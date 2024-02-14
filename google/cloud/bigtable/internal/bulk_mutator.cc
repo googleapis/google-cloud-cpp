@@ -204,12 +204,12 @@ grpc::Status BulkMutator::MakeOneRequest(bigtable::DataClient& client,
 }
 
 Status BulkMutator::MakeOneRequest(BigtableStub& stub,
-                                   MutateRowsLimiter& limiter) {
+                                   MutateRowsLimiter& limiter,
+                                   Options const& options) {
   // Send the request to the server.
   auto const& mutations = state_.BeforeStart();
 
   // Configure the context
-  auto const& options = google::cloud::internal::CurrentOptions();
   auto context = std::make_shared<grpc::ClientContext>();
   google::cloud::internal::ConfigureContext(*context, options);
   retry_context_.PreCall(*context);

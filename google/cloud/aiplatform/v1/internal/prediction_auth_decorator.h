@@ -46,6 +46,13 @@ class PredictionServiceAuth : public PredictionServiceStub {
       grpc::ClientContext& context,
       google::cloud::aiplatform::v1::RawPredictRequest const& request) override;
 
+  std::unique_ptr<
+      google::cloud::internal::StreamingReadRpc<google::api::HttpBody>>
+  StreamRawPredict(std::shared_ptr<grpc::ClientContext> context,
+                   Options const& options,
+                   google::cloud::aiplatform::v1::StreamRawPredictRequest const&
+                       request) override;
+
   StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse> DirectPredict(
       grpc::ClientContext& context,
       google::cloud::aiplatform::v1::DirectPredictRequest const& request)
@@ -55,6 +62,20 @@ class PredictionServiceAuth : public PredictionServiceStub {
   DirectRawPredict(grpc::ClientContext& context,
                    google::cloud::aiplatform::v1::DirectRawPredictRequest const&
                        request) override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::aiplatform::v1::StreamDirectPredictRequest,
+      google::cloud::aiplatform::v1::StreamDirectPredictResponse>>
+  AsyncStreamDirectPredict(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context) override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::aiplatform::v1::StreamDirectRawPredictRequest,
+      google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>>
+  AsyncStreamDirectRawPredict(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::aiplatform::v1::StreamingPredictRequest,
@@ -79,6 +100,11 @@ class PredictionServiceAuth : public PredictionServiceStub {
   StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
       grpc::ClientContext& context,
       google::cloud::aiplatform::v1::ExplainRequest const& request) override;
+
+  StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
+  GenerateContent(grpc::ClientContext& context,
+                  google::cloud::aiplatform::v1::GenerateContentRequest const&
+                      request) override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::cloud::aiplatform::v1::GenerateContentResponse>>

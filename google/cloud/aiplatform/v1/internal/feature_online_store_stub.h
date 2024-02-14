@@ -38,6 +38,12 @@ class FeatureOnlineStoreServiceStub {
       grpc::ClientContext& context,
       google::cloud::aiplatform::v1::FetchFeatureValuesRequest const&
           request) = 0;
+
+  virtual StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
+  SearchNearestEntities(
+      grpc::ClientContext& context,
+      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+          request) = 0;
 };
 
 class DefaultFeatureOnlineStoreServiceStub
@@ -54,6 +60,12 @@ class DefaultFeatureOnlineStoreServiceStub
       grpc::ClientContext& context,
       google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request)
       override;
+
+  StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
+  SearchNearestEntities(
+      grpc::ClientContext& context,
+      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+          request) override;
 
  private:
   std::unique_ptr<

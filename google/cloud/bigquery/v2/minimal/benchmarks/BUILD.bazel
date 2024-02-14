@@ -12,13 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load(":experimental_bigquery_rest_client_benchmark_programs.bzl", "experimental_bigquery_rest_client_benchmark_programs")
+load(":experimental_bigquery_rest_client_benchmark_unit_tests.bzl", "experimental_bigquery_rest_client_benchmark_unit_tests")
+load(":experimental_bigquery_rest_client_benchmarks.bzl", "experimental_bigquery_rest_client_benchmarks_hdrs", "experimental_bigquery_rest_client_benchmarks_srcs")
+
 package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
-
-load(":experimental_bigquery_rest_client_benchmarks.bzl", "experimental_bigquery_rest_client_benchmarks_hdrs", "experimental_bigquery_rest_client_benchmarks_srcs")
-load(":experimental_bigquery_rest_client_benchmark_unit_tests.bzl", "experimental_bigquery_rest_client_benchmark_unit_tests")
-load(":experimental_bigquery_rest_client_benchmark_programs.bzl", "experimental_bigquery_rest_client_benchmark_programs")
 
 cc_library(
     name = "experimental_bigquery_rest_client_benchmarks",

@@ -42,9 +42,12 @@ using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::testing::_;
+using ::testing::AllOf;
+using ::testing::Field;
 using ::testing::HasSubstr;
 using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
@@ -1343,6 +1346,53 @@ TEST_F(AsyncConnectionImplTest, AsyncDeleteObjectTooManyTransients) {
 
   auto response = pending.get();
   EXPECT_THAT(response, StatusIs(TransientError().code()));
+}
+
+// For RewriteObject just validate the basic functionality. The tests for
+// `RewriterConnectionImpl` are the important ones.
+TEST_F(AsyncConnectionImplTest, RewriteObject) {
+  using ::google::cloud::storage_experimental::RewriteObjectRequest;
+  using ::google::cloud::storage_experimental::RewriteObjectResponse;
+
+  AsyncSequencer<bool> sequencer;
+  auto mock = std::make_shared<storage::testing::MockStorageStub>();
+  EXPECT_CALL(*mock, AsyncRewriteObject)
+      .WillOnce([&] {
+        return sequencer.PushBack("RewriteObject(1)").then([](auto) {
+          return StatusOr<google::storage::v2::RewriteResponse>(
+              TransientError());
+        });
+      })
+      .WillOnce([&] {
+        return sequencer.PushBack("RewriteObject(2)").then([](auto) {
+          google::storage::v2::RewriteResponse response;
+          response.set_total_bytes_rewritten(1000);
+          response.set_object_size(3000);
+          response.set_rewrite_token("test-rewrite-token");
+          return make_status_or(response);
+        });
+      });
+
+  auto match_progress = [](int rewritten, int size) {
+    return AllOf(
+        Field(&RewriteObjectResponse::total_bytes_rewritten, rewritten),
+        Field(&RewriteObjectResponse::object_size, size),
+        Field(&RewriteObjectResponse::rewrite_token, "test-rewrite-token"));
+  };
+
+  internal::AutomaticallyCreatedBackgroundThreads pool(1);
+  auto connection = MakeTestConnection(pool.cq(), mock);
+  auto rewriter = connection->RewriteObject(
+      {RewriteObjectRequest(), connection->options()});
+
+  auto r1 = rewriter->Iterate();
+  auto next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "RewriteObject(1)");
+  next.first.set_value(true);
+  next = sequencer.PopFrontWithName();
+  EXPECT_EQ(next.second, "RewriteObject(2)");
+  next.first.set_value(true);
+  EXPECT_THAT(r1.get(), IsOkAndHolds(match_progress(1000, 3000)));
 }
 
 }  // namespace

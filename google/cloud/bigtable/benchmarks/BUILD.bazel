@@ -12,11 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load(":bigtable_benchmark_common.bzl", "bigtable_benchmark_common_hdrs", "bigtable_benchmark_common_srcs")
+load(":bigtable_benchmark_programs.bzl", "bigtable_benchmark_programs")
+load(":bigtable_benchmarks_unit_tests.bzl", "bigtable_benchmarks_unit_tests")
+
 package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
-
-load(":bigtable_benchmark_common.bzl", "bigtable_benchmark_common_hdrs", "bigtable_benchmark_common_srcs")
 
 cc_library(
     name = "bigtable_benchmark_common",
@@ -30,8 +32,6 @@ cc_library(
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
 )
-
-load(":bigtable_benchmark_programs.bzl", "bigtable_benchmark_programs")
 
 [cc_binary(
     name = program.replace("/", "_").replace(".cc", ""),
@@ -47,8 +47,6 @@ load(":bigtable_benchmark_programs.bzl", "bigtable_benchmark_programs")
         "//:common",
     ],
 ) for program in bigtable_benchmark_programs]
-
-load(":bigtable_benchmarks_unit_tests.bzl", "bigtable_benchmarks_unit_tests")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),

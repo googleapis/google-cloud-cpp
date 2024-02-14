@@ -18,6 +18,7 @@
 #include "google/cloud/storage/async/reader_connection.h"
 #include "google/cloud/storage/mocks/mock_async_connection.h"
 #include "google/cloud/storage/mocks/mock_async_reader_connection.h"
+#include "google/cloud/storage/mocks/mock_async_rewriter_connection.h"
 #include "google/cloud/storage/mocks/mock_async_writer_connection.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/opentelemetry_options.h"
@@ -35,11 +36,15 @@ using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage_experimental::AsyncConnection;
 using ::google::cloud::storage_mocks::MockAsyncConnection;
 using ::google::cloud::storage_mocks::MockAsyncReaderConnection;
+using ::google::cloud::storage_mocks::MockAsyncRewriterConnection;
 using ::google::cloud::storage_mocks::MockAsyncWriterConnection;
+using ::google::cloud::testing_util::EventNamed;
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::OTelContextCaptured;
 using ::google::cloud::testing_util::PromiseWithOTelContext;
+using ::google::cloud::testing_util::SpanHasEvents;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
@@ -49,6 +54,9 @@ using ::google::cloud::testing_util::ThereIsAnActiveSpan;
 using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::ElementsAre;
+using ::testing::Field;
+using ::testing::IsEmpty;
+using ::testing::Optional;
 using ::testing::Return;
 using ::testing::VariantWith;
 
@@ -350,6 +358,43 @@ TEST(ConnectionTracing, DeleteObject) {
                          SpanNamed("storage::AsyncConnection::DeleteObject"),
                          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
                          SpanHasInstrumentationScope(), SpanKindIsClient())));
+}
+
+TEST(ConnectionTracing, RewriteObject) {
+  using ::google::cloud::storage_experimental::RewriteObjectResponse;
+  auto span_catcher = InstallSpanCatcher();
+
+  auto mock = std::make_unique<MockAsyncConnection>();
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(TracingEnabled()));
+  EXPECT_CALL(*mock, RewriteObject).WillOnce([] {
+    auto rewriter = std::make_shared<MockAsyncRewriterConnection>();
+    EXPECT_CALL(*rewriter, Iterate).WillOnce([] {
+      EXPECT_TRUE(ThereIsAnActiveSpan());
+      EXPECT_TRUE(OTelContextCaptured());
+      return make_ready_future(make_status_or(RewriteObjectResponse{
+          3000, 3000, "", storage::ObjectMetadata().set_size(3000)}));
+    });
+    return rewriter;
+  });
+  auto connection = MakeTracingAsyncConnection(std::move(mock));
+  auto rewriter = connection->RewriteObject(
+      AsyncConnection::RewriteObjectParams{{}, connection->options()});
+  auto r1 = rewriter->Iterate().get();
+  EXPECT_THAT(r1,
+              IsOkAndHolds(AllOf(
+                  Field(&RewriteObjectResponse::total_bytes_rewritten, 3000),
+                  Field(&RewriteObjectResponse::object_size, 3000),
+                  Field(&RewriteObjectResponse::rewrite_token, IsEmpty()),
+                  Field(&RewriteObjectResponse::metadata,
+                        Optional(storage::ObjectMetadata().set_size(3000))))));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans, ElementsAre(AllOf(
+                 SpanNamed("storage::AsyncConnection::RewriteObject"),
+                 SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                 SpanHasInstrumentationScope(), SpanKindIsClient(),
+                 SpanHasEvents(EventNamed("gl-cpp.storage.rewrite.iterate")))));
 }
 
 }  // namespace

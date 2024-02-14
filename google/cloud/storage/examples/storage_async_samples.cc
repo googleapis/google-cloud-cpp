@@ -329,6 +329,83 @@ void StartBufferedUpload(
   std::cout << "File successfully uploaded " << metadata << "\n";
 }
 
+void RewriteObject(google::cloud::storage_experimental::AsyncClient& client,
+                   std::vector<std::string> const& argv) {
+  //! [rewrite-object]
+  namespace g = google::cloud;
+  namespace gcs = g::storage;
+  namespace gcs_ex = g::storage_experimental;
+  auto coro =
+      [](gcs_ex::AsyncClient& client, std::string bucket_name,
+         std::string object_name,
+         std::string destination_name) -> g::future<gcs::ObjectMetadata> {
+    auto [rewriter, token] = client.StartRewrite(bucket_name, object_name,
+                                                 bucket_name, destination_name);
+    while (token.valid()) {
+      auto [progress, t] =
+          (co_await rewriter.Iterate(std::move(token))).value();
+      token = std::move(t);
+      std::cout << progress.total_bytes_rewritten << " of "
+                << progress.object_size << " bytes rewritten\n";
+      if (progress.metadata) co_return *std::move(progress.metadata);
+    }
+    throw std::runtime_error("rewrite failed before completion");
+  };
+  //! [rewrite-object]
+
+  // The example is easier to test and run if we call the coroutine and block
+  // until it completes.
+  auto const metadata = coro(client, argv.at(0), argv.at(1), argv.at(2)).get();
+  std::cout << "Object successfully rewritten " << metadata << "\n";
+}
+
+void ResumeRewrite(google::cloud::storage_experimental::AsyncClient& client,
+                   std::vector<std::string> const& argv) {
+  //! [resume-rewrite]
+  namespace g = google::cloud;
+  namespace gcs = g::storage;
+  namespace gcs_ex = g::storage_experimental;
+  auto start = [](gcs_ex::AsyncClient& client, std::string bucket_name,
+                  std::string object_name,
+                  std::string destination_name) -> g::future<std::string> {
+    // First start a rewrite. In this example we will limit the number of bytes
+    // rewritten by each iteration to capture then token and resume the rewrite
+    // later.
+    auto [rewriter, token] = client.StartRewrite(
+        bucket_name, object_name, bucket_name, destination_name,
+        gcs::MaxBytesRewrittenPerCall(1024 * 1024));
+    auto [progress, t] = (co_await rewriter.Iterate(std::move(token))).value();
+    co_return progress.rewrite_token;
+  };
+  auto resume =
+      [](gcs_ex::AsyncClient& client, std::string bucket_name,
+         std::string object_name, std::string destination_name,
+         std::string rewrite_token) -> g::future<gcs::ObjectMetadata> {
+    // Continue rewriting, this could happen on a separate process, or even
+    // after the application restarts.
+    auto [rewriter, token] = client.ResumeRewrite(
+        bucket_name, object_name, bucket_name, destination_name, rewrite_token,
+        gcs::MaxBytesRewrittenPerCall(1024 * 1024));
+    while (token.valid()) {
+      auto [progress, t] =
+          (co_await rewriter.Iterate(std::move(token))).value();
+      token = std::move(t);
+      std::cout << progress.total_bytes_rewritten << " of "
+                << progress.object_size << " bytes rewritten\n";
+      if (progress.metadata) co_return *std::move(progress.metadata);
+    }
+    throw std::runtime_error("rewrite failed before completion");
+  };
+  //! [resume-rewrite]
+
+  // The example is easier to test and run if we call the coroutine and block
+  // until it completes.
+  auto const rt = start(client, argv.at(0), argv.at(1), argv.at(2)).get();
+  auto const metadata =
+      resume(client, argv.at(0), argv.at(1), argv.at(2), rt).get();
+  std::cout << "Object successfully rewritten " << metadata << "\n";
+}
+
 #else
 void ReadObject(google::cloud::storage_experimental::AsyncClient&,
                 std::vector<std::string> const&) {
@@ -356,6 +433,16 @@ void StartBufferedUpload(google::cloud::storage_experimental::AsyncClient&,
                          std::vector<std::string> const&) {
   std::cerr
       << "AsyncClient::StartBufferedUpload() example requires coroutines\n";
+}
+
+void RewriteObject(google::cloud::storage_experimental::AsyncClient&,
+                   std::vector<std::string> const&) {
+  std::cerr << "AsyncClient::RewriteObject() example requires coroutines\n";
+}
+
+void ResumeRewrite(google::cloud::storage_experimental::AsyncClient&,
+                   std::vector<std::string> const&) {
+  std::cerr << "AsyncClient::ResumeRewrite() example requires coroutines\n";
 }
 #endif  // GOOGLE_CLOUD_CPP
 
@@ -509,6 +596,18 @@ void AutoRun(std::vector<std::string> const& argv) {
     (void)std::remove(filename.c_str());
   }
 
+  std::cout << "Running the RewriteObject() example" << std::endl;
+  auto const o6 = examples::MakeRandomObjectName(generator, "object-");
+  RewriteObject(client, {bucket_name, object_name, o6});
+
+  std::cout << "Running the ResumeRewrite() example" << std::endl;
+  auto const o7 = examples::MakeRandomObjectName(generator, "object-");
+  (void)client.InsertObject(bucket_name, o7, std::string(4 * 1024 * 1024, 'A'))
+      .get()
+      .value();
+  auto const o8 = examples::MakeRandomObjectName(generator, "object-");
+  ResumeRewrite(client, {bucket_name, object_name, o8});
+
   std::cout << "Running DeleteObject() example" << std::endl;
   AsyncDeleteObject(client, {bucket_name, object_name});
 
@@ -519,6 +618,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   pending.push_back(client.DeleteObject(bucket_name, o3));
   pending.push_back(client.DeleteObject(bucket_name, o4));
   pending.push_back(client.DeleteObject(bucket_name, o5));
+  pending.push_back(client.DeleteObject(bucket_name, o6));
+  pending.push_back(client.DeleteObject(bucket_name, o7));
+  pending.push_back(client.DeleteObject(bucket_name, o8));
   for (auto& f : pending) (void)f.get();
 }
 
@@ -565,6 +667,8 @@ int main(int argc, char* argv[]) try {
       make_entry("write-object-with-retry", {"<filename>"},
                  WriteObjectWithRetry),
       make_entry("buffered-upload", {}, StartBufferedUpload),
+      make_entry("rewrite-object", {"<destination>"}, RewriteObject),
+      make_entry("resume-rewrite-object", {"<destination>"}, ResumeRewrite),
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);

@@ -43,6 +43,30 @@ class CompletionServiceTracingStub : public CompletionServiceStub {
                 google::cloud::discoveryengine::v1::CompleteQueryRequest const&
                     request) override;
 
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncImportSuggestionDenyListEntries(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::discoveryengine::v1::
+          ImportSuggestionDenyListEntriesRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncPurgeSuggestionDenyListEntries(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::discoveryengine::v1::
+          PurgeSuggestionDenyListEntriesRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::shared_ptr<CompletionServiceStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>

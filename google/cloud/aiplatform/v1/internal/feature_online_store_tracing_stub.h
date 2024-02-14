@@ -45,6 +45,12 @@ class FeatureOnlineStoreServiceTracingStub
       google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request)
       override;
 
+  StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
+  SearchNearestEntities(
+      grpc::ClientContext& context,
+      google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+          request) override;
+
  private:
   std::shared_ptr<FeatureOnlineStoreServiceStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>

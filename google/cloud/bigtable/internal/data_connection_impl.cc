@@ -174,7 +174,7 @@ std::vector<bigtable::FailedMutation> DataConnectionImpl::BulkApply(
   std::unique_ptr<bigtable::DataRetryPolicy> retry;
   std::unique_ptr<BackoffPolicy> backoff;
   while (true) {
-    auto status = mutator.MakeOneRequest(*stub_, *limiter_);
+    auto status = mutator.MakeOneRequest(*stub_, *limiter_, *current);
     if (!mutator.HasPendingMutations()) break;
     if (!retry) retry = retry_policy(*current);
     if (!retry->OnFailure(status)) break;
@@ -202,8 +202,7 @@ bigtable::RowReader DataConnectionImpl::ReadRowsFull(
       stub_, std::move(params.app_profile_id), std::move(params.table_name),
       std::move(params.row_set), params.rows_limit, std::move(params.filter),
       params.reverse, retry_policy(*current), backoff_policy(*current),
-      // TODO(#13514) - use Option value.
-      false);
+      enable_server_retries(*current));
   return MakeRowReader(std::move(impl));
 }
 

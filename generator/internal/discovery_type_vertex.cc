@@ -21,12 +21,9 @@
 #include "absl/strings/str_format.h"
 #include "absl/strings/str_split.h"
 #include "absl/types/optional.h"
+#include <google/protobuf/descriptor.pb.h>
 #include <cassert>
 #include <set>
-
-// We need to use FieldDescriptor::has_optional_keyword as its "replacement"
-// FieldDescriptor::has_presence does not exhibit the same behavior.
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {
@@ -453,10 +450,17 @@ StatusOr<int> DiscoveryTypeVertex::GetFieldNumber(
           "map<string, %s>",
           qualified_type_name(*field_descriptor->message_type()->map_value()));
     } else {
+      // TODO(#13587): We use the FieldDescriptorProto to access the literal
+      // proto definition of the field in order to determine if the optional
+      // keyword was used. Adding/removing the optional keyword may not actually
+      // indicate that we cannot reuse the field. If we determine that's the
+      // case the check for has_proto3_optional can be removed.
+      google::protobuf::FieldDescriptorProto field_descriptor_proto;
+      field_descriptor->CopyTo(&field_descriptor_proto);
       if (field_descriptor->is_repeated()) {
         type_name =
             absl::StrCat("repeated ", qualified_type_name(*field_descriptor));
-      } else if (field_descriptor->has_optional_keyword()) {
+      } else if (field_descriptor_proto.has_proto3_optional()) {
         type_name =
             absl::StrCat("optional ", qualified_type_name(*field_descriptor));
       } else {

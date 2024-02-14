@@ -36,7 +36,7 @@ SHA256=$(sha256sum "${DOWNLOAD}" | sed "s/ .*//")
 PIPERORIGIN_REVID=
 REV_COMMIT="${COMMIT}"
 until grep -q "/googleapis/archive/${REV_COMMIT}\.tar" bazel/workspace0.bzl; do
-  gh api "repos/${REPO}/commits/${REV_COMMIT}" >"${DOWNLOAD}"
+  curl -fsSL -H "Accept: application/json" "https://api.github.com/repos/${REPO}/commits/${REV_COMMIT}" -o "${DOWNLOAD}"
   PIPERORIGIN_REVID=$(jq --raw-output .commit.message <"${DOWNLOAD}" |
     grep PiperOrigin-RevId:) && break
   REV_COMMIT=$(jq --raw-output '.parents[0].sha' <"${DOWNLOAD}")

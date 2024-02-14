@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load(":storage_examples.bzl", "storage_examples")
+load(":storage_examples_common.bzl", "storage_examples_common_hdrs", "storage_examples_common_srcs")
+load(":storage_examples_unit_tests.bzl", "storage_examples_unit_tests")
+load(":storage_grpc_examples.bzl", "storage_grpc_examples", "storage_grpc_unit_tests")
+
 package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
-
-load(":storage_examples_common.bzl", "storage_examples_common_hdrs", "storage_examples_common_srcs")
-load(":storage_examples_unit_tests.bzl", "storage_examples_unit_tests")
-load(":storage_examples.bzl", "storage_examples")
-load(":storage_grpc_examples.bzl", "storage_grpc_examples", "storage_grpc_unit_tests")
 
 cc_library(
     name = "storage_examples_common",

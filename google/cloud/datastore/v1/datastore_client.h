@@ -108,8 +108,8 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.datastore.v1.LookupRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L161}
-  /// [google.datastore.v1.LookupResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L179}
+  /// [google.datastore.v1.LookupRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L160}
+  /// [google.datastore.v1.LookupResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L178}
   ///
   // clang-format on
   StatusOr<google::datastore::v1::LookupResponse> Lookup(
@@ -140,8 +140,8 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.datastore.v1.LookupRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L161}
-  /// [google.datastore.v1.LookupResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L179}
+  /// [google.datastore.v1.LookupRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L160}
+  /// [google.datastore.v1.LookupResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L178}
   ///
   // clang-format on
   StatusOr<google::datastore::v1::LookupResponse> Lookup(
@@ -170,8 +170,8 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.datastore.v1.RunQueryRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L209}
-  /// [google.datastore.v1.RunQueryResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L245}
+  /// [google.datastore.v1.RunQueryRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L208}
+  /// [google.datastore.v1.RunQueryResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L239}
   ///
   // clang-format on
   StatusOr<google::datastore::v1::RunQueryResponse> RunQuery(
@@ -200,8 +200,8 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.datastore.v1.RunAggregationQueryRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L270}
-  /// [google.datastore.v1.RunAggregationQueryResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L306}
+  /// [google.datastore.v1.RunAggregationQueryRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L258}
+  /// [google.datastore.v1.RunAggregationQueryResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L289}
   ///
   // clang-format on
   StatusOr<google::datastore::v1::RunAggregationQueryResponse>
@@ -227,8 +227,8 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.datastore.v1.BeginTransactionRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L331}
-  /// [google.datastore.v1.BeginTransactionResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L347}
+  /// [google.datastore.v1.BeginTransactionRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L308}
+  /// [google.datastore.v1.BeginTransactionResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L324}
   ///
   // clang-format on
   StatusOr<google::datastore::v1::BeginTransactionResponse> BeginTransaction(
@@ -257,8 +257,8 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.datastore.v1.BeginTransactionRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L331}
-  /// [google.datastore.v1.BeginTransactionResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L347}
+  /// [google.datastore.v1.BeginTransactionRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L308}
+  /// [google.datastore.v1.BeginTransactionResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L324}
   ///
   // clang-format on
   StatusOr<google::datastore::v1::BeginTransactionResponse> BeginTransaction(
@@ -301,9 +301,9 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.datastore.v1.CommitRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L374}
-  /// [google.datastore.v1.CommitResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L432}
-  /// [google.datastore.v1.Datastore.BeginTransaction]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L89}
+  /// [google.datastore.v1.CommitRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L351}
+  /// [google.datastore.v1.CommitResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L409}
+  /// [google.datastore.v1.Datastore.BeginTransaction]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L88}
   ///
   // clang-format on
   StatusOr<google::datastore::v1::CommitResponse> Commit(
@@ -346,8 +346,8 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.datastore.v1.CommitRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L374}
-  /// [google.datastore.v1.CommitResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L432}
+  /// [google.datastore.v1.CommitRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L351}
+  /// [google.datastore.v1.CommitResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L409}
   ///
   // clang-format on
   StatusOr<google::datastore::v1::CommitResponse> Commit(
@@ -380,8 +380,8 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.datastore.v1.CommitRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L374}
-  /// [google.datastore.v1.CommitResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L432}
+  /// [google.datastore.v1.CommitRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L351}
+  /// [google.datastore.v1.CommitResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L409}
   ///
   // clang-format on
   StatusOr<google::datastore::v1::CommitResponse> Commit(
@@ -407,9 +407,9 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.datastore.v1.Datastore.BeginTransaction]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L89}
-  /// [google.datastore.v1.RollbackRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L353}
-  /// [google.datastore.v1.RollbackResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L371}
+  /// [google.datastore.v1.Datastore.BeginTransaction]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L88}
+  /// [google.datastore.v1.RollbackRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L330}
+  /// [google.datastore.v1.RollbackResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L348}
   ///
   // clang-format on
   StatusOr<google::datastore::v1::RollbackResponse> Rollback(
@@ -439,8 +439,8 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.datastore.v1.RollbackRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L353}
-  /// [google.datastore.v1.RollbackResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L371}
+  /// [google.datastore.v1.RollbackRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L330}
+  /// [google.datastore.v1.RollbackResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L348}
   ///
   // clang-format on
   StatusOr<google::datastore::v1::RollbackResponse> Rollback(
@@ -467,8 +467,8 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.datastore.v1.AllocateIdsRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L447}
-  /// [google.datastore.v1.AllocateIdsResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L464}
+  /// [google.datastore.v1.AllocateIdsRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L424}
+  /// [google.datastore.v1.AllocateIdsResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L441}
   ///
   // clang-format on
   StatusOr<google::datastore::v1::AllocateIdsResponse> AllocateIds(
@@ -499,8 +499,8 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.datastore.v1.AllocateIdsRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L447}
-  /// [google.datastore.v1.AllocateIdsResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L464}
+  /// [google.datastore.v1.AllocateIdsRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L424}
+  /// [google.datastore.v1.AllocateIdsResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L441}
   ///
   // clang-format on
   StatusOr<google::datastore::v1::AllocateIdsResponse> AllocateIds(
@@ -528,8 +528,8 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.datastore.v1.ReserveIdsRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L472}
-  /// [google.datastore.v1.ReserveIdsResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L489}
+  /// [google.datastore.v1.ReserveIdsRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L449}
+  /// [google.datastore.v1.ReserveIdsResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L466}
   ///
   // clang-format on
   StatusOr<google::datastore::v1::ReserveIdsResponse> ReserveIds(
@@ -560,8 +560,8 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.datastore.v1.ReserveIdsRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L472}
-  /// [google.datastore.v1.ReserveIdsResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L489}
+  /// [google.datastore.v1.ReserveIdsRequest]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L449}
+  /// [google.datastore.v1.ReserveIdsResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L466}
   ///
   // clang-format on
   StatusOr<google::datastore::v1::ReserveIdsResponse> ReserveIds(

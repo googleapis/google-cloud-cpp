@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:private"])
-
-licenses(["notice"])  # Apache 2.0
-
 load(":google_cloud_cpp_pubsublite.bzl", "google_cloud_cpp_pubsublite_hdrs", "google_cloud_cpp_pubsublite_srcs")
 load(":google_cloud_cpp_pubsublite_mocks.bzl", "google_cloud_cpp_pubsublite_mocks_hdrs")
 load(":pubsublite_testing.bzl", "pubsublite_testing_hdrs", "pubsublite_testing_srcs")
 load(":pubsublite_unit_tests.bzl", "pubsublite_unit_tests")
+
+package(default_visibility = ["//visibility:private"])
+
+licenses(["notice"])  # Apache 2.0
 
 filegroup(
     name = "public_hdrs",

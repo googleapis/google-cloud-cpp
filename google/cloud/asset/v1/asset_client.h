@@ -127,8 +127,8 @@ class AssetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.asset.v1.Asset]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L95}
-  /// [google.cloud.asset.v1.ExportAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L329}
-  /// [google.cloud.asset.v1.ExportAssetsResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L399}
+  /// [google.cloud.asset.v1.ExportAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L328}
+  /// [google.cloud.asset.v1.ExportAssetsResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L398}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   // clang-format on
@@ -169,7 +169,7 @@ class AssetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.asset.v1.Asset]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L95}
-  /// [google.cloud.asset.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L415}
+  /// [google.cloud.asset.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L414}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::Asset> ListAssets(
@@ -209,7 +209,7 @@ class AssetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.asset.v1.Asset]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L95}
-  /// [google.cloud.asset.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L415}
+  /// [google.cloud.asset.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L414}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::Asset> ListAssets(
@@ -244,8 +244,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.BatchGetAssetsHistoryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L501}
-  /// [google.cloud.asset.v1.BatchGetAssetsHistoryResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L554}
+  /// [google.cloud.asset.v1.BatchGetAssetsHistoryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L500}
+  /// [google.cloud.asset.v1.BatchGetAssetsHistoryResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L553}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse>
@@ -276,8 +276,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.CreateFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L560}
-  /// [google.cloud.asset.v1.Feed]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L810}
+  /// [google.cloud.asset.v1.CreateFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L559}
+  /// [google.cloud.asset.v1.Feed]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L809}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::Feed> CreateFeed(std::string const& parent,
@@ -307,8 +307,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.CreateFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L560}
-  /// [google.cloud.asset.v1.Feed]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L810}
+  /// [google.cloud.asset.v1.CreateFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L559}
+  /// [google.cloud.asset.v1.Feed]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L809}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::Feed> CreateFeed(
@@ -336,8 +336,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.Feed]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L810}
-  /// [google.cloud.asset.v1.GetFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L580}
+  /// [google.cloud.asset.v1.Feed]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L809}
+  /// [google.cloud.asset.v1.GetFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L579}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::Feed> GetFeed(std::string const& name,
@@ -366,8 +366,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.Feed]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L810}
-  /// [google.cloud.asset.v1.GetFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L580}
+  /// [google.cloud.asset.v1.Feed]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L809}
+  /// [google.cloud.asset.v1.GetFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L579}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::Feed> GetFeed(
@@ -394,8 +394,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.ListFeedsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L592}
-  /// [google.cloud.asset.v1.ListFeedsResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L599}
+  /// [google.cloud.asset.v1.ListFeedsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L591}
+  /// [google.cloud.asset.v1.ListFeedsResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L598}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::ListFeedsResponse> ListFeeds(
@@ -424,8 +424,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.ListFeedsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L592}
-  /// [google.cloud.asset.v1.ListFeedsResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L599}
+  /// [google.cloud.asset.v1.ListFeedsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L591}
+  /// [google.cloud.asset.v1.ListFeedsResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L598}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::ListFeedsResponse> ListFeeds(
@@ -454,8 +454,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.Feed]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L810}
-  /// [google.cloud.asset.v1.UpdateFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L605}
+  /// [google.cloud.asset.v1.Feed]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L809}
+  /// [google.cloud.asset.v1.UpdateFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L604}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::Feed> UpdateFeed(
@@ -484,8 +484,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.Feed]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L810}
-  /// [google.cloud.asset.v1.UpdateFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L605}
+  /// [google.cloud.asset.v1.Feed]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L809}
+  /// [google.cloud.asset.v1.UpdateFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L604}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::Feed> UpdateFeed(
@@ -511,7 +511,7 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.DeleteFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L620}
+  /// [google.cloud.asset.v1.DeleteFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L619}
   ///
   // clang-format on
   Status DeleteFeed(std::string const& name, Options opts = {});
@@ -537,7 +537,7 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.DeleteFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L620}
+  /// [google.cloud.asset.v1.DeleteFeedRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L619}
   ///
   // clang-format on
   Status DeleteFeed(google::cloud::asset::v1::DeleteFeedRequest const& request,
@@ -569,8 +569,8 @@ class AssetServiceClient {
   ///  @n
   ///  For more information, see [SearchAllResourcesRequest][google.cloud.asset.v1.SearchAllResourcesRequest].
   /// @param asset_types  Optional. A list of asset types that this request searches for. If empty,
-  ///  it will search all the [searchable asset
-  ///  types](https://cloud.google.com/asset-inventory/docs/supported-asset-types).
+  ///  it will search all the asset types [supported by search
+  ///  APIs](https://cloud.google.com/asset-inventory/docs/supported-asset-types).
   ///  @n
   ///  Regular expressions are also supported. For example:
   ///  @n
@@ -605,7 +605,7 @@ class AssetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.asset.v1.ResourceSearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L342}
-  /// [google.cloud.asset.v1.SearchAllResourcesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L889}
+  /// [google.cloud.asset.v1.SearchAllResourcesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L888}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::ResourceSearchResult>
@@ -649,7 +649,7 @@ class AssetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.asset.v1.ResourceSearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L342}
-  /// [google.cloud.asset.v1.SearchAllResourcesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L889}
+  /// [google.cloud.asset.v1.SearchAllResourcesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L888}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::ResourceSearchResult>
@@ -710,7 +710,7 @@ class AssetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.asset.v1.IamPolicySearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L753}
-  /// [google.cloud.asset.v1.SearchAllIamPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1082}
+  /// [google.cloud.asset.v1.SearchAllIamPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1081}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
@@ -753,7 +753,7 @@ class AssetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.asset.v1.IamPolicySearchResult]: @googleapis_reference_link{google/cloud/asset/v1/assets.proto#L753}
-  /// [google.cloud.asset.v1.SearchAllIamPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1082}
+  /// [google.cloud.asset.v1.SearchAllIamPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1081}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
@@ -785,8 +785,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeIamPolicyRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1393}
-  /// [google.cloud.asset.v1.AnalyzeIamPolicyResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1433}
+  /// [google.cloud.asset.v1.AnalyzeIamPolicyRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1392}
+  /// [google.cloud.asset.v1.AnalyzeIamPolicyResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1432}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse> AnalyzeIamPolicy(
@@ -832,9 +832,9 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeIamPolicyLongrunningRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1549}
-  /// [google.cloud.asset.v1.AnalyzeIamPolicyLongrunningResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1580}
-  /// [google.cloud.asset.v1.AnalyzeIamPolicyResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1433}
+  /// [google.cloud.asset.v1.AnalyzeIamPolicyLongrunningRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1548}
+  /// [google.cloud.asset.v1.AnalyzeIamPolicyLongrunningResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1579}
+  /// [google.cloud.asset.v1.AnalyzeIamPolicyResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1432}
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
   ///
   // clang-format on
@@ -872,8 +872,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeMoveRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1763}
-  /// [google.cloud.asset.v1.AnalyzeMoveResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1806}
+  /// [google.cloud.asset.v1.AnalyzeMoveRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1762}
+  /// [google.cloud.asset.v1.AnalyzeMoveResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1805}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse> AnalyzeMove(
@@ -914,8 +914,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.QueryAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1877}
-  /// [google.cloud.asset.v1.QueryAssetsResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1963}
+  /// [google.cloud.asset.v1.QueryAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1876}
+  /// [google.cloud.asset.v1.QueryAssetsResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1962}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::QueryAssetsResponse> QueryAssets(
@@ -955,8 +955,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.CreateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1640}
-  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1583}
+  /// [google.cloud.asset.v1.CreateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1639}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1582}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
@@ -987,8 +987,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.CreateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1640}
-  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1583}
+  /// [google.cloud.asset.v1.CreateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1639}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1582}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
@@ -1017,8 +1017,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.GetSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1670}
-  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1583}
+  /// [google.cloud.asset.v1.GetSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1669}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1582}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::SavedQuery> GetSavedQuery(
@@ -1047,8 +1047,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.GetSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1670}
-  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1583}
+  /// [google.cloud.asset.v1.GetSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1669}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1582}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::SavedQuery> GetSavedQuery(
@@ -1084,8 +1084,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1685}
-  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1583}
+  /// [google.cloud.asset.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1684}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1582}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::SavedQuery> ListSavedQueries(
@@ -1123,8 +1123,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1685}
-  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1583}
+  /// [google.cloud.asset.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1684}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1582}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::SavedQuery> ListSavedQueries(
@@ -1157,8 +1157,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1583}
-  /// [google.cloud.asset.v1.UpdateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1730}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1582}
+  /// [google.cloud.asset.v1.UpdateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1729}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
@@ -1188,8 +1188,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1583}
-  /// [google.cloud.asset.v1.UpdateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1730}
+  /// [google.cloud.asset.v1.SavedQuery]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1582}
+  /// [google.cloud.asset.v1.UpdateSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1729}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
@@ -1217,7 +1217,7 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1747}
+  /// [google.cloud.asset.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1746}
   ///
   // clang-format on
   Status DeleteSavedQuery(std::string const& name, Options opts = {});
@@ -1243,7 +1243,7 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1747}
+  /// [google.cloud.asset.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L1746}
   ///
   // clang-format on
   Status DeleteSavedQuery(
@@ -1273,8 +1273,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.BatchGetEffectiveIamPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2048}
-  /// [google.cloud.asset.v1.BatchGetEffectiveIamPoliciesResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2078}
+  /// [google.cloud.asset.v1.BatchGetEffectiveIamPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2047}
+  /// [google.cloud.asset.v1.BatchGetEffectiveIamPoliciesResponse]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2077}
   ///
   // clang-format on
   StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
@@ -1327,9 +1327,9 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2356}
-  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.OrgPolicyResult]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2394}
-  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.org_policy_results]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2415}
+  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2355}
+  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.OrgPolicyResult]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2393}
+  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.org_policy_results]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2414}
   ///
   // clang-format on
   StreamRange<
@@ -1369,8 +1369,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2356}
-  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.OrgPolicyResult]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2394}
+  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2355}
+  /// [google.cloud.asset.v1.AnalyzeOrgPoliciesResponse.OrgPolicyResult]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2393}
   ///
   // clang-format on
   StreamRange<
@@ -1426,9 +1426,9 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2427}
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2469}
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.governed_containers]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2498}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2426}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2468}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.governed_containers]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2497}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::
@@ -1471,8 +1471,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2427}
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2469}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2426}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2468}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::
@@ -1499,9 +1499,8 @@ class AssetServiceClient {
   /// * compute.requireOsLogin
   /// * compute.disableNestedVirtualization
   ///
-  /// This RPC only returns either resources of types supported by [searchable
-  /// asset
-  /// types](https://cloud.google.com/asset-inventory/docs/supported-asset-types),
+  /// This RPC only returns either resources of types [supported by search
+  /// APIs](https://cloud.google.com/asset-inventory/docs/supported-asset-types)
   /// or IAM policies.
   ///
   /// @param scope  Required. The organization to scope the request. Only organization
@@ -1539,9 +1538,9 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2510}
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2628}
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.governed_assets]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2658}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2509}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2627}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.governed_assets]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2657}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::
@@ -1567,9 +1566,8 @@ class AssetServiceClient {
   /// * compute.requireOsLogin
   /// * compute.disableNestedVirtualization
   ///
-  /// This RPC only returns either resources of types supported by [searchable
-  /// asset
-  /// types](https://cloud.google.com/asset-inventory/docs/supported-asset-types),
+  /// This RPC only returns either resources of types [supported by search
+  /// APIs](https://cloud.google.com/asset-inventory/docs/supported-asset-types)
   /// or IAM policies.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -1600,8 +1598,8 @@ class AssetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2510}
-  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2628}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsRequest]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2509}
+  /// [google.cloud.asset.v1.AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset]: @googleapis_reference_link{google/cloud/asset/v1/asset_service.proto#L2627}
   ///
   // clang-format on
   StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::

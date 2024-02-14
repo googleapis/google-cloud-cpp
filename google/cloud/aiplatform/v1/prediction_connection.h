@@ -191,6 +191,9 @@ class PredictionServiceConnection {
   virtual StatusOr<google::api::HttpBody> RawPredict(
       google::cloud::aiplatform::v1::RawPredictRequest const& request);
 
+  virtual StreamRange<google::api::HttpBody> StreamRawPredict(
+      google::cloud::aiplatform::v1::StreamRawPredictRequest const& request);
+
   virtual StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
   DirectPredict(
       google::cloud::aiplatform::v1::DirectPredictRequest const& request);
@@ -198,6 +201,16 @@ class PredictionServiceConnection {
   virtual StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
   DirectRawPredict(
       google::cloud::aiplatform::v1::DirectRawPredictRequest const& request);
+
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::aiplatform::v1::StreamDirectPredictRequest,
+      google::cloud::aiplatform::v1::StreamDirectPredictResponse>>
+  AsyncStreamDirectPredict();
+
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::aiplatform::v1::StreamDirectRawPredictRequest,
+      google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>>
+  AsyncStreamDirectRawPredict();
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::aiplatform::v1::StreamingPredictRequest,
@@ -215,6 +228,10 @@ class PredictionServiceConnection {
 
   virtual StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
       google::cloud::aiplatform::v1::ExplainRequest const& request);
+
+  virtual StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
+  GenerateContent(
+      google::cloud::aiplatform::v1::GenerateContentRequest const& request);
 
   virtual StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>
   StreamGenerateContent(

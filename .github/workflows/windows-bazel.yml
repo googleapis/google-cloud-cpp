@@ -73,7 +73,7 @@ jobs:
     #   https://github.com/microsoft/vswhere/wiki/Find-VC
     # Note that in other runners the publisher is GitHub. If we trust GitHub
     # to run the VM, we should trust their runners.
-    - uses: ilammy/msvc-dev-cmd@cec98b9d092141f74527d0afa6feb2af698cfe89 # @v1.21.1
+    - uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # @v1.13.0
     - name: Build google-cloud-cpp
       shell: bash
       run: |

@@ -12,25 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_INVOCATION_ID_GENERATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_INVOCATION_ID_GENERATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_INVOCATION_ID_GENERATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_INVOCATION_ID_GENERATOR_H
 
-#include "google/cloud/storage/version.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/version.h"
 #include <mutex>
 #include <string>
 
 namespace google {
 namespace cloud {
-namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 /**
- * Generate retry headers for the storage client library.
+ * Generate invocation ids (aka request ids).
  *
- * Part of the GCS telemetry requirements include sending a unique ID with all
- * the requests
+ * Some services accept a request id field (or header) to determine if a request
+ * is a retry attempt. Such services return the previous result of the request,
+ * effectively making the request retry idempotent.
  */
 class InvocationIdGenerator {
  public:
@@ -50,8 +50,7 @@ class InvocationIdGenerator {
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_INVOCATION_ID_GENERATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_INVOCATION_ID_GENERATOR_H

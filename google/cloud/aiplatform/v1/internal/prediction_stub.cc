@@ -53,6 +53,17 @@ StatusOr<google::api::HttpBody> DefaultPredictionServiceStub::RawPredict(
   return response;
 }
 
+std::unique_ptr<
+    google::cloud::internal::StreamingReadRpc<google::api::HttpBody>>
+DefaultPredictionServiceStub::StreamRawPredict(
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    google::cloud::aiplatform::v1::StreamRawPredictRequest const& request) {
+  auto stream = grpc_stub_->StreamRawPredict(context.get(), request);
+  return std::make_unique<
+      google::cloud::internal::StreamingReadRpcImpl<google::api::HttpBody>>(
+      std::move(context), std::move(stream));
+}
+
 StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
 DefaultPredictionServiceStub::DirectPredict(
     grpc::ClientContext& context,
@@ -75,6 +86,36 @@ DefaultPredictionServiceStub::DirectRawPredict(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamDirectPredictRequest,
+    google::cloud::aiplatform::v1::StreamDirectPredictResponse>>
+DefaultPredictionServiceStub::AsyncStreamDirectPredict(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context) {
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::cloud::aiplatform::v1::StreamDirectPredictRequest,
+      google::cloud::aiplatform::v1::StreamDirectPredictResponse>(
+      cq, std::move(context),
+      [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncStreamDirectPredict(context, cq);
+      });
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::aiplatform::v1::StreamDirectRawPredictRequest,
+    google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>>
+DefaultPredictionServiceStub::AsyncStreamDirectRawPredict(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context) {
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::cloud::aiplatform::v1::StreamDirectRawPredictRequest,
+      google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>(
+      cq, std::move(context),
+      [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncStreamDirectRawPredict(context, cq);
+      });
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -124,6 +165,18 @@ DefaultPredictionServiceStub::Explain(
     google::cloud::aiplatform::v1::ExplainRequest const& request) {
   google::cloud::aiplatform::v1::ExplainResponse response;
   auto status = grpc_stub_->Explain(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
+DefaultPredictionServiceStub::GenerateContent(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::GenerateContentRequest const& request) {
+  google::cloud::aiplatform::v1::GenerateContentResponse response;
+  auto status = grpc_stub_->GenerateContent(&context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

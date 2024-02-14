@@ -22,11 +22,14 @@
 #include "google/cloud/discoveryengine/v1/completion_connection_idempotency_policy.h"
 #include "google/cloud/discoveryengine/v1/internal/completion_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/discoveryengine/v1/completion_service.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -185,6 +188,18 @@ class CompletionServiceConnection {
   virtual StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
   CompleteQuery(
       google::cloud::discoveryengine::v1::CompleteQueryRequest const& request);
+
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::
+                              ImportSuggestionDenyListEntriesResponse>>
+  ImportSuggestionDenyListEntries(
+      google::cloud::discoveryengine::v1::
+          ImportSuggestionDenyListEntriesRequest const& request);
+
+  virtual future<StatusOr<google::cloud::discoveryengine::v1::
+                              PurgeSuggestionDenyListEntriesResponse>>
+  PurgeSuggestionDenyListEntries(
+      google::cloud::discoveryengine::v1::
+          PurgeSuggestionDenyListEntriesRequest const& request);
 };
 
 /**

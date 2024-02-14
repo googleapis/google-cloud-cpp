@@ -20,10 +20,11 @@ namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-void RetryContext::PreCall(grpc::ClientContext& context) const {
+void RetryContext::PreCall(grpc::ClientContext& context) {
   for (auto const& h : cookies_) {
     context.AddMetadata(h.first, h.second);
   }
+  context.AddMetadata("bigtable-attempt", std::to_string(attempt_number_++));
 }
 
 void RetryContext::PostCall(grpc::ClientContext const& context) {

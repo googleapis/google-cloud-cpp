@@ -12,11 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+load(":service_dirs.bzl", "operation_service_dirs", "service_dirs")
+
 package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
-
-load(":service_dirs.bzl", "operation_service_dirs", "service_dirs")
 
 # Service C++ files and mocks targets
 [[

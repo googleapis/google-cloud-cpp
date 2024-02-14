@@ -52,7 +52,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class RetryContext {
  public:
   // Adds stored bigtable cookies as client metadata.
-  void PreCall(grpc::ClientContext& context) const;
+  void PreCall(grpc::ClientContext& context);
   // Stores bigtable cookies returned as server metadata.
   void PostCall(grpc::ClientContext const& context);
 
@@ -62,6 +62,7 @@ class RetryContext {
       std::multimap<grpc::string_ref, grpc::string_ref> const& metadata);
 
   std::unordered_map<std::string, std::string> cookies_;
+  int attempt_number_ = 0;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

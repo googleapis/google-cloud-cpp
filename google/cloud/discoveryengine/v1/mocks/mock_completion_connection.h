@@ -52,6 +52,20 @@ class MockCompletionServiceConnection
       CompleteQuery,
       (google::cloud::discoveryengine::v1::CompleteQueryRequest const& request),
       (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
+                                  ImportSuggestionDenyListEntriesResponse>>,
+              ImportSuggestionDenyListEntries,
+              (google::cloud::discoveryengine::v1::
+                   ImportSuggestionDenyListEntriesRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
+                                  PurgeSuggestionDenyListEntriesResponse>>,
+              PurgeSuggestionDenyListEntries,
+              (google::cloud::discoveryengine::v1::
+                   PurgeSuggestionDenyListEntriesRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -52,6 +52,17 @@ FeatureOnlineStoreServiceMetadata::FetchFeatureValues(
   return child_->FetchFeatureValues(context, request);
 }
 
+StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
+FeatureOnlineStoreServiceMetadata::SearchNearestEntities(
+    grpc::ClientContext& context,
+    google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
+        request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("feature_view=",
+                           internal::UrlEncode(request.feature_view())));
+  return child_->SearchNearestEntities(context, request);
+}
+
 void FeatureOnlineStoreServiceMetadata::SetMetadata(
     grpc::ClientContext& context, Options const& options,
     std::string const& request_params) {
