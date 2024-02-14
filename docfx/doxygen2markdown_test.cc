@@ -730,32 +730,13 @@ TEST(Doxygen2Markdown, ParagraphProgramListingAddsNewLine) {
 
   auto constexpr kExpected = R"md(
 
-###### Thread-safety
-
-Instances of this class created via copy-construction or copy-assignment share the underlying pool of connections. Access to these copies via multiple threads is guaranteed to work. Two threads operating concurrently on the same instance of this class is not guaranteed to work.
-
-###### Cost
-
-Creating a new object of type [`TableAdmin`](xref:classgoogle_1_1cloud_1_1bigtable_1_1TableAdmin) is comparable to creating a few objects of type `std::string` or a few objects of type `std::shared_ptr<int>`. The class represents a shallow handle to a remote object.
-
 ###### Error Handling
 
-This class uses [`StatusOr`](xref:classgoogle_1_1cloud_1_1StatusOr)`<T>` to report errors. When an operation fails to perform its work the returned [`StatusOr`](xref:classgoogle_1_1cloud_1_1StatusOr)`<T>` contains the error details. If the `ok()` member function in the [`StatusOr`](xref:classgoogle_1_1cloud_1_1StatusOr)`<T>` returns `true` then it contains the expected result. Operations that do not return a value simply return a [`google::cloud::Status`](xref:classgoogle_1_1cloud_1_1Status) indicating success or the details of the error Please consult the [`StatusOr<T>` documentation](xref:classgoogle_1_1cloud_1_1StatusOr) for more details.
+Description goes here.
 
 ```cpp
 namespace cbt = google::cloud::bigtable;
 namespace btadmin = google::bigtable::admin::v2;
-cbt::TableAdmin admin = ...;
-google::cloud::StatusOr<btadmin::Table> metadata = admin.GetTable(...);
-
-if (!metadata) {
-  std::cerr << "Error fetching table metadata\n";
-  return;
-}
-
-// Use "metadata" as a smart pointer here, e.g.:
-std::cout << "The full table name is " << table->name() << " the table has "
-          << table->column_families_size() << " column families\n";
 ```)md";
 
   pugi::xml_document doc;
