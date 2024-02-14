@@ -46,12 +46,12 @@ Idempotency StorageControlConnectionIdempotencyPolicy::DeleteFolder(
 
 Idempotency StorageControlConnectionIdempotencyPolicy::GetFolder(
     google::storage::control::v2::GetFolderRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency StorageControlConnectionIdempotencyPolicy::ListFolders(
     google::storage::control::v2::ListFoldersRequest) {  // NOLINT
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency StorageControlConnectionIdempotencyPolicy::RenameFolder(
@@ -61,7 +61,7 @@ Idempotency StorageControlConnectionIdempotencyPolicy::RenameFolder(
 
 Idempotency StorageControlConnectionIdempotencyPolicy::GetStorageLayout(
     google::storage::control::v2::GetStorageLayoutRequest const&) {
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<StorageControlConnectionIdempotencyPolicy>
