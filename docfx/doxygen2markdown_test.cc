@@ -725,17 +725,6 @@ TEST(Doxygen2Markdown, ParagraphProgramListingAddsNewLine) {
 </simplesect>
 <programlisting><codeline><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">cbt<sp/>=<sp/><ref refid="namespacegoogle_1_1cloud_1_1bigtable" kindref="compound">google::cloud::bigtable</ref>;</highlight></codeline>
 <codeline><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">btadmin<sp/>=<sp/>google::bigtable::admin::v2;</highlight></codeline>
-<codeline><highlight class="normal">cbt::TableAdmin<sp/>admin<sp/>=<sp/>...;</highlight></codeline>
-<codeline><highlight class="normal"><ref refid="classgoogle_1_1cloud_1_1StatusOr" kindref="compound" external="/workspace/cmake-out/google/cloud/cloud.tag">google::cloud::StatusOr&lt;btadmin::Table&gt;</ref><sp/>metadata<sp/>=<sp/>admin.GetTable(...);</highlight></codeline>
-<codeline><highlight class="normal"></highlight></codeline>
-<codeline><highlight class="normal"></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(!metadata)<sp/>{</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/>std::cerr<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;Error<sp/>fetching<sp/>table<sp/>metadata\n&quot;</highlight><highlight class="normal">;</highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal">;</highlight></codeline>
-<codeline><highlight class="normal">}</highlight></codeline>
-<codeline><highlight class="normal"></highlight></codeline>
-<codeline><highlight class="normal"></highlight><highlight class="comment">//<sp/>Use<sp/>&quot;metadata&quot;<sp/>as<sp/>a<sp/>smart<sp/>pointer<sp/>here,<sp/>e.g.:</highlight><highlight class="normal"></highlight></codeline>
-<codeline><highlight class="normal">std::cout<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;The<sp/>full<sp/>table<sp/>name<sp/>is<sp/>&quot;</highlight><highlight class="normal"><sp/>&lt;&lt;<sp/>table-&gt;name()<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;<sp/>the<sp/>table<sp/>has<sp/>&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>&lt;&lt;<sp/>table-&gt;column_families_size()<sp/>&lt;&lt;<sp/></highlight><highlight class="stringliteral">&quot;<sp/>column<sp/>families\n&quot;</highlight><highlight class="normal">;</highlight></codeline>
 </programlisting></para>     </detaileddescription>
  </doxygen>)xml";
 
