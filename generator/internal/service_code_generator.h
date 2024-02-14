@@ -185,6 +185,13 @@ class ServiceCodeGenerator : public GeneratorInterface {
    */
   bool HasGenerateGrpcTransport() const;
 
+  /// Determine if any of the methods has an autopopulated `request_id`-like
+  /// field.
+  bool HasRequestId() const;
+
+  /// Determine if @p method has an auto-populated `request_id`-like field.
+  bool HasRequestId(google::protobuf::MethodDescriptor const& method) const;
+
   /**
    * Determines if any of the method signatures has any Protocol Buffer
    * Well-Known Types per

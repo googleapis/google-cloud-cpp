@@ -73,4 +73,6 @@ service {
   gen_async_rpcs: [
     "CreateFoo"
   ]
+  override_service_config_yaml_directory: "generator/integration_tests"
+  override_service_config_yaml_name: "test_request_id.yaml"
 }

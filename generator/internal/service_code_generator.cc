@@ -17,6 +17,7 @@
 #include "generator/internal/longrunning.h"
 #include "generator/internal/pagination.h"
 #include "generator/internal/printer.h"
+#include "generator/internal/request_id.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/algorithm.h"
@@ -198,6 +199,22 @@ bool ServiceCodeGenerator::HasGenerateGrpcTransport() const {
       service_vars_.find("generate_grpc_transport");
   return generate_grpc_transport != service_vars_.end() &&
          generate_grpc_transport->second == "true";
+}
+
+bool ServiceCodeGenerator::HasRequestId() const {
+  return std::any_of(service_method_vars_.begin(), service_method_vars_.end(),
+                     [](auto const& kv) {
+                       return kv.second.find("request_id_field_name") !=
+                              kv.second.end();
+                     });
+}
+
+bool ServiceCodeGenerator::HasRequestId(
+    google::protobuf::MethodDescriptor const& method) const {
+  auto mv = service_method_vars_.find(method.full_name());
+  if (mv == service_method_vars_.end()) return false;
+  auto const& method_vars = mv->second;
+  return method_vars.find("request_id_field_name") != method_vars.end();
 }
 
 std::vector<std::string>
