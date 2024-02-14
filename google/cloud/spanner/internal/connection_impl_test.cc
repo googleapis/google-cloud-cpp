@@ -153,7 +153,9 @@ MATCHER_P(HasReturnStats, return_commit_stats, "has return-stats value") {
 MATCHER_P(HasMaxCommitDelay, max_commit_delay, "has max commit delay") {
   return arg.max_commit_delay() ==
          google::protobuf::util::TimeUtil::MillisecondsToDuration(
-             max_commit_delay.count());
+             std::chrono::duration_cast<std::chrono::milliseconds>(
+                 max_commit_delay)
+                 .count());
 }
 
 MATCHER(HasBeginTransaction, "has begin TransactionSelector set") {
@@ -2533,17 +2535,14 @@ TEST(ConnectionImplTest, CommitSuccessWithMaxCommitDelay) {
                       HasMaxCommitDelay(std::chrono::milliseconds(100)))))
       .WillOnce(Return(MakeCommitResponse(
           spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
-              .value(),
-          spanner::CommitStats{42})));
+              .value())));
 
   auto conn = MakeConnectionImpl(db, mock);
   internal::OptionsSpan span(MakeLimitedTimeOptions());
-  Options options;
-  options.set<google::cloud::spanner::MaxCommitDelayOption>(
-      std::chrono::milliseconds(100));
   auto commit = conn->Commit({spanner::MakeReadWriteTransaction(),
                               {},
-                              spanner::CommitOptions(options)});
+                              spanner::CommitOptions{}.set_max_commit_delay(
+                                  std::chrono::milliseconds(100))});
   ASSERT_STATUS_OK(commit);
 }
 

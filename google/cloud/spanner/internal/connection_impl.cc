@@ -1139,13 +1139,10 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
   request.set_return_commit_stats(params.options.return_stats());
   request.mutable_request_options()->set_priority(
       ProtoRequestPriority(params.options.request_priority()));
-  if (static_cast<Options>(params.options)
-          .has<spanner::MaxCommitDelayOption>()) {
+  if (params.options.max_commit_delay().has_value()) {
     *request.mutable_max_commit_delay() =
         google::protobuf::util::TimeUtil::MillisecondsToDuration(
-            static_cast<Options>(params.options)
-                .get<spanner::MaxCommitDelayOption>()
-                .count());
+            params.options.max_commit_delay().value().count());
   }
 
   // params.options.transaction_tag() was either already used to set

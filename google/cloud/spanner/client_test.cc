@@ -985,14 +985,13 @@ TEST(ClientTest, MaxCommitDelay) {
   auto timestamp =
       spanner_internal::TimestampFromRFC3339("2020-10-20T02:20:09.123Z");
   ASSERT_STATUS_OK(timestamp);
-  CommitStats stats{42};
 
   auto conn = std::make_shared<MockConnection>();
   EXPECT_CALL(*conn, Commit)
-      .WillOnce([&timestamp, &stats](Connection::CommitParams const& cp) {
+      .WillOnce([&timestamp](Connection::CommitParams const& cp) {
         EXPECT_EQ(cp.options.max_commit_delay(),
                   std::chrono::milliseconds(100));
-        return CommitResult{*timestamp, stats};
+        return CommitResult{*timestamp};
       });
 
   Client client(conn);
