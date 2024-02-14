@@ -111,9 +111,12 @@ future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 InstancesConnectionImpl::DeleteInstance(
     google::appengine::v1::DeleteInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::OperationMetadataV1>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -137,8 +140,7 @@ InstancesConnectionImpl::DeleteInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::appengine::v1::OperationMetadataV1>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -146,9 +148,12 @@ future<StatusOr<google::appengine::v1::Instance>>
 InstancesConnectionImpl::DebugInstance(
     google::appengine::v1::DebugInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DebugInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -172,8 +177,7 @@ InstancesConnectionImpl::DebugInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::appengine::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DebugInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

@@ -82,9 +82,12 @@ future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
 CompletionServiceConnectionImpl::ImportCompletionData(
     google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportCompletionData(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::ImportCompletionDataResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -109,8 +112,7 @@ CompletionServiceConnectionImpl::ImportCompletionData(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::retail::v2::ImportCompletionDataResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportCompletionData(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

@@ -72,9 +72,12 @@ ConversationDatasetsConnectionImpl::CreateConversationDataset(
     google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateConversationDataset(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::ConversationDataset>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -99,8 +102,7 @@ ConversationDatasetsConnectionImpl::CreateConversationDataset(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::v2::ConversationDataset>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateConversationDataset(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -161,10 +163,13 @@ ConversationDatasetsConnectionImpl::DeleteConversationDataset(
     google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteConversationDataset(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::
           DeleteConversationDatasetOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -190,8 +195,7 @@ ConversationDatasetsConnectionImpl::DeleteConversationDataset(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::dialogflow::v2::
               DeleteConversationDatasetOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteConversationDataset(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -201,9 +205,12 @@ ConversationDatasetsConnectionImpl::ImportConversationData(
     google::cloud::dialogflow::v2::ImportConversationDataRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportConversationData(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -229,8 +236,7 @@ ConversationDatasetsConnectionImpl::ImportConversationData(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::v2::
               ImportConversationDataOperationResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportConversationData(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

@@ -154,9 +154,12 @@ future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
 TestCasesConnectionImpl::RunTestCase(
     google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RunTestCase(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::RunTestCaseResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -180,8 +183,7 @@ TestCasesConnectionImpl::RunTestCase(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::cx::v3::RunTestCaseResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RunTestCase(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -190,9 +192,12 @@ TestCasesConnectionImpl::BatchRunTestCases(
     google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchRunTestCases(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -217,8 +222,7 @@ TestCasesConnectionImpl::BatchRunTestCases(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->BatchRunTestCases(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -242,9 +246,12 @@ future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
 TestCasesConnectionImpl::ImportTestCases(
     google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportTestCases(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -269,8 +276,7 @@ TestCasesConnectionImpl::ImportTestCases(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportTestCases(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -278,9 +284,12 @@ future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
 TestCasesConnectionImpl::ExportTestCases(
     google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ExportTestCases(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -305,8 +314,7 @@ TestCasesConnectionImpl::ExportTestCases(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ExportTestCases(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

@@ -98,9 +98,12 @@ future<StatusOr<google::cloud::netapp::v1::StoragePool>>
 NetAppConnectionImpl::CreateStoragePool(
     google::cloud::netapp::v1::CreateStoragePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateStoragePool(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::StoragePool>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -124,8 +127,7 @@ NetAppConnectionImpl::CreateStoragePool(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::StoragePool>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateStoragePool(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -147,9 +149,12 @@ future<StatusOr<google::cloud::netapp::v1::StoragePool>>
 NetAppConnectionImpl::UpdateStoragePool(
     google::cloud::netapp::v1::UpdateStoragePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateStoragePool(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::StoragePool>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -173,8 +178,7 @@ NetAppConnectionImpl::UpdateStoragePool(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::StoragePool>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateStoragePool(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -182,9 +186,12 @@ future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppConnectionImpl::DeleteStoragePool(
     google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteStoragePool(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -208,8 +215,7 @@ NetAppConnectionImpl::DeleteStoragePool(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::netapp::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteStoragePool(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -263,9 +269,12 @@ future<StatusOr<google::cloud::netapp::v1::Volume>>
 NetAppConnectionImpl::CreateVolume(
     google::cloud::netapp::v1::CreateVolumeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateVolume(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::Volume>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -289,8 +298,7 @@ NetAppConnectionImpl::CreateVolume(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::Volume>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateVolume(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -298,9 +306,12 @@ future<StatusOr<google::cloud::netapp::v1::Volume>>
 NetAppConnectionImpl::UpdateVolume(
     google::cloud::netapp::v1::UpdateVolumeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateVolume(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::Volume>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -324,8 +335,7 @@ NetAppConnectionImpl::UpdateVolume(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::Volume>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateVolume(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -333,9 +343,12 @@ future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppConnectionImpl::DeleteVolume(
     google::cloud::netapp::v1::DeleteVolumeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteVolume(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -359,8 +372,7 @@ NetAppConnectionImpl::DeleteVolume(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::netapp::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteVolume(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -368,9 +380,12 @@ future<StatusOr<google::cloud::netapp::v1::Volume>>
 NetAppConnectionImpl::RevertVolume(
     google::cloud::netapp::v1::RevertVolumeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RevertVolume(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::Volume>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -394,8 +409,7 @@ NetAppConnectionImpl::RevertVolume(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::Volume>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RevertVolume(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -449,9 +463,12 @@ future<StatusOr<google::cloud::netapp::v1::Snapshot>>
 NetAppConnectionImpl::CreateSnapshot(
     google::cloud::netapp::v1::CreateSnapshotRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateSnapshot(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::Snapshot>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -475,8 +492,7 @@ NetAppConnectionImpl::CreateSnapshot(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::Snapshot>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateSnapshot(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -484,9 +500,12 @@ future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppConnectionImpl::DeleteSnapshot(
     google::cloud::netapp::v1::DeleteSnapshotRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteSnapshot(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -510,8 +529,7 @@ NetAppConnectionImpl::DeleteSnapshot(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::netapp::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteSnapshot(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -519,9 +537,12 @@ future<StatusOr<google::cloud::netapp::v1::Snapshot>>
 NetAppConnectionImpl::UpdateSnapshot(
     google::cloud::netapp::v1::UpdateSnapshotRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateSnapshot(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::Snapshot>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -545,8 +566,7 @@ NetAppConnectionImpl::UpdateSnapshot(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::Snapshot>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateSnapshot(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -604,9 +624,12 @@ future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
 NetAppConnectionImpl::CreateActiveDirectory(
     google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateActiveDirectory(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::ActiveDirectory>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -631,8 +654,7 @@ NetAppConnectionImpl::CreateActiveDirectory(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::ActiveDirectory>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateActiveDirectory(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -640,9 +662,12 @@ future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
 NetAppConnectionImpl::UpdateActiveDirectory(
     google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateActiveDirectory(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::ActiveDirectory>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -667,8 +692,7 @@ NetAppConnectionImpl::UpdateActiveDirectory(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::ActiveDirectory>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateActiveDirectory(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -676,9 +700,12 @@ future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppConnectionImpl::DeleteActiveDirectory(
     google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteActiveDirectory(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -703,8 +730,7 @@ NetAppConnectionImpl::DeleteActiveDirectory(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::netapp::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteActiveDirectory(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -745,9 +771,12 @@ future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
 NetAppConnectionImpl::CreateKmsConfig(
     google::cloud::netapp::v1::CreateKmsConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateKmsConfig(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::KmsConfig>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -771,8 +800,7 @@ NetAppConnectionImpl::CreateKmsConfig(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::KmsConfig>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateKmsConfig(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -794,9 +822,12 @@ future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
 NetAppConnectionImpl::UpdateKmsConfig(
     google::cloud::netapp::v1::UpdateKmsConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateKmsConfig(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::KmsConfig>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -820,8 +851,7 @@ NetAppConnectionImpl::UpdateKmsConfig(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::KmsConfig>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateKmsConfig(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -829,9 +859,12 @@ future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
 NetAppConnectionImpl::EncryptVolumes(
     google::cloud::netapp::v1::EncryptVolumesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->EncryptVolumes(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::KmsConfig>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -855,8 +888,7 @@ NetAppConnectionImpl::EncryptVolumes(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::KmsConfig>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->EncryptVolumes(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -878,9 +910,12 @@ future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppConnectionImpl::DeleteKmsConfig(
     google::cloud::netapp::v1::DeleteKmsConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteKmsConfig(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -904,8 +939,7 @@ NetAppConnectionImpl::DeleteKmsConfig(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::netapp::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteKmsConfig(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -960,9 +994,12 @@ future<StatusOr<google::cloud::netapp::v1::Replication>>
 NetAppConnectionImpl::CreateReplication(
     google::cloud::netapp::v1::CreateReplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateReplication(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::Replication>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -986,8 +1023,7 @@ NetAppConnectionImpl::CreateReplication(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::Replication>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateReplication(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -995,9 +1031,12 @@ future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppConnectionImpl::DeleteReplication(
     google::cloud::netapp::v1::DeleteReplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteReplication(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1021,8 +1060,7 @@ NetAppConnectionImpl::DeleteReplication(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::netapp::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteReplication(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1030,9 +1068,12 @@ future<StatusOr<google::cloud::netapp::v1::Replication>>
 NetAppConnectionImpl::UpdateReplication(
     google::cloud::netapp::v1::UpdateReplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateReplication(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::Replication>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1056,8 +1097,7 @@ NetAppConnectionImpl::UpdateReplication(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::Replication>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateReplication(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1065,9 +1105,12 @@ future<StatusOr<google::cloud::netapp::v1::Replication>>
 NetAppConnectionImpl::StopReplication(
     google::cloud::netapp::v1::StopReplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->StopReplication(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::Replication>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1091,8 +1134,7 @@ NetAppConnectionImpl::StopReplication(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::Replication>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->StopReplication(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1100,9 +1142,12 @@ future<StatusOr<google::cloud::netapp::v1::Replication>>
 NetAppConnectionImpl::ResumeReplication(
     google::cloud::netapp::v1::ResumeReplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ResumeReplication(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::Replication>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1126,8 +1171,7 @@ NetAppConnectionImpl::ResumeReplication(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::Replication>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ResumeReplication(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1136,9 +1180,12 @@ NetAppConnectionImpl::ReverseReplicationDirection(
     google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ReverseReplicationDirection(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::Replication>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1163,8 +1210,7 @@ NetAppConnectionImpl::ReverseReplicationDirection(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::Replication>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ReverseReplicationDirection(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1172,9 +1218,12 @@ future<StatusOr<google::cloud::netapp::v1::BackupVault>>
 NetAppConnectionImpl::CreateBackupVault(
     google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateBackupVault(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::BackupVault>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1198,8 +1247,7 @@ NetAppConnectionImpl::CreateBackupVault(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::BackupVault>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateBackupVault(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1254,9 +1302,12 @@ future<StatusOr<google::cloud::netapp::v1::BackupVault>>
 NetAppConnectionImpl::UpdateBackupVault(
     google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateBackupVault(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::BackupVault>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1280,8 +1331,7 @@ NetAppConnectionImpl::UpdateBackupVault(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::BackupVault>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateBackupVault(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1289,9 +1339,12 @@ future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppConnectionImpl::DeleteBackupVault(
     google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteBackupVault(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1315,8 +1368,7 @@ NetAppConnectionImpl::DeleteBackupVault(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::netapp::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteBackupVault(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1324,9 +1376,12 @@ future<StatusOr<google::cloud::netapp::v1::Backup>>
 NetAppConnectionImpl::CreateBackup(
     google::cloud::netapp::v1::CreateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateBackup(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::Backup>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1350,8 +1405,7 @@ NetAppConnectionImpl::CreateBackup(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::Backup>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateBackup(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1405,9 +1459,12 @@ future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppConnectionImpl::DeleteBackup(
     google::cloud::netapp::v1::DeleteBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteBackup(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1431,8 +1488,7 @@ NetAppConnectionImpl::DeleteBackup(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::netapp::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteBackup(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1440,9 +1496,12 @@ future<StatusOr<google::cloud::netapp::v1::Backup>>
 NetAppConnectionImpl::UpdateBackup(
     google::cloud::netapp::v1::UpdateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateBackup(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::Backup>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1466,8 +1525,7 @@ NetAppConnectionImpl::UpdateBackup(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::Backup>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateBackup(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1475,9 +1533,12 @@ future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
 NetAppConnectionImpl::CreateBackupPolicy(
     google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateBackupPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::BackupPolicy>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1501,8 +1562,7 @@ NetAppConnectionImpl::CreateBackupPolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::BackupPolicy>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateBackupPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1557,9 +1617,12 @@ future<StatusOr<google::cloud::netapp::v1::BackupPolicy>>
 NetAppConnectionImpl::UpdateBackupPolicy(
     google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateBackupPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::BackupPolicy>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1583,8 +1646,7 @@ NetAppConnectionImpl::UpdateBackupPolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::netapp::v1::BackupPolicy>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateBackupPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1592,9 +1654,12 @@ future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
 NetAppConnectionImpl::DeleteBackupPolicy(
     google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteBackupPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::netapp::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1618,8 +1683,7 @@ NetAppConnectionImpl::DeleteBackupPolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::netapp::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteBackupPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

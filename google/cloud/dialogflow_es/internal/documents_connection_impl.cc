@@ -114,9 +114,12 @@ future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsConnectionImpl::CreateDocument(
     google::cloud::dialogflow::v2::CreateDocumentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateDocument(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::Document>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -140,8 +143,7 @@ DocumentsConnectionImpl::CreateDocument(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::v2::Document>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateDocument(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -149,9 +151,12 @@ future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
 DocumentsConnectionImpl::ImportDocuments(
     google::cloud::dialogflow::v2::ImportDocumentsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportDocuments(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::ImportDocumentsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -176,8 +181,7 @@ DocumentsConnectionImpl::ImportDocuments(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::v2::ImportDocumentsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportDocuments(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -185,9 +189,12 @@ future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
 DocumentsConnectionImpl::DeleteDocument(
     google::cloud::dialogflow::v2::DeleteDocumentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteDocument(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::KnowledgeOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -211,8 +218,7 @@ DocumentsConnectionImpl::DeleteDocument(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::dialogflow::v2::KnowledgeOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteDocument(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -220,9 +226,12 @@ future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsConnectionImpl::UpdateDocument(
     google::cloud::dialogflow::v2::UpdateDocumentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateDocument(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::Document>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -246,8 +255,7 @@ DocumentsConnectionImpl::UpdateDocument(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::v2::Document>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateDocument(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -255,9 +263,12 @@ future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsConnectionImpl::ReloadDocument(
     google::cloud::dialogflow::v2::ReloadDocumentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ReloadDocument(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::Document>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -281,8 +292,7 @@ DocumentsConnectionImpl::ReloadDocument(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::v2::Document>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ReloadDocument(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -290,9 +300,12 @@ future<StatusOr<google::cloud::dialogflow::v2::Document>>
 DocumentsConnectionImpl::ExportDocument(
     google::cloud::dialogflow::v2::ExportDocumentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ExportDocument(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::Document>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -316,8 +329,7 @@ DocumentsConnectionImpl::ExportDocument(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::v2::Document>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ExportDocument(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

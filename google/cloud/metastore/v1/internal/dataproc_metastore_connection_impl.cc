@@ -117,9 +117,12 @@ future<StatusOr<google::cloud::metastore::v1::Service>>
 DataprocMetastoreConnectionImpl::CreateService(
     google::cloud::metastore::v1::CreateServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateService(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::metastore::v1::Service>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -143,8 +146,7 @@ DataprocMetastoreConnectionImpl::CreateService(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::metastore::v1::Service>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateService(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -152,9 +154,12 @@ future<StatusOr<google::cloud::metastore::v1::Service>>
 DataprocMetastoreConnectionImpl::UpdateService(
     google::cloud::metastore::v1::UpdateServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateService(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::metastore::v1::Service>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -178,8 +183,7 @@ DataprocMetastoreConnectionImpl::UpdateService(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::metastore::v1::Service>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateService(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -187,9 +191,12 @@ future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
 DataprocMetastoreConnectionImpl::DeleteService(
     google::cloud::metastore::v1::DeleteServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteService(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::metastore::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -213,8 +220,7 @@ DataprocMetastoreConnectionImpl::DeleteService(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::metastore::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteService(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -271,9 +277,12 @@ future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
 DataprocMetastoreConnectionImpl::CreateMetadataImport(
     google::cloud::metastore::v1::CreateMetadataImportRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateMetadataImport(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::metastore::v1::MetadataImport>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -298,8 +307,7 @@ DataprocMetastoreConnectionImpl::CreateMetadataImport(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::metastore::v1::MetadataImport>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateMetadataImport(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -307,9 +315,12 @@ future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
 DataprocMetastoreConnectionImpl::UpdateMetadataImport(
     google::cloud::metastore::v1::UpdateMetadataImportRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateMetadataImport(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::metastore::v1::MetadataImport>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -334,8 +345,7 @@ DataprocMetastoreConnectionImpl::UpdateMetadataImport(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::metastore::v1::MetadataImport>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateMetadataImport(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -343,9 +353,12 @@ future<StatusOr<google::cloud::metastore::v1::MetadataExport>>
 DataprocMetastoreConnectionImpl::ExportMetadata(
     google::cloud::metastore::v1::ExportMetadataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ExportMetadata(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::metastore::v1::MetadataExport>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -369,8 +382,7 @@ DataprocMetastoreConnectionImpl::ExportMetadata(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::metastore::v1::MetadataExport>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ExportMetadata(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -378,9 +390,12 @@ future<StatusOr<google::cloud::metastore::v1::Restore>>
 DataprocMetastoreConnectionImpl::RestoreService(
     google::cloud::metastore::v1::RestoreServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RestoreService(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::metastore::v1::Restore>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -404,8 +419,7 @@ DataprocMetastoreConnectionImpl::RestoreService(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::metastore::v1::Restore>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RestoreService(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -458,9 +472,12 @@ future<StatusOr<google::cloud::metastore::v1::Backup>>
 DataprocMetastoreConnectionImpl::CreateBackup(
     google::cloud::metastore::v1::CreateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateBackup(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::metastore::v1::Backup>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -484,8 +501,7 @@ DataprocMetastoreConnectionImpl::CreateBackup(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::metastore::v1::Backup>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateBackup(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -493,9 +509,12 @@ future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
 DataprocMetastoreConnectionImpl::DeleteBackup(
     google::cloud::metastore::v1::DeleteBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteBackup(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::metastore::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -519,8 +538,7 @@ DataprocMetastoreConnectionImpl::DeleteBackup(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::metastore::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteBackup(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -528,9 +546,12 @@ future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>
 DataprocMetastoreConnectionImpl::QueryMetadata(
     google::cloud::metastore::v1::QueryMetadataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->QueryMetadata(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::metastore::v1::QueryMetadataResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -554,8 +575,7 @@ DataprocMetastoreConnectionImpl::QueryMetadata(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::metastore::v1::QueryMetadataResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->QueryMetadata(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -563,9 +583,12 @@ future<StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>
 DataprocMetastoreConnectionImpl::MoveTableToDatabase(
     google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->MoveTableToDatabase(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::metastore::v1::MoveTableToDatabaseResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -590,8 +613,7 @@ DataprocMetastoreConnectionImpl::MoveTableToDatabase(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::metastore::v1::MoveTableToDatabaseResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->MoveTableToDatabase(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -601,9 +623,12 @@ DataprocMetastoreConnectionImpl::AlterMetadataResourceLocation(
     google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->AlterMetadataResourceLocation(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -628,8 +653,7 @@ DataprocMetastoreConnectionImpl::AlterMetadataResourceLocation(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AlterMetadataResourceLocation(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

@@ -158,9 +158,12 @@ future<StatusOr<google::cloud::gkehub::v1::Membership>>
 GkeHubConnectionImpl::CreateMembership(
     google::cloud::gkehub::v1::CreateMembershipRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateMembership(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkehub::v1::Membership>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -184,8 +187,7 @@ GkeHubConnectionImpl::CreateMembership(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkehub::v1::Membership>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateMembership(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -193,9 +195,12 @@ future<StatusOr<google::cloud::gkehub::v1::Feature>>
 GkeHubConnectionImpl::CreateFeature(
     google::cloud::gkehub::v1::CreateFeatureRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateFeature(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkehub::v1::Feature>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -219,8 +224,7 @@ GkeHubConnectionImpl::CreateFeature(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkehub::v1::Feature>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateFeature(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -228,9 +232,12 @@ future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
 GkeHubConnectionImpl::DeleteMembership(
     google::cloud::gkehub::v1::DeleteMembershipRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteMembership(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkehub::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -254,8 +261,7 @@ GkeHubConnectionImpl::DeleteMembership(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::gkehub::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteMembership(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -263,9 +269,12 @@ future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>
 GkeHubConnectionImpl::DeleteFeature(
     google::cloud::gkehub::v1::DeleteFeatureRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteFeature(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkehub::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -289,8 +298,7 @@ GkeHubConnectionImpl::DeleteFeature(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::gkehub::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteFeature(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -298,9 +306,12 @@ future<StatusOr<google::cloud::gkehub::v1::Membership>>
 GkeHubConnectionImpl::UpdateMembership(
     google::cloud::gkehub::v1::UpdateMembershipRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateMembership(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkehub::v1::Membership>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -324,8 +335,7 @@ GkeHubConnectionImpl::UpdateMembership(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkehub::v1::Membership>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateMembership(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -333,9 +343,12 @@ future<StatusOr<google::cloud::gkehub::v1::Feature>>
 GkeHubConnectionImpl::UpdateFeature(
     google::cloud::gkehub::v1::UpdateFeatureRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateFeature(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkehub::v1::Feature>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -359,8 +372,7 @@ GkeHubConnectionImpl::UpdateFeature(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkehub::v1::Feature>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateFeature(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

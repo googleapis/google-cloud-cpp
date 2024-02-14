@@ -66,9 +66,12 @@ future<StatusOr<google::cloud::retail::v2::Model>>
 ModelServiceConnectionImpl::CreateModel(
     google::cloud::retail::v2::CreateModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateModel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::Model>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -91,8 +94,7 @@ ModelServiceConnectionImpl::CreateModel(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::retail::v2::Model>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateModel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -200,9 +202,11 @@ future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>
 ModelServiceConnectionImpl::TuneModel(
     google::cloud::retail::v2::TuneModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->TuneModel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::TuneModelResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -225,8 +229,7 @@ ModelServiceConnectionImpl::TuneModel(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::retail::v2::TuneModelResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->TuneModel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

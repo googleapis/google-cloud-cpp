@@ -71,9 +71,12 @@ future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
 SpecialistPoolServiceConnectionImpl::CreateSpecialistPool(
     google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateSpecialistPool(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::SpecialistPool>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -98,8 +101,7 @@ SpecialistPoolServiceConnectionImpl::CreateSpecialistPool(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::SpecialistPool>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateSpecialistPool(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -156,9 +158,12 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 SpecialistPoolServiceConnectionImpl::DeleteSpecialistPool(
     google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteSpecialistPool(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -183,8 +188,7 @@ SpecialistPoolServiceConnectionImpl::DeleteSpecialistPool(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteSpecialistPool(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -192,9 +196,12 @@ future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>
 SpecialistPoolServiceConnectionImpl::UpdateSpecialistPool(
     google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateSpecialistPool(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::SpecialistPool>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -219,8 +226,7 @@ SpecialistPoolServiceConnectionImpl::UpdateSpecialistPool(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::SpecialistPool>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateSpecialistPool(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

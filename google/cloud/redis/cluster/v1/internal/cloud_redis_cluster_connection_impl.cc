@@ -119,9 +119,12 @@ future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
 CloudRedisClusterConnectionImpl::UpdateCluster(
     google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::cluster::v1::Cluster>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -146,8 +149,7 @@ CloudRedisClusterConnectionImpl::UpdateCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::redis::cluster::v1::Cluster>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -155,9 +157,12 @@ future<StatusOr<google::protobuf::Any>>
 CloudRedisClusterConnectionImpl::DeleteCluster(
     google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::protobuf::Any>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -182,8 +187,7 @@ CloudRedisClusterConnectionImpl::DeleteCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::protobuf::Any>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -191,9 +195,12 @@ future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>
 CloudRedisClusterConnectionImpl::CreateCluster(
     google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::cluster::v1::Cluster>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -218,8 +225,7 @@ CloudRedisClusterConnectionImpl::CreateCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::redis::cluster::v1::Cluster>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

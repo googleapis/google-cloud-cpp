@@ -115,9 +115,12 @@ future<StatusOr<google::cloud::connectors::v1::Connection>>
 ConnectorsConnectionImpl::CreateConnection(
     google::cloud::connectors::v1::CreateConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateConnection(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::connectors::v1::Connection>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -142,8 +145,7 @@ ConnectorsConnectionImpl::CreateConnection(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::connectors::v1::Connection>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateConnection(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -151,9 +153,12 @@ future<StatusOr<google::cloud::connectors::v1::Connection>>
 ConnectorsConnectionImpl::UpdateConnection(
     google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateConnection(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::connectors::v1::Connection>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -178,8 +183,7 @@ ConnectorsConnectionImpl::UpdateConnection(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::connectors::v1::Connection>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateConnection(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -187,9 +191,12 @@ future<StatusOr<google::cloud::connectors::v1::OperationMetadata>>
 ConnectorsConnectionImpl::DeleteConnection(
     google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteConnection(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::connectors::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -214,8 +221,7 @@ ConnectorsConnectionImpl::DeleteConnection(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::connectors::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteConnection(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -385,9 +391,13 @@ ConnectorsConnectionImpl::RefreshConnectionSchemaMetadata(
     google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RefreshConnectionSchemaMetadata(
+          request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::connectors::v1::ConnectionSchemaMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -412,8 +422,7 @@ ConnectorsConnectionImpl::RefreshConnectionSchemaMetadata(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::connectors::v1::ConnectionSchemaMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RefreshConnectionSchemaMetadata(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

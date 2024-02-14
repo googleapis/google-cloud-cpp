@@ -154,9 +154,12 @@ EntityTypesConnectionImpl::BatchUpdateEntityTypes(
     google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchUpdateEntityTypes(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -181,8 +184,7 @@ EntityTypesConnectionImpl::BatchUpdateEntityTypes(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->BatchUpdateEntityTypes(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -191,9 +193,12 @@ EntityTypesConnectionImpl::BatchDeleteEntityTypes(
     google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchDeleteEntityTypes(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::protobuf::Struct>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -218,8 +223,7 @@ EntityTypesConnectionImpl::BatchDeleteEntityTypes(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::protobuf::Struct>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->BatchDeleteEntityTypes(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -227,9 +231,12 @@ future<StatusOr<google::protobuf::Struct>>
 EntityTypesConnectionImpl::BatchCreateEntities(
     google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchCreateEntities(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::protobuf::Struct>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -254,8 +261,7 @@ EntityTypesConnectionImpl::BatchCreateEntities(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::protobuf::Struct>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->BatchCreateEntities(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -263,9 +269,12 @@ future<StatusOr<google::protobuf::Struct>>
 EntityTypesConnectionImpl::BatchUpdateEntities(
     google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchUpdateEntities(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::protobuf::Struct>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -290,8 +299,7 @@ EntityTypesConnectionImpl::BatchUpdateEntities(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::protobuf::Struct>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->BatchUpdateEntities(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -299,9 +307,12 @@ future<StatusOr<google::protobuf::Struct>>
 EntityTypesConnectionImpl::BatchDeleteEntities(
     google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchDeleteEntities(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::protobuf::Struct>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -326,8 +337,7 @@ EntityTypesConnectionImpl::BatchDeleteEntities(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::protobuf::Struct>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->BatchDeleteEntities(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

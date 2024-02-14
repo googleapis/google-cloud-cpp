@@ -91,9 +91,11 @@ future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
 BatchServiceConnectionImpl::DeleteJob(
     google::cloud::batch::v1::DeleteJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->DeleteJob(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::batch::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -116,8 +118,7 @@ BatchServiceConnectionImpl::DeleteJob(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::batch::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteJob(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

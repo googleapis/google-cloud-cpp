@@ -96,9 +96,12 @@ future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsConnectionImpl::RegisterDomain(
     google::cloud::domains::v1::RegisterDomainRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RegisterDomain(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::domains::v1::Registration>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -122,8 +125,7 @@ DomainsConnectionImpl::RegisterDomain(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::domains::v1::Registration>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RegisterDomain(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -148,9 +150,12 @@ future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsConnectionImpl::TransferDomain(
     google::cloud::domains::v1::TransferDomainRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->TransferDomain(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::domains::v1::Registration>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -174,8 +179,7 @@ DomainsConnectionImpl::TransferDomain(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::domains::v1::Registration>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->TransferDomain(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -231,9 +235,12 @@ future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsConnectionImpl::UpdateRegistration(
     google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateRegistration(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::domains::v1::Registration>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -258,8 +265,7 @@ DomainsConnectionImpl::UpdateRegistration(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::domains::v1::Registration>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateRegistration(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -268,9 +274,12 @@ DomainsConnectionImpl::ConfigureManagementSettings(
     google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ConfigureManagementSettings(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::domains::v1::Registration>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -295,8 +304,7 @@ DomainsConnectionImpl::ConfigureManagementSettings(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::domains::v1::Registration>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ConfigureManagementSettings(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -304,9 +312,12 @@ future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsConnectionImpl::ConfigureDnsSettings(
     google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ConfigureDnsSettings(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::domains::v1::Registration>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -331,8 +342,7 @@ DomainsConnectionImpl::ConfigureDnsSettings(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::domains::v1::Registration>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ConfigureDnsSettings(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -341,9 +351,12 @@ DomainsConnectionImpl::ConfigureContactSettings(
     google::cloud::domains::v1::ConfigureContactSettingsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ConfigureContactSettings(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::domains::v1::Registration>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -368,8 +381,7 @@ DomainsConnectionImpl::ConfigureContactSettings(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::domains::v1::Registration>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ConfigureContactSettings(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -377,9 +389,12 @@ future<StatusOr<google::cloud::domains::v1::Registration>>
 DomainsConnectionImpl::ExportRegistration(
     google::cloud::domains::v1::ExportRegistrationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ExportRegistration(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::domains::v1::Registration>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -404,8 +419,7 @@ DomainsConnectionImpl::ExportRegistration(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::domains::v1::Registration>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ExportRegistration(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -413,9 +427,12 @@ future<StatusOr<google::cloud::domains::v1::OperationMetadata>>
 DomainsConnectionImpl::DeleteRegistration(
     google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteRegistration(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::domains::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -440,8 +457,7 @@ DomainsConnectionImpl::DeleteRegistration(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::domains::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteRegistration(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

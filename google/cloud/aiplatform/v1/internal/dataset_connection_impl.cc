@@ -69,9 +69,12 @@ future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
 DatasetServiceConnectionImpl::CreateDataset(
     google::cloud::aiplatform::v1::CreateDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateDataset(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::Dataset>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -95,8 +98,7 @@ DatasetServiceConnectionImpl::CreateDataset(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::Dataset>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateDataset(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -166,9 +168,12 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 DatasetServiceConnectionImpl::DeleteDataset(
     google::cloud::aiplatform::v1::DeleteDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteDataset(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -192,8 +197,7 @@ DatasetServiceConnectionImpl::DeleteDataset(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteDataset(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -201,9 +205,12 @@ future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
 DatasetServiceConnectionImpl::ImportData(
     google::cloud::aiplatform::v1::ImportDataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportData(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::ImportDataResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -226,8 +233,7 @@ DatasetServiceConnectionImpl::ImportData(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::ImportDataResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportData(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -235,9 +241,12 @@ future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
 DatasetServiceConnectionImpl::ExportData(
     google::cloud::aiplatform::v1::ExportDataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ExportData(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::ExportDataResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -260,8 +269,7 @@ DatasetServiceConnectionImpl::ExportData(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::ExportDataResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ExportData(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -269,9 +277,12 @@ future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
 DatasetServiceConnectionImpl::CreateDatasetVersion(
     google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateDatasetVersion(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DatasetVersion>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -296,8 +307,7 @@ DatasetServiceConnectionImpl::CreateDatasetVersion(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::DatasetVersion>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateDatasetVersion(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -305,9 +315,12 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 DatasetServiceConnectionImpl::DeleteDatasetVersion(
     google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteDatasetVersion(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -332,8 +345,7 @@ DatasetServiceConnectionImpl::DeleteDatasetVersion(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteDatasetVersion(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -391,9 +403,12 @@ DatasetServiceConnectionImpl::RestoreDatasetVersion(
     google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RestoreDatasetVersion(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DatasetVersion>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -418,8 +433,7 @@ DatasetServiceConnectionImpl::RestoreDatasetVersion(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::DatasetVersion>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RestoreDatasetVersion(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -526,9 +540,12 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 DatasetServiceConnectionImpl::DeleteSavedQuery(
     google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteSavedQuery(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -553,8 +570,7 @@ DatasetServiceConnectionImpl::DeleteSavedQuery(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteSavedQuery(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

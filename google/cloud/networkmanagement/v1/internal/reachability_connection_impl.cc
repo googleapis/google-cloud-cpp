@@ -131,9 +131,12 @@ ReachabilityServiceConnectionImpl::CreateConnectivityTest(
     google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateConnectivityTest(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkmanagement::v1::ConnectivityTest>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -158,8 +161,7 @@ ReachabilityServiceConnectionImpl::CreateConnectivityTest(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkmanagement::v1::ConnectivityTest>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateConnectivityTest(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -168,9 +170,12 @@ ReachabilityServiceConnectionImpl::UpdateConnectivityTest(
     google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateConnectivityTest(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkmanagement::v1::ConnectivityTest>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -195,8 +200,7 @@ ReachabilityServiceConnectionImpl::UpdateConnectivityTest(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkmanagement::v1::ConnectivityTest>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateConnectivityTest(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -205,9 +209,12 @@ ReachabilityServiceConnectionImpl::RerunConnectivityTest(
     google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RerunConnectivityTest(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkmanagement::v1::ConnectivityTest>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -232,8 +239,7 @@ ReachabilityServiceConnectionImpl::RerunConnectivityTest(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkmanagement::v1::ConnectivityTest>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RerunConnectivityTest(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -242,9 +248,12 @@ ReachabilityServiceConnectionImpl::DeleteConnectivityTest(
     google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteConnectivityTest(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkmanagement::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -269,8 +278,7 @@ ReachabilityServiceConnectionImpl::DeleteConnectivityTest(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::networkmanagement::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteConnectivityTest(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

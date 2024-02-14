@@ -70,9 +70,12 @@ future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>
 EndpointServiceConnectionImpl::CreateEndpoint(
     google::cloud::aiplatform::v1::CreateEndpointRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateEndpoint(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::Endpoint>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -96,8 +99,7 @@ EndpointServiceConnectionImpl::CreateEndpoint(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::Endpoint>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateEndpoint(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -167,9 +169,12 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 EndpointServiceConnectionImpl::DeleteEndpoint(
     google::cloud::aiplatform::v1::DeleteEndpointRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteEndpoint(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -193,8 +198,7 @@ EndpointServiceConnectionImpl::DeleteEndpoint(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteEndpoint(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -202,9 +206,12 @@ future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>
 EndpointServiceConnectionImpl::DeployModel(
     google::cloud::aiplatform::v1::DeployModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeployModel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeployModelResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -227,8 +234,7 @@ EndpointServiceConnectionImpl::DeployModel(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::DeployModelResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeployModel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -236,9 +242,12 @@ future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>
 EndpointServiceConnectionImpl::UndeployModel(
     google::cloud::aiplatform::v1::UndeployModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UndeployModel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::UndeployModelResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -262,8 +271,7 @@ EndpointServiceConnectionImpl::UndeployModel(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::UndeployModelResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UndeployModel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -271,9 +279,12 @@ future<StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>
 EndpointServiceConnectionImpl::MutateDeployedModel(
     google::cloud::aiplatform::v1::MutateDeployedModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->MutateDeployedModel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::MutateDeployedModelResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -298,8 +309,7 @@ EndpointServiceConnectionImpl::MutateDeployedModel(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::MutateDeployedModelResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->MutateDeployedModel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

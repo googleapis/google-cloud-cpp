@@ -81,9 +81,12 @@ FeatureOnlineStoreAdminServiceConnectionImpl::CreateFeatureOnlineStore(
     google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateFeatureOnlineStore(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::FeatureOnlineStore>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -108,8 +111,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::CreateFeatureOnlineStore(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::FeatureOnlineStore>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateFeatureOnlineStore(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -170,9 +172,12 @@ FeatureOnlineStoreAdminServiceConnectionImpl::UpdateFeatureOnlineStore(
     google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateFeatureOnlineStore(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::FeatureOnlineStore>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -197,8 +202,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::UpdateFeatureOnlineStore(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::FeatureOnlineStore>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateFeatureOnlineStore(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -207,9 +211,12 @@ FeatureOnlineStoreAdminServiceConnectionImpl::DeleteFeatureOnlineStore(
     google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteFeatureOnlineStore(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -234,8 +241,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::DeleteFeatureOnlineStore(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteFeatureOnlineStore(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -243,9 +249,12 @@ future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
 FeatureOnlineStoreAdminServiceConnectionImpl::CreateFeatureView(
     google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateFeatureView(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::FeatureView>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -270,8 +279,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::CreateFeatureView(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::FeatureView>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateFeatureView(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -328,9 +336,12 @@ future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
 FeatureOnlineStoreAdminServiceConnectionImpl::UpdateFeatureView(
     google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateFeatureView(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::FeatureView>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -355,8 +366,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::UpdateFeatureView(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::FeatureView>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateFeatureView(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -364,9 +374,12 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 FeatureOnlineStoreAdminServiceConnectionImpl::DeleteFeatureView(
     google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteFeatureView(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -391,8 +404,7 @@ FeatureOnlineStoreAdminServiceConnectionImpl::DeleteFeatureView(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteFeatureView(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

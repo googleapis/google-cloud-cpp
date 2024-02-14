@@ -85,9 +85,12 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 ScheduleServiceConnectionImpl::DeleteSchedule(
     google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteSchedule(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -111,8 +114,7 @@ ScheduleServiceConnectionImpl::DeleteSchedule(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteSchedule(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

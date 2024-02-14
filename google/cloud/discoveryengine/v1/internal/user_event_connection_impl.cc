@@ -98,9 +98,12 @@ UserEventServiceConnectionImpl::ImportUserEvents(
     google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportUserEvents(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::discoveryengine::v1::ImportUserEventsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -125,8 +128,7 @@ UserEventServiceConnectionImpl::ImportUserEvents(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::discoveryengine::v1::ImportUserEventsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportUserEvents(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

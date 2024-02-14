@@ -146,9 +146,12 @@ future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnectionImpl::CreateProject(
     google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateProject(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::Project>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -173,8 +176,7 @@ ProjectsConnectionImpl::CreateProject(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::resourcemanager::v3::Project>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateProject(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -182,9 +184,12 @@ future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnectionImpl::UpdateProject(
     google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateProject(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::Project>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -209,8 +214,7 @@ ProjectsConnectionImpl::UpdateProject(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::resourcemanager::v3::Project>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateProject(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -218,9 +222,12 @@ future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnectionImpl::MoveProject(
     google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->MoveProject(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::Project>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -244,8 +251,7 @@ ProjectsConnectionImpl::MoveProject(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::resourcemanager::v3::Project>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->MoveProject(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -253,9 +259,12 @@ future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnectionImpl::DeleteProject(
     google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteProject(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::Project>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -280,8 +289,7 @@ ProjectsConnectionImpl::DeleteProject(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::resourcemanager::v3::Project>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteProject(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -289,9 +297,12 @@ future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnectionImpl::UndeleteProject(
     google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UndeleteProject(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::Project>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -316,8 +327,7 @@ ProjectsConnectionImpl::UndeleteProject(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::resourcemanager::v3::Project>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UndeleteProject(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

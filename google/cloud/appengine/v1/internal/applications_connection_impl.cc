@@ -80,9 +80,12 @@ future<StatusOr<google::appengine::v1::Application>>
 ApplicationsConnectionImpl::CreateApplication(
     google::appengine::v1::CreateApplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateApplication(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::Application>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -106,8 +109,7 @@ ApplicationsConnectionImpl::CreateApplication(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::appengine::v1::Application>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateApplication(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -115,9 +117,12 @@ future<StatusOr<google::appengine::v1::Application>>
 ApplicationsConnectionImpl::UpdateApplication(
     google::appengine::v1::UpdateApplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateApplication(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::Application>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -141,8 +146,7 @@ ApplicationsConnectionImpl::UpdateApplication(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::appengine::v1::Application>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateApplication(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -150,9 +154,12 @@ future<StatusOr<google::appengine::v1::Application>>
 ApplicationsConnectionImpl::RepairApplication(
     google::appengine::v1::RepairApplicationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RepairApplication(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::Application>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -176,8 +183,7 @@ ApplicationsConnectionImpl::RepairApplication(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::appengine::v1::Application>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RepairApplication(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

@@ -70,9 +70,12 @@ future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnectionImpl::CreateCluster(
     google::cloud::dataproc::v1::CreateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::Cluster>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -96,8 +99,7 @@ ClusterControllerConnectionImpl::CreateCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dataproc::v1::Cluster>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -105,9 +107,12 @@ future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnectionImpl::UpdateCluster(
     google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::Cluster>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -131,8 +136,7 @@ ClusterControllerConnectionImpl::UpdateCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dataproc::v1::Cluster>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -140,9 +144,12 @@ future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnectionImpl::StopCluster(
     google::cloud::dataproc::v1::StopClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->StopCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::Cluster>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -165,8 +172,7 @@ ClusterControllerConnectionImpl::StopCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dataproc::v1::Cluster>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->StopCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -174,9 +180,12 @@ future<StatusOr<google::cloud::dataproc::v1::Cluster>>
 ClusterControllerConnectionImpl::StartCluster(
     google::cloud::dataproc::v1::StartClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->StartCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::Cluster>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -200,8 +209,7 @@ ClusterControllerConnectionImpl::StartCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dataproc::v1::Cluster>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->StartCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -209,9 +217,12 @@ future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
 ClusterControllerConnectionImpl::DeleteCluster(
     google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::ClusterOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -235,8 +246,7 @@ ClusterControllerConnectionImpl::DeleteCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::dataproc::v1::ClusterOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -291,9 +301,12 @@ future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
 ClusterControllerConnectionImpl::DiagnoseCluster(
     google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DiagnoseCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::DiagnoseClusterResults>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -317,8 +330,7 @@ ClusterControllerConnectionImpl::DiagnoseCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dataproc::v1::DiagnoseClusterResults>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DiagnoseCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

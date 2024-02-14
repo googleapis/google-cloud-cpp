@@ -108,9 +108,12 @@ MetricsScopesConnectionImpl::CreateMonitoredProject(
     google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateMonitoredProject(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::monitoring::metricsscope::v1::MonitoredProject>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -135,8 +138,7 @@ MetricsScopesConnectionImpl::CreateMonitoredProject(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::monitoring::metricsscope::v1::MonitoredProject>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateMonitoredProject(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -145,9 +147,12 @@ MetricsScopesConnectionImpl::DeleteMonitoredProject(
     google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteMonitoredProject(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::monitoring::metricsscope::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -172,8 +177,7 @@ MetricsScopesConnectionImpl::DeleteMonitoredProject(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::monitoring::metricsscope::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteMonitoredProject(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

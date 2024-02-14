@@ -104,9 +104,12 @@ TagBindingsConnectionImpl::CreateTagBinding(
     google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateTagBinding(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::TagBinding>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -131,8 +134,7 @@ TagBindingsConnectionImpl::CreateTagBinding(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::resourcemanager::v3::TagBinding>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateTagBinding(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -141,9 +143,12 @@ TagBindingsConnectionImpl::DeleteTagBinding(
     google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteTagBinding(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -168,8 +173,7 @@ TagBindingsConnectionImpl::DeleteTagBinding(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteTagBinding(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

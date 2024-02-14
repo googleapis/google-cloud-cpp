@@ -116,9 +116,12 @@ future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
 SchemaServiceConnectionImpl::CreateSchema(
     google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateSchema(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::discoveryengine::v1::Schema>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -143,8 +146,7 @@ SchemaServiceConnectionImpl::CreateSchema(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::discoveryengine::v1::Schema>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateSchema(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -152,9 +154,12 @@ future<StatusOr<google::cloud::discoveryengine::v1::Schema>>
 SchemaServiceConnectionImpl::UpdateSchema(
     google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateSchema(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::discoveryengine::v1::Schema>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -179,8 +184,7 @@ SchemaServiceConnectionImpl::UpdateSchema(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::discoveryengine::v1::Schema>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateSchema(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -188,9 +192,12 @@ future<StatusOr<google::cloud::discoveryengine::v1::DeleteSchemaMetadata>>
 SchemaServiceConnectionImpl::DeleteSchema(
     google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteSchema(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::discoveryengine::v1::DeleteSchemaMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -215,8 +222,7 @@ SchemaServiceConnectionImpl::DeleteSchema(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::discoveryengine::v1::DeleteSchemaMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteSchema(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

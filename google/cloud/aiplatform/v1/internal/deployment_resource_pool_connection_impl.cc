@@ -80,9 +80,12 @@ DeploymentResourcePoolServiceConnectionImpl::CreateDeploymentResourcePool(
     google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateDeploymentResourcePool(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeploymentResourcePool>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -107,8 +110,7 @@ DeploymentResourcePoolServiceConnectionImpl::CreateDeploymentResourcePool(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::DeploymentResourcePool>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateDeploymentResourcePool(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -170,9 +172,12 @@ DeploymentResourcePoolServiceConnectionImpl::DeleteDeploymentResourcePool(
     google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteDeploymentResourcePool(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -197,8 +202,7 @@ DeploymentResourcePoolServiceConnectionImpl::DeleteDeploymentResourcePool(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteDeploymentResourcePool(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

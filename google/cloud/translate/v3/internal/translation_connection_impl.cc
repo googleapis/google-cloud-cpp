@@ -129,9 +129,12 @@ future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
 TranslationServiceConnectionImpl::BatchTranslateText(
     google::cloud::translation::v3::BatchTranslateTextRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchTranslateText(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::translation::v3::BatchTranslateResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -156,8 +159,7 @@ TranslationServiceConnectionImpl::BatchTranslateText(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::translation::v3::BatchTranslateResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->BatchTranslateText(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -166,9 +168,12 @@ TranslationServiceConnectionImpl::BatchTranslateDocument(
     google::cloud::translation::v3::BatchTranslateDocumentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchTranslateDocument(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::translation::v3::BatchTranslateDocumentResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -193,8 +198,7 @@ TranslationServiceConnectionImpl::BatchTranslateDocument(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::translation::v3::BatchTranslateDocumentResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->BatchTranslateDocument(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -202,9 +206,12 @@ future<StatusOr<google::cloud::translation::v3::Glossary>>
 TranslationServiceConnectionImpl::CreateGlossary(
     google::cloud::translation::v3::CreateGlossaryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateGlossary(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::translation::v3::Glossary>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -229,8 +236,7 @@ TranslationServiceConnectionImpl::CreateGlossary(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::translation::v3::Glossary>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateGlossary(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -286,9 +292,12 @@ future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
 TranslationServiceConnectionImpl::DeleteGlossary(
     google::cloud::translation::v3::DeleteGlossaryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteGlossary(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::translation::v3::DeleteGlossaryResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -313,8 +322,7 @@ TranslationServiceConnectionImpl::DeleteGlossary(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::translation::v3::DeleteGlossaryResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteGlossary(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

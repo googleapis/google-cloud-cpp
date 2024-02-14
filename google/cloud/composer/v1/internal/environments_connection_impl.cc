@@ -69,9 +69,12 @@ EnvironmentsConnectionImpl::CreateEnvironment(
     google::cloud::orchestration::airflow::service::v1::
         CreateEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateEnvironment(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::orchestration::airflow::service::v1::Environment>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -96,8 +99,7 @@ EnvironmentsConnectionImpl::CreateEnvironment(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::orchestration::airflow::service::v1::Environment>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateEnvironment(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -160,9 +162,12 @@ EnvironmentsConnectionImpl::UpdateEnvironment(
     google::cloud::orchestration::airflow::service::v1::
         UpdateEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateEnvironment(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::orchestration::airflow::service::v1::Environment>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -187,8 +192,7 @@ EnvironmentsConnectionImpl::UpdateEnvironment(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::orchestration::airflow::service::v1::Environment>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateEnvironment(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -198,9 +202,12 @@ EnvironmentsConnectionImpl::DeleteEnvironment(
     google::cloud::orchestration::airflow::service::v1::
         DeleteEnvironmentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteEnvironment(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::orchestration::airflow::service::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -226,8 +233,7 @@ EnvironmentsConnectionImpl::DeleteEnvironment(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::orchestration::airflow::service::v1::
               OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteEnvironment(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -288,9 +294,12 @@ EnvironmentsConnectionImpl::SaveSnapshot(
     google::cloud::orchestration::airflow::service::v1::
         SaveSnapshotRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->SaveSnapshot(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -316,8 +325,7 @@ EnvironmentsConnectionImpl::SaveSnapshot(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::orchestration::airflow::service::v1::
               SaveSnapshotResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->SaveSnapshot(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -327,9 +335,12 @@ EnvironmentsConnectionImpl::LoadSnapshot(
     google::cloud::orchestration::airflow::service::v1::
         LoadSnapshotRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->LoadSnapshot(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -355,8 +366,7 @@ EnvironmentsConnectionImpl::LoadSnapshot(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::orchestration::airflow::service::v1::
               LoadSnapshotResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->LoadSnapshot(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -366,10 +376,13 @@ EnvironmentsConnectionImpl::DatabaseFailover(
     google::cloud::orchestration::airflow::service::v1::
         DatabaseFailoverRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DatabaseFailover(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::orchestration::airflow::service::v1::
           DatabaseFailoverResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -395,8 +408,7 @@ EnvironmentsConnectionImpl::DatabaseFailover(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::orchestration::airflow::service::v1::
               DatabaseFailoverResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DatabaseFailover(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

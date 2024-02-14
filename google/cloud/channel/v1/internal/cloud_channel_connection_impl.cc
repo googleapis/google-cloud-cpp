@@ -188,9 +188,12 @@ future<StatusOr<google::cloud::channel::v1::Customer>>
 CloudChannelServiceConnectionImpl::ProvisionCloudIdentity(
     google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ProvisionCloudIdentity(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Customer>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -215,8 +218,7 @@ CloudChannelServiceConnectionImpl::ProvisionCloudIdentity(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::Customer>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ProvisionCloudIdentity(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -341,9 +343,12 @@ future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::CreateEntitlement(
     google::cloud::channel::v1::CreateEntitlementRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateEntitlement(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -367,8 +372,7 @@ CloudChannelServiceConnectionImpl::CreateEntitlement(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::Entitlement>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateEntitlement(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -376,9 +380,12 @@ future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::ChangeParameters(
     google::cloud::channel::v1::ChangeParametersRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ChangeParameters(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -402,8 +409,7 @@ CloudChannelServiceConnectionImpl::ChangeParameters(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::Entitlement>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ChangeParameters(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -411,9 +417,12 @@ future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::ChangeRenewalSettings(
     google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ChangeRenewalSettings(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -438,8 +447,7 @@ CloudChannelServiceConnectionImpl::ChangeRenewalSettings(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::Entitlement>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ChangeRenewalSettings(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -447,9 +455,12 @@ future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::ChangeOffer(
     google::cloud::channel::v1::ChangeOfferRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ChangeOffer(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -472,8 +483,7 @@ CloudChannelServiceConnectionImpl::ChangeOffer(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::Entitlement>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ChangeOffer(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -481,9 +491,12 @@ future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::StartPaidService(
     google::cloud::channel::v1::StartPaidServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->StartPaidService(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -507,8 +520,7 @@ CloudChannelServiceConnectionImpl::StartPaidService(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::Entitlement>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->StartPaidService(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -516,9 +528,12 @@ future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::SuspendEntitlement(
     google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->SuspendEntitlement(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -543,8 +558,7 @@ CloudChannelServiceConnectionImpl::SuspendEntitlement(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::Entitlement>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->SuspendEntitlement(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -552,9 +566,12 @@ future<StatusOr<google::cloud::channel::v1::OperationMetadata>>
 CloudChannelServiceConnectionImpl::CancelEntitlement(
     google::cloud::channel::v1::CancelEntitlementRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CancelEntitlement(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -578,8 +595,7 @@ CloudChannelServiceConnectionImpl::CancelEntitlement(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::channel::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CancelEntitlement(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -587,9 +603,12 @@ future<StatusOr<google::cloud::channel::v1::Entitlement>>
 CloudChannelServiceConnectionImpl::ActivateEntitlement(
     google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ActivateEntitlement(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::Entitlement>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -614,8 +633,7 @@ CloudChannelServiceConnectionImpl::ActivateEntitlement(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::Entitlement>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ActivateEntitlement(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -623,9 +641,12 @@ future<StatusOr<google::cloud::channel::v1::TransferEntitlementsResponse>>
 CloudChannelServiceConnectionImpl::TransferEntitlements(
     google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->TransferEntitlements(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::TransferEntitlementsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -650,8 +671,7 @@ CloudChannelServiceConnectionImpl::TransferEntitlements(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::TransferEntitlementsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->TransferEntitlements(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -660,9 +680,12 @@ CloudChannelServiceConnectionImpl::TransferEntitlementsToGoogle(
     google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->TransferEntitlementsToGoogle(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -687,8 +710,7 @@ CloudChannelServiceConnectionImpl::TransferEntitlementsToGoogle(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::channel::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->TransferEntitlementsToGoogle(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

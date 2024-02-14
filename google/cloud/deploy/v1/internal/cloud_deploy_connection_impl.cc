@@ -115,9 +115,12 @@ future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
 CloudDeployConnectionImpl::CreateDeliveryPipeline(
     google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateDeliveryPipeline(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::deploy::v1::DeliveryPipeline>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -142,8 +145,7 @@ CloudDeployConnectionImpl::CreateDeliveryPipeline(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::deploy::v1::DeliveryPipeline>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateDeliveryPipeline(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -151,9 +153,12 @@ future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
 CloudDeployConnectionImpl::UpdateDeliveryPipeline(
     google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateDeliveryPipeline(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::deploy::v1::DeliveryPipeline>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -178,8 +183,7 @@ CloudDeployConnectionImpl::UpdateDeliveryPipeline(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::deploy::v1::DeliveryPipeline>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateDeliveryPipeline(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -187,9 +191,12 @@ future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
 CloudDeployConnectionImpl::DeleteDeliveryPipeline(
     google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteDeliveryPipeline(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::deploy::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -214,8 +221,7 @@ CloudDeployConnectionImpl::DeleteDeliveryPipeline(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::deploy::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteDeliveryPipeline(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -284,9 +290,12 @@ future<StatusOr<google::cloud::deploy::v1::Target>>
 CloudDeployConnectionImpl::CreateTarget(
     google::cloud::deploy::v1::CreateTargetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateTarget(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::deploy::v1::Target>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -310,8 +319,7 @@ CloudDeployConnectionImpl::CreateTarget(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::deploy::v1::Target>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateTarget(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -319,9 +327,12 @@ future<StatusOr<google::cloud::deploy::v1::Target>>
 CloudDeployConnectionImpl::UpdateTarget(
     google::cloud::deploy::v1::UpdateTargetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateTarget(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::deploy::v1::Target>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -345,8 +356,7 @@ CloudDeployConnectionImpl::UpdateTarget(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::deploy::v1::Target>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateTarget(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -354,9 +364,12 @@ future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
 CloudDeployConnectionImpl::DeleteTarget(
     google::cloud::deploy::v1::DeleteTargetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteTarget(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::deploy::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -380,8 +393,7 @@ CloudDeployConnectionImpl::DeleteTarget(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::deploy::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteTarget(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -439,9 +451,12 @@ future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
 CloudDeployConnectionImpl::CreateCustomTargetType(
     google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateCustomTargetType(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::deploy::v1::CustomTargetType>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -466,8 +481,7 @@ CloudDeployConnectionImpl::CreateCustomTargetType(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::deploy::v1::CustomTargetType>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateCustomTargetType(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -475,9 +489,12 @@ future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
 CloudDeployConnectionImpl::UpdateCustomTargetType(
     google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateCustomTargetType(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::deploy::v1::CustomTargetType>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -502,8 +519,7 @@ CloudDeployConnectionImpl::UpdateCustomTargetType(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::deploy::v1::CustomTargetType>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateCustomTargetType(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -511,9 +527,12 @@ future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
 CloudDeployConnectionImpl::DeleteCustomTargetType(
     google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteCustomTargetType(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::deploy::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -538,8 +557,7 @@ CloudDeployConnectionImpl::DeleteCustomTargetType(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::deploy::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteCustomTargetType(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -594,9 +612,12 @@ future<StatusOr<google::cloud::deploy::v1::Release>>
 CloudDeployConnectionImpl::CreateRelease(
     google::cloud::deploy::v1::CreateReleaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateRelease(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::deploy::v1::Release>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -620,8 +641,7 @@ CloudDeployConnectionImpl::CreateRelease(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::deploy::v1::Release>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateRelease(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -732,9 +752,12 @@ future<StatusOr<google::cloud::deploy::v1::Rollout>>
 CloudDeployConnectionImpl::CreateRollout(
     google::cloud::deploy::v1::CreateRolloutRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateRollout(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::deploy::v1::Rollout>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -758,8 +781,7 @@ CloudDeployConnectionImpl::CreateRollout(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::deploy::v1::Rollout>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateRollout(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -870,9 +892,12 @@ future<StatusOr<google::cloud::deploy::v1::Automation>>
 CloudDeployConnectionImpl::CreateAutomation(
     google::cloud::deploy::v1::CreateAutomationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateAutomation(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::deploy::v1::Automation>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -896,8 +921,7 @@ CloudDeployConnectionImpl::CreateAutomation(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::deploy::v1::Automation>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateAutomation(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -905,9 +929,12 @@ future<StatusOr<google::cloud::deploy::v1::Automation>>
 CloudDeployConnectionImpl::UpdateAutomation(
     google::cloud::deploy::v1::UpdateAutomationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateAutomation(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::deploy::v1::Automation>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -931,8 +958,7 @@ CloudDeployConnectionImpl::UpdateAutomation(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::deploy::v1::Automation>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateAutomation(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -940,9 +966,12 @@ future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
 CloudDeployConnectionImpl::DeleteAutomation(
     google::cloud::deploy::v1::DeleteAutomationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteAutomation(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::deploy::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -966,8 +995,7 @@ CloudDeployConnectionImpl::DeleteAutomation(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::deploy::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteAutomation(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

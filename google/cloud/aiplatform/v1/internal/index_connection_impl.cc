@@ -67,9 +67,12 @@ future<StatusOr<google::cloud::aiplatform::v1::Index>>
 IndexServiceConnectionImpl::CreateIndex(
     google::cloud::aiplatform::v1::CreateIndexRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateIndex(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::Index>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -92,8 +95,7 @@ IndexServiceConnectionImpl::CreateIndex(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::Index>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateIndex(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -146,9 +148,12 @@ future<StatusOr<google::cloud::aiplatform::v1::Index>>
 IndexServiceConnectionImpl::UpdateIndex(
     google::cloud::aiplatform::v1::UpdateIndexRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateIndex(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::Index>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -171,8 +176,7 @@ IndexServiceConnectionImpl::UpdateIndex(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::Index>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateIndex(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -180,9 +184,12 @@ future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
 IndexServiceConnectionImpl::DeleteIndex(
     google::cloud::aiplatform::v1::DeleteIndexRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteIndex(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::DeleteOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -205,8 +212,7 @@ IndexServiceConnectionImpl::DeleteIndex(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::aiplatform::v1::DeleteOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteIndex(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

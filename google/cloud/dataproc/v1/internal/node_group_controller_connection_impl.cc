@@ -69,9 +69,12 @@ future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
 NodeGroupControllerConnectionImpl::CreateNodeGroup(
     google::cloud::dataproc::v1::CreateNodeGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateNodeGroup(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::NodeGroup>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -95,8 +98,7 @@ NodeGroupControllerConnectionImpl::CreateNodeGroup(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dataproc::v1::NodeGroup>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateNodeGroup(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -104,9 +106,12 @@ future<StatusOr<google::cloud::dataproc::v1::NodeGroup>>
 NodeGroupControllerConnectionImpl::ResizeNodeGroup(
     google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ResizeNodeGroup(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::NodeGroup>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -130,8 +135,7 @@ NodeGroupControllerConnectionImpl::ResizeNodeGroup(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dataproc::v1::NodeGroup>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ResizeNodeGroup(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

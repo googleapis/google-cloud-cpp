@@ -165,9 +165,12 @@ LineageConnectionImpl::DeleteProcess(
     google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteProcess(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datacatalog::lineage::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -192,8 +195,7 @@ LineageConnectionImpl::DeleteProcess(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::datacatalog::lineage::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteProcess(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -272,9 +274,11 @@ future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
 LineageConnectionImpl::DeleteRun(
     google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->DeleteRun(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datacatalog::lineage::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -298,8 +302,7 @@ LineageConnectionImpl::DeleteRun(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::datacatalog::lineage::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteRun(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

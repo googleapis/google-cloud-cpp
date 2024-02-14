@@ -149,9 +149,12 @@ future<StatusOr<google::cloud::datafusion::v1::Instance>>
 DataFusionConnectionImpl::CreateInstance(
     google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datafusion::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -175,8 +178,7 @@ DataFusionConnectionImpl::CreateInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::datafusion::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -184,9 +186,12 @@ future<StatusOr<google::cloud::datafusion::v1::OperationMetadata>>
 DataFusionConnectionImpl::DeleteInstance(
     google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datafusion::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -210,8 +215,7 @@ DataFusionConnectionImpl::DeleteInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::datafusion::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -219,9 +223,12 @@ future<StatusOr<google::cloud::datafusion::v1::Instance>>
 DataFusionConnectionImpl::UpdateInstance(
     google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datafusion::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -245,8 +252,7 @@ DataFusionConnectionImpl::UpdateInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::datafusion::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -254,9 +260,12 @@ future<StatusOr<google::cloud::datafusion::v1::Instance>>
 DataFusionConnectionImpl::RestartInstance(
     google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RestartInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datafusion::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -281,8 +290,7 @@ DataFusionConnectionImpl::RestartInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::datafusion::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RestartInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

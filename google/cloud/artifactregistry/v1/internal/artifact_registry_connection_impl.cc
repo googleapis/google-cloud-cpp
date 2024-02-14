@@ -275,9 +275,12 @@ ArtifactRegistryConnectionImpl::ImportAptArtifacts(
     google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportAptArtifacts(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -302,8 +305,7 @@ ArtifactRegistryConnectionImpl::ImportAptArtifacts(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportAptArtifacts(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -313,9 +315,12 @@ ArtifactRegistryConnectionImpl::ImportYumArtifacts(
     google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportYumArtifacts(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -340,8 +345,7 @@ ArtifactRegistryConnectionImpl::ImportYumArtifacts(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportYumArtifacts(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -399,9 +403,12 @@ ArtifactRegistryConnectionImpl::CreateRepository(
     google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateRepository(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::artifactregistry::v1::Repository>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -426,8 +433,7 @@ ArtifactRegistryConnectionImpl::CreateRepository(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::artifactregistry::v1::Repository>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateRepository(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -451,9 +457,12 @@ ArtifactRegistryConnectionImpl::DeleteRepository(
     google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteRepository(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::artifactregistry::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -478,8 +487,7 @@ ArtifactRegistryConnectionImpl::DeleteRepository(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::devtools::artifactregistry::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteRepository(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -536,9 +544,12 @@ ArtifactRegistryConnectionImpl::DeletePackage(
     google::devtools::artifactregistry::v1::DeletePackageRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeletePackage(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::artifactregistry::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -563,8 +574,7 @@ ArtifactRegistryConnectionImpl::DeletePackage(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::devtools::artifactregistry::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeletePackage(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -621,9 +631,12 @@ ArtifactRegistryConnectionImpl::DeleteVersion(
     google::devtools::artifactregistry::v1::DeleteVersionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteVersion(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::artifactregistry::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -648,8 +661,7 @@ ArtifactRegistryConnectionImpl::DeleteVersion(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::devtools::artifactregistry::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteVersion(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -659,9 +671,12 @@ ArtifactRegistryConnectionImpl::BatchDeleteVersions(
     google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchDeleteVersions(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -686,8 +701,7 @@ ArtifactRegistryConnectionImpl::BatchDeleteVersions(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::devtools::artifactregistry::v1::BatchDeleteVersionsMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->BatchDeleteVersions(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

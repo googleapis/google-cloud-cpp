@@ -65,9 +65,12 @@ future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>
 AssetServiceConnectionImpl::ExportAssets(
     google::cloud::asset::v1::ExportAssetsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ExportAssets(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::asset::v1::ExportAssetsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -91,8 +94,7 @@ AssetServiceConnectionImpl::ExportAssets(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::asset::v1::ExportAssetsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ExportAssets(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -294,9 +296,12 @@ AssetServiceConnectionImpl::AnalyzeIamPolicyLongrunning(
     google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->AnalyzeIamPolicyLongrunning(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -321,8 +326,7 @@ AssetServiceConnectionImpl::AnalyzeIamPolicyLongrunning(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AnalyzeIamPolicyLongrunning(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

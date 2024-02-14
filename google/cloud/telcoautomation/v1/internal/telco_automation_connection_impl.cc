@@ -125,9 +125,12 @@ TelcoAutomationConnectionImpl::CreateOrchestrationCluster(
     google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateOrchestrationCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::telcoautomation::v1::OrchestrationCluster>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -152,8 +155,7 @@ TelcoAutomationConnectionImpl::CreateOrchestrationCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::telcoautomation::v1::OrchestrationCluster>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateOrchestrationCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -162,9 +164,12 @@ TelcoAutomationConnectionImpl::DeleteOrchestrationCluster(
     google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteOrchestrationCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::telcoautomation::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -189,8 +194,7 @@ TelcoAutomationConnectionImpl::DeleteOrchestrationCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::telcoautomation::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteOrchestrationCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -243,9 +247,12 @@ future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
 TelcoAutomationConnectionImpl::CreateEdgeSlm(
     google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateEdgeSlm(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::telcoautomation::v1::EdgeSlm>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -270,8 +277,7 @@ TelcoAutomationConnectionImpl::CreateEdgeSlm(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::telcoautomation::v1::EdgeSlm>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateEdgeSlm(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -279,9 +285,12 @@ future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>
 TelcoAutomationConnectionImpl::DeleteEdgeSlm(
     google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteEdgeSlm(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::telcoautomation::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -306,8 +315,7 @@ TelcoAutomationConnectionImpl::DeleteEdgeSlm(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::telcoautomation::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteEdgeSlm(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

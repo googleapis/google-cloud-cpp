@@ -69,9 +69,12 @@ future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
 AwsClustersConnectionImpl::CreateAwsCluster(
     google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateAwsCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkemulticloud::v1::AwsCluster>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -96,8 +99,7 @@ AwsClustersConnectionImpl::CreateAwsCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkemulticloud::v1::AwsCluster>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateAwsCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -105,9 +107,12 @@ future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
 AwsClustersConnectionImpl::UpdateAwsCluster(
     google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateAwsCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkemulticloud::v1::AwsCluster>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -132,8 +137,7 @@ AwsClustersConnectionImpl::UpdateAwsCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkemulticloud::v1::AwsCluster>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateAwsCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -188,9 +192,12 @@ future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AwsClustersConnectionImpl::DeleteAwsCluster(
     google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteAwsCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkemulticloud::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -215,8 +222,7 @@ AwsClustersConnectionImpl::DeleteAwsCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::gkemulticloud::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteAwsCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -257,9 +263,12 @@ future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
 AwsClustersConnectionImpl::CreateAwsNodePool(
     google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateAwsNodePool(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkemulticloud::v1::AwsNodePool>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -284,8 +293,7 @@ AwsClustersConnectionImpl::CreateAwsNodePool(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkemulticloud::v1::AwsNodePool>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateAwsNodePool(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -293,9 +301,12 @@ future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
 AwsClustersConnectionImpl::UpdateAwsNodePool(
     google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateAwsNodePool(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkemulticloud::v1::AwsNodePool>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -320,8 +331,7 @@ AwsClustersConnectionImpl::UpdateAwsNodePool(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkemulticloud::v1::AwsNodePool>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateAwsNodePool(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -330,9 +340,12 @@ AwsClustersConnectionImpl::RollbackAwsNodePoolUpdate(
     google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RollbackAwsNodePoolUpdate(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkemulticloud::v1::AwsNodePool>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -357,8 +370,7 @@ AwsClustersConnectionImpl::RollbackAwsNodePoolUpdate(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkemulticloud::v1::AwsNodePool>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RollbackAwsNodePoolUpdate(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -413,9 +425,12 @@ future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
 AwsClustersConnectionImpl::DeleteAwsNodePool(
     google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteAwsNodePool(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkemulticloud::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -440,8 +455,7 @@ AwsClustersConnectionImpl::DeleteAwsNodePool(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::gkemulticloud::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteAwsNodePool(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

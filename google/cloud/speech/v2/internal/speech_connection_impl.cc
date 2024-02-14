@@ -65,9 +65,12 @@ future<StatusOr<google::cloud::speech::v2::Recognizer>>
 SpeechConnectionImpl::CreateRecognizer(
     google::cloud::speech::v2::CreateRecognizerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateRecognizer(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::speech::v2::Recognizer>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -91,8 +94,7 @@ SpeechConnectionImpl::CreateRecognizer(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::speech::v2::Recognizer>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateRecognizer(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -147,9 +149,12 @@ future<StatusOr<google::cloud::speech::v2::Recognizer>>
 SpeechConnectionImpl::UpdateRecognizer(
     google::cloud::speech::v2::UpdateRecognizerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateRecognizer(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::speech::v2::Recognizer>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -173,8 +178,7 @@ SpeechConnectionImpl::UpdateRecognizer(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::speech::v2::Recognizer>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateRecognizer(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -182,9 +186,12 @@ future<StatusOr<google::cloud::speech::v2::Recognizer>>
 SpeechConnectionImpl::DeleteRecognizer(
     google::cloud::speech::v2::DeleteRecognizerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteRecognizer(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::speech::v2::Recognizer>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -208,8 +215,7 @@ SpeechConnectionImpl::DeleteRecognizer(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::speech::v2::Recognizer>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteRecognizer(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -217,9 +223,12 @@ future<StatusOr<google::cloud::speech::v2::Recognizer>>
 SpeechConnectionImpl::UndeleteRecognizer(
     google::cloud::speech::v2::UndeleteRecognizerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UndeleteRecognizer(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::speech::v2::Recognizer>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -243,8 +252,7 @@ SpeechConnectionImpl::UndeleteRecognizer(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::speech::v2::Recognizer>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UndeleteRecognizer(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -266,9 +274,12 @@ future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
 SpeechConnectionImpl::BatchRecognize(
     google::cloud::speech::v2::BatchRecognizeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchRecognize(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::speech::v2::BatchRecognizeResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -292,8 +303,7 @@ SpeechConnectionImpl::BatchRecognize(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::speech::v2::BatchRecognizeResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->BatchRecognize(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -327,9 +337,12 @@ future<StatusOr<google::cloud::speech::v2::CustomClass>>
 SpeechConnectionImpl::CreateCustomClass(
     google::cloud::speech::v2::CreateCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateCustomClass(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::speech::v2::CustomClass>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -353,8 +366,7 @@ SpeechConnectionImpl::CreateCustomClass(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::speech::v2::CustomClass>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateCustomClass(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -409,9 +421,12 @@ future<StatusOr<google::cloud::speech::v2::CustomClass>>
 SpeechConnectionImpl::UpdateCustomClass(
     google::cloud::speech::v2::UpdateCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateCustomClass(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::speech::v2::CustomClass>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -435,8 +450,7 @@ SpeechConnectionImpl::UpdateCustomClass(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::speech::v2::CustomClass>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateCustomClass(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -444,9 +458,12 @@ future<StatusOr<google::cloud::speech::v2::CustomClass>>
 SpeechConnectionImpl::DeleteCustomClass(
     google::cloud::speech::v2::DeleteCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteCustomClass(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::speech::v2::CustomClass>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -470,8 +487,7 @@ SpeechConnectionImpl::DeleteCustomClass(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::speech::v2::CustomClass>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteCustomClass(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -479,9 +495,12 @@ future<StatusOr<google::cloud::speech::v2::CustomClass>>
 SpeechConnectionImpl::UndeleteCustomClass(
     google::cloud::speech::v2::UndeleteCustomClassRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UndeleteCustomClass(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::speech::v2::CustomClass>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -506,8 +525,7 @@ SpeechConnectionImpl::UndeleteCustomClass(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::speech::v2::CustomClass>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UndeleteCustomClass(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -515,9 +533,12 @@ future<StatusOr<google::cloud::speech::v2::PhraseSet>>
 SpeechConnectionImpl::CreatePhraseSet(
     google::cloud::speech::v2::CreatePhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreatePhraseSet(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::speech::v2::PhraseSet>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -541,8 +562,7 @@ SpeechConnectionImpl::CreatePhraseSet(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::speech::v2::PhraseSet>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreatePhraseSet(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -597,9 +617,12 @@ future<StatusOr<google::cloud::speech::v2::PhraseSet>>
 SpeechConnectionImpl::UpdatePhraseSet(
     google::cloud::speech::v2::UpdatePhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdatePhraseSet(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::speech::v2::PhraseSet>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -623,8 +646,7 @@ SpeechConnectionImpl::UpdatePhraseSet(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::speech::v2::PhraseSet>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdatePhraseSet(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -632,9 +654,12 @@ future<StatusOr<google::cloud::speech::v2::PhraseSet>>
 SpeechConnectionImpl::DeletePhraseSet(
     google::cloud::speech::v2::DeletePhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeletePhraseSet(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::speech::v2::PhraseSet>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -658,8 +683,7 @@ SpeechConnectionImpl::DeletePhraseSet(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::speech::v2::PhraseSet>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeletePhraseSet(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -667,9 +691,12 @@ future<StatusOr<google::cloud::speech::v2::PhraseSet>>
 SpeechConnectionImpl::UndeletePhraseSet(
     google::cloud::speech::v2::UndeletePhraseSetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UndeletePhraseSet(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::speech::v2::PhraseSet>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -693,8 +720,7 @@ SpeechConnectionImpl::UndeletePhraseSet(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::speech::v2::PhraseSet>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UndeletePhraseSet(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

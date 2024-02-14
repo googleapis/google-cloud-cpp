@@ -79,8 +79,11 @@ RequestIdServiceConnectionImpl::CreateFoo(google::test::requestid::v1::CreateFoo
 future<StatusOr<google::test::requestid::v1::Foo>>
 RequestIdServiceConnectionImpl::RenameFoo(google::test::requestid::v1::RenameFooRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RenameFoo(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<google::test::requestid::v1::Foo>(
-    background_->cq(), current, request,
+    background_->cq(), current, std::move(request_copy),
     [stub = stub_](google::cloud::CompletionQueue& cq,
                    std::shared_ptr<grpc::ClientContext> context,
                    Options const& options,
@@ -100,10 +103,8 @@ RequestIdServiceConnectionImpl::RenameFoo(google::test::requestid::v1::RenameFoo
      return stub->AsyncCancelOperation(cq, std::move(context), options, request);
     },
     &google::cloud::internal::ExtractLongRunningResultResponse<google::test::requestid::v1::Foo>,
-    retry_policy(*current), backoff_policy(*current),
-    idempotency_policy(*current)->RenameFoo(request),
+    retry_policy(*current), backoff_policy(*current), idempotent,
     polling_policy(*current), __func__);
-
 }
 
 StreamRange<google::test::requestid::v1::Foo>
@@ -136,16 +137,18 @@ RequestIdServiceConnectionImpl::ListFoos(google::test::requestid::v1::ListFoosRe
 future<StatusOr<google::test::requestid::v1::Foo>>
 RequestIdServiceConnectionImpl::AsyncCreateFoo(google::test::requestid::v1::CreateFooRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateFoo(request_copy);
   return google::cloud::internal::AsyncRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateFoo(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       background_->cq(),
       [stub = stub_](CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      google::test::requestid::v1::CreateFooRequest const& request) {
         return stub->AsyncCreateFoo(cq, std::move(context), request);
       },
-      request, __func__);
+      std::move(request_copy), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

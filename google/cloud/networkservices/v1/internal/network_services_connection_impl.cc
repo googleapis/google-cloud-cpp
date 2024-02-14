@@ -123,9 +123,12 @@ NetworkServicesConnectionImpl::CreateEndpointPolicy(
     google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateEndpointPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::EndpointPolicy>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -150,8 +153,7 @@ NetworkServicesConnectionImpl::CreateEndpointPolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkservices::v1::EndpointPolicy>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateEndpointPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -160,9 +162,12 @@ NetworkServicesConnectionImpl::UpdateEndpointPolicy(
     google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateEndpointPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::EndpointPolicy>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -187,8 +192,7 @@ NetworkServicesConnectionImpl::UpdateEndpointPolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkservices::v1::EndpointPolicy>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateEndpointPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -197,9 +201,12 @@ NetworkServicesConnectionImpl::DeleteEndpointPolicy(
     google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteEndpointPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -224,8 +231,7 @@ NetworkServicesConnectionImpl::DeleteEndpointPolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::networkservices::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteEndpointPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -278,9 +284,12 @@ future<StatusOr<google::cloud::networkservices::v1::Gateway>>
 NetworkServicesConnectionImpl::CreateGateway(
     google::cloud::networkservices::v1::CreateGatewayRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateGateway(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::Gateway>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -305,8 +314,7 @@ NetworkServicesConnectionImpl::CreateGateway(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkservices::v1::Gateway>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateGateway(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -314,9 +322,12 @@ future<StatusOr<google::cloud::networkservices::v1::Gateway>>
 NetworkServicesConnectionImpl::UpdateGateway(
     google::cloud::networkservices::v1::UpdateGatewayRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateGateway(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::Gateway>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -341,8 +352,7 @@ NetworkServicesConnectionImpl::UpdateGateway(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkservices::v1::Gateway>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateGateway(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -350,9 +360,12 @@ future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnectionImpl::DeleteGateway(
     google::cloud::networkservices::v1::DeleteGatewayRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteGateway(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -377,8 +390,7 @@ NetworkServicesConnectionImpl::DeleteGateway(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::networkservices::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteGateway(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -431,9 +443,12 @@ future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
 NetworkServicesConnectionImpl::CreateGrpcRoute(
     google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateGrpcRoute(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::GrpcRoute>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -458,8 +473,7 @@ NetworkServicesConnectionImpl::CreateGrpcRoute(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkservices::v1::GrpcRoute>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateGrpcRoute(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -467,9 +481,12 @@ future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
 NetworkServicesConnectionImpl::UpdateGrpcRoute(
     google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateGrpcRoute(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::GrpcRoute>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -494,8 +511,7 @@ NetworkServicesConnectionImpl::UpdateGrpcRoute(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkservices::v1::GrpcRoute>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateGrpcRoute(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -503,9 +519,12 @@ future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnectionImpl::DeleteGrpcRoute(
     google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteGrpcRoute(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -530,8 +549,7 @@ NetworkServicesConnectionImpl::DeleteGrpcRoute(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::networkservices::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteGrpcRoute(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -584,9 +602,12 @@ future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
 NetworkServicesConnectionImpl::CreateHttpRoute(
     google::cloud::networkservices::v1::CreateHttpRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateHttpRoute(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::HttpRoute>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -611,8 +632,7 @@ NetworkServicesConnectionImpl::CreateHttpRoute(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkservices::v1::HttpRoute>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateHttpRoute(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -620,9 +640,12 @@ future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
 NetworkServicesConnectionImpl::UpdateHttpRoute(
     google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateHttpRoute(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::HttpRoute>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -647,8 +670,7 @@ NetworkServicesConnectionImpl::UpdateHttpRoute(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkservices::v1::HttpRoute>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateHttpRoute(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -656,9 +678,12 @@ future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnectionImpl::DeleteHttpRoute(
     google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteHttpRoute(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -683,8 +708,7 @@ NetworkServicesConnectionImpl::DeleteHttpRoute(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::networkservices::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteHttpRoute(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -737,9 +761,12 @@ future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
 NetworkServicesConnectionImpl::CreateTcpRoute(
     google::cloud::networkservices::v1::CreateTcpRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateTcpRoute(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::TcpRoute>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -764,8 +791,7 @@ NetworkServicesConnectionImpl::CreateTcpRoute(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkservices::v1::TcpRoute>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateTcpRoute(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -773,9 +799,12 @@ future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
 NetworkServicesConnectionImpl::UpdateTcpRoute(
     google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateTcpRoute(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::TcpRoute>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -800,8 +829,7 @@ NetworkServicesConnectionImpl::UpdateTcpRoute(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkservices::v1::TcpRoute>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateTcpRoute(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -809,9 +837,12 @@ future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnectionImpl::DeleteTcpRoute(
     google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteTcpRoute(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -836,8 +867,7 @@ NetworkServicesConnectionImpl::DeleteTcpRoute(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::networkservices::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteTcpRoute(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -890,9 +920,12 @@ future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
 NetworkServicesConnectionImpl::CreateTlsRoute(
     google::cloud::networkservices::v1::CreateTlsRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateTlsRoute(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::TlsRoute>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -917,8 +950,7 @@ NetworkServicesConnectionImpl::CreateTlsRoute(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkservices::v1::TlsRoute>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateTlsRoute(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -926,9 +958,12 @@ future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
 NetworkServicesConnectionImpl::UpdateTlsRoute(
     google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateTlsRoute(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::TlsRoute>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -953,8 +988,7 @@ NetworkServicesConnectionImpl::UpdateTlsRoute(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkservices::v1::TlsRoute>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateTlsRoute(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -962,9 +996,12 @@ future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnectionImpl::DeleteTlsRoute(
     google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteTlsRoute(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -989,8 +1026,7 @@ NetworkServicesConnectionImpl::DeleteTlsRoute(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::networkservices::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteTlsRoute(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1049,9 +1085,12 @@ NetworkServicesConnectionImpl::CreateServiceBinding(
     google::cloud::networkservices::v1::CreateServiceBindingRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateServiceBinding(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::ServiceBinding>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1076,8 +1115,7 @@ NetworkServicesConnectionImpl::CreateServiceBinding(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkservices::v1::ServiceBinding>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateServiceBinding(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1086,9 +1124,12 @@ NetworkServicesConnectionImpl::DeleteServiceBinding(
     google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteServiceBinding(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1113,8 +1154,7 @@ NetworkServicesConnectionImpl::DeleteServiceBinding(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::networkservices::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteServiceBinding(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1168,9 +1208,12 @@ future<StatusOr<google::cloud::networkservices::v1::Mesh>>
 NetworkServicesConnectionImpl::CreateMesh(
     google::cloud::networkservices::v1::CreateMeshRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateMesh(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::Mesh>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1194,8 +1237,7 @@ NetworkServicesConnectionImpl::CreateMesh(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkservices::v1::Mesh>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateMesh(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1203,9 +1245,12 @@ future<StatusOr<google::cloud::networkservices::v1::Mesh>>
 NetworkServicesConnectionImpl::UpdateMesh(
     google::cloud::networkservices::v1::UpdateMeshRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateMesh(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::Mesh>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1229,8 +1274,7 @@ NetworkServicesConnectionImpl::UpdateMesh(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networkservices::v1::Mesh>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateMesh(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1238,9 +1282,12 @@ future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>
 NetworkServicesConnectionImpl::DeleteMesh(
     google::cloud::networkservices::v1::DeleteMeshRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteMesh(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networkservices::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1264,8 +1311,7 @@ NetworkServicesConnectionImpl::DeleteMesh(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::networkservices::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteMesh(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

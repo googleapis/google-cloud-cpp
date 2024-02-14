@@ -128,9 +128,12 @@ future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
 TagKeysConnectionImpl::CreateTagKey(
     google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateTagKey(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::TagKey>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -155,8 +158,7 @@ TagKeysConnectionImpl::CreateTagKey(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::resourcemanager::v3::TagKey>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateTagKey(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -164,9 +166,12 @@ future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
 TagKeysConnectionImpl::UpdateTagKey(
     google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateTagKey(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::TagKey>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -191,8 +196,7 @@ TagKeysConnectionImpl::UpdateTagKey(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::resourcemanager::v3::TagKey>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateTagKey(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -200,9 +204,12 @@ future<StatusOr<google::cloud::resourcemanager::v3::TagKey>>
 TagKeysConnectionImpl::DeleteTagKey(
     google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteTagKey(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::TagKey>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -227,8 +234,7 @@ TagKeysConnectionImpl::DeleteTagKey(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::resourcemanager::v3::TagKey>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteTagKey(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

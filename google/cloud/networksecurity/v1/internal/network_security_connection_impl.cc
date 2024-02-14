@@ -125,9 +125,12 @@ NetworkSecurityConnectionImpl::CreateAuthorizationPolicy(
     google::cloud::networksecurity::v1::CreateAuthorizationPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateAuthorizationPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networksecurity::v1::AuthorizationPolicy>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -152,8 +155,7 @@ NetworkSecurityConnectionImpl::CreateAuthorizationPolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networksecurity::v1::AuthorizationPolicy>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateAuthorizationPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -162,9 +164,12 @@ NetworkSecurityConnectionImpl::UpdateAuthorizationPolicy(
     google::cloud::networksecurity::v1::UpdateAuthorizationPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateAuthorizationPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networksecurity::v1::AuthorizationPolicy>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -189,8 +194,7 @@ NetworkSecurityConnectionImpl::UpdateAuthorizationPolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networksecurity::v1::AuthorizationPolicy>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateAuthorizationPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -199,9 +203,12 @@ NetworkSecurityConnectionImpl::DeleteAuthorizationPolicy(
     google::cloud::networksecurity::v1::DeleteAuthorizationPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteAuthorizationPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networksecurity::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -226,8 +233,7 @@ NetworkSecurityConnectionImpl::DeleteAuthorizationPolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::networksecurity::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteAuthorizationPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -286,9 +292,12 @@ NetworkSecurityConnectionImpl::CreateServerTlsPolicy(
     google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateServerTlsPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networksecurity::v1::ServerTlsPolicy>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -313,8 +322,7 @@ NetworkSecurityConnectionImpl::CreateServerTlsPolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networksecurity::v1::ServerTlsPolicy>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateServerTlsPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -323,9 +331,12 @@ NetworkSecurityConnectionImpl::UpdateServerTlsPolicy(
     google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateServerTlsPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networksecurity::v1::ServerTlsPolicy>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -350,8 +361,7 @@ NetworkSecurityConnectionImpl::UpdateServerTlsPolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networksecurity::v1::ServerTlsPolicy>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateServerTlsPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -360,9 +370,12 @@ NetworkSecurityConnectionImpl::DeleteServerTlsPolicy(
     google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteServerTlsPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networksecurity::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -387,8 +400,7 @@ NetworkSecurityConnectionImpl::DeleteServerTlsPolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::networksecurity::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteServerTlsPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -447,9 +459,12 @@ NetworkSecurityConnectionImpl::CreateClientTlsPolicy(
     google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateClientTlsPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networksecurity::v1::ClientTlsPolicy>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -474,8 +489,7 @@ NetworkSecurityConnectionImpl::CreateClientTlsPolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networksecurity::v1::ClientTlsPolicy>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateClientTlsPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -484,9 +498,12 @@ NetworkSecurityConnectionImpl::UpdateClientTlsPolicy(
     google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateClientTlsPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networksecurity::v1::ClientTlsPolicy>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -511,8 +528,7 @@ NetworkSecurityConnectionImpl::UpdateClientTlsPolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::networksecurity::v1::ClientTlsPolicy>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateClientTlsPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -521,9 +537,12 @@ NetworkSecurityConnectionImpl::DeleteClientTlsPolicy(
     google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteClientTlsPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::networksecurity::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -548,8 +567,7 @@ NetworkSecurityConnectionImpl::DeleteClientTlsPolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::networksecurity::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteClientTlsPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

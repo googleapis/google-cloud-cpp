@@ -84,9 +84,12 @@ future<StatusOr<google::cloud::policysimulator::v1::Replay>>
 SimulatorConnectionImpl::CreateReplay(
     google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateReplay(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::policysimulator::v1::Replay>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -111,8 +114,7 @@ SimulatorConnectionImpl::CreateReplay(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::policysimulator::v1::Replay>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateReplay(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

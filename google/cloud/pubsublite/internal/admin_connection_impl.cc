@@ -292,9 +292,12 @@ future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
 AdminServiceConnectionImpl::SeekSubscription(
     google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->SeekSubscription(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::pubsublite::v1::SeekSubscriptionResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -319,8 +322,7 @@ AdminServiceConnectionImpl::SeekSubscription(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::pubsublite::v1::SeekSubscriptionResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->SeekSubscription(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -452,9 +454,11 @@ future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
 AdminServiceConnectionImpl::AsyncGetTopicPartitions(
     google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->GetTopicPartitions(request_copy);
   return google::cloud::internal::AsyncRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetTopicPartitions(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       background_->cq(),
       [stub = stub_](
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
@@ -462,7 +466,7 @@ AdminServiceConnectionImpl::AsyncGetTopicPartitions(
               request) {
         return stub->AsyncGetTopicPartitions(cq, std::move(context), request);
       },
-      request, __func__);
+      std::move(request_copy), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

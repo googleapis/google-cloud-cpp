@@ -69,9 +69,12 @@ future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
 ServiceUsageConnectionImpl::EnableService(
     google::api::serviceusage::v1::EnableServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->EnableService(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::serviceusage::v1::EnableServiceResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -95,8 +98,7 @@ ServiceUsageConnectionImpl::EnableService(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::api::serviceusage::v1::EnableServiceResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->EnableService(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -104,9 +106,12 @@ future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
 ServiceUsageConnectionImpl::DisableService(
     google::api::serviceusage::v1::DisableServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DisableService(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::serviceusage::v1::DisableServiceResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -130,8 +135,7 @@ ServiceUsageConnectionImpl::DisableService(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::api::serviceusage::v1::DisableServiceResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DisableService(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -186,9 +190,12 @@ future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
 ServiceUsageConnectionImpl::BatchEnableServices(
     google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchEnableServices(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::serviceusage::v1::BatchEnableServicesResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -213,8 +220,7 @@ ServiceUsageConnectionImpl::BatchEnableServices(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::api::serviceusage::v1::BatchEnableServicesResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->BatchEnableServices(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

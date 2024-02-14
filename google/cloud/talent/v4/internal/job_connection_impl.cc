@@ -78,9 +78,12 @@ future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
 JobServiceConnectionImpl::BatchCreateJobs(
     google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchCreateJobs(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::talent::v4::BatchCreateJobsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -104,8 +107,7 @@ JobServiceConnectionImpl::BatchCreateJobs(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::talent::v4::BatchCreateJobsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->BatchCreateJobs(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -139,9 +141,12 @@ future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
 JobServiceConnectionImpl::BatchUpdateJobs(
     google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchUpdateJobs(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::talent::v4::BatchUpdateJobsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -165,8 +170,7 @@ JobServiceConnectionImpl::BatchUpdateJobs(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::talent::v4::BatchUpdateJobsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->BatchUpdateJobs(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -187,9 +191,12 @@ future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
 JobServiceConnectionImpl::BatchDeleteJobs(
     google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchDeleteJobs(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::talent::v4::BatchDeleteJobsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -213,8 +220,7 @@ JobServiceConnectionImpl::BatchDeleteJobs(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::talent::v4::BatchDeleteJobsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->BatchDeleteJobs(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

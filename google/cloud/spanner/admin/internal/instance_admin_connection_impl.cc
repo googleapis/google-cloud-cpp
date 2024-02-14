@@ -119,9 +119,12 @@ InstanceAdminConnectionImpl::CreateInstanceConfig(
     google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateInstanceConfig(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::spanner::admin::instance::v1::InstanceConfig>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -146,8 +149,7 @@ InstanceAdminConnectionImpl::CreateInstanceConfig(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::spanner::admin::instance::v1::InstanceConfig>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateInstanceConfig(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -156,9 +158,12 @@ InstanceAdminConnectionImpl::UpdateInstanceConfig(
     google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateInstanceConfig(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::spanner::admin::instance::v1::InstanceConfig>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -183,8 +188,7 @@ InstanceAdminConnectionImpl::UpdateInstanceConfig(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::spanner::admin::instance::v1::InstanceConfig>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateInstanceConfig(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -291,9 +295,12 @@ InstanceAdminConnectionImpl::CreateInstance(
     google::spanner::admin::instance::v1::CreateInstanceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::spanner::admin::instance::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -318,8 +325,7 @@ InstanceAdminConnectionImpl::CreateInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::spanner::admin::instance::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -328,9 +334,12 @@ InstanceAdminConnectionImpl::UpdateInstance(
     google::spanner::admin::instance::v1::UpdateInstanceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::spanner::admin::instance::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -355,8 +364,7 @@ InstanceAdminConnectionImpl::UpdateInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::spanner::admin::instance::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

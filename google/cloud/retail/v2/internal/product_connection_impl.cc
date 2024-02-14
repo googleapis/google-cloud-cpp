@@ -155,9 +155,12 @@ future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
 ProductServiceConnectionImpl::ImportProducts(
     google::cloud::retail::v2::ImportProductsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportProducts(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::ImportProductsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -181,8 +184,7 @@ ProductServiceConnectionImpl::ImportProducts(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::retail::v2::ImportProductsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportProducts(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -190,9 +192,12 @@ future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
 ProductServiceConnectionImpl::SetInventory(
     google::cloud::retail::v2::SetInventoryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->SetInventory(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::SetInventoryResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -216,8 +221,7 @@ ProductServiceConnectionImpl::SetInventory(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::retail::v2::SetInventoryResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->SetInventory(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -225,9 +229,12 @@ future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
 ProductServiceConnectionImpl::AddFulfillmentPlaces(
     google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->AddFulfillmentPlaces(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::AddFulfillmentPlacesResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -252,8 +259,7 @@ ProductServiceConnectionImpl::AddFulfillmentPlaces(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::retail::v2::AddFulfillmentPlacesResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AddFulfillmentPlaces(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -261,9 +267,12 @@ future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
 ProductServiceConnectionImpl::RemoveFulfillmentPlaces(
     google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RemoveFulfillmentPlaces(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -288,8 +297,7 @@ ProductServiceConnectionImpl::RemoveFulfillmentPlaces(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RemoveFulfillmentPlaces(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -297,9 +305,12 @@ future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
 ProductServiceConnectionImpl::AddLocalInventories(
     google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->AddLocalInventories(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::AddLocalInventoriesResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -324,8 +335,7 @@ ProductServiceConnectionImpl::AddLocalInventories(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::retail::v2::AddLocalInventoriesResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AddLocalInventories(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -333,9 +343,12 @@ future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
 ProductServiceConnectionImpl::RemoveLocalInventories(
     google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RemoveLocalInventories(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::RemoveLocalInventoriesResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -360,8 +373,7 @@ ProductServiceConnectionImpl::RemoveLocalInventories(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::retail::v2::RemoveLocalInventoriesResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RemoveLocalInventories(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

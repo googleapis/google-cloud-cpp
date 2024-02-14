@@ -72,9 +72,12 @@ AttachedClustersConnectionImpl::CreateAttachedCluster(
     google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateAttachedCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkemulticloud::v1::AttachedCluster>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -99,8 +102,7 @@ AttachedClustersConnectionImpl::CreateAttachedCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkemulticloud::v1::AttachedCluster>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateAttachedCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -109,9 +111,12 @@ AttachedClustersConnectionImpl::UpdateAttachedCluster(
     google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateAttachedCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkemulticloud::v1::AttachedCluster>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -136,8 +141,7 @@ AttachedClustersConnectionImpl::UpdateAttachedCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkemulticloud::v1::AttachedCluster>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateAttachedCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -146,9 +150,12 @@ AttachedClustersConnectionImpl::ImportAttachedCluster(
     google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportAttachedCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkemulticloud::v1::AttachedCluster>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -173,8 +180,7 @@ AttachedClustersConnectionImpl::ImportAttachedCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkemulticloud::v1::AttachedCluster>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportAttachedCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -234,9 +240,12 @@ AttachedClustersConnectionImpl::DeleteAttachedCluster(
     google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteAttachedCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkemulticloud::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -261,8 +270,7 @@ AttachedClustersConnectionImpl::DeleteAttachedCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::gkemulticloud::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteAttachedCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

@@ -200,9 +200,12 @@ future<StatusOr<google::storagetransfer::v1::TransferOperation>>
 StorageTransferServiceConnectionImpl::RunTransferJob(
     google::storagetransfer::v1::RunTransferJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RunTransferJob(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::storagetransfer::v1::TransferOperation>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -226,8 +229,7 @@ StorageTransferServiceConnectionImpl::RunTransferJob(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::storagetransfer::v1::TransferOperation>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RunTransferJob(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

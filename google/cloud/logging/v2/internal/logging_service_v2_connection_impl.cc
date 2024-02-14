@@ -186,15 +186,18 @@ future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
 LoggingServiceV2ConnectionImpl::AsyncWriteLogEntries(
     google::logging::v2::WriteLogEntriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->WriteLogEntries(request_copy);
   return google::cloud::internal::AsyncRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->WriteLogEntries(request), background_->cq(),
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      background_->cq(),
       [stub = stub_](
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
           google::logging::v2::WriteLogEntriesRequest const& request) {
         return stub->AsyncWriteLogEntries(cq, std::move(context), request);
       },
-      request, __func__);
+      std::move(request_copy), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -95,9 +95,12 @@ future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
 UserEventServiceConnectionImpl::PurgeUserEvents(
     google::cloud::retail::v2::PurgeUserEventsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->PurgeUserEvents(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::PurgeUserEventsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -121,8 +124,7 @@ UserEventServiceConnectionImpl::PurgeUserEvents(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::retail::v2::PurgeUserEventsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->PurgeUserEvents(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -130,9 +132,12 @@ future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
 UserEventServiceConnectionImpl::ImportUserEvents(
     google::cloud::retail::v2::ImportUserEventsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportUserEvents(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::ImportUserEventsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -156,8 +161,7 @@ UserEventServiceConnectionImpl::ImportUserEvents(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::retail::v2::ImportUserEventsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportUserEvents(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -165,9 +169,12 @@ future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
 UserEventServiceConnectionImpl::RejoinUserEvents(
     google::cloud::retail::v2::RejoinUserEventsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RejoinUserEvents(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::RejoinUserEventsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -191,8 +198,7 @@ UserEventServiceConnectionImpl::RejoinUserEvents(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::retail::v2::RejoinUserEventsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RejoinUserEvents(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

@@ -127,9 +127,12 @@ future<StatusOr<google::cloud::metastore::v1::Federation>>
 DataprocMetastoreFederationConnectionImpl::CreateFederation(
     google::cloud::metastore::v1::CreateFederationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateFederation(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::metastore::v1::Federation>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -154,8 +157,7 @@ DataprocMetastoreFederationConnectionImpl::CreateFederation(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::metastore::v1::Federation>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateFederation(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -163,9 +165,12 @@ future<StatusOr<google::cloud::metastore::v1::Federation>>
 DataprocMetastoreFederationConnectionImpl::UpdateFederation(
     google::cloud::metastore::v1::UpdateFederationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateFederation(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::metastore::v1::Federation>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -190,8 +195,7 @@ DataprocMetastoreFederationConnectionImpl::UpdateFederation(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::metastore::v1::Federation>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateFederation(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -199,9 +203,12 @@ future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
 DataprocMetastoreFederationConnectionImpl::DeleteFederation(
     google::cloud::metastore::v1::DeleteFederationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteFederation(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::metastore::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -226,8 +233,7 @@ DataprocMetastoreFederationConnectionImpl::DeleteFederation(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::metastore::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteFederation(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

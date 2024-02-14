@@ -71,9 +71,12 @@ OsConfigZonalServiceConnectionImpl::CreateOSPolicyAssignment(
     google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateOSPolicyAssignment(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::osconfig::v1::OSPolicyAssignment>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -98,8 +101,7 @@ OsConfigZonalServiceConnectionImpl::CreateOSPolicyAssignment(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::osconfig::v1::OSPolicyAssignment>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateOSPolicyAssignment(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -108,9 +110,12 @@ OsConfigZonalServiceConnectionImpl::UpdateOSPolicyAssignment(
     google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateOSPolicyAssignment(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::osconfig::v1::OSPolicyAssignment>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -135,8 +140,7 @@ OsConfigZonalServiceConnectionImpl::UpdateOSPolicyAssignment(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::osconfig::v1::OSPolicyAssignment>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateOSPolicyAssignment(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -233,9 +237,12 @@ OsConfigZonalServiceConnectionImpl::DeleteOSPolicyAssignment(
     google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteOSPolicyAssignment(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -260,8 +267,7 @@ OsConfigZonalServiceConnectionImpl::DeleteOSPolicyAssignment(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::osconfig::v1::OSPolicyAssignmentOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteOSPolicyAssignment(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

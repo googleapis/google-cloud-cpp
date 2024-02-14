@@ -107,9 +107,12 @@ future<StatusOr<google::cloud::ids::v1::Endpoint>>
 IDSConnectionImpl::CreateEndpoint(
     google::cloud::ids::v1::CreateEndpointRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateEndpoint(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::ids::v1::Endpoint>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -133,8 +136,7 @@ IDSConnectionImpl::CreateEndpoint(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::ids::v1::Endpoint>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateEndpoint(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -142,9 +144,12 @@ future<StatusOr<google::cloud::ids::v1::OperationMetadata>>
 IDSConnectionImpl::DeleteEndpoint(
     google::cloud::ids::v1::DeleteEndpointRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteEndpoint(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::ids::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -168,8 +173,7 @@ IDSConnectionImpl::DeleteEndpoint(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::ids::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteEndpoint(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

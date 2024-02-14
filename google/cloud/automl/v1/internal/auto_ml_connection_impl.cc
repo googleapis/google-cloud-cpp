@@ -65,9 +65,12 @@ future<StatusOr<google::cloud::automl::v1::Dataset>>
 AutoMlConnectionImpl::CreateDataset(
     google::cloud::automl::v1::CreateDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateDataset(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::Dataset>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -91,8 +94,7 @@ AutoMlConnectionImpl::CreateDataset(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::automl::v1::Dataset>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateDataset(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -160,9 +162,12 @@ future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::DeleteDataset(
     google::cloud::automl::v1::DeleteDatasetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteDataset(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -186,8 +191,7 @@ AutoMlConnectionImpl::DeleteDataset(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::automl::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteDataset(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -195,9 +199,12 @@ future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::ImportData(
     google::cloud::automl::v1::ImportDataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportData(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -220,8 +227,7 @@ AutoMlConnectionImpl::ImportData(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::automl::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportData(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -229,9 +235,12 @@ future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::ExportData(
     google::cloud::automl::v1::ExportDataRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ExportData(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -254,8 +263,7 @@ AutoMlConnectionImpl::ExportData(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::automl::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ExportData(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -278,9 +286,12 @@ future<StatusOr<google::cloud::automl::v1::Model>>
 AutoMlConnectionImpl::CreateModel(
     google::cloud::automl::v1::CreateModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateModel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::Model>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -303,8 +314,7 @@ AutoMlConnectionImpl::CreateModel(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::automl::v1::Model>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateModel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -356,9 +366,12 @@ future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::DeleteModel(
     google::cloud::automl::v1::DeleteModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteModel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -381,8 +394,7 @@ AutoMlConnectionImpl::DeleteModel(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::automl::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteModel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -403,9 +415,12 @@ future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::DeployModel(
     google::cloud::automl::v1::DeployModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeployModel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -428,8 +443,7 @@ AutoMlConnectionImpl::DeployModel(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::automl::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeployModel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -437,9 +451,12 @@ future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::UndeployModel(
     google::cloud::automl::v1::UndeployModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UndeployModel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -463,8 +480,7 @@ AutoMlConnectionImpl::UndeployModel(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::automl::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UndeployModel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -472,9 +488,12 @@ future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::ExportModel(
     google::cloud::automl::v1::ExportModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ExportModel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -497,8 +516,7 @@ AutoMlConnectionImpl::ExportModel(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::automl::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ExportModel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
