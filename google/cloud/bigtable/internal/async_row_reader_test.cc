@@ -43,6 +43,7 @@ using ::google::cloud::bigtable_internal::AsyncRowReader;
 using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
@@ -160,7 +161,7 @@ TEST_F(AsyncRowReaderTest, Success) {
                          on_row.AsStdFunction(), on_finish.AsStdFunction(),
                          bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
                          bigtable::Filter::PassAllFilter(), false,
-                         std::move(retry), std::move(mock_b));
+                         std::move(retry), std::move(mock_b), true);
 }
 
 /// @test Verify that reading works when the futures are not immediately
@@ -228,7 +229,7 @@ TEST_F(AsyncRowReaderTest, SuccessDelayedFuture) {
                          on_row.AsStdFunction(), on_finish.AsStdFunction(),
                          bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
                          bigtable::Filter::PassAllFilter(), false,
-                         std::move(retry), std::move(mock_b));
+                         std::move(retry), std::move(mock_b), false);
 
   // Satisfy the futures
   p1.set_value(true);
@@ -286,7 +287,7 @@ TEST_F(AsyncRowReaderTest, ResponseInMultipleChunks) {
                          on_row.AsStdFunction(), on_finish.AsStdFunction(),
                          bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
                          bigtable::Filter::PassAllFilter(), false,
-                         std::move(retry), std::move(mock_b));
+                         std::move(retry), std::move(mock_b), false);
 }
 
 /// @test Verify that parser fails if the stream finishes prematurely.
@@ -337,7 +338,7 @@ TEST_F(AsyncRowReaderTest, ParserEofFailsOnUnfinishedRow) {
                          on_row.AsStdFunction(), on_finish.AsStdFunction(),
                          bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
                          bigtable::Filter::PassAllFilter(), false,
-                         std::move(retry), std::move(mock_b));
+                         std::move(retry), std::move(mock_b), false);
 }
 
 /// @test Check that we ignore HandleEndOfStream errors if enough rows were read
@@ -394,7 +395,7 @@ TEST_F(AsyncRowReaderTest, ParserEofDoesntFailOnUnfinishedRowIfRowLimit) {
                          on_row.AsStdFunction(), on_finish.AsStdFunction(),
                          bigtable::RowSet(), 1,
                          bigtable::Filter::PassAllFilter(), false,
-                         std::move(retry), std::move(mock_b));
+                         std::move(retry), std::move(mock_b), false);
 }
 
 /// @test Verify that permanent errors are not retried and properly passed.
@@ -438,7 +439,7 @@ TEST_F(AsyncRowReaderTest, PermanentFailure) {
                          on_row.AsStdFunction(), on_finish.AsStdFunction(),
                          bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
                          bigtable::Filter::PassAllFilter(), false,
-                         std::move(retry), std::move(mock_b));
+                         std::move(retry), std::move(mock_b), false);
 }
 
 TEST_F(AsyncRowReaderTest, RetryPolicyExhausted) {
@@ -492,7 +493,95 @@ TEST_F(AsyncRowReaderTest, RetryPolicyExhausted) {
                          on_row.AsStdFunction(), on_finish.AsStdFunction(),
                          bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
                          bigtable::Filter::PassAllFilter(), false,
-                         std::move(retry), std::move(mock_b));
+                         std::move(retry), std::move(mock_b), false);
+}
+
+TEST_F(AsyncRowReaderTest, RetryInfoHeeded) {
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer)
+      .WillOnce(Return(ByMove(make_ready_future(
+          make_status_or(std::chrono::system_clock::now())))));
+  CompletionQueue cq(mock_cq);
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([this](Unused, auto context, v2::ReadRowsRequest const&) {
+        metadata_fixture_.SetServerMetadata(*context, {});
+        auto stream = std::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start)
+            .WillOnce(Return(ByMove(make_ready_future(false))));
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          auto status = internal::PermissionDeniedError("try again");
+          internal::SetRetryInfo(status, internal::RetryInfo{ms(0)});
+          return make_ready_future(status);
+        });
+        return stream;
+      })
+      .WillOnce([](Unused, Unused, v2::ReadRowsRequest const&) {
+        auto stream = std::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start)
+            .WillOnce(Return(ByMove(make_ready_future(true))));
+        EXPECT_CALL(*stream, Read)
+            .WillOnce(Return(ByMove(make_ready_future(EndOfStream()))));
+        EXPECT_CALL(*stream, Finish)
+            .WillOnce(Return(ByMove(make_ready_future(Status()))));
+        return stream;
+      });
+
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call).Times(0);
+
+  MockFunction<void(Status const&)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_STATUS_OK(status);
+  });
+
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
+
+  AsyncRowReader::Create(cq, mock, kAppProfile, kTableName,
+                         on_row.AsStdFunction(), on_finish.AsStdFunction(),
+                         bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+                         bigtable::Filter::PassAllFilter(), false,
+                         std::move(retry), std::move(mock_b), true);
+}
+
+TEST_F(AsyncRowReaderTest, RetryInfoIgnored) {
+  CompletionQueue cq;
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([this](Unused, auto context, v2::ReadRowsRequest const&) {
+        metadata_fixture_.SetServerMetadata(*context, {});
+        auto stream = std::make_unique<MockAsyncReadRowsStream>();
+        EXPECT_CALL(*stream, Start)
+            .WillOnce(Return(ByMove(make_ready_future(false))));
+        EXPECT_CALL(*stream, Finish).WillOnce([] {
+          auto status = internal::PermissionDeniedError("try again");
+          internal::SetRetryInfo(status, internal::RetryInfo{ms(0)});
+          return make_ready_future(status);
+        });
+        return stream;
+      });
+
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call).Times(0);
+
+  MockFunction<void(Status const&)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
+  });
+
+  auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
+
+  AsyncRowReader::Create(cq, mock, kAppProfile, kTableName,
+                         on_row.AsStdFunction(), on_finish.AsStdFunction(),
+                         bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
+                         bigtable::Filter::PassAllFilter(), false,
+                         std::move(retry), std::move(mock_b), false);
 }
 
 /// @test Verify that retries do not ask for rows we have already read.
@@ -577,7 +666,7 @@ TEST_F(AsyncRowReaderTest, RetrySkipsReadRows) {
       cq, mock, kAppProfile, kTableName, on_row.AsStdFunction(),
       on_finish.AsStdFunction(), bigtable::RowSet("r1", "r2"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, std::move(retry), std::move(mock_b));
+      false, std::move(retry), std::move(mock_b), false);
 }
 
 /// @test Verify that we do not retry at all if the rowset will be empty.
@@ -633,7 +722,7 @@ TEST_F(AsyncRowReaderTest, NoRetryIfRowSetIsEmpty) {
       cq, mock, kAppProfile, kTableName, on_row.AsStdFunction(),
       on_finish.AsStdFunction(), bigtable::RowSet("r1"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, std::move(retry), std::move(mock_b));
+      false, std::move(retry), std::move(mock_b), false);
 }
 
 /// @test Verify that the last scanned row is respected.
@@ -724,7 +813,7 @@ TEST_F(AsyncRowReaderTest, LastScannedRowKeyIsRespected) {
       cq, mock, kAppProfile, kTableName, on_row.AsStdFunction(),
       on_finish.AsStdFunction(), bigtable::RowSet("r1", "r2", "r3"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      false, std::move(retry), std::move(mock_b));
+      false, std::move(retry), std::move(mock_b), false);
 }
 
 /// @test Verify proper handling of bogus responses from the service.
@@ -779,7 +868,7 @@ TEST_F(AsyncRowReaderTest, ParserFailsOnOutOfOrderRowKeys) {
                          on_row.AsStdFunction(), on_finish.AsStdFunction(),
                          bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
                          bigtable::Filter::PassAllFilter(), false,
-                         std::move(retry), std::move(mock_b));
+                         std::move(retry), std::move(mock_b), false);
 }
 
 /// @test Verify canceling the stream by satisfying the futures with false
@@ -873,7 +962,7 @@ TEST_P(AsyncRowReaderExceptionTest, CancelMidStream) {
                          on_row.AsStdFunction(), on_finish.AsStdFunction(),
                          bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
                          bigtable::Filter::PassAllFilter(), false,
-                         std::move(retry), std::move(mock_b));
+                         std::move(retry), std::move(mock_b), false);
 }
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -940,7 +1029,7 @@ TEST_F(AsyncRowReaderTest, CancelAfterStreamFinish) {
                          on_row.AsStdFunction(), on_finish.AsStdFunction(),
                          bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
                          bigtable::Filter::PassAllFilter(), false,
-                         std::move(retry), std::move(mock_b));
+                         std::move(retry), std::move(mock_b), false);
 }
 
 /// @test Verify that the recursion described in TryGiveRowToUser is bounded.
@@ -1014,7 +1103,7 @@ TEST_F(AsyncRowReaderTest, DeepStack) {
                          on_row.AsStdFunction(), on_finish.AsStdFunction(),
                          bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
                          bigtable::Filter::PassAllFilter(), false,
-                         std::move(retry), std::move(mock_b));
+                         std::move(retry), std::move(mock_b), false);
 }
 
 TEST_F(AsyncRowReaderTest, TimerErrorEndsLoop) {
@@ -1074,7 +1163,7 @@ TEST_F(AsyncRowReaderTest, TimerErrorEndsLoop) {
                          on_row.AsStdFunction(), on_finish.AsStdFunction(),
                          bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
                          bigtable::Filter::PassAllFilter(), false,
-                         std::move(retry), std::move(mock_b));
+                         std::move(retry), std::move(mock_b), false);
 }
 
 TEST_F(AsyncRowReaderTest, CurrentOptionsContinuedOnRetries) {
@@ -1130,7 +1219,7 @@ TEST_F(AsyncRowReaderTest, CurrentOptionsContinuedOnRetries) {
                          on_row.AsStdFunction(), on_finish.AsStdFunction(),
                          bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
                          bigtable::Filter::PassAllFilter(), false,
-                         std::move(retry), std::move(mock_b));
+                         std::move(retry), std::move(mock_b), false);
 
   // Simulate the timer being satisfied in a thread with different prevailing
   // options than the calling thread.
@@ -1191,7 +1280,7 @@ TEST_F(AsyncRowReaderTest, ReverseScanSuccess) {
                          on_row.AsStdFunction(), on_finish.AsStdFunction(),
                          bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
                          bigtable::Filter::PassAllFilter(), true,
-                         std::move(retry), std::move(mock_b));
+                         std::move(retry), std::move(mock_b), false);
 }
 
 TEST_F(AsyncRowReaderTest, ReverseScanFailsOnIncreasingRowKeyOrder) {
@@ -1244,7 +1333,7 @@ TEST_F(AsyncRowReaderTest, ReverseScanFailsOnIncreasingRowKeyOrder) {
                          on_row.AsStdFunction(), on_finish.AsStdFunction(),
                          bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
                          bigtable::Filter::PassAllFilter(), true,
-                         std::move(retry), std::move(mock_b));
+                         std::move(retry), std::move(mock_b), false);
 }
 
 TEST_F(AsyncRowReaderTest, ReverseScanResumption) {
@@ -1333,7 +1422,7 @@ TEST_F(AsyncRowReaderTest, ReverseScanResumption) {
       cq, mock, kAppProfile, kTableName, on_row.AsStdFunction(),
       on_finish.AsStdFunction(), bigtable::RowSet("r1", "r2", "r3"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
-      true, std::move(retry), std::move(mock_b));
+      true, std::move(retry), std::move(mock_b), false);
 }
 
 TEST_F(AsyncRowReaderTest, BigtableCookie) {
@@ -1389,7 +1478,7 @@ TEST_F(AsyncRowReaderTest, BigtableCookie) {
                          on_row.AsStdFunction(), on_finish.AsStdFunction(),
                          bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
                          bigtable::Filter::PassAllFilter(), false,
-                         std::move(retry), std::move(mock_b));
+                         std::move(retry), std::move(mock_b), false);
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -1426,7 +1515,7 @@ TEST_F(AsyncRowReaderTest, TracedBackoff) {
                          std::move(on_row), std::move(on_finish),
                          bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
                          bigtable::Filter::PassAllFilter(), false,
-                         std::move(retry), std::move(mock_b));
+                         std::move(retry), std::move(mock_b), false);
 
   // Block until the async call has completed.
   p.get_future().get();
@@ -1463,7 +1552,7 @@ TEST_F(AsyncRowReaderTest, CallSpanActiveThroughout) {
                          std::move(on_row), std::move(on_finish),
                          bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
                          bigtable::Filter::PassAllFilter(), false,
-                         std::move(retry), std::move(mock_b));
+                         std::move(retry), std::move(mock_b), false);
 
   // Block until the async call has completed.
   p.get_future().get();
