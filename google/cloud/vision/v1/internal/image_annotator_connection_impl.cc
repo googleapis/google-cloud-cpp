@@ -96,9 +96,12 @@ future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>
 ImageAnnotatorConnectionImpl::AsyncBatchAnnotateImages(
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->AsyncBatchAnnotateImages(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -123,8 +126,7 @@ ImageAnnotatorConnectionImpl::AsyncBatchAnnotateImages(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AsyncBatchAnnotateImages(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -132,9 +134,12 @@ future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>
 ImageAnnotatorConnectionImpl::AsyncBatchAnnotateFiles(
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->AsyncBatchAnnotateFiles(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -159,8 +164,7 @@ ImageAnnotatorConnectionImpl::AsyncBatchAnnotateFiles(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AsyncBatchAnnotateFiles(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

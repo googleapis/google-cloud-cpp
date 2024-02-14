@@ -112,9 +112,12 @@ future<StatusOr<google::cloud::run::v2::Execution>>
 ExecutionsConnectionImpl::DeleteExecution(
     google::cloud::run::v2::DeleteExecutionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteExecution(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::run::v2::Execution>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -138,8 +141,7 @@ ExecutionsConnectionImpl::DeleteExecution(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::run::v2::Execution>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteExecution(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -147,9 +149,12 @@ future<StatusOr<google::cloud::run::v2::Execution>>
 ExecutionsConnectionImpl::CancelExecution(
     google::cloud::run::v2::CancelExecutionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CancelExecution(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::run::v2::Execution>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -173,8 +178,7 @@ ExecutionsConnectionImpl::CancelExecution(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::run::v2::Execution>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CancelExecution(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

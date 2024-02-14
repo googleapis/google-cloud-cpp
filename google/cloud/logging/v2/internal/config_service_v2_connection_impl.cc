@@ -112,9 +112,12 @@ future<StatusOr<google::logging::v2::LogBucket>>
 ConfigServiceV2ConnectionImpl::CreateBucketAsync(
     google::logging::v2::CreateBucketRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateBucketAsync(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::logging::v2::LogBucket>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -138,8 +141,7 @@ ConfigServiceV2ConnectionImpl::CreateBucketAsync(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::logging::v2::LogBucket>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateBucketAsync(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -147,9 +149,12 @@ future<StatusOr<google::logging::v2::LogBucket>>
 ConfigServiceV2ConnectionImpl::UpdateBucketAsync(
     google::logging::v2::UpdateBucketRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateBucketAsync(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::logging::v2::LogBucket>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -173,8 +178,7 @@ ConfigServiceV2ConnectionImpl::UpdateBucketAsync(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::logging::v2::LogBucket>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateBucketAsync(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -406,9 +410,12 @@ future<StatusOr<google::logging::v2::Link>>
 ConfigServiceV2ConnectionImpl::CreateLink(
     google::logging::v2::CreateLinkRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateLink(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::logging::v2::Link>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -431,8 +438,7 @@ ConfigServiceV2ConnectionImpl::CreateLink(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::logging::v2::Link>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateLink(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -440,9 +446,12 @@ future<StatusOr<google::logging::v2::LinkMetadata>>
 ConfigServiceV2ConnectionImpl::DeleteLink(
     google::logging::v2::DeleteLinkRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteLink(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::logging::v2::LinkMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -465,8 +474,7 @@ ConfigServiceV2ConnectionImpl::DeleteLink(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::logging::v2::LinkMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteLink(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -660,9 +668,12 @@ future<StatusOr<google::logging::v2::CopyLogEntriesResponse>>
 ConfigServiceV2ConnectionImpl::CopyLogEntries(
     google::logging::v2::CopyLogEntriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CopyLogEntries(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::logging::v2::CopyLogEntriesResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -686,8 +697,7 @@ ConfigServiceV2ConnectionImpl::CopyLogEntries(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::logging::v2::CopyLogEntriesResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CopyLogEntries(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

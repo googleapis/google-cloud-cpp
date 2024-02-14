@@ -114,9 +114,12 @@ future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminConnectionImpl::CreateCluster(
     google::cloud::alloydb::v1::CreateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::alloydb::v1::Cluster>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -140,8 +143,7 @@ AlloyDBAdminConnectionImpl::CreateCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::alloydb::v1::Cluster>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -149,9 +151,12 @@ future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminConnectionImpl::UpdateCluster(
     google::cloud::alloydb::v1::UpdateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::alloydb::v1::Cluster>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -175,8 +180,7 @@ AlloyDBAdminConnectionImpl::UpdateCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::alloydb::v1::Cluster>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -184,9 +188,12 @@ future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
 AlloyDBAdminConnectionImpl::DeleteCluster(
     google::cloud::alloydb::v1::DeleteClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::alloydb::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -210,8 +217,7 @@ AlloyDBAdminConnectionImpl::DeleteCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::alloydb::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -219,9 +225,12 @@ future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminConnectionImpl::PromoteCluster(
     google::cloud::alloydb::v1::PromoteClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->PromoteCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::alloydb::v1::Cluster>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -245,8 +254,7 @@ AlloyDBAdminConnectionImpl::PromoteCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::alloydb::v1::Cluster>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->PromoteCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -254,9 +262,12 @@ future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminConnectionImpl::RestoreCluster(
     google::cloud::alloydb::v1::RestoreClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RestoreCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::alloydb::v1::Cluster>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -280,8 +291,7 @@ AlloyDBAdminConnectionImpl::RestoreCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::alloydb::v1::Cluster>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RestoreCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -289,9 +299,12 @@ future<StatusOr<google::cloud::alloydb::v1::Cluster>>
 AlloyDBAdminConnectionImpl::CreateSecondaryCluster(
     google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateSecondaryCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::alloydb::v1::Cluster>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -316,8 +329,7 @@ AlloyDBAdminConnectionImpl::CreateSecondaryCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::alloydb::v1::Cluster>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateSecondaryCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -372,9 +384,12 @@ future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminConnectionImpl::CreateInstance(
     google::cloud::alloydb::v1::CreateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::alloydb::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -398,8 +413,7 @@ AlloyDBAdminConnectionImpl::CreateInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::alloydb::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -407,9 +421,12 @@ future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminConnectionImpl::CreateSecondaryInstance(
     google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateSecondaryInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::alloydb::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -434,8 +451,7 @@ AlloyDBAdminConnectionImpl::CreateSecondaryInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::alloydb::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateSecondaryInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -443,9 +459,12 @@ future<StatusOr<google::cloud::alloydb::v1::BatchCreateInstancesResponse>>
 AlloyDBAdminConnectionImpl::BatchCreateInstances(
     google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchCreateInstances(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::alloydb::v1::BatchCreateInstancesResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -470,8 +489,7 @@ AlloyDBAdminConnectionImpl::BatchCreateInstances(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::alloydb::v1::BatchCreateInstancesResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->BatchCreateInstances(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -479,9 +497,12 @@ future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminConnectionImpl::UpdateInstance(
     google::cloud::alloydb::v1::UpdateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::alloydb::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -505,8 +526,7 @@ AlloyDBAdminConnectionImpl::UpdateInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::alloydb::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -514,9 +534,12 @@ future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
 AlloyDBAdminConnectionImpl::DeleteInstance(
     google::cloud::alloydb::v1::DeleteInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::alloydb::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -540,8 +563,7 @@ AlloyDBAdminConnectionImpl::DeleteInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::alloydb::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -549,9 +571,12 @@ future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminConnectionImpl::FailoverInstance(
     google::cloud::alloydb::v1::FailoverInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->FailoverInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::alloydb::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -575,8 +600,7 @@ AlloyDBAdminConnectionImpl::FailoverInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::alloydb::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->FailoverInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -584,9 +608,12 @@ future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminConnectionImpl::InjectFault(
     google::cloud::alloydb::v1::InjectFaultRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->InjectFault(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::alloydb::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -609,8 +636,7 @@ AlloyDBAdminConnectionImpl::InjectFault(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::alloydb::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->InjectFault(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -618,9 +644,12 @@ future<StatusOr<google::cloud::alloydb::v1::Instance>>
 AlloyDBAdminConnectionImpl::RestartInstance(
     google::cloud::alloydb::v1::RestartInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RestartInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::alloydb::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -644,8 +673,7 @@ AlloyDBAdminConnectionImpl::RestartInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::alloydb::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RestartInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -700,9 +728,12 @@ future<StatusOr<google::cloud::alloydb::v1::Backup>>
 AlloyDBAdminConnectionImpl::CreateBackup(
     google::cloud::alloydb::v1::CreateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateBackup(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::alloydb::v1::Backup>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -726,8 +757,7 @@ AlloyDBAdminConnectionImpl::CreateBackup(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::alloydb::v1::Backup>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateBackup(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -735,9 +765,12 @@ future<StatusOr<google::cloud::alloydb::v1::Backup>>
 AlloyDBAdminConnectionImpl::UpdateBackup(
     google::cloud::alloydb::v1::UpdateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateBackup(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::alloydb::v1::Backup>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -761,8 +794,7 @@ AlloyDBAdminConnectionImpl::UpdateBackup(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::alloydb::v1::Backup>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateBackup(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -770,9 +802,12 @@ future<StatusOr<google::cloud::alloydb::v1::OperationMetadata>>
 AlloyDBAdminConnectionImpl::DeleteBackup(
     google::cloud::alloydb::v1::DeleteBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteBackup(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::alloydb::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -796,8 +831,7 @@ AlloyDBAdminConnectionImpl::DeleteBackup(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::alloydb::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteBackup(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

@@ -130,9 +130,12 @@ future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
 TagValuesConnectionImpl::CreateTagValue(
     google::cloud::resourcemanager::v3::CreateTagValueRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateTagValue(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::TagValue>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -157,8 +160,7 @@ TagValuesConnectionImpl::CreateTagValue(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::resourcemanager::v3::TagValue>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateTagValue(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -166,9 +168,12 @@ future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
 TagValuesConnectionImpl::UpdateTagValue(
     google::cloud::resourcemanager::v3::UpdateTagValueRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateTagValue(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::TagValue>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -193,8 +198,7 @@ TagValuesConnectionImpl::UpdateTagValue(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::resourcemanager::v3::TagValue>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateTagValue(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -202,9 +206,12 @@ future<StatusOr<google::cloud::resourcemanager::v3::TagValue>>
 TagValuesConnectionImpl::DeleteTagValue(
     google::cloud::resourcemanager::v3::DeleteTagValueRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteTagValue(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::TagValue>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -229,8 +236,7 @@ TagValuesConnectionImpl::DeleteTagValue(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::resourcemanager::v3::TagValue>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteTagValue(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

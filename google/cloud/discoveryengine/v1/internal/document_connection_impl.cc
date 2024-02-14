@@ -154,9 +154,12 @@ future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
 DocumentServiceConnectionImpl::ImportDocuments(
     google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportDocuments(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::discoveryengine::v1::ImportDocumentsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -181,8 +184,7 @@ DocumentServiceConnectionImpl::ImportDocuments(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::discoveryengine::v1::ImportDocumentsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportDocuments(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -190,9 +192,12 @@ future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
 DocumentServiceConnectionImpl::PurgeDocuments(
     google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->PurgeDocuments(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::discoveryengine::v1::PurgeDocumentsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -217,8 +222,7 @@ DocumentServiceConnectionImpl::PurgeDocuments(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::discoveryengine::v1::PurgeDocumentsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->PurgeDocuments(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

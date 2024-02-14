@@ -112,9 +112,12 @@ future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcConnectionImpl::CreateTrigger(
     google::cloud::eventarc::v1::CreateTriggerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateTrigger(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::eventarc::v1::Trigger>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -138,8 +141,7 @@ EventarcConnectionImpl::CreateTrigger(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::eventarc::v1::Trigger>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateTrigger(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -147,9 +149,12 @@ future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcConnectionImpl::UpdateTrigger(
     google::cloud::eventarc::v1::UpdateTriggerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateTrigger(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::eventarc::v1::Trigger>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -173,8 +178,7 @@ EventarcConnectionImpl::UpdateTrigger(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::eventarc::v1::Trigger>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateTrigger(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -182,9 +186,12 @@ future<StatusOr<google::cloud::eventarc::v1::Trigger>>
 EventarcConnectionImpl::DeleteTrigger(
     google::cloud::eventarc::v1::DeleteTriggerRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteTrigger(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::eventarc::v1::Trigger>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -208,8 +215,7 @@ EventarcConnectionImpl::DeleteTrigger(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::eventarc::v1::Trigger>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteTrigger(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -264,9 +270,12 @@ future<StatusOr<google::cloud::eventarc::v1::Channel>>
 EventarcConnectionImpl::CreateChannel(
     google::cloud::eventarc::v1::CreateChannelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateChannel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::eventarc::v1::Channel>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -290,8 +299,7 @@ EventarcConnectionImpl::CreateChannel(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::eventarc::v1::Channel>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateChannel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -299,9 +307,12 @@ future<StatusOr<google::cloud::eventarc::v1::Channel>>
 EventarcConnectionImpl::UpdateChannel(
     google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateChannel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::eventarc::v1::Channel>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -325,8 +336,7 @@ EventarcConnectionImpl::UpdateChannel(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::eventarc::v1::Channel>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateChannel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -334,9 +344,12 @@ future<StatusOr<google::cloud::eventarc::v1::Channel>>
 EventarcConnectionImpl::DeleteChannel(
     google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteChannel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::eventarc::v1::Channel>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -360,8 +373,7 @@ EventarcConnectionImpl::DeleteChannel(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::eventarc::v1::Channel>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteChannel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -466,9 +478,12 @@ EventarcConnectionImpl::CreateChannelConnection(
     google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateChannelConnection(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::eventarc::v1::ChannelConnection>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -493,8 +508,7 @@ EventarcConnectionImpl::CreateChannelConnection(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::eventarc::v1::ChannelConnection>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateChannelConnection(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -503,9 +517,12 @@ EventarcConnectionImpl::DeleteChannelConnection(
     google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteChannelConnection(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::eventarc::v1::ChannelConnection>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -530,8 +547,7 @@ EventarcConnectionImpl::DeleteChannelConnection(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::eventarc::v1::ChannelConnection>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteChannelConnection(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

@@ -118,9 +118,12 @@ DatastreamConnectionImpl::CreateConnectionProfile(
     google::cloud::datastream::v1::CreateConnectionProfileRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateConnectionProfile(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datastream::v1::ConnectionProfile>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -145,8 +148,7 @@ DatastreamConnectionImpl::CreateConnectionProfile(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::datastream::v1::ConnectionProfile>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateConnectionProfile(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -155,9 +157,12 @@ DatastreamConnectionImpl::UpdateConnectionProfile(
     google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateConnectionProfile(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datastream::v1::ConnectionProfile>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -182,8 +187,7 @@ DatastreamConnectionImpl::UpdateConnectionProfile(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::datastream::v1::ConnectionProfile>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateConnectionProfile(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -192,9 +196,12 @@ DatastreamConnectionImpl::DeleteConnectionProfile(
     google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteConnectionProfile(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datastream::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -219,8 +226,7 @@ DatastreamConnectionImpl::DeleteConnectionProfile(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::datastream::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteConnectionProfile(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -290,9 +296,12 @@ future<StatusOr<google::cloud::datastream::v1::Stream>>
 DatastreamConnectionImpl::CreateStream(
     google::cloud::datastream::v1::CreateStreamRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateStream(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datastream::v1::Stream>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -316,8 +325,7 @@ DatastreamConnectionImpl::CreateStream(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::datastream::v1::Stream>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateStream(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -325,9 +333,12 @@ future<StatusOr<google::cloud::datastream::v1::Stream>>
 DatastreamConnectionImpl::UpdateStream(
     google::cloud::datastream::v1::UpdateStreamRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateStream(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datastream::v1::Stream>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -351,8 +362,7 @@ DatastreamConnectionImpl::UpdateStream(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::datastream::v1::Stream>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateStream(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -360,9 +370,12 @@ future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamConnectionImpl::DeleteStream(
     google::cloud::datastream::v1::DeleteStreamRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteStream(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datastream::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -386,8 +399,7 @@ DatastreamConnectionImpl::DeleteStream(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::datastream::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteStream(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -514,9 +526,12 @@ DatastreamConnectionImpl::CreatePrivateConnection(
     google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreatePrivateConnection(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datastream::v1::PrivateConnection>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -541,8 +556,7 @@ DatastreamConnectionImpl::CreatePrivateConnection(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::datastream::v1::PrivateConnection>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreatePrivateConnection(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -601,9 +615,12 @@ DatastreamConnectionImpl::DeletePrivateConnection(
     google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeletePrivateConnection(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datastream::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -628,8 +645,7 @@ DatastreamConnectionImpl::DeletePrivateConnection(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::datastream::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeletePrivateConnection(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -637,9 +653,12 @@ future<StatusOr<google::cloud::datastream::v1::Route>>
 DatastreamConnectionImpl::CreateRoute(
     google::cloud::datastream::v1::CreateRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateRoute(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datastream::v1::Route>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -662,8 +681,7 @@ DatastreamConnectionImpl::CreateRoute(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::datastream::v1::Route>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateRoute(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -716,9 +734,12 @@ future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamConnectionImpl::DeleteRoute(
     google::cloud::datastream::v1::DeleteRouteRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteRoute(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datastream::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -741,8 +762,7 @@ DatastreamConnectionImpl::DeleteRoute(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::datastream::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteRoute(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

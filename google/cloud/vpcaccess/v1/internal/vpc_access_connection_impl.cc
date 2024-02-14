@@ -70,9 +70,12 @@ future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
 VpcAccessServiceConnectionImpl::CreateConnector(
     google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateConnector(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vpcaccess::v1::Connector>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -96,8 +99,7 @@ VpcAccessServiceConnectionImpl::CreateConnector(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vpcaccess::v1::Connector>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateConnector(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -152,9 +154,12 @@ future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
 VpcAccessServiceConnectionImpl::DeleteConnector(
     google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteConnector(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vpcaccess::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -178,8 +183,7 @@ VpcAccessServiceConnectionImpl::DeleteConnector(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vpcaccess::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteConnector(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

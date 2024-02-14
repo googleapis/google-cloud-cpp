@@ -77,9 +77,12 @@ future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>
 CloudChannelReportsServiceConnectionImpl::RunReportJob(
     google::cloud::channel::v1::RunReportJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RunReportJob(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::channel::v1::RunReportJobResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -103,8 +106,7 @@ CloudChannelReportsServiceConnectionImpl::RunReportJob(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::channel::v1::RunReportJobResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RunReportJob(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

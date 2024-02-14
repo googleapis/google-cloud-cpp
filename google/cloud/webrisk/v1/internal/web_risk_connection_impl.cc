@@ -124,9 +124,11 @@ future<StatusOr<google::cloud::webrisk::v1::Submission>>
 WebRiskServiceConnectionImpl::SubmitUri(
     google::cloud::webrisk::v1::SubmitUriRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->SubmitUri(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::webrisk::v1::Submission>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -149,8 +151,7 @@ WebRiskServiceConnectionImpl::SubmitUri(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::webrisk::v1::Submission>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->SubmitUri(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

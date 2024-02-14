@@ -85,9 +85,12 @@ ConsumerProcurementServiceConnectionImpl::PlaceOrder(
     google::cloud::commerce::consumer::procurement::v1::PlaceOrderRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->PlaceOrder(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::commerce::consumer::procurement::v1::Order>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -111,8 +114,7 @@ ConsumerProcurementServiceConnectionImpl::PlaceOrder(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::commerce::consumer::procurement::v1::Order>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->PlaceOrder(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

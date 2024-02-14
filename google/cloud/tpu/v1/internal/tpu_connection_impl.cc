@@ -104,9 +104,12 @@ StatusOr<google::cloud::tpu::v1::Node> TpuConnectionImpl::GetNode(
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::CreateNode(
     google::cloud::tpu::v1::CreateNodeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateNode(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::tpu::v1::Node>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -129,17 +132,19 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::CreateNode(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::tpu::v1::Node>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateNode(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::DeleteNode(
     google::cloud::tpu::v1::DeleteNodeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteNode(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::tpu::v1::Node>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -162,17 +167,19 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::DeleteNode(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::tpu::v1::Node>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteNode(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::ReimageNode(
     google::cloud::tpu::v1::ReimageNodeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ReimageNode(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::tpu::v1::Node>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -195,17 +202,18 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::ReimageNode(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::tpu::v1::Node>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ReimageNode(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::StopNode(
     google::cloud::tpu::v1::StopNodeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->StopNode(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::tpu::v1::Node>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -228,17 +236,18 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::StopNode(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::tpu::v1::Node>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->StopNode(request), polling_policy(*current),
-      __func__);
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::StartNode(
     google::cloud::tpu::v1::StartNodeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->StartNode(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::tpu::v1::Node>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -261,8 +270,7 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::StartNode(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::tpu::v1::Node>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->StartNode(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

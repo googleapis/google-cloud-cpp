@@ -177,9 +177,12 @@ CertificateAuthorityServiceConnectionImpl::ActivateCertificateAuthority(
     google::cloud::security::privateca::v1::
         ActivateCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ActivateCertificateAuthority(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CertificateAuthority>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -204,8 +207,7 @@ CertificateAuthorityServiceConnectionImpl::ActivateCertificateAuthority(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::security::privateca::v1::CertificateAuthority>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ActivateCertificateAuthority(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -214,9 +216,12 @@ CertificateAuthorityServiceConnectionImpl::CreateCertificateAuthority(
     google::cloud::security::privateca::v1::
         CreateCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateCertificateAuthority(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CertificateAuthority>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -241,8 +246,7 @@ CertificateAuthorityServiceConnectionImpl::CreateCertificateAuthority(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::security::privateca::v1::CertificateAuthority>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateCertificateAuthority(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -251,9 +255,12 @@ CertificateAuthorityServiceConnectionImpl::DisableCertificateAuthority(
     google::cloud::security::privateca::v1::
         DisableCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DisableCertificateAuthority(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CertificateAuthority>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -278,8 +285,7 @@ CertificateAuthorityServiceConnectionImpl::DisableCertificateAuthority(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::security::privateca::v1::CertificateAuthority>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DisableCertificateAuthority(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -288,9 +294,12 @@ CertificateAuthorityServiceConnectionImpl::EnableCertificateAuthority(
     google::cloud::security::privateca::v1::
         EnableCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->EnableCertificateAuthority(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CertificateAuthority>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -315,8 +324,7 @@ CertificateAuthorityServiceConnectionImpl::EnableCertificateAuthority(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::security::privateca::v1::CertificateAuthority>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->EnableCertificateAuthority(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -397,9 +405,12 @@ CertificateAuthorityServiceConnectionImpl::UndeleteCertificateAuthority(
     google::cloud::security::privateca::v1::
         UndeleteCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UndeleteCertificateAuthority(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CertificateAuthority>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -424,8 +435,7 @@ CertificateAuthorityServiceConnectionImpl::UndeleteCertificateAuthority(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::security::privateca::v1::CertificateAuthority>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UndeleteCertificateAuthority(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -434,9 +444,12 @@ CertificateAuthorityServiceConnectionImpl::DeleteCertificateAuthority(
     google::cloud::security::privateca::v1::
         DeleteCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteCertificateAuthority(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CertificateAuthority>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -461,8 +474,7 @@ CertificateAuthorityServiceConnectionImpl::DeleteCertificateAuthority(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::security::privateca::v1::CertificateAuthority>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteCertificateAuthority(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -471,9 +483,12 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateAuthority(
     google::cloud::security::privateca::v1::
         UpdateCertificateAuthorityRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateCertificateAuthority(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CertificateAuthority>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -498,8 +513,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateAuthority(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::security::privateca::v1::CertificateAuthority>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateCertificateAuthority(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -508,9 +522,12 @@ CertificateAuthorityServiceConnectionImpl::CreateCaPool(
     google::cloud::security::privateca::v1::CreateCaPoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateCaPool(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CaPool>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -535,8 +552,7 @@ CertificateAuthorityServiceConnectionImpl::CreateCaPool(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::security::privateca::v1::CaPool>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateCaPool(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -545,9 +561,12 @@ CertificateAuthorityServiceConnectionImpl::UpdateCaPool(
     google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateCaPool(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CaPool>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -572,8 +591,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCaPool(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::security::privateca::v1::CaPool>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateCaPool(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -629,9 +647,12 @@ CertificateAuthorityServiceConnectionImpl::DeleteCaPool(
     google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteCaPool(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -656,8 +677,7 @@ CertificateAuthorityServiceConnectionImpl::DeleteCaPool(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::security::privateca::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteCaPool(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -736,9 +756,13 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateRevocationList(
     google::cloud::security::privateca::v1::
         UpdateCertificateRevocationListRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateCertificateRevocationList(
+          request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CertificateRevocationList>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -763,8 +787,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateRevocationList(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::security::privateca::v1::CertificateRevocationList>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateCertificateRevocationList(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -773,9 +796,12 @@ CertificateAuthorityServiceConnectionImpl::CreateCertificateTemplate(
     google::cloud::security::privateca::v1::
         CreateCertificateTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateCertificateTemplate(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CertificateTemplate>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -800,8 +826,7 @@ CertificateAuthorityServiceConnectionImpl::CreateCertificateTemplate(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::security::privateca::v1::CertificateTemplate>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateCertificateTemplate(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -810,9 +835,12 @@ CertificateAuthorityServiceConnectionImpl::DeleteCertificateTemplate(
     google::cloud::security::privateca::v1::
         DeleteCertificateTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteCertificateTemplate(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -837,8 +865,7 @@ CertificateAuthorityServiceConnectionImpl::DeleteCertificateTemplate(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::security::privateca::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteCertificateTemplate(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -901,9 +928,12 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateTemplate(
     google::cloud::security::privateca::v1::
         UpdateCertificateTemplateRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateCertificateTemplate(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::security::privateca::v1::CertificateTemplate>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -928,8 +958,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateTemplate(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::security::privateca::v1::CertificateTemplate>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateCertificateTemplate(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

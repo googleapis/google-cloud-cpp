@@ -118,9 +118,12 @@ future<StatusOr<google::cloud::functions::v1::CloudFunction>>
 CloudFunctionsServiceConnectionImpl::CreateFunction(
     google::cloud::functions::v1::CreateFunctionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateFunction(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::functions::v1::CloudFunction>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -144,8 +147,7 @@ CloudFunctionsServiceConnectionImpl::CreateFunction(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::functions::v1::CloudFunction>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateFunction(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -153,9 +155,12 @@ future<StatusOr<google::cloud::functions::v1::CloudFunction>>
 CloudFunctionsServiceConnectionImpl::UpdateFunction(
     google::cloud::functions::v1::UpdateFunctionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateFunction(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::functions::v1::CloudFunction>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -179,8 +184,7 @@ CloudFunctionsServiceConnectionImpl::UpdateFunction(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::functions::v1::CloudFunction>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateFunction(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -188,9 +192,12 @@ future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
 CloudFunctionsServiceConnectionImpl::DeleteFunction(
     google::cloud::functions::v1::DeleteFunctionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteFunction(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::functions::v1::OperationMetadataV1>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -214,8 +221,7 @@ CloudFunctionsServiceConnectionImpl::DeleteFunction(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::functions::v1::OperationMetadataV1>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteFunction(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

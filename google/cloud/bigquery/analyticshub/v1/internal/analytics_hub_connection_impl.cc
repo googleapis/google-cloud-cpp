@@ -325,9 +325,12 @@ AnalyticsHubServiceConnectionImpl::SubscribeDataExchange(
     google::cloud::bigquery::analyticshub::v1::
         SubscribeDataExchangeRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->SubscribeDataExchange(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::bigquery::analyticshub::v1::SubscribeDataExchangeResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -353,8 +356,7 @@ AnalyticsHubServiceConnectionImpl::SubscribeDataExchange(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::bigquery::analyticshub::v1::
               SubscribeDataExchangeResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->SubscribeDataExchange(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -364,9 +366,12 @@ AnalyticsHubServiceConnectionImpl::RefreshSubscription(
     google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RefreshSubscription(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -392,8 +397,7 @@ AnalyticsHubServiceConnectionImpl::RefreshSubscription(
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::bigquery::analyticshub::v1::
               RefreshSubscriptionResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RefreshSubscription(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -509,9 +513,12 @@ AnalyticsHubServiceConnectionImpl::DeleteSubscription(
     google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteSubscription(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::bigquery::analyticshub::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -536,8 +543,7 @@ AnalyticsHubServiceConnectionImpl::DeleteSubscription(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::bigquery::analyticshub::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteSubscription(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

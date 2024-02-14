@@ -70,9 +70,12 @@ future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
 RepositoryManagerConnectionImpl::CreateConnection(
     google::devtools::cloudbuild::v2::CreateConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateConnection(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v2::Connection>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -97,8 +100,7 @@ RepositoryManagerConnectionImpl::CreateConnection(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::cloudbuild::v2::Connection>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateConnection(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -153,9 +155,12 @@ future<StatusOr<google::devtools::cloudbuild::v2::Connection>>
 RepositoryManagerConnectionImpl::UpdateConnection(
     google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateConnection(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v2::Connection>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -180,8 +185,7 @@ RepositoryManagerConnectionImpl::UpdateConnection(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::cloudbuild::v2::Connection>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateConnection(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -189,9 +193,12 @@ future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
 RepositoryManagerConnectionImpl::DeleteConnection(
     google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteConnection(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v2::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -216,8 +223,7 @@ RepositoryManagerConnectionImpl::DeleteConnection(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::devtools::cloudbuild::v2::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteConnection(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -225,9 +231,12 @@ future<StatusOr<google::devtools::cloudbuild::v2::Repository>>
 RepositoryManagerConnectionImpl::CreateRepository(
     google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateRepository(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v2::Repository>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -252,8 +261,7 @@ RepositoryManagerConnectionImpl::CreateRepository(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::cloudbuild::v2::Repository>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateRepository(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -263,9 +271,12 @@ RepositoryManagerConnectionImpl::BatchCreateRepositories(
     google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchCreateRepositories(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -290,8 +301,7 @@ RepositoryManagerConnectionImpl::BatchCreateRepositories(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->BatchCreateRepositories(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -346,9 +356,12 @@ future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>
 RepositoryManagerConnectionImpl::DeleteRepository(
     google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteRepository(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v2::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -373,8 +386,7 @@ RepositoryManagerConnectionImpl::DeleteRepository(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::devtools::cloudbuild::v2::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteRepository(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

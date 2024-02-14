@@ -83,9 +83,12 @@ RapidMigrationAssessmentConnectionImpl::CreateCollector(
     google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateCollector(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::rapidmigrationassessment::v1::Collector>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -110,8 +113,7 @@ RapidMigrationAssessmentConnectionImpl::CreateCollector(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::rapidmigrationassessment::v1::Collector>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateCollector(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -120,9 +122,12 @@ RapidMigrationAssessmentConnectionImpl::CreateAnnotation(
     google::cloud::rapidmigrationassessment::v1::CreateAnnotationRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateAnnotation(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::rapidmigrationassessment::v1::Annotation>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -147,8 +152,7 @@ RapidMigrationAssessmentConnectionImpl::CreateAnnotation(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::rapidmigrationassessment::v1::Annotation>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateAnnotation(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -226,9 +230,12 @@ RapidMigrationAssessmentConnectionImpl::UpdateCollector(
     google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateCollector(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::rapidmigrationassessment::v1::Collector>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -253,8 +260,7 @@ RapidMigrationAssessmentConnectionImpl::UpdateCollector(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::rapidmigrationassessment::v1::Collector>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateCollector(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -263,9 +269,12 @@ RapidMigrationAssessmentConnectionImpl::DeleteCollector(
     google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteCollector(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::rapidmigrationassessment::v1::Collector>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -290,8 +299,7 @@ RapidMigrationAssessmentConnectionImpl::DeleteCollector(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::rapidmigrationassessment::v1::Collector>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteCollector(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -300,9 +308,12 @@ RapidMigrationAssessmentConnectionImpl::ResumeCollector(
     google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ResumeCollector(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::rapidmigrationassessment::v1::Collector>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -327,8 +338,7 @@ RapidMigrationAssessmentConnectionImpl::ResumeCollector(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::rapidmigrationassessment::v1::Collector>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ResumeCollector(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -337,9 +347,12 @@ RapidMigrationAssessmentConnectionImpl::RegisterCollector(
     google::cloud::rapidmigrationassessment::v1::RegisterCollectorRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RegisterCollector(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::rapidmigrationassessment::v1::Collector>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -364,8 +377,7 @@ RapidMigrationAssessmentConnectionImpl::RegisterCollector(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::rapidmigrationassessment::v1::Collector>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RegisterCollector(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -374,9 +386,12 @@ RapidMigrationAssessmentConnectionImpl::PauseCollector(
     google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->PauseCollector(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::rapidmigrationassessment::v1::Collector>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -401,8 +416,7 @@ RapidMigrationAssessmentConnectionImpl::PauseCollector(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::rapidmigrationassessment::v1::Collector>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->PauseCollector(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

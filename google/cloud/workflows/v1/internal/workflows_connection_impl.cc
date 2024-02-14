@@ -113,9 +113,12 @@ future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsConnectionImpl::CreateWorkflow(
     google::cloud::workflows::v1::CreateWorkflowRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateWorkflow(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::workflows::v1::Workflow>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -139,8 +142,7 @@ WorkflowsConnectionImpl::CreateWorkflow(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::workflows::v1::Workflow>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateWorkflow(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -148,9 +150,12 @@ future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>
 WorkflowsConnectionImpl::DeleteWorkflow(
     google::cloud::workflows::v1::DeleteWorkflowRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteWorkflow(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::workflows::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -174,8 +179,7 @@ WorkflowsConnectionImpl::DeleteWorkflow(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::workflows::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteWorkflow(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -183,9 +187,12 @@ future<StatusOr<google::cloud::workflows::v1::Workflow>>
 WorkflowsConnectionImpl::UpdateWorkflow(
     google::cloud::workflows::v1::UpdateWorkflowRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateWorkflow(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::workflows::v1::Workflow>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -209,8 +216,7 @@ WorkflowsConnectionImpl::UpdateWorkflow(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::workflows::v1::Workflow>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateWorkflow(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

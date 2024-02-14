@@ -126,9 +126,12 @@ CertificateManagerConnectionImpl::CreateCertificate(
     google::cloud::certificatemanager::v1::CreateCertificateRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateCertificate(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::certificatemanager::v1::Certificate>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -153,8 +156,7 @@ CertificateManagerConnectionImpl::CreateCertificate(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::certificatemanager::v1::Certificate>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateCertificate(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -163,9 +165,12 @@ CertificateManagerConnectionImpl::UpdateCertificate(
     google::cloud::certificatemanager::v1::UpdateCertificateRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateCertificate(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::certificatemanager::v1::Certificate>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -190,8 +195,7 @@ CertificateManagerConnectionImpl::UpdateCertificate(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::certificatemanager::v1::Certificate>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateCertificate(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -200,9 +204,12 @@ CertificateManagerConnectionImpl::DeleteCertificate(
     google::cloud::certificatemanager::v1::DeleteCertificateRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteCertificate(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::certificatemanager::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -227,8 +234,7 @@ CertificateManagerConnectionImpl::DeleteCertificate(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::certificatemanager::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteCertificate(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -287,9 +293,12 @@ CertificateManagerConnectionImpl::CreateCertificateMap(
     google::cloud::certificatemanager::v1::CreateCertificateMapRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateCertificateMap(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::certificatemanager::v1::CertificateMap>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -314,8 +323,7 @@ CertificateManagerConnectionImpl::CreateCertificateMap(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::certificatemanager::v1::CertificateMap>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateCertificateMap(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -324,9 +332,12 @@ CertificateManagerConnectionImpl::UpdateCertificateMap(
     google::cloud::certificatemanager::v1::UpdateCertificateMapRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateCertificateMap(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::certificatemanager::v1::CertificateMap>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -351,8 +362,7 @@ CertificateManagerConnectionImpl::UpdateCertificateMap(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::certificatemanager::v1::CertificateMap>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateCertificateMap(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -361,9 +371,12 @@ CertificateManagerConnectionImpl::DeleteCertificateMap(
     google::cloud::certificatemanager::v1::DeleteCertificateMapRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteCertificateMap(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::certificatemanager::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -388,8 +401,7 @@ CertificateManagerConnectionImpl::DeleteCertificateMap(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::certificatemanager::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteCertificateMap(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -452,9 +464,12 @@ CertificateManagerConnectionImpl::CreateCertificateMapEntry(
     google::cloud::certificatemanager::v1::
         CreateCertificateMapEntryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateCertificateMapEntry(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::certificatemanager::v1::CertificateMapEntry>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -479,8 +494,7 @@ CertificateManagerConnectionImpl::CreateCertificateMapEntry(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::certificatemanager::v1::CertificateMapEntry>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateCertificateMapEntry(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -489,9 +503,12 @@ CertificateManagerConnectionImpl::UpdateCertificateMapEntry(
     google::cloud::certificatemanager::v1::
         UpdateCertificateMapEntryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateCertificateMapEntry(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::certificatemanager::v1::CertificateMapEntry>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -516,8 +533,7 @@ CertificateManagerConnectionImpl::UpdateCertificateMapEntry(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::certificatemanager::v1::CertificateMapEntry>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateCertificateMapEntry(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -526,9 +542,12 @@ CertificateManagerConnectionImpl::DeleteCertificateMapEntry(
     google::cloud::certificatemanager::v1::
         DeleteCertificateMapEntryRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteCertificateMapEntry(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::certificatemanager::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -553,8 +572,7 @@ CertificateManagerConnectionImpl::DeleteCertificateMapEntry(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::certificatemanager::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteCertificateMapEntry(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -617,9 +635,12 @@ CertificateManagerConnectionImpl::CreateDnsAuthorization(
     google::cloud::certificatemanager::v1::CreateDnsAuthorizationRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateDnsAuthorization(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::certificatemanager::v1::DnsAuthorization>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -644,8 +665,7 @@ CertificateManagerConnectionImpl::CreateDnsAuthorization(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::certificatemanager::v1::DnsAuthorization>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateDnsAuthorization(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -654,9 +674,12 @@ CertificateManagerConnectionImpl::UpdateDnsAuthorization(
     google::cloud::certificatemanager::v1::UpdateDnsAuthorizationRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateDnsAuthorization(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::certificatemanager::v1::DnsAuthorization>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -681,8 +704,7 @@ CertificateManagerConnectionImpl::UpdateDnsAuthorization(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::certificatemanager::v1::DnsAuthorization>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateDnsAuthorization(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -691,9 +713,12 @@ CertificateManagerConnectionImpl::DeleteDnsAuthorization(
     google::cloud::certificatemanager::v1::DeleteDnsAuthorizationRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteDnsAuthorization(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::certificatemanager::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -718,8 +743,7 @@ CertificateManagerConnectionImpl::DeleteDnsAuthorization(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::certificatemanager::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteDnsAuthorization(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -784,9 +808,13 @@ CertificateManagerConnectionImpl::CreateCertificateIssuanceConfig(
     google::cloud::certificatemanager::v1::
         CreateCertificateIssuanceConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateCertificateIssuanceConfig(
+          request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::certificatemanager::v1::CertificateIssuanceConfig>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -811,8 +839,7 @@ CertificateManagerConnectionImpl::CreateCertificateIssuanceConfig(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::certificatemanager::v1::CertificateIssuanceConfig>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateCertificateIssuanceConfig(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -821,9 +848,13 @@ CertificateManagerConnectionImpl::DeleteCertificateIssuanceConfig(
     google::cloud::certificatemanager::v1::
         DeleteCertificateIssuanceConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteCertificateIssuanceConfig(
+          request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::certificatemanager::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -848,8 +879,7 @@ CertificateManagerConnectionImpl::DeleteCertificateIssuanceConfig(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::certificatemanager::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteCertificateIssuanceConfig(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

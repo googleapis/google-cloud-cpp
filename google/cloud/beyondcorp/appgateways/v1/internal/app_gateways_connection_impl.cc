@@ -130,9 +130,12 @@ AppGatewaysServiceConnectionImpl::CreateAppGateway(
     google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateAppGateway(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::beyondcorp::appgateways::v1::AppGateway>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -157,8 +160,7 @@ AppGatewaysServiceConnectionImpl::CreateAppGateway(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::beyondcorp::appgateways::v1::AppGateway>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateAppGateway(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -168,9 +170,12 @@ AppGatewaysServiceConnectionImpl::DeleteAppGateway(
     google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteAppGateway(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -196,8 +201,7 @@ AppGatewaysServiceConnectionImpl::DeleteAppGateway(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::beyondcorp::appgateways::v1::
               AppGatewayOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteAppGateway(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

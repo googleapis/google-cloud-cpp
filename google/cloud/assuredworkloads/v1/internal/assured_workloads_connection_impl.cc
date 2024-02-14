@@ -76,9 +76,12 @@ future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
 AssuredWorkloadsServiceConnectionImpl::CreateWorkload(
     google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateWorkload(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::assuredworkloads::v1::Workload>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -103,8 +106,7 @@ AssuredWorkloadsServiceConnectionImpl::CreateWorkload(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::assuredworkloads::v1::Workload>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateWorkload(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

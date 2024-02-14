@@ -107,9 +107,12 @@ StatusOr<google::iam::v2::Policy> PoliciesConnectionImpl::GetPolicy(
 future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::CreatePolicy(
     google::iam::v2::CreatePolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreatePolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::iam::v2::Policy>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -133,17 +136,19 @@ future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::CreatePolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::iam::v2::Policy>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreatePolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::UpdatePolicy(
     google::iam::v2::UpdatePolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdatePolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::iam::v2::Policy>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -167,17 +172,19 @@ future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::UpdatePolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::iam::v2::Policy>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdatePolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::DeletePolicy(
     google::iam::v2::DeletePolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeletePolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::iam::v2::Policy>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -201,8 +208,7 @@ future<StatusOr<google::iam::v2::Policy>> PoliciesConnectionImpl::DeletePolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::iam::v2::Policy>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeletePolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

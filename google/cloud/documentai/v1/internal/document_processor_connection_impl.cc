@@ -89,9 +89,12 @@ future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
 DocumentProcessorServiceConnectionImpl::BatchProcessDocuments(
     google::cloud::documentai::v1::BatchProcessRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BatchProcessDocuments(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::documentai::v1::BatchProcessResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -115,8 +118,7 @@ DocumentProcessorServiceConnectionImpl::BatchProcessDocuments(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::documentai::v1::BatchProcessResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->BatchProcessDocuments(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -237,9 +239,12 @@ DocumentProcessorServiceConnectionImpl::TrainProcessorVersion(
     google::cloud::documentai::v1::TrainProcessorVersionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->TrainProcessorVersion(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::documentai::v1::TrainProcessorVersionResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -264,8 +269,7 @@ DocumentProcessorServiceConnectionImpl::TrainProcessorVersion(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::documentai::v1::TrainProcessorVersionResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->TrainProcessorVersion(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -325,9 +329,12 @@ DocumentProcessorServiceConnectionImpl::DeleteProcessorVersion(
     google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteProcessorVersion(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::documentai::v1::DeleteProcessorVersionMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -352,8 +359,7 @@ DocumentProcessorServiceConnectionImpl::DeleteProcessorVersion(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::documentai::v1::DeleteProcessorVersionMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteProcessorVersion(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -362,9 +368,12 @@ DocumentProcessorServiceConnectionImpl::DeployProcessorVersion(
     google::cloud::documentai::v1::DeployProcessorVersionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeployProcessorVersion(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::documentai::v1::DeployProcessorVersionResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -389,8 +398,7 @@ DocumentProcessorServiceConnectionImpl::DeployProcessorVersion(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::documentai::v1::DeployProcessorVersionResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeployProcessorVersion(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -400,9 +408,12 @@ DocumentProcessorServiceConnectionImpl::UndeployProcessorVersion(
     google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UndeployProcessorVersion(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::documentai::v1::UndeployProcessorVersionResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -427,8 +438,7 @@ DocumentProcessorServiceConnectionImpl::UndeployProcessorVersion(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::documentai::v1::UndeployProcessorVersionResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UndeployProcessorVersion(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -449,9 +459,12 @@ future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
 DocumentProcessorServiceConnectionImpl::DeleteProcessor(
     google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteProcessor(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::documentai::v1::DeleteProcessorMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -476,8 +489,7 @@ DocumentProcessorServiceConnectionImpl::DeleteProcessor(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::documentai::v1::DeleteProcessorMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteProcessor(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -485,9 +497,12 @@ future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
 DocumentProcessorServiceConnectionImpl::EnableProcessor(
     google::cloud::documentai::v1::EnableProcessorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->EnableProcessor(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::documentai::v1::EnableProcessorResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -512,8 +527,7 @@ DocumentProcessorServiceConnectionImpl::EnableProcessor(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::documentai::v1::EnableProcessorResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->EnableProcessor(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -521,9 +535,12 @@ future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
 DocumentProcessorServiceConnectionImpl::DisableProcessor(
     google::cloud::documentai::v1::DisableProcessorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DisableProcessor(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::documentai::v1::DisableProcessorResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -548,8 +565,7 @@ DocumentProcessorServiceConnectionImpl::DisableProcessor(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::documentai::v1::DisableProcessorResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DisableProcessor(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -559,9 +575,12 @@ DocumentProcessorServiceConnectionImpl::SetDefaultProcessorVersion(
     google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->SetDefaultProcessorVersion(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -586,8 +605,7 @@ DocumentProcessorServiceConnectionImpl::SetDefaultProcessorVersion(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->SetDefaultProcessorVersion(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -595,9 +613,12 @@ future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
 DocumentProcessorServiceConnectionImpl::ReviewDocument(
     google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ReviewDocument(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::documentai::v1::ReviewDocumentResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -621,8 +642,7 @@ DocumentProcessorServiceConnectionImpl::ReviewDocument(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::documentai::v1::ReviewDocumentResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ReviewDocument(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -632,9 +652,12 @@ DocumentProcessorServiceConnectionImpl::EvaluateProcessorVersion(
     google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->EvaluateProcessorVersion(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::documentai::v1::EvaluateProcessorVersionResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -659,8 +682,7 @@ DocumentProcessorServiceConnectionImpl::EvaluateProcessorVersion(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::documentai::v1::EvaluateProcessorVersionResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->EvaluateProcessorVersion(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

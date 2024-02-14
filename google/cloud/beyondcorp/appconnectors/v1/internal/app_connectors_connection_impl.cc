@@ -133,9 +133,12 @@ AppConnectorsServiceConnectionImpl::CreateAppConnector(
     google::cloud::beyondcorp::appconnectors::v1::
         CreateAppConnectorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateAppConnector(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::beyondcorp::appconnectors::v1::AppConnector>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -160,8 +163,7 @@ AppConnectorsServiceConnectionImpl::CreateAppConnector(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::beyondcorp::appconnectors::v1::AppConnector>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateAppConnector(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -170,9 +172,12 @@ AppConnectorsServiceConnectionImpl::UpdateAppConnector(
     google::cloud::beyondcorp::appconnectors::v1::
         UpdateAppConnectorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateAppConnector(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::beyondcorp::appconnectors::v1::AppConnector>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -197,8 +202,7 @@ AppConnectorsServiceConnectionImpl::UpdateAppConnector(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::beyondcorp::appconnectors::v1::AppConnector>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateAppConnector(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -208,10 +212,13 @@ AppConnectorsServiceConnectionImpl::DeleteAppConnector(
     google::cloud::beyondcorp::appconnectors::v1::
         DeleteAppConnectorRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteAppConnector(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::beyondcorp::appconnectors::v1::
           AppConnectorOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -237,8 +244,7 @@ AppConnectorsServiceConnectionImpl::DeleteAppConnector(
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::beyondcorp::appconnectors::v1::
               AppConnectorOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteAppConnector(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -247,9 +253,12 @@ AppConnectorsServiceConnectionImpl::ReportStatus(
     google::cloud::beyondcorp::appconnectors::v1::ReportStatusRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ReportStatus(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::beyondcorp::appconnectors::v1::AppConnector>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -274,8 +283,7 @@ AppConnectorsServiceConnectionImpl::ReportStatus(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::beyondcorp::appconnectors::v1::AppConnector>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ReportStatus(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

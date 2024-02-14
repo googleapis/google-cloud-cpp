@@ -71,9 +71,12 @@ future<StatusOr<google::datastore::admin::v1::ExportEntitiesResponse>>
 DatastoreAdminConnectionImpl::ExportEntities(
     google::datastore::admin::v1::ExportEntitiesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ExportEntities(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::datastore::admin::v1::ExportEntitiesResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -97,8 +100,7 @@ DatastoreAdminConnectionImpl::ExportEntities(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::datastore::admin::v1::ExportEntitiesResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ExportEntities(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -106,9 +108,12 @@ future<StatusOr<google::datastore::admin::v1::ImportEntitiesMetadata>>
 DatastoreAdminConnectionImpl::ImportEntities(
     google::datastore::admin::v1::ImportEntitiesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportEntities(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::datastore::admin::v1::ImportEntitiesMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -132,8 +137,7 @@ DatastoreAdminConnectionImpl::ImportEntities(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::datastore::admin::v1::ImportEntitiesMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportEntities(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -141,9 +145,12 @@ future<StatusOr<google::datastore::admin::v1::Index>>
 DatastoreAdminConnectionImpl::CreateIndex(
     google::datastore::admin::v1::CreateIndexRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateIndex(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::datastore::admin::v1::Index>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -166,8 +173,7 @@ DatastoreAdminConnectionImpl::CreateIndex(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::datastore::admin::v1::Index>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateIndex(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -175,9 +181,12 @@ future<StatusOr<google::datastore::admin::v1::Index>>
 DatastoreAdminConnectionImpl::DeleteIndex(
     google::datastore::admin::v1::DeleteIndexRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteIndex(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::datastore::admin::v1::Index>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -200,8 +209,7 @@ DatastoreAdminConnectionImpl::DeleteIndex(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::datastore::admin::v1::Index>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteIndex(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

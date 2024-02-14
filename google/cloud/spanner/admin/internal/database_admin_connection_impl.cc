@@ -103,9 +103,12 @@ DatabaseAdminConnectionImpl::CreateDatabase(
     google::spanner::admin::database::v1::CreateDatabaseRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateDatabase(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::spanner::admin::database::v1::Database>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -130,8 +133,7 @@ DatabaseAdminConnectionImpl::CreateDatabase(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::spanner::admin::database::v1::Database>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateDatabase(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -153,9 +155,12 @@ DatabaseAdminConnectionImpl::UpdateDatabase(
     google::spanner::admin::database::v1::UpdateDatabaseRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateDatabase(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::spanner::admin::database::v1::Database>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -180,8 +185,7 @@ DatabaseAdminConnectionImpl::UpdateDatabase(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::spanner::admin::database::v1::Database>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateDatabase(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -191,9 +195,12 @@ DatabaseAdminConnectionImpl::UpdateDatabaseDdl(
     google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateDatabaseDdl(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -218,8 +225,7 @@ DatabaseAdminConnectionImpl::UpdateDatabaseDdl(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateDatabaseDdl(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -293,9 +299,12 @@ future<StatusOr<google::spanner::admin::database::v1::Backup>>
 DatabaseAdminConnectionImpl::CreateBackup(
     google::spanner::admin::database::v1::CreateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateBackup(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::spanner::admin::database::v1::Backup>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -320,8 +329,7 @@ DatabaseAdminConnectionImpl::CreateBackup(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::spanner::admin::database::v1::Backup>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateBackup(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -329,9 +337,12 @@ future<StatusOr<google::spanner::admin::database::v1::Backup>>
 DatabaseAdminConnectionImpl::CopyBackup(
     google::spanner::admin::database::v1::CopyBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CopyBackup(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::spanner::admin::database::v1::Backup>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -355,8 +366,7 @@ DatabaseAdminConnectionImpl::CopyBackup(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::spanner::admin::database::v1::Backup>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CopyBackup(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -435,9 +445,12 @@ DatabaseAdminConnectionImpl::RestoreDatabase(
     google::spanner::admin::database::v1::RestoreDatabaseRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RestoreDatabase(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::spanner::admin::database::v1::Database>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -462,8 +475,7 @@ DatabaseAdminConnectionImpl::RestoreDatabase(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::spanner::admin::database::v1::Database>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RestoreDatabase(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

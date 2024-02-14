@@ -173,9 +173,12 @@ ConversationProfilesConnectionImpl::SetSuggestionFeatureConfig(
     google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->SetSuggestionFeatureConfig(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::ConversationProfile>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -200,8 +203,7 @@ ConversationProfilesConnectionImpl::SetSuggestionFeatureConfig(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::v2::ConversationProfile>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->SetSuggestionFeatureConfig(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -210,9 +212,12 @@ ConversationProfilesConnectionImpl::ClearSuggestionFeatureConfig(
     google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ClearSuggestionFeatureConfig(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::v2::ConversationProfile>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -237,8 +242,7 @@ ConversationProfilesConnectionImpl::ClearSuggestionFeatureConfig(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::v2::ConversationProfile>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ClearSuggestionFeatureConfig(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

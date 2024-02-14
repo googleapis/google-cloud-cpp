@@ -116,9 +116,12 @@ future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineConnectionImpl::CreatePrivateCloud(
     google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreatePrivateCloud(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::PrivateCloud>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -143,8 +146,7 @@ VmwareEngineConnectionImpl::CreatePrivateCloud(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::PrivateCloud>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreatePrivateCloud(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -152,9 +154,12 @@ future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineConnectionImpl::UpdatePrivateCloud(
     google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdatePrivateCloud(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::PrivateCloud>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -179,8 +184,7 @@ VmwareEngineConnectionImpl::UpdatePrivateCloud(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::PrivateCloud>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdatePrivateCloud(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -188,9 +192,12 @@ future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
 VmwareEngineConnectionImpl::DeletePrivateCloud(
     google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeletePrivateCloud(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::PrivateCloud>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -215,8 +222,7 @@ VmwareEngineConnectionImpl::DeletePrivateCloud(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::PrivateCloud>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeletePrivateCloud(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -225,9 +231,12 @@ VmwareEngineConnectionImpl::UndeletePrivateCloud(
     google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UndeletePrivateCloud(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::PrivateCloud>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -252,8 +261,7 @@ VmwareEngineConnectionImpl::UndeletePrivateCloud(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::PrivateCloud>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UndeletePrivateCloud(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -309,9 +317,12 @@ future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
 VmwareEngineConnectionImpl::CreateCluster(
     google::cloud::vmwareengine::v1::CreateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::Cluster>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -336,8 +347,7 @@ VmwareEngineConnectionImpl::CreateCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::Cluster>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -345,9 +355,12 @@ future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
 VmwareEngineConnectionImpl::UpdateCluster(
     google::cloud::vmwareengine::v1::UpdateClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::Cluster>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -372,8 +385,7 @@ VmwareEngineConnectionImpl::UpdateCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::Cluster>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -381,9 +393,12 @@ future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
 VmwareEngineConnectionImpl::DeleteCluster(
     google::cloud::vmwareengine::v1::DeleteClusterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteCluster(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -408,8 +423,7 @@ VmwareEngineConnectionImpl::DeleteCluster(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmwareengine::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteCluster(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -553,9 +567,12 @@ VmwareEngineConnectionImpl::CreateExternalAddress(
     google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateExternalAddress(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::ExternalAddress>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -580,8 +597,7 @@ VmwareEngineConnectionImpl::CreateExternalAddress(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::ExternalAddress>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateExternalAddress(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -590,9 +606,12 @@ VmwareEngineConnectionImpl::UpdateExternalAddress(
     google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateExternalAddress(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::ExternalAddress>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -617,8 +636,7 @@ VmwareEngineConnectionImpl::UpdateExternalAddress(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::ExternalAddress>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateExternalAddress(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -627,9 +645,12 @@ VmwareEngineConnectionImpl::DeleteExternalAddress(
     google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteExternalAddress(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -654,8 +675,7 @@ VmwareEngineConnectionImpl::DeleteExternalAddress(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmwareengine::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteExternalAddress(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -708,9 +728,12 @@ future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>
 VmwareEngineConnectionImpl::UpdateSubnet(
     google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateSubnet(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::Subnet>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -734,8 +757,7 @@ VmwareEngineConnectionImpl::UpdateSubnet(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::Subnet>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateSubnet(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -796,9 +818,12 @@ VmwareEngineConnectionImpl::CreateExternalAccessRule(
     google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateExternalAccessRule(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::ExternalAccessRule>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -823,8 +848,7 @@ VmwareEngineConnectionImpl::CreateExternalAccessRule(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::ExternalAccessRule>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateExternalAccessRule(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -833,9 +857,12 @@ VmwareEngineConnectionImpl::UpdateExternalAccessRule(
     google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateExternalAccessRule(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::ExternalAccessRule>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -860,8 +887,7 @@ VmwareEngineConnectionImpl::UpdateExternalAccessRule(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::ExternalAccessRule>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateExternalAccessRule(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -870,9 +896,12 @@ VmwareEngineConnectionImpl::DeleteExternalAccessRule(
     google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteExternalAccessRule(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -897,8 +926,7 @@ VmwareEngineConnectionImpl::DeleteExternalAccessRule(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmwareengine::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteExternalAccessRule(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -953,9 +981,12 @@ VmwareEngineConnectionImpl::CreateLoggingServer(
     google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateLoggingServer(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::LoggingServer>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -980,8 +1011,7 @@ VmwareEngineConnectionImpl::CreateLoggingServer(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::LoggingServer>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateLoggingServer(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -990,9 +1020,12 @@ VmwareEngineConnectionImpl::UpdateLoggingServer(
     google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateLoggingServer(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::LoggingServer>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1017,8 +1050,7 @@ VmwareEngineConnectionImpl::UpdateLoggingServer(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::LoggingServer>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateLoggingServer(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1027,9 +1059,12 @@ VmwareEngineConnectionImpl::DeleteLoggingServer(
     google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteLoggingServer(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1054,8 +1089,7 @@ VmwareEngineConnectionImpl::DeleteLoggingServer(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmwareengine::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteLoggingServer(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1144,9 +1178,12 @@ VmwareEngineConnectionImpl::ResetNsxCredentials(
     google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ResetNsxCredentials(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::PrivateCloud>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1171,8 +1208,7 @@ VmwareEngineConnectionImpl::ResetNsxCredentials(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::PrivateCloud>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ResetNsxCredentials(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1181,9 +1217,12 @@ VmwareEngineConnectionImpl::ResetVcenterCredentials(
     google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ResetVcenterCredentials(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::PrivateCloud>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1208,8 +1247,7 @@ VmwareEngineConnectionImpl::ResetVcenterCredentials(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::PrivateCloud>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ResetVcenterCredentials(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1231,9 +1269,12 @@ VmwareEngineConnectionImpl::UpdateDnsForwarding(
     google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateDnsForwarding(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::DnsForwarding>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1258,8 +1299,7 @@ VmwareEngineConnectionImpl::UpdateDnsForwarding(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::DnsForwarding>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateDnsForwarding(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1317,9 +1357,12 @@ VmwareEngineConnectionImpl::CreateNetworkPeering(
     google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateNetworkPeering(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::NetworkPeering>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1344,8 +1387,7 @@ VmwareEngineConnectionImpl::CreateNetworkPeering(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::NetworkPeering>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateNetworkPeering(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1354,9 +1396,12 @@ VmwareEngineConnectionImpl::DeleteNetworkPeering(
     google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteNetworkPeering(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1381,8 +1426,7 @@ VmwareEngineConnectionImpl::DeleteNetworkPeering(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmwareengine::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteNetworkPeering(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1391,9 +1435,12 @@ VmwareEngineConnectionImpl::UpdateNetworkPeering(
     google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateNetworkPeering(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::NetworkPeering>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1418,8 +1465,7 @@ VmwareEngineConnectionImpl::UpdateNetworkPeering(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::NetworkPeering>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateNetworkPeering(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1462,9 +1508,12 @@ VmwareEngineConnectionImpl::CreateHcxActivationKey(
     google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateHcxActivationKey(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::HcxActivationKey>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1489,8 +1538,7 @@ VmwareEngineConnectionImpl::CreateHcxActivationKey(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::HcxActivationKey>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateHcxActivationKey(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1597,9 +1645,12 @@ VmwareEngineConnectionImpl::CreateNetworkPolicy(
     google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateNetworkPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::NetworkPolicy>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1624,8 +1675,7 @@ VmwareEngineConnectionImpl::CreateNetworkPolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::NetworkPolicy>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateNetworkPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1634,9 +1684,12 @@ VmwareEngineConnectionImpl::UpdateNetworkPolicy(
     google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateNetworkPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::NetworkPolicy>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1661,8 +1714,7 @@ VmwareEngineConnectionImpl::UpdateNetworkPolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::NetworkPolicy>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateNetworkPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1671,9 +1723,12 @@ VmwareEngineConnectionImpl::DeleteNetworkPolicy(
     google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteNetworkPolicy(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -1698,8 +1753,7 @@ VmwareEngineConnectionImpl::DeleteNetworkPolicy(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmwareengine::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteNetworkPolicy(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1761,9 +1815,13 @@ VmwareEngineConnectionImpl::CreateManagementDnsZoneBinding(
     google::cloud::vmwareengine::v1::
         CreateManagementDnsZoneBindingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateManagementDnsZoneBinding(
+          request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -1788,8 +1846,7 @@ VmwareEngineConnectionImpl::CreateManagementDnsZoneBinding(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateManagementDnsZoneBinding(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1798,9 +1855,13 @@ VmwareEngineConnectionImpl::UpdateManagementDnsZoneBinding(
     google::cloud::vmwareengine::v1::
         UpdateManagementDnsZoneBindingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateManagementDnsZoneBinding(
+          request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -1825,8 +1886,7 @@ VmwareEngineConnectionImpl::UpdateManagementDnsZoneBinding(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateManagementDnsZoneBinding(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1835,9 +1895,13 @@ VmwareEngineConnectionImpl::DeleteManagementDnsZoneBinding(
     google::cloud::vmwareengine::v1::
         DeleteManagementDnsZoneBindingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteManagementDnsZoneBinding(
+          request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -1862,8 +1926,7 @@ VmwareEngineConnectionImpl::DeleteManagementDnsZoneBinding(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmwareengine::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteManagementDnsZoneBinding(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1872,9 +1935,13 @@ VmwareEngineConnectionImpl::RepairManagementDnsZoneBinding(
     google::cloud::vmwareengine::v1::
         RepairManagementDnsZoneBindingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RepairManagementDnsZoneBinding(
+          request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -1899,8 +1966,7 @@ VmwareEngineConnectionImpl::RepairManagementDnsZoneBinding(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RepairManagementDnsZoneBinding(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1909,9 +1975,12 @@ VmwareEngineConnectionImpl::CreateVmwareEngineNetwork(
     google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateVmwareEngineNetwork(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::VmwareEngineNetwork>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -1936,8 +2005,7 @@ VmwareEngineConnectionImpl::CreateVmwareEngineNetwork(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::VmwareEngineNetwork>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateVmwareEngineNetwork(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1946,9 +2014,12 @@ VmwareEngineConnectionImpl::UpdateVmwareEngineNetwork(
     google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateVmwareEngineNetwork(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::VmwareEngineNetwork>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -1973,8 +2044,7 @@ VmwareEngineConnectionImpl::UpdateVmwareEngineNetwork(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::VmwareEngineNetwork>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateVmwareEngineNetwork(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -1983,9 +2053,12 @@ VmwareEngineConnectionImpl::DeleteVmwareEngineNetwork(
     google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteVmwareEngineNetwork(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -2010,8 +2083,7 @@ VmwareEngineConnectionImpl::DeleteVmwareEngineNetwork(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmwareengine::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteVmwareEngineNetwork(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -2072,9 +2144,12 @@ VmwareEngineConnectionImpl::CreatePrivateConnection(
     google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreatePrivateConnection(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::PrivateConnection>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -2099,8 +2174,7 @@ VmwareEngineConnectionImpl::CreatePrivateConnection(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::PrivateConnection>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreatePrivateConnection(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -2160,9 +2234,12 @@ VmwareEngineConnectionImpl::UpdatePrivateConnection(
     google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdatePrivateConnection(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::PrivateConnection>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -2187,8 +2264,7 @@ VmwareEngineConnectionImpl::UpdatePrivateConnection(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::PrivateConnection>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdatePrivateConnection(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -2197,9 +2273,12 @@ VmwareEngineConnectionImpl::DeletePrivateConnection(
     google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeletePrivateConnection(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -2224,8 +2303,7 @@ VmwareEngineConnectionImpl::DeletePrivateConnection(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vmwareengine::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeletePrivateConnection(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -2272,9 +2350,12 @@ VmwareEngineConnectionImpl::GrantDnsBindPermission(
     google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->GrantDnsBindPermission(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::DnsBindPermission>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -2299,8 +2380,7 @@ VmwareEngineConnectionImpl::GrantDnsBindPermission(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::DnsBindPermission>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GrantDnsBindPermission(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -2325,9 +2405,12 @@ VmwareEngineConnectionImpl::RevokeDnsBindPermission(
     google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RevokeDnsBindPermission(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vmwareengine::v1::DnsBindPermission>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -2352,8 +2435,7 @@ VmwareEngineConnectionImpl::RevokeDnsBindPermission(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vmwareengine::v1::DnsBindPermission>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RevokeDnsBindPermission(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

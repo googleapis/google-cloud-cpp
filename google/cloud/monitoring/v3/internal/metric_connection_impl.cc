@@ -252,16 +252,18 @@ Status MetricServiceConnectionImpl::CreateServiceTimeSeries(
 future<Status> MetricServiceConnectionImpl::AsyncCreateTimeSeries(
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateTimeSeries(request_copy);
   return google::cloud::internal::AsyncRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateTimeSeries(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       background_->cq(),
       [stub = stub_](
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
           google::monitoring::v3::CreateTimeSeriesRequest const& request) {
         return stub->AsyncCreateTimeSeries(cq, std::move(context), request);
       },
-      request, __func__);
+      std::move(request_copy), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

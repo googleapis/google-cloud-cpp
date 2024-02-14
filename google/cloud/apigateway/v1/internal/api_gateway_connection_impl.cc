@@ -117,9 +117,12 @@ future<StatusOr<google::cloud::apigateway::v1::Gateway>>
 ApiGatewayServiceConnectionImpl::CreateGateway(
     google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateGateway(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::apigateway::v1::Gateway>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -143,8 +146,7 @@ ApiGatewayServiceConnectionImpl::CreateGateway(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::apigateway::v1::Gateway>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateGateway(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -152,9 +154,12 @@ future<StatusOr<google::cloud::apigateway::v1::Gateway>>
 ApiGatewayServiceConnectionImpl::UpdateGateway(
     google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateGateway(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::apigateway::v1::Gateway>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -178,8 +183,7 @@ ApiGatewayServiceConnectionImpl::UpdateGateway(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::apigateway::v1::Gateway>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateGateway(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -187,9 +191,12 @@ future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
 ApiGatewayServiceConnectionImpl::DeleteGateway(
     google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteGateway(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::apigateway::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -213,8 +220,7 @@ ApiGatewayServiceConnectionImpl::DeleteGateway(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::apigateway::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteGateway(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -268,9 +274,11 @@ future<StatusOr<google::cloud::apigateway::v1::Api>>
 ApiGatewayServiceConnectionImpl::CreateApi(
     google::cloud::apigateway::v1::CreateApiRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->CreateApi(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::apigateway::v1::Api>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -293,8 +301,7 @@ ApiGatewayServiceConnectionImpl::CreateApi(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::apigateway::v1::Api>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateApi(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -302,9 +309,11 @@ future<StatusOr<google::cloud::apigateway::v1::Api>>
 ApiGatewayServiceConnectionImpl::UpdateApi(
     google::cloud::apigateway::v1::UpdateApiRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->UpdateApi(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::apigateway::v1::Api>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -327,8 +336,7 @@ ApiGatewayServiceConnectionImpl::UpdateApi(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::apigateway::v1::Api>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateApi(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -336,9 +344,11 @@ future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
 ApiGatewayServiceConnectionImpl::DeleteApi(
     google::cloud::apigateway::v1::DeleteApiRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->DeleteApi(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::apigateway::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -361,8 +371,7 @@ ApiGatewayServiceConnectionImpl::DeleteApi(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::apigateway::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteApi(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -418,9 +427,12 @@ future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
 ApiGatewayServiceConnectionImpl::CreateApiConfig(
     google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateApiConfig(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::apigateway::v1::ApiConfig>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -445,8 +457,7 @@ ApiGatewayServiceConnectionImpl::CreateApiConfig(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::apigateway::v1::ApiConfig>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateApiConfig(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -454,9 +465,12 @@ future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>
 ApiGatewayServiceConnectionImpl::UpdateApiConfig(
     google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateApiConfig(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::apigateway::v1::ApiConfig>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -481,8 +495,7 @@ ApiGatewayServiceConnectionImpl::UpdateApiConfig(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::apigateway::v1::ApiConfig>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateApiConfig(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -490,9 +503,12 @@ future<StatusOr<google::cloud::apigateway::v1::OperationMetadata>>
 ApiGatewayServiceConnectionImpl::DeleteApiConfig(
     google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteApiConfig(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::apigateway::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -517,8 +533,7 @@ ApiGatewayServiceConnectionImpl::DeleteApiConfig(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::apigateway::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteApiConfig(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

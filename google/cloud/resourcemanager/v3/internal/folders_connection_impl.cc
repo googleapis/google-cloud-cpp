@@ -145,9 +145,12 @@ future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnectionImpl::CreateFolder(
     google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateFolder(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::Folder>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -172,8 +175,7 @@ FoldersConnectionImpl::CreateFolder(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::resourcemanager::v3::Folder>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateFolder(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -181,9 +183,12 @@ future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnectionImpl::UpdateFolder(
     google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateFolder(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::Folder>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -208,8 +213,7 @@ FoldersConnectionImpl::UpdateFolder(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::resourcemanager::v3::Folder>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateFolder(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -217,9 +221,12 @@ future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnectionImpl::MoveFolder(
     google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->MoveFolder(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::Folder>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -243,8 +250,7 @@ FoldersConnectionImpl::MoveFolder(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::resourcemanager::v3::Folder>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->MoveFolder(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -252,9 +258,12 @@ future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnectionImpl::DeleteFolder(
     google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteFolder(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::Folder>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -279,8 +288,7 @@ FoldersConnectionImpl::DeleteFolder(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::resourcemanager::v3::Folder>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteFolder(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -288,9 +296,12 @@ future<StatusOr<google::cloud::resourcemanager::v3::Folder>>
 FoldersConnectionImpl::UndeleteFolder(
     google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UndeleteFolder(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::Folder>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -315,8 +326,7 @@ FoldersConnectionImpl::UndeleteFolder(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::resourcemanager::v3::Folder>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UndeleteFolder(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

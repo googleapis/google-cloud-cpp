@@ -67,9 +67,12 @@ future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
 BackupForGKEConnectionImpl::CreateBackupPlan(
     google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateBackupPlan(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::BackupPlan>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -94,8 +97,7 @@ BackupForGKEConnectionImpl::CreateBackupPlan(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkebackup::v1::BackupPlan>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateBackupPlan(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -151,9 +153,12 @@ future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
 BackupForGKEConnectionImpl::UpdateBackupPlan(
     google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateBackupPlan(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::BackupPlan>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -178,8 +183,7 @@ BackupForGKEConnectionImpl::UpdateBackupPlan(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkebackup::v1::BackupPlan>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateBackupPlan(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -187,9 +191,12 @@ future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKEConnectionImpl::DeleteBackupPlan(
     google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteBackupPlan(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -214,8 +221,7 @@ BackupForGKEConnectionImpl::DeleteBackupPlan(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::gkebackup::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteBackupPlan(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -223,9 +229,12 @@ future<StatusOr<google::cloud::gkebackup::v1::Backup>>
 BackupForGKEConnectionImpl::CreateBackup(
     google::cloud::gkebackup::v1::CreateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateBackup(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::Backup>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -249,8 +258,7 @@ BackupForGKEConnectionImpl::CreateBackup(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkebackup::v1::Backup>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateBackup(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -303,9 +311,12 @@ future<StatusOr<google::cloud::gkebackup::v1::Backup>>
 BackupForGKEConnectionImpl::UpdateBackup(
     google::cloud::gkebackup::v1::UpdateBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateBackup(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::Backup>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -329,8 +340,7 @@ BackupForGKEConnectionImpl::UpdateBackup(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkebackup::v1::Backup>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateBackup(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -338,9 +348,12 @@ future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKEConnectionImpl::DeleteBackup(
     google::cloud::gkebackup::v1::DeleteBackupRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteBackup(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -364,8 +377,7 @@ BackupForGKEConnectionImpl::DeleteBackup(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::gkebackup::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteBackup(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -421,9 +433,12 @@ future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
 BackupForGKEConnectionImpl::CreateRestorePlan(
     google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateRestorePlan(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::RestorePlan>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -448,8 +463,7 @@ BackupForGKEConnectionImpl::CreateRestorePlan(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkebackup::v1::RestorePlan>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateRestorePlan(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -505,9 +519,12 @@ future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
 BackupForGKEConnectionImpl::UpdateRestorePlan(
     google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateRestorePlan(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::RestorePlan>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -532,8 +549,7 @@ BackupForGKEConnectionImpl::UpdateRestorePlan(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkebackup::v1::RestorePlan>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateRestorePlan(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -541,9 +557,12 @@ future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKEConnectionImpl::DeleteRestorePlan(
     google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteRestorePlan(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -568,8 +587,7 @@ BackupForGKEConnectionImpl::DeleteRestorePlan(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::gkebackup::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteRestorePlan(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -577,9 +595,12 @@ future<StatusOr<google::cloud::gkebackup::v1::Restore>>
 BackupForGKEConnectionImpl::CreateRestore(
     google::cloud::gkebackup::v1::CreateRestoreRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateRestore(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::Restore>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -603,8 +624,7 @@ BackupForGKEConnectionImpl::CreateRestore(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkebackup::v1::Restore>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateRestore(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -659,9 +679,12 @@ future<StatusOr<google::cloud::gkebackup::v1::Restore>>
 BackupForGKEConnectionImpl::UpdateRestore(
     google::cloud::gkebackup::v1::UpdateRestoreRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateRestore(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::Restore>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -685,8 +708,7 @@ BackupForGKEConnectionImpl::UpdateRestore(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::gkebackup::v1::Restore>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateRestore(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -694,9 +716,12 @@ future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
 BackupForGKEConnectionImpl::DeleteRestore(
     google::cloud::gkebackup::v1::DeleteRestoreRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteRestore(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gkebackup::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -720,8 +745,7 @@ BackupForGKEConnectionImpl::DeleteRestore(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::gkebackup::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteRestore(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

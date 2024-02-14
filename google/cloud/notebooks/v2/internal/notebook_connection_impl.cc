@@ -116,9 +116,12 @@ future<StatusOr<google::cloud::notebooks::v2::Instance>>
 NotebookServiceConnectionImpl::CreateInstance(
     google::cloud::notebooks::v2::CreateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v2::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -142,8 +145,7 @@ NotebookServiceConnectionImpl::CreateInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v2::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -151,9 +153,12 @@ future<StatusOr<google::cloud::notebooks::v2::Instance>>
 NotebookServiceConnectionImpl::UpdateInstance(
     google::cloud::notebooks::v2::UpdateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v2::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -177,8 +182,7 @@ NotebookServiceConnectionImpl::UpdateInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v2::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -186,9 +190,12 @@ future<StatusOr<google::cloud::notebooks::v2::OperationMetadata>>
 NotebookServiceConnectionImpl::DeleteInstance(
     google::cloud::notebooks::v2::DeleteInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v2::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -212,8 +219,7 @@ NotebookServiceConnectionImpl::DeleteInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::notebooks::v2::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -221,9 +227,12 @@ future<StatusOr<google::cloud::notebooks::v2::Instance>>
 NotebookServiceConnectionImpl::StartInstance(
     google::cloud::notebooks::v2::StartInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->StartInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v2::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -247,8 +256,7 @@ NotebookServiceConnectionImpl::StartInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v2::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->StartInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -256,9 +264,12 @@ future<StatusOr<google::cloud::notebooks::v2::Instance>>
 NotebookServiceConnectionImpl::StopInstance(
     google::cloud::notebooks::v2::StopInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->StopInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v2::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -282,8 +293,7 @@ NotebookServiceConnectionImpl::StopInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v2::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->StopInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -291,9 +301,12 @@ future<StatusOr<google::cloud::notebooks::v2::Instance>>
 NotebookServiceConnectionImpl::ResetInstance(
     google::cloud::notebooks::v2::ResetInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ResetInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v2::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -317,8 +330,7 @@ NotebookServiceConnectionImpl::ResetInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v2::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ResetInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -343,9 +355,12 @@ future<StatusOr<google::cloud::notebooks::v2::Instance>>
 NotebookServiceConnectionImpl::UpgradeInstance(
     google::cloud::notebooks::v2::UpgradeInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpgradeInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v2::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -369,8 +384,7 @@ NotebookServiceConnectionImpl::UpgradeInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v2::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpgradeInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -378,9 +392,12 @@ future<StatusOr<google::cloud::notebooks::v2::Instance>>
 NotebookServiceConnectionImpl::RollbackInstance(
     google::cloud::notebooks::v2::RollbackInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RollbackInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v2::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -405,8 +422,7 @@ NotebookServiceConnectionImpl::RollbackInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v2::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RollbackInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -414,9 +430,12 @@ future<StatusOr<google::cloud::notebooks::v2::Instance>>
 NotebookServiceConnectionImpl::DiagnoseInstance(
     google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DiagnoseInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::notebooks::v2::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -441,8 +460,7 @@ NotebookServiceConnectionImpl::DiagnoseInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::notebooks::v2::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DiagnoseInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

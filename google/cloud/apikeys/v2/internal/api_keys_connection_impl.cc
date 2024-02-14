@@ -65,9 +65,11 @@ future<StatusOr<google::api::apikeys::v2::Key>>
 ApiKeysConnectionImpl::CreateKey(
     google::api::apikeys::v2::CreateKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->CreateKey(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::apikeys::v2::Key>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -90,8 +92,7 @@ ApiKeysConnectionImpl::CreateKey(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::api::apikeys::v2::Key>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateKey(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -156,9 +157,11 @@ future<StatusOr<google::api::apikeys::v2::Key>>
 ApiKeysConnectionImpl::UpdateKey(
     google::api::apikeys::v2::UpdateKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->UpdateKey(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::apikeys::v2::Key>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -181,8 +184,7 @@ ApiKeysConnectionImpl::UpdateKey(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::api::apikeys::v2::Key>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateKey(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -190,9 +192,11 @@ future<StatusOr<google::api::apikeys::v2::Key>>
 ApiKeysConnectionImpl::DeleteKey(
     google::api::apikeys::v2::DeleteKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->DeleteKey(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::apikeys::v2::Key>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -215,8 +219,7 @@ ApiKeysConnectionImpl::DeleteKey(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::api::apikeys::v2::Key>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteKey(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -224,9 +227,12 @@ future<StatusOr<google::api::apikeys::v2::Key>>
 ApiKeysConnectionImpl::UndeleteKey(
     google::api::apikeys::v2::UndeleteKeyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UndeleteKey(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::apikeys::v2::Key>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -249,8 +255,7 @@ ApiKeysConnectionImpl::UndeleteKey(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::api::apikeys::v2::Key>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UndeleteKey(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

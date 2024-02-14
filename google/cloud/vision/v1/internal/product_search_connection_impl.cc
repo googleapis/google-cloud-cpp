@@ -387,9 +387,12 @@ future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>
 ProductSearchConnectionImpl::ImportProductSets(
     google::cloud::vision::v1::ImportProductSetsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportProductSets(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vision::v1::ImportProductSetsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -413,8 +416,7 @@ ProductSearchConnectionImpl::ImportProductSets(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::vision::v1::ImportProductSetsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportProductSets(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -422,9 +424,12 @@ future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>
 ProductSearchConnectionImpl::PurgeProducts(
     google::cloud::vision::v1::PurgeProductsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->PurgeProducts(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vision::v1::BatchOperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -448,8 +453,7 @@ ProductSearchConnectionImpl::PurgeProducts(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::vision::v1::BatchOperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->PurgeProducts(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

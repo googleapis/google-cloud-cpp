@@ -75,9 +75,12 @@ future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
 VideoIntelligenceServiceConnectionImpl::AnnotateVideo(
     google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->AnnotateVideo(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::videointelligence::v1::AnnotateVideoResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -102,8 +105,7 @@ VideoIntelligenceServiceConnectionImpl::AnnotateVideo(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::videointelligence::v1::AnnotateVideoResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AnnotateVideo(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

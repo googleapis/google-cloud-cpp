@@ -114,9 +114,12 @@ future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnectionImpl::CreateInstance(
     google::cloud::memcache::v1::CreateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::memcache::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -140,8 +143,7 @@ CloudMemcacheConnectionImpl::CreateInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::memcache::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -149,9 +151,12 @@ future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnectionImpl::UpdateInstance(
     google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::memcache::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -175,8 +180,7 @@ CloudMemcacheConnectionImpl::UpdateInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::memcache::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -184,9 +188,12 @@ future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnectionImpl::UpdateParameters(
     google::cloud::memcache::v1::UpdateParametersRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateParameters(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::memcache::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -210,8 +217,7 @@ CloudMemcacheConnectionImpl::UpdateParameters(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::memcache::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateParameters(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -219,9 +225,12 @@ future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
 CloudMemcacheConnectionImpl::DeleteInstance(
     google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::memcache::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -245,8 +254,7 @@ CloudMemcacheConnectionImpl::DeleteInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::memcache::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -254,9 +262,12 @@ future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnectionImpl::ApplyParameters(
     google::cloud::memcache::v1::ApplyParametersRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ApplyParameters(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::memcache::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -280,8 +291,7 @@ CloudMemcacheConnectionImpl::ApplyParameters(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::memcache::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ApplyParameters(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -289,9 +299,12 @@ future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnectionImpl::RescheduleMaintenance(
     google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RescheduleMaintenance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::memcache::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -316,8 +329,7 @@ CloudMemcacheConnectionImpl::RescheduleMaintenance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::memcache::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RescheduleMaintenance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

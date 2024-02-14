@@ -532,9 +532,12 @@ future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
 DataCatalogConnectionImpl::ReconcileTags(
     google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ReconcileTags(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datacatalog::v1::ReconcileTagsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -558,8 +561,7 @@ DataCatalogConnectionImpl::ReconcileTags(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::datacatalog::v1::ReconcileTagsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ReconcileTags(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -636,9 +638,12 @@ future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
 DataCatalogConnectionImpl::ImportEntries(
     google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportEntries(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::datacatalog::v1::ImportEntriesResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -662,8 +667,7 @@ DataCatalogConnectionImpl::ImportEntries(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::datacatalog::v1::ImportEntriesResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportEntries(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

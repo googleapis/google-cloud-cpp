@@ -77,9 +77,12 @@ ManagedIdentitiesServiceConnectionImpl::CreateMicrosoftAdDomain(
     google::cloud::managedidentities::v1::CreateMicrosoftAdDomainRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateMicrosoftAdDomain(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::managedidentities::v1::Domain>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -104,8 +107,7 @@ ManagedIdentitiesServiceConnectionImpl::CreateMicrosoftAdDomain(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::managedidentities::v1::Domain>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateMicrosoftAdDomain(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -174,9 +176,12 @@ future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnectionImpl::UpdateDomain(
     google::cloud::managedidentities::v1::UpdateDomainRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateDomain(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::managedidentities::v1::Domain>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -201,8 +206,7 @@ ManagedIdentitiesServiceConnectionImpl::UpdateDomain(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::managedidentities::v1::Domain>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateDomain(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -210,9 +214,12 @@ future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>
 ManagedIdentitiesServiceConnectionImpl::DeleteDomain(
     google::cloud::managedidentities::v1::DeleteDomainRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteDomain(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::managedidentities::v1::OpMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -237,8 +244,7 @@ ManagedIdentitiesServiceConnectionImpl::DeleteDomain(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::managedidentities::v1::OpMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteDomain(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -246,9 +252,12 @@ future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnectionImpl::AttachTrust(
     google::cloud::managedidentities::v1::AttachTrustRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->AttachTrust(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::managedidentities::v1::Domain>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -272,8 +281,7 @@ ManagedIdentitiesServiceConnectionImpl::AttachTrust(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::managedidentities::v1::Domain>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->AttachTrust(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -282,9 +290,12 @@ ManagedIdentitiesServiceConnectionImpl::ReconfigureTrust(
     google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ReconfigureTrust(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::managedidentities::v1::Domain>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -309,8 +320,7 @@ ManagedIdentitiesServiceConnectionImpl::ReconfigureTrust(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::managedidentities::v1::Domain>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ReconfigureTrust(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -318,9 +328,12 @@ future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnectionImpl::DetachTrust(
     google::cloud::managedidentities::v1::DetachTrustRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DetachTrust(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::managedidentities::v1::Domain>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -344,8 +357,7 @@ ManagedIdentitiesServiceConnectionImpl::DetachTrust(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::managedidentities::v1::Domain>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DetachTrust(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -353,9 +365,12 @@ future<StatusOr<google::cloud::managedidentities::v1::Domain>>
 ManagedIdentitiesServiceConnectionImpl::ValidateTrust(
     google::cloud::managedidentities::v1::ValidateTrustRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ValidateTrust(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::managedidentities::v1::Domain>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -380,8 +395,7 @@ ManagedIdentitiesServiceConnectionImpl::ValidateTrust(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::managedidentities::v1::Domain>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ValidateTrust(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

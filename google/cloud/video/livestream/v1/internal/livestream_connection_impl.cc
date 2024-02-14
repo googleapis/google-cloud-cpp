@@ -74,9 +74,12 @@ future<StatusOr<google::cloud::video::livestream::v1::Channel>>
 LivestreamServiceConnectionImpl::CreateChannel(
     google::cloud::video::livestream::v1::CreateChannelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateChannel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::video::livestream::v1::Channel>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -101,8 +104,7 @@ LivestreamServiceConnectionImpl::CreateChannel(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::video::livestream::v1::Channel>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateChannel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -156,9 +158,12 @@ future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
 LivestreamServiceConnectionImpl::DeleteChannel(
     google::cloud::video::livestream::v1::DeleteChannelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteChannel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::video::livestream::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -183,8 +188,7 @@ LivestreamServiceConnectionImpl::DeleteChannel(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::video::livestream::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteChannel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -192,9 +196,12 @@ future<StatusOr<google::cloud::video::livestream::v1::Channel>>
 LivestreamServiceConnectionImpl::UpdateChannel(
     google::cloud::video::livestream::v1::UpdateChannelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateChannel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::video::livestream::v1::Channel>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -219,8 +226,7 @@ LivestreamServiceConnectionImpl::UpdateChannel(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::video::livestream::v1::Channel>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateChannel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -228,9 +234,12 @@ future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
 LivestreamServiceConnectionImpl::StartChannel(
     google::cloud::video::livestream::v1::StartChannelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->StartChannel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::video::livestream::v1::ChannelOperationResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -255,8 +264,7 @@ LivestreamServiceConnectionImpl::StartChannel(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::video::livestream::v1::ChannelOperationResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->StartChannel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -264,9 +272,12 @@ future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
 LivestreamServiceConnectionImpl::StopChannel(
     google::cloud::video::livestream::v1::StopChannelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->StopChannel(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::video::livestream::v1::ChannelOperationResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -290,8 +301,7 @@ LivestreamServiceConnectionImpl::StopChannel(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::video::livestream::v1::ChannelOperationResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->StopChannel(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -299,9 +309,12 @@ future<StatusOr<google::cloud::video::livestream::v1::Input>>
 LivestreamServiceConnectionImpl::CreateInput(
     google::cloud::video::livestream::v1::CreateInputRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateInput(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::video::livestream::v1::Input>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -325,8 +338,7 @@ LivestreamServiceConnectionImpl::CreateInput(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::video::livestream::v1::Input>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateInput(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -380,9 +392,12 @@ future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
 LivestreamServiceConnectionImpl::DeleteInput(
     google::cloud::video::livestream::v1::DeleteInputRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteInput(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::video::livestream::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -406,8 +421,7 @@ LivestreamServiceConnectionImpl::DeleteInput(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::video::livestream::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteInput(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -415,9 +429,12 @@ future<StatusOr<google::cloud::video::livestream::v1::Input>>
 LivestreamServiceConnectionImpl::UpdateInput(
     google::cloud::video::livestream::v1::UpdateInputRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateInput(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::video::livestream::v1::Input>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -441,8 +458,7 @@ LivestreamServiceConnectionImpl::UpdateInput(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::video::livestream::v1::Input>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateInput(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -521,9 +537,12 @@ future<StatusOr<google::cloud::video::livestream::v1::Asset>>
 LivestreamServiceConnectionImpl::CreateAsset(
     google::cloud::video::livestream::v1::CreateAssetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateAsset(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::video::livestream::v1::Asset>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -547,8 +566,7 @@ LivestreamServiceConnectionImpl::CreateAsset(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::video::livestream::v1::Asset>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateAsset(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -556,9 +574,12 @@ future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
 LivestreamServiceConnectionImpl::DeleteAsset(
     google::cloud::video::livestream::v1::DeleteAssetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteAsset(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::video::livestream::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -582,8 +603,7 @@ LivestreamServiceConnectionImpl::DeleteAsset(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::video::livestream::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteAsset(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -652,9 +672,12 @@ future<StatusOr<google::cloud::video::livestream::v1::Pool>>
 LivestreamServiceConnectionImpl::UpdatePool(
     google::cloud::video::livestream::v1::UpdatePoolRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdatePool(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::video::livestream::v1::Pool>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -678,8 +701,7 @@ LivestreamServiceConnectionImpl::UpdatePool(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::video::livestream::v1::Pool>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdatePool(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

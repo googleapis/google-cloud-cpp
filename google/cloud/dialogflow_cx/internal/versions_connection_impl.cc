@@ -114,9 +114,12 @@ future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
 VersionsConnectionImpl::CreateVersion(
     google::cloud::dialogflow::cx::v3::CreateVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateVersion(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dialogflow::cx::v3::Version>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -141,8 +144,7 @@ VersionsConnectionImpl::CreateVersion(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::dialogflow::cx::v3::Version>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateVersion(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -174,9 +176,12 @@ Status VersionsConnectionImpl::DeleteVersion(
 future<StatusOr<google::protobuf::Struct>> VersionsConnectionImpl::LoadVersion(
     google::cloud::dialogflow::cx::v3::LoadVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->LoadVersion(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::protobuf::Struct>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -200,8 +205,7 @@ future<StatusOr<google::protobuf::Struct>> VersionsConnectionImpl::LoadVersion(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::protobuf::Struct>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->LoadVersion(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

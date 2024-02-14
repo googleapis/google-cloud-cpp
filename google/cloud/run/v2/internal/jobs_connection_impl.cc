@@ -62,9 +62,11 @@ JobsConnectionImpl::JobsConnectionImpl(
 future<StatusOr<google::cloud::run::v2::Job>> JobsConnectionImpl::CreateJob(
     google::cloud::run::v2::CreateJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->CreateJob(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::run::v2::Job>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -87,8 +89,7 @@ future<StatusOr<google::cloud::run::v2::Job>> JobsConnectionImpl::CreateJob(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::run::v2::Job>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateJob(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -137,9 +138,11 @@ StreamRange<google::cloud::run::v2::Job> JobsConnectionImpl::ListJobs(
 future<StatusOr<google::cloud::run::v2::Job>> JobsConnectionImpl::UpdateJob(
     google::cloud::run::v2::UpdateJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->UpdateJob(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::run::v2::Job>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -162,17 +165,18 @@ future<StatusOr<google::cloud::run::v2::Job>> JobsConnectionImpl::UpdateJob(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::run::v2::Job>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateJob(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::run::v2::Job>> JobsConnectionImpl::DeleteJob(
     google::cloud::run::v2::DeleteJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->DeleteJob(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::run::v2::Job>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -195,17 +199,18 @@ future<StatusOr<google::cloud::run::v2::Job>> JobsConnectionImpl::DeleteJob(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::run::v2::Job>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteJob(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
 future<StatusOr<google::cloud::run::v2::Execution>> JobsConnectionImpl::RunJob(
     google::cloud::run::v2::RunJobRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->RunJob(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::run::v2::Execution>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
                      Options const& options,
@@ -228,9 +233,8 @@ future<StatusOr<google::cloud::run::v2::Execution>> JobsConnectionImpl::RunJob(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::run::v2::Execution>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RunJob(request), polling_policy(*current),
-      __func__);
+      retry_policy(*current), backoff_policy(*current), idempotent,
+      polling_policy(*current), __func__);
 }
 
 StatusOr<google::iam::v1::Policy> JobsConnectionImpl::GetIamPolicy(

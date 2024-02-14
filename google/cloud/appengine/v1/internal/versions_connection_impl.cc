@@ -109,9 +109,12 @@ future<StatusOr<google::appengine::v1::Version>>
 VersionsConnectionImpl::CreateVersion(
     google::appengine::v1::CreateVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateVersion(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::Version>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -135,8 +138,7 @@ VersionsConnectionImpl::CreateVersion(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::appengine::v1::Version>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateVersion(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -144,9 +146,12 @@ future<StatusOr<google::appengine::v1::Version>>
 VersionsConnectionImpl::UpdateVersion(
     google::appengine::v1::UpdateVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateVersion(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::Version>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -170,8 +175,7 @@ VersionsConnectionImpl::UpdateVersion(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::appengine::v1::Version>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateVersion(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -179,9 +183,12 @@ future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 VersionsConnectionImpl::DeleteVersion(
     google::appengine::v1::DeleteVersionRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteVersion(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::OperationMetadataV1>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -205,8 +212,7 @@ VersionsConnectionImpl::DeleteVersion(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::appengine::v1::OperationMetadataV1>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteVersion(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

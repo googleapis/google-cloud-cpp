@@ -70,9 +70,12 @@ future<StatusOr<google::cloud::securitycenter::v1::BulkMuteFindingsResponse>>
 SecurityCenterConnectionImpl::BulkMuteFindings(
     google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->BulkMuteFindings(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::securitycenter::v1::BulkMuteFindingsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -97,8 +100,7 @@ SecurityCenterConnectionImpl::BulkMuteFindings(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::securitycenter::v1::BulkMuteFindingsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->BulkMuteFindings(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -719,9 +721,12 @@ SecurityCenterConnectionImpl::RunAssetDiscovery(
     google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RunAssetDiscovery(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -746,8 +751,7 @@ SecurityCenterConnectionImpl::RunAssetDiscovery(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::securitycenter::v1::RunAssetDiscoveryResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RunAssetDiscovery(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

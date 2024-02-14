@@ -65,9 +65,12 @@ future<StatusOr<google::cloud::run::v2::Service>>
 ServicesConnectionImpl::CreateService(
     google::cloud::run::v2::CreateServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateService(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::run::v2::Service>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -91,8 +94,7 @@ ServicesConnectionImpl::CreateService(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::run::v2::Service>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateService(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -145,9 +147,12 @@ future<StatusOr<google::cloud::run::v2::Service>>
 ServicesConnectionImpl::UpdateService(
     google::cloud::run::v2::UpdateServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateService(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::run::v2::Service>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -171,8 +176,7 @@ ServicesConnectionImpl::UpdateService(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::run::v2::Service>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateService(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -180,9 +184,12 @@ future<StatusOr<google::cloud::run::v2::Service>>
 ServicesConnectionImpl::DeleteService(
     google::cloud::run::v2::DeleteServiceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteService(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::run::v2::Service>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -206,8 +213,7 @@ ServicesConnectionImpl::DeleteService(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::run::v2::Service>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteService(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

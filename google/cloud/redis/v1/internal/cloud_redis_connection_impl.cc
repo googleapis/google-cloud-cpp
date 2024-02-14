@@ -127,9 +127,12 @@ future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::CreateInstance(
     google::cloud::redis::v1::CreateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -153,8 +156,7 @@ CloudRedisConnectionImpl::CreateInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::redis::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -162,9 +164,12 @@ future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::UpdateInstance(
     google::cloud::redis::v1::UpdateInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -188,8 +193,7 @@ CloudRedisConnectionImpl::UpdateInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::redis::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -197,9 +201,12 @@ future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::UpgradeInstance(
     google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpgradeInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -223,8 +230,7 @@ CloudRedisConnectionImpl::UpgradeInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::redis::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpgradeInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -232,9 +238,12 @@ future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::ImportInstance(
     google::cloud::redis::v1::ImportInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -258,8 +267,7 @@ CloudRedisConnectionImpl::ImportInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::redis::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -267,9 +275,12 @@ future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::ExportInstance(
     google::cloud::redis::v1::ExportInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ExportInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -293,8 +304,7 @@ CloudRedisConnectionImpl::ExportInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::redis::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ExportInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -302,9 +312,12 @@ future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::FailoverInstance(
     google::cloud::redis::v1::FailoverInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->FailoverInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -328,8 +341,7 @@ CloudRedisConnectionImpl::FailoverInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::redis::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->FailoverInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -337,9 +349,12 @@ future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
 CloudRedisConnectionImpl::DeleteInstance(
     google::cloud::redis::v1::DeleteInstanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -363,8 +378,7 @@ CloudRedisConnectionImpl::DeleteInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::redis::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -372,9 +386,12 @@ future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::RescheduleMaintenance(
     google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->RescheduleMaintenance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -399,8 +416,7 @@ CloudRedisConnectionImpl::RescheduleMaintenance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::redis::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->RescheduleMaintenance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

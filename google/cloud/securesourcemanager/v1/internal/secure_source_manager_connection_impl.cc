@@ -125,9 +125,12 @@ SecureSourceManagerConnectionImpl::CreateInstance(
     google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::securesourcemanager::v1::Instance>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -152,8 +155,7 @@ SecureSourceManagerConnectionImpl::CreateInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::securesourcemanager::v1::Instance>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -162,9 +164,12 @@ SecureSourceManagerConnectionImpl::DeleteInstance(
     google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteInstance(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::securesourcemanager::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -189,8 +194,7 @@ SecureSourceManagerConnectionImpl::DeleteInstance(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::securesourcemanager::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteInstance(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -248,9 +252,12 @@ SecureSourceManagerConnectionImpl::CreateRepository(
     google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateRepository(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::securesourcemanager::v1::Repository>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -275,8 +282,7 @@ SecureSourceManagerConnectionImpl::CreateRepository(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::securesourcemanager::v1::Repository>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateRepository(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -285,9 +291,12 @@ SecureSourceManagerConnectionImpl::DeleteRepository(
     google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteRepository(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::securesourcemanager::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -312,8 +321,7 @@ SecureSourceManagerConnectionImpl::DeleteRepository(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::securesourcemanager::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteRepository(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

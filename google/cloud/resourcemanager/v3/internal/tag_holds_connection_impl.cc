@@ -69,9 +69,12 @@ future<StatusOr<google::cloud::resourcemanager::v3::TagHold>>
 TagHoldsConnectionImpl::CreateTagHold(
     google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateTagHold(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::TagHold>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -96,8 +99,7 @@ TagHoldsConnectionImpl::CreateTagHold(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::resourcemanager::v3::TagHold>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateTagHold(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -105,9 +107,12 @@ future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
 TagHoldsConnectionImpl::DeleteTagHold(
     google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteTagHold(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -132,8 +137,7 @@ TagHoldsConnectionImpl::DeleteTagHold(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteTagHold(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

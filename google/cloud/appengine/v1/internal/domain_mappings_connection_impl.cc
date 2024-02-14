@@ -116,9 +116,12 @@ future<StatusOr<google::appengine::v1::DomainMapping>>
 DomainMappingsConnectionImpl::CreateDomainMapping(
     google::appengine::v1::CreateDomainMappingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateDomainMapping(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::DomainMapping>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -142,8 +145,7 @@ DomainMappingsConnectionImpl::CreateDomainMapping(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::appengine::v1::DomainMapping>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateDomainMapping(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -151,9 +153,12 @@ future<StatusOr<google::appengine::v1::DomainMapping>>
 DomainMappingsConnectionImpl::UpdateDomainMapping(
     google::appengine::v1::UpdateDomainMappingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateDomainMapping(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::DomainMapping>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -177,8 +182,7 @@ DomainMappingsConnectionImpl::UpdateDomainMapping(
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::appengine::v1::DomainMapping>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateDomainMapping(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -186,9 +190,12 @@ future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 DomainMappingsConnectionImpl::DeleteDomainMapping(
     google::appengine::v1::DeleteDomainMappingRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteDomainMapping(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::OperationMetadataV1>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
           std::shared_ptr<grpc::ClientContext> context, Options const& options,
@@ -212,8 +219,7 @@ DomainMappingsConnectionImpl::DeleteDomainMapping(
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::appengine::v1::OperationMetadataV1>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteDomainMapping(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
