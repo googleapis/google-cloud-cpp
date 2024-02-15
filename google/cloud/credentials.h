@@ -39,6 +39,9 @@ class CredentialsVisitor;
  * (intentionally) very narrow. Only the internal components in the client
  * libraries should need to access the details of this class.
  *
+ * You can use the [OAuth2 Library] to create access tokens from a `Credentials`
+ * object.
+ *
  * @see https://cloud.google.com/docs/authentication for more information on
  *     authentication in GCP.
  *
@@ -48,6 +51,7 @@ class CredentialsVisitor;
  * [IAM Service]: https://cloud.google.com/iam/docs
  * [C++ IAM client library]:
  * https://cloud.google.com/cpp/docs/reference/iam/latest/
+ * [OAuth2 Library]: https://cloud.google.com/cpp/docs/reference/oauth2/latest
  *
  * @ingroup guac
  */
