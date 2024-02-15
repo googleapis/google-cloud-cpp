@@ -346,7 +346,7 @@ TEST_F(BulkMutatorTest, RetryInfoHeeded) {
       .WillOnce([this](auto context, auto const&,
                        google::bigtable::v2::MutateRowsRequest const& request) {
         metadata_fixture_.SetServerMetadata(*context, {});
-        std::vector<std::string> row_keys;
+        std::vector<RowKeyType> row_keys;
         for (auto const& entry : request.entries()) {
           row_keys.push_back(entry.row_key());
         }
