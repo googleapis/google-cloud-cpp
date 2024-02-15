@@ -17,6 +17,7 @@
 #include "google/cloud/pubsub/internal/publisher_stub.h"
 #include "google/cloud/pubsub/internal/tracing_helpers.h"
 #include "google/cloud/pubsub/options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "opentelemetry/context/runtime_context.h"
@@ -25,7 +26,6 @@
 #include "opentelemetry/trace/span.h"
 #include <algorithm>
 #include <string>
-#include "google/cloud/common_options.h"
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
@@ -108,7 +108,7 @@ auto MakeChild(
 Spans MakeBatchSinkSpans(Spans const& message_spans, pubsub::Topic const& topic,
                          Options const& options) {
   auto const max_otel_links = options.get<pubsub::MaxOtelLinkCountOption>();
-  auto const endpoint = options.get<EndpointOption>();
+  auto const& endpoint = options.get<EndpointOption>();
   Spans batch_sink_spans;
   // If the batch size is less than the max size, add the links to a single
   // span. If the batch size is greater than the max size, create a parent

@@ -19,13 +19,13 @@
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/testing/mock_batch_sink.h"
 #include "google/cloud/pubsub/topic.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/trace/semantic_conventions.h>
-#include "google/cloud/common_options.h"
 
 namespace google {
 namespace cloud {
