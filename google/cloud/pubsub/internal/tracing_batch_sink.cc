@@ -25,6 +25,7 @@
 #include "opentelemetry/trace/span.h"
 #include <algorithm>
 #include <string>
+#include "google/cloud/common_options.h"
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
@@ -58,7 +59,7 @@ auto MakeLinks(Spans::const_iterator begin, Spans::const_iterator end) {
 }
 
 auto MakeParent(Links const& links, Spans const& message_spans,
-                pubsub::Topic const& topic) {
+                pubsub::Topic const& topic, std::string const endpoint) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto options = RootStartSpanOptions();
   options.kind = opentelemetry::trace::SpanKind::kClient;
@@ -72,6 +73,7 @@ auto MakeParent(Links const& links, Spans const& message_spans,
                            "messaging.operation", "publish"},
                           {sc::kThreadId, internal::CurrentThreadId()},
                           {sc::kMessagingSystem, "gcp_pubsub"},
+                          {/*sc::kServerAddress=*/"server.address", endpoint},
                           {"gcp.project_id", topic.project_id()},
                           {sc::kMessagingDestinationName, topic.topic_id()}},
                          /*links*/ std::move(links), options);
@@ -106,6 +108,7 @@ auto MakeChild(
 Spans MakeBatchSinkSpans(Spans const& message_spans, pubsub::Topic const& topic,
                          Options const& options) {
   auto const max_otel_links = options.get<pubsub::MaxOtelLinkCountOption>();
+  auto const endpoint = options.get<EndpointOption>();
   Spans batch_sink_spans;
   // If the batch size is less than the max size, add the links to a single
   // span. If the batch size is greater than the max size, create a parent
@@ -113,12 +116,11 @@ Spans MakeBatchSinkSpans(Spans const& message_spans, pubsub::Topic const& topic,
   if (message_spans.size() <= max_otel_links) {
     batch_sink_spans.push_back(
         MakeParent(MakeLinks(message_spans.begin(), message_spans.end()),
-                   message_spans, topic));
+                   message_spans, topic, endpoint));
     return batch_sink_spans;
   }
-  batch_sink_spans.push_back(MakeParent({{}}, message_spans, topic));
+  batch_sink_spans.push_back(MakeParent({{}}, message_spans, topic, endpoint));
   auto batch_sink_parent = batch_sink_spans.front();
-
   auto cut = [&message_spans, max_otel_links](auto i) {
     auto const batch_size = static_cast<std::ptrdiff_t>(max_otel_links);
     return std::next(

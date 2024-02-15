@@ -25,6 +25,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/trace/semantic_conventions.h>
+#include "google/cloud/common_options.h"
 
 namespace google {
 namespace cloud {
@@ -55,6 +56,7 @@ using ::testing::Contains;
 namespace {
 
 auto constexpr kDefaultMaxLinks = 128;
+auto constexpr kDefaultEndpoint = "endpoint";
 
 void EndSpans(std::vector<opentelemetry::nostd::shared_ptr<
                   opentelemetry::trace::Span>> const& spans) {
@@ -94,6 +96,7 @@ void AddMessages(
 auto MakeTestOptions(size_t max_otel_link_count = kDefaultMaxLinks) {
   Options options;
   options.set<pubsub::MaxOtelLinkCountOption>(max_otel_link_count);
+  options.set<EndpointOption>(kDefaultEndpoint);
   return options;
 }
 
@@ -214,6 +217,10 @@ TEST(TracingBatchSink, PublishSpanHasAttributes) {
       spans, Contains(AllOf(SpanNamed("test-topic publish"),
                             SpanHasAttributes(OTelAttribute<std::string>(
                                 "gcp.project_id", TestTopic().project_id())))));
+  EXPECT_THAT(spans,
+              Contains(AllOf(SpanNamed("test-topic publish"),
+                             SpanHasAttributes(OTelAttribute<std::string>(
+                                 "server.address", kDefaultEndpoint)))));
   EXPECT_THAT(
       spans, Contains(AllOf(
                  SpanNamed("test-topic publish"),
