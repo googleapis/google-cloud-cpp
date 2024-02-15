@@ -529,8 +529,14 @@ bool AppendIfParagraph(std::ostream& os, MarkdownContext const& ctx,
                        pugi::xml_node node) {
   if (std::string_view{node.name()} != "para") return false;
   os << ctx.paragraph_start << ctx.paragraph_indent;
+  auto nested = ctx;
   for (auto const child : node) {
-    if (AppendIfDocCmdGroup(os, ctx, child)) continue;
+    // After the first successful item we need to insert a blank line before
+    // each additional item.
+    if (AppendIfDocCmdGroup(os, nested, child)) {
+      nested.paragraph_start = "\n\n";
+      continue;
+    }
     UnknownChildType(__func__, child);
   }
   return true;
@@ -550,11 +556,6 @@ bool AppendIfParagraph(std::ostream& os, MarkdownContext const& ctx,
 bool AppendIfProgramListing(std::ostream& os, MarkdownContext const& ctx,
                             pugi::xml_node node) {
   if (std::string_view{node.name()} != "programlisting") return false;
-  // Start with a new paragraph, with the right level of indentation, and a new
-  // code fence.
-  if (ctx.paragraph_start.empty()) {
-    os << "\n\n";
-  }
   os << ctx.paragraph_start << ctx.paragraph_indent << "```cpp";
   for (auto const child : node) {
     if (AppendIfCodeline(os, ctx, child)) continue;
@@ -810,7 +811,7 @@ bool AppendIfListItem(std::ostream& os, MarkdownContext const& ctx,
   nested.paragraph_indent = ctx.paragraph_indent + ctx.item_prefix;
   for (auto const child : node) {
     if (AppendIfParagraph(os, nested, child)) {
-      // Subsequence paragraphs within the same list item require a blank line
+      // Subsequent paragraphs within the same list item require a blank line
       nested.paragraph_start = "\n\n";
       nested.paragraph_indent =
           ctx.paragraph_indent + std::string(ctx.item_prefix.size(), ' ');
