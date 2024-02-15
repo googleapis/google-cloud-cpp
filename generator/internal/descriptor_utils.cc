@@ -21,6 +21,7 @@
 #include "generator/internal/http_option_utils.h"
 #include "generator/internal/longrunning.h"
 #include "generator/internal/pagination.h"
+#include "generator/internal/request_id.h"
 #include "generator/internal/resolve_method_return.h"
 #include "generator/internal/routing.h"
 #include "generator/internal/scaffold_generator.h"
@@ -899,7 +900,7 @@ std::map<std::string, std::string> ParseIdempotencyOverrides(
 
 std::map<std::string, VarsDictionary> CreateMethodVars(
     google::protobuf::ServiceDescriptor const& service,
-    VarsDictionary const& vars) {
+    YAML::Node const& service_config, VarsDictionary const& vars) {
   auto split_arg = [&vars](std::string const& arg) -> std::set<std::string> {
     auto l = vars.find(arg);
     if (l == vars.end()) return {};
@@ -931,6 +932,10 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
     method_vars["response_message_type"] = method.output_type()->full_name();
     method_vars["response_type"] =
         ProtoNameToCppName(method.output_type()->full_name());
+    auto request_id_field_name = RequestIdFieldName(service_config, method);
+    if (!request_id_field_name.empty()) {
+      method_vars["request_id_field_name"] = std::move(request_id_field_name);
+    }
     SetLongrunningOperationMethodVars(method, method_vars);
     AssignPaginationMethodVars(method, method_vars);
     SetMethodSignatureMethodVars(service, method, emitted_rpcs, omitted_rpcs,

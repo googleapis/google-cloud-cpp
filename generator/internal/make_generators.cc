@@ -55,10 +55,11 @@ namespace generator_internal {
 std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     google::protobuf::ServiceDescriptor const* service,
     google::protobuf::compiler::GeneratorContext* context,
+    YAML::Node const& service_config,
     std::vector<std::pair<std::string, std::string>> const& vars) {
   std::vector<std::unique_ptr<GeneratorInterface>> code_generators;
   VarsDictionary service_vars = CreateServiceVars(*service, vars);
-  auto method_vars = CreateMethodVars(*service, service_vars);
+  auto method_vars = CreateMethodVars(*service, service_config, service_vars);
   bool const generate_grpc_transport = [&] {
     auto iter = service_vars.find("generate_grpc_transport");
     if (iter == service_vars.end()) return true;
