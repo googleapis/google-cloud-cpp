@@ -106,6 +106,7 @@ bool operator==(BucketMetadata const& lhs, BucketMetadata const& rhs) {
          && lhs.retention_policy_ == rhs.retention_policy_                  //
          && lhs.rpo_ == rhs.rpo_                                            //
          && lhs.self_link_ == rhs.self_link_                                //
+         && lhs.soft_delete_policy_ == rhs.soft_delete_policy_              //
          && lhs.storage_class_ == rhs.storage_class_                        //
          && lhs.time_created_ == rhs.time_created_                          //
          && lhs.updated_ == rhs.updated_                                    //
@@ -182,8 +183,11 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   }
 
   os << ", project_number=" << rhs.project_number()
-     << ", self_link=" << rhs.self_link()
-     << ", storage_class=" << rhs.storage_class() << ", time_created="
+     << ", self_link=" << rhs.self_link();
+  if (rhs.has_soft_delete_policy()) {
+    os << ", soft_delete_policy=" << rhs.soft_delete_policy();
+  }
+  os << ", storage_class=" << rhs.storage_class() << ", time_created="
      << google::cloud::internal::FormatRfc3339(rhs.time_created())
      << ", updated=" << google::cloud::internal::FormatRfc3339(rhs.updated());
 
@@ -484,6 +488,24 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetRpo(
 
 BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetRpo() {
   impl_.RemoveField("rpo");
+  return *this;
+}
+
+BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetSoftDeletePolicy(
+    BucketSoftDeletePolicy const& v) {
+  // Only the retentionDurationSeconds field is writeable, so do not modify the
+  // other fields.
+  impl_.AddSubPatch(
+      "softDeletePolicy",
+      internal::PatchBuilder().SetIntField(
+          "retentionDurationSeconds",
+          static_cast<std::uint64_t>(v.retention_duration.count())));
+  return *this;
+}
+
+BucketMetadataPatchBuilder&
+BucketMetadataPatchBuilder::ResetSoftDeletePolicy() {
+  impl_.RemoveField("softDeletePolicy");
   return *this;
 }
 

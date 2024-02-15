@@ -439,6 +439,7 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
           autoclass { enabled: true }
           billing { requester_pays: true }
           retention_policy { retention_duration { seconds: 123000 } }
+          soft_delete_policy { retention_duration { seconds: 864000 } }
           iam_config {
             uniform_bucket_level_access { enabled: true }
             public_access_prevention: "enforced"
@@ -514,6 +515,7 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
           .SetAutoclass(storage::BucketAutoclass{true})
           .SetBilling(storage::BucketBilling{/*.requester_pays=*/true})
           .SetRetentionPolicy(std::chrono::seconds(123000))
+          .SetSoftDeletePolicy(std::chrono::seconds(864000))
           .SetIamConfiguration(storage::BucketIamConfiguration{
               /*.uniform_bucket_level_access=*/storage::
                   UniformBucketLevelAccess{true, {}},
@@ -532,11 +534,11 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllOptions) {
   // with IsProtoEqual does not work.
   EXPECT_THAT(
       actual->update_mask().paths(),
-      UnorderedElementsAre("storage_class", "rpo", "acl", "default_object_acl",
-                           "lifecycle", "cors", "default_event_based_hold",
-                           "labels.key0", "website", "versioning", "logging",
-                           "encryption", "autoclass", "billing",
-                           "retention_policy", "iam_config"));
+      UnorderedElementsAre(
+          "storage_class", "rpo", "acl", "default_object_acl", "lifecycle",
+          "cors", "default_event_based_hold", "labels.key0", "website",
+          "versioning", "logging", "encryption", "autoclass", "billing",
+          "retention_policy", "soft_delete_policy", "iam_config"));
 
   // Clear the paths, which we already compared, and compare the proto.
   actual->mutable_update_mask()->clear_paths();
@@ -568,6 +570,7 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllResets) {
                          .ResetLogging()
                          .ResetRetentionPolicy()
                          .ResetRpo()
+                         .ResetSoftDeletePolicy()
                          .ResetStorageClass()
                          .ResetVersioning()
                          .ResetWebsite());
@@ -576,12 +579,13 @@ TEST(GrpcBucketRequestParser, PatchBucketRequestAllResets) {
   ASSERT_STATUS_OK(actual);
   // First check the paths. We do not care about their order, so checking them
   // with IsProtoEqual does not work.
-  EXPECT_THAT(actual->update_mask().paths(),
-              UnorderedElementsAre(
-                  "storage_class", "rpo", "acl", "default_object_acl",
-                  "lifecycle", "cors", "default_event_based_hold", "labels",
-                  "website", "versioning", "logging", "encryption", "autoclass",
-                  "billing", "retention_policy", "iam_config"));
+  EXPECT_THAT(
+      actual->update_mask().paths(),
+      UnorderedElementsAre(
+          "storage_class", "rpo", "acl", "default_object_acl", "lifecycle",
+          "cors", "default_event_based_hold", "labels", "website", "versioning",
+          "logging", "encryption", "autoclass", "billing", "retention_policy",
+          "soft_delete_policy", "iam_config"));
 
   // Clear the paths, which we already compared, and compare the proto.
   actual->mutable_update_mask()->clear_paths();
@@ -642,6 +646,7 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
       R"pb(
         bucket {
           name: "projects/_/buckets/bucket-name"
+          soft_delete_policy { retention_duration { seconds: 864000 } }
           storage_class: "NEARLINE"
           rpo: "ASYNC_TURBO"
           acl { entity: "allUsers" role: "READER" }
@@ -705,6 +710,7 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
   storage::internal::UpdateBucketRequest req(
       storage::BucketMetadata{}
           .set_name("bucket-name")
+          .set_soft_delete_policy(std::chrono::seconds(864000))
           .set_storage_class("NEARLINE")
           .set_rpo(storage::RpoAsyncTurbo())
           .set_acl({storage::BucketAccessControl{}
@@ -777,12 +783,13 @@ TEST(GrpcBucketRequestParser, UpdateBucketRequestAllOptions) {
   auto actual = ToProto(req);
   // First check the paths, we do not care about their order, so checking them
   // with IsProtoEqual does not work.
-  EXPECT_THAT(actual.update_mask().paths(),
-              UnorderedElementsAre(
-                  "storage_class", "rpo", "acl", "default_object_acl",
-                  "lifecycle", "cors", "default_event_based_hold", "labels",
-                  "website", "versioning", "logging", "encryption", "autoclass",
-                  "billing", "retention_policy", "iam_config"));
+  EXPECT_THAT(
+      actual.update_mask().paths(),
+      UnorderedElementsAre("soft_delete_policy", "storage_class", "rpo", "acl",
+                           "default_object_acl", "lifecycle", "cors",
+                           "default_event_based_hold", "labels", "website",
+                           "versioning", "logging", "encryption", "autoclass",
+                           "billing", "retention_policy", "iam_config"));
 
   // Clear the paths, which we already compared, and test the rest
   actual.mutable_update_mask()->clear_paths();

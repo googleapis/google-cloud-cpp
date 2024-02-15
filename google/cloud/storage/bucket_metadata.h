@@ -26,6 +26,7 @@
 #include "google/cloud/storage/bucket_logging.h"
 #include "google/cloud/storage/bucket_retention_policy.h"
 #include "google/cloud/storage/bucket_rpo.h"
+#include "google/cloud/storage/bucket_soft_delete_policy.h"
 #include "google/cloud/storage/bucket_versioning.h"
 #include "google/cloud/storage/bucket_website.h"
 #include "google/cloud/storage/internal/patch_builder.h"
@@ -464,6 +465,42 @@ class BucketMetadata {
   }
   ///@}
 
+  /// @name Accessors and modifiers for the soft delete policy.
+  ///@{
+  bool has_soft_delete_policy() const {
+    return soft_delete_policy_.has_value();
+  }
+  BucketSoftDeletePolicy const& soft_delete_policy() const {
+    return *soft_delete_policy_;
+  }
+  absl::optional<BucketSoftDeletePolicy> const& soft_delete_policy_as_optional()
+      const {
+    return soft_delete_policy_;
+  }
+  BucketMetadata& set_soft_delete_policy(BucketSoftDeletePolicy v) {
+    soft_delete_policy_ = std::move(v);
+    return *this;
+  }
+
+  /**
+   * Sets the soft delete policy.
+   *
+   * The retention period is the only writable attribute in a retention policy.
+   * This function makes it easier to set the retention policy when the
+   * `BucketMetadata` object is used to update or patch the bucket.
+   */
+  BucketMetadata& set_soft_delete_policy(
+      std::chrono::seconds retention_duration) {
+    return set_soft_delete_policy(BucketSoftDeletePolicy{
+        retention_duration, std::chrono::system_clock::time_point{}});
+  }
+
+  BucketMetadata& reset_soft_delete_policy() {
+    soft_delete_policy_.reset();
+    return *this;
+  }
+  ///@}
+
   /// @name Access and modify the default storage class attribute.
   ///@{
   std::string const& storage_class() const { return storage_class_; }
@@ -590,6 +627,7 @@ class BucketMetadata {
   absl::optional<BucketRetentionPolicy> retention_policy_;
   std::string rpo_;
   std::string self_link_;
+  absl::optional<BucketSoftDeletePolicy> soft_delete_policy_;
   std::string storage_class_;
   std::chrono::system_clock::time_point time_created_;
   std::chrono::system_clock::time_point updated_;
@@ -682,6 +720,17 @@ class BucketMetadataPatchBuilder {
 
   BucketMetadataPatchBuilder& SetRpo(std::string const& v);
   BucketMetadataPatchBuilder& ResetRpo();
+
+  BucketMetadataPatchBuilder& SetSoftDeletePolicy(
+      BucketSoftDeletePolicy const& v);
+  BucketMetadataPatchBuilder& SetSoftDeletePolicy(
+      std::chrono::seconds retention_duration) {
+    // This is the only parameter that the application can set, so make it easy
+    // for them to set it.
+    return SetSoftDeletePolicy(BucketSoftDeletePolicy{
+        retention_duration, std::chrono::system_clock::time_point{}});
+  }
+  BucketMetadataPatchBuilder& ResetSoftDeletePolicy();
 
   BucketMetadataPatchBuilder& SetStorageClass(std::string const& v);
   BucketMetadataPatchBuilder& ResetStorageClass();
