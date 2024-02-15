@@ -720,12 +720,17 @@ TEST(Doxygen2Markdown, ParagraphProgramListingAddsNewLine) {
   auto constexpr kXml = R"xml(<?xml version="1.0" standalone="yes"?>
     <doxygen version="1.9.1" xml:lang="en-US">
     <detaileddescription  id='test-node'>
-    <para>
-<simplesect kind="par"><title>Error Handling</title><para>Description goes here.</para>
-</simplesect>
-<programlisting><codeline><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">cbt<sp/>=<sp/><ref refid="namespacegoogle_1_1cloud_1_1bigtable" kindref="compound">google::cloud::bigtable</ref>;</highlight></codeline>
-<codeline><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">btadmin<sp/>=<sp/>google::bigtable::admin::v2;</highlight></codeline>
-</programlisting></para>     </detaileddescription>
+      <para>
+        <simplesect kind="par">
+          <title>Error Handling</title>
+            <para>Description goes here.</para>
+        </simplesect>
+        <programlisting>
+          <codeline><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">cbt<sp/>=<sp/><ref refid="namespacegoogle_1_1cloud_1_1bigtable" kindref="compound">google::cloud::bigtable</ref>;</highlight></codeline>
+          <codeline><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">btadmin<sp/>=<sp/>google::bigtable::admin::v2;</highlight></codeline>
+        </programlisting>
+      </para>    
+    </detaileddescription>
  </doxygen>)xml";
 
   auto constexpr kExpected = R"md(
