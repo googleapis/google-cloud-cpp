@@ -729,7 +729,7 @@ TEST(Doxygen2Markdown, ParagraphProgramListingAddsNewLine) {
           <codeline><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">cbt<sp/>=<sp/><ref refid="namespacegoogle_1_1cloud_1_1bigtable" kindref="compound">google::cloud::bigtable</ref>;</highlight></codeline>
           <codeline><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">btadmin<sp/>=<sp/>google::bigtable::admin::v2;</highlight></codeline>
         </programlisting>
-      </para>    
+      </para>
     </detaileddescription>
  </doxygen>)xml";
 
