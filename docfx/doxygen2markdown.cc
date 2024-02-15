@@ -552,6 +552,9 @@ bool AppendIfProgramListing(std::ostream& os, MarkdownContext const& ctx,
   if (std::string_view{node.name()} != "programlisting") return false;
   // Start with a new paragraph, with the right level of indentation, and a new
   // code fence.
+  if (ctx.paragraph_start.empty()) {
+    os << "\n\n";
+  }
   os << ctx.paragraph_start << ctx.paragraph_indent << "```cpp";
   for (auto const child : node) {
     if (AppendIfCodeline(os, ctx, child)) continue;
