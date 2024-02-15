@@ -130,14 +130,14 @@ std::map<std::string, std::string> ScaffoldVars(
     vars.emplace("title", api.value("title", ""));
     vars.emplace("description", api.value("description", ""));
     vars.emplace("directory", api.value("directory", ""));
+    vars.emplace("service_config_yaml_name",
+                 absl::StrCat(api.value("directory", ""), "/",
+                              api.value("configFile", "")));
     vars.emplace("nameInServiceConfig", api.value("nameInServiceConfig", ""));
-    vars.emplace("configFile", api.value("configFile", ""));
-  }
-  if (!service.override_service_config_yaml_directory().empty()) {
-    vars.emplace("directory", service.override_service_config_yaml_directory());
   }
   if (!service.override_service_config_yaml_name().empty()) {
-    vars.emplace("configFile", service.override_service_config_yaml_name());
+    vars.emplace("service_config_yaml_name",
+                 service.override_service_config_yaml_name());
   }
   auto const library = LibraryName(service.product_path());
   vars["copyright_year"] = service.initial_copyright_year();
@@ -219,10 +219,9 @@ std::map<std::string, std::string> ScaffoldVars(
 
 std::string ServiceConfigYamlPath(
     std::string const& root, std::map<std::string, std::string> const& vars) {
-  auto const directory = vars.find("directory");
-  auto const name = vars.find("configFile");
-  if (name == vars.end() || directory == vars.end()) return {};
-  return absl::StrCat(root, "/", directory->second, "/", name->second);
+  auto const name = vars.find("service_config_yaml_name");
+  if (name == vars.end()) return {};
+  return absl::StrCat(root, "/", name->second);
 }
 
 void MakeDirectory(std::string const& path) {

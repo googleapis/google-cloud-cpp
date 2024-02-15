@@ -873,7 +873,6 @@ message WithRequestIdRequest {
   string field = 1 [ (google.api.field_info).format = UUID4 ];
 }
 
-
 message WithoutRequestIdRequest {
   string field = 1;
 }

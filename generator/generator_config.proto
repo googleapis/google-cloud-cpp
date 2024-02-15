@@ -171,14 +171,13 @@ message ServiceConfiguration {
   // service. This will replace the service comment from the upstream repo.
   map<string, string> service_name_to_comment = 27;
 
-  // If not empty, it overrides the location of the service config YAML file.
+  // If not empty, it overrides the name (relative to the googleapis root) of
+  // the service config YAML file.
+  //
   // Normally the directory and name for the service config YAML are fetched
-  // from the service index JSON file in the googleapis repository. When using
+  // from the service index JSON file in the googleapis repository. When
   // processing golden files we need to provide our own YAML files.
-  string override_service_config_yaml_directory = 28;
-
-  // If not empty, it overrides the name of the service config YAML file.
-  string override_service_config_yaml_name = 29;
+  string override_service_config_yaml_name = 28;
 }
 
 message DiscoveryDocumentDefinedProduct {
