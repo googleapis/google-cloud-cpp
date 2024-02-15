@@ -42,6 +42,8 @@ add_library(
     bucket_retention_policy.cc
     bucket_retention_policy.h
     bucket_rpo.h
+    bucket_soft_delete_policy.cc
+    bucket_soft_delete_policy.h
     bucket_versioning.h
     bucket_website.h
     client.cc
@@ -423,6 +425,7 @@ if (BUILD_TESTING)
         bucket_cors_entry_test.cc
         bucket_iam_configuration_test.cc
         bucket_metadata_test.cc
+        bucket_soft_delete_policy_test.cc
         client_bucket_acl_test.cc
         client_bucket_test.cc
         client_default_object_acl_test.cc
