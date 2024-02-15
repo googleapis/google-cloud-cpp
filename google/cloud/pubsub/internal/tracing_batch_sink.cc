@@ -59,7 +59,7 @@ auto MakeLinks(Spans::const_iterator begin, Spans::const_iterator end) {
 }
 
 auto MakeParent(Links const& links, Spans const& message_spans,
-                pubsub::Topic const& topic, std::string const endpoint) {
+                pubsub::Topic const& topic, std::string const& endpoint) {
   namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto options = RootStartSpanOptions();
   options.kind = opentelemetry::trace::SpanKind::kClient;
