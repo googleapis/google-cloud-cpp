@@ -57,6 +57,7 @@ Status ConnectionImplGenerator::GenerateHeader() {
            : "",
        "google/cloud/background_threads.h", "google/cloud/backoff_policy.h",
        HasLongrunningMethod() ? "google/cloud/future.h" : "",
+       HasRequestId() ? "google/cloud/internal/invocation_id_generator.h" : "",
        "google/cloud/options.h",
        HasLongrunningMethod() ? "google/cloud/polling_policy.h" : "",
        "google/cloud/status_or.h",
@@ -117,11 +118,17 @@ class $connection_class_name$Impl
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub_;
-  Options options_;
-)""");
+  Options options_;)""");
+
+  if (HasRequestId()) {
+    HeaderPrint(R"""(
+  std::shared_ptr<google::cloud::internal::InvocationIdGenerator>
+      invocation_id_generator_ =
+          std::make_shared<google::cloud::internal::InvocationIdGenerator>();)""");
+  }
 
   // This closes the *ConnectionImpl class definition.
-  HeaderPrint("};\n");
+  HeaderPrint("\n};\n");
 
   HeaderCloseNamespaces();
 
@@ -324,6 +331,9 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
     return {};
   }
 
+  // We do not need to consider `HasRequestId()` in paginated APIs. The main
+  // motivation for `HasRequestId()` is to make the request idempotent, but
+  // paginated APIs are always read-only and therefore idempotent.
   if (IsPaginated(method)) {
     return R"""(
 StreamRange<$range_output_type$>
@@ -363,6 +373,12 @@ $connection_class_name$Impl::$method_name$($request_type$ request) {
             ? R"""(future<Status>)"""
             : R"""(future<StatusOr<$longrunning_deduced_response_type$>>)""";
 
+    auto const* request_id_fragment = HasRequestId(method) ? R"""(
+  if (request_copy.$request_id_field_name$().empty()) {
+    request_copy.set_$request_id_field_name$(invocation_id_generator_->MakeInvocationId());
+  })"""
+                                                           : "";
+
     // One of the variations is how to extract the value from the operation
     // result, some operations use the metadata, some the data. We need to
     // provide the right function to internal::AsyncLongRunningOperation.
@@ -387,7 +403,8 @@ $connection_class_name$Impl::$method_name$($request_type$ request) {
                         R"""(
 $connection_class_name$Impl::$method_name$($request_type$ const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto request_copy = request;
+  auto request_copy = request;)""",
+                        request_id_fragment, R"""(
   auto const idempotent =
       idempotency_policy(*current)->$method_name$(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<$longrunning_deduced_response_type$>(
@@ -424,6 +441,26 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
   auto const* return_fragment = IsResponseTypeEmpty(method)
                                     ? R"""(Status)"""
                                     : R"""(StatusOr<$response_type$>)""";
+  if (HasRequestId(method)) {
+    return absl::StrCat("\n", return_fragment, R"""(
+$connection_class_name$Impl::$method_name$($request_type$ const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.$request_id_field_name$().empty()) {
+    request_copy.set_$request_id_field_name$(invocation_id_generator_->MakeInvocationId());
+  }
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->$method_name$(request_copy),
+      [this](grpc::ClientContext& context,
+             $request_type$ const& request) {
+        return stub_->$method_name$(context, request);
+      },
+      request_copy, __func__);
+}
+)""");
+  }
+
   return absl::StrCat("\n", return_fragment,
                       R"""(
 $connection_class_name$Impl::$method_name$($request_type$ const& request) {
@@ -445,12 +482,19 @@ std::string ConnectionImplGenerator::AsyncMethodDefinition(
   auto const* return_fragment =
       IsResponseTypeEmpty(method) ? R"""(future<Status>)"""
                                   : R"""(future<StatusOr<$response_type$>>)""";
+  auto const* request_id_fragment = HasRequestId(method) ?
+                                                         R"""(
+  if (request_copy.$request_id_field_name$().empty()) {
+    request_copy.set_$request_id_field_name$(invocation_id_generator_->MakeInvocationId());
+  })"""
+                                                         : "";
 
   return absl::StrCat("\n", return_fragment,
                       R"""(
 $connection_class_name$Impl::Async$method_name$($request_type$ const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
-  auto request_copy = request;
+  auto request_copy = request;)""",
+                      request_id_fragment, R"""(
   auto const idempotent =
       idempotency_policy(*current)->$method_name$(request_copy);
   return google::cloud::internal::AsyncRetryLoop(

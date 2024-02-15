@@ -101,8 +101,8 @@ class RequestIdServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.requestid.v1.CreateFooRequest]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L80}
-  /// [google.test.requestid.v1.Foo]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L66}
+  /// [google.test.requestid.v1.CreateFooRequest]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L79}
+  /// [google.test.requestid.v1.Foo]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L65}
   ///
   // clang-format on
   StatusOr<google::test::requestid::v1::Foo>
@@ -131,8 +131,8 @@ class RequestIdServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.requestid.v1.CreateFooRequest]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L80}
-  /// [google.test.requestid.v1.Foo]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L66}
+  /// [google.test.requestid.v1.CreateFooRequest]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L79}
+  /// [google.test.requestid.v1.Foo]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L65}
   ///
   // clang-format on
   StatusOr<google::test::requestid::v1::Foo>
@@ -165,8 +165,8 @@ class RequestIdServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.requestid.v1.Foo]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L66}
-  /// [google.test.requestid.v1.RenameFooRequest]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L100}
+  /// [google.test.requestid.v1.Foo]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L65}
+  /// [google.test.requestid.v1.RenameFooRequest]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L99}
   ///
   // clang-format on
   future<StatusOr<google::test::requestid::v1::Foo>>
@@ -202,8 +202,8 @@ class RequestIdServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.requestid.v1.Foo]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L66}
-  /// [google.test.requestid.v1.RenameFooRequest]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L100}
+  /// [google.test.requestid.v1.Foo]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L65}
+  /// [google.test.requestid.v1.RenameFooRequest]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L99}
   ///
   // clang-format on
   future<StatusOr<google::test::requestid::v1::Foo>>
@@ -236,8 +236,8 @@ class RequestIdServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.requestid.v1.Foo]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L66}
-  /// [google.test.requestid.v1.ListFoosRequest]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L135}
+  /// [google.test.requestid.v1.Foo]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L65}
+  /// [google.test.requestid.v1.ListFoosRequest]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L134}
   ///
   // clang-format on
   StreamRange<google::test::requestid::v1::Foo>
@@ -275,8 +275,8 @@ class RequestIdServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.requestid.v1.Foo]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L66}
-  /// [google.test.requestid.v1.ListFoosRequest]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L135}
+  /// [google.test.requestid.v1.Foo]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L65}
+  /// [google.test.requestid.v1.ListFoosRequest]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L134}
   ///
   // clang-format on
   StreamRange<google::test::requestid::v1::Foo>
@@ -301,8 +301,8 @@ class RequestIdServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.requestid.v1.CreateFooRequest]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L80}
-  /// [google.test.requestid.v1.Foo]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L66}
+  /// [google.test.requestid.v1.CreateFooRequest]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L79}
+  /// [google.test.requestid.v1.Foo]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L65}
   ///
   // clang-format on
   future<StatusOr<google::test::requestid::v1::Foo>>
@@ -331,8 +331,8 @@ class RequestIdServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.test.requestid.v1.CreateFooRequest]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L80}
-  /// [google.test.requestid.v1.Foo]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L66}
+  /// [google.test.requestid.v1.CreateFooRequest]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L79}
+  /// [google.test.requestid.v1.Foo]: @googleapis_reference_link{generator/integration_tests/test_request_id.proto#L65}
   ///
   // clang-format on
   future<StatusOr<google::test::requestid::v1::Foo>>

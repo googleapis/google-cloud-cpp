@@ -70,41 +70,53 @@ StatusOr<google::storage::control::v2::Folder>
 StorageControlConnectionImpl::CreateFolder(
     google::storage::control::v2::CreateFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateFolder(request),
+      idempotency_policy(*current)->CreateFolder(request_copy),
       [this](grpc::ClientContext& context,
              google::storage::control::v2::CreateFolderRequest const& request) {
         return stub_->CreateFolder(context, request);
       },
-      request, __func__);
+      request_copy, __func__);
 }
 
 Status StorageControlConnectionImpl::DeleteFolder(
     google::storage::control::v2::DeleteFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteFolder(request),
+      idempotency_policy(*current)->DeleteFolder(request_copy),
       [this](grpc::ClientContext& context,
              google::storage::control::v2::DeleteFolderRequest const& request) {
         return stub_->DeleteFolder(context, request);
       },
-      request, __func__);
+      request_copy, __func__);
 }
 
 StatusOr<google::storage::control::v2::Folder>
 StorageControlConnectionImpl::GetFolder(
     google::storage::control::v2::GetFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetFolder(request),
+      idempotency_policy(*current)->GetFolder(request_copy),
       [this](grpc::ClientContext& context,
              google::storage::control::v2::GetFolderRequest const& request) {
         return stub_->GetFolder(context, request);
       },
-      request, __func__);
+      request_copy, __func__);
 }
 
 StreamRange<google::storage::control::v2::Folder>
@@ -143,6 +155,9 @@ StorageControlConnectionImpl::RenameFolder(
     google::storage::control::v2::RenameFolderRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   auto const idempotent =
       idempotency_policy(*current)->RenameFolder(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
@@ -179,13 +194,17 @@ StatusOr<google::storage::control::v2::StorageLayout>
 StorageControlConnectionImpl::GetStorageLayout(
     google::storage::control::v2::GetStorageLayoutRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  if (request_copy.request_id().empty()) {
+    request_copy.set_request_id(invocation_id_generator_->MakeInvocationId());
+  }
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetStorageLayout(request),
+      idempotency_policy(*current)->GetStorageLayout(request_copy),
       [this](grpc::ClientContext& context,
              google::storage::control::v2::GetStorageLayoutRequest const&
                  request) { return stub_->GetStorageLayout(context, request); },
-      request, __func__);
+      request_copy, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
