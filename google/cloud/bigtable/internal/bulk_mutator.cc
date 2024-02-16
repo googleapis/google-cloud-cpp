@@ -218,8 +218,7 @@ Status BulkMutator::MakeOneRequest(BigtableStub& stub,
   auto context = std::make_shared<grpc::ClientContext>();
   google::cloud::internal::ConfigureContext(*context, options);
   retry_context_.PreCall(*context);
-  bool enable_server_retries =
-      options.get<internal::EnableServerRetriesOption>();
+  bool enable_server_retries = options.get<EnableServerRetriesOption>();
 
   struct UnpackVariant {
     BulkMutatorState& state;

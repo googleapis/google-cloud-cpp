@@ -55,7 +55,7 @@ inline std::unique_ptr<bigtable::IdempotentMutationPolicy> idempotency_policy(
 }
 
 inline bool enable_server_retries(Options const& options) {
-  return options.get<internal::EnableServerRetriesOption>();
+  return options.get<EnableServerRetriesOption>();
 }
 
 }  // namespace
