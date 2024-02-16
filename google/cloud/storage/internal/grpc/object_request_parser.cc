@@ -337,6 +337,9 @@ google::storage::v2::GetObjectRequest ToProto(
   result.set_generation(request.GetOption<storage::Generation>().value_or(0));
   auto projection = request.GetOption<storage::Projection>().value_or("");
   if (projection == "full") result.mutable_read_mask()->add_paths("*");
+  if (request.GetOption<storage::SoftDeleted>().value_or(true)) {
+    result.set_soft_deleted(true);
+  }
   return result;
 }
 
@@ -579,6 +582,9 @@ google::storage::v2::ListObjectsRequest ToProto(
   result.set_lexicographic_end(
       request.GetOption<storage::EndOffset>().value_or(""));
   result.set_match_glob(request.GetOption<storage::MatchGlob>().value_or(""));
+  if (request.GetOption<storage::SoftDeleted>().value_or(true)) {
+    result.set_soft_deleted(true);
+  }
   return result;
 }
 
