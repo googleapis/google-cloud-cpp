@@ -430,7 +430,7 @@ void DataConnectionImpl::AsyncReadRows(
       background_->cq(), stub_, app_profile_id(*current), table_name,
       std::move(on_row), std::move(on_finish), std::move(row_set), rows_limit,
       std::move(filter), reverse, retry_policy(*current),
-      backoff_policy(*current));
+      backoff_policy(*current), enable_server_retries(*current));
 }
 
 future<StatusOr<std::pair<bool, bigtable::Row>>>
