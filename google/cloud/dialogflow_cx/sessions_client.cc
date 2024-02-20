@@ -39,6 +39,14 @@ SessionsClient::DetectIntent(
   return connection_->DetectIntent(request);
 }
 
+StreamRange<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
+SessionsClient::ServerStreamingDetectIntent(
+    google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ServerStreamingDetectIntent(request);
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>

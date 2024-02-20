@@ -22,6 +22,7 @@
 #include "google/cloud/dialogflow_cx/internal/entity_types_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
 #include <string>
@@ -63,6 +64,28 @@ class EntityTypesMetadata : public EntityTypesStub {
       grpc::ClientContext& context,
       google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request)
       override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncExportEntityTypes(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncImportEntityTypes(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,

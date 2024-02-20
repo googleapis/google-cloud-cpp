@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_cx/internal/sessions_logging_decorator.h"
 #include "google/cloud/internal/async_read_write_stream_logging.h"
 #include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/cx/v3/session.grpc.pb.h>
 #include <memory>
@@ -44,6 +45,31 @@ SessionsLogging::DetectIntent(
              google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
                  request) { return child_->DetectIntent(context, request); },
       context, request, __func__, tracing_options_);
+}
+
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::dialogflow::cx::v3::DetectIntentResponse>>
+SessionsLogging::ServerStreamingDetectIntent(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request)
+          -> std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+              google::cloud::dialogflow::cx::v3::DetectIntentResponse>> {
+        auto stream = child_->ServerStreamingDetectIntent(std::move(context),
+                                                          options, request);
+        if (stream_logging_) {
+          stream =
+              std::make_unique<google::cloud::internal::StreamingReadRpcLogging<
+                  google::cloud::dialogflow::cx::v3::DetectIntentResponse>>(
+                  std::move(stream), tracing_options_,
+                  google::cloud::internal::RequestIdForLogging());
+        }
+        return stream;
+      },
+      std::move(context), options, request, __func__, tracing_options_);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

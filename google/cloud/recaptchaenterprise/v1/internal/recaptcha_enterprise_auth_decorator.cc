@@ -173,6 +173,17 @@ Status RecaptchaEnterpriseServiceAuth::DeleteFirewallPolicy(
 }
 
 StatusOr<
+    google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+RecaptchaEnterpriseServiceAuth::ReorderFirewallPolicies(
+    grpc::ClientContext& context,
+    google::cloud::recaptchaenterprise::v1::
+        ReorderFirewallPoliciesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ReorderFirewallPolicies(context, request);
+}
+
+StatusOr<
     google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>
 RecaptchaEnterpriseServiceAuth::ListRelatedAccountGroups(
     grpc::ClientContext& context,

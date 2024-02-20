@@ -89,6 +89,59 @@ EntityTypesTracingStub::ListEntityTypes(
                            child_->ListEntityTypes(context, request));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+EntityTypesTracingStub::AsyncExportEntityTypes(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.EntityTypes", "ExportEntityTypes");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncExportEntityTypes(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EntityTypesTracingStub::AsyncImportEntityTypes(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.dialogflow.cx.v3.EntityTypes", "ImportEntityTypes");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncImportEntityTypes(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EntityTypesTracingStub::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::longrunning::GetOperationRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+future<Status> EntityTypesTracingStub::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
+                                     "CancelOperation");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<EntityTypesStub> MakeEntityTypesTracingStub(

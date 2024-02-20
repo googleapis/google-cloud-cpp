@@ -329,6 +329,23 @@ Status RecaptchaEnterpriseServiceConnectionImpl::DeleteFirewallPolicy(
       request, __func__);
 }
 
+StatusOr<
+    google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+RecaptchaEnterpriseServiceConnectionImpl::ReorderFirewallPolicies(
+    google::cloud::recaptchaenterprise::v1::
+        ReorderFirewallPoliciesRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->ReorderFirewallPolicies(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::recaptchaenterprise::v1::
+                 ReorderFirewallPoliciesRequest const& request) {
+        return stub_->ReorderFirewallPolicies(context, request);
+      },
+      request, __func__);
+}
+
 StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>
 RecaptchaEnterpriseServiceConnectionImpl::ListRelatedAccountGroups(
     google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest

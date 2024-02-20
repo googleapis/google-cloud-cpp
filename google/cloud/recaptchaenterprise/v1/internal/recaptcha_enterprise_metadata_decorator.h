@@ -123,6 +123,13 @@ class RecaptchaEnterpriseServiceMetadata
           request) override;
 
   StatusOr<
+      google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+  ReorderFirewallPolicies(
+      grpc::ClientContext& context,
+      google::cloud::recaptchaenterprise::v1::
+          ReorderFirewallPoliciesRequest const& request) override;
+
+  StatusOr<
       google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>
   ListRelatedAccountGroups(
       grpc::ClientContext& context,

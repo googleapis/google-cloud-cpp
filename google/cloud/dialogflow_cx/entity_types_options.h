@@ -59,12 +59,23 @@ struct EntityTypesConnectionIdempotencyPolicyOption {
 };
 
 /**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-dialogflow_cx-options
+ */
+struct EntityTypesPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
  * The options applicable to EntityTypes.
  *
  * @ingroup google-cloud-dialogflow_cx-options
  */
 using EntityTypesPolicyOptionList =
     OptionList<EntityTypesRetryPolicyOption, EntityTypesBackoffPolicyOption,
+               EntityTypesPollingPolicyOption,
                EntityTypesConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

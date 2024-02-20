@@ -135,6 +135,127 @@ EnvironmentsMetadata::PollAirflowCommand(
   return child_->PollAirflowCommand(context, request);
 }
 
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse>
+EnvironmentsMetadata::ListWorkloads(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        ListWorkloadsRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListWorkloads(context, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsMetadata::CreateUserWorkloadsSecret(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        CreateUserWorkloadsSecretRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateUserWorkloadsSecret(context, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsMetadata::GetUserWorkloadsSecret(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        GetUserWorkloadsSecretRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetUserWorkloadsSecret(context, request);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ListUserWorkloadsSecretsResponse>
+EnvironmentsMetadata::ListUserWorkloadsSecrets(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        ListUserWorkloadsSecretsRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListUserWorkloadsSecrets(context, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsMetadata::UpdateUserWorkloadsSecret(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateUserWorkloadsSecretRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat(
+                  "user_workloads_secret.name=",
+                  internal::UrlEncode(request.user_workloads_secret().name())));
+  return child_->UpdateUserWorkloadsSecret(context, request);
+}
+
+Status EnvironmentsMetadata::DeleteUserWorkloadsSecret(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteUserWorkloadsSecretRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteUserWorkloadsSecret(context, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsMetadata::CreateUserWorkloadsConfigMap(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        CreateUserWorkloadsConfigMapRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->CreateUserWorkloadsConfigMap(context, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsMetadata::GetUserWorkloadsConfigMap(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        GetUserWorkloadsConfigMapRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetUserWorkloadsConfigMap(context, request);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ListUserWorkloadsConfigMapsResponse>
+EnvironmentsMetadata::ListUserWorkloadsConfigMaps(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        ListUserWorkloadsConfigMapsRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListUserWorkloadsConfigMaps(context, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsMetadata::UpdateUserWorkloadsConfigMap(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateUserWorkloadsConfigMapRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("user_workloads_config_map.name=",
+                           internal::UrlEncode(
+                               request.user_workloads_config_map().name())));
+  return child_->UpdateUserWorkloadsConfigMap(context, request);
+}
+
+Status EnvironmentsMetadata::DeleteUserWorkloadsConfigMap(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteUserWorkloadsConfigMapRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteUserWorkloadsConfigMap(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncSaveSnapshot(
     google::cloud::CompletionQueue& cq,

@@ -162,6 +162,167 @@ EnvironmentsLogging::PollAirflowCommand(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse>
+EnvironmentsLogging::ListWorkloads(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        ListWorkloadsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 ListWorkloadsRequest const& request) {
+        return child_->ListWorkloads(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsLogging::CreateUserWorkloadsSecret(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        CreateUserWorkloadsSecretRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 CreateUserWorkloadsSecretRequest const& request) {
+        return child_->CreateUserWorkloadsSecret(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsLogging::GetUserWorkloadsSecret(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        GetUserWorkloadsSecretRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 GetUserWorkloadsSecretRequest const& request) {
+        return child_->GetUserWorkloadsSecret(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ListUserWorkloadsSecretsResponse>
+EnvironmentsLogging::ListUserWorkloadsSecrets(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        ListUserWorkloadsSecretsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 ListUserWorkloadsSecretsRequest const& request) {
+        return child_->ListUserWorkloadsSecrets(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsLogging::UpdateUserWorkloadsSecret(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateUserWorkloadsSecretRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 UpdateUserWorkloadsSecretRequest const& request) {
+        return child_->UpdateUserWorkloadsSecret(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+Status EnvironmentsLogging::DeleteUserWorkloadsSecret(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteUserWorkloadsSecretRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 DeleteUserWorkloadsSecretRequest const& request) {
+        return child_->DeleteUserWorkloadsSecret(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsLogging::CreateUserWorkloadsConfigMap(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        CreateUserWorkloadsConfigMapRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 CreateUserWorkloadsConfigMapRequest const& request) {
+        return child_->CreateUserWorkloadsConfigMap(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsLogging::GetUserWorkloadsConfigMap(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        GetUserWorkloadsConfigMapRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 GetUserWorkloadsConfigMapRequest const& request) {
+        return child_->GetUserWorkloadsConfigMap(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ListUserWorkloadsConfigMapsResponse>
+EnvironmentsLogging::ListUserWorkloadsConfigMaps(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        ListUserWorkloadsConfigMapsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 ListUserWorkloadsConfigMapsRequest const& request) {
+        return child_->ListUserWorkloadsConfigMaps(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsLogging::UpdateUserWorkloadsConfigMap(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateUserWorkloadsConfigMapRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 UpdateUserWorkloadsConfigMapRequest const& request) {
+        return child_->UpdateUserWorkloadsConfigMap(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+Status EnvironmentsLogging::DeleteUserWorkloadsConfigMap(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteUserWorkloadsConfigMapRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 DeleteUserWorkloadsConfigMapRequest const& request) {
+        return child_->DeleteUserWorkloadsConfigMap(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsLogging::AsyncSaveSnapshot(
     google::cloud::CompletionQueue& cq,

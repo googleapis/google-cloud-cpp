@@ -196,6 +196,18 @@ Status RecaptchaEnterpriseServiceTracingConnection::DeleteFirewallPolicy(
   return internal::EndSpan(*span, child_->DeleteFirewallPolicy(request));
 }
 
+StatusOr<
+    google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+RecaptchaEnterpriseServiceTracingConnection::ReorderFirewallPolicies(
+    google::cloud::recaptchaenterprise::v1::
+        ReorderFirewallPoliciesRequest const& request) {
+  auto span = internal::MakeSpan(
+      "recaptchaenterprise_v1::RecaptchaEnterpriseServiceConnection::"
+      "ReorderFirewallPolicies");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ReorderFirewallPolicies(request));
+}
+
 StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>
 RecaptchaEnterpriseServiceTracingConnection::ListRelatedAccountGroups(
     google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest

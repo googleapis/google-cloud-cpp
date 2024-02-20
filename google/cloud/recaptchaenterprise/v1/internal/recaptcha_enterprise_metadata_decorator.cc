@@ -188,6 +188,17 @@ Status RecaptchaEnterpriseServiceMetadata::DeleteFirewallPolicy(
 }
 
 StatusOr<
+    google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+RecaptchaEnterpriseServiceMetadata::ReorderFirewallPolicies(
+    grpc::ClientContext& context,
+    google::cloud::recaptchaenterprise::v1::
+        ReorderFirewallPoliciesRequest const& request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ReorderFirewallPolicies(context, request);
+}
+
+StatusOr<
     google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>
 RecaptchaEnterpriseServiceMetadata::ListRelatedAccountGroups(
     grpc::ClientContext& context,

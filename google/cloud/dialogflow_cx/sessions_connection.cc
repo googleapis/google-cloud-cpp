@@ -42,6 +42,18 @@ SessionsConnection::DetectIntent(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
+SessionsConnection::ServerStreamingDetectIntent(
+    google::cloud::dialogflow::cx::v3::DetectIntentRequest const&) {
+  return google::cloud::internal::MakeStreamRange<
+      google::cloud::dialogflow::cx::v3::DetectIntentResponse>(
+      []()
+          -> absl::variant<
+              Status, google::cloud::dialogflow::cx::v3::DetectIntentResponse> {
+        return Status(StatusCode::kUnimplemented, "not implemented");
+      });
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>

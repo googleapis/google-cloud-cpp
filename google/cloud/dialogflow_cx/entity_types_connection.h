@@ -22,12 +22,15 @@
 #include "google/cloud/dialogflow_cx/entity_types_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_cx/internal/entity_types_retry_traits.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/cx/v3/entity_type.pb.h>
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 #include <string>
 
@@ -202,6 +205,18 @@ class EntityTypesConnection {
   virtual StreamRange<google::cloud::dialogflow::cx::v3::EntityType>
   ListEntityTypes(
       google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request);
+
+  virtual future<
+      StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
+  ExportEntityTypes(
+      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
+  ImportEntityTypes(
+      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+          request);
 };
 
 /**

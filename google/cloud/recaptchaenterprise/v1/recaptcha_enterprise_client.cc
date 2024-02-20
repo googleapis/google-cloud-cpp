@@ -303,6 +303,29 @@ Status RecaptchaEnterpriseServiceClient::DeleteFirewallPolicy(
   return connection_->DeleteFirewallPolicy(request);
 }
 
+StatusOr<
+    google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+RecaptchaEnterpriseServiceClient::ReorderFirewallPolicies(
+    std::string const& parent, std::vector<std::string> const& names,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesRequest
+      request;
+  request.set_parent(parent);
+  *request.mutable_names() = {names.begin(), names.end()};
+  return connection_->ReorderFirewallPolicies(request);
+}
+
+StatusOr<
+    google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+RecaptchaEnterpriseServiceClient::ReorderFirewallPolicies(
+    google::cloud::recaptchaenterprise::v1::
+        ReorderFirewallPoliciesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ReorderFirewallPolicies(request);
+}
+
 StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>
 RecaptchaEnterpriseServiceClient::ListRelatedAccountGroups(
     std::string const& parent, Options opts) {

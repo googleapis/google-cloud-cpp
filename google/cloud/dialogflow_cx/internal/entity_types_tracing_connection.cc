@@ -79,6 +79,26 @@ EntityTypesTracingConnection::ListEntityTypes(
                                                      std::move(sr));
 }
 
+future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
+EntityTypesTracingConnection::ExportEntityTypes(
+    google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EntityTypesConnection::ExportEntityTypes");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ExportEntityTypes(request));
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
+EntityTypesTracingConnection::ImportEntityTypes(
+    google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EntityTypesConnection::ImportEntityTypes");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->ImportEntityTypes(request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<dialogflow_cx::EntityTypesConnection>

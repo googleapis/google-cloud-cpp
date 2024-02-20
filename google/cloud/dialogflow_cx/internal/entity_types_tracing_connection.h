@@ -60,6 +60,16 @@ class EntityTypesTracingConnection
       google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request)
       override;
 
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
+  ExportEntityTypes(
+      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+          request) override;
+
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
+  ImportEntityTypes(
+      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+          request) override;
+
  private:
   std::shared_ptr<dialogflow_cx::EntityTypesConnection> child_;
 };

@@ -69,6 +69,50 @@ class EnvironmentsConnectionIdempotencyPolicy {
       google::cloud::orchestration::airflow::service::v1::
           PollAirflowCommandRequest const& request);
 
+  virtual google::cloud::Idempotency ListWorkloads(
+      google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest
+          request);
+
+  virtual google::cloud::Idempotency CreateUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          CreateUserWorkloadsSecretRequest const& request);
+
+  virtual google::cloud::Idempotency GetUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          GetUserWorkloadsSecretRequest const& request);
+
+  virtual google::cloud::Idempotency ListUserWorkloadsSecrets(
+      google::cloud::orchestration::airflow::service::v1::
+          ListUserWorkloadsSecretsRequest request);
+
+  virtual google::cloud::Idempotency UpdateUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          UpdateUserWorkloadsSecretRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          DeleteUserWorkloadsSecretRequest const& request);
+
+  virtual google::cloud::Idempotency CreateUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          CreateUserWorkloadsConfigMapRequest const& request);
+
+  virtual google::cloud::Idempotency GetUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          GetUserWorkloadsConfigMapRequest const& request);
+
+  virtual google::cloud::Idempotency ListUserWorkloadsConfigMaps(
+      google::cloud::orchestration::airflow::service::v1::
+          ListUserWorkloadsConfigMapsRequest request);
+
+  virtual google::cloud::Idempotency UpdateUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          UpdateUserWorkloadsConfigMapRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          DeleteUserWorkloadsConfigMapRequest const& request);
+
   virtual google::cloud::Idempotency SaveSnapshot(
       google::cloud::orchestration::airflow::service::v1::
           SaveSnapshotRequest const& request);

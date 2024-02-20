@@ -142,6 +142,12 @@ Status DataTransferServiceConnection::EnrollDataSources(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+Status DataTransferServiceConnection::UnenrollDataSources(
+    google::cloud::bigquery::datatransfer::v1::
+        UnenrollDataSourcesRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<DataTransferServiceConnection>
 MakeDataTransferServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

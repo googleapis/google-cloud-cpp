@@ -124,6 +124,11 @@ class DataTransferServiceMetadata : public DataTransferServiceStub {
       google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
           request) override;
 
+  Status UnenrollDataSources(
+      grpc::ClientContext& context,
+      google::cloud::bigquery::datatransfer::v1::
+          UnenrollDataSourcesRequest const& request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);

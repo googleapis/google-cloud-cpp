@@ -228,6 +228,21 @@ Status RecaptchaEnterpriseServiceTracingStub::DeleteFirewallPolicy(
 }
 
 StatusOr<
+    google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+RecaptchaEnterpriseServiceTracingStub::ReorderFirewallPolicies(
+    grpc::ClientContext& context,
+    google::cloud::recaptchaenterprise::v1::
+        ReorderFirewallPoliciesRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseService",
+      "ReorderFirewallPolicies");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ReorderFirewallPolicies(context, request));
+}
+
+StatusOr<
     google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>
 RecaptchaEnterpriseServiceTracingStub::ListRelatedAccountGroups(
     grpc::ClientContext& context,

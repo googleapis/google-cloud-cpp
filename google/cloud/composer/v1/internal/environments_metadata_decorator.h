@@ -87,6 +87,78 @@ class EnvironmentsMetadata : public EnvironmentsStub {
                      google::cloud::orchestration::airflow::service::v1::
                          PollAirflowCommandRequest const& request) override;
 
+  StatusOr<
+      google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse>
+  ListWorkloads(grpc::ClientContext& context,
+                google::cloud::orchestration::airflow::service::v1::
+                    ListWorkloadsRequest const& request) override;
+
+  StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  CreateUserWorkloadsSecret(
+      grpc::ClientContext& context,
+      google::cloud::orchestration::airflow::service::v1::
+          CreateUserWorkloadsSecretRequest const& request) override;
+
+  StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  GetUserWorkloadsSecret(
+      grpc::ClientContext& context,
+      google::cloud::orchestration::airflow::service::v1::
+          GetUserWorkloadsSecretRequest const& request) override;
+
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               ListUserWorkloadsSecretsResponse>
+  ListUserWorkloadsSecrets(
+      grpc::ClientContext& context,
+      google::cloud::orchestration::airflow::service::v1::
+          ListUserWorkloadsSecretsRequest const& request) override;
+
+  StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  UpdateUserWorkloadsSecret(
+      grpc::ClientContext& context,
+      google::cloud::orchestration::airflow::service::v1::
+          UpdateUserWorkloadsSecretRequest const& request) override;
+
+  Status DeleteUserWorkloadsSecret(
+      grpc::ClientContext& context,
+      google::cloud::orchestration::airflow::service::v1::
+          DeleteUserWorkloadsSecretRequest const& request) override;
+
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               UserWorkloadsConfigMap>
+  CreateUserWorkloadsConfigMap(
+      grpc::ClientContext& context,
+      google::cloud::orchestration::airflow::service::v1::
+          CreateUserWorkloadsConfigMapRequest const& request) override;
+
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               UserWorkloadsConfigMap>
+  GetUserWorkloadsConfigMap(
+      grpc::ClientContext& context,
+      google::cloud::orchestration::airflow::service::v1::
+          GetUserWorkloadsConfigMapRequest const& request) override;
+
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               ListUserWorkloadsConfigMapsResponse>
+  ListUserWorkloadsConfigMaps(
+      grpc::ClientContext& context,
+      google::cloud::orchestration::airflow::service::v1::
+          ListUserWorkloadsConfigMapsRequest const& request) override;
+
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               UserWorkloadsConfigMap>
+  UpdateUserWorkloadsConfigMap(
+      grpc::ClientContext& context,
+      google::cloud::orchestration::airflow::service::v1::
+          UpdateUserWorkloadsConfigMapRequest const& request) override;
+
+  Status DeleteUserWorkloadsConfigMap(
+      grpc::ClientContext& context,
+      google::cloud::orchestration::airflow::service::v1::
+          DeleteUserWorkloadsConfigMapRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncSaveSnapshot(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context, Options const& options,

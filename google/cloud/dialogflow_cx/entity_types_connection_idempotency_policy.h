@@ -53,6 +53,14 @@ class EntityTypesConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListEntityTypes(
       google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request);
+
+  virtual google::cloud::Idempotency ExportEntityTypes(
+      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+          request);
+
+  virtual google::cloud::Idempotency ImportEntityTypes(
+      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+          request);
 };
 
 std::unique_ptr<EntityTypesConnectionIdempotencyPolicy>

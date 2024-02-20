@@ -193,6 +193,15 @@ Status DataTransferServiceMetadata::EnrollDataSources(
   return child_->EnrollDataSources(context, request);
 }
 
+Status DataTransferServiceMetadata::UnenrollDataSources(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const&
+        request) {
+  SetMetadata(context, internal::CurrentOptions(),
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->UnenrollDataSources(context, request);
+}
+
 void DataTransferServiceMetadata::SetMetadata(
     grpc::ClientContext& context, Options const& options,
     std::string const& request_params) {

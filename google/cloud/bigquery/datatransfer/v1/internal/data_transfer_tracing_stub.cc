@@ -239,6 +239,19 @@ Status DataTransferServiceTracingStub::EnrollDataSources(
                            child_->EnrollDataSources(context, request));
 }
 
+Status DataTransferServiceTracingStub::UnenrollDataSources(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.bigquery.datatransfer.v1.DataTransferService",
+      "UnenrollDataSources");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->UnenrollDataSources(context, request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<DataTransferServiceStub> MakeDataTransferServiceTracingStub(
