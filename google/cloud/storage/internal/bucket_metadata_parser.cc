@@ -234,6 +234,18 @@ Status ParseRetentionPolicy(BucketMetadata& meta, nlohmann::json const& json) {
   return Status{};
 }
 
+Status ParseSoftDeletePolicy(BucketMetadata& meta, nlohmann::json const& json) {
+  auto const l = json.find("softDeletePolicy");
+  if (l == json.end()) return Status{};
+  auto duration = internal::ParseLongField(*l, "retentionDurationSeconds");
+  if (!duration) return std::move(duration).status();
+  auto effective_time = internal::ParseTimestampField(*l, "effectiveTime");
+  if (!effective_time) return std::move(effective_time).status();
+  meta.set_soft_delete_policy(
+      BucketSoftDeletePolicy{std::chrono::seconds(*duration), *effective_time});
+  return Status{};
+}
+
 Status ParseTimeCreated(BucketMetadata& meta, nlohmann::json const& json) {
   auto v = ParseTimestampField(json, "timeCreated");
   if (!v) return std::move(v).status();
@@ -441,6 +453,13 @@ void ToJsonRpo(nlohmann::json& json, BucketMetadata const& meta) {
   SetIfNotEmpty(json, "rpo", meta.rpo());
 }
 
+void ToJsonSoftDeletePolicy(nlohmann::json& json, BucketMetadata const& meta) {
+  if (!meta.has_soft_delete_policy()) return;
+  json["softDeletePolicy"] =
+      nlohmann::json{{"retentionDurationSeconds",
+                      meta.soft_delete_policy().retention_duration.count()}};
+}
+
 void ToJsonStorageClass(nlohmann::json& json, BucketMetadata const& meta) {
   SetIfNotEmpty(json, "storageClass", meta.storage_class());
 }
@@ -543,6 +562,7 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
         meta.set_self_link(json.value("selfLink", ""));
         return Status{};
       },
+      ParseSoftDeletePolicy,
       [](BucketMetadata& meta, nlohmann::json const& json) {
         meta.set_storage_class(json.value("storageClass", ""));
         return Status{};
@@ -590,6 +610,7 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
   ToJsonName(json, meta);
   ToJsonRetentionPolicy(json, meta);
   ToJsonRpo(json, meta);
+  ToJsonSoftDeletePolicy(json, meta);
   ToJsonStorageClass(json, meta);
   ToJsonVersioning(json, meta);
   ToJsonWebsite(json, meta);

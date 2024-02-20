@@ -106,6 +106,9 @@ google::storage::v2::Bucket ToProto(storage::BucketMetadata const& rhs) {
   if (rhs.has_autoclass()) {
     *result.mutable_autoclass() = ToProto(rhs.autoclass());
   }
+  if (rhs.has_soft_delete_policy()) {
+    *result.mutable_soft_delete_policy() = ToProto(rhs.soft_delete_policy());
+  }
   return result;
 }
 
@@ -169,6 +172,9 @@ storage::BucketMetadata FromProto(google::storage::v2::Bucket const& rhs,
     metadata.set_retention_policy(FromProto(rhs.retention_policy()));
   }
   metadata.set_rpo(rhs.rpo());
+  if (rhs.has_soft_delete_policy()) {
+    metadata.set_soft_delete_policy(FromProto(rhs.soft_delete_policy()));
+  }
   metadata.set_storage_class(rhs.storage_class());
   if (rhs.has_create_time()) {
     metadata.set_time_created(
@@ -493,6 +499,27 @@ storage::BucketRetentionPolicy FromProto(
       google::cloud::internal::ToChronoTimePoint(rhs.effective_time());
   result.is_locked = rhs.is_locked();
   result.retention_period = std::chrono::duration_cast<std::chrono::seconds>(
+      std::chrono::seconds(rhs.retention_duration().seconds()) +
+      std::chrono::nanoseconds(rhs.retention_duration().nanos()));
+  return result;
+}
+
+google::storage::v2::Bucket::SoftDeletePolicy ToProto(
+    storage::BucketSoftDeletePolicy const& rhs) {
+  google::storage::v2::Bucket::SoftDeletePolicy result;
+  *result.mutable_effective_time() =
+      google::cloud::internal::ToProtoTimestamp(rhs.effective_time);
+  *result.mutable_retention_duration() =
+      google::cloud::internal::ToDurationProto(rhs.retention_duration);
+  return result;
+}
+
+storage::BucketSoftDeletePolicy FromProto(
+    google::storage::v2::Bucket::SoftDeletePolicy const& rhs) {
+  storage::BucketSoftDeletePolicy result;
+  result.effective_time =
+      google::cloud::internal::ToChronoTimePoint(rhs.effective_time());
+  result.retention_duration = std::chrono::duration_cast<std::chrono::seconds>(
       std::chrono::seconds(rhs.retention_duration().seconds()) +
       std::chrono::nanoseconds(rhs.retention_duration().nanos()));
   return result;
