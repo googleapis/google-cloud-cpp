@@ -2106,7 +2106,7 @@ cmake --build cmake-out --target install
 
 [^5]: The Google Cloud Storage client does not require Protobuf.
 
-[^6]: In some platforms, some libraries may need a newer version of Protobuf to
+[^6]: On some platforms, some libraries may need a newer version of Protobuf to
     workaround conflicts between system pre-processor macros and symbols used in
     the Protobuf-generated code.
 
