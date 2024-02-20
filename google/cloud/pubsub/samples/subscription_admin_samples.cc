@@ -102,8 +102,9 @@ void CreateSubscription(
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
-    // [END pubsub_create_pull_subscription]
-  }(std::move(client), argv.at(0), argv.at(1), argv.at(2));
+  }
+  // [END pubsub_create_pull_subscription]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void CreateBigQuerySubscription(
@@ -131,8 +132,9 @@ void CreateBigQuerySubscription(
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
-    // [END pubsub_create_bigquery_subscription]
-  }(std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+  }
+  // [END pubsub_create_bigquery_subscription]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
 void CreateCloudStorageSubscription(
@@ -160,8 +162,9 @@ void CreateCloudStorageSubscription(
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
-    // [END pubsub_create_cloud_storage_subscription]
-  }(std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+  }
+  // [END pubsub_create_cloud_storage_subscription]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
 void CreateDeadLetterSubscription(
@@ -198,9 +201,10 @@ void CreateDeadLetterSubscription(
 
     std::cout << "After " << sub->dead_letter_policy().max_delivery_attempts()
               << " delivery attempts.\n";
-    // [END pubsub_dead_letter_create_subscription]
-  }(std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
-    std::stoi(argv.at(4)));
+  }
+  // [END pubsub_dead_letter_create_subscription]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
+   std::stoi(argv.at(4)));
 }
 
 void CreateSubscriptionWithExactlyOnceDelivery(
