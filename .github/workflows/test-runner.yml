@@ -132,3 +132,23 @@ jobs:
           contains(github.event.pull_request.labels.*.name, 'gha:full-build')
         }}
     secrets: inherit
+  notify:
+    name: Notify-Google-Chat
+    needs:
+      - external-account-integration
+      - macos-bazel
+      - macos-cmake
+      - windows-bazel
+      - windows-cmake
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Google Chat
+        shell: bash
+        run: |
+          failure="${{ contains(needs.*.result, 'failure') }}"
+          cancelled="${{ contains(needs.*.result, 'cancelled') }}"
+          if [[ "${failure}" == "false" ]] && [[ "${cancelled}" == "false" ]]; then exit 0; fi
+          printf '{"text": "GHA Build %s %s/%s/actions/runs/%s"}' \
+            "${{ job.status }}" "${{ github.server_url }}" "${{ github.repository }}" "${{ github.run_id }}" | 
+          curl -fsX POST -o NUL -d@- -H "Content-Type: application/json; charset=UTF-8" '${{ secrets.CLOUD_CPP_BUILD_ALERTS_WEBHOOK }}'
