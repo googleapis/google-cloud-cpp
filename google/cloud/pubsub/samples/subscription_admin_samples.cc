@@ -109,12 +109,12 @@ void CreateSubscription(
 void CreateBigQuerySubscription(
     google::cloud::pubsub_admin::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
+  // [START pubsub_create_bigquery_subscription]
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::SubscriptionAdminClient client,
      std::string const& project_id, std::string const& topic_id,
      std::string const& subscription_id, std::string const& table_id) {
-    // [START pubsub_create_bigquery_subscription]
     google::pubsub::v1::Subscription request;
     request.set_name(
         pubsub::Subscription(project_id, subscription_id).FullName());
@@ -234,12 +234,12 @@ void CreateSubscriptionWithExactlyOnceDelivery(
 void CreateFilteredSubscription(
     google::cloud::pubsub_admin::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
+  // [START pubsub_create_subscription_with_filter]
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::SubscriptionAdminClient client,
      std::string const& project_id, std::string topic_id,
      std::string subscription_id) {
-    // [START pubsub_create_subscription_with_filter]
     google::pubsub::v1::Subscription request;
     request.set_name(
         pubsub::Subscription(project_id, std::move(subscription_id))
