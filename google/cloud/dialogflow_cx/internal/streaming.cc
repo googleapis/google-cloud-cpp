@@ -19,6 +19,10 @@ namespace cloud {
 namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+void SessionsServerStreamingDetectIntentStreamingUpdater(
+    google::cloud::dialogflow::cx::v3::DetectIntentResponse const& ,
+    google::cloud::dialogflow::cx::v3::DetectIntentRequest& ) {}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>
