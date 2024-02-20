@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/pubsub/admin/topic_admin_client.h"
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
 #include "google/cloud/pubsub/schema.h"
 #include "google/cloud/pubsub/schema_client.h"
@@ -19,7 +20,6 @@
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/subscription_builder.h"
 #include "google/cloud/pubsub/topic_admin_client.h"
-#include "google/cloud/pubsub/admin/topic_admin_client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/project.h"
@@ -121,29 +121,6 @@ class EventCounter {
  */
 void PleaseIgnoreThisSimplifiesTestingTheSamples() {
   EventCounter::Instance().Increment();
-}
-
-void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
-                 std::vector<std::string> const& argv) {
-  //! [START pubsub_quickstart_create_topic]
-  //! [START pubsub_create_topic]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string project_id,
-     std::string topic_id) {
-    auto topic = client.CreateTopic(pubsub::TopicBuilder(
-        pubsub::Topic(std::move(project_id), std::move(topic_id))));
-    // Note that kAlreadyExists is a possible error when the library retries.
-    if (topic.status().code() == google::cloud::StatusCode::kAlreadyExists) {
-      std::cout << "The topic already exists\n";
-      return;
-    }
-    if (!topic) throw std::move(topic).status();
-
-    std::cout << "The topic was successfully created: " << topic->DebugString()
-              << "\n";
-    //! [END pubsub_create_topic]
-    //! [END pubsub_quickstart_create_topic]
-  }(std::move(client), argv.at(0), argv.at(1));
 }
 
 void DeleteTopic(google::cloud::pubsub::TopicAdminClient client,
@@ -2307,7 +2284,7 @@ void AutoRunProtobuf(
 }
 
 void AutoRun(std::vector<std::string> const& argv) {
- using google::cloud::pubsub::examples::Cleanup;
+  using google::cloud::pubsub::examples::Cleanup;
   namespace examples = ::google::cloud::testing_util;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
@@ -2333,10 +2310,12 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const bigquery_subscription_id = RandomSubscriptionId(generator);
   auto const ordering_subscription_id = RandomSubscriptionId(generator);
   auto const ordering_topic_id = "ordering-" + RandomTopicId(generator);
-  auto const ordering_topic = google::cloud::pubsub::Topic(project_id, ordering_topic_id);
+  auto const ordering_topic =
+      google::cloud::pubsub::Topic(project_id, ordering_topic_id);
   auto const dead_letter_subscription_id = RandomSubscriptionId(generator);
   auto const dead_letter_topic_id = "dead-letter-" + RandomTopicId(generator);
-  auto const dead_letter_topic = google::cloud::pubsub::Topic(project_id, dead_letter_topic_id);
+  auto const dead_letter_topic =
+      google::cloud::pubsub::Topic(project_id, dead_letter_topic_id);
   auto const snapshot_id = RandomSnapshotId(generator);
 
   using ::google::cloud::StatusCode;
@@ -2361,21 +2340,24 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nCreate topic (" << topic.topic_id() << ")" << std::endl;
   topic_admin.CreateTopic(topic.FullName());
-  std::cout << "\nCreate topic (" << ordering_topic.topic_id() << ")" << std::endl;
+  std::cout << "\nCreate topic (" << ordering_topic.topic_id() << ")"
+            << std::endl;
   topic_admin.CreateTopic(ordering_topic.FullName());
-    std::cout << "\nCreate topic (" << dead_letter_topic.topic_id() << ")" << std::endl;
+  std::cout << "\nCreate topic (" << dead_letter_topic.topic_id() << ")"
+            << std::endl;
   topic_admin.CreateTopic(dead_letter_topic.FullName());
-      Cleanup cleanup;
-  cleanup.Defer([topic_admin, topic , ordering_topic, dead_letter_topic]() mutable {
-    std::cout << "\nDelete topic (" << topic.topic_id() << ")" << std::endl;
-    (void)topic_admin.DeleteTopic(topic.FullName());
-    std::cout << "\nDelete topic (" << ordering_topic.topic_id() << ")"
-              << std::endl;
-    (void)topic_admin.DeleteTopic(ordering_topic.FullName());
-    std::cout << "\nDelete topic (" << dead_letter_topic.topic_id() << ")"
-              << std::endl;
-    (void)topic_admin.DeleteTopic(dead_letter_topic.FullName());
-    });
+  Cleanup cleanup;
+  cleanup.Defer(
+      [topic_admin, topic, ordering_topic, dead_letter_topic]() mutable {
+        std::cout << "\nDelete topic (" << topic.topic_id() << ")" << std::endl;
+        (void)topic_admin.DeleteTopic(topic.FullName());
+        std::cout << "\nDelete topic (" << ordering_topic.topic_id() << ")"
+                  << std::endl;
+        (void)topic_admin.DeleteTopic(ordering_topic.FullName());
+        std::cout << "\nDelete topic (" << dead_letter_topic.topic_id() << ")"
+                  << std::endl;
+        (void)topic_admin.DeleteTopic(dead_letter_topic.FullName());
+      });
 
   std::cout << "\nRunning ListTopics() sample" << std::endl;
   ListTopics(topic_admin_client, {project_id});
