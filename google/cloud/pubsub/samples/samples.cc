@@ -2355,7 +2355,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   google::cloud::pubsub::TopicAdminClient topic_admin_client(
       google::cloud::pubsub::MakeTopicAdminConnection());
   google::cloud::pubsub_admin::TopicAdminClient topic_admin(
-      google::cloud::pubsub::MakeTopicAdminConnection());
+      google::cloud::pubsub_admin::MakeTopicAdminConnection());
   google::cloud::pubsub::SubscriptionAdminClient subscription_admin_client(
       google::cloud::pubsub::MakeSubscriptionAdminConnection());
 
@@ -2525,7 +2525,6 @@ void AutoRun(std::vector<std::string> const& argv) {
                     topic_admin_client, subscription_admin_client);
   });
 
-  auto topic = google::cloud::pubsub::Topic(project_id, topic_id);
   auto publisher = google::cloud::pubsub::Publisher(
       google::cloud::pubsub::MakePublisherConnection(
           topic, google::cloud::Options{}
