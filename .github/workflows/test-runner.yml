@@ -142,7 +142,7 @@ jobs:
       - windows-bazel
       - windows-cmake
     # Run even if the other jobs failed or were skipped.
-    if: always()
+    if: ${{ contains(fromJSON('["schedule", "push", "workflow_dispatch"]'), github.event_name) }}
     runs-on: ubuntu-latest
     steps:
       - name: Notify Google Chat
