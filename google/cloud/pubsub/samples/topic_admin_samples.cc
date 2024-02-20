@@ -336,6 +336,31 @@ void DeleteTopic(google::cloud::pubsub_admin::TopicAdminClient client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void ExampleStatusOr(google::cloud::pubsub_admin::TopicAdminClient client,
+                     std::vector<std::string> const& argv) {
+  //! [example-status-or]
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub_admin::TopicAdminClient client, std::string const& project_id) {
+    // The actual type of `topic` is
+    // google::cloud::StatusOr<google::pubsub::v1::Topic>, but
+    // we expect it'll most often be declared with auto like this.
+    for (auto& topic :
+         client.ListTopics(google::cloud::Project(project_id).FullName())) {
+      // Use `topic` like a smart pointer; check it before de-referencing
+      if (!topic) {
+        // `topic` doesn't contain a value, so `.status()` will contain error
+        // info
+        std::cerr << topic.status() << "\n";
+        break;
+      }
+      std::cout << topic->DebugString() << "\n";
+    }
+  }
+  //! [example-status-or]
+  (std::move(client), argv.at(0));
+}
+
 void AutoRunAvro(
     std::string const& project_id, std::string const& topic_id,
     std::string const& schema_id, std::string const& testdata_directory,
@@ -518,6 +543,9 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   // Since the topic was created already, this should return kAlreadyExists.
   std::cout << "\nRunning CreateTopic() sample [2]" << std::endl;
+
+  std::cout << "\nRunning the StatusOr example" << std::endl;
+  ExampleStatusOr(topic_admin_client, {project_id});
 
   std::cout << "\nRunning GetTopic() sample" << std::endl;
   GetTopic(topic_admin_client, {project_id, topic_id});

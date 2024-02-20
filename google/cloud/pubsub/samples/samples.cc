@@ -142,59 +142,6 @@ void DeleteTopic(google::cloud::pubsub::TopicAdminClient client,
   }(std::move(client), argv.at(0), argv.at(1));
 }
 
-void DetachSubscription(google::cloud::pubsub::TopicAdminClient client,
-                        std::vector<std::string> const& argv) {
-  //! [START pubsub_detach_subscription] [detach-subscription]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string const& project_id,
-     std::string const& subscription_id) {
-    auto response = client.DetachSubscription(
-        pubsub::Subscription(project_id, subscription_id));
-    if (!response.ok()) throw std::move(response).status();
-
-    std::cout << "The subscription was successfully detached: "
-              << response->DebugString() << "\n";
-  }
-  //! [END pubsub_detach_subscription] [detach-subscription]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void ListTopics(google::cloud::pubsub::TopicAdminClient client,
-                std::vector<std::string> const& argv) {
-  //! [START pubsub_list_topics]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string const& project_id) {
-    int count = 0;
-    for (auto& topic : client.ListTopics(project_id)) {
-      if (!topic) throw std::move(topic).status();
-      std::cout << "Topic Name: " << topic->name() << "\n";
-      ++count;
-    }
-    if (count == 0) {
-      std::cout << "No topics found in project " << project_id << "\n";
-    }
-  }
-  //! [END pubsub_list_topics]
-  (std::move(client), argv.at(0));
-}
-
-void ListTopicSubscriptions(google::cloud::pubsub::TopicAdminClient client,
-                            std::vector<std::string> const& argv) {
-  //! [START pubsub_list_topic_subscriptions]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string const& project_id,
-     std::string const& topic_id) {
-    auto const topic = pubsub::Topic(project_id, topic_id);
-    std::cout << "Subscription list for topic " << topic << ":\n";
-    for (auto& name : client.ListTopicSubscriptions(topic)) {
-      if (!name) throw std::move(name).status();
-      std::cout << "  " << *name << "\n";
-    }
-  }
-  //! [END pubsub_list_topic_subscriptions]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
 void CreateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
                         std::vector<std::string> const& argv) {
   //! [START pubsub_create_pull_subscription] [create-subscription]
@@ -708,29 +655,6 @@ void SeekWithTimestamp(google::cloud::pubsub::SubscriptionAdminClient client,
   }
   //! [seek-with-timestamp]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void ExampleStatusOr(google::cloud::pubsub::TopicAdminClient client,
-                     std::vector<std::string> const& argv) {
-  //! [example-status-or]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string const& project_id) {
-    // The actual type of `topic` is
-    // google::cloud::StatusOr<google::pubsub::v1::Topic>, but
-    // we expect it'll most often be declared with auto like this.
-    for (auto& topic : client.ListTopics(project_id)) {
-      // Use `topic` like a smart pointer; check it before de-referencing
-      if (!topic) {
-        // `topic` doesn't contain a value, so `.status()` will contain error
-        // info
-        std::cerr << topic.status() << "\n";
-        break;
-      }
-      std::cout << topic->DebugString() << "\n";
-    }
-  }
-  //! [example-status-or]
-  (std::move(client), argv.at(0));
 }
 
 void CreateAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
@@ -2256,7 +2180,11 @@ void AutoRunProtobuf(
 }
 
 void AutoRun(std::vector<std::string> const& argv) {
+<<<<<<< HEAD
   using google::cloud::pubsub::examples::Cleanup;
+=======
+ using google::cloud::pubsub::examples::Cleanup;
+>>>>>>> a4b978fa46 (cleanup(pubsub): remove duplicate old samples)
   namespace examples = ::google::cloud::testing_util;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
@@ -2282,12 +2210,19 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const bigquery_subscription_id = RandomSubscriptionId(generator);
   auto const ordering_subscription_id = RandomSubscriptionId(generator);
   auto const ordering_topic_id = "ordering-" + RandomTopicId(generator);
+<<<<<<< HEAD
   auto const ordering_topic =
       google::cloud::pubsub::Topic(project_id, ordering_topic_id);
   auto const dead_letter_subscription_id = RandomSubscriptionId(generator);
   auto const dead_letter_topic_id = "dead-letter-" + RandomTopicId(generator);
   auto const dead_letter_topic =
       google::cloud::pubsub::Topic(project_id, dead_letter_topic_id);
+=======
+  auto const ordering_topic = google::cloud::pubsub::Topic(project_id, ordering_topic_id);
+  auto const dead_letter_subscription_id = RandomSubscriptionId(generator);
+  auto const dead_letter_topic_id = "dead-letter-" + RandomTopicId(generator);
+  auto const dead_letter_topic = google::cloud::pubsub::Topic(project_id, dead_letter_topic_id);
+>>>>>>> a4b978fa46 (cleanup(pubsub): remove duplicate old samples)
   auto const snapshot_id = RandomSnapshotId(generator);
 
   using ::google::cloud::StatusCode;
@@ -2330,12 +2265,15 @@ void AutoRun(std::vector<std::string> const& argv) {
                   << std::endl;
         (void)topic_admin.DeleteTopic(dead_letter_topic.FullName());
       });
+<<<<<<< HEAD
 
   std::cout << "\nRunning ListTopics() sample" << std::endl;
   ListTopics(topic_admin_client, {project_id});
 
   std::cout << "\nRunning the StatusOr example" << std::endl;
   ExampleStatusOr(topic_admin_client, {project_id});
+=======
+>>>>>>> a4b978fa46 (cleanup(pubsub): remove duplicate old samples)
 
   std::cout << "\nRunning CreateSubscription() sample [1]" << std::endl;
   CreateSubscription(subscription_admin_client,
@@ -2372,9 +2310,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   CreateSubscriptionWithExactlyOnceDelivery(
       subscription_admin_client,
       {project_id, topic_id, exactly_once_subscription_id});
-
-  std::cout << "\nRunning ListTopicSubscriptions() sample" << std::endl;
-  ListTopicSubscriptions(topic_admin_client, {project_id, topic_id});
 
   std::cout << "\nRunning GetSubscription() sample" << std::endl;
   GetSubscription(subscription_admin_client, {project_id, subscription_id});
@@ -2599,11 +2534,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning SubscriberRetrySettings() sample" << std::endl;
   PublishHelper(publisher, "SubscriberRetrySettings", 1);
   SubscriberRetrySettings({project_id, subscription_id});
-
-  std::cout << "\nRunning DetachSubscription() sample" << std::endl;
-  ignore_emulator_failures([&] {
-    DetachSubscription(topic_admin_client, {project_id, subscription_id});
-  });
 
   std::cout << "\nRunning DeleteSubscription() sample [2]" << std::endl;
   DeleteSubscription(subscription_admin_client,
