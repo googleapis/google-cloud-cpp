@@ -292,6 +292,14 @@ Status DataTransferServiceClient::EnrollDataSources(
   return connection_->EnrollDataSources(request);
 }
 
+Status DataTransferServiceClient::UnenrollDataSources(
+    google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UnenrollDataSources(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_datatransfer_v1
 }  // namespace cloud

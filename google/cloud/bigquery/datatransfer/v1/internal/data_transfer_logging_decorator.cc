@@ -242,6 +242,19 @@ Status DataTransferServiceLogging::EnrollDataSources(
       context, request, __func__, tracing_options_);
 }
 
+Status DataTransferServiceLogging::UnenrollDataSources(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::bigquery::datatransfer::v1::
+                 UnenrollDataSourcesRequest const& request) {
+        return child_->UnenrollDataSources(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_datatransfer_v1_internal
 }  // namespace cloud

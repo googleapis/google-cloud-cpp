@@ -111,6 +111,10 @@ class DataTransferServiceTracingConnection
       google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
           request) override;
 
+  Status UnenrollDataSources(
+      google::cloud::bigquery::datatransfer::v1::
+          UnenrollDataSourcesRequest const& request) override;
+
  private:
   std::shared_ptr<bigquery_datatransfer_v1::DataTransferServiceConnection>
       child_;

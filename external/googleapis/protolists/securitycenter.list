@@ -1,4 +1,5 @@
 @com_google_googleapis//google/cloud/securitycenter/v1:access.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:application.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:asset.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:bigquery_export.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:cloud_dlp_data_profile.proto

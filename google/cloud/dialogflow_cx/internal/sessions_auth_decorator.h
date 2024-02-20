@@ -43,6 +43,13 @@ class SessionsAuth : public SessionsStub {
                google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
                    request) override;
 
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::dialogflow::cx::v3::DetectIntentResponse>>
+  ServerStreamingDetectIntent(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request)
+      override;
+
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>

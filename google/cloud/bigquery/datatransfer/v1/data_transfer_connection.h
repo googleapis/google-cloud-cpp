@@ -257,6 +257,10 @@ class DataTransferServiceConnection {
   virtual Status EnrollDataSources(
       google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
           request);
+
+  virtual Status UnenrollDataSources(
+      google::cloud::bigquery::datatransfer::v1::
+          UnenrollDataSourcesRequest const& request);
 };
 
 /**

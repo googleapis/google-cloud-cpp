@@ -123,6 +123,11 @@ class DataTransferServiceLogging : public DataTransferServiceStub {
       google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
           request) override;
 
+  Status UnenrollDataSources(
+      grpc::ClientContext& context,
+      google::cloud::bigquery::datatransfer::v1::
+          UnenrollDataSourcesRequest const& request) override;
+
  private:
   std::shared_ptr<DataTransferServiceStub> child_;
   TracingOptions tracing_options_;

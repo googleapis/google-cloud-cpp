@@ -42,6 +42,17 @@ DefaultSessionsStub::DetectIntent(
   return response;
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::dialogflow::cx::v3::DetectIntentResponse>>
+DefaultSessionsStub::ServerStreamingDetectIntent(
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
+  auto stream = grpc_stub_->ServerStreamingDetectIntent(context.get(), request);
+  return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
+      google::cloud::dialogflow::cx::v3::DetectIntentResponse>>(
+      std::move(context), std::move(stream));
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>

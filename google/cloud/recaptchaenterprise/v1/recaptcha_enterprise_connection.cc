@@ -135,6 +135,14 @@ Status RecaptchaEnterpriseServiceConnection::DeleteFirewallPolicy(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<
+    google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+RecaptchaEnterpriseServiceConnection::ReorderFirewallPolicies(
+    google::cloud::recaptchaenterprise::v1::
+        ReorderFirewallPoliciesRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>
 RecaptchaEnterpriseServiceConnection::ListRelatedAccountGroups(
     google::cloud::recaptchaenterprise::v1::

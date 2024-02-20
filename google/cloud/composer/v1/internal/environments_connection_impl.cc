@@ -288,6 +288,256 @@ EnvironmentsConnectionImpl::PollAirflowCommand(
       request, __func__);
 }
 
+StreamRange<google::cloud::orchestration::airflow::service::v1::
+                ListWorkloadsResponse::ComposerWorkload>
+EnvironmentsConnectionImpl::ListWorkloads(
+    google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest
+        request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency = idempotency_policy(*current)->ListWorkloads(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::orchestration::airflow::service::v1::
+                      ListWorkloadsResponse::ComposerWorkload>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<composer_v1::EnvironmentsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::orchestration::airflow::service::v1::
+              ListWorkloadsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::orchestration::airflow::service::v1::
+                       ListWorkloadsRequest const& request) {
+              return stub->ListWorkloads(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::orchestration::airflow::service::v1::
+             ListWorkloadsResponse r) {
+        std::vector<google::cloud::orchestration::airflow::service::v1::
+                        ListWorkloadsResponse::ComposerWorkload>
+            result(r.workloads().size());
+        auto& messages = *r.mutable_workloads();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsConnectionImpl::CreateUserWorkloadsSecret(
+    google::cloud::orchestration::airflow::service::v1::
+        CreateUserWorkloadsSecretRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateUserWorkloadsSecret(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 CreateUserWorkloadsSecretRequest const& request) {
+        return stub_->CreateUserWorkloadsSecret(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsConnectionImpl::GetUserWorkloadsSecret(
+    google::cloud::orchestration::airflow::service::v1::
+        GetUserWorkloadsSecretRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetUserWorkloadsSecret(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 GetUserWorkloadsSecretRequest const& request) {
+        return stub_->GetUserWorkloadsSecret(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsConnectionImpl::ListUserWorkloadsSecrets(
+    google::cloud::orchestration::airflow::service::v1::
+        ListUserWorkloadsSecretsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListUserWorkloadsSecrets(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<composer_v1::EnvironmentsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::orchestration::airflow::service::v1::
+              ListUserWorkloadsSecretsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::orchestration::airflow::service::v1::
+                       ListUserWorkloadsSecretsRequest const& request) {
+              return stub->ListUserWorkloadsSecrets(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::orchestration::airflow::service::v1::
+             ListUserWorkloadsSecretsResponse r) {
+        std::vector<google::cloud::orchestration::airflow::service::v1::
+                        UserWorkloadsSecret>
+            result(r.user_workloads_secrets().size());
+        auto& messages = *r.mutable_user_workloads_secrets();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsConnectionImpl::UpdateUserWorkloadsSecret(
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateUserWorkloadsSecretRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateUserWorkloadsSecret(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 UpdateUserWorkloadsSecretRequest const& request) {
+        return stub_->UpdateUserWorkloadsSecret(context, request);
+      },
+      request, __func__);
+}
+
+Status EnvironmentsConnectionImpl::DeleteUserWorkloadsSecret(
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteUserWorkloadsSecretRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteUserWorkloadsSecret(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 DeleteUserWorkloadsSecretRequest const& request) {
+        return stub_->DeleteUserWorkloadsSecret(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsConnectionImpl::CreateUserWorkloadsConfigMap(
+    google::cloud::orchestration::airflow::service::v1::
+        CreateUserWorkloadsConfigMapRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateUserWorkloadsConfigMap(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 CreateUserWorkloadsConfigMapRequest const& request) {
+        return stub_->CreateUserWorkloadsConfigMap(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsConnectionImpl::GetUserWorkloadsConfigMap(
+    google::cloud::orchestration::airflow::service::v1::
+        GetUserWorkloadsConfigMapRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetUserWorkloadsConfigMap(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 GetUserWorkloadsConfigMapRequest const& request) {
+        return stub_->GetUserWorkloadsConfigMap(context, request);
+      },
+      request, __func__);
+}
+
+StreamRange<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsConnectionImpl::ListUserWorkloadsConfigMaps(
+    google::cloud::orchestration::airflow::service::v1::
+        ListUserWorkloadsConfigMapsRequest request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListUserWorkloadsConfigMaps(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::orchestration::airflow::service::v1::
+                      UserWorkloadsConfigMap>>(
+      std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<composer_v1::EnvironmentsRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          google::cloud::orchestration::airflow::service::v1::
+              ListUserWorkloadsConfigMapsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::orchestration::airflow::service::v1::
+                       ListUserWorkloadsConfigMapsRequest const& request) {
+              return stub->ListUserWorkloadsConfigMaps(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::orchestration::airflow::service::v1::
+             ListUserWorkloadsConfigMapsResponse r) {
+        std::vector<google::cloud::orchestration::airflow::service::v1::
+                        UserWorkloadsConfigMap>
+            result(r.user_workloads_config_maps().size());
+        auto& messages = *r.mutable_user_workloads_config_maps();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsConnectionImpl::UpdateUserWorkloadsConfigMap(
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateUserWorkloadsConfigMapRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateUserWorkloadsConfigMap(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 UpdateUserWorkloadsConfigMapRequest const& request) {
+        return stub_->UpdateUserWorkloadsConfigMap(context, request);
+      },
+      request, __func__);
+}
+
+Status EnvironmentsConnectionImpl::DeleteUserWorkloadsConfigMap(
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteUserWorkloadsConfigMapRequest const& request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteUserWorkloadsConfigMap(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::orchestration::airflow::service::v1::
+                 DeleteUserWorkloadsConfigMapRequest const& request) {
+        return stub_->DeleteUserWorkloadsConfigMap(context, request);
+      },
+      request, __func__);
+}
+
 future<StatusOr<
     google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
 EnvironmentsConnectionImpl::SaveSnapshot(

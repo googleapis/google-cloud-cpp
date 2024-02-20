@@ -63,6 +63,28 @@ class EntityTypesTracingStub : public EntityTypesStub {
       google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncExportEntityTypes(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncImportEntityTypes(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::longrunning::CancelOperationRequest const& request) override;
+
  private:
   std::shared_ptr<EntityTypesStub> child_;
   std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>

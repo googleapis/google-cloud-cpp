@@ -136,6 +136,13 @@ class MockRecaptchaEnterpriseServiceConnection
                    DeleteFirewallPolicyRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::recaptchaenterprise::v1::
+                           ReorderFirewallPoliciesResponse>,
+              ReorderFirewallPolicies,
+              (google::cloud::recaptchaenterprise::v1::
+                   ReorderFirewallPoliciesRequest const& request),
+              (override));
+
   MOCK_METHOD(
       (StreamRange<
           google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>),

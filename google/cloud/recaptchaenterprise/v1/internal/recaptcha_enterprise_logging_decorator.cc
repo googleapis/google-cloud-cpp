@@ -222,6 +222,21 @@ Status RecaptchaEnterpriseServiceLogging::DeleteFirewallPolicy(
 }
 
 StatusOr<
+    google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+RecaptchaEnterpriseServiceLogging::ReorderFirewallPolicies(
+    grpc::ClientContext& context,
+    google::cloud::recaptchaenterprise::v1::
+        ReorderFirewallPoliciesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::recaptchaenterprise::v1::
+                 ReorderFirewallPoliciesRequest const& request) {
+        return child_->ReorderFirewallPolicies(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<
     google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>
 RecaptchaEnterpriseServiceLogging::ListRelatedAccountGroups(
     grpc::ClientContext& context,

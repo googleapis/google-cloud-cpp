@@ -144,6 +144,122 @@ EnvironmentsAuth::PollAirflowCommand(
   return child_->PollAirflowCommand(context, request);
 }
 
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse>
+EnvironmentsAuth::ListWorkloads(grpc::ClientContext& context,
+                                google::cloud::orchestration::airflow::service::
+                                    v1::ListWorkloadsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListWorkloads(context, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsAuth::CreateUserWorkloadsSecret(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        CreateUserWorkloadsSecretRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateUserWorkloadsSecret(context, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsAuth::GetUserWorkloadsSecret(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        GetUserWorkloadsSecretRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetUserWorkloadsSecret(context, request);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ListUserWorkloadsSecretsResponse>
+EnvironmentsAuth::ListUserWorkloadsSecrets(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        ListUserWorkloadsSecretsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListUserWorkloadsSecrets(context, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+EnvironmentsAuth::UpdateUserWorkloadsSecret(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateUserWorkloadsSecretRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateUserWorkloadsSecret(context, request);
+}
+
+Status EnvironmentsAuth::DeleteUserWorkloadsSecret(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteUserWorkloadsSecretRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteUserWorkloadsSecret(context, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsAuth::CreateUserWorkloadsConfigMap(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        CreateUserWorkloadsConfigMapRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateUserWorkloadsConfigMap(context, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsAuth::GetUserWorkloadsConfigMap(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        GetUserWorkloadsConfigMapRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetUserWorkloadsConfigMap(context, request);
+}
+
+StatusOr<google::cloud::orchestration::airflow::service::v1::
+             ListUserWorkloadsConfigMapsResponse>
+EnvironmentsAuth::ListUserWorkloadsConfigMaps(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        ListUserWorkloadsConfigMapsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListUserWorkloadsConfigMaps(context, request);
+}
+
+StatusOr<
+    google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
+EnvironmentsAuth::UpdateUserWorkloadsConfigMap(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        UpdateUserWorkloadsConfigMapRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateUserWorkloadsConfigMap(context, request);
+}
+
+Status EnvironmentsAuth::DeleteUserWorkloadsConfigMap(
+    grpc::ClientContext& context,
+    google::cloud::orchestration::airflow::service::v1::
+        DeleteUserWorkloadsConfigMapRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteUserWorkloadsConfigMap(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EnvironmentsAuth::AsyncSaveSnapshot(
     google::cloud::CompletionQueue& cq,

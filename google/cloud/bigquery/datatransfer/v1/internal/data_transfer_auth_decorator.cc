@@ -179,6 +179,15 @@ Status DataTransferServiceAuth::EnrollDataSources(
   return child_->EnrollDataSources(context, request);
 }
 
+Status DataTransferServiceAuth::UnenrollDataSources(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UnenrollDataSources(context, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_datatransfer_v1_internal
 }  // namespace cloud

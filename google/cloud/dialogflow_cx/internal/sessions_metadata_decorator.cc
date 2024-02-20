@@ -51,6 +51,17 @@ SessionsMetadata::DetectIntent(
   return child_->DetectIntent(context, request);
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::dialogflow::cx::v3::DetectIntentResponse>>
+SessionsMetadata::ServerStreamingDetectIntent(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
+  SetMetadata(*context, options,
+              absl::StrCat("session=", internal::UrlEncode(request.session())));
+  return child_->ServerStreamingDetectIntent(std::move(context), options,
+                                             request);
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>

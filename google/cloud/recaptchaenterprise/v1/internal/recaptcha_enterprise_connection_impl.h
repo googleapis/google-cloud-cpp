@@ -117,6 +117,12 @@ class RecaptchaEnterpriseServiceConnectionImpl
       google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
           request) override;
 
+  StatusOr<
+      google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+  ReorderFirewallPolicies(
+      google::cloud::recaptchaenterprise::v1::
+          ReorderFirewallPoliciesRequest const& request) override;
+
   StreamRange<google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>
   ListRelatedAccountGroups(
       google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest

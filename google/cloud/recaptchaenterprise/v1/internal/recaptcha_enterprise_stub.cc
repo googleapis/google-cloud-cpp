@@ -219,6 +219,22 @@ Status DefaultRecaptchaEnterpriseServiceStub::DeleteFirewallPolicy(
 }
 
 StatusOr<
+    google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+DefaultRecaptchaEnterpriseServiceStub::ReorderFirewallPolicies(
+    grpc::ClientContext& context,
+    google::cloud::recaptchaenterprise::v1::
+        ReorderFirewallPoliciesRequest const& request) {
+  google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse
+      response;
+  auto status =
+      grpc_stub_->ReorderFirewallPolicies(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
     google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>
 DefaultRecaptchaEnterpriseServiceStub::ListRelatedAccountGroups(
     grpc::ClientContext& context,

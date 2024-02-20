@@ -21,6 +21,8 @@
 
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/internal/streaming_read_rpc.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/cx/v3/session.grpc.pb.h>
@@ -39,6 +41,13 @@ class SessionsStub {
   DetectIntent(grpc::ClientContext& context,
                google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
                    request) = 0;
+
+  virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::dialogflow::cx::v3::DetectIntentResponse>>
+  ServerStreamingDetectIntent(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
+          request) = 0;
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
@@ -75,6 +84,13 @@ class DefaultSessionsStub : public SessionsStub {
   DetectIntent(grpc::ClientContext& context,
                google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
                    request) override;
+
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::dialogflow::cx::v3::DetectIntentResponse>>
+  ServerStreamingDetectIntent(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request)
+      override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,

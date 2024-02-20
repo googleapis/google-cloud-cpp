@@ -122,6 +122,11 @@ class DataTransferServiceStub {
       grpc::ClientContext& context,
       google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
           request) = 0;
+
+  virtual Status UnenrollDataSources(
+      grpc::ClientContext& context,
+      google::cloud::bigquery::datatransfer::v1::
+          UnenrollDataSourcesRequest const& request) = 0;
 };
 
 class DefaultDataTransferServiceStub : public DataTransferServiceStub {
@@ -216,6 +221,11 @@ class DefaultDataTransferServiceStub : public DataTransferServiceStub {
       grpc::ClientContext& context,
       google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
           request) override;
+
+  Status UnenrollDataSources(
+      grpc::ClientContext& context,
+      google::cloud::bigquery::datatransfer::v1::
+          UnenrollDataSourcesRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::bigquery::datatransfer::v1::

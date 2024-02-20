@@ -127,6 +127,12 @@ Idempotency DataTransferServiceConnectionIdempotencyPolicy::EnrollDataSources(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency DataTransferServiceConnectionIdempotencyPolicy::UnenrollDataSources(
+    google::cloud::bigquery::datatransfer::v1::
+        UnenrollDataSourcesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<DataTransferServiceConnectionIdempotencyPolicy>
 MakeDefaultDataTransferServiceConnectionIdempotencyPolicy() {
   return std::make_unique<DataTransferServiceConnectionIdempotencyPolicy>();

@@ -113,8 +113,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.CreateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L177}
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1297}
+  /// [google.cloud.orchestration.airflow.service.v1.CreateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L314}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1868}
   ///
   // clang-format on
   future<
@@ -155,8 +155,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.CreateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L177}
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1297}
+  /// [google.cloud.orchestration.airflow.service.v1.CreateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L314}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1868}
   ///
   // clang-format on
   future<
@@ -184,8 +184,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1297}
-  /// [google.cloud.orchestration.airflow.service.v1.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L187}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1868}
+  /// [google.cloud.orchestration.airflow.service.v1.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L324}
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
@@ -214,8 +214,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1297}
-  /// [google.cloud.orchestration.airflow.service.v1.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L187}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1868}
+  /// [google.cloud.orchestration.airflow.service.v1.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L324}
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
@@ -251,8 +251,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1297}
-  /// [google.cloud.orchestration.airflow.service.v1.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L194}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1868}
+  /// [google.cloud.orchestration.airflow.service.v1.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L331}
   ///
   // clang-format on
   StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
@@ -290,8 +290,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1297}
-  /// [google.cloud.orchestration.airflow.service.v1.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L194}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1868}
+  /// [google.cloud.orchestration.airflow.service.v1.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L331}
   ///
   // clang-format on
   StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
@@ -336,8 +336,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1297}
-  /// [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L223}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1868}
+  /// [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L360}
   ///
   // clang-format on
   future<
@@ -378,8 +378,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1297}
-  /// [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L223}
+  /// [google.cloud.orchestration.airflow.service.v1.Environment]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L1868}
+  /// [google.cloud.orchestration.airflow.service.v1.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L360}
   ///
   // clang-format on
   future<
@@ -414,7 +414,7 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.DeleteEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L216}
+  /// [google.cloud.orchestration.airflow.service.v1.DeleteEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L353}
   /// [google.cloud.orchestration.airflow.service.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/operations.proto#L27}
   ///
   // clang-format on
@@ -452,7 +452,7 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.DeleteEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L216}
+  /// [google.cloud.orchestration.airflow.service.v1.DeleteEnvironmentRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L353}
   /// [google.cloud.orchestration.airflow.service.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/operations.proto#L27}
   ///
   // clang-format on
@@ -485,8 +485,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.ExecuteAirflowCommandRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L359}
-  /// [google.cloud.orchestration.airflow.service.v1.ExecuteAirflowCommandResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L378}
+  /// [google.cloud.orchestration.airflow.service.v1.ExecuteAirflowCommandRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L496}
+  /// [google.cloud.orchestration.airflow.service.v1.ExecuteAirflowCommandResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L515}
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -518,8 +518,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.StopAirflowCommandRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L393}
-  /// [google.cloud.orchestration.airflow.service.v1.StopAirflowCommandResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L413}
+  /// [google.cloud.orchestration.airflow.service.v1.StopAirflowCommandRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L530}
+  /// [google.cloud.orchestration.airflow.service.v1.StopAirflowCommandResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L550}
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -551,8 +551,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.PollAirflowCommandRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L422}
-  /// [google.cloud.orchestration.airflow.service.v1.PollAirflowCommandResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L441}
+  /// [google.cloud.orchestration.airflow.service.v1.PollAirflowCommandRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L559}
+  /// [google.cloud.orchestration.airflow.service.v1.PollAirflowCommandResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L578}
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -560,6 +560,791 @@ class EnvironmentsClient {
   PollAirflowCommand(google::cloud::orchestration::airflow::service::v1::
                          PollAirflowCommandRequest const& request,
                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists workloads in a Cloud Composer environment. Workload is a unit that
+  /// runs a single Composer component.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param parent  Required. The environment name to get workloads for, in the form:
+  ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.orchestration.airflow.service.v1.ListWorkloadsResponse.ComposerWorkload], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L800}
+  /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsResponse.ComposerWorkload]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L829}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::orchestration::airflow::service::v1::
+                  ListWorkloadsResponse::ComposerWorkload>
+  ListWorkloads(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists workloads in a Cloud Composer environment. Workload is a unit that
+  /// runs a single Composer component.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.ListWorkloadsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.orchestration.airflow.service.v1.ListWorkloadsResponse.ComposerWorkload], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L800}
+  /// [google.cloud.orchestration.airflow.service.v1.ListWorkloadsResponse.ComposerWorkload]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L829}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::orchestration::airflow::service::v1::
+                  ListWorkloadsResponse::ComposerWorkload>
+  ListWorkloads(
+      google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a user workloads Secret.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param parent  Required. The environment name to create a Secret for, in the form:
+  ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
+  /// @param user_workloads_secret  Required. User workloads Secret to create.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.CreateUserWorkloadsSecretRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L609}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L742}
+  ///
+  // clang-format on
+  StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  CreateUserWorkloadsSecret(
+      std::string const& parent,
+      google::cloud::orchestration::airflow::service::v1::
+          UserWorkloadsSecret const& user_workloads_secret,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a user workloads Secret.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.CreateUserWorkloadsSecretRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.CreateUserWorkloadsSecretRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L609}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L742}
+  ///
+  // clang-format on
+  StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  CreateUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::
+                                CreateUserWorkloadsSecretRequest const& request,
+                            Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets an existing user workloads Secret.
+  /// Values of the "data" field in the response are cleared.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param name  Required. The resource name of the Secret to get, in the form:
+  ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsSecrets/{userWorkloadsSecretId}"
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.GetUserWorkloadsSecretRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L625}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L742}
+  ///
+  // clang-format on
+  StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  GetUserWorkloadsSecret(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets an existing user workloads Secret.
+  /// Values of the "data" field in the response are cleared.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.GetUserWorkloadsSecretRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.GetUserWorkloadsSecretRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L625}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L742}
+  ///
+  // clang-format on
+  StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  GetUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::
+                             GetUserWorkloadsSecretRequest const& request,
+                         Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists user workloads Secrets.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param parent  Required. List Secrets in the given environment, in the form:
+  ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.ListUserWorkloadsSecretsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L637}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L742}
+  ///
+  // clang-format on
+  StreamRange<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  ListUserWorkloadsSecrets(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists user workloads Secrets.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.ListUserWorkloadsSecretsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.ListUserWorkloadsSecretsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L637}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L742}
+  ///
+  // clang-format on
+  StreamRange<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  ListUserWorkloadsSecrets(google::cloud::orchestration::airflow::service::v1::
+                               ListUserWorkloadsSecretsRequest request,
+                           Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a user workloads Secret.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param user_workloads_secret  Optional. User workloads Secret to override.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.UpdateUserWorkloadsSecretRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L656}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L742}
+  ///
+  // clang-format on
+  StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  UpdateUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          UserWorkloadsSecret const& user_workloads_secret,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a user workloads Secret.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.UpdateUserWorkloadsSecretRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.UpdateUserWorkloadsSecretRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L656}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsSecret]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L742}
+  ///
+  // clang-format on
+  StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  UpdateUserWorkloadsSecret(google::cloud::orchestration::airflow::service::v1::
+                                UpdateUserWorkloadsSecretRequest const& request,
+                            Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a user workloads Secret.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param name  Required. The Secret to delete, in the form:
+  ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsSecrets/{userWorkloadsSecretId}"
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.DeleteUserWorkloadsSecretRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L663}
+  ///
+  // clang-format on
+  Status DeleteUserWorkloadsSecret(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a user workloads Secret.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.DeleteUserWorkloadsSecretRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.DeleteUserWorkloadsSecretRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L663}
+  ///
+  // clang-format on
+  Status DeleteUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          DeleteUserWorkloadsSecretRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a user workloads ConfigMap.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param parent  Required. The environment name to create a ConfigMap for, in the form:
+  ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
+  /// @param user_workloads_config_map  Required. User workloads ConfigMap to create.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.CreateUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L675}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L772}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               UserWorkloadsConfigMap>
+  CreateUserWorkloadsConfigMap(
+      std::string const& parent,
+      google::cloud::orchestration::airflow::service::v1::
+          UserWorkloadsConfigMap const& user_workloads_config_map,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a user workloads ConfigMap.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.CreateUserWorkloadsConfigMapRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.CreateUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L675}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L772}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               UserWorkloadsConfigMap>
+  CreateUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          CreateUserWorkloadsConfigMapRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets an existing user workloads ConfigMap.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param name  Required. The resource name of the ConfigMap to get, in the form:
+  ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsConfigMaps/{userWorkloadsConfigMapId}"
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.GetUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L691}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L772}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               UserWorkloadsConfigMap>
+  GetUserWorkloadsConfigMap(std::string const& name, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Gets an existing user workloads ConfigMap.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.GetUserWorkloadsConfigMapRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.GetUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L691}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L772}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               UserWorkloadsConfigMap>
+  GetUserWorkloadsConfigMap(google::cloud::orchestration::airflow::service::v1::
+                                GetUserWorkloadsConfigMapRequest const& request,
+                            Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists user workloads ConfigMaps.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param parent  Required. List ConfigMaps in the given environment, in the form:
+  ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.ListUserWorkloadsConfigMapsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L703}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L772}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::orchestration::airflow::service::v1::
+                  UserWorkloadsConfigMap>
+  ListUserWorkloadsConfigMaps(std::string const& parent, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Lists user workloads ConfigMaps.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.ListUserWorkloadsConfigMapsRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [StreamRange](@ref google::cloud::StreamRange)
+  ///     to iterate of the results. See the documentation of this type for
+  ///     details. In brief, this class has `begin()` and `end()` member
+  ///     functions returning a iterator class meeting the
+  ///     [input iterator requirements]. The value type for this iterator is a
+  ///     [`StatusOr`] as the iteration may fail even after some values are
+  ///     retrieved successfully, for example, if there is a network disconnect.
+  ///     An empty set of results does not indicate an error, it indicates
+  ///     that there are no resources meeting the request criteria.
+  ///     On a successful iteration the `StatusOr<T>` contains elements of type
+  ///     [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap], or rather,
+  ///     the C++ class generated by Protobuf from that type. Please consult the
+  ///     Protobuf documentation for details on the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.ListUserWorkloadsConfigMapsRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L703}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L772}
+  ///
+  // clang-format on
+  StreamRange<google::cloud::orchestration::airflow::service::v1::
+                  UserWorkloadsConfigMap>
+  ListUserWorkloadsConfigMaps(
+      google::cloud::orchestration::airflow::service::v1::
+          ListUserWorkloadsConfigMapsRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a user workloads ConfigMap.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param user_workloads_config_map  Optional. User workloads ConfigMap to override.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.UpdateUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L722}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L772}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               UserWorkloadsConfigMap>
+  UpdateUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          UserWorkloadsConfigMap const& user_workloads_config_map,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Updates a user workloads ConfigMap.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.UpdateUserWorkloadsConfigMapRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return the result of the RPC. The response message type
+  ///     ([google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap])
+  ///     is mapped to a C++ class using the [Protobuf mapping rules].
+  ///     If the request fails, the [`StatusOr`] contains the error details.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.UpdateUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L722}
+  /// [google.cloud.orchestration.airflow.service.v1.UserWorkloadsConfigMap]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L772}
+  ///
+  // clang-format on
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               UserWorkloadsConfigMap>
+  UpdateUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          UpdateUserWorkloadsConfigMapRequest const& request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a user workloads ConfigMap.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param name  Required. The ConfigMap to delete, in the form:
+  ///  "projects/{projectId}/locations/{locationId}/environments/{environmentId}/userWorkloadsConfigMaps/{userWorkloadsConfigMapId}"
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.DeleteUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L729}
+  ///
+  // clang-format on
+  Status DeleteUserWorkloadsConfigMap(std::string const& name,
+                                      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Deletes a user workloads ConfigMap.
+  ///
+  /// This method is supported for Cloud Composer environments in versions
+  /// composer-3.*.*-airflow-*.*.* and newer.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.orchestration.airflow.service.v1.DeleteUserWorkloadsConfigMapRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return a [`Status`] object. If the request failed, the
+  ///     status contains the details of the failure.
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.orchestration.airflow.service.v1.DeleteUserWorkloadsConfigMapRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L729}
+  ///
+  // clang-format on
+  Status DeleteUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          DeleteUserWorkloadsConfigMapRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -594,8 +1379,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.SaveSnapshotRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L472}
-  /// [google.cloud.orchestration.airflow.service.v1.SaveSnapshotResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L483}
+  /// [google.cloud.orchestration.airflow.service.v1.SaveSnapshotRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L916}
+  /// [google.cloud.orchestration.airflow.service.v1.SaveSnapshotResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L927}
   ///
   // clang-format on
   future<StatusOr<
@@ -637,8 +1422,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.LoadSnapshotRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L492}
-  /// [google.cloud.orchestration.airflow.service.v1.LoadSnapshotResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L519}
+  /// [google.cloud.orchestration.airflow.service.v1.LoadSnapshotRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L936}
+  /// [google.cloud.orchestration.airflow.service.v1.LoadSnapshotResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L963}
   ///
   // clang-format on
   future<StatusOr<
@@ -677,8 +1462,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.DatabaseFailoverRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L523}
-  /// [google.cloud.orchestration.airflow.service.v1.DatabaseFailoverResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L530}
+  /// [google.cloud.orchestration.airflow.service.v1.DatabaseFailoverRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L967}
+  /// [google.cloud.orchestration.airflow.service.v1.DatabaseFailoverResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L974}
   ///
   // clang-format on
   future<StatusOr<google::cloud::orchestration::airflow::service::v1::
@@ -710,8 +1495,8 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.orchestration.airflow.service.v1.FetchDatabasePropertiesRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L533}
-  /// [google.cloud.orchestration.airflow.service.v1.FetchDatabasePropertiesResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L545}
+  /// [google.cloud.orchestration.airflow.service.v1.FetchDatabasePropertiesRequest]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L977}
+  /// [google.cloud.orchestration.airflow.service.v1.FetchDatabasePropertiesResponse]: @googleapis_reference_link{google/cloud/orchestration/airflow/service/v1/environments.proto#L989}
   ///
   // clang-format on
   StatusOr<google::cloud::orchestration::airflow::service::v1::

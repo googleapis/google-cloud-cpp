@@ -113,7 +113,7 @@ class PagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListPagesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L428}
+  /// [google.cloud.dialogflow.cx.v3.ListPagesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L431}
   /// [google.cloud.dialogflow.cx.v3.Page]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L117}
   ///
   // clang-format on
@@ -152,7 +152,7 @@ class PagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ListPagesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L428}
+  /// [google.cloud.dialogflow.cx.v3.ListPagesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L431}
   /// [google.cloud.dialogflow.cx.v3.Page]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L117}
   ///
   // clang-format on
@@ -179,7 +179,7 @@ class PagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetPageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L484}
+  /// [google.cloud.dialogflow.cx.v3.GetPageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L487}
   /// [google.cloud.dialogflow.cx.v3.Page]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L117}
   ///
   // clang-format on
@@ -209,7 +209,7 @@ class PagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetPageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L484}
+  /// [google.cloud.dialogflow.cx.v3.GetPageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L487}
   /// [google.cloud.dialogflow.cx.v3.Page]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L117}
   ///
   // clang-format on
@@ -241,7 +241,7 @@ class PagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreatePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L519}
+  /// [google.cloud.dialogflow.cx.v3.CreatePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L522}
   /// [google.cloud.dialogflow.cx.v3.Page]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L117}
   ///
   // clang-format on
@@ -276,7 +276,7 @@ class PagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreatePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L519}
+  /// [google.cloud.dialogflow.cx.v3.CreatePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L522}
   /// [google.cloud.dialogflow.cx.v3.Page]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L117}
   ///
   // clang-format on
@@ -309,7 +309,7 @@ class PagesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Page]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L117}
-  /// [google.cloud.dialogflow.cx.v3.UpdatePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L558}
+  /// [google.cloud.dialogflow.cx.v3.UpdatePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L561}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Page> UpdatePage(
@@ -344,7 +344,7 @@ class PagesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Page]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L117}
-  /// [google.cloud.dialogflow.cx.v3.UpdatePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L558}
+  /// [google.cloud.dialogflow.cx.v3.UpdatePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L561}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::Page> UpdatePage(
@@ -372,7 +372,7 @@ class PagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeletePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L591}
+  /// [google.cloud.dialogflow.cx.v3.DeletePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L594}
   ///
   // clang-format on
   Status DeletePage(std::string const& name, Options opts = {});
@@ -402,7 +402,7 @@ class PagesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeletePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L591}
+  /// [google.cloud.dialogflow.cx.v3.DeletePageRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L594}
   ///
   // clang-format on
   Status DeletePage(

@@ -385,6 +385,21 @@ Status DataTransferServiceConnectionImpl::EnrollDataSources(
       request, __func__);
 }
 
+Status DataTransferServiceConnectionImpl::UnenrollDataSources(
+    google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::internal::RetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UnenrollDataSources(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::bigquery::datatransfer::v1::
+                 UnenrollDataSourcesRequest const& request) {
+        return stub_->UnenrollDataSources(context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_datatransfer_v1_internal
 }  // namespace cloud

@@ -59,6 +59,16 @@ Idempotency EntityTypesConnectionIdempotencyPolicy::ListEntityTypes(
   return Idempotency::kIdempotent;
 }
 
+Idempotency EntityTypesConnectionIdempotencyPolicy::ExportEntityTypes(
+    google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency EntityTypesConnectionIdempotencyPolicy::ImportEntityTypes(
+    google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<EntityTypesConnectionIdempotencyPolicy>
 MakeDefaultEntityTypesConnectionIdempotencyPolicy() {
   return std::make_unique<EntityTypesConnectionIdempotencyPolicy>();

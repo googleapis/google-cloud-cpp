@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_cx/internal/sessions_tracing_stub.h"
 #include "google/cloud/internal/async_read_write_stream_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/streaming_read_rpc_tracing.h"
 
 namespace google {
 namespace cloud {
@@ -40,6 +41,21 @@ SessionsTracingStub::DetectIntent(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DetectIntent(context, request));
+}
+
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::dialogflow::cx::v3::DetectIntentResponse>>
+SessionsTracingStub::ServerStreamingDetectIntent(
+    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Sessions",
+                                     "ServerStreamingDetectIntent");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto stream = child_->ServerStreamingDetectIntent(context, options, request);
+  return std::make_unique<internal::StreamingReadRpcTracing<
+      google::cloud::dialogflow::cx::v3::DetectIntentResponse>>(
+      std::move(context), std::move(stream), std::move(span));
 }
 
 std::unique_ptr<AsyncStreamingReadWriteRpc<

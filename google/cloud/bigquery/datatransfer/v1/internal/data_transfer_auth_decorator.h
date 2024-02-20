@@ -123,6 +123,11 @@ class DataTransferServiceAuth : public DataTransferServiceStub {
       google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
           request) override;
 
+  Status UnenrollDataSources(
+      grpc::ClientContext& context,
+      google::cloud::bigquery::datatransfer::v1::
+          UnenrollDataSourcesRequest const& request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<DataTransferServiceStub> child_;

@@ -118,6 +118,13 @@ class RecaptchaEnterpriseServiceStub {
           request) = 0;
 
   virtual StatusOr<
+      google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+  ReorderFirewallPolicies(
+      grpc::ClientContext& context,
+      google::cloud::recaptchaenterprise::v1::
+          ReorderFirewallPoliciesRequest const& request) = 0;
+
+  virtual StatusOr<
       google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>
   ListRelatedAccountGroups(
       grpc::ClientContext& context,
@@ -229,6 +236,13 @@ class DefaultRecaptchaEnterpriseServiceStub
       grpc::ClientContext& context,
       google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
           request) override;
+
+  StatusOr<
+      google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+  ReorderFirewallPolicies(
+      grpc::ClientContext& context,
+      google::cloud::recaptchaenterprise::v1::
+          ReorderFirewallPoliciesRequest const& request) override;
 
   StatusOr<
       google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>

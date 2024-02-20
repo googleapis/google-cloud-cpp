@@ -227,6 +227,18 @@ Status DefaultDataTransferServiceStub::EnrollDataSources(
   return google::cloud::Status();
 }
 
+Status DefaultDataTransferServiceStub::UnenrollDataSources(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->UnenrollDataSources(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_datatransfer_v1_internal
 }  // namespace cloud
