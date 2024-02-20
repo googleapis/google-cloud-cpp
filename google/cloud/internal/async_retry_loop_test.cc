@@ -200,13 +200,10 @@ TEST(AsyncRetryLoopTest, ReturnJustStatus) {
   ASSERT_THAT(actual, IsOk());
 }
 
-class RetryPolicyWithSetup {
+class RetryPolicyWithSetup : public RetryPolicy {
  public:
-  virtual ~RetryPolicyWithSetup() = default;
-  virtual bool OnFailure(Status const&) = 0;
+  ~RetryPolicyWithSetup() override = default;
   virtual void Setup(grpc::ClientContext&) const = 0;
-  virtual bool IsExhausted() const = 0;
-  virtual bool IsPermanentFailure(Status const&) const = 0;
 };
 
 class MockRetryPolicy : public RetryPolicyWithSetup {
