@@ -18,6 +18,7 @@
 
 #include "generator/integration_tests/golden/v1/golden_rest_only_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

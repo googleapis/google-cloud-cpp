@@ -19,6 +19,7 @@
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "generator/integration_tests/golden/v1/golden_kitchen_sink_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

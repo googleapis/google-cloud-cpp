@@ -19,6 +19,7 @@
 #include "generator/integration_tests/golden/v1/internal/golden_rest_only_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
