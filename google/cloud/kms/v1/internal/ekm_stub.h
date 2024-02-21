@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <google/cloud/kms/v1/ekm_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

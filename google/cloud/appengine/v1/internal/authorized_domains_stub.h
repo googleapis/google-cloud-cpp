@@ -24,6 +24,7 @@
 #include <google/appengine/v1/appengine.grpc.pb.h>
 #include <google/appengine/v1/operation.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

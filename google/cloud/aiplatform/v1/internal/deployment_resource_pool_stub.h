@@ -27,6 +27,7 @@
 #include <google/cloud/aiplatform/v1/deployment_resource_pool_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

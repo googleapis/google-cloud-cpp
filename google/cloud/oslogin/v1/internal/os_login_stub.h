@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <google/cloud/oslogin/v1/oslogin.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -27,6 +27,7 @@
 #include <google/cloud/translate/v3/translation_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -24,6 +24,7 @@
 #include <google/devtools/containeranalysis/v1/containeranalysis.grpc.pb.h>
 #include <grafeas/v1/grafeas.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

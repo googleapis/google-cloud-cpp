@@ -27,6 +27,7 @@
 #include <google/cloud/securesourcemanager/v1/secure_source_manager.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

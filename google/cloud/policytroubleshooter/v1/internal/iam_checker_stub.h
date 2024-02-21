@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <google/cloud/policytroubleshooter/v1/checker.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

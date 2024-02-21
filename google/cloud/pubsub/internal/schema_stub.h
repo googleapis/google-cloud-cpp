@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <google/pubsub/v1/schema.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

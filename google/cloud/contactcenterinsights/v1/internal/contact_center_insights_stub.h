@@ -27,6 +27,7 @@
 #include <google/cloud/contactcenterinsights/v1/contact_center_insights.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

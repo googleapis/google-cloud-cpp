@@ -26,6 +26,7 @@
 #include "google/cloud/version.h"
 #include <google/logging/v2/logging.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
