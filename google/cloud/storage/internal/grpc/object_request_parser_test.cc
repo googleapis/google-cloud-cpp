@@ -214,6 +214,20 @@ TEST(GrpcObjectRequestParser, DeleteObjectAllFields) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcObjectRequestParser, GetObjectMetadata) {
+  google::storage::v2::GetObjectRequest expected;
+  EXPECT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        bucket: "projects/_/buckets/test-bucket" object: "test-object"
+      )pb",
+      &expected));
+
+  storage::internal::GetObjectMetadataRequest req("test-bucket", "test-object");
+
+  auto const actual = ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcObjectRequestParser, GetObjectMetadataAllFields) {
   google::storage::v2::GetObjectRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(
@@ -869,6 +883,20 @@ TEST(GrpcObjectRequestParser, WriteObjectResponseWithResource) {
   EXPECT_THAT(actual.request_metadata,
               UnorderedElementsAre(Pair("header", "value"),
                                    Pair("other-header", "other-value")));
+}
+
+TEST(GrpcObjectRequestParser, ListObjectsRequest) {
+  google::storage::v2::ListObjectsRequest expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        parent: "projects/_/buckets/test-bucket"
+      )pb",
+      &expected));
+
+  storage::internal::ListObjectsRequest req("test-bucket");
+
+  auto const actual = ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 TEST(GrpcObjectRequestParser, ListObjectsRequestAllFields) {
