@@ -70,7 +70,7 @@ TEST_F(MetadataDecoratorTest, ExplicitApiClientHeader) {
   // is sufficient.
   EXPECT_CALL(*mock_, GetDatabase)
       .WillOnce(
-          [this](grpc::ClientContext& context,
+          [this](grpc::ClientContext& context, Options const&,
                  google::test::admin::database::v1::GetDatabaseRequest const&
                      request) {
             IsContextMDValid(context,
@@ -85,14 +85,14 @@ TEST_F(MetadataDecoratorTest, ExplicitApiClientHeader) {
   google::test::admin::database::v1::GetDatabaseRequest request;
   request.set_name(
       "projects/my_project/instances/my_instance/databases/my_database");
-  auto status = stub.GetDatabase(context, request);
+  auto status = stub.GetDatabase(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
 TEST_F(MetadataDecoratorTest, GetDatabase) {
   EXPECT_CALL(*mock_, GetDatabase)
       .WillOnce(
-          [this](grpc::ClientContext& context,
+          [this](grpc::ClientContext& context, Options const&,
                  google::test::admin::database::v1::GetDatabaseRequest const&
                      request) {
             IsContextMDValid(context,
@@ -107,14 +107,14 @@ TEST_F(MetadataDecoratorTest, GetDatabase) {
   google::test::admin::database::v1::GetDatabaseRequest request;
   request.set_name(
       "projects/my_project/instances/my_instance/databases/my_database");
-  auto status = stub.GetDatabase(context, request);
+  auto status = stub.GetDatabase(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
 TEST_F(MetadataDecoratorTest, ListDatabases) {
   EXPECT_CALL(*mock_, ListDatabases)
       .WillOnce(
-          [this](grpc::ClientContext& context,
+          [this](grpc::ClientContext& context, Options const&,
                  google::test::admin::database::v1::ListDatabasesRequest const&
                      request) {
             IsContextMDValid(context,
@@ -128,7 +128,7 @@ TEST_F(MetadataDecoratorTest, ListDatabases) {
   grpc::ClientContext context;
   google::test::admin::database::v1::ListDatabasesRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
-  auto status = stub.ListDatabases(context, request);
+  auto status = stub.ListDatabases(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
@@ -181,7 +181,7 @@ TEST_F(MetadataDecoratorTest, UpdateDatabaseDdl) {
 TEST_F(MetadataDecoratorTest, DropDatabase) {
   EXPECT_CALL(*mock_, DropDatabase)
       .WillOnce(
-          [this](grpc::ClientContext& context,
+          [this](grpc::ClientContext& context, Options const&,
                  google::test::admin::database::v1::DropDatabaseRequest const&
                      request) {
             IsContextMDValid(
@@ -196,14 +196,14 @@ TEST_F(MetadataDecoratorTest, DropDatabase) {
   google::test::admin::database::v1::DropDatabaseRequest request;
   request.set_database(
       "projects/my_project/instances/my_instance/databases/my_database");
-  auto status = stub.DropDatabase(context, request);
+  auto status = stub.DropDatabase(context, Options{}, request);
   EXPECT_EQ(TransientError(), status);
 }
 
 TEST_F(MetadataDecoratorTest, GetDatabaseDdl) {
   EXPECT_CALL(*mock_, GetDatabaseDdl)
       .WillOnce(
-          [this](grpc::ClientContext& context,
+          [this](grpc::ClientContext& context, Options const&,
                  google::test::admin::database::v1::GetDatabaseDdlRequest const&
                      request) {
             IsContextMDValid(
@@ -218,13 +218,13 @@ TEST_F(MetadataDecoratorTest, GetDatabaseDdl) {
   google::test::admin::database::v1::GetDatabaseDdlRequest request;
   request.set_database(
       "projects/my_project/instances/my_instance/databases/my_database");
-  auto status = stub.GetDatabaseDdl(context, request);
+  auto status = stub.GetDatabaseDdl(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
 TEST_F(MetadataDecoratorTest, SetIamPolicy) {
   EXPECT_CALL(*mock_, SetIamPolicy)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        google::iam::v1::SetIamPolicyRequest const& request) {
         IsContextMDValid(
             context,
@@ -238,13 +238,13 @@ TEST_F(MetadataDecoratorTest, SetIamPolicy) {
   google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(
       "projects/my_project/instances/my_instance/databases/my_database");
-  auto status = stub.SetIamPolicy(context, request);
+  auto status = stub.SetIamPolicy(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
 TEST_F(MetadataDecoratorTest, GetIamPolicy) {
   EXPECT_CALL(*mock_, GetIamPolicy)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        google::iam::v1::GetIamPolicyRequest const& request) {
         IsContextMDValid(
             context,
@@ -258,14 +258,14 @@ TEST_F(MetadataDecoratorTest, GetIamPolicy) {
   google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(
       "projects/my_project/instances/my_instance/databases/my_database");
-  auto status = stub.GetIamPolicy(context, request);
+  auto status = stub.GetIamPolicy(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
 TEST_F(MetadataDecoratorTest, TestIamPermissions) {
   EXPECT_CALL(*mock_, TestIamPermissions)
       .WillOnce(
-          [this](grpc::ClientContext& context,
+          [this](grpc::ClientContext& context, Options const&,
                  google::iam::v1::TestIamPermissionsRequest const& request) {
             IsContextMDValid(context,
                              "google.test.admin.database.v1."
@@ -279,7 +279,7 @@ TEST_F(MetadataDecoratorTest, TestIamPermissions) {
   google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(
       "projects/my_project/instances/my_instance/databases/my_database");
-  auto status = stub.TestIamPermissions(context, request);
+  auto status = stub.TestIamPermissions(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
@@ -308,7 +308,7 @@ TEST_F(MetadataDecoratorTest, CreateBackup) {
 TEST_F(MetadataDecoratorTest, GetBackup) {
   EXPECT_CALL(*mock_, GetBackup)
       .WillOnce([this](
-                    grpc::ClientContext& context,
+                    grpc::ClientContext& context, Options const&,
                     google::test::admin::database::v1::GetBackupRequest const&
                         request) {
         IsContextMDValid(
@@ -322,14 +322,14 @@ TEST_F(MetadataDecoratorTest, GetBackup) {
   google::test::admin::database::v1::GetBackupRequest request;
   request.set_name(
       "projects/my_project/instances/my_instance/backups/my_backup");
-  auto status = stub.GetBackup(context, request);
+  auto status = stub.GetBackup(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
 TEST_F(MetadataDecoratorTest, UpdateBackup) {
   EXPECT_CALL(*mock_, UpdateBackup)
       .WillOnce(
-          [this](grpc::ClientContext& context,
+          [this](grpc::ClientContext& context, Options const&,
                  google::test::admin::database::v1::UpdateBackupRequest const&
                      request) {
             IsContextMDValid(
@@ -344,14 +344,14 @@ TEST_F(MetadataDecoratorTest, UpdateBackup) {
   google::test::admin::database::v1::UpdateBackupRequest request;
   request.mutable_backup()->set_name(
       "projects/my_project/instances/my_instance/backups/my_backup");
-  auto status = stub.UpdateBackup(context, request);
+  auto status = stub.UpdateBackup(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
 TEST_F(MetadataDecoratorTest, DeleteBackup) {
   EXPECT_CALL(*mock_, DeleteBackup)
       .WillOnce(
-          [this](grpc::ClientContext& context,
+          [this](grpc::ClientContext& context, Options const&,
                  google::test::admin::database::v1::DeleteBackupRequest const&
                      request) {
             IsContextMDValid(
@@ -366,14 +366,14 @@ TEST_F(MetadataDecoratorTest, DeleteBackup) {
   google::test::admin::database::v1::DeleteBackupRequest request;
   request.set_name(
       "projects/my_project/instances/my_instance/backups/my_backup");
-  auto status = stub.DeleteBackup(context, request);
+  auto status = stub.DeleteBackup(context, Options{}, request);
   EXPECT_EQ(TransientError(), status);
 }
 
 TEST_F(MetadataDecoratorTest, ListBackups) {
   EXPECT_CALL(*mock_, ListBackups)
       .WillOnce(
-          [this](grpc::ClientContext& context,
+          [this](grpc::ClientContext& context, Options const&,
                  google::test::admin::database::v1::ListBackupsRequest const&
                      request) {
             IsContextMDValid(
@@ -387,7 +387,7 @@ TEST_F(MetadataDecoratorTest, ListBackups) {
   grpc::ClientContext context;
   google::test::admin::database::v1::ListBackupsRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
-  auto status = stub.ListBackups(context, request);
+  auto status = stub.ListBackups(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
@@ -415,7 +415,7 @@ TEST_F(MetadataDecoratorTest, RestoreDatabase) {
 
 TEST_F(MetadataDecoratorTest, ListDatabaseOperations) {
   EXPECT_CALL(*mock_, ListDatabaseOperations)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        google::test::admin::database::v1::
                            ListDatabaseOperationsRequest const& request) {
         IsContextMDValid(context,
@@ -429,13 +429,13 @@ TEST_F(MetadataDecoratorTest, ListDatabaseOperations) {
   grpc::ClientContext context;
   google::test::admin::database::v1::ListDatabaseOperationsRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
-  auto status = stub.ListDatabaseOperations(context, request);
+  auto status = stub.ListDatabaseOperations(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 
 TEST_F(MetadataDecoratorTest, ListBackupOperations) {
   EXPECT_CALL(*mock_, ListBackupOperations)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        google::test::admin::database::v1::
                            ListBackupOperationsRequest const& request) {
         IsContextMDValid(context,
@@ -449,7 +449,7 @@ TEST_F(MetadataDecoratorTest, ListBackupOperations) {
   grpc::ClientContext context;
   google::test::admin::database::v1::ListBackupOperationsRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
-  auto status = stub.ListBackupOperations(context, request);
+  auto status = stub.ListBackupOperations(context, Options{}, request);
   EXPECT_EQ(TransientError(), status.status());
 }
 

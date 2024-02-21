@@ -61,9 +61,7 @@ TEST(GoldenKitchenSinkRoundRobinDecoratorTest, GenerateAccessToken) {
   GoldenKitchenSinkRoundRobin stub(AsPlainStubs(mocks));
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
     grpc::ClientContext context;
-    auto status = stub.GenerateAccessToken(
-        context,
-        google::test::admin::database::v1::GenerateAccessTokenRequest{});
+    auto status = stub.GenerateAccessToken(context, Options{}, {});
     EXPECT_STATUS_OK(status);
   }
 }

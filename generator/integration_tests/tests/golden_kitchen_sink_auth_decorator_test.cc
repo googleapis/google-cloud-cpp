@@ -53,11 +53,11 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, GenerateAccessToken) {
   auto under_test = GoldenKitchenSinkAuth(MakeTypicalMockAuth(), mock);
   ::google::test::admin::database::v1::GenerateAccessTokenRequest request;
   grpc::ClientContext ctx;
-  auto auth_failure = under_test.GenerateAccessToken(ctx, request);
+  auto auth_failure = under_test.GenerateAccessToken(ctx, Options{}, request);
   EXPECT_THAT(ctx.credentials(), IsNull());
   EXPECT_THAT(auth_failure, StatusIs(StatusCode::kInvalidArgument));
 
-  auto auth_success = under_test.GenerateAccessToken(ctx, request);
+  auto auth_success = under_test.GenerateAccessToken(ctx, Options{}, request);
   EXPECT_THAT(ctx.credentials(), Not(IsNull()));
   EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
 }
@@ -71,11 +71,11 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, GenerateIdToken) {
   auto under_test = GoldenKitchenSinkAuth(MakeTypicalMockAuth(), mock);
   ::google::test::admin::database::v1::GenerateIdTokenRequest request;
   grpc::ClientContext ctx;
-  auto auth_failure = under_test.GenerateIdToken(ctx, request);
+  auto auth_failure = under_test.GenerateIdToken(ctx, Options{}, request);
   EXPECT_THAT(ctx.credentials(), IsNull());
   EXPECT_THAT(auth_failure, StatusIs(StatusCode::kInvalidArgument));
 
-  auto auth_success = under_test.GenerateIdToken(ctx, request);
+  auto auth_success = under_test.GenerateIdToken(ctx, Options{}, request);
   EXPECT_THAT(ctx.credentials(), Not(IsNull()));
   EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
 }
@@ -89,11 +89,11 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, WriteLogEntries) {
   auto under_test = GoldenKitchenSinkAuth(MakeTypicalMockAuth(), mock);
   ::google::test::admin::database::v1::WriteLogEntriesRequest request;
   grpc::ClientContext ctx;
-  auto auth_failure = under_test.WriteLogEntries(ctx, request);
+  auto auth_failure = under_test.WriteLogEntries(ctx, Options{}, request);
   EXPECT_THAT(ctx.credentials(), IsNull());
   EXPECT_THAT(auth_failure, StatusIs(StatusCode::kInvalidArgument));
 
-  auto auth_success = under_test.WriteLogEntries(ctx, request);
+  auto auth_success = under_test.WriteLogEntries(ctx, Options{}, request);
   EXPECT_THAT(ctx.credentials(), Not(IsNull()));
   EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
 }
@@ -107,11 +107,11 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, ListLogs) {
   auto under_test = GoldenKitchenSinkAuth(MakeTypicalMockAuth(), mock);
   ::google::test::admin::database::v1::ListLogsRequest request;
   grpc::ClientContext ctx;
-  auto auth_failure = under_test.ListLogs(ctx, request);
+  auto auth_failure = under_test.ListLogs(ctx, Options{}, request);
   EXPECT_THAT(ctx.credentials(), IsNull());
   EXPECT_THAT(auth_failure, StatusIs(StatusCode::kInvalidArgument));
 
-  auto auth_success = under_test.ListLogs(ctx, request);
+  auto auth_success = under_test.ListLogs(ctx, Options{}, request);
   EXPECT_THAT(ctx.credentials(), Not(IsNull()));
   EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
 }
@@ -147,11 +147,13 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, ListServiceAccountKeys) {
   auto under_test = GoldenKitchenSinkAuth(MakeTypicalMockAuth(), mock);
   ::google::test::admin::database::v1::ListServiceAccountKeysRequest request;
   grpc::ClientContext ctx;
-  auto auth_failure = under_test.ListServiceAccountKeys(ctx, request);
+  auto auth_failure =
+      under_test.ListServiceAccountKeys(ctx, Options{}, request);
   EXPECT_THAT(ctx.credentials(), IsNull());
   EXPECT_THAT(auth_failure, StatusIs(StatusCode::kInvalidArgument));
 
-  auto auth_success = under_test.ListServiceAccountKeys(ctx, request);
+  auto auth_success =
+      under_test.ListServiceAccountKeys(ctx, Options{}, request);
   EXPECT_THAT(ctx.credentials(), Not(IsNull()));
   EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
 }

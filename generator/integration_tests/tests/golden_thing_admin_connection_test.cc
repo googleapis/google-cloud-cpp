@@ -88,7 +88,7 @@ TEST(GoldenThingAdminConnectionTest, ListDatabases) {
   EXPECT_CALL(*mock, ListDatabases)
       .WillOnce(
           [&expected_parent](
-              grpc::ClientContext&,
+              grpc::ClientContext&, Options const&,
               ::google::test::admin::database::v1::ListDatabasesRequest const&
                   request) {
             EXPECT_EQ(expected_parent, request.parent());
@@ -103,7 +103,7 @@ TEST(GoldenThingAdminConnectionTest, ListDatabases) {
           })
       .WillOnce(
           [&expected_parent](
-              grpc::ClientContext&,
+              grpc::ClientContext&, Options const&,
               ::google::test::admin::database::v1::ListDatabasesRequest const&
                   request) {
             EXPECT_EQ(expected_parent, request.parent());
@@ -118,7 +118,7 @@ TEST(GoldenThingAdminConnectionTest, ListDatabases) {
           })
       .WillOnce(
           [&expected_parent](
-              grpc::ClientContext&,
+              grpc::ClientContext&, Options const&,
               ::google::test::admin::database::v1::ListDatabasesRequest const&
                   request) {
             EXPECT_EQ(expected_parent, request.parent());
@@ -251,7 +251,7 @@ TEST(GoldenThingAdminConnectionTest, GetDatabaseSuccess) {
       .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "try-again")))
       .WillOnce(
           [&expected_name](
-              grpc::ClientContext&,
+              grpc::ClientContext&, Options const&,
               ::google::test::admin::database::v1::GetDatabaseRequest const&
                   request) {
             EXPECT_EQ(expected_name, request.name());
@@ -386,7 +386,7 @@ TEST(GoldenThingAdminConnectionTest, DropDatabaseSuccess) {
   EXPECT_CALL(*mock, DropDatabase)
       .WillOnce(
           [&expected_name](
-              grpc::ClientContext&,
+              grpc::ClientContext&, Options const&,
               ::google::test::admin::database::v1::DropDatabaseRequest const&
                   request) {
             EXPECT_EQ(expected_name, request.database());
@@ -440,7 +440,7 @@ TEST(GoldenThingAdminConnectionTest, GetDatabaseDdlSuccess) {
       "projects/test-project/instances/test-instance/databases/test-database";
   EXPECT_CALL(*mock, GetDatabaseDdl)
       .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "try-again")))
-      .WillOnce([&expected_name](grpc::ClientContext&,
+      .WillOnce([&expected_name](grpc::ClientContext&, Options const&,
                                  ::google::test::admin::database::v1::
                                      GetDatabaseDdlRequest const& request) {
         EXPECT_EQ(expected_name, request.database());
@@ -509,7 +509,7 @@ TEST(GoldenThingAdminConnectionTest, SetIamPolicySuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, SetIamPolicy)
       .WillOnce([&expected_name, &expected_policy](
-                    grpc::ClientContext&,
+                    grpc::ClientContext&, Options const&,
                     google::iam::v1::SetIamPolicyRequest const& request) {
         EXPECT_EQ(expected_name, request.resource());
         EXPECT_THAT(request.policy(), IsProtoEqual(expected_policy));
@@ -575,7 +575,7 @@ TEST(GoldenThingAdminConnectionTest, GetIamPolicySuccess) {
   std::string const expected_member = "user:foobar@example.com";
   EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce([&expected_name, &expected_role, &expected_member](
-                    grpc::ClientContext&,
+                    grpc::ClientContext&, Options const&,
                     google::iam::v1::GetIamPolicyRequest const& request) {
         EXPECT_EQ(expected_name, request.resource());
         google::iam::v1::Policy response;
@@ -637,7 +637,7 @@ TEST(GoldenThingAdminConnectionTest, TestIamPermissionsSuccess) {
   std::string const expected_permission = "spanner.databases.read";
   EXPECT_CALL(*mock, TestIamPermissions)
       .WillOnce([&expected_name, &expected_permission](
-                    grpc::ClientContext&,
+                    grpc::ClientContext&, Options const&,
                     google::iam::v1::TestIamPermissionsRequest const& request) {
         EXPECT_EQ(expected_name, request.resource());
         EXPECT_EQ(1, request.permissions_size());
@@ -767,7 +767,7 @@ TEST(GoldenThingAdminConnectionTest, GetBackupSuccess) {
   EXPECT_CALL(*mock, GetBackup)
       .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "try-again")))
       .WillOnce([&expected_name](
-                    grpc::ClientContext&,
+                    grpc::ClientContext&, Options const&,
                     ::google::test::admin::database::v1::GetBackupRequest const&
                         request) {
         EXPECT_EQ(expected_name, request.name());
@@ -824,7 +824,7 @@ TEST(GoldenThingAdminConnectionTest, UpdateBackupSuccess) {
   EXPECT_CALL(*mock, UpdateBackup)
       .WillOnce(
           [&expected_name](
-              grpc::ClientContext&,
+              grpc::ClientContext&, Options const&,
               ::google::test::admin::database::v1::UpdateBackupRequest const&
                   request) {
             EXPECT_EQ(expected_name, request.backup().name());
@@ -882,7 +882,7 @@ TEST(GoldenThingAdminConnectionTest, DeleteBackupSuccess) {
   EXPECT_CALL(*mock, DeleteBackup)
       .WillOnce(
           [&expected_name](
-              grpc::ClientContext&,
+              grpc::ClientContext&, Options const&,
               ::google::test::admin::database::v1::DeleteBackupRequest const&
                   request) {
             EXPECT_EQ(expected_name, request.name());
@@ -936,7 +936,7 @@ TEST(GoldenThingAdminConnectionTest, ListBackups) {
   EXPECT_CALL(*mock, ListBackups)
       .WillOnce(
           [&expected_parent](
-              grpc::ClientContext&,
+              grpc::ClientContext&, Options const&,
               ::google::test::admin::database::v1::ListBackupsRequest const&
                   request) {
             EXPECT_EQ(expected_parent, request.parent());
@@ -949,7 +949,7 @@ TEST(GoldenThingAdminConnectionTest, ListBackups) {
           })
       .WillOnce(
           [&expected_parent](
-              grpc::ClientContext&,
+              grpc::ClientContext&, Options const&,
               ::google::test::admin::database::v1::ListBackupsRequest const&
                   request) {
             EXPECT_EQ(expected_parent, request.parent());
@@ -962,7 +962,7 @@ TEST(GoldenThingAdminConnectionTest, ListBackups) {
           })
       .WillOnce(
           [&expected_parent](
-              grpc::ClientContext&,
+              grpc::ClientContext&, Options const&,
               ::google::test::admin::database::v1::ListBackupsRequest const&
                   request) {
             EXPECT_EQ(expected_parent, request.parent());
@@ -1096,7 +1096,7 @@ TEST(GoldenThingAdminConnectionTest, ListDatabaseOperations) {
       "projects/test-project/instances/test-instance";
   EXPECT_CALL(*mock, ListDatabaseOperations)
       .WillOnce(
-          [&expected_parent](grpc::ClientContext&,
+          [&expected_parent](grpc::ClientContext&, Options const&,
                              ::google::test::admin::database::v1::
                                  ListDatabaseOperationsRequest const& request) {
             EXPECT_EQ(expected_parent, request.parent());
@@ -1110,7 +1110,7 @@ TEST(GoldenThingAdminConnectionTest, ListDatabaseOperations) {
             return make_status_or(page);
           })
       .WillOnce(
-          [&expected_parent](grpc::ClientContext&,
+          [&expected_parent](grpc::ClientContext&, Options const&,
                              ::google::test::admin::database::v1::
                                  ListDatabaseOperationsRequest const& request) {
             EXPECT_EQ(expected_parent, request.parent());
@@ -1124,7 +1124,7 @@ TEST(GoldenThingAdminConnectionTest, ListDatabaseOperations) {
             return make_status_or(page);
           })
       .WillOnce(
-          [&expected_parent](grpc::ClientContext&,
+          [&expected_parent](grpc::ClientContext&, Options const&,
                              ::google::test::admin::database::v1::
                                  ListDatabaseOperationsRequest const& request) {
             EXPECT_EQ(expected_parent, request.parent());
@@ -1189,7 +1189,7 @@ TEST(GoldenThingAdminConnectionTest, ListBackupOperations) {
       "projects/test-project/instances/test-instance";
   EXPECT_CALL(*mock, ListBackupOperations)
       .WillOnce([&expected_parent](
-                    grpc::ClientContext&,
+                    grpc::ClientContext&, Options const&,
                     ::google::test::admin::database::v1::
                         ListBackupOperationsRequest const& request) {
         EXPECT_EQ(expected_parent, request.parent());
@@ -1202,7 +1202,7 @@ TEST(GoldenThingAdminConnectionTest, ListBackupOperations) {
         return make_status_or(page);
       })
       .WillOnce([&expected_parent](
-                    grpc::ClientContext&,
+                    grpc::ClientContext&, Options const&,
                     ::google::test::admin::database::v1::
                         ListBackupOperationsRequest const& request) {
         EXPECT_EQ(expected_parent, request.parent());
@@ -1214,7 +1214,7 @@ TEST(GoldenThingAdminConnectionTest, ListBackupOperations) {
         return make_status_or(page);
       })
       .WillOnce([&expected_parent](
-                    grpc::ClientContext&,
+                    grpc::ClientContext&, Options const&,
                     ::google::test::admin::database::v1::
                         ListBackupOperationsRequest const& request) {
         EXPECT_EQ(expected_parent, request.parent());
