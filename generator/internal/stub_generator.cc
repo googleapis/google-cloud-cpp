@@ -51,9 +51,6 @@ Status StubGenerator::GenerateHeader() {
   HeaderPrint("\n");
   auto const needs_completion_queue =
       HasAsyncMethod() || HasBidirStreamingMethod();
-  auto const needs_options = HasLongrunningMethod() ||
-                             HasStreamingWriteMethod() ||
-                             HasStreamingReadMethod();
   HeaderLocalIncludes(
       {HasBidirStreamingMethod()
            ? "google/cloud/async_streaming_read_write_rpc.h"
@@ -70,8 +67,8 @@ Status StubGenerator::GenerateHeader() {
                                 : "",
        HasStreamingWriteMethod() ? "google/cloud/internal/streaming_write_rpc.h"
                                  : "",
-       needs_options ? "google/cloud/options.h" : "",
-       "google/cloud/status_or.h", "google/cloud/version.h"});
+       "google/cloud/options.h", "google/cloud/status_or.h",
+       "google/cloud/version.h"});
   std::vector<std::string> additional_pb_header_paths =
       absl::StrSplit(vars("additional_pb_header_paths"), absl::ByChar(','));
   HeaderSystemIncludes(additional_pb_header_paths);
@@ -136,19 +133,21 @@ Status StubGenerator::GenerateHeader() {
 )""");
       continue;
     }
-    HeaderPrintMethod(
-        method,
-        {MethodPattern(
-            {{IsResponseTypeEmpty,
-              // clang-format off
-    "\n  virtual Status $method_name$(\n",
-    "\n  virtual StatusOr<$response_type$> $method_name$(\n"},
-   {"    grpc::ClientContext& context,\n"
-    "    $request_type$ const& request) = 0;\n"
-                 // clang-format on
-             }},
-            And(IsNonStreaming, Not(IsLongrunningOperation)))},
-        __FILE__, __LINE__);
+    if (IsResponseTypeEmpty(method)) {
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  virtual Status $method_name$(
+      grpc::ClientContext& context,
+      Options const& options,
+      $request_type$ const& request) = 0;
+)""");
+      continue;
+    }
+    HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  virtual StatusOr<$response_type$> $method_name$(
+      grpc::ClientContext& context,
+      Options const& options,
+      $request_type$ const& request) = 0;
+)""");
   }
 
   for (auto const& method : async_methods()) {
@@ -372,29 +371,38 @@ Default$stub_class_name$::$method_name$(
 )""");
       continue;
     }
-    CcPrintMethod(
-        method,
-        {MethodPattern(
-            {{IsResponseTypeEmpty,
-              // clang-format off
-    "\nStatus\n",
-    "\nStatusOr<$response_type$>\n"},
-    {"Default$stub_class_name$::$method_name$(\n"
-    "  grpc::ClientContext& context,\n"
-    "  $request_type$ const& request) {\n"
-    "    $response_type$ response;\n"
-    "    auto status =\n"
-    "        grpc_stub_->$method_name$(&context, request, &response);\n"
-    "    if (!status.ok()) {\n"
-    "      return google::cloud::MakeStatusFromRpcError(status);\n"
-    "    }\n"},
-   {IsResponseTypeEmpty,
-    "    return google::cloud::Status();\n",
-    "    return response;\n"},
-   {"}\n"}},
-            // clang-format on
-            And(IsNonStreaming, Not(IsLongrunningOperation)))},
-        __FILE__, __LINE__);
+
+    if (IsResponseTypeEmpty(method)) {
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+Status
+Default$stub_class_name$::$method_name$(
+  grpc::ClientContext& context, Options const&,
+  $request_type$ const& request) {
+    $response_type$ response;
+    auto status =
+        grpc_stub_->$method_name$(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
+}
+)""");
+      continue;
+    }
+    CcPrintMethod(method, __FILE__, __LINE__, R"""(
+StatusOr<$response_type$>
+Default$stub_class_name$::$method_name$(
+  grpc::ClientContext& context, Options const&,
+  $request_type$ const& request) {
+    $response_type$ response;
+    auto status =
+        grpc_stub_->$method_name$(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+}
+)""");
   }
 
   for (auto const& method : async_methods()) {

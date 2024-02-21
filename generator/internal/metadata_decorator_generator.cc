@@ -276,24 +276,21 @@ $metadata_class_name$::$method_name$(
 )""");
       continue;
     }
-    CcPrintMethod(
-        method,
-        {MethodPattern(
-            {
-                {IsResponseTypeEmpty,
-                 // clang-format off
-    "\nStatus\n",
-    "\nStatusOr<$response_type$>\n"},
-   {"$metadata_class_name$::$method_name$(\n"
-    "    grpc::ClientContext& context,\n"
-    "    $request_type$ const& request) {\n"},
-    {SetMetadataText(method, kReference, "internal::CurrentOptions()")},
-   {"\n  return child_->$method_name$(context, request);\n"
-    "}\n",}
-                // clang-format on
-            },
-            And(IsNonStreaming, Not(IsLongrunningOperation)))},
-        __FILE__, __LINE__);
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  IsResponseTypeEmpty(method) ? "\nStatus"
+                                              : "\nStatusOr<$response_type$>");
+    CcPrintMethod(method, __FILE__, __LINE__, R"""(
+$metadata_class_name$::$method_name$(
+    grpc::ClientContext& context,
+    Options const& options,
+    $request_type$ const& request) {
+)""");
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  SetMetadataText(method, kReference, "options"));
+    CcPrintMethod(method, __FILE__, __LINE__, R"""(
+  return child_->$method_name$(context, options, request);
+}
+)""");
   }
 
   for (auto const& method : async_methods()) {

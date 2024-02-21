@@ -230,27 +230,24 @@ $logging_class_name$::$method_name$(
 )""");
       continue;
     }
-    CcPrintMethod(
-        method,
-        {MethodPattern(
-            {{IsResponseTypeEmpty,
-              // clang-format off
-    "\nStatus\n",
-    "\nStatusOr<$response_type$>\n"},
-    {
-    "$logging_class_name$::$method_name$(\n"
-    "    grpc::ClientContext& context,\n"
-    "    $request_type$ const& request) {\n"
-    "  return google::cloud::internal::LogWrapper(\n"
-    "      [this](grpc::ClientContext& context,\n"
-    "             $request_type$ const& request) {\n"
-    "        return child_->$method_name$(context, request);\n"
-    "      },\n"
-    "      context, request, __func__, tracing_options_);\n"
-    "}\n"}},
-            // clang-format on
-            And(IsNonStreaming, Not(IsLongrunningOperation)))},
-        __FILE__, __LINE__);
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  IsResponseTypeEmpty(method) ? "\nStatus"
+                                              : "\nStatusOr<$response_type$>");
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  R"""(
+$logging_class_name$::$method_name$(
+    grpc::ClientContext& context,
+    Options const& options,
+    $request_type$ const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             Options const& options,
+             $request_type$ const& request) {
+        return child_->$method_name$(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+)""");
   }
 
   for (auto const& method : async_methods()) {
