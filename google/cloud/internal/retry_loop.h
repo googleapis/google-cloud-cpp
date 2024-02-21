@@ -79,8 +79,8 @@ auto RetryLoopImpl(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
     auto result = functor(context, options, request);
     if (result.ok()) return result;
     last_status = GetResultStatus(std::move(result));
-    auto delay = BackoffOrBreak(last_status, location, retry_policy,
-                                backoff_policy, idempotency);
+    auto delay = Backoff(last_status, location, retry_policy, backoff_policy,
+                         idempotency);
     if (!delay) return std::move(delay).status();
     sleeper(*delay);
   }

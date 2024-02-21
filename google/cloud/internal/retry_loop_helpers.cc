@@ -106,11 +106,11 @@ Status RetryLoopCancelled(Status const& status, char const* location) {
   return Status(status.code(), std::move(message), std::move(ei));
 }
 
-StatusOr<std::chrono::milliseconds> BackoffOrBreak(Status const& status,
-                                                   char const* location,
-                                                   RetryPolicy& retry,
-                                                   BackoffPolicy& backoff,
-                                                   Idempotency idempotency) {
+StatusOr<std::chrono::milliseconds> Backoff(Status const& status,
+                                            char const* location,
+                                            RetryPolicy& retry,
+                                            BackoffPolicy& backoff,
+                                            Idempotency idempotency) {
   if (idempotency == Idempotency::kNonIdempotent) {
     return RetryLoopNonIdempotentError(status, location);
   }

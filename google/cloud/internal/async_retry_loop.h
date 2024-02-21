@@ -259,8 +259,8 @@ class AsyncRetryLoopImpl
     if (result.ok()) return SetDone(std::move(result));
     // Some kind of failure, first verify that it is retryable.
     last_status_ = GetResultStatus(std::move(result));
-    auto delay = BackoffOrBreak(last_status_, location_, *retry_policy_,
-                                *backoff_policy_, idempotency_);
+    auto delay = Backoff(last_status_, location_, *retry_policy_,
+                         *backoff_policy_, idempotency_);
     if (!delay) return SetDone(std::move(delay).status());
     StartBackoff(*delay);
   }
