@@ -27,6 +27,7 @@
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
