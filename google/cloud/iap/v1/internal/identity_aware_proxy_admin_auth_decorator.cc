@@ -19,6 +19,7 @@
 #include "google/cloud/iap/v1/internal/identity_aware_proxy_admin_auth_decorator.h"
 #include <google/cloud/iap/v1/service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

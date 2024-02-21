@@ -118,6 +118,7 @@ Status TracingStubGenerator::GenerateCc() {
            ? "google/cloud/internal/streaming_write_rpc_tracing.h"
            : "",
        "google/cloud/internal/grpc_opentelemetry.h"});
+  CcSystemIncludes({"utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

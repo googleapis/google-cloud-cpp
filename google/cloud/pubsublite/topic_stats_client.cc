@@ -18,6 +18,7 @@
 
 #include "google/cloud/pubsublite/topic_stats_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

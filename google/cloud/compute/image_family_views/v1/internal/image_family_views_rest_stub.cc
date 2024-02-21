@@ -23,6 +23,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/compute/image_family_views/v1/image_family_views.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

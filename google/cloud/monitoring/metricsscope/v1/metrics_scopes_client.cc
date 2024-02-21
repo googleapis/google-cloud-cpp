@@ -18,6 +18,7 @@
 
 #include "google/cloud/monitoring/metricsscope/v1/metrics_scopes_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/target_http_proxies/v1/target_http_proxies_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

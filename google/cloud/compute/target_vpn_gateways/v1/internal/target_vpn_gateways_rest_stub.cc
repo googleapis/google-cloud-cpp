@@ -24,6 +24,7 @@
 #include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
 #include <google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

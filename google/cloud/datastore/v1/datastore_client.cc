@@ -18,6 +18,7 @@
 
 #include "google/cloud/datastore/v1/datastore_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

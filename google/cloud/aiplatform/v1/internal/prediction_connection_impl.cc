@@ -25,6 +25,7 @@
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

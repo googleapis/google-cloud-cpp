@@ -18,6 +18,7 @@
 
 #include "google/cloud/servicehealth/v1/service_health_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

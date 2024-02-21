@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/projects/v1/projects_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

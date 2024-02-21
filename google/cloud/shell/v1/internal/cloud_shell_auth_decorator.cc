@@ -19,6 +19,7 @@
 #include "google/cloud/shell/v1/internal/cloud_shell_auth_decorator.h"
 #include <google/cloud/shell/v1/cloudshell.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

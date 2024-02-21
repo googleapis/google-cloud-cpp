@@ -19,6 +19,7 @@
 
 #include "google/cloud/compute/region_ssl_certificates/v1/region_ssl_certificates_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

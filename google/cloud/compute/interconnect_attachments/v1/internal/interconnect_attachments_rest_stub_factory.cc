@@ -29,6 +29,7 @@
 #include "google/cloud/rest_options.h"
 #include "absl/strings/match.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

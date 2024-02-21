@@ -24,6 +24,7 @@
 #include <generator/integration_tests/test.pb.h>
 #include <google/longrunning/operations.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

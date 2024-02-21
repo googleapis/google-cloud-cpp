@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/instances/v1/instances_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

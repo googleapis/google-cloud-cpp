@@ -30,6 +30,7 @@
 #include "google/cloud/options.h"
 #include <google/cloud/beyondcorp/appgateways/v1/app_gateways_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

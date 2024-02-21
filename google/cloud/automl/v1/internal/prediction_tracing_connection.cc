@@ -19,6 +19,7 @@
 #include "google/cloud/automl/v1/internal/prediction_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

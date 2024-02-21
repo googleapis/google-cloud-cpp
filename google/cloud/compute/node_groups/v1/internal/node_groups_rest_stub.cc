@@ -24,6 +24,7 @@
 #include <google/cloud/compute/node_groups/v1/node_groups.pb.h>
 #include <google/cloud/compute/zone_operations/v1/zone_operations.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

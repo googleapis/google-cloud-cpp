@@ -18,6 +18,7 @@
 
 #include "google/cloud/workflows/executions/v1/executions_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

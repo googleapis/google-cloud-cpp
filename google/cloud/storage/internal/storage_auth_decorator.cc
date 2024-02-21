@@ -23,6 +23,7 @@
 #include "google/cloud/internal/streaming_write_rpc_impl.h"
 #include <google/storage/v2/storage.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

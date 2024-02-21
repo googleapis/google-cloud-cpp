@@ -19,6 +19,7 @@
 #include "google/cloud/aiplatform/v1/internal/featurestore_auth_decorator.h"
 #include <google/cloud/aiplatform/v1/featurestore_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

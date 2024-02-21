@@ -19,6 +19,7 @@
 #include "google/cloud/privateca/v1/internal/certificate_authority_auth_decorator.h"
 #include <google/cloud/security/privateca/v1/service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

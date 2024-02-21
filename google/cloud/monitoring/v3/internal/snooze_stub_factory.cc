@@ -30,6 +30,7 @@
 #include "google/cloud/options.h"
 #include <google/monitoring/v3/snooze_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -18,6 +18,7 @@
 
 #include "google/cloud/video/livestream/v1/livestream_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

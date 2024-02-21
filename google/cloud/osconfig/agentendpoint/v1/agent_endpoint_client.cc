@@ -18,6 +18,7 @@
 
 #include "google/cloud/osconfig/agentendpoint/v1/agent_endpoint_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

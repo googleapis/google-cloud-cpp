@@ -25,6 +25,7 @@
 #include <google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways.pb.h>
 #include <google/cloud/compute/global_operations/v1/global_operations.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

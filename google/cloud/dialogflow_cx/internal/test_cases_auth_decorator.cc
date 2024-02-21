@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_cx/internal/test_cases_auth_decorator.h"
 #include <google/cloud/dialogflow/cx/v3/test_case.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

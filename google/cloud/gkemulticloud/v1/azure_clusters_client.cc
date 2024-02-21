@@ -18,6 +18,7 @@
 
 #include "google/cloud/gkemulticloud/v1/azure_clusters_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

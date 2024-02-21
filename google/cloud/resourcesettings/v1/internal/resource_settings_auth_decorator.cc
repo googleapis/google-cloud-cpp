@@ -19,6 +19,7 @@
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_auth_decorator.h"
 #include <google/cloud/resourcesettings/v1/resource_settings.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

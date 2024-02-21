@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/region_instances/v1/region_instances_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

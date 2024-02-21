@@ -19,6 +19,7 @@
 
 #include "google/cloud/compute/public_advertised_prefixes/v1/public_advertised_prefixes_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

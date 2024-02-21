@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/machine_types/v1/machine_types_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

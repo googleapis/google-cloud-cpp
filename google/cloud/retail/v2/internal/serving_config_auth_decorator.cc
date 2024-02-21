@@ -19,6 +19,7 @@
 #include "google/cloud/retail/v2/internal/serving_config_auth_decorator.h"
 #include <google/cloud/retail/v2/serving_config_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

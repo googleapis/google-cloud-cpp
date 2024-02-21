@@ -18,6 +18,7 @@
 
 #include "google/cloud/gkehub/v1/gke_hub_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

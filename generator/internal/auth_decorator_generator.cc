@@ -109,7 +109,7 @@ Status AuthDecoratorGenerator::GenerateCc() {
           ? "google/cloud/internal/streaming_write_rpc_impl.h"
           : "",
   });
-  CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
+  CcSystemIncludes({vars("proto_grpc_header_path"), "memory", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

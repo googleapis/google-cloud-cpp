@@ -18,6 +18,7 @@
 
 #include "google/cloud/video/transcoder/v1/transcoder_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

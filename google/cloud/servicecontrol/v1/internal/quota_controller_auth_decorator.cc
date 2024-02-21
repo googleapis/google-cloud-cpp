@@ -19,6 +19,7 @@
 #include "google/cloud/servicecontrol/v1/internal/quota_controller_auth_decorator.h"
 #include <google/api/servicecontrol/v1/quota_controller.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

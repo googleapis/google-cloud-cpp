@@ -18,6 +18,7 @@
 
 #include "google/cloud/oslogin/v1/os_login_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -19,6 +19,7 @@
 #include "google/cloud/assuredworkloads/v1/internal/assured_workloads_auth_decorator.h"
 #include <google/cloud/assuredworkloads/v1/assuredworkloads.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

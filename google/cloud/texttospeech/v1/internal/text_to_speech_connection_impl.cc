@@ -23,6 +23,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

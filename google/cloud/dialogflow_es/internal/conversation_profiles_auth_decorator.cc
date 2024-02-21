@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_es/internal/conversation_profiles_auth_decorator.h"
 #include <google/cloud/dialogflow/v2/conversation_profile.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

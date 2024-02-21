@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/datatransfer/v1/data_transfer_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

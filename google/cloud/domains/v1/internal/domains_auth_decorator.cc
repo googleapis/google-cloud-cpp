@@ -19,6 +19,7 @@
 #include "google/cloud/domains/v1/internal/domains_auth_decorator.h"
 #include <google/cloud/domains/v1/domains.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -18,6 +18,7 @@
 
 #include "google/cloud/essentialcontacts/v1/internal/essential_contacts_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -30,6 +30,7 @@
 #include "google/cloud/options.h"
 #include <google/cloud/contentwarehouse/v1/ruleset_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

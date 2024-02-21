@@ -271,7 +271,7 @@ Status StubRestGenerator::GenerateCc() {
                     HasLongrunningMethod()
                         ? vars("longrunning_operation_include_header")
                         : "",
-                    "memory"});
+                    "memory", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

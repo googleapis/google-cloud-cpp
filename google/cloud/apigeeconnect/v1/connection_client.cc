@@ -18,6 +18,7 @@
 
 #include "google/cloud/apigeeconnect/v1/connection_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

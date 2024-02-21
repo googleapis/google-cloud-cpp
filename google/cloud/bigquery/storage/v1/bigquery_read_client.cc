@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/storage/v1/bigquery_read_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -19,6 +19,7 @@
 
 #include "google/cloud/compute/network_edge_security_services/v1/network_edge_security_services_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

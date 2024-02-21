@@ -18,6 +18,7 @@
 
 #include "google/cloud/contactcenterinsights/v1/contact_center_insights_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

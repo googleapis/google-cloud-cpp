@@ -18,6 +18,7 @@
 
 #include "google/cloud/serviceusage/v1/service_usage_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

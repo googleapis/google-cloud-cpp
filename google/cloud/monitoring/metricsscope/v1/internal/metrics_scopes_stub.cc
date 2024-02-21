@@ -22,6 +22,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <google/monitoring/metricsscope/v1/metrics_scopes.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -19,6 +19,7 @@
 #include "google/cloud/billing/budgets/v1/internal/budget_auth_decorator.h"
 #include <google/cloud/billing/budgets/v1/budget_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

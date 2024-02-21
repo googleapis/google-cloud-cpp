@@ -19,6 +19,7 @@
 #include "google/cloud/notebooks/v1/internal/managed_notebook_auth_decorator.h"
 #include <google/cloud/notebooks/v1/managed_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

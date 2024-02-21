@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/accelerator_types/v1/accelerator_types_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -18,6 +18,7 @@
 
 #include "google/cloud/edgenetwork/v1/edge_network_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

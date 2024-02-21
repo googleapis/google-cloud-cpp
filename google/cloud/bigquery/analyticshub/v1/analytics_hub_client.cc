@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/analyticshub/v1/analytics_hub_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

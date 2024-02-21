@@ -18,6 +18,7 @@
 
 #include "google/cloud/secretmanager/v1/secret_manager_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

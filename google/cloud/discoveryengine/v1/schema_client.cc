@@ -18,6 +18,7 @@
 
 #include "google/cloud/discoveryengine/v1/schema_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

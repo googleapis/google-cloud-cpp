@@ -18,6 +18,7 @@
 
 #include "google/cloud/contactcenterinsights/v1/internal/contact_center_insights_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_es/internal/answer_records_auth_decorator.h"
 #include <google/cloud/dialogflow/v2/answer_record.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -19,6 +19,7 @@
 #include "google/cloud/vision/v1/internal/product_search_auth_decorator.h"
 #include <google/cloud/vision/v1/product_search_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

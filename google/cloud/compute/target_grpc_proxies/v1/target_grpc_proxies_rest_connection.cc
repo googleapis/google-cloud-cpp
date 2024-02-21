@@ -27,6 +27,7 @@
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_options.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

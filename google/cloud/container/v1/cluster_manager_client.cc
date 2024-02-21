@@ -18,6 +18,7 @@
 
 #include "google/cloud/container/v1/cluster_manager_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

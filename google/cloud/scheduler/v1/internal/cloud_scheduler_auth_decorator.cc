@@ -19,6 +19,7 @@
 #include "google/cloud/scheduler/v1/internal/cloud_scheduler_auth_decorator.h"
 #include <google/cloud/scheduler/v1/cloudscheduler.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

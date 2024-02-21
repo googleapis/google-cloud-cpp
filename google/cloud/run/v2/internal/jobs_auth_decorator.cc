@@ -19,6 +19,7 @@
 #include "google/cloud/run/v2/internal/jobs_auth_decorator.h"
 #include <google/cloud/run/v2/job.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

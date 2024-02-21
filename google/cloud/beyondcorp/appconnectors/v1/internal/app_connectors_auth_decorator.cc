@@ -19,6 +19,7 @@
 #include "google/cloud/beyondcorp/appconnectors/v1/internal/app_connectors_auth_decorator.h"
 #include <google/cloud/beyondcorp/appconnectors/v1/app_connectors_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

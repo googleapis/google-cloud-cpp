@@ -18,6 +18,7 @@
 
 #include "google/cloud/cloudbuild/v1/cloud_build_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

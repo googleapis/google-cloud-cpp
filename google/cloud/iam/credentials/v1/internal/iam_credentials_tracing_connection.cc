@@ -19,6 +19,7 @@
 #include "google/cloud/iam/credentials/v1/internal/iam_credentials_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

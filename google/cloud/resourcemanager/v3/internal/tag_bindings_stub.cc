@@ -22,6 +22,7 @@
 #include <google/cloud/resourcemanager/v3/tag_bindings.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

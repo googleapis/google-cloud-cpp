@@ -18,6 +18,7 @@
 
 #include "google/cloud/accessapproval/v1/access_approval_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

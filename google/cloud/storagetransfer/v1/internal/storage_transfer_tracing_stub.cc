@@ -18,6 +18,7 @@
 
 #include "google/cloud/storagetransfer/v1/internal/storage_transfer_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {

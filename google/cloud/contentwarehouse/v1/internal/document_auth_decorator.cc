@@ -19,6 +19,7 @@
 #include "google/cloud/contentwarehouse/v1/internal/document_auth_decorator.h"
 #include <google/cloud/contentwarehouse/v1/document_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

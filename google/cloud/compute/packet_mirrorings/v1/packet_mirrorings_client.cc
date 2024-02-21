@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/packet_mirrorings/v1/packet_mirrorings_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

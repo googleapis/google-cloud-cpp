@@ -18,6 +18,7 @@
 
 #include "google/cloud/profiler/v2/profiler_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

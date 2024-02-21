@@ -18,6 +18,7 @@
 
 #include "google/cloud/composer/v1/image_versions_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

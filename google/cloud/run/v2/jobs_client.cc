@@ -18,6 +18,7 @@
 
 #include "google/cloud/run/v2/jobs_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

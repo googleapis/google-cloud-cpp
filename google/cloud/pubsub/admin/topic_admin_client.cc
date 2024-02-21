@@ -18,6 +18,7 @@
 
 #include "google/cloud/pubsub/admin/topic_admin_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

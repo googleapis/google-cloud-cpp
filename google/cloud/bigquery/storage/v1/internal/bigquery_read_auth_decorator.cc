@@ -19,6 +19,7 @@
 #include "google/cloud/bigquery/storage/v1/internal/bigquery_read_auth_decorator.h"
 #include <google/cloud/bigquery/storage/v1/storage.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

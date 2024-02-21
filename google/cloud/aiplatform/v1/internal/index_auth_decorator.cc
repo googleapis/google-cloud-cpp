@@ -19,6 +19,7 @@
 #include "google/cloud/aiplatform/v1/internal/index_auth_decorator.h"
 #include <google/cloud/aiplatform/v1/index_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

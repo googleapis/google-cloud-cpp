@@ -19,6 +19,7 @@
 #include "google/cloud/aiplatform/v1/internal/tensorboard_auth_decorator.h"
 #include <google/cloud/aiplatform/v1/tensorboard_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

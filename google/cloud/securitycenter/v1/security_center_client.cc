@@ -20,6 +20,7 @@
 #include "google/cloud/securitycenter/v1/security_center_options.h"
 #include <memory>
 #include <thread>
+#include <utility>
 
 namespace google {
 namespace cloud {

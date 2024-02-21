@@ -18,6 +18,7 @@
 
 #include "google/cloud/confidentialcomputing/v1/confidential_computing_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

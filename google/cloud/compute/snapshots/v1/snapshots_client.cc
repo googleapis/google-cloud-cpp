@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/snapshots/v1/snapshots_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

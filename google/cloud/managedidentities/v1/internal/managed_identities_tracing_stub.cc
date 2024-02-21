@@ -18,6 +18,7 @@
 
 #include "google/cloud/managedidentities/v1/internal/managed_identities_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {

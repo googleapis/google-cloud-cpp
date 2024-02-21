@@ -19,6 +19,7 @@
 #include "google/cloud/language/v2/internal/language_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

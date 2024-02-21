@@ -19,6 +19,7 @@
 #include "google/cloud/dataproc/v1/internal/batch_controller_auth_decorator.h"
 #include <google/cloud/dataproc/v1/batches.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

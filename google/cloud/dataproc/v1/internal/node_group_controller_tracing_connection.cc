@@ -19,6 +19,7 @@
 #include "google/cloud/dataproc/v1/internal/node_group_controller_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

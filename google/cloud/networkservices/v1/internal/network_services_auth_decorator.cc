@@ -19,6 +19,7 @@
 #include "google/cloud/networkservices/v1/internal/network_services_auth_decorator.h"
 #include <google/cloud/networkservices/v1/network_services.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

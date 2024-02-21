@@ -19,6 +19,7 @@
 
 #include "google/cloud/securitycentermanagement/v1/security_center_management_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

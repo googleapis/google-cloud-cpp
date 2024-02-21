@@ -25,6 +25,7 @@
 #include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
 #include <google/cloud/compute/region_target_http_proxies/v1/region_target_http_proxies.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

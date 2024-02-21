@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/internal/spanner_auth_decorator.h"
 #include <google/spanner/v1/spanner.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

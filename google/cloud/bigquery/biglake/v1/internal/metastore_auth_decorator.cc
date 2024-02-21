@@ -19,6 +19,7 @@
 #include "google/cloud/bigquery/biglake/v1/internal/metastore_auth_decorator.h"
 #include <google/cloud/bigquery/biglake/v1/metastore.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

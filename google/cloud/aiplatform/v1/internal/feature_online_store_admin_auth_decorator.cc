@@ -19,6 +19,7 @@
 #include "google/cloud/aiplatform/v1/internal/feature_online_store_admin_auth_decorator.h"
 #include <google/cloud/aiplatform/v1/feature_online_store_admin_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

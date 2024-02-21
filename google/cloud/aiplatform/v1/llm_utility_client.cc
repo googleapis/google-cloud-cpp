@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/llm_utility_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

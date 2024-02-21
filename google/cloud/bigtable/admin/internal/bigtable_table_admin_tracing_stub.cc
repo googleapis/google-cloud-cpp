@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {

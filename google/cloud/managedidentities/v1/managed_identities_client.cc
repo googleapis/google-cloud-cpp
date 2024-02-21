@@ -18,6 +18,7 @@
 
 #include "google/cloud/managedidentities/v1/managed_identities_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

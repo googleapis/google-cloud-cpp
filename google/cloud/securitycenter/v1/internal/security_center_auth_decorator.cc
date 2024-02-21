@@ -19,6 +19,7 @@
 #include "google/cloud/securitycenter/v1/internal/security_center_auth_decorator.h"
 #include <google/cloud/securitycenter/v1/securitycenter_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

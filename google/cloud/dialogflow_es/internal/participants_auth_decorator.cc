@@ -20,6 +20,7 @@
 #include "google/cloud/internal/async_read_write_stream_auth.h"
 #include <google/cloud/dialogflow/v2/participant.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -84,7 +84,7 @@ Status StubFactoryGenerator::GenerateCc() {
                    "google/cloud/internal/algorithm.h",
                    "google/cloud/internal/opentelemetry.h",
                    "google/cloud/options.h", "google/cloud/log.h"});
-  CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
+  CcSystemIncludes({vars("proto_grpc_header_path"), "memory", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

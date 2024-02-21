@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/region_commitments/v1/region_commitments_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

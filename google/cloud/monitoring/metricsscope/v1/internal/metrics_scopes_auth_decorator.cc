@@ -19,6 +19,7 @@
 #include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_auth_decorator.h"
 #include <google/monitoring/metricsscope/v1/metrics_scopes.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

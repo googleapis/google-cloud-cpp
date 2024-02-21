@@ -18,6 +18,7 @@
 
 #include "google/cloud/language/v1/language_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -18,6 +18,7 @@
 
 #include "google/cloud/networkmanagement/v1/reachability_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

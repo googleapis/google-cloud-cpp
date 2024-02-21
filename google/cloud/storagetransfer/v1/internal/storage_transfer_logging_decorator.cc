@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/storagetransfer/v1/transfer.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

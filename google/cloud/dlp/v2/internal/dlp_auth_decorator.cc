@@ -19,6 +19,7 @@
 #include "google/cloud/dlp/v2/internal/dlp_auth_decorator.h"
 #include <google/privacy/dlp/v2/dlp.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

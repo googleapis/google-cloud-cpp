@@ -22,6 +22,7 @@
 #include "google/cloud/status_or.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

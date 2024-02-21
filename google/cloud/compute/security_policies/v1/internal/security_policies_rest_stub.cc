@@ -24,6 +24,7 @@
 #include <google/cloud/compute/global_operations/v1/global_operations.pb.h>
 #include <google/cloud/compute/security_policies/v1/security_policies.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

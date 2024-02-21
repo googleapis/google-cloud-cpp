@@ -19,6 +19,7 @@
 #include "google/cloud/cloudbuild/v1/internal/cloud_build_auth_decorator.h"
 #include <google/devtools/cloudbuild/v1/cloudbuild.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

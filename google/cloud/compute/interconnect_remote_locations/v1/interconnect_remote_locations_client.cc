@@ -19,6 +19,7 @@
 
 #include "google/cloud/compute/interconnect_remote_locations/v1/interconnect_remote_locations_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

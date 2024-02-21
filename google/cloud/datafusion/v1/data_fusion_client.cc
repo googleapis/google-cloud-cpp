@@ -18,6 +18,7 @@
 
 #include "google/cloud/datafusion/v1/data_fusion_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

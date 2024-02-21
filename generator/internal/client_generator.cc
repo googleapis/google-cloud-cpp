@@ -362,6 +362,7 @@ Status ClientGenerator::GenerateCc() {
     CcLocalIncludes({vars("options_header_path")});
     CcSystemIncludes({"thread"});
   }
+  CcSystemIncludes({"utility"});
 
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;

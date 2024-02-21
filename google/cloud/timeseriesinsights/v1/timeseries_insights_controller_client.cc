@@ -18,6 +18,7 @@
 
 #include "google/cloud/timeseriesinsights/v1/timeseries_insights_controller_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

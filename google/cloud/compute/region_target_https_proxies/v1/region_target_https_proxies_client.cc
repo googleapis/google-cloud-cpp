@@ -19,6 +19,7 @@
 
 #include "google/cloud/compute/region_target_https_proxies/v1/region_target_https_proxies_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

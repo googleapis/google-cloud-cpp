@@ -18,6 +18,7 @@
 
 #include "google/cloud/video/stitcher/v1/video_stitcher_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

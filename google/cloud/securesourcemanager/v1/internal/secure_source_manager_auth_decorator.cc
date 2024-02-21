@@ -19,6 +19,7 @@
 #include "google/cloud/securesourcemanager/v1/internal/secure_source_manager_auth_decorator.h"
 #include <google/cloud/securesourcemanager/v1/secure_source_manager.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

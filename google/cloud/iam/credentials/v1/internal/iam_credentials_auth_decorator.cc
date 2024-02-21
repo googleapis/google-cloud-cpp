@@ -19,6 +19,7 @@
 #include "google/cloud/iam/credentials/v1/internal/iam_credentials_auth_decorator.h"
 #include <google/iam/credentials/v1/iamcredentials.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

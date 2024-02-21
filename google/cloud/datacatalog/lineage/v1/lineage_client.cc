@@ -18,6 +18,7 @@
 
 #include "google/cloud/datacatalog/lineage/v1/lineage_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

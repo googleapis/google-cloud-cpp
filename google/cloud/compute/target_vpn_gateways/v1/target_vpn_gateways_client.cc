@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/target_vpn_gateways/v1/target_vpn_gateways_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -18,6 +18,7 @@
 
 #include "google/cloud/sql/v1/sql_ssl_certs_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

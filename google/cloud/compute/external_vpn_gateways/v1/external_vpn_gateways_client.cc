@@ -19,6 +19,7 @@
 
 #include "google/cloud/compute/external_vpn_gateways/v1/external_vpn_gateways_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

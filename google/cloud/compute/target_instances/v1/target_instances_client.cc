@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/target_instances/v1/target_instances_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

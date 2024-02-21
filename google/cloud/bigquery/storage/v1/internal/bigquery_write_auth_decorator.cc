@@ -20,6 +20,7 @@
 #include "google/cloud/internal/async_read_write_stream_auth.h"
 #include <google/cloud/bigquery/storage/v1/storage.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

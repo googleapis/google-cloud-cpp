@@ -164,7 +164,7 @@ Status ConnectionImplGenerator::GenerateCc() {
        HasStreamingReadMethod()
            ? "google/cloud/internal/streaming_read_rpc_logging.h"
            : ""});
-  CcSystemIncludes({"memory"});
+  CcSystemIncludes({"memory", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/devtools/cloudprofiler/v2/profiler.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

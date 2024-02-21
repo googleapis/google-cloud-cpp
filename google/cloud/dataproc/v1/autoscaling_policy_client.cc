@@ -18,6 +18,7 @@
 
 #include "google/cloud/dataproc/v1/autoscaling_policy_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

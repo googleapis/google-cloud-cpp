@@ -19,6 +19,7 @@
 #include "google/cloud/discoveryengine/v1/internal/user_event_auth_decorator.h"
 #include <google/cloud/discoveryengine/v1/user_event_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

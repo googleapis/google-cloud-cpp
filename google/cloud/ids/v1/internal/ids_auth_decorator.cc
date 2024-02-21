@@ -19,6 +19,7 @@
 #include "google/cloud/ids/v1/internal/ids_auth_decorator.h"
 #include <google/cloud/ids/v1/ids.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

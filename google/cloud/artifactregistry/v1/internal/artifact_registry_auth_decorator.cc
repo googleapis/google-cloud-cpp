@@ -19,6 +19,7 @@
 #include "google/cloud/artifactregistry/v1/internal/artifact_registry_auth_decorator.h"
 #include <google/devtools/artifactregistry/v1/service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

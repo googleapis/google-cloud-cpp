@@ -18,6 +18,7 @@
 
 #include "google/cloud/migrationcenter/v1/migration_center_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

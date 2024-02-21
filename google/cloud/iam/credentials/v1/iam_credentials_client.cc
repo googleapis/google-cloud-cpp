@@ -18,6 +18,7 @@
 
 #include "google/cloud/iam/credentials/v1/iam_credentials_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

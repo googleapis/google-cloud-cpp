@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/zone_operations/v1/zone_operations_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

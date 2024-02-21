@@ -30,6 +30,7 @@
 #include "google/cloud/options.h"
 #include <google/cloud/texttospeech/v1/cloud_tts.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

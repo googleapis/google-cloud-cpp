@@ -18,6 +18,7 @@
 
 #include "google/cloud/notebooks/v2/notebook_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

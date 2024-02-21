@@ -19,6 +19,7 @@
 #include "google/cloud/webrisk/v1/internal/web_risk_auth_decorator.h"
 #include <google/cloud/webrisk/v1/webrisk.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

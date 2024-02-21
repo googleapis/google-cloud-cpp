@@ -18,6 +18,7 @@
 
 #include "google/cloud/privateca/v1/certificate_authority_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

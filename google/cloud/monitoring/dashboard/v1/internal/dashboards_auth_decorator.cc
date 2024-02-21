@@ -19,6 +19,7 @@
 #include "google/cloud/monitoring/dashboard/v1/internal/dashboards_auth_decorator.h"
 #include <google/monitoring/dashboard/v1/dashboards_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

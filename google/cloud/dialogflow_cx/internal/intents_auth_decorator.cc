@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_cx/internal/intents_auth_decorator.h"
 #include <google/cloud/dialogflow/cx/v3/intent.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

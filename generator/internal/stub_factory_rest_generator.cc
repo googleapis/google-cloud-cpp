@@ -79,7 +79,7 @@ Status StubFactoryRestGenerator::GenerateCc() {
        "google/cloud/internal/populate_rest_options.h",
        "google/cloud/rest_options.h", "google/cloud/internal/algorithm.h",
        "google/cloud/options.h", "google/cloud/log.h", "absl/strings/match.h"});
-  CcSystemIncludes({"memory"});
+  CcSystemIncludes({"memory", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
