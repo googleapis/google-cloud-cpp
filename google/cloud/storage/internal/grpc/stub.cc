@@ -270,7 +270,7 @@ StatusOr<storage::internal::ListBucketsResponse> GrpcStub::ListBuckets(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->ListBuckets(ctx, proto);
+  auto response = stub_->ListBuckets(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
@@ -282,7 +282,7 @@ StatusOr<storage::BucketMetadata> GrpcStub::CreateBucket(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->CreateBucket(ctx, proto);
+  auto response = stub_->CreateBucket(ctx, options, proto);
   if (response) return FromProto(*response, options);
   // GCS returns kFailedPrecondition when the bucket already exists. I filed
   // a bug to change this to kAborted, for consistency with JSON.  In either
@@ -311,7 +311,7 @@ StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteBucket(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto status = stub_->DeleteBucket(ctx, proto);
+  auto status = stub_->DeleteBucket(ctx, options, proto);
   if (!status.ok()) return status;
   return storage::internal::EmptyResponse{};
 }
@@ -323,7 +323,7 @@ StatusOr<storage::BucketMetadata> GrpcStub::UpdateBucket(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->UpdateBucket(ctx, proto);
+  auto response = stub_->UpdateBucket(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response, options);
 }
@@ -343,7 +343,7 @@ StatusOr<storage::NativeIamPolicy> GrpcStub::GetNativeBucketIamPolicy(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->GetIamPolicy(ctx, proto);
+  auto response = stub_->GetIamPolicy(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
@@ -355,7 +355,7 @@ StatusOr<storage::NativeIamPolicy> GrpcStub::SetNativeBucketIamPolicy(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->SetIamPolicy(ctx, proto);
+  auto response = stub_->SetIamPolicy(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
@@ -368,7 +368,7 @@ GrpcStub::TestBucketIamPermissions(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->TestIamPermissions(ctx, proto);
+  auto response = stub_->TestIamPermissions(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
@@ -380,7 +380,7 @@ StatusOr<storage::BucketMetadata> GrpcStub::LockBucketRetentionPolicy(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->LockBucketRetentionPolicy(ctx, proto);
+  auto response = stub_->LockBucketRetentionPolicy(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response, options);
 }
@@ -464,7 +464,7 @@ StatusOr<storage::ObjectMetadata> GrpcStub::CopyObject(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->RewriteObject(ctx, *proto);
+  auto response = stub_->RewriteObject(ctx, options, *proto);
   if (!response) return std::move(response).status();
   if (!response->done()) {
     return Status(
@@ -520,7 +520,7 @@ StatusOr<storage::internal::ListObjectsResponse> GrpcStub::ListObjects(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->ListObjects(ctx, proto);
+  auto response = stub_->ListObjects(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response, options);
 }
@@ -532,7 +532,7 @@ StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteObject(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->DeleteObject(ctx, proto);
+  auto response = stub_->DeleteObject(ctx, options, proto);
   if (!response.ok()) return response;
   return storage::internal::EmptyResponse{};
 }
@@ -545,7 +545,7 @@ StatusOr<storage::ObjectMetadata> GrpcStub::UpdateObject(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->UpdateObject(ctx, *proto);
+  auto response = stub_->UpdateObject(ctx, options, *proto);
   if (!response) return std::move(response).status();
   return FromProto(*response, options);
 }
@@ -566,7 +566,7 @@ StatusOr<storage::ObjectMetadata> GrpcStub::ComposeObject(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->ComposeObject(ctx, *proto);
+  auto response = stub_->ComposeObject(ctx, options, *proto);
   if (!response) return std::move(response).status();
   return FromProto(*response, options);
 }
@@ -579,7 +579,7 @@ StatusOr<storage::internal::RewriteObjectResponse> GrpcStub::RewriteObject(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->RewriteObject(ctx, *proto);
+  auto response = stub_->RewriteObject(ctx, options, *proto);
   if (!response) return std::move(response).status();
   return FromProto(*response, options);
 }
@@ -598,7 +598,7 @@ GrpcStub::CreateResumableUpload(
   if (timeout.count() != 0) {
     ctx.set_deadline(std::chrono::system_clock::now() + timeout);
   }
-  auto response = stub_->StartResumableWrite(ctx, *proto_request);
+  auto response = stub_->StartResumableWrite(ctx, options, *proto_request);
   if (!response.ok()) return std::move(response).status();
 
   return storage::internal::CreateResumableUploadResponse{
@@ -616,7 +616,7 @@ GrpcStub::QueryResumableUpload(
   if (timeout.count() != 0) {
     ctx.set_deadline(std::chrono::system_clock::now() + timeout);
   }
-  auto response = stub_->QueryWriteStatus(ctx, ToProto(request));
+  auto response = stub_->QueryWriteStatus(ctx, options, ToProto(request));
   if (!response) return std::move(response).status();
   return FromProto(*response, options);
 }
@@ -631,7 +631,7 @@ StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteResumableUpload(
   if (timeout.count() != 0) {
     ctx.set_deadline(std::chrono::system_clock::now() + timeout);
   }
-  auto response = stub_->CancelResumableWrite(ctx, ToProto(request));
+  auto response = stub_->CancelResumableWrite(ctx, options, ToProto(request));
   if (!response) return std::move(response).status();
   return storage::internal::EmptyResponse{};
 }
@@ -1027,7 +1027,7 @@ StatusOr<storage::ServiceAccount> GrpcStub::GetServiceAccount(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->GetServiceAccount(ctx, proto);
+  auto response = stub_->GetServiceAccount(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
@@ -1039,7 +1039,7 @@ StatusOr<storage::internal::ListHmacKeysResponse> GrpcStub::ListHmacKeys(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->ListHmacKeys(ctx, proto);
+  auto response = stub_->ListHmacKeys(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
@@ -1051,7 +1051,7 @@ StatusOr<storage::internal::CreateHmacKeyResponse> GrpcStub::CreateHmacKey(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->CreateHmacKey(ctx, proto);
+  auto response = stub_->CreateHmacKey(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
@@ -1063,7 +1063,7 @@ StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteHmacKey(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->DeleteHmacKey(ctx, proto);
+  auto response = stub_->DeleteHmacKey(ctx, options, proto);
   if (!response.ok()) return response;
   return storage::internal::EmptyResponse{};
 }
@@ -1075,7 +1075,7 @@ StatusOr<storage::HmacKeyMetadata> GrpcStub::GetHmacKey(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->GetHmacKey(ctx, proto);
+  auto response = stub_->GetHmacKey(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
@@ -1087,7 +1087,7 @@ StatusOr<storage::HmacKeyMetadata> GrpcStub::UpdateHmacKey(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->UpdateHmacKey(ctx, proto);
+  auto response = stub_->UpdateHmacKey(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
@@ -1113,7 +1113,7 @@ GrpcStub::ListNotifications(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->ListNotificationConfigs(ctx, proto);
+  auto response = stub_->ListNotificationConfigs(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
@@ -1125,7 +1125,7 @@ StatusOr<storage::NotificationMetadata> GrpcStub::CreateNotification(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->CreateNotificationConfig(ctx, proto);
+  auto response = stub_->CreateNotificationConfig(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
@@ -1137,7 +1137,7 @@ StatusOr<storage::NotificationMetadata> GrpcStub::GetNotification(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->GetNotificationConfig(ctx, proto);
+  auto response = stub_->GetNotificationConfig(ctx, options, proto);
   if (!response) return std::move(response).status();
   return FromProto(*response);
 }
@@ -1149,7 +1149,7 @@ StatusOr<storage::internal::EmptyResponse> GrpcStub::DeleteNotification(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  auto response = stub_->DeleteNotificationConfig(ctx, proto);
+  auto response = stub_->DeleteNotificationConfig(ctx, options, proto);
   if (!response.ok()) return response;
   return storage::internal::EmptyResponse{};
 }
@@ -1165,7 +1165,7 @@ StatusOr<google::storage::v2::Bucket> GrpcStub::GetBucketMetadataImpl(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  return stub_->GetBucket(ctx, proto);
+  return stub_->GetBucket(ctx, options, proto);
 }
 
 StatusOr<google::storage::v2::Bucket> GrpcStub::PatchBucketImpl(
@@ -1176,7 +1176,7 @@ StatusOr<google::storage::v2::Bucket> GrpcStub::PatchBucketImpl(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  return stub_->UpdateBucket(ctx, *proto);
+  return stub_->UpdateBucket(ctx, options, *proto);
 }
 
 StatusOr<google::storage::v2::Object> GrpcStub::GetObjectMetadataImpl(
@@ -1186,7 +1186,7 @@ StatusOr<google::storage::v2::Object> GrpcStub::GetObjectMetadataImpl(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  return stub_->GetObject(ctx, proto);
+  return stub_->GetObject(ctx, options, proto);
 }
 
 StatusOr<google::storage::v2::Object> GrpcStub::PatchObjectImpl(
@@ -1197,7 +1197,7 @@ StatusOr<google::storage::v2::Object> GrpcStub::PatchObjectImpl(
   grpc::ClientContext ctx;
   ApplyQueryParameters(ctx, options, request);
   AddIdempotencyToken(ctx, context);
-  return stub_->UpdateObject(ctx, *proto);
+  return stub_->UpdateObject(ctx, options, *proto);
 }
 
 StatusOr<google::storage::v2::Bucket> GrpcStub::ModifyBucketAccessControl(

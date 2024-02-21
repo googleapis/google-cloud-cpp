@@ -202,7 +202,7 @@ std::shared_ptr<GrpcStub> CreateTestClient(
 TEST_F(GrpcClientAclTest, ListBucketAclFailure) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -229,7 +229,8 @@ TEST_F(GrpcClientAclTest, ListBucketAclFailure) {
 TEST_F(GrpcClientAclTest, ListBucketAclSuccess) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Bucket response;
@@ -264,7 +265,7 @@ TEST_F(GrpcClientAclTest, GetBucketAclSuccess) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .Times(2)
-      .WillRepeatedly([&](grpc::ClientContext&,
+      .WillRepeatedly([&](grpc::ClientContext&, Options const&,
                           v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
@@ -296,7 +297,7 @@ TEST_F(GrpcClientAclTest, GetBucketAclSuccess) {
 TEST_F(GrpcClientAclTest, GetBucketAclFailure) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -323,7 +324,8 @@ TEST_F(GrpcClientAclTest, GetBucketAclFailure) {
 TEST_F(GrpcClientAclTest, GetBucketAclNotFound) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Bucket response;
@@ -343,7 +345,8 @@ TEST_F(GrpcClientAclTest, GetBucketAclNotFound) {
 TEST_F(GrpcClientAclTest, CreateBucketAclSuccess) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Bucket response;
@@ -351,7 +354,7 @@ TEST_F(GrpcClientAclTest, CreateBucketAclSuccess) {
         return response;
       });
   EXPECT_CALL(*mock, UpdateBucket)
-      .WillOnce([](grpc::ClientContext&,
+      .WillOnce([](grpc::ClientContext&, Options const&,
                    v2::UpdateBucketRequest const& request) {
         v2::Bucket response;
         EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
@@ -383,7 +386,7 @@ TEST_F(GrpcClientAclTest, CreateBucketAclSuccess) {
 TEST_F(GrpcClientAclTest, CreateBucketAclFailure) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
         // The `Field()` option is ignored, as the implementation only works
@@ -410,7 +413,8 @@ TEST_F(GrpcClientAclTest, CreateBucketAclFailure) {
 TEST_F(GrpcClientAclTest, CreateBucketAclPatchFails) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Bucket response;
@@ -418,7 +422,7 @@ TEST_F(GrpcClientAclTest, CreateBucketAclPatchFails) {
         return response;
       });
   EXPECT_CALL(*mock, UpdateBucket)
-      .WillOnce([](grpc::ClientContext&,
+      .WillOnce([](grpc::ClientContext&, Options const&,
                    v2::UpdateBucketRequest const& request) {
         EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
         auto expected = v2::BucketAccessControl();
@@ -443,7 +447,7 @@ TEST_F(GrpcClientAclTest, DeleteBucketAclSuccess) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .Times(2)
-      .WillRepeatedly([&](grpc::ClientContext&,
+      .WillRepeatedly([&](grpc::ClientContext&, Options const&,
                           v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
@@ -453,7 +457,7 @@ TEST_F(GrpcClientAclTest, DeleteBucketAclSuccess) {
       });
   EXPECT_CALL(*mock, UpdateBucket)
       .Times(2)
-      .WillRepeatedly([](grpc::ClientContext&,
+      .WillRepeatedly([](grpc::ClientContext&, Options const&,
                          v2::UpdateBucketRequest const& request) {
         v2::Bucket response;
         EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
@@ -483,7 +487,7 @@ TEST_F(GrpcClientAclTest, DeleteBucketAclSuccess) {
 TEST_F(GrpcClientAclTest, DeleteBucketAclFailure) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
         // The `Field()` option is ignored, as the implementation only works
@@ -510,7 +514,8 @@ TEST_F(GrpcClientAclTest, DeleteBucketAclFailure) {
 TEST_F(GrpcClientAclTest, DeleteBucketAclPatchFails) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Bucket response;
@@ -518,7 +523,7 @@ TEST_F(GrpcClientAclTest, DeleteBucketAclPatchFails) {
         return response;
       });
   EXPECT_CALL(*mock, UpdateBucket)
-      .WillOnce([](grpc::ClientContext&,
+      .WillOnce([](grpc::ClientContext&, Options const&,
                    v2::UpdateBucketRequest const& request) {
         EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
         auto expected = v2::BucketAccessControl();
@@ -543,7 +548,8 @@ TEST_F(GrpcClientAclTest, DeleteBucketAclPatchFails) {
 TEST_F(GrpcClientAclTest, DeleteBucketAclNotFound) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Bucket response;
@@ -566,7 +572,7 @@ TEST_F(GrpcClientAclTest, UpdateBucketSuccess) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .Times(2)
-      .WillRepeatedly([&](grpc::ClientContext&,
+      .WillRepeatedly([&](grpc::ClientContext&, Options const&,
                           v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
@@ -576,7 +582,7 @@ TEST_F(GrpcClientAclTest, UpdateBucketSuccess) {
       });
   EXPECT_CALL(*mock, UpdateBucket)
       .Times(2)
-      .WillRepeatedly([](grpc::ClientContext&,
+      .WillRepeatedly([](grpc::ClientContext&, Options const&,
                          v2::UpdateBucketRequest const& request) {
         v2::Bucket response;
         EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
@@ -613,7 +619,7 @@ TEST_F(GrpcClientAclTest, UpdateBucketSuccess) {
 TEST_F(GrpcClientAclTest, UpdateBucketAclFailure) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
         // The `Field()` option is ignored, as the implementation only works
@@ -640,7 +646,8 @@ TEST_F(GrpcClientAclTest, UpdateBucketAclFailure) {
 TEST_F(GrpcClientAclTest, UpdateBucketAclPatchFails) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Bucket response;
@@ -648,7 +655,7 @@ TEST_F(GrpcClientAclTest, UpdateBucketAclPatchFails) {
         return response;
       });
   EXPECT_CALL(*mock, UpdateBucket)
-      .WillOnce([](grpc::ClientContext&,
+      .WillOnce([](grpc::ClientContext&, Options const&,
                    v2::UpdateBucketRequest const& request) {
         EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
         auto expected = v2::BucketAccessControl();
@@ -673,7 +680,7 @@ TEST_F(GrpcClientAclTest, PatchBucketAclSuccess) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .Times(2)
-      .WillRepeatedly([&](grpc::ClientContext&,
+      .WillRepeatedly([&](grpc::ClientContext&, Options const&,
                           v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
@@ -683,7 +690,7 @@ TEST_F(GrpcClientAclTest, PatchBucketAclSuccess) {
       });
   EXPECT_CALL(*mock, UpdateBucket)
       .Times(2)
-      .WillRepeatedly([](grpc::ClientContext&,
+      .WillRepeatedly([](grpc::ClientContext&, Options const&,
                          v2::UpdateBucketRequest const& request) {
         v2::Bucket response;
         EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
@@ -722,7 +729,7 @@ TEST_F(GrpcClientAclTest, PatchBucketAclSuccess) {
 TEST_F(GrpcClientAclTest, PatchBucketAclFailure) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
@@ -749,7 +756,8 @@ TEST_F(GrpcClientAclTest, PatchBucketAclFailure) {
 TEST_F(GrpcClientAclTest, PatchBucketAclPatchFails) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Bucket response;
@@ -757,7 +765,7 @@ TEST_F(GrpcClientAclTest, PatchBucketAclPatchFails) {
         return response;
       });
   EXPECT_CALL(*mock, UpdateBucket)
-      .WillOnce([](grpc::ClientContext&,
+      .WillOnce([](grpc::ClientContext&, Options const&,
                    v2::UpdateBucketRequest const& request) {
         EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
         auto expected = v2::BucketAccessControl();
@@ -782,7 +790,7 @@ TEST_F(GrpcClientAclTest, PatchBucketAclPatchFails) {
 TEST_F(GrpcClientAclTest, ListObjectAclFailure) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetObjectRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -811,7 +819,8 @@ TEST_F(GrpcClientAclTest, ListObjectAclFailure) {
 TEST_F(GrpcClientAclTest, ListObjectAclSuccess) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
-      .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetObjectRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Object response;
@@ -851,7 +860,7 @@ TEST_F(GrpcClientAclTest, GetObjectAclSuccess) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .Times(2)
-      .WillRepeatedly([&](grpc::ClientContext&,
+      .WillRepeatedly([&](grpc::ClientContext&, Options const&,
                           v2::GetObjectRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
@@ -885,7 +894,7 @@ TEST_F(GrpcClientAclTest, GetObjectAclSuccess) {
 TEST_F(GrpcClientAclTest, GetObjectAclFailure) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetObjectRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -914,7 +923,8 @@ TEST_F(GrpcClientAclTest, GetObjectAclFailure) {
 TEST_F(GrpcClientAclTest, GetObjectAclNotFound) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
-      .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetObjectRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Object response;
@@ -935,7 +945,8 @@ TEST_F(GrpcClientAclTest, GetObjectAclNotFound) {
 TEST_F(GrpcClientAclTest, CreateObjectAclSuccess) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
-      .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetObjectRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Object response;
@@ -943,7 +954,7 @@ TEST_F(GrpcClientAclTest, CreateObjectAclSuccess) {
         return response;
       });
   EXPECT_CALL(*mock, UpdateObject)
-      .WillOnce([](grpc::ClientContext&,
+      .WillOnce([](grpc::ClientContext&, Options const&,
                    v2::UpdateObjectRequest const& request) {
         v2::Object response;
         EXPECT_TRUE(TextFormat::ParseFromString(kObjectProtoText, &response));
@@ -978,7 +989,7 @@ TEST_F(GrpcClientAclTest, CreateObjectAclSuccess) {
 TEST_F(GrpcClientAclTest, CreateObjectAclFailure) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetObjectRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
@@ -1005,7 +1016,8 @@ TEST_F(GrpcClientAclTest, CreateObjectAclFailure) {
 TEST_F(GrpcClientAclTest, CreateObjectAclPatchFails) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
-      .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetObjectRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Object response;
@@ -1013,7 +1025,7 @@ TEST_F(GrpcClientAclTest, CreateObjectAclPatchFails) {
         return response;
       });
   EXPECT_CALL(*mock, UpdateObject)
-      .WillOnce([](grpc::ClientContext&,
+      .WillOnce([](grpc::ClientContext&, Options const&,
                    v2::UpdateObjectRequest const& request) {
         EXPECT_EQ(request.object().bucket(),
                   "projects/_/buckets/test-bucket-id");
@@ -1041,7 +1053,7 @@ TEST_F(GrpcClientAclTest, DeleteObjectAclSuccess) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .Times(2)
-      .WillRepeatedly([&](grpc::ClientContext&,
+      .WillRepeatedly([&](grpc::ClientContext&, Options const&,
                           v2::GetObjectRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
@@ -1051,7 +1063,7 @@ TEST_F(GrpcClientAclTest, DeleteObjectAclSuccess) {
       });
   EXPECT_CALL(*mock, UpdateObject)
       .Times(2)
-      .WillRepeatedly([&](grpc::ClientContext&,
+      .WillRepeatedly([&](grpc::ClientContext&, Options const&,
                           v2::UpdateObjectRequest const& request) {
         v2::Object response;
         EXPECT_TRUE(TextFormat::ParseFromString(kObjectProtoText, &response));
@@ -1083,7 +1095,7 @@ TEST_F(GrpcClientAclTest, DeleteObjectAclSuccess) {
 TEST_F(GrpcClientAclTest, DeleteObjectAclFailure) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetObjectRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
@@ -1110,7 +1122,8 @@ TEST_F(GrpcClientAclTest, DeleteObjectAclFailure) {
 TEST_F(GrpcClientAclTest, DeleteObjectAclPatchFails) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
-      .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetObjectRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Object response;
@@ -1118,19 +1131,19 @@ TEST_F(GrpcClientAclTest, DeleteObjectAclPatchFails) {
         return response;
       });
   EXPECT_CALL(*mock, UpdateObject)
-      .WillOnce(
-          [](grpc::ClientContext&, v2::UpdateObjectRequest const& request) {
-            EXPECT_EQ(request.object().bucket(),
-                      "projects/_/buckets/test-bucket-id");
-            EXPECT_EQ(request.object().name(), "test-object-id");
-            auto expected = v2::ObjectAccessControl();
-            expected.set_entity("test-entity2");
-            expected.set_role("test-role2");
-            EXPECT_THAT(request.object().acl(),
-                        ElementsAre(IsProtoEqual(expected)));
-            EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
-            return Status(StatusCode::kFailedPrecondition, "conflict");
-          });
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   v2::UpdateObjectRequest const& request) {
+        EXPECT_EQ(request.object().bucket(),
+                  "projects/_/buckets/test-bucket-id");
+        EXPECT_EQ(request.object().name(), "test-object-id");
+        auto expected = v2::ObjectAccessControl();
+        expected.set_entity("test-entity2");
+        expected.set_role("test-role2");
+        EXPECT_THAT(request.object().acl(),
+                    ElementsAre(IsProtoEqual(expected)));
+        EXPECT_THAT(request.update_mask().paths(), ElementsAre("acl"));
+        return Status(StatusCode::kFailedPrecondition, "conflict");
+      });
 
   auto client = CreateTestClient(mock);
   auto context = TestContext();
@@ -1145,7 +1158,8 @@ TEST_F(GrpcClientAclTest, DeleteObjectAclPatchFails) {
 TEST_F(GrpcClientAclTest, DeleteObjectAclNotFound) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
-      .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetObjectRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Object response;
@@ -1168,7 +1182,7 @@ TEST_F(GrpcClientAclTest, UpdateObjectAclSuccess) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .Times(2)
-      .WillRepeatedly([&](grpc::ClientContext&,
+      .WillRepeatedly([&](grpc::ClientContext&, Options const&,
                           v2::GetObjectRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
@@ -1178,7 +1192,7 @@ TEST_F(GrpcClientAclTest, UpdateObjectAclSuccess) {
       });
   EXPECT_CALL(*mock, UpdateObject)
       .Times(2)
-      .WillRepeatedly([&](grpc::ClientContext&,
+      .WillRepeatedly([&](grpc::ClientContext&, Options const&,
                           v2::UpdateObjectRequest const& request) {
         v2::Object response;
         EXPECT_TRUE(TextFormat::ParseFromString(kObjectProtoText, &response));
@@ -1216,7 +1230,7 @@ TEST_F(GrpcClientAclTest, UpdateObjectAclSuccess) {
 TEST_F(GrpcClientAclTest, UpdateObjectAclFailure) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetObjectRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
@@ -1243,7 +1257,8 @@ TEST_F(GrpcClientAclTest, UpdateObjectAclFailure) {
 TEST_F(GrpcClientAclTest, UpdateObjectAclPatchFails) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
-      .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetObjectRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Object response;
@@ -1251,7 +1266,7 @@ TEST_F(GrpcClientAclTest, UpdateObjectAclPatchFails) {
         return response;
       });
   EXPECT_CALL(*mock, UpdateObject)
-      .WillOnce([](grpc::ClientContext&,
+      .WillOnce([](grpc::ClientContext&, Options const&,
                    v2::UpdateObjectRequest const& request) {
         EXPECT_EQ(request.object().bucket(),
                   "projects/_/buckets/test-bucket-id");
@@ -1278,7 +1293,7 @@ TEST_F(GrpcClientAclTest, PatchObjectAclSuccess) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
       .Times(2)
-      .WillRepeatedly([&](grpc::ClientContext&,
+      .WillRepeatedly([&](grpc::ClientContext&, Options const&,
                           v2::GetObjectRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
@@ -1288,7 +1303,7 @@ TEST_F(GrpcClientAclTest, PatchObjectAclSuccess) {
       });
   EXPECT_CALL(*mock, UpdateObject)
       .Times(2)
-      .WillRepeatedly([&](grpc::ClientContext&,
+      .WillRepeatedly([&](grpc::ClientContext&, Options const&,
                           v2::UpdateObjectRequest const& request) {
         v2::Object response;
         EXPECT_TRUE(TextFormat::ParseFromString(kObjectProtoText, &response));
@@ -1328,7 +1343,7 @@ TEST_F(GrpcClientAclTest, PatchObjectAclSuccess) {
 TEST_F(GrpcClientAclTest, PatchObjectAclFailure) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetObjectRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
@@ -1356,7 +1371,8 @@ TEST_F(GrpcClientAclTest, PatchObjectAclFailure) {
 TEST_F(GrpcClientAclTest, PatchObjectAclPatchFails) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
-      .WillOnce([&](grpc::ClientContext&, v2::GetObjectRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetObjectRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Object response;
@@ -1364,7 +1380,7 @@ TEST_F(GrpcClientAclTest, PatchObjectAclPatchFails) {
         return response;
       });
   EXPECT_CALL(*mock, UpdateObject)
-      .WillOnce([](grpc::ClientContext&,
+      .WillOnce([](grpc::ClientContext&, Options const&,
                    v2::UpdateObjectRequest const& request) {
         EXPECT_EQ(request.object().bucket(),
                   "projects/_/buckets/test-bucket-id");
@@ -1391,7 +1407,7 @@ TEST_F(GrpcClientAclTest, PatchObjectAclPatchFails) {
 TEST_F(GrpcClientAclTest, ListDefaultObjectAclFailure) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -1418,7 +1434,8 @@ TEST_F(GrpcClientAclTest, ListDefaultObjectAclFailure) {
 TEST_F(GrpcClientAclTest, ListDefaultObjectAclSuccess) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Bucket response;
@@ -1453,7 +1470,7 @@ TEST_F(GrpcClientAclTest, GetDefaultObjectAclSuccess) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .Times(2)
-      .WillRepeatedly([&](grpc::ClientContext&,
+      .WillRepeatedly([&](grpc::ClientContext&, Options const&,
                           v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
@@ -1487,7 +1504,7 @@ TEST_F(GrpcClientAclTest, GetDefaultObjectAclSuccess) {
 TEST_F(GrpcClientAclTest, GetDefaultObjectAclFailure) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -1515,7 +1532,8 @@ TEST_F(GrpcClientAclTest, GetDefaultObjectAclFailure) {
 TEST_F(GrpcClientAclTest, GetDefaultObjectAclNotFound) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Bucket response;
@@ -1536,7 +1554,8 @@ TEST_F(GrpcClientAclTest, GetDefaultObjectAclNotFound) {
 TEST_F(GrpcClientAclTest, CreateDefaultObjectAclSuccess) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Bucket response;
@@ -1544,7 +1563,7 @@ TEST_F(GrpcClientAclTest, CreateDefaultObjectAclSuccess) {
         return response;
       });
   EXPECT_CALL(*mock, UpdateBucket)
-      .WillOnce([](grpc::ClientContext&,
+      .WillOnce([](grpc::ClientContext&, Options const&,
                    v2::UpdateBucketRequest const& request) {
         v2::Bucket response;
         EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
@@ -1573,7 +1592,7 @@ TEST_F(GrpcClientAclTest, CreateDefaultObjectAclSuccess) {
 TEST_F(GrpcClientAclTest, CreateDefaultObjectAclFailure) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
@@ -1599,7 +1618,8 @@ TEST_F(GrpcClientAclTest, CreateDefaultObjectAclFailure) {
 TEST_F(GrpcClientAclTest, CreateDefaultObjectAclPatchFails) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Bucket response;
@@ -1607,7 +1627,7 @@ TEST_F(GrpcClientAclTest, CreateDefaultObjectAclPatchFails) {
         return response;
       });
   EXPECT_CALL(*mock, UpdateBucket)
-      .WillOnce([](grpc::ClientContext&,
+      .WillOnce([](grpc::ClientContext&, Options const&,
                    v2::UpdateBucketRequest const& request) {
         EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
         auto expected = v2::ObjectAccessControl();
@@ -1634,7 +1654,7 @@ TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclSuccess) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .Times(2)
-      .WillRepeatedly([&](grpc::ClientContext&,
+      .WillRepeatedly([&](grpc::ClientContext&, Options const&,
                           v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
@@ -1644,7 +1664,7 @@ TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclSuccess) {
       });
   EXPECT_CALL(*mock, UpdateBucket)
       .Times(2)
-      .WillRepeatedly([](grpc::ClientContext&,
+      .WillRepeatedly([](grpc::ClientContext&, Options const&,
                          v2::UpdateBucketRequest const& request) {
         v2::Bucket response;
         EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
@@ -1676,7 +1696,7 @@ TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclSuccess) {
 TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclFailure) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
@@ -1702,7 +1722,8 @@ TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclFailure) {
 TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclPatchFails) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Bucket response;
@@ -1710,7 +1731,7 @@ TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclPatchFails) {
         return response;
       });
   EXPECT_CALL(*mock, UpdateBucket)
-      .WillOnce([](grpc::ClientContext&,
+      .WillOnce([](grpc::ClientContext&, Options const&,
                    v2::UpdateBucketRequest const& request) {
         EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
         auto expected = v2::ObjectAccessControl();
@@ -1736,7 +1757,8 @@ TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclPatchFails) {
 TEST_F(GrpcClientAclTest, DeleteDefaultObjectAclNotFound) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Bucket response;
@@ -1759,7 +1781,7 @@ TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclSuccess) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .Times(2)
-      .WillRepeatedly([&](grpc::ClientContext&,
+      .WillRepeatedly([&](grpc::ClientContext&, Options const&,
                           v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
@@ -1769,7 +1791,7 @@ TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclSuccess) {
       });
   EXPECT_CALL(*mock, UpdateBucket)
       .Times(2)
-      .WillRepeatedly([](grpc::ClientContext&,
+      .WillRepeatedly([](grpc::ClientContext&, Options const&,
                          v2::UpdateBucketRequest const& request) {
         v2::Bucket response;
         EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
@@ -1805,7 +1827,7 @@ TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclSuccess) {
 TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclFailure) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
@@ -1831,7 +1853,8 @@ TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclFailure) {
 TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclPatchFails) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Bucket response;
@@ -1839,7 +1862,7 @@ TEST_F(GrpcClientAclTest, UpdateDefaultObjectAclPatchFails) {
         return response;
       });
   EXPECT_CALL(*mock, UpdateBucket)
-      .WillOnce([](grpc::ClientContext&,
+      .WillOnce([](grpc::ClientContext&, Options const&,
                    v2::UpdateBucketRequest const& request) {
         EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
         auto expected = v2::ObjectAccessControl();
@@ -1866,7 +1889,7 @@ TEST_F(GrpcClientAclTest, PatchDefaultObjectAclSuccess) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
       .Times(2)
-      .WillRepeatedly([&](grpc::ClientContext&,
+      .WillRepeatedly([&](grpc::ClientContext&, Options const&,
                           v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
@@ -1876,7 +1899,7 @@ TEST_F(GrpcClientAclTest, PatchDefaultObjectAclSuccess) {
       });
   EXPECT_CALL(*mock, UpdateBucket)
       .Times(2)
-      .WillRepeatedly([](grpc::ClientContext&,
+      .WillRepeatedly([](grpc::ClientContext&, Options const&,
                          v2::UpdateBucketRequest const& request) {
         v2::Bucket response;
         EXPECT_TRUE(TextFormat::ParseFromString(kBucketProtoText, &response));
@@ -1916,7 +1939,7 @@ TEST_F(GrpcClientAclTest, PatchDefaultObjectAclSuccess) {
 TEST_F(GrpcClientAclTest, PatchDefaultObjectAclFailure) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
@@ -1943,7 +1966,8 @@ TEST_F(GrpcClientAclTest, PatchDefaultObjectAclFailure) {
 TEST_F(GrpcClientAclTest, PatchDefaultObjectAclPatchFails) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([&](grpc::ClientContext&, v2::GetBucketRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    v2::GetBucketRequest const& request) {
         EXPECT_TRUE(request.has_read_mask());
         EXPECT_THAT(request.read_mask().paths(), ElementsAre("*"));
         v2::Bucket response;
@@ -1951,7 +1975,7 @@ TEST_F(GrpcClientAclTest, PatchDefaultObjectAclPatchFails) {
         return response;
       });
   EXPECT_CALL(*mock, UpdateBucket)
-      .WillOnce([](grpc::ClientContext&,
+      .WillOnce([](grpc::ClientContext&, Options const&,
                    v2::UpdateBucketRequest const& request) {
         EXPECT_EQ(request.bucket().name(), "projects/_/buckets/test-bucket-id");
         auto expected = v2::ObjectAccessControl();
