@@ -20,6 +20,7 @@
 #include "google/cloud/rapidmigrationassessment/v1/internal/rapid_migration_assessment_auth_decorator.h"
 #include <google/cloud/rapidmigrationassessment/v1/rapidmigrationassessment.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

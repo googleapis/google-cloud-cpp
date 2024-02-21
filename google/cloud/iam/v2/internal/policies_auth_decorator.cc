@@ -19,6 +19,7 @@
 #include "google/cloud/iam/v2/internal/policies_auth_decorator.h"
 #include <google/iam/v2/policy.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

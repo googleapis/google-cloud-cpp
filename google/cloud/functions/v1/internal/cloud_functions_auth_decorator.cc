@@ -19,6 +19,7 @@
 #include "google/cloud/functions/v1/internal/cloud_functions_auth_decorator.h"
 #include <google/cloud/functions/v1/functions.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

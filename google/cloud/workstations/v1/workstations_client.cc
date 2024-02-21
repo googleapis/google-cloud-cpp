@@ -18,6 +18,7 @@
 
 #include "google/cloud/workstations/v1/workstations_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

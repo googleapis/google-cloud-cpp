@@ -20,6 +20,7 @@
 #include "google/cloud/internal/async_read_write_stream_auth.h"
 #include <google/cloud/aiplatform/v1/prediction_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

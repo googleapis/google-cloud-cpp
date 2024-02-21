@@ -24,6 +24,7 @@
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

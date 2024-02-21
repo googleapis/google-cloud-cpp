@@ -30,6 +30,7 @@
 #include "google/cloud/options.h"
 #include <grafeas/v1/grafeas.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

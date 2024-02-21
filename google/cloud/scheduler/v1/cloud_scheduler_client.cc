@@ -18,6 +18,7 @@
 
 #include "google/cloud/scheduler/v1/cloud_scheduler_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

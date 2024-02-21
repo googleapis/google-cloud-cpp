@@ -19,6 +19,7 @@
 
 #include "google/cloud/compute/region_backend_services/v1/region_backend_services_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

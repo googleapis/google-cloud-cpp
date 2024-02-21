@@ -19,6 +19,7 @@
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_serialization_auth_decorator.h"
 #include <google/cloud/datacatalog/v1/policytagmanagerserialization.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

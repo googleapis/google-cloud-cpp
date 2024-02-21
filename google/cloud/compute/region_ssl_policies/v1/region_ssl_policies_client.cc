@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/region_ssl_policies/v1/region_ssl_policies_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

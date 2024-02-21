@@ -24,6 +24,7 @@
 #include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
 #include <google/cloud/compute/region_url_maps/v1/region_url_maps.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

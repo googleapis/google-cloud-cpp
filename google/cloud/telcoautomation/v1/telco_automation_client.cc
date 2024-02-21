@@ -18,6 +18,7 @@
 
 #include "google/cloud/telcoautomation/v1/telco_automation_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -18,6 +18,7 @@
 
 #include "google/cloud/vision/v1/image_annotator_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

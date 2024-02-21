@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/contexts_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

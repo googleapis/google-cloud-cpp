@@ -24,6 +24,7 @@
 #include <google/cloud/compute/global_operations/v1/global_operations.pb.h>
 #include <google/cloud/compute/url_maps/v1/url_maps.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

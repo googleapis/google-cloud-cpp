@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/service_attachments/v1/service_attachments_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

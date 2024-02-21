@@ -30,6 +30,7 @@
 #include "google/cloud/options.h"
 #include <google/cloud/kms/inventory/v1/key_tracking_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

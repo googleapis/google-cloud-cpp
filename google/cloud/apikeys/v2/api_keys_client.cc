@@ -18,6 +18,7 @@
 
 #include "google/cloud/apikeys/v2/api_keys_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

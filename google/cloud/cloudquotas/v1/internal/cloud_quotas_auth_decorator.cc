@@ -19,6 +19,7 @@
 #include "google/cloud/cloudquotas/v1/internal/cloud_quotas_auth_decorator.h"
 #include <google/api/cloudquotas/v1/cloudquotas.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

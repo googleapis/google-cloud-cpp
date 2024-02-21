@@ -19,6 +19,7 @@
 #include "google/cloud/memcache/v1/internal/cloud_memcache_auth_decorator.h"
 #include <google/cloud/memcache/v1/cloud_memcache.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

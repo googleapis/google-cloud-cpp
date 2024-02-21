@@ -19,6 +19,7 @@
 #include "google/cloud/tpu/v1/internal/tpu_auth_decorator.h"
 #include <google/cloud/tpu/v1/cloud_tpu.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

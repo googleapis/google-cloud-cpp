@@ -19,6 +19,7 @@
 #include "google/cloud/edgenetwork/v1/internal/edge_network_auth_decorator.h"
 #include <google/cloud/edgenetwork/v1/service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

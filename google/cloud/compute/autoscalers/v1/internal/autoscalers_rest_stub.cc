@@ -24,6 +24,7 @@
 #include <google/cloud/compute/autoscalers/v1/autoscalers.pb.h>
 #include <google/cloud/compute/zone_operations/v1/zone_operations.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

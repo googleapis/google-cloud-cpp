@@ -19,6 +19,7 @@
 #include "google/cloud/bigquery/connection/v1/internal/connection_auth_decorator.h"
 #include <google/cloud/bigquery/connection/v1/connection.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

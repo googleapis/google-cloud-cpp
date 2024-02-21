@@ -19,6 +19,7 @@
 #include "google/cloud/speech/v1/internal/adaptation_auth_decorator.h"
 #include <google/cloud/speech/v1/cloud_speech_adaptation.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

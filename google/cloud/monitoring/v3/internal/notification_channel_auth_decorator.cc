@@ -19,6 +19,7 @@
 #include "google/cloud/monitoring/v3/internal/notification_channel_auth_decorator.h"
 #include <google/monitoring/v3/notification_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

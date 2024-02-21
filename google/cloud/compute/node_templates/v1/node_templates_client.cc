@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/node_templates/v1/node_templates_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

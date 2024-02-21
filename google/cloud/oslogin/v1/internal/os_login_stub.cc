@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/oslogin/v1/oslogin.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

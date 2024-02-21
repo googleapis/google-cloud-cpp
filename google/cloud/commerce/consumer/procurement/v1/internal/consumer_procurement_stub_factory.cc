@@ -31,6 +31,7 @@
 #include "google/cloud/options.h"
 #include <google/cloud/commerce/consumer/procurement/v1/procurement_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

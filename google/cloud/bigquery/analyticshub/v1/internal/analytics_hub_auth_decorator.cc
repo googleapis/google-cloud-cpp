@@ -19,6 +19,7 @@
 #include "google/cloud/bigquery/analyticshub/v1/internal/analytics_hub_auth_decorator.h"
 #include <google/cloud/bigquery/analyticshub/v1/analyticshub.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

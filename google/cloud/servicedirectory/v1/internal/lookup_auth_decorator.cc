@@ -19,6 +19,7 @@
 #include "google/cloud/servicedirectory/v1/internal/lookup_auth_decorator.h"
 #include <google/cloud/servicedirectory/v1/lookup_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

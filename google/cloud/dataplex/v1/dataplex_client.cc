@@ -18,6 +18,7 @@
 
 #include "google/cloud/dataplex/v1/dataplex_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

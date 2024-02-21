@@ -19,6 +19,7 @@
 #include "google/cloud/texttospeech/v1/internal/text_to_speech_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

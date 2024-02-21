@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/image_family_views/v1/image_family_views_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

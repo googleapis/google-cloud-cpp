@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/node_groups/v1/node_groups_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

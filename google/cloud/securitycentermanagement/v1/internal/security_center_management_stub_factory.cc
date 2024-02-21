@@ -31,6 +31,7 @@
 #include "google/cloud/options.h"
 #include <google/cloud/securitycentermanagement/v1/security_center_management.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

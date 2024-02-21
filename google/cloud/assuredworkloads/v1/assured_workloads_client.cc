@@ -18,6 +18,7 @@
 
 #include "google/cloud/assuredworkloads/v1/assured_workloads_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

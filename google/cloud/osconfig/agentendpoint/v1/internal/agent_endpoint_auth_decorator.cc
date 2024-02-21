@@ -19,6 +19,7 @@
 #include "google/cloud/osconfig/agentendpoint/v1/internal/agent_endpoint_auth_decorator.h"
 #include <google/cloud/osconfig/agentendpoint/v1/agentendpoint.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

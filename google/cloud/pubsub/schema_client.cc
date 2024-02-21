@@ -19,6 +19,7 @@
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/pubsub/schema_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

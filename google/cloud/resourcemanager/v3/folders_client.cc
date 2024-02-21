@@ -20,6 +20,7 @@
 #include "google/cloud/resourcemanager/v3/folders_options.h"
 #include <memory>
 #include <thread>
+#include <utility>
 
 namespace google {
 namespace cloud {

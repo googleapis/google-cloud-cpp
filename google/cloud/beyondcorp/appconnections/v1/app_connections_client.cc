@@ -19,6 +19,7 @@
 
 #include "google/cloud/beyondcorp/appconnections/v1/app_connections_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

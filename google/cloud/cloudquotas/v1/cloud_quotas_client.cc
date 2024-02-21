@@ -18,6 +18,7 @@
 
 #include "google/cloud/cloudquotas/v1/cloud_quotas_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

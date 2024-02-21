@@ -20,6 +20,7 @@
 #include "google/cloud/internal/async_read_write_stream_auth.h"
 #include <google/pubsub/v1/pubsub.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -19,6 +19,7 @@
 #include "google/cloud/eventarc/v1/internal/eventarc_auth_decorator.h"
 #include <google/cloud/eventarc/v1/eventarc.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

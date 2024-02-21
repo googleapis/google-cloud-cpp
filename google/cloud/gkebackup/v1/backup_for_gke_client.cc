@@ -18,6 +18,7 @@
 
 #include "google/cloud/gkebackup/v1/backup_for_gke_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

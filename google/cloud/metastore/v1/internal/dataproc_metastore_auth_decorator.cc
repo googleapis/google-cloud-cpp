@@ -19,6 +19,7 @@
 #include "google/cloud/metastore/v1/internal/dataproc_metastore_auth_decorator.h"
 #include <google/cloud/metastore/v1/metastore.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

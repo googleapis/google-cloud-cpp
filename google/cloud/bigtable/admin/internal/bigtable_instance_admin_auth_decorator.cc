@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/admin/internal/bigtable_instance_admin_auth_decorator.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

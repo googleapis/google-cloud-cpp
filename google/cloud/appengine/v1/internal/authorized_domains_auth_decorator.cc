@@ -19,6 +19,7 @@
 #include "google/cloud/appengine/v1/internal/authorized_domains_auth_decorator.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

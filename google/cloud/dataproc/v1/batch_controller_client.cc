@@ -18,6 +18,7 @@
 
 #include "google/cloud/dataproc/v1/batch_controller_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

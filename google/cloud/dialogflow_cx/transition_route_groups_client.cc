@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/transition_route_groups_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

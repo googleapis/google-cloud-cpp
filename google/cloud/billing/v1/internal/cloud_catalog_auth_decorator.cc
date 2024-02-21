@@ -19,6 +19,7 @@
 #include "google/cloud/billing/v1/internal/cloud_catalog_auth_decorator.h"
 #include <google/cloud/billing/v1/cloud_catalog.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

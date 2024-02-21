@@ -19,6 +19,7 @@
 #include "google/cloud/composer/v1/internal/environments_auth_decorator.h"
 #include <google/cloud/orchestration/airflow/service/v1/environments.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

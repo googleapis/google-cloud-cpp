@@ -30,6 +30,7 @@
 #include "google/cloud/options.h"
 #include <google/cloud/dialogflow/cx/v3/environment.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

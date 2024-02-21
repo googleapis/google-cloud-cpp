@@ -18,6 +18,7 @@
 
 #include "google/cloud/binaryauthorization/v1/validation_helper_v1_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

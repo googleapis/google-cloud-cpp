@@ -19,6 +19,7 @@
 #include "google/cloud/asset/v1/internal/asset_auth_decorator.h"
 #include <google/cloud/asset/v1/asset_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

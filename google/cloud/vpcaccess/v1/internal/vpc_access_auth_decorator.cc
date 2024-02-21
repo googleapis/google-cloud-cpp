@@ -19,6 +19,7 @@
 #include "google/cloud/vpcaccess/v1/internal/vpc_access_auth_decorator.h"
 #include <google/cloud/vpcaccess/v1/vpc_access.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -22,6 +22,7 @@
 #include <google/cloud/video/stitcher/v1/video_stitcher_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

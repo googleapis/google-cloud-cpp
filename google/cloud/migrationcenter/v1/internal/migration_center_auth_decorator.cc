@@ -19,6 +19,7 @@
 #include "google/cloud/migrationcenter/v1/internal/migration_center_auth_decorator.h"
 #include <google/cloud/migrationcenter/v1/migrationcenter.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

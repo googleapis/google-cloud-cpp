@@ -25,6 +25,7 @@
 #include <google/cloud/compute/public_delegated_prefixes/v1/public_delegated_prefixes.pb.h>
 #include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

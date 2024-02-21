@@ -18,6 +18,7 @@
 
 #include "google/cloud/channel/v1/cloud_channel_reports_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

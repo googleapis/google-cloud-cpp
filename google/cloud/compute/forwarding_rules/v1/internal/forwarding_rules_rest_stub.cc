@@ -24,6 +24,7 @@
 #include <google/cloud/compute/forwarding_rules/v1/forwarding_rules.pb.h>
 #include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

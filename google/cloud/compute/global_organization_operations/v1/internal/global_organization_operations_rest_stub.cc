@@ -24,6 +24,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/compute/global_organization_operations/v1/global_organization_operations.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

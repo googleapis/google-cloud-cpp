@@ -19,6 +19,7 @@
 #include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_auth_decorator.h"
 #include <google/cloud/recaptchaenterprise/v1/recaptchaenterprise.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

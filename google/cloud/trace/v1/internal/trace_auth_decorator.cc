@@ -19,6 +19,7 @@
 #include "google/cloud/trace/v1/internal/trace_auth_decorator.h"
 #include <google/devtools/cloudtrace/v1/trace.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

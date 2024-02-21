@@ -18,6 +18,7 @@
 
 #include "google/cloud/support/v2/case_attachment_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

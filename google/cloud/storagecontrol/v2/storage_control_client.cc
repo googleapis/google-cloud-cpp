@@ -18,6 +18,7 @@
 
 #include "google/cloud/storagecontrol/v2/storage_control_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

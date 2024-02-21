@@ -19,6 +19,7 @@
 #include "google/cloud/aiplatform/v1/internal/llm_utility_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

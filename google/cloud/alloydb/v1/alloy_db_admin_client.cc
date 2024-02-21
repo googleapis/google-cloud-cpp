@@ -18,6 +18,7 @@
 
 #include "google/cloud/alloydb/v1/alloy_db_admin_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

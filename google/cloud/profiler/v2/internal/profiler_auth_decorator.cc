@@ -19,6 +19,7 @@
 #include "google/cloud/profiler/v2/internal/profiler_auth_decorator.h"
 #include <google/devtools/cloudprofiler/v2/profiler.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -18,6 +18,7 @@
 
 #include "google/cloud/redis/v1/internal/cloud_redis_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {

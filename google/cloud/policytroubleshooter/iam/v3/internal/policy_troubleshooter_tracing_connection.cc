@@ -19,6 +19,7 @@
 #include "google/cloud/policytroubleshooter/iam/v3/internal/policy_troubleshooter_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

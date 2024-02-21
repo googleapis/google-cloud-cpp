@@ -19,6 +19,7 @@
 #include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

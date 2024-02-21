@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/addresses/v1/addresses_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

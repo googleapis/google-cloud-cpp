@@ -19,6 +19,7 @@
 #include "google/cloud/redis/v1/internal/cloud_redis_auth_decorator.h"
 #include <google/cloud/redis/v1/cloud_redis.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

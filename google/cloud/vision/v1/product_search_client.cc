@@ -18,6 +18,7 @@
 
 #include "google/cloud/vision/v1/product_search_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

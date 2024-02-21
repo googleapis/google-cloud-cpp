@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_es/internal/session_entity_types_auth_decorator.h"
 #include <google/cloud/dialogflow/v2/session_entity_type.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -18,6 +18,7 @@
 
 #include "google/cloud/resourcemanager/v3/projects_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

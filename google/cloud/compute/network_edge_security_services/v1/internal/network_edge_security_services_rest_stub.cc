@@ -25,6 +25,7 @@
 #include <google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.pb.h>
 #include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

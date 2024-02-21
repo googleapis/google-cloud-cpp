@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/backend_buckets/v1/backend_buckets_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

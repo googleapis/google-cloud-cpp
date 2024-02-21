@@ -18,6 +18,7 @@
 
 #include "google/cloud/baremetalsolution/v2/bare_metal_solution_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

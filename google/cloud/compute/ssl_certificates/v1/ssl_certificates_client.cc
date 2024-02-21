@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/ssl_certificates/v1/ssl_certificates_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

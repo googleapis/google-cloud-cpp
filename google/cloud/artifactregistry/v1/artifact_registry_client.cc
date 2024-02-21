@@ -18,6 +18,7 @@
 
 #include "google/cloud/artifactregistry/v1/artifact_registry_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

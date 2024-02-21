@@ -30,6 +30,7 @@
 #include "google/cloud/options.h"
 #include <google/cloud/networkconnectivity/v1/hub.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

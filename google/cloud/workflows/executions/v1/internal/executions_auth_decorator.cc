@@ -19,6 +19,7 @@
 #include "google/cloud/workflows/executions/v1/internal/executions_auth_decorator.h"
 #include <google/cloud/workflows/executions/v1/executions.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

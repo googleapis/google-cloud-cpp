@@ -18,6 +18,7 @@
 
 #include "google/cloud/notebooks/v1/internal/managed_notebook_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {

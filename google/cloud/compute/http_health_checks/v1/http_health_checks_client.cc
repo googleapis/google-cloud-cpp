@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/http_health_checks/v1/http_health_checks_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

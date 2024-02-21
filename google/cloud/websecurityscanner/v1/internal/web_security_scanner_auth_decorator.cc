@@ -19,6 +19,7 @@
 #include "google/cloud/websecurityscanner/v1/internal/web_security_scanner_auth_decorator.h"
 #include <google/cloud/websecurityscanner/v1/web_security_scanner.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

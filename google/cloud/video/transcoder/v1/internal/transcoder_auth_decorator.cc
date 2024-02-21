@@ -19,6 +19,7 @@
 #include "google/cloud/video/transcoder/v1/internal/transcoder_auth_decorator.h"
 #include <google/cloud/video/transcoder/v1/services.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

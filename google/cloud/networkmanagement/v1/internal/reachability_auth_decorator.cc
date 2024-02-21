@@ -19,6 +19,7 @@
 #include "google/cloud/networkmanagement/v1/internal/reachability_auth_decorator.h"
 #include <google/cloud/networkmanagement/v1/reachability.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -30,6 +30,7 @@
 #include "google/cloud/options.h"
 #include <google/storage/control/v2/storage_control.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

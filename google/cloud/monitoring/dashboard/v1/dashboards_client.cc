@@ -18,6 +18,7 @@
 
 #include "google/cloud/monitoring/dashboard/v1/dashboards_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

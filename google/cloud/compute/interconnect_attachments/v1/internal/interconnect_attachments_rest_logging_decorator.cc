@@ -21,6 +21,7 @@
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

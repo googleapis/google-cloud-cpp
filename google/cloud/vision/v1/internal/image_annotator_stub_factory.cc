@@ -30,6 +30,7 @@
 #include "google/cloud/options.h"
 #include <google/cloud/vision/v1/image_annotator.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

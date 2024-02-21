@@ -18,6 +18,7 @@
 
 #include "google/cloud/networksecurity/v1/network_security_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

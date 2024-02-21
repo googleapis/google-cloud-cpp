@@ -19,6 +19,7 @@
 
 #include "google/cloud/compute/region_security_policies/v1/region_security_policies_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

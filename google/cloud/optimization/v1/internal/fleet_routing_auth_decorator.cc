@@ -19,6 +19,7 @@
 #include "google/cloud/optimization/v1/internal/fleet_routing_auth_decorator.h"
 #include <google/cloud/optimization/v1/fleet_routing.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

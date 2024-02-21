@@ -18,6 +18,7 @@
 
 #include "google/cloud/vpcaccess/v1/vpc_access_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
