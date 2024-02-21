@@ -43,85 +43,99 @@ GoldenKitchenSinkLogging::GoldenKitchenSinkLogging(
 StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
 GoldenKitchenSinkLogging::GenerateAccessToken(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
+             Options const& options,
              google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
-        return child_->GenerateAccessToken(context, request);
+        return child_->GenerateAccessToken(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
 GoldenKitchenSinkLogging::GenerateIdToken(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
+             Options const& options,
              google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
-        return child_->GenerateIdToken(context, request);
+        return child_->GenerateIdToken(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
 GoldenKitchenSinkLogging::WriteLogEntries(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
+             Options const& options,
              google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
-        return child_->WriteLogEntries(context, request);
+        return child_->WriteLogEntries(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::test::admin::database::v1::ListLogsResponse>
 GoldenKitchenSinkLogging::ListLogs(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ListLogsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
+             Options const& options,
              google::test::admin::database::v1::ListLogsRequest const& request) {
-        return child_->ListLogs(context, request);
+        return child_->ListLogs(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 GoldenKitchenSinkLogging::ListServiceAccountKeys(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
+             Options const& options,
              google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
-        return child_->ListServiceAccountKeys(context, request);
+        return child_->ListServiceAccountKeys(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status
 GoldenKitchenSinkLogging::DoNothing(
     grpc::ClientContext& context,
+    Options const& options,
     google::protobuf::Empty const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
+             Options const& options,
              google::protobuf::Empty const& request) {
-        return child_->DoNothing(context, request);
+        return child_->DoNothing(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status
 GoldenKitchenSinkLogging::Deprecated2(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
+             Options const& options,
              google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
-        return child_->Deprecated2(context, request);
+        return child_->Deprecated2(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -190,25 +204,29 @@ GoldenKitchenSinkLogging::AsyncStreamingReadWrite(
 Status
 GoldenKitchenSinkLogging::ExplicitRouting1(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
+             Options const& options,
              google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
-        return child_->ExplicitRouting1(context, request);
+        return child_->ExplicitRouting1(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status
 GoldenKitchenSinkLogging::ExplicitRouting2(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
+             Options const& options,
              google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
-        return child_->ExplicitRouting2(context, request);
+        return child_->ExplicitRouting2(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<

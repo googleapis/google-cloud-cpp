@@ -33,7 +33,7 @@ RequestIdServiceStub::~RequestIdServiceStub() = default;
 
 StatusOr<google::test::requestid::v1::Foo>
 DefaultRequestIdServiceStub::CreateFoo(
-  grpc::ClientContext& context,
+  grpc::ClientContext& context, Options const&,
   google::test::requestid::v1::CreateFooRequest const& request) {
     google::test::requestid::v1::Foo response;
     auto status =
@@ -63,7 +63,7 @@ DefaultRequestIdServiceStub::AsyncRenameFoo(
 
 StatusOr<google::test::requestid::v1::ListFoosResponse>
 DefaultRequestIdServiceStub::ListFoos(
-  grpc::ClientContext& context,
+  grpc::ClientContext& context, Options const&,
   google::test::requestid::v1::ListFoosRequest const& request) {
     google::test::requestid::v1::ListFoosResponse response;
     auto status =

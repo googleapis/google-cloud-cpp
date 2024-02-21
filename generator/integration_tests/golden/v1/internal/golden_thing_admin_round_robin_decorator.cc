@@ -29,8 +29,9 @@ GoldenThingAdminRoundRobin::GoldenThingAdminRoundRobin(
 
 StatusOr<google::test::admin::database::v1::ListDatabasesResponse> GoldenThingAdminRoundRobin::ListDatabases(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ListDatabasesRequest const& request) {
-  return Child()->ListDatabases(context, request);
+  return Child()->ListDatabases(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -44,8 +45,9 @@ GoldenThingAdminRoundRobin::AsyncCreateDatabase(
 
 StatusOr<google::test::admin::database::v1::Database> GoldenThingAdminRoundRobin::GetDatabase(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GetDatabaseRequest const& request) {
-  return Child()->GetDatabase(context, request);
+  return Child()->GetDatabase(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -59,32 +61,37 @@ GoldenThingAdminRoundRobin::AsyncUpdateDatabaseDdl(
 
 Status GoldenThingAdminRoundRobin::DropDatabase(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::DropDatabaseRequest const& request) {
-  return Child()->DropDatabase(context, request);
+  return Child()->DropDatabase(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse> GoldenThingAdminRoundRobin::GetDatabaseDdl(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
-  return Child()->GetDatabaseDdl(context, request);
+  return Child()->GetDatabaseDdl(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> GoldenThingAdminRoundRobin::SetIamPolicy(
     grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return Child()->SetIamPolicy(context, request);
+  return Child()->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> GoldenThingAdminRoundRobin::GetIamPolicy(
     grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return Child()->GetIamPolicy(context, request);
+  return Child()->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse> GoldenThingAdminRoundRobin::TestIamPermissions(
     grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return Child()->TestIamPermissions(context, request);
+  return Child()->TestIamPermissions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -98,26 +105,30 @@ GoldenThingAdminRoundRobin::AsyncCreateBackup(
 
 StatusOr<google::test::admin::database::v1::Backup> GoldenThingAdminRoundRobin::GetBackup(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GetBackupRequest const& request) {
-  return Child()->GetBackup(context, request);
+  return Child()->GetBackup(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::Backup> GoldenThingAdminRoundRobin::UpdateBackup(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::UpdateBackupRequest const& request) {
-  return Child()->UpdateBackup(context, request);
+  return Child()->UpdateBackup(context, options, request);
 }
 
 Status GoldenThingAdminRoundRobin::DeleteBackup(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::DeleteBackupRequest const& request) {
-  return Child()->DeleteBackup(context, request);
+  return Child()->DeleteBackup(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::ListBackupsResponse> GoldenThingAdminRoundRobin::ListBackups(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ListBackupsRequest const& request) {
-  return Child()->ListBackups(context, request);
+  return Child()->ListBackups(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -131,14 +142,16 @@ GoldenThingAdminRoundRobin::AsyncRestoreDatabase(
 
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> GoldenThingAdminRoundRobin::ListDatabaseOperations(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
-  return Child()->ListDatabaseOperations(context, request);
+  return Child()->ListDatabaseOperations(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse> GoldenThingAdminRoundRobin::ListBackupOperations(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
-  return Child()->ListBackupOperations(context, request);
+  return Child()->ListBackupOperations(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

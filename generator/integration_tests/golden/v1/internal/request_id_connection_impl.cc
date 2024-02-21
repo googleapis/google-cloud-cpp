@@ -74,11 +74,11 @@ RequestIdServiceConnectionImpl::CreateFoo(google::test::requestid::v1::CreateFoo
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateFoo(request_copy),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::test::requestid::v1::CreateFooRequest const& request) {
-        return stub_->CreateFoo(context, request);
+        return stub_->CreateFoo(context, options, request);
       },
-      request_copy, __func__);
+      *current, request_copy, __func__);
 }
 
 future<StatusOr<google::test::requestid::v1::Foo>>
@@ -122,17 +122,18 @@ RequestIdServiceConnectionImpl::ListFoos(google::test::requestid::v1::ListFoosRe
   auto idempotency = idempotency_policy(*current)->ListFoos(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<google::test::requestid::v1::Foo>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<golden_v1::RequestIdServiceRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::test::requestid::v1::ListFoosRequest const& r) {
+          Options const& options, google::test::requestid::v1::ListFoosRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, google::test::requestid::v1::ListFoosRequest const& request) {
-              return stub->ListFoos(context, request);
+            [stub](grpc::ClientContext& context, Options const& options,
+                   google::test::requestid::v1::ListFoosRequest const& request) {
+              return stub->ListFoos(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::test::requestid::v1::ListFoosResponse r) {
         std::vector<google::test::requestid::v1::Foo> result(r.foos().size());

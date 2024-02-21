@@ -40,8 +40,9 @@ class GoldenThingAdminStub {
   virtual ~GoldenThingAdminStub() = 0;
 
   virtual StatusOr<google::test::admin::database::v1::ListDatabasesResponse> ListDatabases(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::ListDatabasesRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::test::admin::database::v1::ListDatabasesRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
       google::cloud::CompletionQueue& cq,
@@ -50,8 +51,9 @@ class GoldenThingAdminStub {
       google::test::admin::database::v1::CreateDatabaseRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::Database> GetDatabase(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::GetDatabaseRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::test::admin::database::v1::GetDatabaseRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabaseDdl(
       google::cloud::CompletionQueue& cq,
@@ -60,24 +62,29 @@ class GoldenThingAdminStub {
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) = 0;
 
   virtual Status DropDatabase(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::DropDatabaseRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::test::admin::database::v1::DropDatabaseRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse> GetDatabaseDdl(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::GetDatabaseDdlRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::test::admin::database::v1::GetDatabaseDdlRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-    grpc::ClientContext& context,
-    google::iam::v1::SetIamPolicyRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-    grpc::ClientContext& context,
-    google::iam::v1::GetIamPolicyRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-    grpc::ClientContext& context,
-    google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
       google::cloud::CompletionQueue& cq,
@@ -86,20 +93,24 @@ class GoldenThingAdminStub {
       google::test::admin::database::v1::CreateBackupRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::Backup> GetBackup(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::GetBackupRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::test::admin::database::v1::GetBackupRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::Backup> UpdateBackup(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::UpdateBackupRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::test::admin::database::v1::UpdateBackupRequest const& request) = 0;
 
   virtual Status DeleteBackup(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::DeleteBackupRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::test::admin::database::v1::DeleteBackupRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::ListBackupsResponse> ListBackups(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::ListBackupsRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::test::admin::database::v1::ListBackupsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatabase(
       google::cloud::CompletionQueue& cq,
@@ -108,12 +119,14 @@ class GoldenThingAdminStub {
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> ListDatabaseOperations(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse> ListBackupOperations(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::ListBackupOperationsRequest const& request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::test::admin::database::v1::ListBackupOperationsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncLongRunningWithoutRouting(
       google::cloud::CompletionQueue& cq,
@@ -156,6 +169,7 @@ class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
 
   StatusOr<google::test::admin::database::v1::ListDatabasesResponse> ListDatabases(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::ListDatabasesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
@@ -166,6 +180,7 @@ class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
 
   StatusOr<google::test::admin::database::v1::Database> GetDatabase(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::GetDatabaseRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabaseDdl(
@@ -176,22 +191,27 @@ class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
 
   Status DropDatabase(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::DropDatabaseRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse> GetDatabaseDdl(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::GetDatabaseDdlRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       grpc::ClientContext& context,
+      Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
@@ -202,18 +222,22 @@ class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
 
   StatusOr<google::test::admin::database::v1::Backup> GetBackup(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::GetBackupRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::Backup> UpdateBackup(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::UpdateBackupRequest const& request) override;
 
   Status DeleteBackup(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::DeleteBackupRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::ListBackupsResponse> ListBackups(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::ListBackupsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatabase(
@@ -224,10 +248,12 @@ class DefaultGoldenThingAdminStub : public GoldenThingAdminStub {
 
   StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> ListDatabaseOperations(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse> ListBackupOperations(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::ListBackupOperationsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncLongRunningWithoutRouting(
