@@ -325,7 +325,7 @@ next 24 hours.
 ## 8. \[optional\] Push the release to Conan
 
 The documentation has moved to the
-[How-To Guide: Update Conan Package](/release/howto-update-conan.md).
+[How-To Guide: Update Conan Package](/release/howto-update-conan-package.md).
 
 # Creating a patch release of google-cloud-cpp on an existing release branch
 
