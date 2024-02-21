@@ -102,19 +102,20 @@ void CreateSubscription(
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
-    // [END pubsub_create_pull_subscription]
-  }(std::move(client), argv.at(0), argv.at(1), argv.at(2));
+  }
+  // [END pubsub_create_pull_subscription]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void CreateBigQuerySubscription(
     google::cloud::pubsub_admin::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
+  // [START pubsub_create_bigquery_subscription]
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::SubscriptionAdminClient client,
      std::string const& project_id, std::string const& topic_id,
      std::string const& subscription_id, std::string const& table_id) {
-    // [START pubsub_create_bigquery_subscription]
     google::pubsub::v1::Subscription request;
     request.set_name(
         pubsub::Subscription(project_id, subscription_id).FullName());
@@ -131,19 +132,20 @@ void CreateBigQuerySubscription(
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
-    // [END pubsub_create_bigquery_subscription]
-  }(std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+  }
+  // [END pubsub_create_bigquery_subscription]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
 void CreateCloudStorageSubscription(
     google::cloud::pubsub_admin::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
+  // [START pubsub_create_cloud_storage_subscription]
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::SubscriptionAdminClient client,
      std::string const& project_id, std::string const& topic_id,
      std::string const& subscription_id, std::string const& bucket) {
-    // [START pubsub_create_cloud_storage_subscription]
     google::pubsub::v1::Subscription request;
     request.set_name(
         pubsub::Subscription(project_id, subscription_id).FullName());
@@ -160,8 +162,9 @@ void CreateCloudStorageSubscription(
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
-    // [END pubsub_create_cloud_storage_subscription]
-  }(std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+  }
+  // [END pubsub_create_cloud_storage_subscription]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
 void CreateDeadLetterSubscription(
@@ -198,9 +201,10 @@ void CreateDeadLetterSubscription(
 
     std::cout << "After " << sub->dead_letter_policy().max_delivery_attempts()
               << " delivery attempts.\n";
-    // [END pubsub_dead_letter_create_subscription]
-  }(std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
-    std::stoi(argv.at(4)));
+  }
+  // [END pubsub_dead_letter_create_subscription]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
+   std::stoi(argv.at(4)));
 }
 
 void CreateSubscriptionWithExactlyOnceDelivery(
@@ -234,12 +238,12 @@ void CreateSubscriptionWithExactlyOnceDelivery(
 void CreateFilteredSubscription(
     google::cloud::pubsub_admin::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
+  // [START pubsub_create_subscription_with_filter]
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::SubscriptionAdminClient client,
      std::string const& project_id, std::string topic_id,
      std::string subscription_id) {
-    // [START pubsub_create_subscription_with_filter]
     google::pubsub::v1::Subscription request;
     request.set_name(
         pubsub::Subscription(project_id, std::move(subscription_id))
@@ -256,8 +260,9 @@ void CreateFilteredSubscription(
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
-    // [END pubsub_create_subscription_with_filter]
-  }(std::move(client), argv.at(0), argv.at(1), argv.at(2));
+  }
+  // [END pubsub_create_subscription_with_filter]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void CreateOrderingSubscription(
