@@ -15,63 +15,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_WELL_KNOWN_PARAMETERS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_WELL_KNOWN_PARAMETERS_H
 
+#include "google/cloud/storage/internal/well_known_parameters_impl.h"
 #include "google/cloud/storage/version.h"
-#include "google/cloud/internal/ios_flags_saver.h"
 #include "google/cloud/optional.h"
-#include "absl/types/optional.h"
 #include <cstdint>
-#include <iomanip>
 #include <string>
 
 namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
-/**
- * Defines well-known request headers using the CRTP.
- *
- * @tparam P the type we will use to represent the query parameter.
- * @tparam T the C++ type of the query parameter
- */
-template <typename P, typename T>
-class WellKnownParameter {
- public:
-  WellKnownParameter() = default;
-  explicit WellKnownParameter(T&& value) : value_(std::forward<T>(value)) {}
-  explicit WellKnownParameter(T const& value) : value_(value) {}
-
-  char const* parameter_name() const { return P::well_known_parameter_name(); }
-  bool has_value() const { return value_.has_value(); }
-  T const& value() const { return value_.value(); }
-  template <typename U>
-  T value_or(U&& default_val) {
-    return value_.value_or(std::forward<U>(default_val));
-  }
-
- private:
-  absl::optional<T> value_;
-};
-
-template <typename P, typename T>
-std::ostream& operator<<(std::ostream& os,
-                         WellKnownParameter<P, T> const& rhs) {
-  if (rhs.has_value()) {
-    return os << rhs.parameter_name() << "=" << rhs.value();
-  }
-  return os << rhs.parameter_name() << "=<not set>";
-}
-
-template <typename P>
-std::ostream& operator<<(std::ostream& os,
-                         WellKnownParameter<P, bool> const& rhs) {
-  if (rhs.has_value()) {
-    google::cloud::internal::IosFlagsSaver saver(os);
-    return os << rhs.parameter_name() << "=" << std::boolalpha << rhs.value();
-  }
-  return os << rhs.parameter_name() << "=<not set>";
-}
-}  // namespace internal
 
 /**
  * Sets the contentEncoding option for object uploads.

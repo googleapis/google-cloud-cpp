@@ -181,6 +181,7 @@ add_library(
     internal/tuple_filter.h
     internal/unified_rest_credentials.cc
     internal/unified_rest_credentials.h
+    internal/well_known_parameters_impl.h
     lifecycle_rule.cc
     lifecycle_rule.h
     list_buckets_reader.cc
