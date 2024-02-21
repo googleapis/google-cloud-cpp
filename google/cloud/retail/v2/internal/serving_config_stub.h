@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <google/cloud/retail/v2/serving_config_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

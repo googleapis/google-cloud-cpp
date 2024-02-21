@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/cx/v3/security_settings.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

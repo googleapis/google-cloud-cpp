@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <google/privacy/dlp/v2/dlp.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

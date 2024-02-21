@@ -28,6 +28,7 @@
 #include <google/cloud/notebooks/v1/service.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

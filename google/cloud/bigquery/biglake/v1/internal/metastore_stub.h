@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <google/cloud/bigquery/biglake/v1/metastore.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -27,6 +27,7 @@
 #include <google/cloud/metastore/v1/metastore_federation.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

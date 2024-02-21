@@ -27,6 +27,7 @@
 #include <google/cloud/redis/v1/cloud_redis.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -27,6 +27,7 @@
 #include <google/cloud/networkservices/v1/network_services.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

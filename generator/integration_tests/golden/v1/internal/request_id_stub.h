@@ -27,6 +27,7 @@
 #include <generator/integration_tests/test_request_id.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <google/cloud/talent/v4/tenant_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

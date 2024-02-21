@@ -27,6 +27,7 @@
 #include <google/cloud/certificatemanager/v1/certificate_manager.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

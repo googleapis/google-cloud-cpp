@@ -27,6 +27,7 @@
 #include <google/cloud/videointelligence/v1/video_intelligence.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

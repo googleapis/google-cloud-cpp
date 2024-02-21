@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <google/cloud/dataproc/v1/autoscaling_policies.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

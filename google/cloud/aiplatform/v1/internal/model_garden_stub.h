@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <google/cloud/aiplatform/v1/model_garden_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

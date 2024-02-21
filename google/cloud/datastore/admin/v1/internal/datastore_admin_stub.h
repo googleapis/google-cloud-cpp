@@ -27,6 +27,7 @@
 #include <google/datastore/admin/v1/datastore_admin.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

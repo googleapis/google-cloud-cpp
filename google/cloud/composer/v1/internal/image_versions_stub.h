@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <google/cloud/orchestration/airflow/service/v1/image_versions.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/v2/knowledge_base.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

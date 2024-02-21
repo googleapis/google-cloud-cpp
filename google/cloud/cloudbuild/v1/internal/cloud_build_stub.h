@@ -27,6 +27,7 @@
 #include <google/devtools/cloudbuild/v1/cloudbuild.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
