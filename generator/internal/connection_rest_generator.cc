@@ -142,7 +142,7 @@ Status ConnectionRestGenerator::GenerateCc() {
        vars("tracing_connection_header_path"), "google/cloud/common_options.h",
        "google/cloud/internal/rest_options.h", "google/cloud/credentials.h",
        "google/cloud/internal/rest_background_threads_impl.h"});
-  CcSystemIncludes({"memory"});
+  CcSystemIncludes({"memory", "utility"});
 
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;

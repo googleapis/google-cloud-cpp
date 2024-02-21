@@ -160,7 +160,7 @@ Status LoggingDecoratorRestGenerator::GenerateCc() {
   CcLocalIncludes({vars("logging_rest_header_path"),
                    "google/cloud/internal/log_wrapper.h",
                    "google/cloud/status_or.h"});
-  CcSystemIncludes({"memory"});
+  CcSystemIncludes({"memory", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

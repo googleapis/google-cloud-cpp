@@ -124,7 +124,7 @@ Status TracingConnectionGenerator::GenerateCc() {
           ? "google/cloud/internal/traced_stream_range.h"
           : "",
   });
-  CcSystemIncludes({"memory"});
+  CcSystemIncludes({"memory", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

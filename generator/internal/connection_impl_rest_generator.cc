@@ -162,7 +162,7 @@ Status ConnectionImplRestGenerator::GenerateCc() {
        needs_async_retry_loop ? "google/cloud/internal/async_rest_retry_loop.h"
                               : "",
        "google/cloud/internal/rest_retry_loop.h"});
-  CcSystemIncludes({"memory"});
+  CcSystemIncludes({"memory", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
