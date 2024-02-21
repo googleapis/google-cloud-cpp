@@ -33,7 +33,7 @@ DataprocMetastoreFederationStub::~DataprocMetastoreFederationStub() = default;
 
 StatusOr<google::cloud::metastore::v1::ListFederationsResponse>
 DefaultDataprocMetastoreFederationStub::ListFederations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::metastore::v1::ListFederationsRequest const& request) {
   google::cloud::metastore::v1::ListFederationsResponse response;
   auto status = grpc_stub_->ListFederations(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultDataprocMetastoreFederationStub::ListFederations(
 
 StatusOr<google::cloud::metastore::v1::Federation>
 DefaultDataprocMetastoreFederationStub::GetFederation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::metastore::v1::GetFederationRequest const& request) {
   google::cloud::metastore::v1::Federation response;
   auto status = grpc_stub_->GetFederation(&context, request, &response);

@@ -40,11 +40,11 @@ class NotebookServiceStub {
 
   virtual StatusOr<google::cloud::notebooks::v2::ListInstancesResponse>
   ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::notebooks::v2::ListInstancesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::notebooks::v2::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::notebooks::v2::GetInstanceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
@@ -80,7 +80,7 @@ class NotebookServiceStub {
   virtual StatusOr<
       google::cloud::notebooks::v2::CheckInstanceUpgradabilityResponse>
   CheckInstanceUpgradability(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::notebooks::v2::CheckInstanceUpgradabilityRequest const&
           request) = 0;
 
@@ -123,12 +123,12 @@ class DefaultNotebookServiceStub : public NotebookServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::notebooks::v2::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::notebooks::v2::ListInstancesRequest const& request)
       override;
 
   StatusOr<google::cloud::notebooks::v2::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::notebooks::v2::GetInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
@@ -169,7 +169,7 @@ class DefaultNotebookServiceStub : public NotebookServiceStub {
 
   StatusOr<google::cloud::notebooks::v2::CheckInstanceUpgradabilityResponse>
   CheckInstanceUpgradability(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::notebooks::v2::CheckInstanceUpgradabilityRequest const&
           request) override;
 

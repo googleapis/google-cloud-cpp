@@ -66,10 +66,12 @@ SessionsConnectionImpl::DetectIntent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DetectIntent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
-                 request) { return stub_->DetectIntent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DetectIntent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
@@ -100,10 +102,12 @@ SessionsConnectionImpl::MatchIntent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->MatchIntent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::MatchIntentRequest const&
-                 request) { return stub_->MatchIntent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->MatchIntent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
@@ -113,10 +117,12 @@ SessionsConnectionImpl::FulfillIntent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FulfillIntent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&
-                 request) { return stub_->FulfillIntent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->FulfillIntent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
@@ -128,12 +134,12 @@ SessionsConnectionImpl::SubmitAnswerFeedback(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SubmitAnswerFeedback(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
               request) {
-        return stub_->SubmitAnswerFeedback(context, request);
+        return stub_->SubmitAnswerFeedback(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

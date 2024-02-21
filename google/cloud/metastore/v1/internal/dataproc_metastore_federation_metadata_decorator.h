@@ -42,12 +42,12 @@ class DataprocMetastoreFederationMetadata
       std::string api_client_header = "");
 
   StatusOr<google::cloud::metastore::v1::ListFederationsResponse>
-  ListFederations(grpc::ClientContext& context,
+  ListFederations(grpc::ClientContext& context, Options const& options,
                   google::cloud::metastore::v1::ListFederationsRequest const&
                       request) override;
 
   StatusOr<google::cloud::metastore::v1::Federation> GetFederation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::metastore::v1::GetFederationRequest const& request)
       override;
 

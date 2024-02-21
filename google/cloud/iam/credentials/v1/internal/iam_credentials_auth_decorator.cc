@@ -33,38 +33,38 @@ IAMCredentialsAuth::IAMCredentialsAuth(
 
 StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
 IAMCredentialsAuth::GenerateAccessToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateAccessToken(context, request);
+  return child_->GenerateAccessToken(context, options, request);
 }
 
 StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
 IAMCredentialsAuth::GenerateIdToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateIdToken(context, request);
+  return child_->GenerateIdToken(context, options, request);
 }
 
 StatusOr<google::iam::credentials::v1::SignBlobResponse>
 IAMCredentialsAuth::SignBlob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::credentials::v1::SignBlobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SignBlob(context, request);
+  return child_->SignBlob(context, options, request);
 }
 
 StatusOr<google::iam::credentials::v1::SignJwtResponse>
 IAMCredentialsAuth::SignJwt(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::credentials::v1::SignJwtRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SignJwt(context, request);
+  return child_->SignJwt(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

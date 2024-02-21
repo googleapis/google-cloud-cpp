@@ -33,26 +33,26 @@ EnvironmentsTracingStub::EnvironmentsTracingStub(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListEnvironmentsResponse>
 EnvironmentsTracingStub::ListEnvironments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Environments", "ListEnvironments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListEnvironments(context, request));
+                           child_->ListEnvironments(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Environment>
 EnvironmentsTracingStub::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Environments", "GetEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetEnvironment(context, request));
+                           child_->GetEnvironment(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -84,28 +84,29 @@ EnvironmentsTracingStub::AsyncUpdateEnvironment(
 }
 
 Status EnvironmentsTracingStub::DeleteEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Environments", "DeleteEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteEnvironment(context, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteEnvironment(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryResponse>
 EnvironmentsTracingStub::LookupEnvironmentHistory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Environments", "LookupEnvironmentHistory");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->LookupEnvironmentHistory(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->LookupEnvironmentHistory(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -124,7 +125,7 @@ EnvironmentsTracingStub::AsyncRunContinuousTest(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListContinuousTestResultsResponse>
 EnvironmentsTracingStub::ListContinuousTestResults(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest const&
         request) {
   auto span =
@@ -132,8 +133,9 @@ EnvironmentsTracingStub::ListContinuousTestResults(
                              "ListContinuousTestResults");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListContinuousTestResults(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListContinuousTestResults(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

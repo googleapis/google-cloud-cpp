@@ -55,31 +55,31 @@ ConversationDatasetsLogging::AsyncCreateConversationDataset(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
 ConversationDatasetsLogging::GetConversationDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
                  request) {
-        return child_->GetConversationDataset(context, request);
+        return child_->GetConversationDataset(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationDatasetsResponse>
 ConversationDatasetsLogging::ListConversationDatasets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListConversationDatasetsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::v2::ListConversationDatasetsRequest const&
               request) {
-        return child_->ListConversationDatasets(context, request);
+        return child_->ListConversationDatasets(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -48,13 +48,13 @@ class FeatureOnlineStoreAdminServiceTracingStub
 
   StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
   GetFeatureOnlineStore(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListFeatureOnlineStoresResponse>
   ListFeatureOnlineStores(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest const&
           request) override;
 
@@ -79,12 +79,12 @@ class FeatureOnlineStoreAdminServiceTracingStub
       override;
 
   StatusOr<google::cloud::aiplatform::v1::FeatureView> GetFeatureView(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetFeatureViewRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListFeatureViewsResponse>
-  ListFeatureViews(grpc::ClientContext& context,
+  ListFeatureViews(grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::ListFeatureViewsRequest const&
                        request) override;
 
@@ -101,18 +101,18 @@ class FeatureOnlineStoreAdminServiceTracingStub
       override;
 
   StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>
-  SyncFeatureView(grpc::ClientContext& context,
+  SyncFeatureView(grpc::ClientContext& context, Options const& options,
                   google::cloud::aiplatform::v1::SyncFeatureViewRequest const&
                       request) override;
 
   StatusOr<google::cloud::aiplatform::v1::FeatureViewSync> GetFeatureViewSync(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListFeatureViewSyncsResponse>
   ListFeatureViewSyncs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest const& request)
       override;
 

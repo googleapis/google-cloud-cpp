@@ -39,16 +39,16 @@ class FoldersStub {
   virtual ~FoldersStub() = 0;
 
   virtual StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcemanager::v3::GetFolderRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::resourcemanager::v3::ListFoldersResponse>
-  ListFolders(grpc::ClientContext& context,
+  ListFolders(grpc::ClientContext& context, Options const& options,
               google::cloud::resourcemanager::v3::ListFoldersRequest const&
                   request) = 0;
 
   virtual StatusOr<google::cloud::resourcemanager::v3::SearchFoldersResponse>
-  SearchFolders(grpc::ClientContext& context,
+  SearchFolders(grpc::ClientContext& context, Options const& options,
                 google::cloud::resourcemanager::v3::SearchFoldersRequest const&
                     request) = 0;
 
@@ -82,16 +82,16 @@ class FoldersStub {
           request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -116,17 +116,17 @@ class DefaultFoldersStub : public FoldersStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcemanager::v3::GetFolderRequest const& request)
       override;
 
   StatusOr<google::cloud::resourcemanager::v3::ListFoldersResponse> ListFolders(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcemanager::v3::ListFoldersRequest const& request)
       override;
 
   StatusOr<google::cloud::resourcemanager::v3::SearchFoldersResponse>
-  SearchFolders(grpc::ClientContext& context,
+  SearchFolders(grpc::ClientContext& context, Options const& options,
                 google::cloud::resourcemanager::v3::SearchFoldersRequest const&
                     request) override;
 
@@ -161,15 +161,15 @@ class DefaultFoldersStub : public FoldersStub {
       override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

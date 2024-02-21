@@ -40,23 +40,23 @@ class ProductServiceAuth : public ProductServiceStub {
       std::shared_ptr<ProductServiceStub> child);
 
   StatusOr<google::cloud::retail::v2::Product> CreateProduct(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::CreateProductRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Product> GetProduct(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::GetProductRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ListProductsResponse> ListProducts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::ListProductsRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Product> UpdateProduct(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::UpdateProductRequest const& request) override;
 
   Status DeleteProduct(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::DeleteProductRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportProducts(

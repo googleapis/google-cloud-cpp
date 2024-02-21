@@ -50,7 +50,7 @@ ConsumerProcurementServiceTracingStub::AsyncPlaceOrder(
 
 StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>
 ConsumerProcurementServiceTracingStub::GetOrder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::commerce::consumer::procurement::v1::GetOrderRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -59,12 +59,13 @@ ConsumerProcurementServiceTracingStub::GetOrder(
       "GetOrder");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetOrder(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetOrder(context, options, request));
 }
 
 StatusOr<google::cloud::commerce::consumer::procurement::v1::ListOrdersResponse>
 ConsumerProcurementServiceTracingStub::ListOrders(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::commerce::consumer::procurement::v1::ListOrdersRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -74,7 +75,7 @@ ConsumerProcurementServiceTracingStub::ListOrders(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListOrders(context, request));
+                           child_->ListOrders(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

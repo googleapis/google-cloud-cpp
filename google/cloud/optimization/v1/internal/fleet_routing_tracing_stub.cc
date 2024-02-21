@@ -33,14 +33,14 @@ FleetRoutingTracingStub::FleetRoutingTracingStub(
 
 StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
 FleetRoutingTracingStub::OptimizeTours(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::optimization::v1::OptimizeToursRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.optimization.v1.FleetRouting", "OptimizeTours");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->OptimizeTours(context, request));
+                           child_->OptimizeTours(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

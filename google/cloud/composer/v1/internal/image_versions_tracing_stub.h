@@ -39,7 +39,7 @@ class ImageVersionsTracingStub : public ImageVersionsStub {
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                ListImageVersionsResponse>
-  ListImageVersions(grpc::ClientContext& context,
+  ListImageVersions(grpc::ClientContext& context, Options const& options,
                     google::cloud::orchestration::airflow::service::v1::
                         ListImageVersionsRequest const& request) override;
 

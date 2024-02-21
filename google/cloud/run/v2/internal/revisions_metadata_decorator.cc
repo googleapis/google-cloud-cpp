@@ -45,7 +45,7 @@ RevisionsMetadata::RevisionsMetadata(
               : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::run::v2::Revision> RevisionsMetadata::GetRevision(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetRevisionRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -64,17 +64,16 @@ StatusOr<google::cloud::run::v2::Revision> RevisionsMetadata::GetRevision(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->GetRevision(context, request);
+  return child_->GetRevision(context, options, request);
 }
 
 StatusOr<google::cloud::run::v2::ListRevisionsResponse>
 RevisionsMetadata::ListRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::ListRevisionsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -93,12 +92,11 @@ RevisionsMetadata::ListRevisions(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->ListRevisions(context, request);
+  return child_->ListRevisions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

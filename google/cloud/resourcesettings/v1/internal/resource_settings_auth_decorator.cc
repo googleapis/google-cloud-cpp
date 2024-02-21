@@ -33,29 +33,29 @@ ResourceSettingsServiceAuth::ResourceSettingsServiceAuth(
 
 StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
 ResourceSettingsServiceAuth::ListSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcesettings::v1::ListSettingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSettings(context, request);
+  return child_->ListSettings(context, options, request);
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceAuth::GetSetting(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcesettings::v1::GetSettingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetSetting(context, request);
+  return child_->GetSetting(context, options, request);
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceAuth::UpdateSetting(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateSetting(context, request);
+  return child_->UpdateSetting(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

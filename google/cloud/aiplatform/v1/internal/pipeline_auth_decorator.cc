@@ -33,31 +33,31 @@ PipelineServiceAuth::PipelineServiceAuth(
 
 StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
 PipelineServiceAuth::CreateTrainingPipeline(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateTrainingPipeline(context, request);
+  return child_->CreateTrainingPipeline(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
 PipelineServiceAuth::GetTrainingPipeline(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTrainingPipeline(context, request);
+  return child_->GetTrainingPipeline(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListTrainingPipelinesResponse>
 PipelineServiceAuth::ListTrainingPipelines(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListTrainingPipelinesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTrainingPipelines(context, request);
+  return child_->ListTrainingPipelines(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -81,39 +81,39 @@ PipelineServiceAuth::AsyncDeleteTrainingPipeline(
 }
 
 Status PipelineServiceAuth::CancelTrainingPipeline(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CancelTrainingPipeline(context, request);
+  return child_->CancelTrainingPipeline(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::PipelineJob>
 PipelineServiceAuth::CreatePipelineJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreatePipelineJob(context, request);
+  return child_->CreatePipelineJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::PipelineJob>
 PipelineServiceAuth::GetPipelineJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetPipelineJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetPipelineJob(context, request);
+  return child_->GetPipelineJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListPipelineJobsResponse>
 PipelineServiceAuth::ListPipelineJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListPipelineJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListPipelineJobs(context, request);
+  return child_->ListPipelineJobs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -136,11 +136,11 @@ PipelineServiceAuth::AsyncDeletePipelineJob(
 }
 
 Status PipelineServiceAuth::CancelPipelineJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CancelPipelineJob(context, request);
+  return child_->CancelPipelineJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

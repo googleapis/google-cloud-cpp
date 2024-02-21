@@ -33,22 +33,22 @@ CertificateManagerAuth::CertificateManagerAuth(
 
 StatusOr<google::cloud::certificatemanager::v1::ListCertificatesResponse>
 CertificateManagerAuth::ListCertificates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::certificatemanager::v1::ListCertificatesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCertificates(context, request);
+  return child_->ListCertificates(context, options, request);
 }
 
 StatusOr<google::cloud::certificatemanager::v1::Certificate>
 CertificateManagerAuth::GetCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::certificatemanager::v1::GetCertificateRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCertificate(context, request);
+  return child_->GetCertificate(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -113,22 +113,22 @@ CertificateManagerAuth::AsyncDeleteCertificate(
 
 StatusOr<google::cloud::certificatemanager::v1::ListCertificateMapsResponse>
 CertificateManagerAuth::ListCertificateMaps(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::certificatemanager::v1::ListCertificateMapsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCertificateMaps(context, request);
+  return child_->ListCertificateMaps(context, options, request);
 }
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateMap>
 CertificateManagerAuth::GetCertificateMap(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::certificatemanager::v1::GetCertificateMapRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCertificateMap(context, request);
+  return child_->GetCertificateMap(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -194,22 +194,22 @@ CertificateManagerAuth::AsyncDeleteCertificateMap(
 StatusOr<
     google::cloud::certificatemanager::v1::ListCertificateMapEntriesResponse>
 CertificateManagerAuth::ListCertificateMapEntries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::certificatemanager::v1::
         ListCertificateMapEntriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCertificateMapEntries(context, request);
+  return child_->ListCertificateMapEntries(context, options, request);
 }
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>
 CertificateManagerAuth::GetCertificateMapEntry(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::certificatemanager::v1::GetCertificateMapEntryRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCertificateMapEntry(context, request);
+  return child_->GetCertificateMapEntry(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -274,22 +274,22 @@ CertificateManagerAuth::AsyncDeleteCertificateMapEntry(
 
 StatusOr<google::cloud::certificatemanager::v1::ListDnsAuthorizationsResponse>
 CertificateManagerAuth::ListDnsAuthorizations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::certificatemanager::v1::ListDnsAuthorizationsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDnsAuthorizations(context, request);
+  return child_->ListDnsAuthorizations(context, options, request);
 }
 
 StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>
 CertificateManagerAuth::GetDnsAuthorization(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDnsAuthorization(context, request);
+  return child_->GetDnsAuthorization(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -355,22 +355,22 @@ CertificateManagerAuth::AsyncDeleteDnsAuthorization(
 StatusOr<google::cloud::certificatemanager::v1::
              ListCertificateIssuanceConfigsResponse>
 CertificateManagerAuth::ListCertificateIssuanceConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::certificatemanager::v1::
         ListCertificateIssuanceConfigsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCertificateIssuanceConfigs(context, request);
+  return child_->ListCertificateIssuanceConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
 CertificateManagerAuth::GetCertificateIssuanceConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::certificatemanager::v1::
         GetCertificateIssuanceConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCertificateIssuanceConfig(context, request);
+  return child_->GetCertificateIssuanceConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

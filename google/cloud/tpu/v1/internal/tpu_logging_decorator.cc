@@ -36,25 +36,25 @@ TpuLogging::TpuLogging(std::shared_ptr<TpuStub> child,
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::cloud::tpu::v1::ListNodesResponse> TpuLogging::ListNodes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v1::ListNodesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::tpu::v1::ListNodesRequest const& request) {
-        return child_->ListNodes(context, request);
+        return child_->ListNodes(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::tpu::v1::Node> TpuLogging::GetNode(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v1::GetNodeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::tpu::v1::GetNodeRequest const& request) {
-        return child_->GetNode(context, request);
+        return child_->GetNode(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncCreateNode(
@@ -132,53 +132,53 @@ future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncStartNode(
 
 StatusOr<google::cloud::tpu::v1::ListTensorFlowVersionsResponse>
 TpuLogging::ListTensorFlowVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v1::ListTensorFlowVersionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::tpu::v1::ListTensorFlowVersionsRequest const&
                  request) {
-        return child_->ListTensorFlowVersions(context, request);
+        return child_->ListTensorFlowVersions(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::tpu::v1::TensorFlowVersion>
 TpuLogging::GetTensorFlowVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request) {
-        return child_->GetTensorFlowVersion(context, request);
+        return child_->GetTensorFlowVersion(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::tpu::v1::ListAcceleratorTypesResponse>
 TpuLogging::ListAcceleratorTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v1::ListAcceleratorTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::tpu::v1::ListAcceleratorTypesRequest const& request) {
-        return child_->ListAcceleratorTypes(context, request);
+        return child_->ListAcceleratorTypes(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::tpu::v1::AcceleratorType>
 TpuLogging::GetAcceleratorType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request) {
-        return child_->GetAcceleratorType(context, request);
+        return child_->GetAcceleratorType(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>> TpuLogging::AsyncGetOperation(

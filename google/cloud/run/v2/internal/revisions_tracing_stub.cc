@@ -31,26 +31,26 @@ RevisionsTracingStub::RevisionsTracingStub(std::shared_ptr<RevisionsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::run::v2::Revision> RevisionsTracingStub::GetRevision(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetRevisionRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "GetRevision");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetRevision(context, request));
+                           child_->GetRevision(context, options, request));
 }
 
 StatusOr<google::cloud::run::v2::ListRevisionsResponse>
 RevisionsTracingStub::ListRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::ListRevisionsRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.run.v2.Revisions", "ListRevisions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListRevisions(context, request));
+                           child_->ListRevisions(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

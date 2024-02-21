@@ -39,36 +39,36 @@ class LanguageServiceTracingStub : public LanguageServiceStub {
       std::shared_ptr<LanguageServiceStub> child);
 
   StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
-  AnalyzeSentiment(grpc::ClientContext& context,
+  AnalyzeSentiment(grpc::ClientContext& context, Options const& options,
                    google::cloud::language::v1::AnalyzeSentimentRequest const&
                        request) override;
 
   StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
-  AnalyzeEntities(grpc::ClientContext& context,
+  AnalyzeEntities(grpc::ClientContext& context, Options const& options,
                   google::cloud::language::v1::AnalyzeEntitiesRequest const&
                       request) override;
 
   StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
   AnalyzeEntitySentiment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request)
       override;
 
   StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse> AnalyzeSyntax(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::language::v1::AnalyzeSyntaxRequest const& request)
       override;
 
   StatusOr<google::cloud::language::v1::ClassifyTextResponse> ClassifyText(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::language::v1::ClassifyTextRequest const& request) override;
 
   StatusOr<google::cloud::language::v1::ModerateTextResponse> ModerateText(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::language::v1::ModerateTextRequest const& request) override;
 
   StatusOr<google::cloud::language::v1::AnnotateTextResponse> AnnotateText(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::language::v1::AnnotateTextRequest const& request) override;
 
  private:

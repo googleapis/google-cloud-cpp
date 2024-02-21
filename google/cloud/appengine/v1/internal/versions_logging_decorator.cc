@@ -37,25 +37,25 @@ VersionsLogging::VersionsLogging(std::shared_ptr<VersionsStub> child,
 
 StatusOr<google::appengine::v1::ListVersionsResponse>
 VersionsLogging::ListVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListVersionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::ListVersionsRequest const& request) {
-        return child_->ListVersions(context, request);
+        return child_->ListVersions(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::appengine::v1::Version> VersionsLogging::GetVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::GetVersionRequest const& request) {
-        return child_->GetVersion(context, request);
+        return child_->GetVersion(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

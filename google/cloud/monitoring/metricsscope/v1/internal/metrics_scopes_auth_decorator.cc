@@ -33,23 +33,23 @@ MetricsScopesAuth::MetricsScopesAuth(
 
 StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
 MetricsScopesAuth::GetMetricsScope(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetMetricsScope(context, request);
+  return child_->GetMetricsScope(context, options, request);
 }
 
 StatusOr<google::monitoring::metricsscope::v1::
              ListMetricsScopesByMonitoredProjectResponse>
 MetricsScopesAuth::ListMetricsScopesByMonitoredProject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::metricsscope::v1::
         ListMetricsScopesByMonitoredProjectRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListMetricsScopesByMonitoredProject(context, request);
+  return child_->ListMetricsScopesByMonitoredProject(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

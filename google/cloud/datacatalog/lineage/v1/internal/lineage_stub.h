@@ -41,31 +41,31 @@ class LineageStub {
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::
                        ProcessOpenLineageRunEventResponse>
   ProcessOpenLineageRunEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::
           ProcessOpenLineageRunEventRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::Process>
   CreateProcess(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::Process>
   UpdateProcess(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::Process> GetProcess(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::GetProcessRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::datacatalog::lineage::v1::ListProcessesResponse>
   ListProcesses(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::ListProcessesRequest const&
           request) = 0;
 
@@ -76,22 +76,22 @@ class LineageStub {
           request) = 0;
 
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::Run> CreateRun(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::CreateRunRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::Run> UpdateRun(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::UpdateRunRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::Run> GetRun(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::GetRunRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::ListRunsResponse>
-  ListRuns(grpc::ClientContext& context,
+  ListRuns(grpc::ClientContext& context, Options const& options,
            google::cloud::datacatalog::lineage::v1::ListRunsRequest const&
                request) = 0;
 
@@ -103,37 +103,37 @@ class LineageStub {
 
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
   CreateLineageEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
   GetLineageEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::datacatalog::lineage::v1::ListLineageEventsResponse>
   ListLineageEvents(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest const&
           request) = 0;
 
   virtual Status DeleteLineageEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::datacatalog::lineage::v1::SearchLinksResponse>
-  SearchLinks(grpc::ClientContext& context,
+  SearchLinks(grpc::ClientContext& context, Options const& options,
               google::cloud::datacatalog::lineage::v1::SearchLinksRequest const&
                   request) = 0;
 
   virtual StatusOr<
       google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesResponse>
   BatchSearchLinkProcesses(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::
           BatchSearchLinkProcessesRequest const& request) = 0;
 
@@ -161,28 +161,28 @@ class DefaultLineageStub : public LineageStub {
   StatusOr<google::cloud::datacatalog::lineage::v1::
                ProcessOpenLineageRunEventResponse>
   ProcessOpenLineageRunEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::
           ProcessOpenLineageRunEventRequest const& request) override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> CreateProcess(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
           request) override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> UpdateProcess(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
           request) override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::Process> GetProcess(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::ListProcessesResponse>
   ListProcesses(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::ListProcessesRequest const&
           request) override;
 
@@ -193,22 +193,22 @@ class DefaultLineageStub : public LineageStub {
           request) override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::Run> CreateRun(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::Run> UpdateRun(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::Run> GetRun(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::GetRunRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::ListRunsResponse> ListRuns(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::ListRunsRequest const& request)
       override;
 
@@ -220,36 +220,36 @@ class DefaultLineageStub : public LineageStub {
 
   StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
   CreateLineageEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&
           request) override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
   GetLineageEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&
           request) override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::ListLineageEventsResponse>
   ListLineageEvents(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest const&
           request) override;
 
   Status DeleteLineageEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const&
           request) override;
 
   StatusOr<google::cloud::datacatalog::lineage::v1::SearchLinksResponse>
-  SearchLinks(grpc::ClientContext& context,
+  SearchLinks(grpc::ClientContext& context, Options const& options,
               google::cloud::datacatalog::lineage::v1::SearchLinksRequest const&
                   request) override;
 
   StatusOr<
       google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesResponse>
   BatchSearchLinkProcesses(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::lineage::v1::
           BatchSearchLinkProcessesRequest const& request) override;
 

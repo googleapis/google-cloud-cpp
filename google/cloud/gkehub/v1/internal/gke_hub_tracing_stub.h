@@ -38,20 +38,20 @@ class GkeHubTracingStub : public GkeHubStub {
   explicit GkeHubTracingStub(std::shared_ptr<GkeHubStub> child);
 
   StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse> ListMemberships(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::ListMembershipsRequest const& request)
       override;
 
   StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse> ListFeatures(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::ListFeaturesRequest const& request) override;
 
   StatusOr<google::cloud::gkehub::v1::Membership> GetMembership(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::GetMembershipRequest const& request) override;
 
   StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::GetFeatureRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMembership(
@@ -89,7 +89,7 @@ class GkeHubTracingStub : public GkeHubStub {
 
   StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
   GenerateConnectManifest(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request)
       override;
 

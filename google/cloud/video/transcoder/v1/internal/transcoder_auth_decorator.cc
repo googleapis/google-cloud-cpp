@@ -33,76 +33,76 @@ TranscoderServiceAuth::TranscoderServiceAuth(
 
 StatusOr<google::cloud::video::transcoder::v1::Job>
 TranscoderServiceAuth::CreateJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::transcoder::v1::CreateJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateJob(context, request);
+  return child_->CreateJob(context, options, request);
 }
 
 StatusOr<google::cloud::video::transcoder::v1::ListJobsResponse>
 TranscoderServiceAuth::ListJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::transcoder::v1::ListJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListJobs(context, request);
+  return child_->ListJobs(context, options, request);
 }
 
 StatusOr<google::cloud::video::transcoder::v1::Job>
 TranscoderServiceAuth::GetJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::transcoder::v1::GetJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetJob(context, request);
+  return child_->GetJob(context, options, request);
 }
 
 Status TranscoderServiceAuth::DeleteJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::transcoder::v1::DeleteJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteJob(context, request);
+  return child_->DeleteJob(context, options, request);
 }
 
 StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
 TranscoderServiceAuth::CreateJobTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateJobTemplate(context, request);
+  return child_->CreateJobTemplate(context, options, request);
 }
 
 StatusOr<google::cloud::video::transcoder::v1::ListJobTemplatesResponse>
 TranscoderServiceAuth::ListJobTemplates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::transcoder::v1::ListJobTemplatesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListJobTemplates(context, request);
+  return child_->ListJobTemplates(context, options, request);
 }
 
 StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
 TranscoderServiceAuth::GetJobTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetJobTemplate(context, request);
+  return child_->GetJobTemplate(context, options, request);
 }
 
 Status TranscoderServiceAuth::DeleteJobTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteJobTemplate(context, request);
+  return child_->DeleteJobTemplate(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

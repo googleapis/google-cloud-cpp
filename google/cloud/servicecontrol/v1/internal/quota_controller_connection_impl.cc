@@ -68,10 +68,12 @@ QuotaControllerConnectionImpl::AllocateQuota(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AllocateQuota(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::servicecontrol::v1::AllocateQuotaRequest const&
-                 request) { return stub_->AllocateQuota(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->AllocateQuota(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

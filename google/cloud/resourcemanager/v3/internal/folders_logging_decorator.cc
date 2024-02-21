@@ -36,37 +36,41 @@ FoldersLogging::FoldersLogging(std::shared_ptr<FoldersStub> child,
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::cloud::resourcemanager::v3::Folder> FoldersLogging::GetFolder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::GetFolderRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::resourcemanager::v3::GetFolderRequest const& request) {
-        return child_->GetFolder(context, request);
+        return child_->GetFolder(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::ListFoldersResponse>
 FoldersLogging::ListFolders(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListFoldersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::resourcemanager::v3::ListFoldersRequest const&
-                 request) { return child_->ListFolders(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListFolders(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::SearchFoldersResponse>
 FoldersLogging::SearchFolders(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::SearchFoldersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::resourcemanager::v3::SearchFoldersRequest const&
-                 request) { return child_->SearchFolders(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->SearchFolders(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -155,37 +159,37 @@ FoldersLogging::AsyncUndeleteFolder(
 }
 
 StatusOr<google::iam::v1::Policy> FoldersLogging::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
-        return child_->GetIamPolicy(context, request);
+        return child_->GetIamPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> FoldersLogging::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
-        return child_->SetIamPolicy(context, request);
+        return child_->SetIamPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 FoldersLogging::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
-        return child_->TestIamPermissions(context, request);
+        return child_->TestIamPermissions(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

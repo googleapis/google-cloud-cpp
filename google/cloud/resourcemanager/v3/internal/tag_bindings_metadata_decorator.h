@@ -41,7 +41,7 @@ class TagBindingsMetadata : public TagBindingsStub {
 
   StatusOr<google::cloud::resourcemanager::v3::ListTagBindingsResponse>
   ListTagBindings(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcemanager::v3::ListTagBindingsRequest const& request)
       override;
 
@@ -59,7 +59,7 @@ class TagBindingsMetadata : public TagBindingsStub {
 
   StatusOr<google::cloud::resourcemanager::v3::ListEffectiveTagsResponse>
   ListEffectiveTags(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const&
           request) override;
 

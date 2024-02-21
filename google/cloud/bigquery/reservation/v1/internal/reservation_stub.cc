@@ -32,7 +32,7 @@ ReservationServiceStub::~ReservationServiceStub() = default;
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
 DefaultReservationServiceStub::CreateReservation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::CreateReservationRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::Reservation response;
@@ -45,7 +45,7 @@ DefaultReservationServiceStub::CreateReservation(
 
 StatusOr<google::cloud::bigquery::reservation::v1::ListReservationsResponse>
 DefaultReservationServiceStub::ListReservations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::ListReservationsRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::ListReservationsResponse response;
@@ -58,7 +58,7 @@ DefaultReservationServiceStub::ListReservations(
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
 DefaultReservationServiceStub::GetReservation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::GetReservationRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::Reservation response;
@@ -70,7 +70,7 @@ DefaultReservationServiceStub::GetReservation(
 }
 
 Status DefaultReservationServiceStub::DeleteReservation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::DeleteReservationRequest const&
         request) {
   google::protobuf::Empty response;
@@ -83,7 +83,7 @@ Status DefaultReservationServiceStub::DeleteReservation(
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
 DefaultReservationServiceStub::UpdateReservation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::Reservation response;
@@ -96,7 +96,7 @@ DefaultReservationServiceStub::UpdateReservation(
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 DefaultReservationServiceStub::CreateCapacityCommitment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::
         CreateCapacityCommitmentRequest const& request) {
   google::cloud::bigquery::reservation::v1::CapacityCommitment response;
@@ -111,7 +111,7 @@ DefaultReservationServiceStub::CreateCapacityCommitment(
 StatusOr<
     google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsResponse>
 DefaultReservationServiceStub::ListCapacityCommitments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::
         ListCapacityCommitmentsRequest const& request) {
   google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsResponse
@@ -126,7 +126,7 @@ DefaultReservationServiceStub::ListCapacityCommitments(
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 DefaultReservationServiceStub::GetCapacityCommitment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::
         GetCapacityCommitmentRequest const& request) {
   google::cloud::bigquery::reservation::v1::CapacityCommitment response;
@@ -138,7 +138,7 @@ DefaultReservationServiceStub::GetCapacityCommitment(
 }
 
 Status DefaultReservationServiceStub::DeleteCapacityCommitment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::
         DeleteCapacityCommitmentRequest const& request) {
   google::protobuf::Empty response;
@@ -152,7 +152,7 @@ Status DefaultReservationServiceStub::DeleteCapacityCommitment(
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 DefaultReservationServiceStub::UpdateCapacityCommitment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::
         UpdateCapacityCommitmentRequest const& request) {
   google::cloud::bigquery::reservation::v1::CapacityCommitment response;
@@ -167,7 +167,7 @@ DefaultReservationServiceStub::UpdateCapacityCommitment(
 StatusOr<
     google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
 DefaultReservationServiceStub::SplitCapacityCommitment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::
         SplitCapacityCommitmentRequest const& request) {
   google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse
@@ -182,7 +182,7 @@ DefaultReservationServiceStub::SplitCapacityCommitment(
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 DefaultReservationServiceStub::MergeCapacityCommitments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::
         MergeCapacityCommitmentsRequest const& request) {
   google::cloud::bigquery::reservation::v1::CapacityCommitment response;
@@ -196,7 +196,7 @@ DefaultReservationServiceStub::MergeCapacityCommitments(
 
 StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
 DefaultReservationServiceStub::CreateAssignment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::Assignment response;
@@ -209,7 +209,7 @@ DefaultReservationServiceStub::CreateAssignment(
 
 StatusOr<google::cloud::bigquery::reservation::v1::ListAssignmentsResponse>
 DefaultReservationServiceStub::ListAssignments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::ListAssignmentsRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::ListAssignmentsResponse response;
@@ -221,7 +221,7 @@ DefaultReservationServiceStub::ListAssignments(
 }
 
 Status DefaultReservationServiceStub::DeleteAssignment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const&
         request) {
   google::protobuf::Empty response;
@@ -234,7 +234,7 @@ Status DefaultReservationServiceStub::DeleteAssignment(
 
 StatusOr<google::cloud::bigquery::reservation::v1::SearchAssignmentsResponse>
 DefaultReservationServiceStub::SearchAssignments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::SearchAssignmentsResponse response;
@@ -247,7 +247,7 @@ DefaultReservationServiceStub::SearchAssignments(
 
 StatusOr<google::cloud::bigquery::reservation::v1::SearchAllAssignmentsResponse>
 DefaultReservationServiceStub::SearchAllAssignments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::SearchAllAssignmentsResponse
@@ -261,7 +261,7 @@ DefaultReservationServiceStub::SearchAllAssignments(
 
 StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
 DefaultReservationServiceStub::MoveAssignment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::Assignment response;
@@ -274,7 +274,7 @@ DefaultReservationServiceStub::MoveAssignment(
 
 StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
 DefaultReservationServiceStub::UpdateAssignment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::Assignment response;
@@ -287,7 +287,7 @@ DefaultReservationServiceStub::UpdateAssignment(
 
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
 DefaultReservationServiceStub::GetBiReservation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::BiReservation response;
@@ -300,7 +300,7 @@ DefaultReservationServiceStub::GetBiReservation(
 
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
 DefaultReservationServiceStub::UpdateBiReservation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::reservation::v1::UpdateBiReservationRequest const&
         request) {
   google::cloud::bigquery::reservation::v1::BiReservation response;

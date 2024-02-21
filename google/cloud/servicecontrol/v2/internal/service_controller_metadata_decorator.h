@@ -40,11 +40,11 @@ class ServiceControllerMetadata : public ServiceControllerStub {
       std::string api_client_header = "");
 
   StatusOr<google::api::servicecontrol::v2::CheckResponse> Check(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::servicecontrol::v2::CheckRequest const& request) override;
 
   StatusOr<google::api::servicecontrol::v2::ReportResponse> Report(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::servicecontrol::v2::ReportRequest const& request) override;
 
  private:

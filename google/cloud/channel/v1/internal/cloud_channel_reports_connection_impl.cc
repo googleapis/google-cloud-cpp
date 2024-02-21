@@ -120,21 +120,22 @@ CloudChannelReportsServiceConnectionImpl::FetchReportResults(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::channel::v1::Row>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<channel_v1::CloudChannelReportsServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::channel::v1::FetchReportResultsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::channel::v1::FetchReportResultsRequest const&
                        request) {
-              return stub->FetchReportResults(context, request);
+              return stub->FetchReportResults(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::channel::v1::FetchReportResultsResponse r) {
         std::vector<google::cloud::channel::v1::Row> result(r.rows().size());
@@ -153,21 +154,22 @@ CloudChannelReportsServiceConnectionImpl::ListReports(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::channel::v1::Report>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<channel_v1::CloudChannelReportsServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::channel::v1::ListReportsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::channel::v1::ListReportsRequest const& request) {
-              return stub->ListReports(context, request);
+              return stub->ListReports(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::channel::v1::ListReportsResponse r) {
         std::vector<google::cloud::channel::v1::Report> result(

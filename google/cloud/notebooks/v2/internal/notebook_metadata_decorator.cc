@@ -44,20 +44,20 @@ NotebookServiceMetadata::NotebookServiceMetadata(
 
 StatusOr<google::cloud::notebooks::v2::ListInstancesResponse>
 NotebookServiceMetadata::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v2::ListInstancesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListInstances(context, request);
+  return child_->ListInstances(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v2::Instance>
 NotebookServiceMetadata::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v2::GetInstanceRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetInstance(context, request);
+  return child_->GetInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -123,13 +123,13 @@ NotebookServiceMetadata::AsyncResetInstance(
 
 StatusOr<google::cloud::notebooks::v2::CheckInstanceUpgradabilityResponse>
 NotebookServiceMetadata::CheckInstanceUpgradability(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v2::CheckInstanceUpgradabilityRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("notebook_instance=",
                            internal::UrlEncode(request.notebook_instance())));
-  return child_->CheckInstanceUpgradability(context, request);
+  return child_->CheckInstanceUpgradability(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -46,26 +46,26 @@ LivestreamServiceTracingStub::AsyncCreateChannel(
 
 StatusOr<google::cloud::video::livestream::v1::ListChannelsResponse>
 LivestreamServiceTracingStub::ListChannels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::ListChannelsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "ListChannels");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListChannels(context, request));
+                           child_->ListChannels(context, options, request));
 }
 
 StatusOr<google::cloud::video::livestream::v1::Channel>
 LivestreamServiceTracingStub::GetChannel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::GetChannelRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "GetChannel");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetChannel(context, request));
+                           child_->GetChannel(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -135,25 +135,26 @@ LivestreamServiceTracingStub::AsyncCreateInput(
 
 StatusOr<google::cloud::video::livestream::v1::ListInputsResponse>
 LivestreamServiceTracingStub::ListInputs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::ListInputsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "ListInputs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListInputs(context, request));
+                           child_->ListInputs(context, options, request));
 }
 
 StatusOr<google::cloud::video::livestream::v1::Input>
 LivestreamServiceTracingStub::GetInput(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::GetInputRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "GetInput");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetInput(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetInput(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -184,48 +185,49 @@ LivestreamServiceTracingStub::AsyncUpdateInput(
 
 StatusOr<google::cloud::video::livestream::v1::Event>
 LivestreamServiceTracingStub::CreateEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::CreateEventRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "CreateEvent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateEvent(context, request));
+                           child_->CreateEvent(context, options, request));
 }
 
 StatusOr<google::cloud::video::livestream::v1::ListEventsResponse>
 LivestreamServiceTracingStub::ListEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::ListEventsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "ListEvents");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListEvents(context, request));
+                           child_->ListEvents(context, options, request));
 }
 
 StatusOr<google::cloud::video::livestream::v1::Event>
 LivestreamServiceTracingStub::GetEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::GetEventRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "GetEvent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetEvent(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetEvent(context, options, request));
 }
 
 Status LivestreamServiceTracingStub::DeleteEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::DeleteEventRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "DeleteEvent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteEvent(context, request));
+                           child_->DeleteEvent(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -256,36 +258,38 @@ LivestreamServiceTracingStub::AsyncDeleteAsset(
 
 StatusOr<google::cloud::video::livestream::v1::Asset>
 LivestreamServiceTracingStub::GetAsset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::GetAssetRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "GetAsset");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetAsset(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetAsset(context, options, request));
 }
 
 StatusOr<google::cloud::video::livestream::v1::ListAssetsResponse>
 LivestreamServiceTracingStub::ListAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::ListAssetsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "ListAssets");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListAssets(context, request));
+                           child_->ListAssets(context, options, request));
 }
 
 StatusOr<google::cloud::video::livestream::v1::Pool>
 LivestreamServiceTracingStub::GetPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::GetPoolRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.video.livestream.v1.LivestreamService", "GetPool");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetPool(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetPool(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

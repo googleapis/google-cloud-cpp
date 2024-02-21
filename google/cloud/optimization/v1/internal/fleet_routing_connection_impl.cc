@@ -72,10 +72,12 @@ FleetRoutingConnectionImpl::OptimizeTours(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->OptimizeTours(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::optimization::v1::OptimizeToursRequest const&
-                 request) { return stub_->OptimizeTours(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->OptimizeTours(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>

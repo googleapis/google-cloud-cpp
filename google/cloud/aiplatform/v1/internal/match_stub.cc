@@ -32,7 +32,7 @@ MatchServiceStub::~MatchServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>
 DefaultMatchServiceStub::FindNeighbors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::FindNeighborsRequest const& request) {
   google::cloud::aiplatform::v1::FindNeighborsResponse response;
   auto status = grpc_stub_->FindNeighbors(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultMatchServiceStub::FindNeighbors(
 
 StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
 DefaultMatchServiceStub::ReadIndexDatapoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) {
   google::cloud::aiplatform::v1::ReadIndexDatapointsResponse response;
   auto status = grpc_stub_->ReadIndexDatapoints(&context, request, &response);

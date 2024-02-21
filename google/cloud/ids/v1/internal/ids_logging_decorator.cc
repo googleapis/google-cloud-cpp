@@ -37,25 +37,25 @@ IDSLogging::IDSLogging(std::shared_ptr<IDSStub> child,
 
 StatusOr<google::cloud::ids::v1::ListEndpointsResponse>
 IDSLogging::ListEndpoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::ids::v1::ListEndpointsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::ids::v1::ListEndpointsRequest const& request) {
-        return child_->ListEndpoints(context, request);
+        return child_->ListEndpoints(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::ids::v1::Endpoint> IDSLogging::GetEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::ids::v1::GetEndpointRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::ids::v1::GetEndpointRequest const& request) {
-        return child_->GetEndpoint(context, request);
+        return child_->GetEndpoint(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

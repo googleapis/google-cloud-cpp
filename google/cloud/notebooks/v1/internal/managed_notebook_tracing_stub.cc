@@ -33,26 +33,26 @@ ManagedNotebookServiceTracingStub::ManagedNotebookServiceTracingStub(
 
 StatusOr<google::cloud::notebooks::v1::ListRuntimesResponse>
 ManagedNotebookServiceTracingStub::ListRuntimes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::ListRuntimesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.notebooks.v1.ManagedNotebookService", "ListRuntimes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListRuntimes(context, request));
+                           child_->ListRuntimes(context, options, request));
 }
 
 StatusOr<google::cloud::notebooks::v1::Runtime>
 ManagedNotebookServiceTracingStub::GetRuntime(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::GetRuntimeRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.notebooks.v1.ManagedNotebookService", "GetRuntime");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetRuntime(context, request));
+                           child_->GetRuntime(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -174,7 +174,7 @@ ManagedNotebookServiceTracingStub::AsyncReportRuntimeEvent(
 
 StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
 ManagedNotebookServiceTracingStub::RefreshRuntimeTokenInternal(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
         request) {
   auto span =
@@ -183,7 +183,8 @@ ManagedNotebookServiceTracingStub::RefreshRuntimeTokenInternal(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
-      context, *span, child_->RefreshRuntimeTokenInternal(context, request));
+      context, *span,
+      child_->RefreshRuntimeTokenInternal(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

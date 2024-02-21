@@ -54,7 +54,7 @@ DefaultFeatureOnlineStoreAdminServiceStub::AsyncCreateFeatureOnlineStore(
 
 StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
 DefaultFeatureOnlineStoreAdminServiceStub::GetFeatureOnlineStore(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const&
         request) {
   google::cloud::aiplatform::v1::FeatureOnlineStore response;
@@ -67,7 +67,7 @@ DefaultFeatureOnlineStoreAdminServiceStub::GetFeatureOnlineStore(
 
 StatusOr<google::cloud::aiplatform::v1::ListFeatureOnlineStoresResponse>
 DefaultFeatureOnlineStoreAdminServiceStub::ListFeatureOnlineStores(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest const&
         request) {
   google::cloud::aiplatform::v1::ListFeatureOnlineStoresResponse response;
@@ -139,7 +139,7 @@ DefaultFeatureOnlineStoreAdminServiceStub::AsyncCreateFeatureView(
 
 StatusOr<google::cloud::aiplatform::v1::FeatureView>
 DefaultFeatureOnlineStoreAdminServiceStub::GetFeatureView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetFeatureViewRequest const& request) {
   google::cloud::aiplatform::v1::FeatureView response;
   auto status = grpc_stub_->GetFeatureView(&context, request, &response);
@@ -151,7 +151,7 @@ DefaultFeatureOnlineStoreAdminServiceStub::GetFeatureView(
 
 StatusOr<google::cloud::aiplatform::v1::ListFeatureViewsResponse>
 DefaultFeatureOnlineStoreAdminServiceStub::ListFeatureViews(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListFeatureViewsRequest const& request) {
   google::cloud::aiplatform::v1::ListFeatureViewsResponse response;
   auto status = grpc_stub_->ListFeatureViews(&context, request, &response);
@@ -199,7 +199,7 @@ DefaultFeatureOnlineStoreAdminServiceStub::AsyncDeleteFeatureView(
 
 StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>
 DefaultFeatureOnlineStoreAdminServiceStub::SyncFeatureView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::SyncFeatureViewRequest const& request) {
   google::cloud::aiplatform::v1::SyncFeatureViewResponse response;
   auto status = grpc_stub_->SyncFeatureView(&context, request, &response);
@@ -211,7 +211,7 @@ DefaultFeatureOnlineStoreAdminServiceStub::SyncFeatureView(
 
 StatusOr<google::cloud::aiplatform::v1::FeatureViewSync>
 DefaultFeatureOnlineStoreAdminServiceStub::GetFeatureViewSync(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request) {
   google::cloud::aiplatform::v1::FeatureViewSync response;
   auto status = grpc_stub_->GetFeatureViewSync(&context, request, &response);
@@ -223,7 +223,7 @@ DefaultFeatureOnlineStoreAdminServiceStub::GetFeatureViewSync(
 
 StatusOr<google::cloud::aiplatform::v1::ListFeatureViewSyncsResponse>
 DefaultFeatureOnlineStoreAdminServiceStub::ListFeatureViewSyncs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest const& request) {
   google::cloud::aiplatform::v1::ListFeatureViewSyncsResponse response;
   auto status = grpc_stub_->ListFeatureViewSyncs(&context, request, &response);

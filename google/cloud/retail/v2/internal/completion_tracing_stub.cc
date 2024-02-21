@@ -33,14 +33,14 @@ CompletionServiceTracingStub::CompletionServiceTracingStub(
 
 StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
 CompletionServiceTracingStub::CompleteQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::CompleteQueryRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.CompletionService",
                                      "CompleteQuery");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CompleteQuery(context, request));
+                           child_->CompleteQuery(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

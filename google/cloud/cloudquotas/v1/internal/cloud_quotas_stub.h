@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDQUOTAS_V1_INTERNAL_CLOUD_QUOTAS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CLOUDQUOTAS_V1_INTERNAL_CLOUD_QUOTAS_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/api/cloudquotas/v1/cloudquotas.grpc.pb.h>
@@ -36,34 +37,34 @@ class CloudQuotasStub {
 
   virtual StatusOr<google::api::cloudquotas::v1::ListQuotaInfosResponse>
   ListQuotaInfos(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::cloudquotas::v1::ListQuotaInfosRequest const& request) = 0;
 
   virtual StatusOr<google::api::cloudquotas::v1::QuotaInfo> GetQuotaInfo(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::cloudquotas::v1::GetQuotaInfoRequest const& request) = 0;
 
   virtual StatusOr<google::api::cloudquotas::v1::ListQuotaPreferencesResponse>
   ListQuotaPreferences(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::cloudquotas::v1::ListQuotaPreferencesRequest const&
           request) = 0;
 
   virtual StatusOr<google::api::cloudquotas::v1::QuotaPreference>
   GetQuotaPreference(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::cloudquotas::v1::GetQuotaPreferenceRequest const&
           request) = 0;
 
   virtual StatusOr<google::api::cloudquotas::v1::QuotaPreference>
   CreateQuotaPreference(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const&
           request) = 0;
 
   virtual StatusOr<google::api::cloudquotas::v1::QuotaPreference>
   UpdateQuotaPreference(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const&
           request) = 0;
 };
@@ -76,33 +77,33 @@ class DefaultCloudQuotasStub : public CloudQuotasStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::api::cloudquotas::v1::ListQuotaInfosResponse> ListQuotaInfos(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::cloudquotas::v1::ListQuotaInfosRequest const& request)
       override;
 
   StatusOr<google::api::cloudquotas::v1::QuotaInfo> GetQuotaInfo(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::cloudquotas::v1::GetQuotaInfoRequest const& request)
       override;
 
   StatusOr<google::api::cloudquotas::v1::ListQuotaPreferencesResponse>
   ListQuotaPreferences(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::cloudquotas::v1::ListQuotaPreferencesRequest const& request)
       override;
 
   StatusOr<google::api::cloudquotas::v1::QuotaPreference> GetQuotaPreference(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request)
       override;
 
   StatusOr<google::api::cloudquotas::v1::QuotaPreference> CreateQuotaPreference(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request)
       override;
 
   StatusOr<google::api::cloudquotas::v1::QuotaPreference> UpdateQuotaPreference(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request)
       override;
 

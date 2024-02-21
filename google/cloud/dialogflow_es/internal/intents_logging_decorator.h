@@ -40,25 +40,25 @@ class IntentsLogging : public IntentsStub {
                  std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::v2::ListIntentsResponse> ListIntents(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListIntentsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Intent> GetIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetIntentRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::Intent> CreateIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::CreateIntentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Intent> UpdateIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::UpdateIntentRequest const& request)
       override;
 
-  Status DeleteIntent(grpc::ClientContext& context,
+  Status DeleteIntent(grpc::ClientContext& context, Options const& options,
                       google::cloud::dialogflow::v2::DeleteIntentRequest const&
                           request) override;
 

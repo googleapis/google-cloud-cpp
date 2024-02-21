@@ -31,21 +31,23 @@ TasksTracingStub::TasksTracingStub(std::shared_ptr<TasksStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::run::v2::Task> TasksTracingStub::GetTask(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetTaskRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Tasks", "GetTask");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetTask(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetTask(context, options, request));
 }
 
 StatusOr<google::cloud::run::v2::ListTasksResponse> TasksTracingStub::ListTasks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::ListTasksRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Tasks", "ListTasks");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->ListTasks(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListTasks(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

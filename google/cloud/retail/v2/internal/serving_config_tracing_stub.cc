@@ -33,85 +33,85 @@ ServingConfigServiceTracingStub::ServingConfigServiceTracingStub(
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceTracingStub::CreateServingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::CreateServingConfigRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.retail.v2.ServingConfigService", "CreateServingConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateServingConfig(context, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateServingConfig(context, options, request));
 }
 
 Status ServingConfigServiceTracingStub::DeleteServingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::DeleteServingConfigRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.retail.v2.ServingConfigService", "DeleteServingConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteServingConfig(context, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteServingConfig(context, options, request));
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceTracingStub::UpdateServingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::UpdateServingConfigRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.retail.v2.ServingConfigService", "UpdateServingConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateServingConfig(context, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateServingConfig(context, options, request));
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceTracingStub::GetServingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::GetServingConfigRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.retail.v2.ServingConfigService", "GetServingConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetServingConfig(context, request));
+                           child_->GetServingConfig(context, options, request));
 }
 
 StatusOr<google::cloud::retail::v2::ListServingConfigsResponse>
 ServingConfigServiceTracingStub::ListServingConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::ListServingConfigsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.retail.v2.ServingConfigService", "ListServingConfigs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListServingConfigs(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListServingConfigs(context, options, request));
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceTracingStub::AddControl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::AddControlRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.retail.v2.ServingConfigService", "AddControl");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->AddControl(context, request));
+                           child_->AddControl(context, options, request));
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceTracingStub::RemoveControl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::RemoveControlRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.retail.v2.ServingConfigService", "RemoveControl");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->RemoveControl(context, request));
+                           child_->RemoveControl(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

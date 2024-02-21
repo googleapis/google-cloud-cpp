@@ -33,11 +33,11 @@ ModelGardenServiceAuth::ModelGardenServiceAuth(
 
 StatusOr<google::cloud::aiplatform::v1::PublisherModel>
 ModelGardenServiceAuth::GetPublisherModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetPublisherModel(context, request);
+  return child_->GetPublisherModel(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

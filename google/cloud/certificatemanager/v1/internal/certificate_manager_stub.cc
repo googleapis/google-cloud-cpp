@@ -33,7 +33,7 @@ CertificateManagerStub::~CertificateManagerStub() = default;
 
 StatusOr<google::cloud::certificatemanager::v1::ListCertificatesResponse>
 DefaultCertificateManagerStub::ListCertificates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::certificatemanager::v1::ListCertificatesRequest const&
         request) {
   google::cloud::certificatemanager::v1::ListCertificatesResponse response;
@@ -46,7 +46,7 @@ DefaultCertificateManagerStub::ListCertificates(
 
 StatusOr<google::cloud::certificatemanager::v1::Certificate>
 DefaultCertificateManagerStub::GetCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::certificatemanager::v1::GetCertificateRequest const&
         request) {
   google::cloud::certificatemanager::v1::Certificate response;
@@ -119,7 +119,7 @@ DefaultCertificateManagerStub::AsyncDeleteCertificate(
 
 StatusOr<google::cloud::certificatemanager::v1::ListCertificateMapsResponse>
 DefaultCertificateManagerStub::ListCertificateMaps(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::certificatemanager::v1::ListCertificateMapsRequest const&
         request) {
   google::cloud::certificatemanager::v1::ListCertificateMapsResponse response;
@@ -132,7 +132,7 @@ DefaultCertificateManagerStub::ListCertificateMaps(
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateMap>
 DefaultCertificateManagerStub::GetCertificateMap(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::certificatemanager::v1::GetCertificateMapRequest const&
         request) {
   google::cloud::certificatemanager::v1::CertificateMap response;
@@ -203,7 +203,7 @@ DefaultCertificateManagerStub::AsyncDeleteCertificateMap(
 StatusOr<
     google::cloud::certificatemanager::v1::ListCertificateMapEntriesResponse>
 DefaultCertificateManagerStub::ListCertificateMapEntries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::certificatemanager::v1::
         ListCertificateMapEntriesRequest const& request) {
   google::cloud::certificatemanager::v1::ListCertificateMapEntriesResponse
@@ -218,7 +218,7 @@ DefaultCertificateManagerStub::ListCertificateMapEntries(
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>
 DefaultCertificateManagerStub::GetCertificateMapEntry(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::certificatemanager::v1::GetCertificateMapEntryRequest const&
         request) {
   google::cloud::certificatemanager::v1::CertificateMapEntry response;
@@ -289,7 +289,7 @@ DefaultCertificateManagerStub::AsyncDeleteCertificateMapEntry(
 
 StatusOr<google::cloud::certificatemanager::v1::ListDnsAuthorizationsResponse>
 DefaultCertificateManagerStub::ListDnsAuthorizations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::certificatemanager::v1::ListDnsAuthorizationsRequest const&
         request) {
   google::cloud::certificatemanager::v1::ListDnsAuthorizationsResponse response;
@@ -302,7 +302,7 @@ DefaultCertificateManagerStub::ListDnsAuthorizations(
 
 StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>
 DefaultCertificateManagerStub::GetDnsAuthorization(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest const&
         request) {
   google::cloud::certificatemanager::v1::DnsAuthorization response;
@@ -373,7 +373,7 @@ DefaultCertificateManagerStub::AsyncDeleteDnsAuthorization(
 StatusOr<google::cloud::certificatemanager::v1::
              ListCertificateIssuanceConfigsResponse>
 DefaultCertificateManagerStub::ListCertificateIssuanceConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::certificatemanager::v1::
         ListCertificateIssuanceConfigsRequest const& request) {
   google::cloud::certificatemanager::v1::ListCertificateIssuanceConfigsResponse
@@ -388,7 +388,7 @@ DefaultCertificateManagerStub::ListCertificateIssuanceConfigs(
 
 StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
 DefaultCertificateManagerStub::GetCertificateIssuanceConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::certificatemanager::v1::
         GetCertificateIssuanceConfigRequest const& request) {
   google::cloud::certificatemanager::v1::CertificateIssuanceConfig response;

@@ -47,217 +47,229 @@ StatusOr<google::cloud::securitycentermanagement::v1::
              ListEffectiveSecurityHealthAnalyticsCustomModulesResponse>
 SecurityCenterManagementMetadata::
     ListEffectiveSecurityHealthAnalyticsCustomModules(
-        grpc::ClientContext& context,
+        grpc::ClientContext& context, Options const& options,
         google::cloud::securitycentermanagement::v1::
             ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
                 request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListEffectiveSecurityHealthAnalyticsCustomModules(context,
-                                                                   request);
+  return child_->ListEffectiveSecurityHealthAnalyticsCustomModules(
+      context, options, request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              EffectiveSecurityHealthAnalyticsCustomModule>
 SecurityCenterManagementMetadata::
     GetEffectiveSecurityHealthAnalyticsCustomModule(
-        grpc::ClientContext& context,
+        grpc::ClientContext& context, Options const& options,
         google::cloud::securitycentermanagement::v1::
             GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const&
                 request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetEffectiveSecurityHealthAnalyticsCustomModule(context,
-                                                                 request);
+  return child_->GetEffectiveSecurityHealthAnalyticsCustomModule(
+      context, options, request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              ListSecurityHealthAnalyticsCustomModulesResponse>
 SecurityCenterManagementMetadata::ListSecurityHealthAnalyticsCustomModules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         ListSecurityHealthAnalyticsCustomModulesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListSecurityHealthAnalyticsCustomModules(context, request);
+  return child_->ListSecurityHealthAnalyticsCustomModules(context, options,
+                                                          request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              ListDescendantSecurityHealthAnalyticsCustomModulesResponse>
 SecurityCenterManagementMetadata::
     ListDescendantSecurityHealthAnalyticsCustomModules(
-        grpc::ClientContext& context,
+        grpc::ClientContext& context, Options const& options,
         google::cloud::securitycentermanagement::v1::
             ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
                 request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDescendantSecurityHealthAnalyticsCustomModules(context,
-                                                                    request);
+  return child_->ListDescendantSecurityHealthAnalyticsCustomModules(
+      context, options, request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              SecurityHealthAnalyticsCustomModule>
 SecurityCenterManagementMetadata::GetSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetSecurityHealthAnalyticsCustomModule(context, request);
+  return child_->GetSecurityHealthAnalyticsCustomModule(context, options,
+                                                        request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              SecurityHealthAnalyticsCustomModule>
 SecurityCenterManagementMetadata::CreateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateSecurityHealthAnalyticsCustomModule(context, request);
+  return child_->CreateSecurityHealthAnalyticsCustomModule(context, options,
+                                                           request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              SecurityHealthAnalyticsCustomModule>
 SecurityCenterManagementMetadata::UpdateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat(
           "security_health_analytics_custom_module.name=",
           internal::UrlEncode(
               request.security_health_analytics_custom_module().name())));
-  return child_->UpdateSecurityHealthAnalyticsCustomModule(context, request);
+  return child_->UpdateSecurityHealthAnalyticsCustomModule(context, options,
+                                                           request);
 }
 
 Status
 SecurityCenterManagementMetadata::DeleteSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteSecurityHealthAnalyticsCustomModule(context, request);
+  return child_->DeleteSecurityHealthAnalyticsCustomModule(context, options,
+                                                           request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              SimulateSecurityHealthAnalyticsCustomModuleResponse>
 SecurityCenterManagementMetadata::SimulateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         SimulateSecurityHealthAnalyticsCustomModuleRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->SimulateSecurityHealthAnalyticsCustomModule(context, request);
+  return child_->SimulateSecurityHealthAnalyticsCustomModule(context, options,
+                                                             request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              ListEffectiveEventThreatDetectionCustomModulesResponse>
 SecurityCenterManagementMetadata::
     ListEffectiveEventThreatDetectionCustomModules(
-        grpc::ClientContext& context,
+        grpc::ClientContext& context, Options const& options,
         google::cloud::securitycentermanagement::v1::
             ListEffectiveEventThreatDetectionCustomModulesRequest const&
                 request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListEffectiveEventThreatDetectionCustomModules(context,
-                                                                request);
+  return child_->ListEffectiveEventThreatDetectionCustomModules(
+      context, options, request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              EffectiveEventThreatDetectionCustomModule>
 SecurityCenterManagementMetadata::GetEffectiveEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         GetEffectiveEventThreatDetectionCustomModuleRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetEffectiveEventThreatDetectionCustomModule(context, request);
+  return child_->GetEffectiveEventThreatDetectionCustomModule(context, options,
+                                                              request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              ListEventThreatDetectionCustomModulesResponse>
 SecurityCenterManagementMetadata::ListEventThreatDetectionCustomModules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         ListEventThreatDetectionCustomModulesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListEventThreatDetectionCustomModules(context, request);
+  return child_->ListEventThreatDetectionCustomModules(context, options,
+                                                       request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              ListDescendantEventThreatDetectionCustomModulesResponse>
 SecurityCenterManagementMetadata::
     ListDescendantEventThreatDetectionCustomModules(
-        grpc::ClientContext& context,
+        grpc::ClientContext& context, Options const& options,
         google::cloud::securitycentermanagement::v1::
             ListDescendantEventThreatDetectionCustomModulesRequest const&
                 request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDescendantEventThreatDetectionCustomModules(context,
-                                                                 request);
+  return child_->ListDescendantEventThreatDetectionCustomModules(
+      context, options, request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              EventThreatDetectionCustomModule>
 SecurityCenterManagementMetadata::GetEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         GetEventThreatDetectionCustomModuleRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetEventThreatDetectionCustomModule(context, request);
+  return child_->GetEventThreatDetectionCustomModule(context, options, request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              EventThreatDetectionCustomModule>
 SecurityCenterManagementMetadata::CreateEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         CreateEventThreatDetectionCustomModuleRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateEventThreatDetectionCustomModule(context, request);
+  return child_->CreateEventThreatDetectionCustomModule(context, options,
+                                                        request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              EventThreatDetectionCustomModule>
 SecurityCenterManagementMetadata::UpdateEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         UpdateEventThreatDetectionCustomModuleRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("event_threat_detection_custom_module.name=",
                    internal::UrlEncode(
                        request.event_threat_detection_custom_module().name())));
-  return child_->UpdateEventThreatDetectionCustomModule(context, request);
+  return child_->UpdateEventThreatDetectionCustomModule(context, options,
+                                                        request);
 }
 
 Status SecurityCenterManagementMetadata::DeleteEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         DeleteEventThreatDetectionCustomModuleRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteEventThreatDetectionCustomModule(context, request);
+  return child_->DeleteEventThreatDetectionCustomModule(context, options,
+                                                        request);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
              ValidateEventThreatDetectionCustomModuleResponse>
 SecurityCenterManagementMetadata::ValidateEventThreatDetectionCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycentermanagement::v1::
         ValidateEventThreatDetectionCustomModuleRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ValidateEventThreatDetectionCustomModule(context, request);
+  return child_->ValidateEventThreatDetectionCustomModule(context, options,
+                                                          request);
 }
 
 void SecurityCenterManagementMetadata::SetMetadata(

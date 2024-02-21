@@ -37,14 +37,14 @@ CloudShellServiceLogging::CloudShellServiceLogging(
 
 StatusOr<google::cloud::shell::v1::Environment>
 CloudShellServiceLogging::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::shell::v1::GetEnvironmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::shell::v1::GetEnvironmentRequest const& request) {
-        return child_->GetEnvironment(context, request);
+        return child_->GetEnvironment(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

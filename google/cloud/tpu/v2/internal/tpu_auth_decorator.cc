@@ -32,19 +32,19 @@ TpuAuth::TpuAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::tpu::v2::ListNodesResponse> TpuAuth::ListNodes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::ListNodesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListNodes(context, request);
+  return child_->ListNodes(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v2::Node> TpuAuth::GetNode(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::GetNodeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetNode(context, request);
+  return child_->GetNode(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> TpuAuth::AsyncCreateNode(
@@ -137,54 +137,54 @@ future<StatusOr<google::longrunning::Operation>> TpuAuth::AsyncUpdateNode(
 
 StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
 TpuAuth::GenerateServiceIdentity(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::GenerateServiceIdentityRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateServiceIdentity(context, request);
+  return child_->GenerateServiceIdentity(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v2::ListAcceleratorTypesResponse>
 TpuAuth::ListAcceleratorTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::ListAcceleratorTypesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAcceleratorTypes(context, request);
+  return child_->ListAcceleratorTypes(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v2::AcceleratorType> TpuAuth::GetAcceleratorType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::GetAcceleratorTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAcceleratorType(context, request);
+  return child_->GetAcceleratorType(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v2::ListRuntimeVersionsResponse>
 TpuAuth::ListRuntimeVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::ListRuntimeVersionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListRuntimeVersions(context, request);
+  return child_->ListRuntimeVersions(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v2::RuntimeVersion> TpuAuth::GetRuntimeVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::GetRuntimeVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetRuntimeVersion(context, request);
+  return child_->GetRuntimeVersion(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v2::GetGuestAttributesResponse>
 TpuAuth::GetGuestAttributes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::GetGuestAttributesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetGuestAttributes(context, request);
+  return child_->GetGuestAttributes(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> TpuAuth::AsyncGetOperation(

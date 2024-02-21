@@ -107,11 +107,11 @@ ModelServiceConnectionImpl::GetModel(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetModel(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetModelRequest const& request) {
-        return stub_->GetModel(context, request);
+        return stub_->GetModel(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::Model>
@@ -123,18 +123,21 @@ ModelServiceConnectionImpl::ListModels(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Model>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::ModelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListModelsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::ListModelsRequest const&
-                       request) { return stub->ListModels(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListModels(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListModelsResponse r) {
         std::vector<google::cloud::aiplatform::v1::Model> result(
@@ -154,21 +157,22 @@ ModelServiceConnectionImpl::ListModelVersions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Model>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::ModelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListModelVersionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::aiplatform::v1::ListModelVersionsRequest const&
                     request) {
-              return stub->ListModelVersions(context, request);
+              return stub->ListModelVersions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListModelVersionsResponse r) {
         std::vector<google::cloud::aiplatform::v1::Model> result(
@@ -186,11 +190,11 @@ ModelServiceConnectionImpl::UpdateModel(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateModel(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::UpdateModelRequest const& request) {
-        return stub_->UpdateModel(context, request);
+        return stub_->UpdateModel(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<
@@ -314,12 +318,12 @@ ModelServiceConnectionImpl::MergeVersionAliases(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->MergeVersionAliases(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::MergeVersionAliasesRequest const&
                  request) {
-        return stub_->MergeVersionAliases(context, request);
+        return stub_->MergeVersionAliases(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
@@ -401,12 +405,12 @@ ModelServiceConnectionImpl::ImportModelEvaluation(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ImportModelEvaluation(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ImportModelEvaluationRequest const&
                  request) {
-        return stub_->ImportModelEvaluation(context, request);
+        return stub_->ImportModelEvaluation(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<
@@ -418,12 +422,13 @@ ModelServiceConnectionImpl::BatchImportModelEvaluationSlices(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->BatchImportModelEvaluationSlices(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  BatchImportModelEvaluationSlicesRequest const& request) {
-        return stub_->BatchImportModelEvaluationSlices(context, request);
+        return stub_->BatchImportModelEvaluationSlices(context, options,
+                                                       request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
@@ -434,12 +439,13 @@ ModelServiceConnectionImpl::BatchImportEvaluatedAnnotations(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->BatchImportEvaluatedAnnotations(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  BatchImportEvaluatedAnnotationsRequest const& request) {
-        return stub_->BatchImportEvaluatedAnnotations(context, request);
+        return stub_->BatchImportEvaluatedAnnotations(context, options,
+                                                      request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
@@ -449,12 +455,12 @@ ModelServiceConnectionImpl::GetModelEvaluation(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetModelEvaluation(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetModelEvaluationRequest const&
                  request) {
-        return stub_->GetModelEvaluation(context, request);
+        return stub_->GetModelEvaluation(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::ModelEvaluation>
@@ -467,20 +473,21 @@ ModelServiceConnectionImpl::ListModelEvaluations(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::ModelEvaluation>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::ModelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListModelEvaluationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::
                        ListModelEvaluationsRequest const& request) {
-              return stub->ListModelEvaluations(context, request);
+              return stub->ListModelEvaluations(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListModelEvaluationsResponse r) {
         std::vector<google::cloud::aiplatform::v1::ModelEvaluation> result(
@@ -500,12 +507,12 @@ ModelServiceConnectionImpl::GetModelEvaluationSlice(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetModelEvaluationSlice(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&
               request) {
-        return stub_->GetModelEvaluationSlice(context, request);
+        return stub_->GetModelEvaluationSlice(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice>
@@ -518,21 +525,22 @@ ModelServiceConnectionImpl::ListModelEvaluationSlices(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::ModelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::
                        ListModelEvaluationSlicesRequest const& request) {
-              return stub->ListModelEvaluationSlices(context, request);
+              return stub->ListModelEvaluationSlices(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListModelEvaluationSlicesResponse r) {
         std::vector<google::cloud::aiplatform::v1::ModelEvaluationSlice> result(

@@ -33,7 +33,7 @@ UserEventServiceStub::~UserEventServiceStub() = default;
 
 StatusOr<google::cloud::retail::v2::UserEvent>
 DefaultUserEventServiceStub::WriteUserEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::WriteUserEventRequest const& request) {
   google::cloud::retail::v2::UserEvent response;
   auto status = grpc_stub_->WriteUserEvent(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultUserEventServiceStub::WriteUserEvent(
 }
 
 StatusOr<google::api::HttpBody> DefaultUserEventServiceStub::CollectUserEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::CollectUserEventRequest const& request) {
   google::api::HttpBody response;
   auto status = grpc_stub_->CollectUserEvent(&context, request, &response);

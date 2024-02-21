@@ -38,15 +38,17 @@ BigQueryWriteLogging::BigQueryWriteLogging(
 
 StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
 BigQueryWriteLogging::CreateWriteStream(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
-              request) { return child_->CreateWriteStream(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->CreateWriteStream(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -72,53 +74,57 @@ BigQueryWriteLogging::AsyncAppendRows(
 
 StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
 BigQueryWriteLogging::GetWriteStream(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
-                 request) { return child_->GetWriteStream(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetWriteStream(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
 BigQueryWriteLogging::FinalizeWriteStream(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::storage::v1::
                  FinalizeWriteStreamRequest const& request) {
-        return child_->FinalizeWriteStream(context, request);
+        return child_->FinalizeWriteStream(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
 BigQueryWriteLogging::BatchCommitWriteStreams(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::storage::v1::
                  BatchCommitWriteStreamsRequest const& request) {
-        return child_->BatchCommitWriteStreams(context, request);
+        return child_->BatchCommitWriteStreams(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>
 BigQueryWriteLogging::FlushRows(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::storage::v1::FlushRowsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::storage::v1::FlushRowsRequest const&
-                 request) { return child_->FlushRows(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->FlushRows(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

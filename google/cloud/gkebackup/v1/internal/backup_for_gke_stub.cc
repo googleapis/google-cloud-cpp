@@ -51,7 +51,7 @@ DefaultBackupForGKEStub::AsyncCreateBackupPlan(
 
 StatusOr<google::cloud::gkebackup::v1::ListBackupPlansResponse>
 DefaultBackupForGKEStub::ListBackupPlans(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkebackup::v1::ListBackupPlansRequest const& request) {
   google::cloud::gkebackup::v1::ListBackupPlansResponse response;
   auto status = grpc_stub_->ListBackupPlans(&context, request, &response);
@@ -63,7 +63,7 @@ DefaultBackupForGKEStub::ListBackupPlans(
 
 StatusOr<google::cloud::gkebackup::v1::BackupPlan>
 DefaultBackupForGKEStub::GetBackupPlan(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkebackup::v1::GetBackupPlanRequest const& request) {
   google::cloud::gkebackup::v1::BackupPlan response;
   auto status = grpc_stub_->GetBackupPlan(&context, request, &response);
@@ -128,7 +128,7 @@ DefaultBackupForGKEStub::AsyncCreateBackup(
 
 StatusOr<google::cloud::gkebackup::v1::ListBackupsResponse>
 DefaultBackupForGKEStub::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkebackup::v1::ListBackupsRequest const& request) {
   google::cloud::gkebackup::v1::ListBackupsResponse response;
   auto status = grpc_stub_->ListBackups(&context, request, &response);
@@ -140,7 +140,7 @@ DefaultBackupForGKEStub::ListBackups(
 
 StatusOr<google::cloud::gkebackup::v1::Backup>
 DefaultBackupForGKEStub::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkebackup::v1::GetBackupRequest const& request) {
   google::cloud::gkebackup::v1::Backup response;
   auto status = grpc_stub_->GetBackup(&context, request, &response);
@@ -186,7 +186,7 @@ DefaultBackupForGKEStub::AsyncDeleteBackup(
 
 StatusOr<google::cloud::gkebackup::v1::ListVolumeBackupsResponse>
 DefaultBackupForGKEStub::ListVolumeBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkebackup::v1::ListVolumeBackupsRequest const& request) {
   google::cloud::gkebackup::v1::ListVolumeBackupsResponse response;
   auto status = grpc_stub_->ListVolumeBackups(&context, request, &response);
@@ -198,7 +198,7 @@ DefaultBackupForGKEStub::ListVolumeBackups(
 
 StatusOr<google::cloud::gkebackup::v1::VolumeBackup>
 DefaultBackupForGKEStub::GetVolumeBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkebackup::v1::GetVolumeBackupRequest const& request) {
   google::cloud::gkebackup::v1::VolumeBackup response;
   auto status = grpc_stub_->GetVolumeBackup(&context, request, &response);
@@ -228,7 +228,7 @@ DefaultBackupForGKEStub::AsyncCreateRestorePlan(
 
 StatusOr<google::cloud::gkebackup::v1::ListRestorePlansResponse>
 DefaultBackupForGKEStub::ListRestorePlans(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkebackup::v1::ListRestorePlansRequest const& request) {
   google::cloud::gkebackup::v1::ListRestorePlansResponse response;
   auto status = grpc_stub_->ListRestorePlans(&context, request, &response);
@@ -240,7 +240,7 @@ DefaultBackupForGKEStub::ListRestorePlans(
 
 StatusOr<google::cloud::gkebackup::v1::RestorePlan>
 DefaultBackupForGKEStub::GetRestorePlan(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkebackup::v1::GetRestorePlanRequest const& request) {
   google::cloud::gkebackup::v1::RestorePlan response;
   auto status = grpc_stub_->GetRestorePlan(&context, request, &response);
@@ -305,7 +305,7 @@ DefaultBackupForGKEStub::AsyncCreateRestore(
 
 StatusOr<google::cloud::gkebackup::v1::ListRestoresResponse>
 DefaultBackupForGKEStub::ListRestores(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkebackup::v1::ListRestoresRequest const& request) {
   google::cloud::gkebackup::v1::ListRestoresResponse response;
   auto status = grpc_stub_->ListRestores(&context, request, &response);
@@ -317,7 +317,7 @@ DefaultBackupForGKEStub::ListRestores(
 
 StatusOr<google::cloud::gkebackup::v1::Restore>
 DefaultBackupForGKEStub::GetRestore(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkebackup::v1::GetRestoreRequest const& request) {
   google::cloud::gkebackup::v1::Restore response;
   auto status = grpc_stub_->GetRestore(&context, request, &response);
@@ -363,7 +363,7 @@ DefaultBackupForGKEStub::AsyncDeleteRestore(
 
 StatusOr<google::cloud::gkebackup::v1::ListVolumeRestoresResponse>
 DefaultBackupForGKEStub::ListVolumeRestores(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkebackup::v1::ListVolumeRestoresRequest const& request) {
   google::cloud::gkebackup::v1::ListVolumeRestoresResponse response;
   auto status = grpc_stub_->ListVolumeRestores(&context, request, &response);
@@ -375,7 +375,7 @@ DefaultBackupForGKEStub::ListVolumeRestores(
 
 StatusOr<google::cloud::gkebackup::v1::VolumeRestore>
 DefaultBackupForGKEStub::GetVolumeRestore(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request) {
   google::cloud::gkebackup::v1::VolumeRestore response;
   auto status = grpc_stub_->GetVolumeRestore(&context, request, &response);

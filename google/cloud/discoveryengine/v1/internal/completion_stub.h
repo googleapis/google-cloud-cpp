@@ -39,7 +39,7 @@ class CompletionServiceStub {
   virtual ~CompletionServiceStub() = 0;
 
   virtual StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
-  CompleteQuery(grpc::ClientContext& context,
+  CompleteQuery(grpc::ClientContext& context, Options const& options,
                 google::cloud::discoveryengine::v1::CompleteQueryRequest const&
                     request) = 0;
 
@@ -79,7 +79,7 @@ class DefaultCompletionServiceStub : public CompletionServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
-  CompleteQuery(grpc::ClientContext& context,
+  CompleteQuery(grpc::ClientContext& context, Options const& options,
                 google::cloud::discoveryengine::v1::CompleteQueryRequest const&
                     request) override;
 

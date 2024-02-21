@@ -44,12 +44,12 @@ CompletionServiceMetadata::CompletionServiceMetadata(
 
 StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
 CompletionServiceMetadata::CompleteQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::CompleteQueryRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("data_store=", internal::UrlEncode(request.data_store())));
-  return child_->CompleteQuery(context, request);
+  return child_->CompleteQuery(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -76,20 +76,21 @@ DataprocMetastoreConnectionImpl::ListServices(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::metastore::v1::Service>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<metastore_v1::DataprocMetastoreRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::metastore::v1::ListServicesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::metastore::v1::ListServicesRequest const&
                        request) {
-              return stub->ListServices(context, request);
+              return stub->ListServices(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::metastore::v1::ListServicesResponse r) {
         std::vector<google::cloud::metastore::v1::Service> result(
@@ -107,11 +108,11 @@ DataprocMetastoreConnectionImpl::GetService(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetService(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::metastore::v1::GetServiceRequest const& request) {
-        return stub_->GetService(context, request);
+        return stub_->GetService(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::metastore::v1::Service>>
@@ -234,21 +235,22 @@ DataprocMetastoreConnectionImpl::ListMetadataImports(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::metastore::v1::MetadataImport>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<metastore_v1::DataprocMetastoreRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::metastore::v1::ListMetadataImportsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::metastore::v1::ListMetadataImportsRequest const&
                     request) {
-              return stub->ListMetadataImports(context, request);
+              return stub->ListMetadataImports(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::metastore::v1::ListMetadataImportsResponse r) {
         std::vector<google::cloud::metastore::v1::MetadataImport> result(
@@ -266,12 +268,12 @@ DataprocMetastoreConnectionImpl::GetMetadataImport(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetMetadataImport(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::metastore::v1::GetMetadataImportRequest const&
                  request) {
-        return stub_->GetMetadataImport(context, request);
+        return stub_->GetMetadataImport(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::metastore::v1::MetadataImport>>
@@ -433,18 +435,21 @@ DataprocMetastoreConnectionImpl::ListBackups(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::metastore::v1::Backup>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<metastore_v1::DataprocMetastoreRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::metastore::v1::ListBackupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::metastore::v1::ListBackupsRequest const&
-                       request) { return stub->ListBackups(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListBackups(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::metastore::v1::ListBackupsResponse r) {
         std::vector<google::cloud::metastore::v1::Backup> result(
@@ -462,11 +467,11 @@ DataprocMetastoreConnectionImpl::GetBackup(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetBackup(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::metastore::v1::GetBackupRequest const& request) {
-        return stub_->GetBackup(context, request);
+        return stub_->GetBackup(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::metastore::v1::Backup>>

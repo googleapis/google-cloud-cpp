@@ -33,7 +33,7 @@ ServicesStub::~ServicesStub() = default;
 
 StatusOr<google::appengine::v1::ListServicesResponse>
 DefaultServicesStub::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::ListServicesRequest const& request) {
   google::appengine::v1::ListServicesResponse response;
   auto status = grpc_stub_->ListServices(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultServicesStub::ListServices(
 }
 
 StatusOr<google::appengine::v1::Service> DefaultServicesStub::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::GetServiceRequest const& request) {
   google::appengine::v1::Service response;
   auto status = grpc_stub_->GetService(&context, request, &response);

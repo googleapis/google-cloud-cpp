@@ -52,20 +52,20 @@ RepositoryManagerAuth::AsyncCreateConnection(
 
 StatusOr<google::devtools::cloudbuild::v2::Connection>
 RepositoryManagerAuth::GetConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::GetConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetConnection(context, request);
+  return child_->GetConnection(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::ListConnectionsResponse>
 RepositoryManagerAuth::ListConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::ListConnectionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListConnections(context, request);
+  return child_->ListConnections(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -147,20 +147,20 @@ RepositoryManagerAuth::AsyncBatchCreateRepositories(
 
 StatusOr<google::devtools::cloudbuild::v2::Repository>
 RepositoryManagerAuth::GetRepository(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::GetRepositoryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetRepository(context, request);
+  return child_->GetRepository(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::ListRepositoriesResponse>
 RepositoryManagerAuth::ListRepositories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::ListRepositoriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListRepositories(context, request);
+  return child_->ListRepositories(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -184,40 +184,40 @@ RepositoryManagerAuth::AsyncDeleteRepository(
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
 RepositoryManagerAuth::FetchReadWriteToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->FetchReadWriteToken(context, request);
+  return child_->FetchReadWriteToken(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
 RepositoryManagerAuth::FetchReadToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->FetchReadToken(context, request);
+  return child_->FetchReadToken(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse>
 RepositoryManagerAuth::FetchLinkableRepositories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->FetchLinkableRepositories(context, request);
+  return child_->FetchLinkableRepositories(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
 RepositoryManagerAuth::FetchGitRefs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->FetchGitRefs(context, request);
+  return child_->FetchGitRefs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

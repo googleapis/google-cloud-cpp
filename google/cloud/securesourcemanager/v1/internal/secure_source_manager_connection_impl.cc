@@ -82,22 +82,23 @@ SecureSourceManagerConnectionImpl::ListInstances(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::securesourcemanager::v1::Instance>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            securesourcemanager_v1::SecureSourceManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::securesourcemanager::v1::ListInstancesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::securesourcemanager::v1::
                        ListInstancesRequest const& request) {
-              return stub->ListInstances(context, request);
+              return stub->ListInstances(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::securesourcemanager::v1::ListInstancesResponse r) {
         std::vector<google::cloud::securesourcemanager::v1::Instance> result(
@@ -115,10 +116,12 @@ SecureSourceManagerConnectionImpl::GetInstance(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetInstance(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securesourcemanager::v1::GetInstanceRequest const&
-                 request) { return stub_->GetInstance(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetInstance(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
@@ -208,22 +211,23 @@ SecureSourceManagerConnectionImpl::ListRepositories(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::securesourcemanager::v1::Repository>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            securesourcemanager_v1::SecureSourceManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::securesourcemanager::v1::ListRepositoriesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::securesourcemanager::v1::
                        ListRepositoriesRequest const& request) {
-              return stub->ListRepositories(context, request);
+              return stub->ListRepositories(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::securesourcemanager::v1::ListRepositoriesResponse r) {
         std::vector<google::cloud::securesourcemanager::v1::Repository> result(
@@ -242,10 +246,12 @@ SecureSourceManagerConnectionImpl::GetRepository(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRepository(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securesourcemanager::v1::GetRepositoryRequest const&
-                 request) { return stub_->GetRepository(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetRepository(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
@@ -333,11 +339,11 @@ SecureSourceManagerConnectionImpl::GetIamPolicyRepo(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetIamPolicyRepo(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
-        return stub_->GetIamPolicyRepo(context, request);
+        return stub_->GetIamPolicyRepo(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::Policy>
@@ -347,11 +353,11 @@ SecureSourceManagerConnectionImpl::SetIamPolicyRepo(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetIamPolicyRepo(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
-        return stub_->SetIamPolicyRepo(context, request);
+        return stub_->SetIamPolicyRepo(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
@@ -361,11 +367,11 @@ SecureSourceManagerConnectionImpl::TestIamPermissionsRepo(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TestIamPermissionsRepo(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
-        return stub_->TestIamPermissionsRepo(context, request);
+        return stub_->TestIamPermissionsRepo(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

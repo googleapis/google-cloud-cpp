@@ -44,54 +44,54 @@ FirewallMetadata::FirewallMetadata(
 
 StatusOr<google::appengine::v1::ListIngressRulesResponse>
 FirewallMetadata::ListIngressRules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListIngressRulesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListIngressRules(context, request);
+  return child_->ListIngressRules(context, options, request);
 }
 
 StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
 FirewallMetadata::BatchUpdateIngressRules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::BatchUpdateIngressRulesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->BatchUpdateIngressRules(context, request);
+  return child_->BatchUpdateIngressRules(context, options, request);
 }
 
 StatusOr<google::appengine::v1::FirewallRule>
 FirewallMetadata::CreateIngressRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::CreateIngressRuleRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateIngressRule(context, request);
+  return child_->CreateIngressRule(context, options, request);
 }
 
 StatusOr<google::appengine::v1::FirewallRule> FirewallMetadata::GetIngressRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetIngressRuleRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetIngressRule(context, request);
+  return child_->GetIngressRule(context, options, request);
 }
 
 StatusOr<google::appengine::v1::FirewallRule>
 FirewallMetadata::UpdateIngressRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::UpdateIngressRuleRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->UpdateIngressRule(context, request);
+  return child_->UpdateIngressRule(context, options, request);
 }
 
 Status FirewallMetadata::DeleteIngressRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::DeleteIngressRuleRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteIngressRule(context, request);
+  return child_->DeleteIngressRule(context, options, request);
 }
 
 void FirewallMetadata::SetMetadata(grpc::ClientContext& context,

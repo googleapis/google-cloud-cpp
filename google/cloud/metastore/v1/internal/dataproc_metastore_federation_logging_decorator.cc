@@ -37,28 +37,28 @@ DataprocMetastoreFederationLogging::DataprocMetastoreFederationLogging(
 
 StatusOr<google::cloud::metastore::v1::ListFederationsResponse>
 DataprocMetastoreFederationLogging::ListFederations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::ListFederationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::metastore::v1::ListFederationsRequest const& request) {
-        return child_->ListFederations(context, request);
+        return child_->ListFederations(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::metastore::v1::Federation>
 DataprocMetastoreFederationLogging::GetFederation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::GetFederationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::metastore::v1::GetFederationRequest const& request) {
-        return child_->GetFederation(context, request);
+        return child_->GetFederation(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

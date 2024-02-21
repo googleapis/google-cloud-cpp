@@ -40,7 +40,7 @@ class SpeechStub {
   virtual ~SpeechStub() = 0;
 
   virtual StatusOr<google::cloud::speech::v1::RecognizeResponse> Recognize(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v1::RecognizeRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
@@ -77,7 +77,7 @@ class DefaultSpeechStub : public SpeechStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::speech::v1::RecognizeResponse> Recognize(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v1::RecognizeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncLongRunningRecognize(

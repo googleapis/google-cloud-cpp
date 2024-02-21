@@ -55,20 +55,20 @@ FeaturestoreServiceMetadata::AsyncCreateFeaturestore(
 
 StatusOr<google::cloud::aiplatform::v1::Featurestore>
 FeaturestoreServiceMetadata::GetFeaturestore(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetFeaturestore(context, request);
+  return child_->GetFeaturestore(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListFeaturestoresResponse>
 FeaturestoreServiceMetadata::ListFeaturestores(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListFeaturestoresRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListFeaturestores(context, request);
+  return child_->ListFeaturestores(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -107,30 +107,30 @@ FeaturestoreServiceMetadata::AsyncCreateEntityType(
 
 StatusOr<google::cloud::aiplatform::v1::EntityType>
 FeaturestoreServiceMetadata::GetEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetEntityTypeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetEntityType(context, request);
+  return child_->GetEntityType(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListEntityTypesResponse>
 FeaturestoreServiceMetadata::ListEntityTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListEntityTypesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListEntityTypes(context, request);
+  return child_->ListEntityTypes(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::EntityType>
 FeaturestoreServiceMetadata::UpdateEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("entity_type.name=",
                            internal::UrlEncode(request.entity_type().name())));
-  return child_->UpdateEntityType(context, request);
+  return child_->UpdateEntityType(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -167,30 +167,30 @@ FeaturestoreServiceMetadata::AsyncBatchCreateFeatures(
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
 FeaturestoreServiceMetadata::GetFeature(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetFeatureRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetFeature(context, request);
+  return child_->GetFeature(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListFeaturesResponse>
 FeaturestoreServiceMetadata::ListFeatures(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListFeaturesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListFeatures(context, request);
+  return child_->ListFeatures(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
 FeaturestoreServiceMetadata::UpdateFeature(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("feature.name=",
                            internal::UrlEncode(request.feature().name())));
-  return child_->UpdateFeature(context, request);
+  return child_->UpdateFeature(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -254,12 +254,12 @@ FeaturestoreServiceMetadata::AsyncDeleteFeatureValues(
 
 StatusOr<google::cloud::aiplatform::v1::SearchFeaturesResponse>
 FeaturestoreServiceMetadata::SearchFeatures(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::SearchFeaturesRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("location=", internal::UrlEncode(request.location())));
-  return child_->SearchFeatures(context, request);
+  return child_->SearchFeatures(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

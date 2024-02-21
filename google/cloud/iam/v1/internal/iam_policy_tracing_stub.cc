@@ -31,35 +31,35 @@ IAMPolicyTracingStub::IAMPolicyTracingStub(std::shared_ptr<IAMPolicyStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::iam::v1::Policy> IAMPolicyTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.iam.v1.IAMPolicy", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->SetIamPolicy(context, request));
+                           child_->SetIamPolicy(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy> IAMPolicyTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.iam.v1.IAMPolicy", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetIamPolicy(context, request));
+                           child_->GetIamPolicy(context, options, request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 IAMPolicyTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.iam.v1.IAMPolicy", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

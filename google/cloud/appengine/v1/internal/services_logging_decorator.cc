@@ -37,25 +37,25 @@ ServicesLogging::ServicesLogging(std::shared_ptr<ServicesStub> child,
 
 StatusOr<google::appengine::v1::ListServicesResponse>
 ServicesLogging::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::ListServicesRequest const& request) {
-        return child_->ListServices(context, request);
+        return child_->ListServices(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::appengine::v1::Service> ServicesLogging::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::GetServiceRequest const& request) {
-        return child_->GetService(context, request);
+        return child_->GetService(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -44,19 +44,19 @@ ServicesMetadata::ServicesMetadata(
 
 StatusOr<google::appengine::v1::ListServicesResponse>
 ServicesMetadata::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListServicesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListServices(context, request);
+  return child_->ListServices(context, options, request);
 }
 
 StatusOr<google::appengine::v1::Service> ServicesMetadata::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetServiceRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetService(context, request);
+  return child_->GetService(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

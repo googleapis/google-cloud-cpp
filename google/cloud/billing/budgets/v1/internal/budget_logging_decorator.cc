@@ -37,56 +37,66 @@ BudgetServiceLogging::BudgetServiceLogging(
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceLogging::CreateBudget(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::billing::budgets::v1::CreateBudgetRequest const&
-                 request) { return child_->CreateBudget(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->CreateBudget(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceLogging::UpdateBudget(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::billing::budgets::v1::UpdateBudgetRequest const&
-                 request) { return child_->UpdateBudget(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->UpdateBudget(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceLogging::GetBudget(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::budgets::v1::GetBudgetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::billing::budgets::v1::GetBudgetRequest const&
-                 request) { return child_->GetBudget(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetBudget(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::billing::budgets::v1::ListBudgetsResponse>
 BudgetServiceLogging::ListBudgets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::budgets::v1::ListBudgetsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::billing::budgets::v1::ListBudgetsRequest const&
-                 request) { return child_->ListBudgets(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListBudgets(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status BudgetServiceLogging::DeleteBudget(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::billing::budgets::v1::DeleteBudgetRequest const&
-                 request) { return child_->DeleteBudget(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->DeleteBudget(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

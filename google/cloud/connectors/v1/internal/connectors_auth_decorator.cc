@@ -33,20 +33,20 @@ ConnectorsAuth::ConnectorsAuth(
 
 StatusOr<google::cloud::connectors::v1::ListConnectionsResponse>
 ConnectorsAuth::ListConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListConnectionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListConnections(context, request);
+  return child_->ListConnections(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::Connection>
 ConnectorsAuth::GetConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetConnection(context, request);
+  return child_->GetConnection(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -108,65 +108,65 @@ ConnectorsAuth::AsyncDeleteConnection(
 
 StatusOr<google::cloud::connectors::v1::ListProvidersResponse>
 ConnectorsAuth::ListProviders(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListProvidersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListProviders(context, request);
+  return child_->ListProviders(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::Provider> ConnectorsAuth::GetProvider(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetProviderRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetProvider(context, request);
+  return child_->GetProvider(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::ListConnectorsResponse>
 ConnectorsAuth::ListConnectors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListConnectorsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListConnectors(context, request);
+  return child_->ListConnectors(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::Connector> ConnectorsAuth::GetConnector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetConnectorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetConnector(context, request);
+  return child_->GetConnector(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::ListConnectorVersionsResponse>
 ConnectorsAuth::ListConnectorVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListConnectorVersionsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListConnectorVersions(context, request);
+  return child_->ListConnectorVersions(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::ConnectorVersion>
 ConnectorsAuth::GetConnectorVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetConnectorVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetConnectorVersion(context, request);
+  return child_->GetConnectorVersion(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
 ConnectorsAuth::GetConnectionSchemaMetadata(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetConnectionSchemaMetadata(context, request);
+  return child_->GetConnectionSchemaMetadata(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -191,40 +191,40 @@ ConnectorsAuth::AsyncRefreshConnectionSchemaMetadata(
 
 StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse>
 ConnectorsAuth::ListRuntimeEntitySchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListRuntimeEntitySchemas(context, request);
+  return child_->ListRuntimeEntitySchemas(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::ListRuntimeActionSchemasResponse>
 ConnectorsAuth::ListRuntimeActionSchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListRuntimeActionSchemasRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListRuntimeActionSchemas(context, request);
+  return child_->ListRuntimeActionSchemas(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::RuntimeConfig>
 ConnectorsAuth::GetRuntimeConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetRuntimeConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetRuntimeConfig(context, request);
+  return child_->GetRuntimeConfig(context, options, request);
 }
 
 StatusOr<google::cloud::connectors::v1::Settings>
 ConnectorsAuth::GetGlobalSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetGlobalSettingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetGlobalSettings(context, request);
+  return child_->GetGlobalSettings(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

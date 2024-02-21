@@ -73,11 +73,11 @@ FunctionServiceConnectionImpl::GetFunction(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetFunction(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::functions::v2::GetFunctionRequest const& request) {
-        return stub_->GetFunction(context, request);
+        return stub_->GetFunction(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::functions::v2::Function>
@@ -89,20 +89,21 @@ FunctionServiceConnectionImpl::ListFunctions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::functions::v2::Function>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<functions_v2::FunctionServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::functions::v2::ListFunctionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::functions::v2::ListFunctionsRequest const&
                        request) {
-              return stub->ListFunctions(context, request);
+              return stub->ListFunctions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::functions::v2::ListFunctionsResponse r) {
         std::vector<google::cloud::functions::v2::Function> result(
@@ -231,12 +232,12 @@ FunctionServiceConnectionImpl::GenerateUploadUrl(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateUploadUrl(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::functions::v2::GenerateUploadUrlRequest const&
                  request) {
-        return stub_->GenerateUploadUrl(context, request);
+        return stub_->GenerateUploadUrl(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::functions::v2::GenerateDownloadUrlResponse>
@@ -246,12 +247,12 @@ FunctionServiceConnectionImpl::GenerateDownloadUrl(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateDownloadUrl(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::functions::v2::GenerateDownloadUrlRequest const&
                  request) {
-        return stub_->GenerateDownloadUrl(context, request);
+        return stub_->GenerateDownloadUrl(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::functions::v2::ListRuntimesResponse>
@@ -261,11 +262,11 @@ FunctionServiceConnectionImpl::ListRuntimes(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ListRuntimes(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::functions::v2::ListRuntimesRequest const& request) {
-        return stub_->ListRuntimes(context, request);
+        return stub_->ListRuntimes(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

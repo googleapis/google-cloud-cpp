@@ -37,123 +37,123 @@ AdaptationLogging::AdaptationLogging(std::shared_ptr<AdaptationStub> child,
 
 StatusOr<google::cloud::speech::v1::PhraseSet>
 AdaptationLogging::CreatePhraseSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::CreatePhraseSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v1::CreatePhraseSetRequest const& request) {
-        return child_->CreatePhraseSet(context, request);
+        return child_->CreatePhraseSet(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::speech::v1::PhraseSet> AdaptationLogging::GetPhraseSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::GetPhraseSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v1::GetPhraseSetRequest const& request) {
-        return child_->GetPhraseSet(context, request);
+        return child_->GetPhraseSet(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::speech::v1::ListPhraseSetResponse>
 AdaptationLogging::ListPhraseSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::ListPhraseSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v1::ListPhraseSetRequest const& request) {
-        return child_->ListPhraseSet(context, request);
+        return child_->ListPhraseSet(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::speech::v1::PhraseSet>
 AdaptationLogging::UpdatePhraseSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::UpdatePhraseSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v1::UpdatePhraseSetRequest const& request) {
-        return child_->UpdatePhraseSet(context, request);
+        return child_->UpdatePhraseSet(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status AdaptationLogging::DeletePhraseSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::DeletePhraseSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v1::DeletePhraseSetRequest const& request) {
-        return child_->DeletePhraseSet(context, request);
+        return child_->DeletePhraseSet(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
 AdaptationLogging::CreateCustomClass(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::CreateCustomClassRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::speech::v1::CreateCustomClassRequest const& request) {
-        return child_->CreateCustomClass(context, request);
+        return child_->CreateCustomClass(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
 AdaptationLogging::GetCustomClass(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::GetCustomClassRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v1::GetCustomClassRequest const& request) {
-        return child_->GetCustomClass(context, request);
+        return child_->GetCustomClass(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::speech::v1::ListCustomClassesResponse>
 AdaptationLogging::ListCustomClasses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::ListCustomClassesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::speech::v1::ListCustomClassesRequest const& request) {
-        return child_->ListCustomClasses(context, request);
+        return child_->ListCustomClasses(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
 AdaptationLogging::UpdateCustomClass(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::UpdateCustomClassRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::speech::v1::UpdateCustomClassRequest const& request) {
-        return child_->UpdateCustomClass(context, request);
+        return child_->UpdateCustomClass(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status AdaptationLogging::DeleteCustomClass(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::DeleteCustomClassRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::speech::v1::DeleteCustomClassRequest const& request) {
-        return child_->DeleteCustomClass(context, request);
+        return child_->DeleteCustomClass(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

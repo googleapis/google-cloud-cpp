@@ -31,7 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SpannerStub::~SpannerStub() = default;
 
 StatusOr<google::spanner::v1::Session> DefaultSpannerStub::CreateSession(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::v1::CreateSessionRequest const& request) {
   google::spanner::v1::Session response;
   auto status = grpc_stub_->CreateSession(&context, request, &response);
@@ -43,7 +43,7 @@ StatusOr<google::spanner::v1::Session> DefaultSpannerStub::CreateSession(
 
 StatusOr<google::spanner::v1::BatchCreateSessionsResponse>
 DefaultSpannerStub::BatchCreateSessions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::v1::BatchCreateSessionsRequest const& request) {
   google::spanner::v1::BatchCreateSessionsResponse response;
   auto status = grpc_stub_->BatchCreateSessions(&context, request, &response);
@@ -54,7 +54,7 @@ DefaultSpannerStub::BatchCreateSessions(
 }
 
 Status DefaultSpannerStub::DeleteSession(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::v1::DeleteSessionRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteSession(&context, request, &response);
@@ -65,7 +65,7 @@ Status DefaultSpannerStub::DeleteSession(
 }
 
 StatusOr<google::spanner::v1::ResultSet> DefaultSpannerStub::ExecuteSql(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::v1::ExecuteSqlRequest const& request) {
   google::spanner::v1::ResultSet response;
   auto status = grpc_stub_->ExecuteSql(&context, request, &response);
@@ -88,7 +88,7 @@ DefaultSpannerStub::ExecuteStreamingSql(
 
 StatusOr<google::spanner::v1::ExecuteBatchDmlResponse>
 DefaultSpannerStub::ExecuteBatchDml(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::v1::ExecuteBatchDmlRequest const& request) {
   google::spanner::v1::ExecuteBatchDmlResponse response;
   auto status = grpc_stub_->ExecuteBatchDml(&context, request, &response);
@@ -110,7 +110,7 @@ DefaultSpannerStub::StreamingRead(
 }
 
 StatusOr<google::spanner::v1::Transaction> DefaultSpannerStub::BeginTransaction(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::v1::BeginTransactionRequest const& request) {
   google::spanner::v1::Transaction response;
   auto status = grpc_stub_->BeginTransaction(&context, request, &response);
@@ -121,7 +121,7 @@ StatusOr<google::spanner::v1::Transaction> DefaultSpannerStub::BeginTransaction(
 }
 
 StatusOr<google::spanner::v1::CommitResponse> DefaultSpannerStub::Commit(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::v1::CommitRequest const& request) {
   google::spanner::v1::CommitResponse response;
   auto status = grpc_stub_->Commit(&context, request, &response);
@@ -132,7 +132,7 @@ StatusOr<google::spanner::v1::CommitResponse> DefaultSpannerStub::Commit(
 }
 
 Status DefaultSpannerStub::Rollback(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::v1::RollbackRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->Rollback(&context, request, &response);
@@ -144,7 +144,7 @@ Status DefaultSpannerStub::Rollback(
 
 StatusOr<google::spanner::v1::PartitionResponse>
 DefaultSpannerStub::PartitionQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::v1::PartitionQueryRequest const& request) {
   google::spanner::v1::PartitionResponse response;
   auto status = grpc_stub_->PartitionQuery(&context, request, &response);
@@ -156,7 +156,7 @@ DefaultSpannerStub::PartitionQuery(
 
 StatusOr<google::spanner::v1::PartitionResponse>
 DefaultSpannerStub::PartitionRead(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::v1::PartitionReadRequest const& request) {
   google::spanner::v1::PartitionResponse response;
   auto status = grpc_stub_->PartitionRead(&context, request, &response);

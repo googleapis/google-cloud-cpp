@@ -32,7 +32,7 @@ KeyDashboardServiceStub::~KeyDashboardServiceStub() = default;
 
 StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
 DefaultKeyDashboardServiceStub::ListCryptoKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) {
   google::cloud::kms::inventory::v1::ListCryptoKeysResponse response;
   auto status = grpc_stub_->ListCryptoKeys(&context, request, &response);

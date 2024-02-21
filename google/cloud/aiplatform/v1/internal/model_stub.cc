@@ -50,7 +50,7 @@ DefaultModelServiceStub::AsyncUploadModel(
 
 StatusOr<google::cloud::aiplatform::v1::Model>
 DefaultModelServiceStub::GetModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetModelRequest const& request) {
   google::cloud::aiplatform::v1::Model response;
   auto status = grpc_stub_->GetModel(&context, request, &response);
@@ -62,7 +62,7 @@ DefaultModelServiceStub::GetModel(
 
 StatusOr<google::cloud::aiplatform::v1::ListModelsResponse>
 DefaultModelServiceStub::ListModels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListModelsRequest const& request) {
   google::cloud::aiplatform::v1::ListModelsResponse response;
   auto status = grpc_stub_->ListModels(&context, request, &response);
@@ -74,7 +74,7 @@ DefaultModelServiceStub::ListModels(
 
 StatusOr<google::cloud::aiplatform::v1::ListModelVersionsResponse>
 DefaultModelServiceStub::ListModelVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListModelVersionsRequest const& request) {
   google::cloud::aiplatform::v1::ListModelVersionsResponse response;
   auto status = grpc_stub_->ListModelVersions(&context, request, &response);
@@ -86,7 +86,7 @@ DefaultModelServiceStub::ListModelVersions(
 
 StatusOr<google::cloud::aiplatform::v1::Model>
 DefaultModelServiceStub::UpdateModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::UpdateModelRequest const& request) {
   google::cloud::aiplatform::v1::Model response;
   auto status = grpc_stub_->UpdateModel(&context, request, &response);
@@ -153,7 +153,7 @@ DefaultModelServiceStub::AsyncDeleteModelVersion(
 
 StatusOr<google::cloud::aiplatform::v1::Model>
 DefaultModelServiceStub::MergeVersionAliases(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request) {
   google::cloud::aiplatform::v1::Model response;
   auto status = grpc_stub_->MergeVersionAliases(&context, request, &response);
@@ -199,7 +199,7 @@ DefaultModelServiceStub::AsyncCopyModel(
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
 DefaultModelServiceStub::ImportModelEvaluation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ImportModelEvaluationRequest const&
         request) {
   google::cloud::aiplatform::v1::ModelEvaluation response;
@@ -213,7 +213,7 @@ DefaultModelServiceStub::ImportModelEvaluation(
 StatusOr<
     google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
 DefaultModelServiceStub::BatchImportModelEvaluationSlices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::
         BatchImportModelEvaluationSlicesRequest const& request) {
   google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse
@@ -228,7 +228,7 @@ DefaultModelServiceStub::BatchImportModelEvaluationSlices(
 
 StatusOr<google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
 DefaultModelServiceStub::BatchImportEvaluatedAnnotations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsRequest const&
         request) {
   google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse
@@ -243,7 +243,7 @@ DefaultModelServiceStub::BatchImportEvaluatedAnnotations(
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
 DefaultModelServiceStub::GetModelEvaluation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request) {
   google::cloud::aiplatform::v1::ModelEvaluation response;
   auto status = grpc_stub_->GetModelEvaluation(&context, request, &response);
@@ -255,7 +255,7 @@ DefaultModelServiceStub::GetModelEvaluation(
 
 StatusOr<google::cloud::aiplatform::v1::ListModelEvaluationsResponse>
 DefaultModelServiceStub::ListModelEvaluations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListModelEvaluationsRequest const& request) {
   google::cloud::aiplatform::v1::ListModelEvaluationsResponse response;
   auto status = grpc_stub_->ListModelEvaluations(&context, request, &response);
@@ -267,7 +267,7 @@ DefaultModelServiceStub::ListModelEvaluations(
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluationSlice>
 DefaultModelServiceStub::GetModelEvaluationSlice(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&
         request) {
   google::cloud::aiplatform::v1::ModelEvaluationSlice response;
@@ -281,7 +281,7 @@ DefaultModelServiceStub::GetModelEvaluationSlice(
 
 StatusOr<google::cloud::aiplatform::v1::ListModelEvaluationSlicesResponse>
 DefaultModelServiceStub::ListModelEvaluationSlices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest const&
         request) {
   google::cloud::aiplatform::v1::ListModelEvaluationSlicesResponse response;

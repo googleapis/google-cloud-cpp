@@ -33,42 +33,42 @@ ExecutionsAuth::ExecutionsAuth(
 
 StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse>
 ExecutionsAuth::ListExecutions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::executions::v1::ListExecutionsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListExecutions(context, request);
+  return child_->ListExecutions(context, options, request);
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 ExecutionsAuth::CreateExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::executions::v1::CreateExecutionRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateExecution(context, request);
+  return child_->CreateExecution(context, options, request);
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 ExecutionsAuth::GetExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::executions::v1::GetExecutionRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetExecution(context, request);
+  return child_->GetExecution(context, options, request);
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 ExecutionsAuth::CancelExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::executions::v1::CancelExecutionRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CancelExecution(context, request);
+  return child_->CancelExecution(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -46,26 +46,26 @@ RepositoryManagerTracingStub::AsyncCreateConnection(
 
 StatusOr<google::devtools::cloudbuild::v2::Connection>
 RepositoryManagerTracingStub::GetConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::GetConnectionRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.devtools.cloudbuild.v2.RepositoryManager", "GetConnection");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetConnection(context, request));
+                           child_->GetConnection(context, options, request));
 }
 
 StatusOr<google::devtools::cloudbuild::v2::ListConnectionsResponse>
 RepositoryManagerTracingStub::ListConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::ListConnectionsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.devtools.cloudbuild.v2.RepositoryManager", "ListConnections");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListConnections(context, request));
+                           child_->ListConnections(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -124,26 +124,26 @@ RepositoryManagerTracingStub::AsyncBatchCreateRepositories(
 
 StatusOr<google::devtools::cloudbuild::v2::Repository>
 RepositoryManagerTracingStub::GetRepository(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::GetRepositoryRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.devtools.cloudbuild.v2.RepositoryManager", "GetRepository");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetRepository(context, request));
+                           child_->GetRepository(context, options, request));
 }
 
 StatusOr<google::devtools::cloudbuild::v2::ListRepositoriesResponse>
 RepositoryManagerTracingStub::ListRepositories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::ListRepositoriesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.devtools.cloudbuild.v2.RepositoryManager", "ListRepositories");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListRepositories(context, request));
+                           child_->ListRepositories(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -161,32 +161,32 @@ RepositoryManagerTracingStub::AsyncDeleteRepository(
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
 RepositoryManagerTracingStub::FetchReadWriteToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.devtools.cloudbuild.v2.RepositoryManager", "FetchReadWriteToken");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->FetchReadWriteToken(context, request));
+  return internal::EndSpan(
+      context, *span, child_->FetchReadWriteToken(context, options, request));
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
 RepositoryManagerTracingStub::FetchReadToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.devtools.cloudbuild.v2.RepositoryManager", "FetchReadToken");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->FetchReadToken(context, request));
+                           child_->FetchReadToken(context, options, request));
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse>
 RepositoryManagerTracingStub::FetchLinkableRepositories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
         request) {
   auto span =
@@ -194,20 +194,21 @@ RepositoryManagerTracingStub::FetchLinkableRepositories(
                              "FetchLinkableRepositories");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->FetchLinkableRepositories(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->FetchLinkableRepositories(context, options, request));
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
 RepositoryManagerTracingStub::FetchGitRefs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.devtools.cloudbuild.v2.RepositoryManager", "FetchGitRefs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->FetchGitRefs(context, request));
+                           child_->FetchGitRefs(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

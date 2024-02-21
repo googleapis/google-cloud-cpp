@@ -40,7 +40,7 @@ class QuotaControllerMetadata : public QuotaControllerStub {
       std::string api_client_header = "");
 
   StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
-  AllocateQuota(grpc::ClientContext& context,
+  AllocateQuota(grpc::ClientContext& context, Options const& options,
                 google::api::servicecontrol::v1::AllocateQuotaRequest const&
                     request) override;
 

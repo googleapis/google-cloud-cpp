@@ -33,19 +33,19 @@ DocumentsAuth::DocumentsAuth(
 
 StatusOr<google::cloud::dialogflow::v2::ListDocumentsResponse>
 DocumentsAuth::ListDocuments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListDocumentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDocuments(context, request);
+  return child_->ListDocuments(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Document> DocumentsAuth::GetDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetDocumentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDocument(context, request);
+  return child_->GetDocument(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_COMPLETION_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_COMPLETION_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/talent/v4/completion_service.grpc.pb.h>
@@ -36,7 +37,7 @@ class CompletionStub {
 
   virtual StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
   CompleteQuery(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::CompleteQueryRequest const& request) = 0;
 };
 
@@ -48,7 +49,7 @@ class DefaultCompletionStub : public CompletionStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::talent::v4::CompleteQueryResponse> CompleteQuery(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::CompleteQueryRequest const& request) override;
 
  private:

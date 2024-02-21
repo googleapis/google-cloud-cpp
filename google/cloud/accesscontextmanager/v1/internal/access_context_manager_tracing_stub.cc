@@ -33,7 +33,7 @@ AccessContextManagerTracingStub::AccessContextManagerTracingStub(
 
 StatusOr<google::identity::accesscontextmanager::v1::ListAccessPoliciesResponse>
 AccessContextManagerTracingStub::ListAccessPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -41,13 +41,13 @@ AccessContextManagerTracingStub::ListAccessPolicies(
       "ListAccessPolicies");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListAccessPolicies(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListAccessPolicies(context, options, request));
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
 AccessContextManagerTracingStub::GetAccessPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -56,7 +56,7 @@ AccessContextManagerTracingStub::GetAccessPolicy(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetAccessPolicy(context, request));
+                           child_->GetAccessPolicy(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -105,7 +105,7 @@ AccessContextManagerTracingStub::AsyncDeleteAccessPolicy(
 
 StatusOr<google::identity::accesscontextmanager::v1::ListAccessLevelsResponse>
 AccessContextManagerTracingStub::ListAccessLevels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::ListAccessLevelsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -114,12 +114,12 @@ AccessContextManagerTracingStub::ListAccessLevels(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListAccessLevels(context, request));
+                           child_->ListAccessLevels(context, options, request));
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
 AccessContextManagerTracingStub::GetAccessLevel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::GetAccessLevelRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -128,7 +128,7 @@ AccessContextManagerTracingStub::GetAccessLevel(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetAccessLevel(context, request));
+                           child_->GetAccessLevel(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -194,7 +194,7 @@ AccessContextManagerTracingStub::AsyncReplaceAccessLevels(
 StatusOr<
     google::identity::accesscontextmanager::v1::ListServicePerimetersResponse>
 AccessContextManagerTracingStub::ListServicePerimeters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::
         ListServicePerimetersRequest const& request) {
   auto span = internal::MakeSpanGrpc(
@@ -202,13 +202,13 @@ AccessContextManagerTracingStub::ListServicePerimeters(
       "ListServicePerimeters");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListServicePerimeters(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListServicePerimeters(context, options, request));
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
 AccessContextManagerTracingStub::GetServicePerimeter(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::
         GetServicePerimeterRequest const& request) {
   auto span = internal::MakeSpanGrpc(
@@ -216,8 +216,8 @@ AccessContextManagerTracingStub::GetServicePerimeter(
       "GetServicePerimeter");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetServicePerimeter(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetServicePerimeter(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -298,7 +298,7 @@ AccessContextManagerTracingStub::AsyncCommitServicePerimeters(
 StatusOr<google::identity::accesscontextmanager::v1::
              ListGcpUserAccessBindingsResponse>
 AccessContextManagerTracingStub::ListGcpUserAccessBindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::
         ListGcpUserAccessBindingsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
@@ -306,13 +306,14 @@ AccessContextManagerTracingStub::ListGcpUserAccessBindings(
       "ListGcpUserAccessBindings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListGcpUserAccessBindings(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListGcpUserAccessBindings(context, options, request));
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
 AccessContextManagerTracingStub::GetGcpUserAccessBinding(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::
         GetGcpUserAccessBindingRequest const& request) {
   auto span = internal::MakeSpanGrpc(
@@ -320,8 +321,9 @@ AccessContextManagerTracingStub::GetGcpUserAccessBinding(
       "GetGcpUserAccessBinding");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetGcpUserAccessBinding(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GetGcpUserAccessBinding(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -373,7 +375,7 @@ AccessContextManagerTracingStub::AsyncDeleteGcpUserAccessBinding(
 }
 
 StatusOr<google::iam::v1::Policy> AccessContextManagerTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.identity.accesscontextmanager.v1.AccessContextManager",
@@ -381,11 +383,11 @@ StatusOr<google::iam::v1::Policy> AccessContextManagerTracingStub::SetIamPolicy(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->SetIamPolicy(context, request));
+                           child_->SetIamPolicy(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy> AccessContextManagerTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.identity.accesscontextmanager.v1.AccessContextManager",
@@ -393,20 +395,20 @@ StatusOr<google::iam::v1::Policy> AccessContextManagerTracingStub::GetIamPolicy(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetIamPolicy(context, request));
+                           child_->GetIamPolicy(context, options, request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 AccessContextManagerTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.identity.accesscontextmanager.v1.AccessContextManager",
       "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

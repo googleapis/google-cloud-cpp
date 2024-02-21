@@ -37,27 +37,27 @@ FunctionServiceLogging::FunctionServiceLogging(
 
 StatusOr<google::cloud::functions::v2::Function>
 FunctionServiceLogging::GetFunction(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v2::GetFunctionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::functions::v2::GetFunctionRequest const& request) {
-        return child_->GetFunction(context, request);
+        return child_->GetFunction(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::functions::v2::ListFunctionsResponse>
 FunctionServiceLogging::ListFunctions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v2::ListFunctionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::functions::v2::ListFunctionsRequest const& request) {
-        return child_->ListFunctions(context, request);
+        return child_->ListFunctions(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -110,40 +110,40 @@ FunctionServiceLogging::AsyncDeleteFunction(
 
 StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>
 FunctionServiceLogging::GenerateUploadUrl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v2::GenerateUploadUrlRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::functions::v2::GenerateUploadUrlRequest const&
                  request) {
-        return child_->GenerateUploadUrl(context, request);
+        return child_->GenerateUploadUrl(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::functions::v2::GenerateDownloadUrlResponse>
 FunctionServiceLogging::GenerateDownloadUrl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v2::GenerateDownloadUrlRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::functions::v2::GenerateDownloadUrlRequest const&
                  request) {
-        return child_->GenerateDownloadUrl(context, request);
+        return child_->GenerateDownloadUrl(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::functions::v2::ListRuntimesResponse>
 FunctionServiceLogging::ListRuntimes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v2::ListRuntimesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::functions::v2::ListRuntimesRequest const& request) {
-        return child_->ListRuntimes(context, request);
+        return child_->ListRuntimes(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

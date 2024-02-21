@@ -54,30 +54,30 @@ DatasetServiceMetadata::AsyncCreateDataset(
 
 StatusOr<google::cloud::aiplatform::v1::Dataset>
 DatasetServiceMetadata::GetDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetDatasetRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDataset(context, request);
+  return child_->GetDataset(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Dataset>
 DatasetServiceMetadata::UpdateDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateDatasetRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("dataset.name=",
                            internal::UrlEncode(request.dataset().name())));
-  return child_->UpdateDataset(context, request);
+  return child_->UpdateDataset(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListDatasetsResponse>
 DatasetServiceMetadata::ListDatasets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListDatasetsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDatasets(context, request);
+  return child_->ListDatasets(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -134,20 +134,20 @@ DatasetServiceMetadata::AsyncDeleteDatasetVersion(
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
 DatasetServiceMetadata::GetDatasetVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDatasetVersion(context, request);
+  return child_->GetDatasetVersion(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListDatasetVersionsResponse>
 DatasetServiceMetadata::ListDatasetVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListDatasetVersionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDatasetVersions(context, request);
+  return child_->ListDatasetVersions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -164,29 +164,29 @@ DatasetServiceMetadata::AsyncRestoreDatasetVersion(
 
 StatusOr<google::cloud::aiplatform::v1::ListDataItemsResponse>
 DatasetServiceMetadata::ListDataItems(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListDataItemsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDataItems(context, request);
+  return child_->ListDataItems(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::SearchDataItemsResponse>
 DatasetServiceMetadata::SearchDataItems(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::SearchDataItemsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("dataset=", internal::UrlEncode(request.dataset())));
-  return child_->SearchDataItems(context, request);
+  return child_->SearchDataItems(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListSavedQueriesResponse>
 DatasetServiceMetadata::ListSavedQueries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListSavedQueriesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListSavedQueries(context, request);
+  return child_->ListSavedQueries(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -202,20 +202,20 @@ DatasetServiceMetadata::AsyncDeleteSavedQuery(
 
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
 DatasetServiceMetadata::GetAnnotationSpec(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAnnotationSpec(context, request);
+  return child_->GetAnnotationSpec(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListAnnotationsResponse>
 DatasetServiceMetadata::ListAnnotations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListAnnotationsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListAnnotations(context, request);
+  return child_->ListAnnotations(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

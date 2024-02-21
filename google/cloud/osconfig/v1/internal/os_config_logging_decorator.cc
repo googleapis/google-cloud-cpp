@@ -37,157 +37,157 @@ OsConfigServiceLogging::OsConfigServiceLogging(
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
 OsConfigServiceLogging::ExecutePatchJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ExecutePatchJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::osconfig::v1::ExecutePatchJobRequest const& request) {
-        return child_->ExecutePatchJob(context, request);
+        return child_->ExecutePatchJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
 OsConfigServiceLogging::GetPatchJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetPatchJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::GetPatchJobRequest const& request) {
-        return child_->GetPatchJob(context, request);
+        return child_->GetPatchJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
 OsConfigServiceLogging::CancelPatchJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::CancelPatchJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::osconfig::v1::CancelPatchJobRequest const& request) {
-        return child_->CancelPatchJob(context, request);
+        return child_->CancelPatchJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListPatchJobsResponse>
 OsConfigServiceLogging::ListPatchJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListPatchJobsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::ListPatchJobsRequest const& request) {
-        return child_->ListPatchJobs(context, request);
+        return child_->ListPatchJobs(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListPatchJobInstanceDetailsResponse>
 OsConfigServiceLogging::ListPatchJobInstanceDetails(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::osconfig::v1::ListPatchJobInstanceDetailsRequest const&
               request) {
-        return child_->ListPatchJobInstanceDetails(context, request);
+        return child_->ListPatchJobInstanceDetails(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceLogging::CreatePatchDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::CreatePatchDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::CreatePatchDeploymentRequest const&
                  request) {
-        return child_->CreatePatchDeployment(context, request);
+        return child_->CreatePatchDeployment(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceLogging::GetPatchDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetPatchDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::GetPatchDeploymentRequest const&
                  request) {
-        return child_->GetPatchDeployment(context, request);
+        return child_->GetPatchDeployment(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListPatchDeploymentsResponse>
 OsConfigServiceLogging::ListPatchDeployments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListPatchDeploymentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::ListPatchDeploymentsRequest const&
                  request) {
-        return child_->ListPatchDeployments(context, request);
+        return child_->ListPatchDeployments(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status OsConfigServiceLogging::DeletePatchDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::DeletePatchDeploymentRequest const&
                  request) {
-        return child_->DeletePatchDeployment(context, request);
+        return child_->DeletePatchDeployment(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceLogging::UpdatePatchDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const&
                  request) {
-        return child_->UpdatePatchDeployment(context, request);
+        return child_->UpdatePatchDeployment(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceLogging::PausePatchDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::PausePatchDeploymentRequest const&
                  request) {
-        return child_->PausePatchDeployment(context, request);
+        return child_->PausePatchDeployment(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::v1::PatchDeployment>
 OsConfigServiceLogging::ResumePatchDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::ResumePatchDeploymentRequest const&
                  request) {
-        return child_->ResumePatchDeployment(context, request);
+        return child_->ResumePatchDeployment(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

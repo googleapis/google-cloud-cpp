@@ -37,60 +37,60 @@ CompanyServiceLogging::CompanyServiceLogging(
 
 StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceLogging::CreateCompany(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::CreateCompanyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::CreateCompanyRequest const& request) {
-        return child_->CreateCompany(context, request);
+        return child_->CreateCompany(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::talent::v4::Company> CompanyServiceLogging::GetCompany(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::GetCompanyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::GetCompanyRequest const& request) {
-        return child_->GetCompany(context, request);
+        return child_->GetCompany(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceLogging::UpdateCompany(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::UpdateCompanyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::UpdateCompanyRequest const& request) {
-        return child_->UpdateCompany(context, request);
+        return child_->UpdateCompany(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status CompanyServiceLogging::DeleteCompany(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::DeleteCompanyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::DeleteCompanyRequest const& request) {
-        return child_->DeleteCompany(context, request);
+        return child_->DeleteCompany(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::talent::v4::ListCompaniesResponse>
 CompanyServiceLogging::ListCompanies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::ListCompaniesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::ListCompaniesRequest const& request) {
-        return child_->ListCompanies(context, request);
+        return child_->ListCompanies(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

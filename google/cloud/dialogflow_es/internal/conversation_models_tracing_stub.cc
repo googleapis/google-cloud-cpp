@@ -48,19 +48,19 @@ ConversationModelsTracingStub::AsyncCreateConversationModel(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationModel>
 ConversationModelsTracingStub::GetConversationModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetConversationModelRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.v2.ConversationModels", "GetConversationModel");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetConversationModel(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetConversationModel(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationModelsResponse>
 ConversationModelsTracingStub::ListConversationModels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListConversationModelsRequest const&
         request) {
   auto span =
@@ -68,8 +68,9 @@ ConversationModelsTracingStub::ListConversationModels(
                              "ListConversationModels");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListConversationModels(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListConversationModels(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -120,7 +121,7 @@ ConversationModelsTracingStub::AsyncUndeployConversationModel(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
 ConversationModelsTracingStub::GetConversationModelEvaluation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest const&
         request) {
   auto span =
@@ -129,13 +130,14 @@ ConversationModelsTracingStub::GetConversationModelEvaluation(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
-      context, *span, child_->GetConversationModelEvaluation(context, request));
+      context, *span,
+      child_->GetConversationModelEvaluation(context, options, request));
 }
 
 StatusOr<
     google::cloud::dialogflow::v2::ListConversationModelEvaluationsResponse>
 ConversationModelsTracingStub::ListConversationModelEvaluations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::
         ListConversationModelEvaluationsRequest const& request) {
   auto span =
@@ -145,7 +147,7 @@ ConversationModelsTracingStub::ListConversationModelEvaluations(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
-      child_->ListConversationModelEvaluations(context, request));
+      child_->ListConversationModelEvaluations(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

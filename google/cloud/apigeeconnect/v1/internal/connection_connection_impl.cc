@@ -71,21 +71,22 @@ ConnectionServiceConnectionImpl::ListConnections(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::apigeeconnect::v1::Connection>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<apigeeconnect_v1::ConnectionServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::apigeeconnect::v1::ListConnectionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::apigeeconnect::v1::ListConnectionsRequest const&
                     request) {
-              return stub->ListConnections(context, request);
+              return stub->ListConnections(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::apigeeconnect::v1::ListConnectionsResponse r) {
         std::vector<google::cloud::apigeeconnect::v1::Connection> result(

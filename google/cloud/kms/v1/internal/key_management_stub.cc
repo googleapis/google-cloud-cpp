@@ -32,7 +32,7 @@ KeyManagementServiceStub::~KeyManagementServiceStub() = default;
 
 StatusOr<google::cloud::kms::v1::ListKeyRingsResponse>
 DefaultKeyManagementServiceStub::ListKeyRings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::ListKeyRingsRequest const& request) {
   google::cloud::kms::v1::ListKeyRingsResponse response;
   auto status = grpc_stub_->ListKeyRings(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultKeyManagementServiceStub::ListKeyRings(
 
 StatusOr<google::cloud::kms::v1::ListCryptoKeysResponse>
 DefaultKeyManagementServiceStub::ListCryptoKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::ListCryptoKeysRequest const& request) {
   google::cloud::kms::v1::ListCryptoKeysResponse response;
   auto status = grpc_stub_->ListCryptoKeys(&context, request, &response);
@@ -56,7 +56,7 @@ DefaultKeyManagementServiceStub::ListCryptoKeys(
 
 StatusOr<google::cloud::kms::v1::ListCryptoKeyVersionsResponse>
 DefaultKeyManagementServiceStub::ListCryptoKeyVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::ListCryptoKeyVersionsRequest const& request) {
   google::cloud::kms::v1::ListCryptoKeyVersionsResponse response;
   auto status = grpc_stub_->ListCryptoKeyVersions(&context, request, &response);
@@ -68,7 +68,7 @@ DefaultKeyManagementServiceStub::ListCryptoKeyVersions(
 
 StatusOr<google::cloud::kms::v1::ListImportJobsResponse>
 DefaultKeyManagementServiceStub::ListImportJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::ListImportJobsRequest const& request) {
   google::cloud::kms::v1::ListImportJobsResponse response;
   auto status = grpc_stub_->ListImportJobs(&context, request, &response);
@@ -80,7 +80,7 @@ DefaultKeyManagementServiceStub::ListImportJobs(
 
 StatusOr<google::cloud::kms::v1::KeyRing>
 DefaultKeyManagementServiceStub::GetKeyRing(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::GetKeyRingRequest const& request) {
   google::cloud::kms::v1::KeyRing response;
   auto status = grpc_stub_->GetKeyRing(&context, request, &response);
@@ -92,7 +92,7 @@ DefaultKeyManagementServiceStub::GetKeyRing(
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
 DefaultKeyManagementServiceStub::GetCryptoKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::GetCryptoKeyRequest const& request) {
   google::cloud::kms::v1::CryptoKey response;
   auto status = grpc_stub_->GetCryptoKey(&context, request, &response);
@@ -104,7 +104,7 @@ DefaultKeyManagementServiceStub::GetCryptoKey(
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 DefaultKeyManagementServiceStub::GetCryptoKeyVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request) {
   google::cloud::kms::v1::CryptoKeyVersion response;
   auto status = grpc_stub_->GetCryptoKeyVersion(&context, request, &response);
@@ -116,7 +116,7 @@ DefaultKeyManagementServiceStub::GetCryptoKeyVersion(
 
 StatusOr<google::cloud::kms::v1::PublicKey>
 DefaultKeyManagementServiceStub::GetPublicKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::GetPublicKeyRequest const& request) {
   google::cloud::kms::v1::PublicKey response;
   auto status = grpc_stub_->GetPublicKey(&context, request, &response);
@@ -128,7 +128,7 @@ DefaultKeyManagementServiceStub::GetPublicKey(
 
 StatusOr<google::cloud::kms::v1::ImportJob>
 DefaultKeyManagementServiceStub::GetImportJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::GetImportJobRequest const& request) {
   google::cloud::kms::v1::ImportJob response;
   auto status = grpc_stub_->GetImportJob(&context, request, &response);
@@ -140,7 +140,7 @@ DefaultKeyManagementServiceStub::GetImportJob(
 
 StatusOr<google::cloud::kms::v1::KeyRing>
 DefaultKeyManagementServiceStub::CreateKeyRing(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::CreateKeyRingRequest const& request) {
   google::cloud::kms::v1::KeyRing response;
   auto status = grpc_stub_->CreateKeyRing(&context, request, &response);
@@ -152,7 +152,7 @@ DefaultKeyManagementServiceStub::CreateKeyRing(
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
 DefaultKeyManagementServiceStub::CreateCryptoKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::CreateCryptoKeyRequest const& request) {
   google::cloud::kms::v1::CryptoKey response;
   auto status = grpc_stub_->CreateCryptoKey(&context, request, &response);
@@ -164,7 +164,7 @@ DefaultKeyManagementServiceStub::CreateCryptoKey(
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 DefaultKeyManagementServiceStub::CreateCryptoKeyVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request) {
   google::cloud::kms::v1::CryptoKeyVersion response;
   auto status =
@@ -177,7 +177,7 @@ DefaultKeyManagementServiceStub::CreateCryptoKeyVersion(
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 DefaultKeyManagementServiceStub::ImportCryptoKeyVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request) {
   google::cloud::kms::v1::CryptoKeyVersion response;
   auto status =
@@ -190,7 +190,7 @@ DefaultKeyManagementServiceStub::ImportCryptoKeyVersion(
 
 StatusOr<google::cloud::kms::v1::ImportJob>
 DefaultKeyManagementServiceStub::CreateImportJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::CreateImportJobRequest const& request) {
   google::cloud::kms::v1::ImportJob response;
   auto status = grpc_stub_->CreateImportJob(&context, request, &response);
@@ -202,7 +202,7 @@ DefaultKeyManagementServiceStub::CreateImportJob(
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
 DefaultKeyManagementServiceStub::UpdateCryptoKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::UpdateCryptoKeyRequest const& request) {
   google::cloud::kms::v1::CryptoKey response;
   auto status = grpc_stub_->UpdateCryptoKey(&context, request, &response);
@@ -214,7 +214,7 @@ DefaultKeyManagementServiceStub::UpdateCryptoKey(
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 DefaultKeyManagementServiceStub::UpdateCryptoKeyVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request) {
   google::cloud::kms::v1::CryptoKeyVersion response;
   auto status =
@@ -227,7 +227,7 @@ DefaultKeyManagementServiceStub::UpdateCryptoKeyVersion(
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
 DefaultKeyManagementServiceStub::UpdateCryptoKeyPrimaryVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const&
         request) {
   google::cloud::kms::v1::CryptoKey response;
@@ -241,7 +241,7 @@ DefaultKeyManagementServiceStub::UpdateCryptoKeyPrimaryVersion(
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 DefaultKeyManagementServiceStub::DestroyCryptoKeyVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request) {
   google::cloud::kms::v1::CryptoKeyVersion response;
   auto status =
@@ -254,7 +254,7 @@ DefaultKeyManagementServiceStub::DestroyCryptoKeyVersion(
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 DefaultKeyManagementServiceStub::RestoreCryptoKeyVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request) {
   google::cloud::kms::v1::CryptoKeyVersion response;
   auto status =
@@ -267,7 +267,7 @@ DefaultKeyManagementServiceStub::RestoreCryptoKeyVersion(
 
 StatusOr<google::cloud::kms::v1::EncryptResponse>
 DefaultKeyManagementServiceStub::Encrypt(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::EncryptRequest const& request) {
   google::cloud::kms::v1::EncryptResponse response;
   auto status = grpc_stub_->Encrypt(&context, request, &response);
@@ -279,7 +279,7 @@ DefaultKeyManagementServiceStub::Encrypt(
 
 StatusOr<google::cloud::kms::v1::DecryptResponse>
 DefaultKeyManagementServiceStub::Decrypt(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::DecryptRequest const& request) {
   google::cloud::kms::v1::DecryptResponse response;
   auto status = grpc_stub_->Decrypt(&context, request, &response);
@@ -291,7 +291,7 @@ DefaultKeyManagementServiceStub::Decrypt(
 
 StatusOr<google::cloud::kms::v1::RawEncryptResponse>
 DefaultKeyManagementServiceStub::RawEncrypt(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::RawEncryptRequest const& request) {
   google::cloud::kms::v1::RawEncryptResponse response;
   auto status = grpc_stub_->RawEncrypt(&context, request, &response);
@@ -303,7 +303,7 @@ DefaultKeyManagementServiceStub::RawEncrypt(
 
 StatusOr<google::cloud::kms::v1::RawDecryptResponse>
 DefaultKeyManagementServiceStub::RawDecrypt(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::RawDecryptRequest const& request) {
   google::cloud::kms::v1::RawDecryptResponse response;
   auto status = grpc_stub_->RawDecrypt(&context, request, &response);
@@ -315,7 +315,7 @@ DefaultKeyManagementServiceStub::RawDecrypt(
 
 StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
 DefaultKeyManagementServiceStub::AsymmetricSign(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::AsymmetricSignRequest const& request) {
   google::cloud::kms::v1::AsymmetricSignResponse response;
   auto status = grpc_stub_->AsymmetricSign(&context, request, &response);
@@ -327,7 +327,7 @@ DefaultKeyManagementServiceStub::AsymmetricSign(
 
 StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse>
 DefaultKeyManagementServiceStub::AsymmetricDecrypt(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::AsymmetricDecryptRequest const& request) {
   google::cloud::kms::v1::AsymmetricDecryptResponse response;
   auto status = grpc_stub_->AsymmetricDecrypt(&context, request, &response);
@@ -339,7 +339,7 @@ DefaultKeyManagementServiceStub::AsymmetricDecrypt(
 
 StatusOr<google::cloud::kms::v1::MacSignResponse>
 DefaultKeyManagementServiceStub::MacSign(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::MacSignRequest const& request) {
   google::cloud::kms::v1::MacSignResponse response;
   auto status = grpc_stub_->MacSign(&context, request, &response);
@@ -351,7 +351,7 @@ DefaultKeyManagementServiceStub::MacSign(
 
 StatusOr<google::cloud::kms::v1::MacVerifyResponse>
 DefaultKeyManagementServiceStub::MacVerify(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::MacVerifyRequest const& request) {
   google::cloud::kms::v1::MacVerifyResponse response;
   auto status = grpc_stub_->MacVerify(&context, request, &response);
@@ -363,7 +363,7 @@ DefaultKeyManagementServiceStub::MacVerify(
 
 StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
 DefaultKeyManagementServiceStub::GenerateRandomBytes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::v1::GenerateRandomBytesRequest const& request) {
   google::cloud::kms::v1::GenerateRandomBytesResponse response;
   auto status = grpc_stub_->GenerateRandomBytes(&context, request, &response);

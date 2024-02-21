@@ -44,11 +44,11 @@ CompletionServiceMetadata::CompletionServiceMetadata(
 
 StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
 CompletionServiceMetadata::CompleteQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::CompleteQueryRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("catalog=", internal::UrlEncode(request.catalog())));
-  return child_->CompleteQuery(context, request);
+  return child_->CompleteQuery(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

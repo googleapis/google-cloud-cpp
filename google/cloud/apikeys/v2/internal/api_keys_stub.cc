@@ -49,7 +49,7 @@ DefaultApiKeysStub::AsyncCreateKey(
 
 StatusOr<google::api::apikeys::v2::ListKeysResponse>
 DefaultApiKeysStub::ListKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::apikeys::v2::ListKeysRequest const& request) {
   google::api::apikeys::v2::ListKeysResponse response;
   auto status = grpc_stub_->ListKeys(&context, request, &response);
@@ -60,7 +60,7 @@ DefaultApiKeysStub::ListKeys(
 }
 
 StatusOr<google::api::apikeys::v2::Key> DefaultApiKeysStub::GetKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::apikeys::v2::GetKeyRequest const& request) {
   google::api::apikeys::v2::Key response;
   auto status = grpc_stub_->GetKey(&context, request, &response);
@@ -72,7 +72,7 @@ StatusOr<google::api::apikeys::v2::Key> DefaultApiKeysStub::GetKey(
 
 StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
 DefaultApiKeysStub::GetKeyString(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::apikeys::v2::GetKeyStringRequest const& request) {
   google::api::apikeys::v2::GetKeyStringResponse response;
   auto status = grpc_stub_->GetKeyString(&context, request, &response);
@@ -133,7 +133,7 @@ DefaultApiKeysStub::AsyncUndeleteKey(
 
 StatusOr<google::api::apikeys::v2::LookupKeyResponse>
 DefaultApiKeysStub::LookupKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::apikeys::v2::LookupKeyRequest const& request) {
   google::api::apikeys::v2::LookupKeyResponse response;
   auto status = grpc_stub_->LookupKey(&context, request, &response);

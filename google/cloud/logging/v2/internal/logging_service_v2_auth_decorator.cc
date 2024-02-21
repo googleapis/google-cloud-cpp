@@ -33,47 +33,47 @@ LoggingServiceV2Auth::LoggingServiceV2Auth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 Status LoggingServiceV2Auth::DeleteLog(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::DeleteLogRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteLog(context, request);
+  return child_->DeleteLog(context, options, request);
 }
 
 StatusOr<google::logging::v2::WriteLogEntriesResponse>
 LoggingServiceV2Auth::WriteLogEntries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::WriteLogEntriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->WriteLogEntries(context, request);
+  return child_->WriteLogEntries(context, options, request);
 }
 
 StatusOr<google::logging::v2::ListLogEntriesResponse>
 LoggingServiceV2Auth::ListLogEntries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListLogEntriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListLogEntries(context, request);
+  return child_->ListLogEntries(context, options, request);
 }
 
 StatusOr<google::logging::v2::ListMonitoredResourceDescriptorsResponse>
 LoggingServiceV2Auth::ListMonitoredResourceDescriptors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListMonitoredResourceDescriptors(context, request);
+  return child_->ListMonitoredResourceDescriptors(context, options, request);
 }
 
 StatusOr<google::logging::v2::ListLogsResponse> LoggingServiceV2Auth::ListLogs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListLogsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListLogs(context, request);
+  return child_->ListLogs(context, options, request);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

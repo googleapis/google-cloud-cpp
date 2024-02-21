@@ -33,7 +33,7 @@ NetworkSecurityTracingStub::NetworkSecurityTracingStub(
 
 StatusOr<google::cloud::networksecurity::v1::ListAuthorizationPoliciesResponse>
 NetworkSecurityTracingStub::ListAuthorizationPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networksecurity::v1::ListAuthorizationPoliciesRequest const&
         request) {
   auto span =
@@ -41,13 +41,14 @@ NetworkSecurityTracingStub::ListAuthorizationPolicies(
                              "ListAuthorizationPolicies");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListAuthorizationPolicies(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListAuthorizationPolicies(context, options, request));
 }
 
 StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>
 NetworkSecurityTracingStub::GetAuthorizationPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networksecurity::v1::GetAuthorizationPolicyRequest const&
         request) {
   auto span =
@@ -55,8 +56,9 @@ NetworkSecurityTracingStub::GetAuthorizationPolicy(
                              "GetAuthorizationPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetAuthorizationPolicy(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GetAuthorizationPolicy(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -109,7 +111,7 @@ NetworkSecurityTracingStub::AsyncDeleteAuthorizationPolicy(
 
 StatusOr<google::cloud::networksecurity::v1::ListServerTlsPoliciesResponse>
 NetworkSecurityTracingStub::ListServerTlsPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest const&
         request) {
   auto span =
@@ -117,21 +119,21 @@ NetworkSecurityTracingStub::ListServerTlsPolicies(
                              "ListServerTlsPolicies");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListServerTlsPolicies(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListServerTlsPolicies(context, options, request));
 }
 
 StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>
 NetworkSecurityTracingStub::GetServerTlsPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networksecurity::v1::GetServerTlsPolicyRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networksecurity.v1.NetworkSecurity", "GetServerTlsPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetServerTlsPolicy(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetServerTlsPolicy(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -181,7 +183,7 @@ NetworkSecurityTracingStub::AsyncDeleteServerTlsPolicy(
 
 StatusOr<google::cloud::networksecurity::v1::ListClientTlsPoliciesResponse>
 NetworkSecurityTracingStub::ListClientTlsPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networksecurity::v1::ListClientTlsPoliciesRequest const&
         request) {
   auto span =
@@ -189,21 +191,21 @@ NetworkSecurityTracingStub::ListClientTlsPolicies(
                              "ListClientTlsPolicies");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListClientTlsPolicies(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListClientTlsPolicies(context, options, request));
 }
 
 StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>
 NetworkSecurityTracingStub::GetClientTlsPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networksecurity::v1::GetClientTlsPolicyRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networksecurity.v1.NetworkSecurity", "GetClientTlsPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetClientTlsPolicy(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetClientTlsPolicy(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

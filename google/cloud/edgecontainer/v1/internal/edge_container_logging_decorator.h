@@ -40,12 +40,12 @@ class EdgeContainerLogging : public EdgeContainerStub {
                        std::set<std::string> const& components);
 
   StatusOr<google::cloud::edgecontainer::v1::ListClustersResponse> ListClusters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgecontainer::v1::ListClustersRequest const& request)
       override;
 
   StatusOr<google::cloud::edgecontainer::v1::Cluster> GetCluster(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgecontainer::v1::GetClusterRequest const& request)
       override;
 
@@ -69,17 +69,17 @@ class EdgeContainerLogging : public EdgeContainerStub {
 
   StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
           request) override;
 
   StatusOr<google::cloud::edgecontainer::v1::ListNodePoolsResponse>
-  ListNodePools(grpc::ClientContext& context,
+  ListNodePools(grpc::ClientContext& context, Options const& options,
                 google::cloud::edgecontainer::v1::ListNodePoolsRequest const&
                     request) override;
 
   StatusOr<google::cloud::edgecontainer::v1::NodePool> GetNodePool(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgecontainer::v1::GetNodePoolRequest const& request)
       override;
 
@@ -102,23 +102,23 @@ class EdgeContainerLogging : public EdgeContainerStub {
       override;
 
   StatusOr<google::cloud::edgecontainer::v1::ListMachinesResponse> ListMachines(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgecontainer::v1::ListMachinesRequest const& request)
       override;
 
   StatusOr<google::cloud::edgecontainer::v1::Machine> GetMachine(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgecontainer::v1::GetMachineRequest const& request)
       override;
 
   StatusOr<google::cloud::edgecontainer::v1::ListVpnConnectionsResponse>
   ListVpnConnections(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgecontainer::v1::ListVpnConnectionsRequest const&
           request) override;
 
   StatusOr<google::cloud::edgecontainer::v1::VpnConnection> GetVpnConnection(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgecontainer::v1::GetVpnConnectionRequest const& request)
       override;
 

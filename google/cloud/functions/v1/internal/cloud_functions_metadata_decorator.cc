@@ -44,20 +44,20 @@ CloudFunctionsServiceMetadata::CloudFunctionsServiceMetadata(
 
 StatusOr<google::cloud::functions::v1::ListFunctionsResponse>
 CloudFunctionsServiceMetadata::ListFunctions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::ListFunctionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListFunctions(context, request);
+  return child_->ListFunctions(context, options, request);
 }
 
 StatusOr<google::cloud::functions::v1::CloudFunction>
 CloudFunctionsServiceMetadata::GetFunction(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::GetFunctionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetFunction(context, request);
+  return child_->GetFunction(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -94,57 +94,57 @@ CloudFunctionsServiceMetadata::AsyncDeleteFunction(
 
 StatusOr<google::cloud::functions::v1::CallFunctionResponse>
 CloudFunctionsServiceMetadata::CallFunction(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::CallFunctionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->CallFunction(context, request);
+  return child_->CallFunction(context, options, request);
 }
 
 StatusOr<google::cloud::functions::v1::GenerateUploadUrlResponse>
 CloudFunctionsServiceMetadata::GenerateUploadUrl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::GenerateUploadUrlRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->GenerateUploadUrl(context, request);
+  return child_->GenerateUploadUrl(context, options, request);
 }
 
 StatusOr<google::cloud::functions::v1::GenerateDownloadUrlResponse>
 CloudFunctionsServiceMetadata::GenerateDownloadUrl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::GenerateDownloadUrlRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GenerateDownloadUrl(context, request);
+  return child_->GenerateDownloadUrl(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> CloudFunctionsServiceMetadata::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> CloudFunctionsServiceMetadata::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 CloudFunctionsServiceMetadata::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

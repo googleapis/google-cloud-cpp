@@ -37,39 +37,41 @@ JobServiceLogging::JobServiceLogging(std::shared_ptr<JobServiceStub> child,
 
 StatusOr<google::cloud::aiplatform::v1::CustomJob>
 JobServiceLogging::CreateCustomJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateCustomJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::CreateCustomJobRequest const&
-                 request) { return child_->CreateCustomJob(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->CreateCustomJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::CustomJob>
 JobServiceLogging::GetCustomJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetCustomJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::GetCustomJobRequest const& request) {
-        return child_->GetCustomJob(context, request);
+        return child_->GetCustomJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListCustomJobsResponse>
 JobServiceLogging::ListCustomJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListCustomJobsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::ListCustomJobsRequest const& request) {
-        return child_->ListCustomJobs(context, request);
+        return child_->ListCustomJobs(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -90,53 +92,55 @@ JobServiceLogging::AsyncDeleteCustomJob(
 }
 
 Status JobServiceLogging::CancelCustomJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::CancelCustomJobRequest const&
-                 request) { return child_->CancelCustomJob(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->CancelCustomJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
 JobServiceLogging::CreateDataLabelingJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const&
                  request) {
-        return child_->CreateDataLabelingJob(context, request);
+        return child_->CreateDataLabelingJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
 JobServiceLogging::GetDataLabelingJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetDataLabelingJobRequest const&
                  request) {
-        return child_->GetDataLabelingJob(context, request);
+        return child_->GetDataLabelingJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListDataLabelingJobsResponse>
 JobServiceLogging::ListDataLabelingJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListDataLabelingJobsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ListDataLabelingJobsRequest const&
                  request) {
-        return child_->ListDataLabelingJobs(context, request);
+        return child_->ListDataLabelingJobs(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -158,58 +162,58 @@ JobServiceLogging::AsyncDeleteDataLabelingJob(
 }
 
 Status JobServiceLogging::CancelDataLabelingJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const&
                  request) {
-        return child_->CancelDataLabelingJob(context, request);
+        return child_->CancelDataLabelingJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
 JobServiceLogging::CreateHyperparameterTuningJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  CreateHyperparameterTuningJobRequest const& request) {
-        return child_->CreateHyperparameterTuningJob(context, request);
+        return child_->CreateHyperparameterTuningJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
 JobServiceLogging::GetHyperparameterTuningJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  GetHyperparameterTuningJobRequest const& request) {
-        return child_->GetHyperparameterTuningJob(context, request);
+        return child_->GetHyperparameterTuningJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListHyperparameterTuningJobsResponse>
 JobServiceLogging::ListHyperparameterTuningJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  ListHyperparameterTuningJobsRequest const& request) {
-        return child_->ListHyperparameterTuningJobs(context, request);
+        return child_->ListHyperparameterTuningJobs(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -231,51 +235,51 @@ JobServiceLogging::AsyncDeleteHyperparameterTuningJob(
 }
 
 Status JobServiceLogging::CancelHyperparameterTuningJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  CancelHyperparameterTuningJobRequest const& request) {
-        return child_->CancelHyperparameterTuningJob(context, request);
+        return child_->CancelHyperparameterTuningJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::NasJob> JobServiceLogging::CreateNasJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateNasJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::CreateNasJobRequest const& request) {
-        return child_->CreateNasJob(context, request);
+        return child_->CreateNasJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::NasJob> JobServiceLogging::GetNasJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetNasJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetNasJobRequest const& request) {
-        return child_->GetNasJob(context, request);
+        return child_->GetNasJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListNasJobsResponse>
 JobServiceLogging::ListNasJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListNasJobsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ListNasJobsRequest const& request) {
-        return child_->ListNasJobs(context, request);
+        return child_->ListNasJobs(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -295,85 +299,85 @@ JobServiceLogging::AsyncDeleteNasJob(
 }
 
 Status JobServiceLogging::CancelNasJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelNasJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::CancelNasJobRequest const& request) {
-        return child_->CancelNasJob(context, request);
+        return child_->CancelNasJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::NasTrialDetail>
 JobServiceLogging::GetNasTrialDetail(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetNasTrialDetailRequest const&
                  request) {
-        return child_->GetNasTrialDetail(context, request);
+        return child_->GetNasTrialDetail(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListNasTrialDetailsResponse>
 JobServiceLogging::ListNasTrialDetails(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListNasTrialDetailsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ListNasTrialDetailsRequest const&
                  request) {
-        return child_->ListNasTrialDetails(context, request);
+        return child_->ListNasTrialDetails(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
 JobServiceLogging::CreateBatchPredictionJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const&
               request) {
-        return child_->CreateBatchPredictionJob(context, request);
+        return child_->CreateBatchPredictionJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
 JobServiceLogging::GetBatchPredictionJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const&
                  request) {
-        return child_->GetBatchPredictionJob(context, request);
+        return child_->GetBatchPredictionJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListBatchPredictionJobsResponse>
 JobServiceLogging::ListBatchPredictionJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest const&
               request) {
-        return child_->ListBatchPredictionJobs(context, request);
+        return child_->ListBatchPredictionJobs(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -395,77 +399,80 @@ JobServiceLogging::AsyncDeleteBatchPredictionJob(
 }
 
 Status JobServiceLogging::CancelBatchPredictionJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
               request) {
-        return child_->CancelBatchPredictionJob(context, request);
+        return child_->CancelBatchPredictionJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
 JobServiceLogging::CreateModelDeploymentMonitoringJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         CreateModelDeploymentMonitoringJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  CreateModelDeploymentMonitoringJobRequest const& request) {
-        return child_->CreateModelDeploymentMonitoringJob(context, request);
+        return child_->CreateModelDeploymentMonitoringJob(context, options,
+                                                          request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::
              SearchModelDeploymentMonitoringStatsAnomaliesResponse>
 JobServiceLogging::SearchModelDeploymentMonitoringStatsAnomalies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         SearchModelDeploymentMonitoringStatsAnomaliesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  SearchModelDeploymentMonitoringStatsAnomaliesRequest const&
                      request) {
-        return child_->SearchModelDeploymentMonitoringStatsAnomalies(context,
-                                                                     request);
+        return child_->SearchModelDeploymentMonitoringStatsAnomalies(
+            context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
 JobServiceLogging::GetModelDeploymentMonitoringJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetModelDeploymentMonitoringJobRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  GetModelDeploymentMonitoringJobRequest const& request) {
-        return child_->GetModelDeploymentMonitoringJob(context, request);
+        return child_->GetModelDeploymentMonitoringJob(context, options,
+                                                       request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<
     google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsResponse>
 JobServiceLogging::ListModelDeploymentMonitoringJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         ListModelDeploymentMonitoringJobsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  ListModelDeploymentMonitoringJobsRequest const& request) {
-        return child_->ListModelDeploymentMonitoringJobs(context, request);
+        return child_->ListModelDeploymentMonitoringJobs(context, options,
+                                                         request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -505,29 +512,31 @@ JobServiceLogging::AsyncDeleteModelDeploymentMonitoringJob(
 }
 
 Status JobServiceLogging::PauseModelDeploymentMonitoringJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         PauseModelDeploymentMonitoringJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  PauseModelDeploymentMonitoringJobRequest const& request) {
-        return child_->PauseModelDeploymentMonitoringJob(context, request);
+        return child_->PauseModelDeploymentMonitoringJob(context, options,
+                                                         request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status JobServiceLogging::ResumeModelDeploymentMonitoringJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         ResumeModelDeploymentMonitoringJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  ResumeModelDeploymentMonitoringJobRequest const& request) {
-        return child_->ResumeModelDeploymentMonitoringJob(context, request);
+        return child_->ResumeModelDeploymentMonitoringJob(context, options,
+                                                          request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

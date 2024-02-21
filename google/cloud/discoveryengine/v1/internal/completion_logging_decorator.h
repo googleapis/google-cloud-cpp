@@ -40,7 +40,7 @@ class CompletionServiceLogging : public CompletionServiceStub {
                            std::set<std::string> const& components);
 
   StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
-  CompleteQuery(grpc::ClientContext& context,
+  CompleteQuery(grpc::ClientContext& context, Options const& options,
                 google::cloud::discoveryengine::v1::CompleteQueryRequest const&
                     request) override;
 

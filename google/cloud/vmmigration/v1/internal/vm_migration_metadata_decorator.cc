@@ -44,19 +44,19 @@ VmMigrationMetadata::VmMigrationMetadata(
 
 StatusOr<google::cloud::vmmigration::v1::ListSourcesResponse>
 VmMigrationMetadata::ListSources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListSourcesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListSources(context, request);
+  return child_->ListSources(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::Source> VmMigrationMetadata::GetSource(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetSourceRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetSource(context, request);
+  return child_->GetSource(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -92,31 +92,31 @@ VmMigrationMetadata::AsyncDeleteSource(
 
 StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
 VmMigrationMetadata::FetchInventory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::FetchInventoryRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("source=", internal::UrlEncode(request.source())));
-  return child_->FetchInventory(context, request);
+  return child_->FetchInventory(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListUtilizationReportsResponse>
 VmMigrationMetadata::ListUtilizationReports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListUtilizationReportsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListUtilizationReports(context, request);
+  return child_->ListUtilizationReports(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::UtilizationReport>
 VmMigrationMetadata::GetUtilizationReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetUtilizationReportRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetUtilizationReport(context, request);
+  return child_->GetUtilizationReport(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -145,22 +145,22 @@ VmMigrationMetadata::AsyncDeleteUtilizationReport(
 
 StatusOr<google::cloud::vmmigration::v1::ListDatacenterConnectorsResponse>
 VmMigrationMetadata::ListDatacenterConnectors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDatacenterConnectors(context, request);
+  return child_->ListDatacenterConnectors(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
 VmMigrationMetadata::GetDatacenterConnector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDatacenterConnector(context, request);
+  return child_->GetDatacenterConnector(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -213,20 +213,20 @@ VmMigrationMetadata::AsyncCreateMigratingVm(
 
 StatusOr<google::cloud::vmmigration::v1::ListMigratingVmsResponse>
 VmMigrationMetadata::ListMigratingVms(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListMigratingVmsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListMigratingVms(context, request);
+  return child_->ListMigratingVms(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::MigratingVm>
 VmMigrationMetadata::GetMigratingVm(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetMigratingVmRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetMigratingVm(context, request);
+  return child_->GetMigratingVm(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -319,20 +319,20 @@ VmMigrationMetadata::AsyncCancelCloneJob(
 
 StatusOr<google::cloud::vmmigration::v1::ListCloneJobsResponse>
 VmMigrationMetadata::ListCloneJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListCloneJobsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListCloneJobs(context, request);
+  return child_->ListCloneJobs(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::CloneJob>
 VmMigrationMetadata::GetCloneJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetCloneJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetCloneJob(context, request);
+  return child_->GetCloneJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -359,37 +359,37 @@ VmMigrationMetadata::AsyncCancelCutoverJob(
 
 StatusOr<google::cloud::vmmigration::v1::ListCutoverJobsResponse>
 VmMigrationMetadata::ListCutoverJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListCutoverJobsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListCutoverJobs(context, request);
+  return child_->ListCutoverJobs(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::CutoverJob>
 VmMigrationMetadata::GetCutoverJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetCutoverJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetCutoverJob(context, request);
+  return child_->GetCutoverJob(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListGroupsResponse>
 VmMigrationMetadata::ListGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListGroupsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListGroups(context, request);
+  return child_->ListGroups(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::Group> VmMigrationMetadata::GetGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetGroupRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetGroup(context, request);
+  return child_->GetGroup(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -448,20 +448,20 @@ VmMigrationMetadata::AsyncRemoveGroupMigration(
 
 StatusOr<google::cloud::vmmigration::v1::ListTargetProjectsResponse>
 VmMigrationMetadata::ListTargetProjects(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListTargetProjectsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListTargetProjects(context, request);
+  return child_->ListTargetProjects(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::TargetProject>
 VmMigrationMetadata::GetTargetProject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetTargetProjectRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetTargetProject(context, request);
+  return child_->GetTargetProject(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -501,21 +501,21 @@ VmMigrationMetadata::AsyncDeleteTargetProject(
 
 StatusOr<google::cloud::vmmigration::v1::ListReplicationCyclesResponse>
 VmMigrationMetadata::ListReplicationCycles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListReplicationCyclesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListReplicationCycles(context, request);
+  return child_->ListReplicationCycles(context, options, request);
 }
 
 StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
 VmMigrationMetadata::GetReplicationCycle(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetReplicationCycle(context, request);
+  return child_->GetReplicationCycle(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

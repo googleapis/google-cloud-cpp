@@ -56,30 +56,30 @@ ManagedIdentitiesServiceMetadata::AsyncCreateMicrosoftAdDomain(
 
 StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
 ManagedIdentitiesServiceMetadata::ResetAdminPassword(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->ResetAdminPassword(context, request);
+  return child_->ResetAdminPassword(context, options, request);
 }
 
 StatusOr<google::cloud::managedidentities::v1::ListDomainsResponse>
 ManagedIdentitiesServiceMetadata::ListDomains(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::managedidentities::v1::ListDomainsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDomains(context, request);
+  return child_->ListDomains(context, options, request);
 }
 
 StatusOr<google::cloud::managedidentities::v1::Domain>
 ManagedIdentitiesServiceMetadata::GetDomain(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::managedidentities::v1::GetDomainRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDomain(context, request);
+  return child_->GetDomain(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

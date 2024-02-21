@@ -40,11 +40,11 @@ class InstancesLogging : public InstancesStub {
                    std::set<std::string> const& components);
 
   StatusOr<google::appengine::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListInstancesRequest const& request) override;
 
   StatusOr<google::appengine::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(

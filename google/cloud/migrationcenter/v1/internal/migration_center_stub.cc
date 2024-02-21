@@ -33,7 +33,7 @@ MigrationCenterStub::~MigrationCenterStub() = default;
 
 StatusOr<google::cloud::migrationcenter::v1::ListAssetsResponse>
 DefaultMigrationCenterStub::ListAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::ListAssetsRequest const& request) {
   google::cloud::migrationcenter::v1::ListAssetsResponse response;
   auto status = grpc_stub_->ListAssets(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultMigrationCenterStub::ListAssets(
 
 StatusOr<google::cloud::migrationcenter::v1::Asset>
 DefaultMigrationCenterStub::GetAsset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::GetAssetRequest const& request) {
   google::cloud::migrationcenter::v1::Asset response;
   auto status = grpc_stub_->GetAsset(&context, request, &response);
@@ -57,7 +57,7 @@ DefaultMigrationCenterStub::GetAsset(
 
 StatusOr<google::cloud::migrationcenter::v1::Asset>
 DefaultMigrationCenterStub::UpdateAsset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::UpdateAssetRequest const& request) {
   google::cloud::migrationcenter::v1::Asset response;
   auto status = grpc_stub_->UpdateAsset(&context, request, &response);
@@ -69,7 +69,7 @@ DefaultMigrationCenterStub::UpdateAsset(
 
 StatusOr<google::cloud::migrationcenter::v1::BatchUpdateAssetsResponse>
 DefaultMigrationCenterStub::BatchUpdateAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::BatchUpdateAssetsRequest const&
         request) {
   google::cloud::migrationcenter::v1::BatchUpdateAssetsResponse response;
@@ -81,7 +81,7 @@ DefaultMigrationCenterStub::BatchUpdateAssets(
 }
 
 Status DefaultMigrationCenterStub::DeleteAsset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::DeleteAssetRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteAsset(&context, request, &response);
@@ -92,7 +92,7 @@ Status DefaultMigrationCenterStub::DeleteAsset(
 }
 
 Status DefaultMigrationCenterStub::BatchDeleteAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::BatchDeleteAssetsRequest const&
         request) {
   google::protobuf::Empty response;
@@ -105,7 +105,7 @@ Status DefaultMigrationCenterStub::BatchDeleteAssets(
 
 StatusOr<google::cloud::migrationcenter::v1::ReportAssetFramesResponse>
 DefaultMigrationCenterStub::ReportAssetFrames(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::ReportAssetFramesRequest const&
         request) {
   google::cloud::migrationcenter::v1::ReportAssetFramesResponse response;
@@ -118,7 +118,7 @@ DefaultMigrationCenterStub::ReportAssetFrames(
 
 StatusOr<google::cloud::migrationcenter::v1::AggregateAssetsValuesResponse>
 DefaultMigrationCenterStub::AggregateAssetsValues(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::AggregateAssetsValuesRequest const&
         request) {
   google::cloud::migrationcenter::v1::AggregateAssetsValuesResponse response;
@@ -149,7 +149,7 @@ DefaultMigrationCenterStub::AsyncCreateImportJob(
 
 StatusOr<google::cloud::migrationcenter::v1::ListImportJobsResponse>
 DefaultMigrationCenterStub::ListImportJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::ListImportJobsRequest const& request) {
   google::cloud::migrationcenter::v1::ListImportJobsResponse response;
   auto status = grpc_stub_->ListImportJobs(&context, request, &response);
@@ -161,7 +161,7 @@ DefaultMigrationCenterStub::ListImportJobs(
 
 StatusOr<google::cloud::migrationcenter::v1::ImportJob>
 DefaultMigrationCenterStub::GetImportJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::GetImportJobRequest const& request) {
   google::cloud::migrationcenter::v1::ImportJob response;
   auto status = grpc_stub_->GetImportJob(&context, request, &response);
@@ -246,7 +246,7 @@ DefaultMigrationCenterStub::AsyncRunImportJob(
 
 StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>
 DefaultMigrationCenterStub::GetImportDataFile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::GetImportDataFileRequest const&
         request) {
   google::cloud::migrationcenter::v1::ImportDataFile response;
@@ -259,7 +259,7 @@ DefaultMigrationCenterStub::GetImportDataFile(
 
 StatusOr<google::cloud::migrationcenter::v1::ListImportDataFilesResponse>
 DefaultMigrationCenterStub::ListImportDataFiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::ListImportDataFilesRequest const&
         request) {
   google::cloud::migrationcenter::v1::ListImportDataFilesResponse response;
@@ -312,7 +312,7 @@ DefaultMigrationCenterStub::AsyncDeleteImportDataFile(
 
 StatusOr<google::cloud::migrationcenter::v1::ListGroupsResponse>
 DefaultMigrationCenterStub::ListGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::ListGroupsRequest const& request) {
   google::cloud::migrationcenter::v1::ListGroupsResponse response;
   auto status = grpc_stub_->ListGroups(&context, request, &response);
@@ -324,7 +324,7 @@ DefaultMigrationCenterStub::ListGroups(
 
 StatusOr<google::cloud::migrationcenter::v1::Group>
 DefaultMigrationCenterStub::GetGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::GetGroupRequest const& request) {
   google::cloud::migrationcenter::v1::Group response;
   auto status = grpc_stub_->GetGroup(&context, request, &response);
@@ -428,7 +428,7 @@ DefaultMigrationCenterStub::AsyncRemoveAssetsFromGroup(
 
 StatusOr<google::cloud::migrationcenter::v1::ListErrorFramesResponse>
 DefaultMigrationCenterStub::ListErrorFrames(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::ListErrorFramesRequest const& request) {
   google::cloud::migrationcenter::v1::ListErrorFramesResponse response;
   auto status = grpc_stub_->ListErrorFrames(&context, request, &response);
@@ -440,7 +440,7 @@ DefaultMigrationCenterStub::ListErrorFrames(
 
 StatusOr<google::cloud::migrationcenter::v1::ErrorFrame>
 DefaultMigrationCenterStub::GetErrorFrame(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::GetErrorFrameRequest const& request) {
   google::cloud::migrationcenter::v1::ErrorFrame response;
   auto status = grpc_stub_->GetErrorFrame(&context, request, &response);
@@ -452,7 +452,7 @@ DefaultMigrationCenterStub::GetErrorFrame(
 
 StatusOr<google::cloud::migrationcenter::v1::ListSourcesResponse>
 DefaultMigrationCenterStub::ListSources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::ListSourcesRequest const& request) {
   google::cloud::migrationcenter::v1::ListSourcesResponse response;
   auto status = grpc_stub_->ListSources(&context, request, &response);
@@ -464,7 +464,7 @@ DefaultMigrationCenterStub::ListSources(
 
 StatusOr<google::cloud::migrationcenter::v1::Source>
 DefaultMigrationCenterStub::GetSource(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::GetSourceRequest const& request) {
   google::cloud::migrationcenter::v1::Source response;
   auto status = grpc_stub_->GetSource(&context, request, &response);
@@ -530,7 +530,7 @@ DefaultMigrationCenterStub::AsyncDeleteSource(
 
 StatusOr<google::cloud::migrationcenter::v1::ListPreferenceSetsResponse>
 DefaultMigrationCenterStub::ListPreferenceSets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::ListPreferenceSetsRequest const&
         request) {
   google::cloud::migrationcenter::v1::ListPreferenceSetsResponse response;
@@ -543,7 +543,7 @@ DefaultMigrationCenterStub::ListPreferenceSets(
 
 StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>
 DefaultMigrationCenterStub::GetPreferenceSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::GetPreferenceSetRequest const&
         request) {
   google::cloud::migrationcenter::v1::PreferenceSet response;
@@ -616,7 +616,7 @@ DefaultMigrationCenterStub::AsyncDeletePreferenceSet(
 
 StatusOr<google::cloud::migrationcenter::v1::Settings>
 DefaultMigrationCenterStub::GetSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::GetSettingsRequest const& request) {
   google::cloud::migrationcenter::v1::Settings response;
   auto status = grpc_stub_->GetSettings(&context, request, &response);
@@ -666,7 +666,7 @@ DefaultMigrationCenterStub::AsyncCreateReportConfig(
 
 StatusOr<google::cloud::migrationcenter::v1::ReportConfig>
 DefaultMigrationCenterStub::GetReportConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::GetReportConfigRequest const& request) {
   google::cloud::migrationcenter::v1::ReportConfig response;
   auto status = grpc_stub_->GetReportConfig(&context, request, &response);
@@ -678,7 +678,7 @@ DefaultMigrationCenterStub::GetReportConfig(
 
 StatusOr<google::cloud::migrationcenter::v1::ListReportConfigsResponse>
 DefaultMigrationCenterStub::ListReportConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::ListReportConfigsRequest const&
         request) {
   google::cloud::migrationcenter::v1::ListReportConfigsResponse response;
@@ -729,7 +729,7 @@ DefaultMigrationCenterStub::AsyncCreateReport(
 
 StatusOr<google::cloud::migrationcenter::v1::Report>
 DefaultMigrationCenterStub::GetReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::GetReportRequest const& request) {
   google::cloud::migrationcenter::v1::Report response;
   auto status = grpc_stub_->GetReport(&context, request, &response);
@@ -741,7 +741,7 @@ DefaultMigrationCenterStub::GetReport(
 
 StatusOr<google::cloud::migrationcenter::v1::ListReportsResponse>
 DefaultMigrationCenterStub::ListReports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::migrationcenter::v1::ListReportsRequest const& request) {
   google::cloud::migrationcenter::v1::ListReportsResponse response;
   auto status = grpc_stub_->ListReports(&context, request, &response);

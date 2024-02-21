@@ -44,28 +44,28 @@ CloudRedisMetadata::CloudRedisMetadata(
 
 StatusOr<google::cloud::redis::v1::ListInstancesResponse>
 CloudRedisMetadata::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::redis::v1::ListInstancesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListInstances(context, request);
+  return child_->ListInstances(context, options, request);
 }
 
 StatusOr<google::cloud::redis::v1::Instance> CloudRedisMetadata::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::redis::v1::GetInstanceRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetInstance(context, request);
+  return child_->GetInstance(context, options, request);
 }
 
 StatusOr<google::cloud::redis::v1::InstanceAuthString>
 CloudRedisMetadata::GetInstanceAuthString(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::redis::v1::GetInstanceAuthStringRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetInstanceAuthString(context, request);
+  return child_->GetInstanceAuthString(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

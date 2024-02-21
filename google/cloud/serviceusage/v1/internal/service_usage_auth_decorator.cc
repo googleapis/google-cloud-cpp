@@ -70,20 +70,20 @@ ServiceUsageAuth::AsyncDisableService(
 }
 
 StatusOr<google::api::serviceusage::v1::Service> ServiceUsageAuth::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::serviceusage::v1::GetServiceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetService(context, request);
+  return child_->GetService(context, options, request);
 }
 
 StatusOr<google::api::serviceusage::v1::ListServicesResponse>
 ServiceUsageAuth::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::serviceusage::v1::ListServicesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListServices(context, request);
+  return child_->ListServices(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -107,11 +107,11 @@ ServiceUsageAuth::AsyncBatchEnableServices(
 
 StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
 ServiceUsageAuth::BatchGetServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::serviceusage::v1::BatchGetServicesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->BatchGetServices(context, request);
+  return child_->BatchGetServices(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

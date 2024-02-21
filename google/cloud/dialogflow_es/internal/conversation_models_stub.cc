@@ -53,7 +53,7 @@ DefaultConversationModelsStub::AsyncCreateConversationModel(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationModel>
 DefaultConversationModelsStub::GetConversationModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::GetConversationModelRequest const& request) {
   google::cloud::dialogflow::v2::ConversationModel response;
   auto status = grpc_stub_->GetConversationModel(&context, request, &response);
@@ -65,7 +65,7 @@ DefaultConversationModelsStub::GetConversationModel(
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationModelsResponse>
 DefaultConversationModelsStub::ListConversationModels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::ListConversationModelsRequest const&
         request) {
   google::cloud::dialogflow::v2::ListConversationModelsResponse response;
@@ -139,7 +139,7 @@ DefaultConversationModelsStub::AsyncUndeployConversationModel(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
 DefaultConversationModelsStub::GetConversationModelEvaluation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest const&
         request) {
   google::cloud::dialogflow::v2::ConversationModelEvaluation response;
@@ -154,7 +154,7 @@ DefaultConversationModelsStub::GetConversationModelEvaluation(
 StatusOr<
     google::cloud::dialogflow::v2::ListConversationModelEvaluationsResponse>
 DefaultConversationModelsStub::ListConversationModelEvaluations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::
         ListConversationModelEvaluationsRequest const& request) {
   google::cloud::dialogflow::v2::ListConversationModelEvaluationsResponse

@@ -33,28 +33,28 @@ CloudRedisAuth::CloudRedisAuth(
 
 StatusOr<google::cloud::redis::v1::ListInstancesResponse>
 CloudRedisAuth::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::redis::v1::ListInstancesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListInstances(context, request);
+  return child_->ListInstances(context, options, request);
 }
 
 StatusOr<google::cloud::redis::v1::Instance> CloudRedisAuth::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::redis::v1::GetInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetInstance(context, request);
+  return child_->GetInstance(context, options, request);
 }
 
 StatusOr<google::cloud::redis::v1::InstanceAuthString>
 CloudRedisAuth::GetInstanceAuthString(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::redis::v1::GetInstanceAuthStringRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetInstanceAuthString(context, request);
+  return child_->GetInstanceAuthString(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

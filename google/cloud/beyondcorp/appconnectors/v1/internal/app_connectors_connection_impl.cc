@@ -86,22 +86,22 @@ AppConnectorsServiceConnectionImpl::ListAppConnectors(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            beyondcorp_appconnectors_v1::AppConnectorsServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::beyondcorp::appconnectors::v1::
-              ListAppConnectorsRequest const& r) {
+          Options const& options, google::cloud::beyondcorp::appconnectors::v1::
+                                      ListAppConnectorsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::beyondcorp::appconnectors::v1::
                        ListAppConnectorsRequest const& request) {
-              return stub->ListAppConnectors(context, request);
+              return stub->ListAppConnectors(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsResponse
              r) {
@@ -121,12 +121,12 @@ AppConnectorsServiceConnectionImpl::GetAppConnector(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAppConnector(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::beyondcorp::appconnectors::v1::
                  GetAppConnectorRequest const& request) {
-        return stub_->GetAppConnector(context, request);
+        return stub_->GetAppConnector(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>>

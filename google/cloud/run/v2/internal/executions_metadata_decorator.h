@@ -40,11 +40,11 @@ class ExecutionsMetadata : public ExecutionsStub {
                      std::string api_client_header = "");
 
   StatusOr<google::cloud::run::v2::Execution> GetExecution(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::GetExecutionRequest const& request) override;
 
   StatusOr<google::cloud::run::v2::ListExecutionsResponse> ListExecutions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::ListExecutionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteExecution(

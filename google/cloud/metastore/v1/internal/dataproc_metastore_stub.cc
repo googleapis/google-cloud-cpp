@@ -33,7 +33,7 @@ DataprocMetastoreStub::~DataprocMetastoreStub() = default;
 
 StatusOr<google::cloud::metastore::v1::ListServicesResponse>
 DefaultDataprocMetastoreStub::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::metastore::v1::ListServicesRequest const& request) {
   google::cloud::metastore::v1::ListServicesResponse response;
   auto status = grpc_stub_->ListServices(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultDataprocMetastoreStub::ListServices(
 
 StatusOr<google::cloud::metastore::v1::Service>
 DefaultDataprocMetastoreStub::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::metastore::v1::GetServiceRequest const& request) {
   google::cloud::metastore::v1::Service response;
   auto status = grpc_stub_->GetService(&context, request, &response);
@@ -108,7 +108,7 @@ DefaultDataprocMetastoreStub::AsyncDeleteService(
 
 StatusOr<google::cloud::metastore::v1::ListMetadataImportsResponse>
 DefaultDataprocMetastoreStub::ListMetadataImports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::metastore::v1::ListMetadataImportsRequest const& request) {
   google::cloud::metastore::v1::ListMetadataImportsResponse response;
   auto status = grpc_stub_->ListMetadataImports(&context, request, &response);
@@ -120,7 +120,7 @@ DefaultDataprocMetastoreStub::ListMetadataImports(
 
 StatusOr<google::cloud::metastore::v1::MetadataImport>
 DefaultDataprocMetastoreStub::GetMetadataImport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::metastore::v1::GetMetadataImportRequest const& request) {
   google::cloud::metastore::v1::MetadataImport response;
   auto status = grpc_stub_->GetMetadataImport(&context, request, &response);
@@ -202,7 +202,7 @@ DefaultDataprocMetastoreStub::AsyncRestoreService(
 
 StatusOr<google::cloud::metastore::v1::ListBackupsResponse>
 DefaultDataprocMetastoreStub::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::metastore::v1::ListBackupsRequest const& request) {
   google::cloud::metastore::v1::ListBackupsResponse response;
   auto status = grpc_stub_->ListBackups(&context, request, &response);
@@ -214,7 +214,7 @@ DefaultDataprocMetastoreStub::ListBackups(
 
 StatusOr<google::cloud::metastore::v1::Backup>
 DefaultDataprocMetastoreStub::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::metastore::v1::GetBackupRequest const& request) {
   google::cloud::metastore::v1::Backup response;
   auto status = grpc_stub_->GetBackup(&context, request, &response);

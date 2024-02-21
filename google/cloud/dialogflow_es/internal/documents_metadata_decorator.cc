@@ -44,20 +44,20 @@ DocumentsMetadata::DocumentsMetadata(
 
 StatusOr<google::cloud::dialogflow::v2::ListDocumentsResponse>
 DocumentsMetadata::ListDocuments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListDocumentsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDocuments(context, request);
+  return child_->ListDocuments(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Document>
 DocumentsMetadata::GetDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetDocumentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDocument(context, request);
+  return child_->GetDocument(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

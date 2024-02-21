@@ -54,22 +54,22 @@ ConsumerProcurementServiceAuth::AsyncPlaceOrder(
 
 StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>
 ConsumerProcurementServiceAuth::GetOrder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::commerce::consumer::procurement::v1::GetOrderRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetOrder(context, request);
+  return child_->GetOrder(context, options, request);
 }
 
 StatusOr<google::cloud::commerce::consumer::procurement::v1::ListOrdersResponse>
 ConsumerProcurementServiceAuth::ListOrders(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::commerce::consumer::procurement::v1::ListOrdersRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListOrders(context, request);
+  return child_->ListOrders(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

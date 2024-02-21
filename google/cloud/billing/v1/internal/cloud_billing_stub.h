@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_INTERNAL_CLOUD_BILLING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_V1_INTERNAL_CLOUD_BILLING_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/billing/v1/cloud_billing.grpc.pb.h>
@@ -36,61 +37,61 @@ class CloudBillingStub {
 
   virtual StatusOr<google::cloud::billing::v1::BillingAccount>
   GetBillingAccount(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::GetBillingAccountRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::billing::v1::ListBillingAccountsResponse>
   ListBillingAccounts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::ListBillingAccountsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::billing::v1::BillingAccount>
   UpdateBillingAccount(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::UpdateBillingAccountRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::billing::v1::BillingAccount>
   CreateBillingAccount(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::CreateBillingAccountRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::billing::v1::ListProjectBillingInfoResponse>
   ListProjectBillingInfo(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::ListProjectBillingInfoRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
   GetProjectBillingInfo(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::GetProjectBillingInfoRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
   UpdateProjectBillingInfo(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
           request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::billing::v1::BillingAccount>
   MoveBillingAccount(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::MoveBillingAccountRequest const& request) = 0;
 };
 
@@ -102,58 +103,58 @@ class DefaultCloudBillingStub : public CloudBillingStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::billing::v1::BillingAccount> GetBillingAccount(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::GetBillingAccountRequest const& request)
       override;
 
   StatusOr<google::cloud::billing::v1::ListBillingAccountsResponse>
   ListBillingAccounts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::ListBillingAccountsRequest const& request)
       override;
 
   StatusOr<google::cloud::billing::v1::BillingAccount> UpdateBillingAccount(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::UpdateBillingAccountRequest const& request)
       override;
 
   StatusOr<google::cloud::billing::v1::BillingAccount> CreateBillingAccount(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::CreateBillingAccountRequest const& request)
       override;
 
   StatusOr<google::cloud::billing::v1::ListProjectBillingInfoResponse>
   ListProjectBillingInfo(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::ListProjectBillingInfoRequest const& request)
       override;
 
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
   GetProjectBillingInfo(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::GetProjectBillingInfoRequest const& request)
       override;
 
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
   UpdateProjectBillingInfo(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
           request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::cloud::billing::v1::BillingAccount> MoveBillingAccount(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::MoveBillingAccountRequest const& request)
       override;
 

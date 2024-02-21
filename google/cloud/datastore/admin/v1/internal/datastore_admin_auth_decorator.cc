@@ -108,20 +108,20 @@ DatastoreAdminAuth::AsyncDeleteIndex(
 }
 
 StatusOr<google::datastore::admin::v1::Index> DatastoreAdminAuth::GetIndex(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::admin::v1::GetIndexRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIndex(context, request);
+  return child_->GetIndex(context, options, request);
 }
 
 StatusOr<google::datastore::admin::v1::ListIndexesResponse>
 DatastoreAdminAuth::ListIndexes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::admin::v1::ListIndexesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListIndexes(context, request);
+  return child_->ListIndexes(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

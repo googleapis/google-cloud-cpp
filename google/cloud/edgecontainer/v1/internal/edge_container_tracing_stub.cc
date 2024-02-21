@@ -33,26 +33,26 @@ EdgeContainerTracingStub::EdgeContainerTracingStub(
 
 StatusOr<google::cloud::edgecontainer::v1::ListClustersResponse>
 EdgeContainerTracingStub::ListClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgecontainer::v1::ListClustersRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.edgecontainer.v1.EdgeContainer", "ListClusters");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListClusters(context, request));
+                           child_->ListClusters(context, options, request));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::Cluster>
 EdgeContainerTracingStub::GetCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgecontainer::v1::GetClusterRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.edgecontainer.v1.EdgeContainer", "GetCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetCluster(context, request));
+                           child_->GetCluster(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -96,39 +96,39 @@ EdgeContainerTracingStub::AsyncDeleteCluster(
 
 StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
 EdgeContainerTracingStub::GenerateAccessToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.edgecontainer.v1.EdgeContainer", "GenerateAccessToken");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GenerateAccessToken(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GenerateAccessToken(context, options, request));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ListNodePoolsResponse>
 EdgeContainerTracingStub::ListNodePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgecontainer::v1::ListNodePoolsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.edgecontainer.v1.EdgeContainer", "ListNodePools");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListNodePools(context, request));
+                           child_->ListNodePools(context, options, request));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::NodePool>
 EdgeContainerTracingStub::GetNodePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgecontainer::v1::GetNodePoolRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.edgecontainer.v1.EdgeContainer", "GetNodePool");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetNodePool(context, request));
+                           child_->GetNodePool(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -172,51 +172,51 @@ EdgeContainerTracingStub::AsyncDeleteNodePool(
 
 StatusOr<google::cloud::edgecontainer::v1::ListMachinesResponse>
 EdgeContainerTracingStub::ListMachines(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgecontainer::v1::ListMachinesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.edgecontainer.v1.EdgeContainer", "ListMachines");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListMachines(context, request));
+                           child_->ListMachines(context, options, request));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::Machine>
 EdgeContainerTracingStub::GetMachine(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgecontainer::v1::GetMachineRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.edgecontainer.v1.EdgeContainer", "GetMachine");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetMachine(context, request));
+                           child_->GetMachine(context, options, request));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ListVpnConnectionsResponse>
 EdgeContainerTracingStub::ListVpnConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgecontainer::v1::ListVpnConnectionsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.edgecontainer.v1.EdgeContainer", "ListVpnConnections");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListVpnConnections(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListVpnConnections(context, options, request));
 }
 
 StatusOr<google::cloud::edgecontainer::v1::VpnConnection>
 EdgeContainerTracingStub::GetVpnConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgecontainer::v1::GetVpnConnectionRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.edgecontainer.v1.EdgeContainer", "GetVpnConnection");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetVpnConnection(context, request));
+                           child_->GetVpnConnection(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

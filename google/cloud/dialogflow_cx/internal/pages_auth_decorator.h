@@ -39,26 +39,26 @@ class PagesAuth : public PagesStub {
       std::shared_ptr<PagesStub> child);
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListPagesResponse> ListPages(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::ListPagesRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Page> GetPage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetPageRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Page> CreatePage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::CreatePageRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Page> UpdatePage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request)
       override;
 
-  Status DeletePage(grpc::ClientContext& context,
+  Status DeletePage(grpc::ClientContext& context, Options const& options,
                     google::cloud::dialogflow::cx::v3::DeletePageRequest const&
                         request) override;
 

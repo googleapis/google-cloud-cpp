@@ -37,26 +37,28 @@ ConnectorsLogging::ConnectorsLogging(std::shared_ptr<ConnectorsStub> child,
 
 StatusOr<google::cloud::connectors::v1::ListConnectionsResponse>
 ConnectorsLogging::ListConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListConnectionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::connectors::v1::ListConnectionsRequest const&
-                 request) { return child_->ListConnections(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListConnections(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::connectors::v1::Connection>
 ConnectorsLogging::GetConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetConnectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::connectors::v1::GetConnectionRequest const& request) {
-        return child_->GetConnection(context, request);
+        return child_->GetConnection(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -112,94 +114,94 @@ ConnectorsLogging::AsyncDeleteConnection(
 
 StatusOr<google::cloud::connectors::v1::ListProvidersResponse>
 ConnectorsLogging::ListProviders(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListProvidersRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::connectors::v1::ListProvidersRequest const& request) {
-        return child_->ListProviders(context, request);
+        return child_->ListProviders(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::connectors::v1::Provider>
 ConnectorsLogging::GetProvider(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetProviderRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::connectors::v1::GetProviderRequest const& request) {
-        return child_->GetProvider(context, request);
+        return child_->GetProvider(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::connectors::v1::ListConnectorsResponse>
 ConnectorsLogging::ListConnectors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListConnectorsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::connectors::v1::ListConnectorsRequest const& request) {
-        return child_->ListConnectors(context, request);
+        return child_->ListConnectors(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::connectors::v1::Connector>
 ConnectorsLogging::GetConnector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetConnectorRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::connectors::v1::GetConnectorRequest const& request) {
-        return child_->GetConnector(context, request);
+        return child_->GetConnector(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::connectors::v1::ListConnectorVersionsResponse>
 ConnectorsLogging::ListConnectorVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListConnectorVersionsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::connectors::v1::ListConnectorVersionsRequest const&
                  request) {
-        return child_->ListConnectorVersions(context, request);
+        return child_->ListConnectorVersions(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::connectors::v1::ConnectorVersion>
 ConnectorsLogging::GetConnectorVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetConnectorVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::connectors::v1::GetConnectorVersionRequest const&
                  request) {
-        return child_->GetConnectorVersion(context, request);
+        return child_->GetConnectorVersion(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
 ConnectorsLogging::GetConnectionSchemaMetadata(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::connectors::v1::
                  GetConnectionSchemaMetadataRequest const& request) {
-        return child_->GetConnectionSchemaMetadata(context, request);
+        return child_->GetConnectionSchemaMetadata(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -222,58 +224,58 @@ ConnectorsLogging::AsyncRefreshConnectionSchemaMetadata(
 
 StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse>
 ConnectorsLogging::ListRuntimeEntitySchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest const&
               request) {
-        return child_->ListRuntimeEntitySchemas(context, request);
+        return child_->ListRuntimeEntitySchemas(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::connectors::v1::ListRuntimeActionSchemasResponse>
 ConnectorsLogging::ListRuntimeActionSchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::ListRuntimeActionSchemasRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::connectors::v1::ListRuntimeActionSchemasRequest const&
               request) {
-        return child_->ListRuntimeActionSchemas(context, request);
+        return child_->ListRuntimeActionSchemas(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::connectors::v1::RuntimeConfig>
 ConnectorsLogging::GetRuntimeConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetRuntimeConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::connectors::v1::GetRuntimeConfigRequest const&
                  request) {
-        return child_->GetRuntimeConfig(context, request);
+        return child_->GetRuntimeConfig(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::connectors::v1::Settings>
 ConnectorsLogging::GetGlobalSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::connectors::v1::GetGlobalSettingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::connectors::v1::GetGlobalSettingsRequest const&
                  request) {
-        return child_->GetGlobalSettings(context, request);
+        return child_->GetGlobalSettings(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

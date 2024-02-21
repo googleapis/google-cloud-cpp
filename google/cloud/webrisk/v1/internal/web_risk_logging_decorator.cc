@@ -37,52 +37,52 @@ WebRiskServiceLogging::WebRiskServiceLogging(
 
 StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
 WebRiskServiceLogging::ComputeThreatListDiff(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::webrisk::v1::ComputeThreatListDiffRequest const&
                  request) {
-        return child_->ComputeThreatListDiff(context, request);
+        return child_->ComputeThreatListDiff(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
 WebRiskServiceLogging::SearchUris(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::webrisk::v1::SearchUrisRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::webrisk::v1::SearchUrisRequest const& request) {
-        return child_->SearchUris(context, request);
+        return child_->SearchUris(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
 WebRiskServiceLogging::SearchHashes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::webrisk::v1::SearchHashesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::webrisk::v1::SearchHashesRequest const& request) {
-        return child_->SearchHashes(context, request);
+        return child_->SearchHashes(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::webrisk::v1::Submission>
 WebRiskServiceLogging::CreateSubmission(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::webrisk::v1::CreateSubmissionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::webrisk::v1::CreateSubmissionRequest const& request) {
-        return child_->CreateSubmission(context, request);
+        return child_->CreateSubmission(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

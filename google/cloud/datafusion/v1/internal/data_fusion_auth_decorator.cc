@@ -33,29 +33,29 @@ DataFusionAuth::DataFusionAuth(
 
 StatusOr<google::cloud::datafusion::v1::ListAvailableVersionsResponse>
 DataFusionAuth::ListAvailableVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datafusion::v1::ListAvailableVersionsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAvailableVersions(context, request);
+  return child_->ListAvailableVersions(context, options, request);
 }
 
 StatusOr<google::cloud::datafusion::v1::ListInstancesResponse>
 DataFusionAuth::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datafusion::v1::ListInstancesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListInstances(context, request);
+  return child_->ListInstances(context, options, request);
 }
 
 StatusOr<google::cloud::datafusion::v1::Instance> DataFusionAuth::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datafusion::v1::GetInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetInstance(context, request);
+  return child_->GetInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

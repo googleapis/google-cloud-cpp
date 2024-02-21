@@ -83,22 +83,22 @@ AccessContextManagerConnectionImpl::ListAccessPolicies(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            accesscontextmanager_v1::AccessContextManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::identity::accesscontextmanager::v1::
-              ListAccessPoliciesRequest const& r) {
+          Options const& options, google::identity::accesscontextmanager::v1::
+                                      ListAccessPoliciesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::identity::accesscontextmanager::v1::
                        ListAccessPoliciesRequest const& request) {
-              return stub->ListAccessPolicies(context, request);
+              return stub->ListAccessPolicies(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::identity::accesscontextmanager::v1::ListAccessPoliciesResponse
              r) {
@@ -118,12 +118,12 @@ AccessContextManagerConnectionImpl::GetAccessPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAccessPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::identity::accesscontextmanager::v1::
                  GetAccessPolicyRequest const& request) {
-        return stub_->GetAccessPolicy(context, request);
+        return stub_->GetAccessPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
@@ -255,22 +255,22 @@ AccessContextManagerConnectionImpl::ListAccessLevels(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            accesscontextmanager_v1::AccessContextManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::identity::accesscontextmanager::v1::
-              ListAccessLevelsRequest const& r) {
+          Options const& options, google::identity::accesscontextmanager::v1::
+                                      ListAccessLevelsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::identity::accesscontextmanager::v1::
                        ListAccessLevelsRequest const& request) {
-              return stub->ListAccessLevels(context, request);
+              return stub->ListAccessLevels(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::identity::accesscontextmanager::v1::ListAccessLevelsResponse
              r) {
@@ -290,12 +290,12 @@ AccessContextManagerConnectionImpl::GetAccessLevel(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAccessLevel(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::identity::accesscontextmanager::v1::
                  GetAccessLevelRequest const& request) {
-        return stub_->GetAccessLevel(context, request);
+        return stub_->GetAccessLevel(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
@@ -470,22 +470,22 @@ AccessContextManagerConnectionImpl::ListServicePerimeters(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<
       google::identity::accesscontextmanager::v1::ServicePerimeter>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            accesscontextmanager_v1::AccessContextManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::identity::accesscontextmanager::v1::
-              ListServicePerimetersRequest const& r) {
+          Options const& options, google::identity::accesscontextmanager::v1::
+                                      ListServicePerimetersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::identity::accesscontextmanager::v1::
                        ListServicePerimetersRequest const& request) {
-              return stub->ListServicePerimeters(context, request);
+              return stub->ListServicePerimeters(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::identity::accesscontextmanager::v1::
              ListServicePerimetersResponse r) {
@@ -506,12 +506,12 @@ AccessContextManagerConnectionImpl::GetServicePerimeter(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetServicePerimeter(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::identity::accesscontextmanager::v1::
                  GetServicePerimeterRequest const& request) {
-        return stub_->GetServicePerimeter(context, request);
+        return stub_->GetServicePerimeter(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
@@ -729,22 +729,23 @@ AccessContextManagerConnectionImpl::ListGcpUserAccessBindings(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            accesscontextmanager_v1::AccessContextManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::identity::accesscontextmanager::v1::
               ListGcpUserAccessBindingsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::identity::accesscontextmanager::v1::
                        ListGcpUserAccessBindingsRequest const& request) {
-              return stub->ListGcpUserAccessBindings(context, request);
+              return stub->ListGcpUserAccessBindings(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::identity::accesscontextmanager::v1::
              ListGcpUserAccessBindingsResponse r) {
@@ -765,12 +766,12 @@ AccessContextManagerConnectionImpl::GetGcpUserAccessBinding(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetGcpUserAccessBinding(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::identity::accesscontextmanager::v1::
                  GetGcpUserAccessBindingRequest const& request) {
-        return stub_->GetGcpUserAccessBinding(context, request);
+        return stub_->GetGcpUserAccessBinding(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<
@@ -902,11 +903,11 @@ AccessContextManagerConnectionImpl::SetIamPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
-        return stub_->SetIamPolicy(context, request);
+        return stub_->SetIamPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::Policy>
@@ -916,11 +917,11 @@ AccessContextManagerConnectionImpl::GetIamPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
-        return stub_->GetIamPolicy(context, request);
+        return stub_->GetIamPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
@@ -930,11 +931,11 @@ AccessContextManagerConnectionImpl::TestIamPermissions(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TestIamPermissions(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
-        return stub_->TestIamPermissions(context, request);
+        return stub_->TestIamPermissions(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

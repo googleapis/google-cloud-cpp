@@ -33,108 +33,108 @@ OrgPolicyAuth::OrgPolicyAuth(
 
 StatusOr<google::cloud::orgpolicy::v2::ListConstraintsResponse>
 OrgPolicyAuth::ListConstraints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::ListConstraintsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListConstraints(context, request);
+  return child_->ListConstraints(context, options, request);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::ListPoliciesResponse>
 OrgPolicyAuth::ListPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::ListPoliciesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListPolicies(context, request);
+  return child_->ListPolicies(context, options, request);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyAuth::GetPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::GetPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetPolicy(context, request);
+  return child_->GetPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
 OrgPolicyAuth::GetEffectivePolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEffectivePolicy(context, request);
+  return child_->GetEffectivePolicy(context, options, request);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyAuth::CreatePolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreatePolicy(context, request);
+  return child_->CreatePolicy(context, options, request);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyAuth::UpdatePolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdatePolicy(context, request);
+  return child_->UpdatePolicy(context, options, request);
 }
 
 Status OrgPolicyAuth::DeletePolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeletePolicy(context, request);
+  return child_->DeletePolicy(context, options, request);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
 OrgPolicyAuth::CreateCustomConstraint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateCustomConstraint(context, request);
+  return child_->CreateCustomConstraint(context, options, request);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
 OrgPolicyAuth::UpdateCustomConstraint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateCustomConstraint(context, request);
+  return child_->UpdateCustomConstraint(context, options, request);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
 OrgPolicyAuth::GetCustomConstraint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCustomConstraint(context, request);
+  return child_->GetCustomConstraint(context, options, request);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::ListCustomConstraintsResponse>
 OrgPolicyAuth::ListCustomConstraints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::ListCustomConstraintsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCustomConstraints(context, request);
+  return child_->ListCustomConstraints(context, options, request);
 }
 
 Status OrgPolicyAuth::DeleteCustomConstraint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteCustomConstraint(context, request);
+  return child_->DeleteCustomConstraint(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

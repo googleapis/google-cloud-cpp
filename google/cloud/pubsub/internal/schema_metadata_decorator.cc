@@ -43,88 +43,88 @@ SchemaServiceMetadata::SchemaServiceMetadata(
               : std::move(api_client_header)) {}
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceMetadata::CreateSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::CreateSchemaRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateSchema(context, request);
+  return child_->CreateSchema(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceMetadata::GetSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::GetSchemaRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetSchema(context, request);
+  return child_->GetSchema(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::ListSchemasResponse>
 SchemaServiceMetadata::ListSchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListSchemasRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListSchemas(context, request);
+  return child_->ListSchemas(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse>
 SchemaServiceMetadata::ListSchemaRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListSchemaRevisionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->ListSchemaRevisions(context, request);
+  return child_->ListSchemaRevisions(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceMetadata::CommitSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::CommitSchemaRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->CommitSchema(context, request);
+  return child_->CommitSchema(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceMetadata::RollbackSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::RollbackSchemaRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->RollbackSchema(context, request);
+  return child_->RollbackSchema(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::Schema>
 SchemaServiceMetadata::DeleteSchemaRevision(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::DeleteSchemaRevisionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteSchemaRevision(context, request);
+  return child_->DeleteSchemaRevision(context, options, request);
 }
 
 Status SchemaServiceMetadata::DeleteSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::DeleteSchemaRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteSchema(context, request);
+  return child_->DeleteSchema(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::ValidateSchemaResponse>
 SchemaServiceMetadata::ValidateSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ValidateSchemaRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ValidateSchema(context, request);
+  return child_->ValidateSchema(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::ValidateMessageResponse>
 SchemaServiceMetadata::ValidateMessage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ValidateMessageRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ValidateMessage(context, request);
+  return child_->ValidateMessage(context, options, request);
 }
 
 void SchemaServiceMetadata::SetMetadata(grpc::ClientContext& context,

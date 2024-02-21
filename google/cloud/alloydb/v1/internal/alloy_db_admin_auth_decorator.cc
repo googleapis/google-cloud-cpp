@@ -33,19 +33,19 @@ AlloyDBAdminAuth::AlloyDBAdminAuth(
 
 StatusOr<google::cloud::alloydb::v1::ListClustersResponse>
 AlloyDBAdminAuth::ListClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListClustersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListClusters(context, request);
+  return child_->ListClusters(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::Cluster> AlloyDBAdminAuth::GetCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCluster(context, request);
+  return child_->GetCluster(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -164,19 +164,19 @@ AlloyDBAdminAuth::AsyncCreateSecondaryCluster(
 
 StatusOr<google::cloud::alloydb::v1::ListInstancesResponse>
 AlloyDBAdminAuth::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListInstancesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListInstances(context, request);
+  return child_->ListInstances(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::Instance> AlloyDBAdminAuth::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetInstance(context, request);
+  return child_->GetInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -333,19 +333,19 @@ AlloyDBAdminAuth::AsyncRestartInstance(
 
 StatusOr<google::cloud::alloydb::v1::ListBackupsResponse>
 AlloyDBAdminAuth::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListBackupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBackups(context, request);
+  return child_->ListBackups(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::Backup> AlloyDBAdminAuth::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetBackup(context, request);
+  return child_->GetBackup(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -407,72 +407,72 @@ AlloyDBAdminAuth::AsyncDeleteBackup(
 
 StatusOr<google::cloud::alloydb::v1::ListSupportedDatabaseFlagsResponse>
 AlloyDBAdminAuth::ListSupportedDatabaseFlags(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSupportedDatabaseFlags(context, request);
+  return child_->ListSupportedDatabaseFlags(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
 AlloyDBAdminAuth::GenerateClientCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateClientCertificate(context, request);
+  return child_->GenerateClientCertificate(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
 AlloyDBAdminAuth::GetConnectionInfo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetConnectionInfoRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetConnectionInfo(context, request);
+  return child_->GetConnectionInfo(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::ListUsersResponse>
 AlloyDBAdminAuth::ListUsers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListUsersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListUsers(context, request);
+  return child_->ListUsers(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminAuth::GetUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetUserRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetUser(context, request);
+  return child_->GetUser(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminAuth::CreateUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::CreateUserRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateUser(context, request);
+  return child_->CreateUser(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminAuth::UpdateUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::UpdateUserRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateUser(context, request);
+  return child_->UpdateUser(context, options, request);
 }
 
 Status AlloyDBAdminAuth::DeleteUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::DeleteUserRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteUser(context, request);
+  return child_->DeleteUser(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

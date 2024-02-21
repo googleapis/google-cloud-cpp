@@ -32,38 +32,39 @@ TagKeysTracingStub::TagKeysTracingStub(std::shared_ptr<TagKeysStub> child)
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagKeysResponse>
 TagKeysTracingStub::ListTagKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListTagKeysRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.TagKeys",
                                      "ListTagKeys");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListTagKeys(context, request));
+                           child_->ListTagKeys(context, options, request));
 }
 
 StatusOr<google::cloud::resourcemanager::v3::TagKey>
 TagKeysTracingStub::GetTagKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::GetTagKeyRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.TagKeys",
                                      "GetTagKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetTagKey(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetTagKey(context, options, request));
 }
 
 StatusOr<google::cloud::resourcemanager::v3::TagKey>
 TagKeysTracingStub::GetNamespacedTagKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.TagKeys",
                                      "GetNamespacedTagKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetNamespacedTagKey(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetNamespacedTagKey(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -106,37 +107,37 @@ TagKeysTracingStub::AsyncDeleteTagKey(
 }
 
 StatusOr<google::iam::v1::Policy> TagKeysTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.TagKeys",
                                      "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetIamPolicy(context, request));
+                           child_->GetIamPolicy(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy> TagKeysTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.TagKeys",
                                      "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->SetIamPolicy(context, request));
+                           child_->SetIamPolicy(context, options, request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 TagKeysTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.TagKeys",
                                      "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

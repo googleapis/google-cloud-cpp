@@ -40,12 +40,12 @@ class UserEventServiceStub {
 
   virtual StatusOr<google::cloud::discoveryengine::v1::UserEvent>
   WriteUserEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::WriteUserEventRequest const&
           request) = 0;
 
   virtual StatusOr<google::api::HttpBody> CollectUserEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::CollectUserEventRequest const&
           request) = 0;
 
@@ -78,12 +78,12 @@ class DefaultUserEventServiceStub : public UserEventServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::discoveryengine::v1::UserEvent> WriteUserEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::WriteUserEventRequest const& request)
       override;
 
   StatusOr<google::api::HttpBody> CollectUserEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::CollectUserEventRequest const&
           request) override;
 

@@ -35,24 +35,25 @@ PredictionServiceTracingStub::PredictionServiceTracingStub(
 
 StatusOr<google::cloud::aiplatform::v1::PredictResponse>
 PredictionServiceTracingStub::Predict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::PredictRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PredictionService", "Predict");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->Predict(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->Predict(context, options, request));
 }
 
 StatusOr<google::api::HttpBody> PredictionServiceTracingStub::RawPredict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::RawPredictRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PredictionService", "RawPredict");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->RawPredict(context, request));
+                           child_->RawPredict(context, options, request));
 }
 
 std::unique_ptr<
@@ -72,26 +73,26 @@ PredictionServiceTracingStub::StreamRawPredict(
 
 StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
 PredictionServiceTracingStub::DirectPredict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::DirectPredictRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PredictionService", "DirectPredict");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DirectPredict(context, request));
+                           child_->DirectPredict(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
 PredictionServiceTracingStub::DirectRawPredict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::DirectRawPredictRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PredictionService", "DirectRawPredict");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DirectRawPredict(context, request));
+                           child_->DirectRawPredict(context, options, request));
 }
 
 std::unique_ptr<AsyncStreamingReadWriteRpc<
@@ -175,25 +176,26 @@ PredictionServiceTracingStub::AsyncStreamingRawPredict(
 
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
 PredictionServiceTracingStub::Explain(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ExplainRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PredictionService", "Explain");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->Explain(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->Explain(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
 PredictionServiceTracingStub::GenerateContent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GenerateContentRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PredictionService", "GenerateContent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GenerateContent(context, request));
+                           child_->GenerateContent(context, options, request));
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<

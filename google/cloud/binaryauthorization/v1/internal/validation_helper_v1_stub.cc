@@ -33,7 +33,7 @@ ValidationHelperV1Stub::~ValidationHelperV1Stub() = default;
 StatusOr<google::cloud::binaryauthorization::v1::
              ValidateAttestationOccurrenceResponse>
 DefaultValidationHelperV1Stub::ValidateAttestationOccurrence(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::binaryauthorization::v1::
         ValidateAttestationOccurrenceRequest const& request) {
   google::cloud::binaryauthorization::v1::ValidateAttestationOccurrenceResponse

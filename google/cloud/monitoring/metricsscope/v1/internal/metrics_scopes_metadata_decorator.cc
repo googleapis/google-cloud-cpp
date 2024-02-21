@@ -44,22 +44,22 @@ MetricsScopesMetadata::MetricsScopesMetadata(
 
 StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
 MetricsScopesMetadata::GetMetricsScope(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetMetricsScope(context, request);
+  return child_->GetMetricsScope(context, options, request);
 }
 
 StatusOr<google::monitoring::metricsscope::v1::
              ListMetricsScopesByMonitoredProjectResponse>
 MetricsScopesMetadata::ListMetricsScopesByMonitoredProject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::metricsscope::v1::
         ListMetricsScopesByMonitoredProjectRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->ListMetricsScopesByMonitoredProject(context, request);
+  SetMetadata(context, options);
+  return child_->ListMetricsScopesByMonitoredProject(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

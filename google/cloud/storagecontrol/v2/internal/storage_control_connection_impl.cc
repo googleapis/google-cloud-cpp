@@ -78,11 +78,11 @@ StorageControlConnectionImpl::CreateFolder(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateFolder(request_copy),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::control::v2::CreateFolderRequest const& request) {
-        return stub_->CreateFolder(context, request);
+        return stub_->CreateFolder(context, options, request);
       },
-      request_copy, __func__);
+      *current, request_copy, __func__);
 }
 
 Status StorageControlConnectionImpl::DeleteFolder(
@@ -95,11 +95,11 @@ Status StorageControlConnectionImpl::DeleteFolder(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteFolder(request_copy),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::control::v2::DeleteFolderRequest const& request) {
-        return stub_->DeleteFolder(context, request);
+        return stub_->DeleteFolder(context, options, request);
       },
-      request_copy, __func__);
+      *current, request_copy, __func__);
 }
 
 StatusOr<google::storage::control::v2::Folder>
@@ -113,11 +113,11 @@ StorageControlConnectionImpl::GetFolder(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetFolder(request_copy),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::control::v2::GetFolderRequest const& request) {
-        return stub_->GetFolder(context, request);
+        return stub_->GetFolder(context, options, request);
       },
-      request_copy, __func__);
+      *current, request_copy, __func__);
 }
 
 StreamRange<google::storage::control::v2::Folder>
@@ -129,18 +129,21 @@ StorageControlConnectionImpl::ListFolders(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::storage::control::v2::Folder>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<storagecontrol_v2::StorageControlRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::storage::control::v2::ListFoldersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::storage::control::v2::ListFoldersRequest const&
-                       request) { return stub->ListFolders(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListFolders(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::storage::control::v2::ListFoldersResponse r) {
         std::vector<google::storage::control::v2::Folder> result(
@@ -202,10 +205,12 @@ StorageControlConnectionImpl::GetStorageLayout(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetStorageLayout(request_copy),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::control::v2::GetStorageLayoutRequest const&
-                 request) { return stub_->GetStorageLayout(context, request); },
-      request_copy, __func__);
+                 request) {
+        return stub_->GetStorageLayout(context, options, request);
+      },
+      *current, request_copy, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

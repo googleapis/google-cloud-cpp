@@ -33,7 +33,7 @@ StorageControlStub::~StorageControlStub() = default;
 
 StatusOr<google::storage::control::v2::Folder>
 DefaultStorageControlStub::CreateFolder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storage::control::v2::CreateFolderRequest const& request) {
   google::storage::control::v2::Folder response;
   auto status = grpc_stub_->CreateFolder(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultStorageControlStub::CreateFolder(
 }
 
 Status DefaultStorageControlStub::DeleteFolder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storage::control::v2::DeleteFolderRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteFolder(&context, request, &response);
@@ -56,7 +56,7 @@ Status DefaultStorageControlStub::DeleteFolder(
 
 StatusOr<google::storage::control::v2::Folder>
 DefaultStorageControlStub::GetFolder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storage::control::v2::GetFolderRequest const& request) {
   google::storage::control::v2::Folder response;
   auto status = grpc_stub_->GetFolder(&context, request, &response);
@@ -68,7 +68,7 @@ DefaultStorageControlStub::GetFolder(
 
 StatusOr<google::storage::control::v2::ListFoldersResponse>
 DefaultStorageControlStub::ListFolders(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storage::control::v2::ListFoldersRequest const& request) {
   google::storage::control::v2::ListFoldersResponse response;
   auto status = grpc_stub_->ListFolders(&context, request, &response);
@@ -97,7 +97,7 @@ DefaultStorageControlStub::AsyncRenameFolder(
 
 StatusOr<google::storage::control::v2::StorageLayout>
 DefaultStorageControlStub::GetStorageLayout(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storage::control::v2::GetStorageLayoutRequest const& request) {
   google::storage::control::v2::StorageLayout response;
   auto status = grpc_stub_->GetStorageLayout(&context, request, &response);

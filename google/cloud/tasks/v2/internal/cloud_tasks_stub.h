@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TASKS_V2_INTERNAL_CLOUD_TASKS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TASKS_V2_INTERNAL_CLOUD_TASKS_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/tasks/v2/cloudtasks.grpc.pb.h>
@@ -35,68 +36,68 @@ class CloudTasksStub {
   virtual ~CloudTasksStub() = 0;
 
   virtual StatusOr<google::cloud::tasks::v2::ListQueuesResponse> ListQueues(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::ListQueuesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tasks::v2::Queue> GetQueue(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::GetQueueRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::CreateQueueRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::UpdateQueueRequest const& request) = 0;
 
   virtual Status DeleteQueue(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::DeleteQueueRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tasks::v2::Queue> PurgeQueue(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::PurgeQueueRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::PauseQueueRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::ResumeQueueRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tasks::v2::ListTasksResponse> ListTasks(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::ListTasksRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tasks::v2::Task> GetTask(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::GetTaskRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tasks::v2::Task> CreateTask(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::CreateTaskRequest const& request) = 0;
 
   virtual Status DeleteTask(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::DeleteTaskRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tasks::v2::Task> RunTask(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::RunTaskRequest const& request) = 0;
 };
 
@@ -108,67 +109,67 @@ class DefaultCloudTasksStub : public CloudTasksStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::tasks::v2::ListQueuesResponse> ListQueues(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::ListQueuesRequest const& request) override;
 
   StatusOr<google::cloud::tasks::v2::Queue> GetQueue(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::GetQueueRequest const& request) override;
 
   StatusOr<google::cloud::tasks::v2::Queue> CreateQueue(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::CreateQueueRequest const& request) override;
 
   StatusOr<google::cloud::tasks::v2::Queue> UpdateQueue(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::UpdateQueueRequest const& request) override;
 
   Status DeleteQueue(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::DeleteQueueRequest const& request) override;
 
   StatusOr<google::cloud::tasks::v2::Queue> PurgeQueue(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::PurgeQueueRequest const& request) override;
 
   StatusOr<google::cloud::tasks::v2::Queue> PauseQueue(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::PauseQueueRequest const& request) override;
 
   StatusOr<google::cloud::tasks::v2::Queue> ResumeQueue(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::ResumeQueueRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::cloud::tasks::v2::ListTasksResponse> ListTasks(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::ListTasksRequest const& request) override;
 
   StatusOr<google::cloud::tasks::v2::Task> GetTask(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::GetTaskRequest const& request) override;
 
   StatusOr<google::cloud::tasks::v2::Task> CreateTask(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::CreateTaskRequest const& request) override;
 
   Status DeleteTask(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::DeleteTaskRequest const& request) override;
 
   StatusOr<google::cloud::tasks::v2::Task> RunTask(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tasks::v2::RunTaskRequest const& request) override;
 
  private:

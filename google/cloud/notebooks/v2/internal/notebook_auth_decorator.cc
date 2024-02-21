@@ -33,20 +33,20 @@ NotebookServiceAuth::NotebookServiceAuth(
 
 StatusOr<google::cloud::notebooks::v2::ListInstancesResponse>
 NotebookServiceAuth::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v2::ListInstancesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListInstances(context, request);
+  return child_->ListInstances(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v2::Instance>
 NotebookServiceAuth::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v2::GetInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetInstance(context, request);
+  return child_->GetInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -165,12 +165,12 @@ NotebookServiceAuth::AsyncResetInstance(
 
 StatusOr<google::cloud::notebooks::v2::CheckInstanceUpgradabilityResponse>
 NotebookServiceAuth::CheckInstanceUpgradability(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v2::CheckInstanceUpgradabilityRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CheckInstanceUpgradability(context, request);
+  return child_->CheckInstanceUpgradability(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

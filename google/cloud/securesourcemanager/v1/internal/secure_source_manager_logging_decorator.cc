@@ -37,25 +37,29 @@ SecureSourceManagerLogging::SecureSourceManagerLogging(
 
 StatusOr<google::cloud::securesourcemanager::v1::ListInstancesResponse>
 SecureSourceManagerLogging::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securesourcemanager::v1::ListInstancesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securesourcemanager::v1::ListInstancesRequest const&
-                 request) { return child_->ListInstances(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListInstances(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::securesourcemanager::v1::Instance>
 SecureSourceManagerLogging::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securesourcemanager::v1::GetInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securesourcemanager::v1::GetInstanceRequest const&
-                 request) { return child_->GetInstance(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetInstance(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -96,27 +100,31 @@ SecureSourceManagerLogging::AsyncDeleteInstance(
 
 StatusOr<google::cloud::securesourcemanager::v1::ListRepositoriesResponse>
 SecureSourceManagerLogging::ListRepositories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securesourcemanager::v1::ListRepositoriesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::securesourcemanager::v1::ListRepositoriesRequest const&
-              request) { return child_->ListRepositories(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->ListRepositories(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::securesourcemanager::v1::Repository>
 SecureSourceManagerLogging::GetRepository(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securesourcemanager::v1::GetRepositoryRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securesourcemanager::v1::GetRepositoryRequest const&
-                 request) { return child_->GetRepository(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetRepository(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -156,37 +164,37 @@ SecureSourceManagerLogging::AsyncDeleteRepository(
 }
 
 StatusOr<google::iam::v1::Policy> SecureSourceManagerLogging::GetIamPolicyRepo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
-        return child_->GetIamPolicyRepo(context, request);
+        return child_->GetIamPolicyRepo(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> SecureSourceManagerLogging::SetIamPolicyRepo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
-        return child_->SetIamPolicyRepo(context, request);
+        return child_->SetIamPolicyRepo(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 SecureSourceManagerLogging::TestIamPermissionsRepo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
-        return child_->TestIamPermissionsRepo(context, request);
+        return child_->TestIamPermissionsRepo(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -33,7 +33,7 @@ ManagedNotebookServiceStub::~ManagedNotebookServiceStub() = default;
 
 StatusOr<google::cloud::notebooks::v1::ListRuntimesResponse>
 DefaultManagedNotebookServiceStub::ListRuntimes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::notebooks::v1::ListRuntimesRequest const& request) {
   google::cloud::notebooks::v1::ListRuntimesResponse response;
   auto status = grpc_stub_->ListRuntimes(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultManagedNotebookServiceStub::ListRuntimes(
 
 StatusOr<google::cloud::notebooks::v1::Runtime>
 DefaultManagedNotebookServiceStub::GetRuntime(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::notebooks::v1::GetRuntimeRequest const& request) {
   google::cloud::notebooks::v1::Runtime response;
   auto status = grpc_stub_->GetRuntime(&context, request, &response);
@@ -211,7 +211,7 @@ DefaultManagedNotebookServiceStub::AsyncReportRuntimeEvent(
 
 StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
 DefaultManagedNotebookServiceStub::RefreshRuntimeTokenInternal(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
         request) {
   google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse response;

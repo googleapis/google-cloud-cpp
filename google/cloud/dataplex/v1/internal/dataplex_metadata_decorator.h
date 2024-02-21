@@ -56,15 +56,15 @@ class DataplexServiceMetadata : public DataplexServiceStub {
       google::cloud::dataplex::v1::DeleteLakeRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::ListLakesResponse> ListLakes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::ListLakesRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::Lake> GetLake(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::GetLakeRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::ListActionsResponse> ListLakeActions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::ListLakeActionsRequest const& request)
       override;
 
@@ -84,15 +84,15 @@ class DataplexServiceMetadata : public DataplexServiceStub {
       google::cloud::dataplex::v1::DeleteZoneRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::ListZonesResponse> ListZones(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::ListZonesRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::Zone> GetZone(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::GetZoneRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::ListActionsResponse> ListZoneActions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::ListZoneActionsRequest const& request)
       override;
 
@@ -112,15 +112,15 @@ class DataplexServiceMetadata : public DataplexServiceStub {
       google::cloud::dataplex::v1::DeleteAssetRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::ListAssetsResponse> ListAssets(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::ListAssetsRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::Asset> GetAsset(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::GetAssetRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::ListActionsResponse> ListAssetActions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::ListAssetActionsRequest const& request)
       override;
 
@@ -140,27 +140,27 @@ class DataplexServiceMetadata : public DataplexServiceStub {
       google::cloud::dataplex::v1::DeleteTaskRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::ListTasksResponse> ListTasks(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::ListTasksRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::Task> GetTask(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::GetTaskRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::ListJobsResponse> ListJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::ListJobsRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::RunTaskResponse> RunTask(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::RunTaskRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::Job> GetJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::GetJobRequest const& request) override;
 
   Status CancelJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::CancelJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEnvironment(
@@ -182,17 +182,17 @@ class DataplexServiceMetadata : public DataplexServiceStub {
       override;
 
   StatusOr<google::cloud::dataplex::v1::ListEnvironmentsResponse>
-  ListEnvironments(grpc::ClientContext& context,
+  ListEnvironments(grpc::ClientContext& context, Options const& options,
                    google::cloud::dataplex::v1::ListEnvironmentsRequest const&
                        request) override;
 
   StatusOr<google::cloud::dataplex::v1::Environment> GetEnvironment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::GetEnvironmentRequest const& request)
       override;
 
   StatusOr<google::cloud::dataplex::v1::ListSessionsResponse> ListSessions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::ListSessionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

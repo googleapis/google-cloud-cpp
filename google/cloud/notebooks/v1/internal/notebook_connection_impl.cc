@@ -75,20 +75,21 @@ NotebookServiceConnectionImpl::ListInstances(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::notebooks::v1::Instance>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<notebooks_v1::NotebookServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::notebooks::v1::ListInstancesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::notebooks::v1::ListInstancesRequest const&
                        request) {
-              return stub->ListInstances(context, request);
+              return stub->ListInstances(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::notebooks::v1::ListInstancesResponse r) {
         std::vector<google::cloud::notebooks::v1::Instance> result(
@@ -106,11 +107,11 @@ NotebookServiceConnectionImpl::GetInstance(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetInstance(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::notebooks::v1::GetInstanceRequest const& request) {
-        return stub_->GetInstance(context, request);
+        return stub_->GetInstance(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -389,12 +390,12 @@ NotebookServiceConnectionImpl::UpdateInstanceMetadataItems(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateInstanceMetadataItems(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::notebooks::v1::
                  UpdateInstanceMetadataItemsRequest const& request) {
-        return stub_->UpdateInstanceMetadataItems(context, request);
+        return stub_->UpdateInstanceMetadataItems(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
@@ -590,12 +591,12 @@ NotebookServiceConnectionImpl::IsInstanceUpgradeable(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->IsInstanceUpgradeable(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::notebooks::v1::IsInstanceUpgradeableRequest const&
                  request) {
-        return stub_->IsInstanceUpgradeable(context, request);
+        return stub_->IsInstanceUpgradeable(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::notebooks::v1::GetInstanceHealthResponse>
@@ -605,12 +606,12 @@ NotebookServiceConnectionImpl::GetInstanceHealth(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetInstanceHealth(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::notebooks::v1::GetInstanceHealthRequest const&
                  request) {
-        return stub_->GetInstanceHealth(context, request);
+        return stub_->GetInstanceHealth(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -774,20 +775,21 @@ NotebookServiceConnectionImpl::ListEnvironments(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::notebooks::v1::Environment>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<notebooks_v1::NotebookServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::notebooks::v1::ListEnvironmentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::notebooks::v1::ListEnvironmentsRequest const&
                        request) {
-              return stub->ListEnvironments(context, request);
+              return stub->ListEnvironments(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::notebooks::v1::ListEnvironmentsResponse r) {
         std::vector<google::cloud::notebooks::v1::Environment> result(
@@ -806,11 +808,11 @@ NotebookServiceConnectionImpl::GetEnvironment(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEnvironment(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::notebooks::v1::GetEnvironmentRequest const& request) {
-        return stub_->GetEnvironment(context, request);
+        return stub_->GetEnvironment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Environment>>
@@ -898,20 +900,21 @@ NotebookServiceConnectionImpl::ListSchedules(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::notebooks::v1::Schedule>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<notebooks_v1::NotebookServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::notebooks::v1::ListSchedulesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::notebooks::v1::ListSchedulesRequest const&
                        request) {
-              return stub->ListSchedules(context, request);
+              return stub->ListSchedules(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::notebooks::v1::ListSchedulesResponse r) {
         std::vector<google::cloud::notebooks::v1::Schedule> result(
@@ -929,11 +932,11 @@ NotebookServiceConnectionImpl::GetSchedule(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSchedule(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::notebooks::v1::GetScheduleRequest const& request) {
-        return stub_->GetSchedule(context, request);
+        return stub_->GetSchedule(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
@@ -1056,20 +1059,21 @@ NotebookServiceConnectionImpl::ListExecutions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::notebooks::v1::Execution>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<notebooks_v1::NotebookServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::notebooks::v1::ListExecutionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::notebooks::v1::ListExecutionsRequest const&
                        request) {
-              return stub->ListExecutions(context, request);
+              return stub->ListExecutions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::notebooks::v1::ListExecutionsResponse r) {
         std::vector<google::cloud::notebooks::v1::Execution> result(
@@ -1087,11 +1091,11 @@ NotebookServiceConnectionImpl::GetExecution(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetExecution(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::notebooks::v1::GetExecutionRequest const& request) {
-        return stub_->GetExecution(context, request);
+        return stub_->GetExecution(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>

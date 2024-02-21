@@ -66,11 +66,11 @@ CompanyServiceConnectionImpl::CreateCompany(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateCompany(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::CreateCompanyRequest const& request) {
-        return stub_->CreateCompany(context, request);
+        return stub_->CreateCompany(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::talent::v4::Company>
@@ -80,11 +80,11 @@ CompanyServiceConnectionImpl::GetCompany(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCompany(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::GetCompanyRequest const& request) {
-        return stub_->GetCompany(context, request);
+        return stub_->GetCompany(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::talent::v4::Company>
@@ -94,11 +94,11 @@ CompanyServiceConnectionImpl::UpdateCompany(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateCompany(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::UpdateCompanyRequest const& request) {
-        return stub_->UpdateCompany(context, request);
+        return stub_->UpdateCompany(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status CompanyServiceConnectionImpl::DeleteCompany(
@@ -107,11 +107,11 @@ Status CompanyServiceConnectionImpl::DeleteCompany(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteCompany(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::DeleteCompanyRequest const& request) {
-        return stub_->DeleteCompany(context, request);
+        return stub_->DeleteCompany(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::talent::v4::Company>
@@ -123,20 +123,21 @@ CompanyServiceConnectionImpl::ListCompanies(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::talent::v4::Company>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<talent_v4::CompanyServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::talent::v4::ListCompaniesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::talent::v4::ListCompaniesRequest const&
                        request) {
-              return stub->ListCompanies(context, request);
+              return stub->ListCompanies(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::talent::v4::ListCompaniesResponse r) {
         std::vector<google::cloud::talent::v4::Company> result(

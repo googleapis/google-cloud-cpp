@@ -44,20 +44,20 @@ VmwareEngineMetadata::VmwareEngineMetadata(
 
 StatusOr<google::cloud::vmwareengine::v1::ListPrivateCloudsResponse>
 VmwareEngineMetadata::ListPrivateClouds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::ListPrivateCloudsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListPrivateClouds(context, request);
+  return child_->ListPrivateClouds(context, options, request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>
 VmwareEngineMetadata::GetPrivateCloud(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::GetPrivateCloudRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetPrivateCloud(context, request);
+  return child_->GetPrivateCloud(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -109,20 +109,20 @@ VmwareEngineMetadata::AsyncUndeletePrivateCloud(
 
 StatusOr<google::cloud::vmwareengine::v1::ListClustersResponse>
 VmwareEngineMetadata::ListClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::ListClustersRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListClusters(context, request);
+  return child_->ListClusters(context, options, request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::Cluster>
 VmwareEngineMetadata::GetCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::GetClusterRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetCluster(context, request);
+  return child_->GetCluster(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -158,50 +158,50 @@ VmwareEngineMetadata::AsyncDeleteCluster(
 
 StatusOr<google::cloud::vmwareengine::v1::ListNodesResponse>
 VmwareEngineMetadata::ListNodes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::ListNodesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListNodes(context, request);
+  return child_->ListNodes(context, options, request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::Node> VmwareEngineMetadata::GetNode(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::GetNodeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetNode(context, request);
+  return child_->GetNode(context, options, request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListExternalAddressesResponse>
 VmwareEngineMetadata::ListExternalAddresses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::ListExternalAddressesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListExternalAddresses(context, request);
+  return child_->ListExternalAddresses(context, options, request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::
              FetchNetworkPolicyExternalAddressesResponse>
 VmwareEngineMetadata::FetchNetworkPolicyExternalAddresses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::
         FetchNetworkPolicyExternalAddressesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("network_policy=",
                            internal::UrlEncode(request.network_policy())));
-  return child_->FetchNetworkPolicyExternalAddresses(context, request);
+  return child_->FetchNetworkPolicyExternalAddresses(context, options, request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>
 VmwareEngineMetadata::GetExternalAddress(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::GetExternalAddressRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetExternalAddress(context, request);
+  return child_->GetExternalAddress(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -244,20 +244,20 @@ VmwareEngineMetadata::AsyncDeleteExternalAddress(
 
 StatusOr<google::cloud::vmwareengine::v1::ListSubnetsResponse>
 VmwareEngineMetadata::ListSubnets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::ListSubnetsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListSubnets(context, request);
+  return child_->ListSubnets(context, options, request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::Subnet>
 VmwareEngineMetadata::GetSubnet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::GetSubnetRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetSubnet(context, request);
+  return child_->GetSubnet(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -273,22 +273,22 @@ VmwareEngineMetadata::AsyncUpdateSubnet(
 
 StatusOr<google::cloud::vmwareengine::v1::ListExternalAccessRulesResponse>
 VmwareEngineMetadata::ListExternalAccessRules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::ListExternalAccessRulesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListExternalAccessRules(context, request);
+  return child_->ListExternalAccessRules(context, options, request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>
 VmwareEngineMetadata::GetExternalAccessRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetExternalAccessRule(context, request);
+  return child_->GetExternalAccessRule(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -331,20 +331,20 @@ VmwareEngineMetadata::AsyncDeleteExternalAccessRule(
 
 StatusOr<google::cloud::vmwareengine::v1::ListLoggingServersResponse>
 VmwareEngineMetadata::ListLoggingServers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::ListLoggingServersRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListLoggingServers(context, request);
+  return child_->ListLoggingServers(context, options, request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::LoggingServer>
 VmwareEngineMetadata::GetLoggingServer(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::GetLoggingServerRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetLoggingServer(context, request);
+  return child_->GetLoggingServer(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -387,41 +387,41 @@ VmwareEngineMetadata::AsyncDeleteLoggingServer(
 
 StatusOr<google::cloud::vmwareengine::v1::ListNodeTypesResponse>
 VmwareEngineMetadata::ListNodeTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::ListNodeTypesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListNodeTypes(context, request);
+  return child_->ListNodeTypes(context, options, request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::NodeType>
 VmwareEngineMetadata::GetNodeType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::GetNodeTypeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetNodeType(context, request);
+  return child_->GetNodeType(context, options, request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::Credentials>
 VmwareEngineMetadata::ShowNsxCredentials(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::ShowNsxCredentialsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("private_cloud=",
                            internal::UrlEncode(request.private_cloud())));
-  return child_->ShowNsxCredentials(context, request);
+  return child_->ShowNsxCredentials(context, options, request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::Credentials>
 VmwareEngineMetadata::ShowVcenterCredentials(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::ShowVcenterCredentialsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("private_cloud=",
                            internal::UrlEncode(request.private_cloud())));
-  return child_->ShowVcenterCredentials(context, request);
+  return child_->ShowVcenterCredentials(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -452,11 +452,11 @@ VmwareEngineMetadata::AsyncResetVcenterCredentials(
 
 StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>
 VmwareEngineMetadata::GetDnsForwarding(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::GetDnsForwardingRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDnsForwarding(context, request);
+  return child_->GetDnsForwarding(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -475,21 +475,21 @@ VmwareEngineMetadata::AsyncUpdateDnsForwarding(
 
 StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>
 VmwareEngineMetadata::GetNetworkPeering(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::GetNetworkPeeringRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetNetworkPeering(context, request);
+  return child_->GetNetworkPeering(context, options, request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListNetworkPeeringsResponse>
 VmwareEngineMetadata::ListNetworkPeerings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListNetworkPeerings(context, request);
+  return child_->ListNetworkPeerings(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -532,11 +532,11 @@ VmwareEngineMetadata::AsyncUpdateNetworkPeering(
 
 StatusOr<google::cloud::vmwareengine::v1::ListPeeringRoutesResponse>
 VmwareEngineMetadata::ListPeeringRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::ListPeeringRoutesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListPeeringRoutes(context, request);
+  return child_->ListPeeringRoutes(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -553,41 +553,41 @@ VmwareEngineMetadata::AsyncCreateHcxActivationKey(
 
 StatusOr<google::cloud::vmwareengine::v1::ListHcxActivationKeysResponse>
 VmwareEngineMetadata::ListHcxActivationKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::ListHcxActivationKeysRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListHcxActivationKeys(context, request);
+  return child_->ListHcxActivationKeys(context, options, request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>
 VmwareEngineMetadata::GetHcxActivationKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::GetHcxActivationKeyRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetHcxActivationKey(context, request);
+  return child_->GetHcxActivationKey(context, options, request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>
 VmwareEngineMetadata::GetNetworkPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::GetNetworkPolicyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetNetworkPolicy(context, request);
+  return child_->GetNetworkPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListNetworkPoliciesResponse>
 VmwareEngineMetadata::ListNetworkPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListNetworkPolicies(context, request);
+  return child_->ListNetworkPolicies(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -630,22 +630,22 @@ VmwareEngineMetadata::AsyncDeleteNetworkPolicy(
 
 StatusOr<google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsResponse>
 VmwareEngineMetadata::ListManagementDnsZoneBindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListManagementDnsZoneBindings(context, request);
+  return child_->ListManagementDnsZoneBindings(context, options, request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
 VmwareEngineMetadata::GetManagementDnsZoneBinding(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::GetManagementDnsZoneBindingRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetManagementDnsZoneBinding(context, request);
+  return child_->GetManagementDnsZoneBinding(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -738,22 +738,22 @@ VmwareEngineMetadata::AsyncDeleteVmwareEngineNetwork(
 
 StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
 VmwareEngineMetadata::GetVmwareEngineNetwork(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::GetVmwareEngineNetworkRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetVmwareEngineNetwork(context, request);
+  return child_->GetVmwareEngineNetwork(context, options, request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListVmwareEngineNetworksResponse>
 VmwareEngineMetadata::ListVmwareEngineNetworks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListVmwareEngineNetworks(context, request);
+  return child_->ListVmwareEngineNetworks(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -770,22 +770,22 @@ VmwareEngineMetadata::AsyncCreatePrivateConnection(
 
 StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
 VmwareEngineMetadata::GetPrivateConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetPrivateConnection(context, request);
+  return child_->GetPrivateConnection(context, options, request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListPrivateConnectionsResponse>
 VmwareEngineMetadata::ListPrivateConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListPrivateConnections(context, request);
+  return child_->ListPrivateConnections(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -817,12 +817,12 @@ VmwareEngineMetadata::AsyncDeletePrivateConnection(
 StatusOr<
     google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesResponse>
 VmwareEngineMetadata::ListPrivateConnectionPeeringRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::
         ListPrivateConnectionPeeringRoutesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListPrivateConnectionPeeringRoutes(context, request);
+  return child_->ListPrivateConnectionPeeringRoutes(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -839,12 +839,12 @@ VmwareEngineMetadata::AsyncGrantDnsBindPermission(
 
 StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
 VmwareEngineMetadata::GetDnsBindPermission(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDnsBindPermission(context, request);
+  return child_->GetDnsBindPermission(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

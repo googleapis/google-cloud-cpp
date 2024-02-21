@@ -33,11 +33,11 @@ TagBindingsAuth::TagBindingsAuth(
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagBindingsResponse>
 TagBindingsAuth::ListTagBindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListTagBindingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTagBindings(context, request);
+  return child_->ListTagBindings(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -82,12 +82,12 @@ TagBindingsAuth::AsyncDeleteTagBinding(
 
 StatusOr<google::cloud::resourcemanager::v3::ListEffectiveTagsResponse>
 TagBindingsAuth::ListEffectiveTags(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEffectiveTags(context, request);
+  return child_->ListEffectiveTags(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

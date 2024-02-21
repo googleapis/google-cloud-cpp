@@ -44,11 +44,11 @@ CloudShellServiceMetadata::CloudShellServiceMetadata(
 
 StatusOr<google::cloud::shell::v1::Environment>
 CloudShellServiceMetadata::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::shell::v1::GetEnvironmentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetEnvironment(context, request);
+  return child_->GetEnvironment(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -33,11 +33,11 @@ SearchServiceAuth::SearchServiceAuth(
 
 StatusOr<google::cloud::discoveryengine::v1::SearchResponse>
 SearchServiceAuth::Search(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::SearchRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->Search(context, request);
+  return child_->Search(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

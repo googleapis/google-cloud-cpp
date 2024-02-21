@@ -33,20 +33,20 @@ FunctionServiceAuth::FunctionServiceAuth(
 
 StatusOr<google::cloud::functions::v2::Function>
 FunctionServiceAuth::GetFunction(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v2::GetFunctionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetFunction(context, request);
+  return child_->GetFunction(context, options, request);
 }
 
 StatusOr<google::cloud::functions::v2::ListFunctionsResponse>
 FunctionServiceAuth::ListFunctions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v2::ListFunctionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListFunctions(context, request);
+  return child_->ListFunctions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -108,29 +108,29 @@ FunctionServiceAuth::AsyncDeleteFunction(
 
 StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>
 FunctionServiceAuth::GenerateUploadUrl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v2::GenerateUploadUrlRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateUploadUrl(context, request);
+  return child_->GenerateUploadUrl(context, options, request);
 }
 
 StatusOr<google::cloud::functions::v2::GenerateDownloadUrlResponse>
 FunctionServiceAuth::GenerateDownloadUrl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v2::GenerateDownloadUrlRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateDownloadUrl(context, request);
+  return child_->GenerateDownloadUrl(context, options, request);
 }
 
 StatusOr<google::cloud::functions::v2::ListRuntimesResponse>
 FunctionServiceAuth::ListRuntimes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v2::ListRuntimesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListRuntimes(context, request);
+  return child_->ListRuntimes(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

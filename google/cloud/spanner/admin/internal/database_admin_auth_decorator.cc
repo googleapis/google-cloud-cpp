@@ -33,11 +33,11 @@ DatabaseAdminAuth::DatabaseAdminAuth(
 
 StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
 DatabaseAdminAuth::ListDatabases(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::admin::database::v1::ListDatabasesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDatabases(context, request);
+  return child_->ListDatabases(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -62,11 +62,11 @@ DatabaseAdminAuth::AsyncCreateDatabase(
 
 StatusOr<google::spanner::admin::database::v1::Database>
 DatabaseAdminAuth::GetDatabase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::admin::database::v1::GetDatabaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDatabase(context, request);
+  return child_->GetDatabase(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -110,46 +110,46 @@ DatabaseAdminAuth::AsyncUpdateDatabaseDdl(
 }
 
 Status DatabaseAdminAuth::DropDatabase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DropDatabase(context, request);
+  return child_->DropDatabase(context, options, request);
 }
 
 StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
 DatabaseAdminAuth::GetDatabaseDdl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDatabaseDdl(context, request);
+  return child_->GetDatabaseDdl(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> DatabaseAdminAuth::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> DatabaseAdminAuth::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DatabaseAdminAuth::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -192,37 +192,37 @@ DatabaseAdminAuth::AsyncCopyBackup(
 
 StatusOr<google::spanner::admin::database::v1::Backup>
 DatabaseAdminAuth::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::admin::database::v1::GetBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetBackup(context, request);
+  return child_->GetBackup(context, options, request);
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
 DatabaseAdminAuth::UpdateBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::admin::database::v1::UpdateBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateBackup(context, request);
+  return child_->UpdateBackup(context, options, request);
 }
 
 Status DatabaseAdminAuth::DeleteBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteBackup(context, request);
+  return child_->DeleteBackup(context, options, request);
 }
 
 StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>
 DatabaseAdminAuth::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::admin::database::v1::ListBackupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBackups(context, request);
+  return child_->ListBackups(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -247,32 +247,32 @@ DatabaseAdminAuth::AsyncRestoreDatabase(
 
 StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>
 DatabaseAdminAuth::ListDatabaseOperations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::admin::database::v1::ListDatabaseOperationsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDatabaseOperations(context, request);
+  return child_->ListDatabaseOperations(context, options, request);
 }
 
 StatusOr<google::spanner::admin::database::v1::ListBackupOperationsResponse>
 DatabaseAdminAuth::ListBackupOperations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::admin::database::v1::ListBackupOperationsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBackupOperations(context, request);
+  return child_->ListBackupOperations(context, options, request);
 }
 
 StatusOr<google::spanner::admin::database::v1::ListDatabaseRolesResponse>
 DatabaseAdminAuth::ListDatabaseRoles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDatabaseRoles(context, request);
+  return child_->ListDatabaseRoles(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

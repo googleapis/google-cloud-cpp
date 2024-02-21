@@ -33,46 +33,46 @@ RuleSetServiceAuth::RuleSetServiceAuth(
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceAuth::CreateRuleSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateRuleSet(context, request);
+  return child_->CreateRuleSet(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceAuth::GetRuleSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetRuleSet(context, request);
+  return child_->GetRuleSet(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceAuth::UpdateRuleSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateRuleSet(context, request);
+  return child_->UpdateRuleSet(context, options, request);
 }
 
 Status RuleSetServiceAuth::DeleteRuleSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteRuleSet(context, request);
+  return child_->DeleteRuleSet(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse>
 RuleSetServiceAuth::ListRuleSets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::ListRuleSetsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListRuleSets(context, request);
+  return child_->ListRuleSets(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

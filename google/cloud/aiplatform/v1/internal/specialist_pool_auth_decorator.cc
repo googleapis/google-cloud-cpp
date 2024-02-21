@@ -52,20 +52,20 @@ SpecialistPoolServiceAuth::AsyncCreateSpecialistPool(
 
 StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
 SpecialistPoolServiceAuth::GetSpecialistPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetSpecialistPool(context, request);
+  return child_->GetSpecialistPool(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListSpecialistPoolsResponse>
 SpecialistPoolServiceAuth::ListSpecialistPools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSpecialistPools(context, request);
+  return child_->ListSpecialistPools(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

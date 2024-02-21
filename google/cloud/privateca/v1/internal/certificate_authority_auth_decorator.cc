@@ -33,52 +33,52 @@ CertificateAuthorityServiceAuth::CertificateAuthorityServiceAuth(
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 CertificateAuthorityServiceAuth::CreateCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::CreateCertificateRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateCertificate(context, request);
+  return child_->CreateCertificate(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 CertificateAuthorityServiceAuth::GetCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::GetCertificateRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCertificate(context, request);
+  return child_->GetCertificate(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::ListCertificatesResponse>
 CertificateAuthorityServiceAuth::ListCertificates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::ListCertificatesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCertificates(context, request);
+  return child_->ListCertificates(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 CertificateAuthorityServiceAuth::RevokeCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::RevokeCertificateRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RevokeCertificate(context, request);
+  return child_->RevokeCertificate(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 CertificateAuthorityServiceAuth::UpdateCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::UpdateCertificateRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateCertificate(context, request);
+  return child_->UpdateCertificate(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -164,33 +164,33 @@ CertificateAuthorityServiceAuth::AsyncEnableCertificateAuthority(
 StatusOr<google::cloud::security::privateca::v1::
              FetchCertificateAuthorityCsrResponse>
 CertificateAuthorityServiceAuth::FetchCertificateAuthorityCsr(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::
         FetchCertificateAuthorityCsrRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->FetchCertificateAuthorityCsr(context, request);
+  return child_->FetchCertificateAuthorityCsr(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>
 CertificateAuthorityServiceAuth::GetCertificateAuthority(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::
         GetCertificateAuthorityRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCertificateAuthority(context, request);
+  return child_->GetCertificateAuthority(context, options, request);
 }
 
 StatusOr<
     google::cloud::security::privateca::v1::ListCertificateAuthoritiesResponse>
 CertificateAuthorityServiceAuth::ListCertificateAuthorities(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::
         ListCertificateAuthoritiesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCertificateAuthorities(context, request);
+  return child_->ListCertificateAuthorities(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -295,20 +295,20 @@ CertificateAuthorityServiceAuth::AsyncUpdateCaPool(
 
 StatusOr<google::cloud::security::privateca::v1::CaPool>
 CertificateAuthorityServiceAuth::GetCaPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::GetCaPoolRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCaPool(context, request);
+  return child_->GetCaPool(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::ListCaPoolsResponse>
 CertificateAuthorityServiceAuth::ListCaPools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::ListCaPoolsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCaPools(context, request);
+  return child_->ListCaPools(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -333,33 +333,33 @@ CertificateAuthorityServiceAuth::AsyncDeleteCaPool(
 
 StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
 CertificateAuthorityServiceAuth::FetchCaCerts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::FetchCaCertsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->FetchCaCerts(context, request);
+  return child_->FetchCaCerts(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>
 CertificateAuthorityServiceAuth::GetCertificateRevocationList(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::
         GetCertificateRevocationListRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCertificateRevocationList(context, request);
+  return child_->GetCertificateRevocationList(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::
              ListCertificateRevocationListsResponse>
 CertificateAuthorityServiceAuth::ListCertificateRevocationLists(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::
         ListCertificateRevocationListsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCertificateRevocationLists(context, request);
+  return child_->ListCertificateRevocationLists(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -424,23 +424,23 @@ CertificateAuthorityServiceAuth::AsyncDeleteCertificateTemplate(
 
 StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
 CertificateAuthorityServiceAuth::GetCertificateTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::GetCertificateTemplateRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCertificateTemplate(context, request);
+  return child_->GetCertificateTemplate(context, options, request);
 }
 
 StatusOr<
     google::cloud::security::privateca::v1::ListCertificateTemplatesResponse>
 CertificateAuthorityServiceAuth::ListCertificateTemplates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::
         ListCertificateTemplatesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCertificateTemplates(context, request);
+  return child_->ListCertificateTemplates(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

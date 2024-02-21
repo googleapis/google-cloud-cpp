@@ -47,16 +47,16 @@ class BigtableInstanceAdminMetadata : public BigtableInstanceAdminStub {
       override;
 
   StatusOr<google::bigtable::admin::v2::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::GetInstanceRequest const& request) override;
 
   StatusOr<google::bigtable::admin::v2::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::ListInstancesRequest const& request)
       override;
 
   StatusOr<google::bigtable::admin::v2::Instance> UpdateInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::Instance const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncPartialUpdateInstance(
@@ -66,7 +66,7 @@ class BigtableInstanceAdminMetadata : public BigtableInstanceAdminStub {
       override;
 
   Status DeleteInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::DeleteInstanceRequest const& request)
       override;
 
@@ -77,11 +77,11 @@ class BigtableInstanceAdminMetadata : public BigtableInstanceAdminStub {
       override;
 
   StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::GetClusterRequest const& request) override;
 
   StatusOr<google::bigtable::admin::v2::ListClustersResponse> ListClusters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::ListClustersRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateCluster(
@@ -95,22 +95,22 @@ class BigtableInstanceAdminMetadata : public BigtableInstanceAdminStub {
       google::bigtable::admin::v2::PartialUpdateClusterRequest const& request)
       override;
 
-  Status DeleteCluster(grpc::ClientContext& context,
+  Status DeleteCluster(grpc::ClientContext& context, Options const& options,
                        google::bigtable::admin::v2::DeleteClusterRequest const&
                            request) override;
 
   StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::CreateAppProfileRequest const& request)
       override;
 
   StatusOr<google::bigtable::admin::v2::AppProfile> GetAppProfile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::GetAppProfileRequest const& request)
       override;
 
   StatusOr<google::bigtable::admin::v2::ListAppProfilesResponse>
-  ListAppProfiles(grpc::ClientContext& context,
+  ListAppProfiles(grpc::ClientContext& context, Options const& options,
                   google::bigtable::admin::v2::ListAppProfilesRequest const&
                       request) override;
 
@@ -121,24 +121,24 @@ class BigtableInstanceAdminMetadata : public BigtableInstanceAdminStub {
       override;
 
   Status DeleteAppProfile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::DeleteAppProfileRequest const& request)
       override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::bigtable::admin::v2::ListHotTabletsResponse> ListHotTablets(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::ListHotTabletsRequest const& request)
       override;
 

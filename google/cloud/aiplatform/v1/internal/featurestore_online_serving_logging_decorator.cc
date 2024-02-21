@@ -39,15 +39,15 @@ FeaturestoreOnlineServingServiceLogging::
 
 StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
 FeaturestoreOnlineServingServiceLogging::ReadFeatureValues(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ReadFeatureValuesRequest const&
                  request) {
-        return child_->ReadFeatureValues(context, request);
+        return child_->ReadFeatureValues(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -79,15 +79,15 @@ FeaturestoreOnlineServingServiceLogging::StreamingReadFeatureValues(
 
 StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
 FeaturestoreOnlineServingServiceLogging::WriteFeatureValues(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::WriteFeatureValuesRequest const&
                  request) {
-        return child_->WriteFeatureValues(context, request);
+        return child_->WriteFeatureValues(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

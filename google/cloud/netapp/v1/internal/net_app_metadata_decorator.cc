@@ -44,11 +44,11 @@ NetAppMetadata::NetAppMetadata(
 
 StatusOr<google::cloud::netapp::v1::ListStoragePoolsResponse>
 NetAppMetadata::ListStoragePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListStoragePoolsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListStoragePools(context, request);
+  return child_->ListStoragePools(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -63,11 +63,11 @@ NetAppMetadata::AsyncCreateStoragePool(
 }
 
 StatusOr<google::cloud::netapp::v1::StoragePool> NetAppMetadata::GetStoragePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetStoragePoolRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetStoragePool(context, request);
+  return child_->GetStoragePool(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -95,19 +95,19 @@ NetAppMetadata::AsyncDeleteStoragePool(
 
 StatusOr<google::cloud::netapp::v1::ListVolumesResponse>
 NetAppMetadata::ListVolumes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListVolumesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListVolumes(context, request);
+  return child_->ListVolumes(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::Volume> NetAppMetadata::GetVolume(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetVolumeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetVolume(context, request);
+  return child_->GetVolume(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -153,19 +153,19 @@ NetAppMetadata::AsyncRevertVolume(
 
 StatusOr<google::cloud::netapp::v1::ListSnapshotsResponse>
 NetAppMetadata::ListSnapshots(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListSnapshotsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListSnapshots(context, request);
+  return child_->ListSnapshots(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::Snapshot> NetAppMetadata::GetSnapshot(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetSnapshotRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetSnapshot(context, request);
+  return child_->GetSnapshot(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -201,20 +201,20 @@ NetAppMetadata::AsyncUpdateSnapshot(
 
 StatusOr<google::cloud::netapp::v1::ListActiveDirectoriesResponse>
 NetAppMetadata::ListActiveDirectories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListActiveDirectoriesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListActiveDirectories(context, request);
+  return child_->ListActiveDirectories(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::ActiveDirectory>
 NetAppMetadata::GetActiveDirectory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetActiveDirectoryRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetActiveDirectory(context, request);
+  return child_->GetActiveDirectory(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -254,11 +254,11 @@ NetAppMetadata::AsyncDeleteActiveDirectory(
 
 StatusOr<google::cloud::netapp::v1::ListKmsConfigsResponse>
 NetAppMetadata::ListKmsConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListKmsConfigsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListKmsConfigs(context, request);
+  return child_->ListKmsConfigs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -272,11 +272,11 @@ NetAppMetadata::AsyncCreateKmsConfig(
 }
 
 StatusOr<google::cloud::netapp::v1::KmsConfig> NetAppMetadata::GetKmsConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetKmsConfigRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetKmsConfig(context, request);
+  return child_->GetKmsConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -302,11 +302,11 @@ NetAppMetadata::AsyncEncryptVolumes(
 
 StatusOr<google::cloud::netapp::v1::VerifyKmsConfigResponse>
 NetAppMetadata::VerifyKmsConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::VerifyKmsConfigRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->VerifyKmsConfig(context, request);
+  return child_->VerifyKmsConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -321,19 +321,19 @@ NetAppMetadata::AsyncDeleteKmsConfig(
 
 StatusOr<google::cloud::netapp::v1::ListReplicationsResponse>
 NetAppMetadata::ListReplications(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListReplicationsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListReplications(context, request);
+  return child_->ListReplications(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::Replication> NetAppMetadata::GetReplication(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetReplicationRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetReplication(context, request);
+  return child_->GetReplication(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -415,20 +415,20 @@ NetAppMetadata::AsyncCreateBackupVault(
 }
 
 StatusOr<google::cloud::netapp::v1::BackupVault> NetAppMetadata::GetBackupVault(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetBackupVaultRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetBackupVault(context, request);
+  return child_->GetBackupVault(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::ListBackupVaultsResponse>
 NetAppMetadata::ListBackupVaults(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListBackupVaultsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListBackupVaults(context, request);
+  return child_->ListBackupVaults(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -465,20 +465,20 @@ NetAppMetadata::AsyncCreateBackup(
 }
 
 StatusOr<google::cloud::netapp::v1::Backup> NetAppMetadata::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetBackupRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetBackup(context, request);
+  return child_->GetBackup(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::ListBackupsResponse>
 NetAppMetadata::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListBackupsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListBackups(context, request);
+  return child_->ListBackups(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -515,20 +515,20 @@ NetAppMetadata::AsyncCreateBackupPolicy(
 
 StatusOr<google::cloud::netapp::v1::BackupPolicy>
 NetAppMetadata::GetBackupPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetBackupPolicyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetBackupPolicy(context, request);
+  return child_->GetBackupPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::ListBackupPoliciesResponse>
 NetAppMetadata::ListBackupPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListBackupPoliciesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListBackupPolicies(context, request);
+  return child_->ListBackupPolicies(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

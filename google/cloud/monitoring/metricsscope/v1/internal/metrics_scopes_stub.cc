@@ -33,7 +33,7 @@ MetricsScopesStub::~MetricsScopesStub() = default;
 
 StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
 DefaultMetricsScopesStub::GetMetricsScope(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
         request) {
   google::monitoring::metricsscope::v1::MetricsScope response;
@@ -47,7 +47,7 @@ DefaultMetricsScopesStub::GetMetricsScope(
 StatusOr<google::monitoring::metricsscope::v1::
              ListMetricsScopesByMonitoredProjectResponse>
 DefaultMetricsScopesStub::ListMetricsScopesByMonitoredProject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::metricsscope::v1::
         ListMetricsScopesByMonitoredProjectRequest const& request) {
   google::monitoring::metricsscope::v1::

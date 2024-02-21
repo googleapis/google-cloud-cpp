@@ -43,15 +43,15 @@ class ApiKeysTracingStub : public ApiKeysStub {
       google::api::apikeys::v2::CreateKeyRequest const& request) override;
 
   StatusOr<google::api::apikeys::v2::ListKeysResponse> ListKeys(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::ListKeysRequest const& request) override;
 
   StatusOr<google::api::apikeys::v2::Key> GetKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::GetKeyRequest const& request) override;
 
   StatusOr<google::api::apikeys::v2::GetKeyStringResponse> GetKeyString(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::GetKeyStringRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateKey(
@@ -70,7 +70,7 @@ class ApiKeysTracingStub : public ApiKeysStub {
       google::api::apikeys::v2::UndeleteKeyRequest const& request) override;
 
   StatusOr<google::api::apikeys::v2::LookupKeyResponse> LookupKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::apikeys::v2::LookupKeyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

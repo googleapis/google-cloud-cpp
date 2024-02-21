@@ -38,36 +38,36 @@ class CaseServiceTracingStub : public CaseServiceStub {
   explicit CaseServiceTracingStub(std::shared_ptr<CaseServiceStub> child);
 
   StatusOr<google::cloud::support::v2::Case> GetCase(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::GetCaseRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::ListCasesResponse> ListCases(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::ListCasesRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::SearchCasesResponse> SearchCases(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::SearchCasesRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Case> CreateCase(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::CreateCaseRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Case> UpdateCase(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::UpdateCaseRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Case> EscalateCase(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::EscalateCaseRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Case> CloseCase(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::CloseCaseRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::SearchCaseClassificationsResponse>
   SearchCaseClassifications(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::SearchCaseClassificationsRequest const&
           request) override;
 

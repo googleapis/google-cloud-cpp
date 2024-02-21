@@ -33,7 +33,7 @@ SecureSourceManagerTracingStub::SecureSourceManagerTracingStub(
 
 StatusOr<google::cloud::securesourcemanager::v1::ListInstancesResponse>
 SecureSourceManagerTracingStub::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securesourcemanager::v1::ListInstancesRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -42,19 +42,19 @@ SecureSourceManagerTracingStub::ListInstances(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListInstances(context, request));
+                           child_->ListInstances(context, options, request));
 }
 
 StatusOr<google::cloud::securesourcemanager::v1::Instance>
 SecureSourceManagerTracingStub::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securesourcemanager::v1::GetInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securesourcemanager.v1.SecureSourceManager", "GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetInstance(context, request));
+                           child_->GetInstance(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -89,7 +89,7 @@ SecureSourceManagerTracingStub::AsyncDeleteInstance(
 
 StatusOr<google::cloud::securesourcemanager::v1::ListRepositoriesResponse>
 SecureSourceManagerTracingStub::ListRepositories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securesourcemanager::v1::ListRepositoriesRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -98,12 +98,12 @@ SecureSourceManagerTracingStub::ListRepositories(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListRepositories(context, request));
+                           child_->ListRepositories(context, options, request));
 }
 
 StatusOr<google::cloud::securesourcemanager::v1::Repository>
 SecureSourceManagerTracingStub::GetRepository(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securesourcemanager::v1::GetRepositoryRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -112,7 +112,7 @@ SecureSourceManagerTracingStub::GetRepository(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetRepository(context, request));
+                           child_->GetRepository(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -147,7 +147,7 @@ SecureSourceManagerTracingStub::AsyncDeleteRepository(
 
 StatusOr<google::iam::v1::Policy>
 SecureSourceManagerTracingStub::GetIamPolicyRepo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securesourcemanager.v1.SecureSourceManager",
@@ -155,12 +155,12 @@ SecureSourceManagerTracingStub::GetIamPolicyRepo(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetIamPolicyRepo(context, request));
+                           child_->GetIamPolicyRepo(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy>
 SecureSourceManagerTracingStub::SetIamPolicyRepo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securesourcemanager.v1.SecureSourceManager",
@@ -168,20 +168,21 @@ SecureSourceManagerTracingStub::SetIamPolicyRepo(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->SetIamPolicyRepo(context, request));
+                           child_->SetIamPolicyRepo(context, options, request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 SecureSourceManagerTracingStub::TestIamPermissionsRepo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securesourcemanager.v1.SecureSourceManager",
       "TestIamPermissionsRepo");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissionsRepo(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->TestIamPermissionsRepo(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

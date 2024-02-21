@@ -54,7 +54,7 @@ DefaultDeploymentResourcePoolServiceStub::AsyncCreateDeploymentResourcePool(
 
 StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
 DefaultDeploymentResourcePoolServiceStub::GetDeploymentResourcePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
         request) {
   google::cloud::aiplatform::v1::DeploymentResourcePool response;
@@ -68,7 +68,7 @@ DefaultDeploymentResourcePoolServiceStub::GetDeploymentResourcePool(
 
 StatusOr<google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse>
 DefaultDeploymentResourcePoolServiceStub::ListDeploymentResourcePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const&
         request) {
   google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse response;

@@ -39,11 +39,11 @@ class TpuStub {
   virtual ~TpuStub() = 0;
 
   virtual StatusOr<google::cloud::tpu::v2::ListNodesResponse> ListNodes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::ListNodesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tpu::v2::Node> GetNode(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::GetNodeRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateNode(
@@ -73,31 +73,31 @@ class TpuStub {
 
   virtual StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
   GenerateServiceIdentity(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::GenerateServiceIdentityRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::tpu::v2::ListAcceleratorTypesResponse>
   ListAcceleratorTypes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::ListAcceleratorTypesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tpu::v2::AcceleratorType> GetAcceleratorType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::GetAcceleratorTypeRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tpu::v2::ListRuntimeVersionsResponse>
   ListRuntimeVersions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::ListRuntimeVersionsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tpu::v2::RuntimeVersion> GetRuntimeVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::GetRuntimeVersionRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::tpu::v2::GetGuestAttributesResponse>
   GetGuestAttributes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::GetGuestAttributesRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -120,11 +120,11 @@ class DefaultTpuStub : public TpuStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::tpu::v2::ListNodesResponse> ListNodes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::ListNodesRequest const& request) override;
 
   StatusOr<google::cloud::tpu::v2::Node> GetNode(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::GetNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateNode(
@@ -154,32 +154,32 @@ class DefaultTpuStub : public TpuStub {
 
   StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
   GenerateServiceIdentity(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::GenerateServiceIdentityRequest const& request)
       override;
 
   StatusOr<google::cloud::tpu::v2::ListAcceleratorTypesResponse>
   ListAcceleratorTypes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::ListAcceleratorTypesRequest const& request)
       override;
 
   StatusOr<google::cloud::tpu::v2::AcceleratorType> GetAcceleratorType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::GetAcceleratorTypeRequest const& request)
       override;
 
   StatusOr<google::cloud::tpu::v2::ListRuntimeVersionsResponse>
-  ListRuntimeVersions(grpc::ClientContext& context,
+  ListRuntimeVersions(grpc::ClientContext& context, Options const& options,
                       google::cloud::tpu::v2::ListRuntimeVersionsRequest const&
                           request) override;
 
   StatusOr<google::cloud::tpu::v2::RuntimeVersion> GetRuntimeVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v2::GetRuntimeVersionRequest const& request) override;
 
   StatusOr<google::cloud::tpu::v2::GetGuestAttributesResponse>
-  GetGuestAttributes(grpc::ClientContext& context,
+  GetGuestAttributes(grpc::ClientContext& context, Options const& options,
                      google::cloud::tpu::v2::GetGuestAttributesRequest const&
                          request) override;
 

@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RESERVATION_V1_INTERNAL_RESERVATION_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_RESERVATION_V1_INTERNAL_RESERVATION_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/bigquery/reservation/v1/reservation.grpc.pb.h>
@@ -36,127 +37,127 @@ class ReservationServiceStub {
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
   CreateReservation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::CreateReservationRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::bigquery::reservation::v1::ListReservationsResponse>
   ListReservations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::ListReservationsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
   GetReservation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::GetReservationRequest const&
           request) = 0;
 
   virtual Status DeleteReservation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::DeleteReservationRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
   UpdateReservation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   CreateCapacityCommitment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::
           CreateCapacityCommitmentRequest const& request) = 0;
 
   virtual StatusOr<
       google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsResponse>
   ListCapacityCommitments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::
           ListCapacityCommitmentsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
-  GetCapacityCommitment(grpc::ClientContext& context,
+  GetCapacityCommitment(grpc::ClientContext& context, Options const& options,
                         google::cloud::bigquery::reservation::v1::
                             GetCapacityCommitmentRequest const& request) = 0;
 
   virtual Status DeleteCapacityCommitment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::
           DeleteCapacityCommitmentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   UpdateCapacityCommitment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::
           UpdateCapacityCommitmentRequest const& request) = 0;
 
   virtual StatusOr<
       google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
   SplitCapacityCommitment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::
           SplitCapacityCommitmentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   MergeCapacityCommitments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::
           MergeCapacityCommitmentsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
   CreateAssignment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::bigquery::reservation::v1::ListAssignmentsResponse>
   ListAssignments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::ListAssignmentsRequest const&
           request) = 0;
 
   virtual Status DeleteAssignment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::bigquery::reservation::v1::SearchAssignmentsResponse>
   SearchAssignments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::bigquery::reservation::v1::SearchAllAssignmentsResponse>
-  SearchAllAssignments(grpc::ClientContext& context,
+  SearchAllAssignments(grpc::ClientContext& context, Options const& options,
                        google::cloud::bigquery::reservation::v1::
                            SearchAllAssignmentsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
   MoveAssignment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
   UpdateAssignment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
   GetBiReservation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
-  UpdateBiReservation(grpc::ClientContext& context,
+  UpdateBiReservation(grpc::ClientContext& context, Options const& options,
                       google::cloud::bigquery::reservation::v1::
                           UpdateBiReservationRequest const& request) = 0;
 };
@@ -171,124 +172,124 @@ class DefaultReservationServiceStub : public ReservationServiceStub {
 
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
   CreateReservation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::CreateReservationRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::ListReservationsResponse>
   ListReservations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::ListReservationsRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
   GetReservation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::GetReservationRequest const&
           request) override;
 
   Status DeleteReservation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::DeleteReservationRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
   UpdateReservation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   CreateCapacityCommitment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::
           CreateCapacityCommitmentRequest const& request) override;
 
   StatusOr<
       google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsResponse>
   ListCapacityCommitments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::
           ListCapacityCommitmentsRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   GetCapacityCommitment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::
           GetCapacityCommitmentRequest const& request) override;
 
   Status DeleteCapacityCommitment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::
           DeleteCapacityCommitmentRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   UpdateCapacityCommitment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::
           UpdateCapacityCommitmentRequest const& request) override;
 
   StatusOr<
       google::cloud::bigquery::reservation::v1::SplitCapacityCommitmentResponse>
   SplitCapacityCommitment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::
           SplitCapacityCommitmentRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
   MergeCapacityCommitments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::
           MergeCapacityCommitmentsRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
   CreateAssignment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::ListAssignmentsResponse>
   ListAssignments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::ListAssignmentsRequest const&
           request) override;
 
   Status DeleteAssignment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::SearchAssignmentsResponse>
   SearchAssignments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest const&
           request) override;
 
   StatusOr<
       google::cloud::bigquery::reservation::v1::SearchAllAssignmentsResponse>
-  SearchAllAssignments(grpc::ClientContext& context,
+  SearchAllAssignments(grpc::ClientContext& context, Options const& options,
                        google::cloud::bigquery::reservation::v1::
                            SearchAllAssignmentsRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment> MoveAssignment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
   UpdateAssignment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
   GetBiReservation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
-  UpdateBiReservation(grpc::ClientContext& context,
+  UpdateBiReservation(grpc::ClientContext& context, Options const& options,
                       google::cloud::bigquery::reservation::v1::
                           UpdateBiReservationRequest const& request) override;
 

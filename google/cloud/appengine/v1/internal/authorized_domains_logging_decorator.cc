@@ -37,15 +37,15 @@ AuthorizedDomainsLogging::AuthorizedDomainsLogging(
 
 StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
 AuthorizedDomainsLogging::ListAuthorizedDomains(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListAuthorizedDomainsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::appengine::v1::ListAuthorizedDomainsRequest const& request) {
-        return child_->ListAuthorizedDomains(context, request);
+        return child_->ListAuthorizedDomains(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

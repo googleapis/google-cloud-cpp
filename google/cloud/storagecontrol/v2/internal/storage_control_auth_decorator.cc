@@ -32,36 +32,36 @@ StorageControlAuth::StorageControlAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::storage::control::v2::Folder> StorageControlAuth::CreateFolder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::CreateFolderRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateFolder(context, request);
+  return child_->CreateFolder(context, options, request);
 }
 
 Status StorageControlAuth::DeleteFolder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::DeleteFolderRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteFolder(context, request);
+  return child_->DeleteFolder(context, options, request);
 }
 
 StatusOr<google::storage::control::v2::Folder> StorageControlAuth::GetFolder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::GetFolderRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetFolder(context, request);
+  return child_->GetFolder(context, options, request);
 }
 
 StatusOr<google::storage::control::v2::ListFoldersResponse>
 StorageControlAuth::ListFolders(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::ListFoldersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListFolders(context, request);
+  return child_->ListFolders(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -85,11 +85,11 @@ StorageControlAuth::AsyncRenameFolder(
 
 StatusOr<google::storage::control::v2::StorageLayout>
 StorageControlAuth::GetStorageLayout(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::GetStorageLayoutRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetStorageLayout(context, request);
+  return child_->GetStorageLayout(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

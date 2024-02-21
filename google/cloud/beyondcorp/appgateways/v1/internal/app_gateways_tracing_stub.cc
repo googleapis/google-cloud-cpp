@@ -33,7 +33,7 @@ AppGatewaysServiceTracingStub::AppGatewaysServiceTracingStub(
 
 StatusOr<google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse>
 AppGatewaysServiceTracingStub::ListAppGateways(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -42,12 +42,12 @@ AppGatewaysServiceTracingStub::ListAppGateways(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListAppGateways(context, request));
+                           child_->ListAppGateways(context, options, request));
 }
 
 StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
 AppGatewaysServiceTracingStub::GetAppGateway(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -56,7 +56,7 @@ AppGatewaysServiceTracingStub::GetAppGateway(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetAppGateway(context, request));
+                           child_->GetAppGateway(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

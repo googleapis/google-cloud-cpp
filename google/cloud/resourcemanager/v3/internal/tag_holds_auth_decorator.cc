@@ -71,11 +71,11 @@ TagHoldsAuth::AsyncDeleteTagHold(
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse>
 TagHoldsAuth::ListTagHolds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListTagHoldsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTagHolds(context, request);
+  return child_->ListTagHolds(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

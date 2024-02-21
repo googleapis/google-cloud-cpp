@@ -75,10 +75,12 @@ DocumentServiceConnectionImpl::GetDocument(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDocument(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::discoveryengine::v1::GetDocumentRequest const&
-                 request) { return stub_->GetDocument(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetDocument(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::discoveryengine::v1::Document>
@@ -90,19 +92,22 @@ DocumentServiceConnectionImpl::ListDocuments(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::discoveryengine::v1::Document>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<discoveryengine_v1::DocumentServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::discoveryengine::v1::ListDocumentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::discoveryengine::v1::ListDocumentsRequest const&
-                    request) { return stub->ListDocuments(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListDocuments(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::discoveryengine::v1::ListDocumentsResponse r) {
         std::vector<google::cloud::discoveryengine::v1::Document> result(
@@ -120,10 +125,12 @@ DocumentServiceConnectionImpl::CreateDocument(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateDocument(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::discoveryengine::v1::CreateDocumentRequest const&
-                 request) { return stub_->CreateDocument(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreateDocument(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
@@ -133,10 +140,12 @@ DocumentServiceConnectionImpl::UpdateDocument(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateDocument(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::discoveryengine::v1::UpdateDocumentRequest const&
-                 request) { return stub_->UpdateDocument(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->UpdateDocument(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status DocumentServiceConnectionImpl::DeleteDocument(
@@ -145,10 +154,12 @@ Status DocumentServiceConnectionImpl::DeleteDocument(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteDocument(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::discoveryengine::v1::DeleteDocumentRequest const&
-                 request) { return stub_->DeleteDocument(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DeleteDocument(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>

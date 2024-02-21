@@ -39,80 +39,80 @@ class ProductSearchStub {
   virtual ~ProductSearchStub() = 0;
 
   virtual StatusOr<google::cloud::vision::v1::ProductSet> CreateProductSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::CreateProductSetRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::vision::v1::ListProductSetsResponse>
   ListProductSets(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::ListProductSetsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::vision::v1::ProductSet> GetProductSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::GetProductSetRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::vision::v1::ProductSet> UpdateProductSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::UpdateProductSetRequest const& request) = 0;
 
   virtual Status DeleteProductSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::DeleteProductSetRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::vision::v1::Product> CreateProduct(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::CreateProductRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::vision::v1::ListProductsResponse>
   ListProducts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::ListProductsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::vision::v1::Product> GetProduct(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::GetProductRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::vision::v1::Product> UpdateProduct(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::UpdateProductRequest const& request) = 0;
 
   virtual Status DeleteProduct(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::DeleteProductRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::vision::v1::ReferenceImage>
   CreateReferenceImage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::CreateReferenceImageRequest const&
           request) = 0;
 
   virtual Status DeleteReferenceImage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::DeleteReferenceImageRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::vision::v1::ListReferenceImagesResponse>
   ListReferenceImages(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::ListReferenceImagesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::vision::v1::ReferenceImage> GetReferenceImage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::GetReferenceImageRequest const& request) = 0;
 
   virtual Status AddProductToProductSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::AddProductToProductSetRequest const&
           request) = 0;
 
   virtual Status RemoveProductFromProductSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::vision::v1::ListProductsInProductSetResponse>
   ListProductsInProductSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::ListProductsInProductSetRequest const&
           request) = 0;
 
@@ -148,83 +148,83 @@ class DefaultProductSearchStub : public ProductSearchStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::vision::v1::ProductSet> CreateProductSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::CreateProductSetRequest const& request)
       override;
 
   StatusOr<google::cloud::vision::v1::ListProductSetsResponse> ListProductSets(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::ListProductSetsRequest const& request)
       override;
 
   StatusOr<google::cloud::vision::v1::ProductSet> GetProductSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::GetProductSetRequest const& request) override;
 
   StatusOr<google::cloud::vision::v1::ProductSet> UpdateProductSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::UpdateProductSetRequest const& request)
       override;
 
   Status DeleteProductSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::DeleteProductSetRequest const& request)
       override;
 
   StatusOr<google::cloud::vision::v1::Product> CreateProduct(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::CreateProductRequest const& request) override;
 
   StatusOr<google::cloud::vision::v1::ListProductsResponse> ListProducts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::ListProductsRequest const& request) override;
 
   StatusOr<google::cloud::vision::v1::Product> GetProduct(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::GetProductRequest const& request) override;
 
   StatusOr<google::cloud::vision::v1::Product> UpdateProduct(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::UpdateProductRequest const& request) override;
 
   Status DeleteProduct(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::DeleteProductRequest const& request) override;
 
   StatusOr<google::cloud::vision::v1::ReferenceImage> CreateReferenceImage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::CreateReferenceImageRequest const& request)
       override;
 
   Status DeleteReferenceImage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::DeleteReferenceImageRequest const& request)
       override;
 
   StatusOr<google::cloud::vision::v1::ListReferenceImagesResponse>
   ListReferenceImages(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::ListReferenceImagesRequest const& request)
       override;
 
   StatusOr<google::cloud::vision::v1::ReferenceImage> GetReferenceImage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::GetReferenceImageRequest const& request)
       override;
 
   Status AddProductToProductSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::AddProductToProductSetRequest const& request)
       override;
 
   Status RemoveProductFromProductSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
           request) override;
 
   StatusOr<google::cloud::vision::v1::ListProductsInProductSetResponse>
   ListProductsInProductSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::ListProductsInProductSetRequest const& request)
       override;
 

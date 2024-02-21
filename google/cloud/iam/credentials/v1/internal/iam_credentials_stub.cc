@@ -32,7 +32,7 @@ IAMCredentialsStub::~IAMCredentialsStub() = default;
 
 StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
 DefaultIAMCredentialsStub::GenerateAccessToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::credentials::v1::GenerateAccessTokenRequest const& request) {
   google::iam::credentials::v1::GenerateAccessTokenResponse response;
   auto status = grpc_stub_->GenerateAccessToken(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultIAMCredentialsStub::GenerateAccessToken(
 
 StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
 DefaultIAMCredentialsStub::GenerateIdToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
   google::iam::credentials::v1::GenerateIdTokenResponse response;
   auto status = grpc_stub_->GenerateIdToken(&context, request, &response);
@@ -56,7 +56,7 @@ DefaultIAMCredentialsStub::GenerateIdToken(
 
 StatusOr<google::iam::credentials::v1::SignBlobResponse>
 DefaultIAMCredentialsStub::SignBlob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::credentials::v1::SignBlobRequest const& request) {
   google::iam::credentials::v1::SignBlobResponse response;
   auto status = grpc_stub_->SignBlob(&context, request, &response);
@@ -68,7 +68,7 @@ DefaultIAMCredentialsStub::SignBlob(
 
 StatusOr<google::iam::credentials::v1::SignJwtResponse>
 DefaultIAMCredentialsStub::SignJwt(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::credentials::v1::SignJwtRequest const& request) {
   google::iam::credentials::v1::SignJwtResponse response;
   auto status = grpc_stub_->SignJwt(&context, request, &response);

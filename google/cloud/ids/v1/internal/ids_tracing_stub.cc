@@ -32,24 +32,24 @@ IDSTracingStub::IDSTracingStub(std::shared_ptr<IDSStub> child)
 
 StatusOr<google::cloud::ids::v1::ListEndpointsResponse>
 IDSTracingStub::ListEndpoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::ids::v1::ListEndpointsRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "ListEndpoints");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListEndpoints(context, request));
+                           child_->ListEndpoints(context, options, request));
 }
 
 StatusOr<google::cloud::ids::v1::Endpoint> IDSTracingStub::GetEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::ids::v1::GetEndpointRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.ids.v1.IDS", "GetEndpoint");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetEndpoint(context, request));
+                           child_->GetEndpoint(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

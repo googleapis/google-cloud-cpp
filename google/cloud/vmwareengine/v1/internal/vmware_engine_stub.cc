@@ -33,7 +33,7 @@ VmwareEngineStub::~VmwareEngineStub() = default;
 
 StatusOr<google::cloud::vmwareengine::v1::ListPrivateCloudsResponse>
 DefaultVmwareEngineStub::ListPrivateClouds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListPrivateCloudsRequest const& request) {
   google::cloud::vmwareengine::v1::ListPrivateCloudsResponse response;
   auto status = grpc_stub_->ListPrivateClouds(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultVmwareEngineStub::ListPrivateClouds(
 
 StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>
 DefaultVmwareEngineStub::GetPrivateCloud(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetPrivateCloudRequest const& request) {
   google::cloud::vmwareengine::v1::PrivateCloud response;
   auto status = grpc_stub_->GetPrivateCloud(&context, request, &response);
@@ -130,7 +130,7 @@ DefaultVmwareEngineStub::AsyncUndeletePrivateCloud(
 
 StatusOr<google::cloud::vmwareengine::v1::ListClustersResponse>
 DefaultVmwareEngineStub::ListClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListClustersRequest const& request) {
   google::cloud::vmwareengine::v1::ListClustersResponse response;
   auto status = grpc_stub_->ListClusters(&context, request, &response);
@@ -142,7 +142,7 @@ DefaultVmwareEngineStub::ListClusters(
 
 StatusOr<google::cloud::vmwareengine::v1::Cluster>
 DefaultVmwareEngineStub::GetCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetClusterRequest const& request) {
   google::cloud::vmwareengine::v1::Cluster response;
   auto status = grpc_stub_->GetCluster(&context, request, &response);
@@ -208,7 +208,7 @@ DefaultVmwareEngineStub::AsyncDeleteCluster(
 
 StatusOr<google::cloud::vmwareengine::v1::ListNodesResponse>
 DefaultVmwareEngineStub::ListNodes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListNodesRequest const& request) {
   google::cloud::vmwareengine::v1::ListNodesResponse response;
   auto status = grpc_stub_->ListNodes(&context, request, &response);
@@ -220,7 +220,7 @@ DefaultVmwareEngineStub::ListNodes(
 
 StatusOr<google::cloud::vmwareengine::v1::Node>
 DefaultVmwareEngineStub::GetNode(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetNodeRequest const& request) {
   google::cloud::vmwareengine::v1::Node response;
   auto status = grpc_stub_->GetNode(&context, request, &response);
@@ -232,7 +232,7 @@ DefaultVmwareEngineStub::GetNode(
 
 StatusOr<google::cloud::vmwareengine::v1::ListExternalAddressesResponse>
 DefaultVmwareEngineStub::ListExternalAddresses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListExternalAddressesRequest const&
         request) {
   google::cloud::vmwareengine::v1::ListExternalAddressesResponse response;
@@ -246,7 +246,7 @@ DefaultVmwareEngineStub::ListExternalAddresses(
 StatusOr<google::cloud::vmwareengine::v1::
              FetchNetworkPolicyExternalAddressesResponse>
 DefaultVmwareEngineStub::FetchNetworkPolicyExternalAddresses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::
         FetchNetworkPolicyExternalAddressesRequest const& request) {
   google::cloud::vmwareengine::v1::FetchNetworkPolicyExternalAddressesResponse
@@ -261,7 +261,7 @@ DefaultVmwareEngineStub::FetchNetworkPolicyExternalAddresses(
 
 StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>
 DefaultVmwareEngineStub::GetExternalAddress(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetExternalAddressRequest const& request) {
   google::cloud::vmwareengine::v1::ExternalAddress response;
   auto status = grpc_stub_->GetExternalAddress(&context, request, &response);
@@ -333,7 +333,7 @@ DefaultVmwareEngineStub::AsyncDeleteExternalAddress(
 
 StatusOr<google::cloud::vmwareengine::v1::ListSubnetsResponse>
 DefaultVmwareEngineStub::ListSubnets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListSubnetsRequest const& request) {
   google::cloud::vmwareengine::v1::ListSubnetsResponse response;
   auto status = grpc_stub_->ListSubnets(&context, request, &response);
@@ -345,7 +345,7 @@ DefaultVmwareEngineStub::ListSubnets(
 
 StatusOr<google::cloud::vmwareengine::v1::Subnet>
 DefaultVmwareEngineStub::GetSubnet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetSubnetRequest const& request) {
   google::cloud::vmwareengine::v1::Subnet response;
   auto status = grpc_stub_->GetSubnet(&context, request, &response);
@@ -375,7 +375,7 @@ DefaultVmwareEngineStub::AsyncUpdateSubnet(
 
 StatusOr<google::cloud::vmwareengine::v1::ListExternalAccessRulesResponse>
 DefaultVmwareEngineStub::ListExternalAccessRules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListExternalAccessRulesRequest const&
         request) {
   google::cloud::vmwareengine::v1::ListExternalAccessRulesResponse response;
@@ -389,7 +389,7 @@ DefaultVmwareEngineStub::ListExternalAccessRules(
 
 StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>
 DefaultVmwareEngineStub::GetExternalAccessRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest const&
         request) {
   google::cloud::vmwareengine::v1::ExternalAccessRule response;
@@ -459,7 +459,7 @@ DefaultVmwareEngineStub::AsyncDeleteExternalAccessRule(
 
 StatusOr<google::cloud::vmwareengine::v1::ListLoggingServersResponse>
 DefaultVmwareEngineStub::ListLoggingServers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListLoggingServersRequest const& request) {
   google::cloud::vmwareengine::v1::ListLoggingServersResponse response;
   auto status = grpc_stub_->ListLoggingServers(&context, request, &response);
@@ -471,7 +471,7 @@ DefaultVmwareEngineStub::ListLoggingServers(
 
 StatusOr<google::cloud::vmwareengine::v1::LoggingServer>
 DefaultVmwareEngineStub::GetLoggingServer(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetLoggingServerRequest const& request) {
   google::cloud::vmwareengine::v1::LoggingServer response;
   auto status = grpc_stub_->GetLoggingServer(&context, request, &response);
@@ -540,7 +540,7 @@ DefaultVmwareEngineStub::AsyncDeleteLoggingServer(
 
 StatusOr<google::cloud::vmwareengine::v1::ListNodeTypesResponse>
 DefaultVmwareEngineStub::ListNodeTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListNodeTypesRequest const& request) {
   google::cloud::vmwareengine::v1::ListNodeTypesResponse response;
   auto status = grpc_stub_->ListNodeTypes(&context, request, &response);
@@ -552,7 +552,7 @@ DefaultVmwareEngineStub::ListNodeTypes(
 
 StatusOr<google::cloud::vmwareengine::v1::NodeType>
 DefaultVmwareEngineStub::GetNodeType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetNodeTypeRequest const& request) {
   google::cloud::vmwareengine::v1::NodeType response;
   auto status = grpc_stub_->GetNodeType(&context, request, &response);
@@ -564,7 +564,7 @@ DefaultVmwareEngineStub::GetNodeType(
 
 StatusOr<google::cloud::vmwareengine::v1::Credentials>
 DefaultVmwareEngineStub::ShowNsxCredentials(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ShowNsxCredentialsRequest const& request) {
   google::cloud::vmwareengine::v1::Credentials response;
   auto status = grpc_stub_->ShowNsxCredentials(&context, request, &response);
@@ -576,7 +576,7 @@ DefaultVmwareEngineStub::ShowNsxCredentials(
 
 StatusOr<google::cloud::vmwareengine::v1::Credentials>
 DefaultVmwareEngineStub::ShowVcenterCredentials(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ShowVcenterCredentialsRequest const&
         request) {
   google::cloud::vmwareengine::v1::Credentials response;
@@ -629,7 +629,7 @@ DefaultVmwareEngineStub::AsyncResetVcenterCredentials(
 
 StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>
 DefaultVmwareEngineStub::GetDnsForwarding(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetDnsForwardingRequest const& request) {
   google::cloud::vmwareengine::v1::DnsForwarding response;
   auto status = grpc_stub_->GetDnsForwarding(&context, request, &response);
@@ -660,7 +660,7 @@ DefaultVmwareEngineStub::AsyncUpdateDnsForwarding(
 
 StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>
 DefaultVmwareEngineStub::GetNetworkPeering(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetNetworkPeeringRequest const& request) {
   google::cloud::vmwareengine::v1::NetworkPeering response;
   auto status = grpc_stub_->GetNetworkPeering(&context, request, &response);
@@ -672,7 +672,7 @@ DefaultVmwareEngineStub::GetNetworkPeering(
 
 StatusOr<google::cloud::vmwareengine::v1::ListNetworkPeeringsResponse>
 DefaultVmwareEngineStub::ListNetworkPeerings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest const&
         request) {
   google::cloud::vmwareengine::v1::ListNetworkPeeringsResponse response;
@@ -742,7 +742,7 @@ DefaultVmwareEngineStub::AsyncUpdateNetworkPeering(
 
 StatusOr<google::cloud::vmwareengine::v1::ListPeeringRoutesResponse>
 DefaultVmwareEngineStub::ListPeeringRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListPeeringRoutesRequest const& request) {
   google::cloud::vmwareengine::v1::ListPeeringRoutesResponse response;
   auto status = grpc_stub_->ListPeeringRoutes(&context, request, &response);
@@ -774,7 +774,7 @@ DefaultVmwareEngineStub::AsyncCreateHcxActivationKey(
 
 StatusOr<google::cloud::vmwareengine::v1::ListHcxActivationKeysResponse>
 DefaultVmwareEngineStub::ListHcxActivationKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListHcxActivationKeysRequest const&
         request) {
   google::cloud::vmwareengine::v1::ListHcxActivationKeysResponse response;
@@ -787,7 +787,7 @@ DefaultVmwareEngineStub::ListHcxActivationKeys(
 
 StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>
 DefaultVmwareEngineStub::GetHcxActivationKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetHcxActivationKeyRequest const&
         request) {
   google::cloud::vmwareengine::v1::HcxActivationKey response;
@@ -800,7 +800,7 @@ DefaultVmwareEngineStub::GetHcxActivationKey(
 
 StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>
 DefaultVmwareEngineStub::GetNetworkPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetNetworkPolicyRequest const& request) {
   google::cloud::vmwareengine::v1::NetworkPolicy response;
   auto status = grpc_stub_->GetNetworkPolicy(&context, request, &response);
@@ -812,7 +812,7 @@ DefaultVmwareEngineStub::GetNetworkPolicy(
 
 StatusOr<google::cloud::vmwareengine::v1::ListNetworkPoliciesResponse>
 DefaultVmwareEngineStub::ListNetworkPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest const&
         request) {
   google::cloud::vmwareengine::v1::ListNetworkPoliciesResponse response;
@@ -882,7 +882,7 @@ DefaultVmwareEngineStub::AsyncDeleteNetworkPolicy(
 
 StatusOr<google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsResponse>
 DefaultVmwareEngineStub::ListManagementDnsZoneBindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsRequest const&
         request) {
   google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsResponse
@@ -897,7 +897,7 @@ DefaultVmwareEngineStub::ListManagementDnsZoneBindings(
 
 StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
 DefaultVmwareEngineStub::GetManagementDnsZoneBinding(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetManagementDnsZoneBindingRequest const&
         request) {
   google::cloud::vmwareengine::v1::ManagementDnsZoneBinding response;
@@ -1048,7 +1048,7 @@ DefaultVmwareEngineStub::AsyncDeleteVmwareEngineNetwork(
 
 StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
 DefaultVmwareEngineStub::GetVmwareEngineNetwork(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetVmwareEngineNetworkRequest const&
         request) {
   google::cloud::vmwareengine::v1::VmwareEngineNetwork response;
@@ -1062,7 +1062,7 @@ DefaultVmwareEngineStub::GetVmwareEngineNetwork(
 
 StatusOr<google::cloud::vmwareengine::v1::ListVmwareEngineNetworksResponse>
 DefaultVmwareEngineStub::ListVmwareEngineNetworks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest const&
         request) {
   google::cloud::vmwareengine::v1::ListVmwareEngineNetworksResponse response;
@@ -1096,7 +1096,7 @@ DefaultVmwareEngineStub::AsyncCreatePrivateConnection(
 
 StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
 DefaultVmwareEngineStub::GetPrivateConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
         request) {
   google::cloud::vmwareengine::v1::PrivateConnection response;
@@ -1109,7 +1109,7 @@ DefaultVmwareEngineStub::GetPrivateConnection(
 
 StatusOr<google::cloud::vmwareengine::v1::ListPrivateConnectionsResponse>
 DefaultVmwareEngineStub::ListPrivateConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest const&
         request) {
   google::cloud::vmwareengine::v1::ListPrivateConnectionsResponse response;
@@ -1164,7 +1164,7 @@ DefaultVmwareEngineStub::AsyncDeletePrivateConnection(
 StatusOr<
     google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesResponse>
 DefaultVmwareEngineStub::ListPrivateConnectionPeeringRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::
         ListPrivateConnectionPeeringRoutesRequest const& request) {
   google::cloud::vmwareengine::v1::ListPrivateConnectionPeeringRoutesResponse
@@ -1199,7 +1199,7 @@ DefaultVmwareEngineStub::AsyncGrantDnsBindPermission(
 
 StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
 DefaultVmwareEngineStub::GetDnsBindPermission(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const&
         request) {
   google::cloud::vmwareengine::v1::DnsBindPermission response;

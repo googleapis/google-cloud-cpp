@@ -33,26 +33,26 @@ FunctionServiceTracingStub::FunctionServiceTracingStub(
 
 StatusOr<google::cloud::functions::v2::Function>
 FunctionServiceTracingStub::GetFunction(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v2::GetFunctionRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.functions.v2.FunctionService", "GetFunction");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetFunction(context, request));
+                           child_->GetFunction(context, options, request));
 }
 
 StatusOr<google::cloud::functions::v2::ListFunctionsResponse>
 FunctionServiceTracingStub::ListFunctions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v2::ListFunctionsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.functions.v2.FunctionService", "ListFunctions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListFunctions(context, request));
+                           child_->ListFunctions(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -96,38 +96,38 @@ FunctionServiceTracingStub::AsyncDeleteFunction(
 
 StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>
 FunctionServiceTracingStub::GenerateUploadUrl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v2::GenerateUploadUrlRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.functions.v2.FunctionService", "GenerateUploadUrl");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GenerateUploadUrl(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GenerateUploadUrl(context, options, request));
 }
 
 StatusOr<google::cloud::functions::v2::GenerateDownloadUrlResponse>
 FunctionServiceTracingStub::GenerateDownloadUrl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v2::GenerateDownloadUrlRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.functions.v2.FunctionService", "GenerateDownloadUrl");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GenerateDownloadUrl(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GenerateDownloadUrl(context, options, request));
 }
 
 StatusOr<google::cloud::functions::v2::ListRuntimesResponse>
 FunctionServiceTracingStub::ListRuntimes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v2::ListRuntimesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.functions.v2.FunctionService", "ListRuntimes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListRuntimes(context, request));
+                           child_->ListRuntimes(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -33,22 +33,22 @@ ReachabilityServiceAuth::ReachabilityServiceAuth(
 
 StatusOr<google::cloud::networkmanagement::v1::ListConnectivityTestsResponse>
 ReachabilityServiceAuth::ListConnectivityTests(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkmanagement::v1::ListConnectivityTestsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListConnectivityTests(context, request);
+  return child_->ListConnectivityTests(context, options, request);
 }
 
 StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
 ReachabilityServiceAuth::GetConnectivityTest(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetConnectivityTest(context, request);
+  return child_->GetConnectivityTest(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

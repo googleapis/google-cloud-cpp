@@ -73,20 +73,21 @@ EnvironmentsConnectionImpl::ListEnvironments(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::Environment>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dialogflow_cx::EnvironmentsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::dialogflow::cx::v3::
                        ListEnvironmentsRequest const& request) {
-              return stub->ListEnvironments(context, request);
+              return stub->ListEnvironments(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dialogflow::cx::v3::ListEnvironmentsResponse r) {
         std::vector<google::cloud::dialogflow::cx::v3::Environment> result(
@@ -104,10 +105,12 @@ EnvironmentsConnectionImpl::GetEnvironment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEnvironment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const&
-                 request) { return stub_->GetEnvironment(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetEnvironment(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
@@ -195,12 +198,12 @@ Status EnvironmentsConnectionImpl::DeleteEnvironment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteEnvironment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
                  request) {
-        return stub_->DeleteEnvironment(context, request);
+        return stub_->DeleteEnvironment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::Environment>
@@ -214,21 +217,22 @@ EnvironmentsConnectionImpl::LookupEnvironmentHistory(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::Environment>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dialogflow_cx::EnvironmentsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dialogflow::cx::v3::
               LookupEnvironmentHistoryRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::dialogflow::cx::v3::
                        LookupEnvironmentHistoryRequest const& request) {
-              return stub->LookupEnvironmentHistory(context, request);
+              return stub->LookupEnvironmentHistory(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryResponse
              r) {
@@ -290,21 +294,22 @@ EnvironmentsConnectionImpl::ListContinuousTestResults(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dialogflow_cx::EnvironmentsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dialogflow::cx::v3::
               ListContinuousTestResultsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::dialogflow::cx::v3::
                        ListContinuousTestResultsRequest const& request) {
-              return stub->ListContinuousTestResults(context, request);
+              return stub->ListContinuousTestResults(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dialogflow::cx::v3::ListContinuousTestResultsResponse
              r) {

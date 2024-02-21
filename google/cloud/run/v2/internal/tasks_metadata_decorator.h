@@ -39,11 +39,11 @@ class TasksMetadata : public TasksStub {
                 std::string api_client_header = "");
 
   StatusOr<google::cloud::run::v2::Task> GetTask(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::GetTaskRequest const& request) override;
 
   StatusOr<google::cloud::run::v2::ListTasksResponse> ListTasks(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::ListTasksRequest const& request) override;
 
  private:

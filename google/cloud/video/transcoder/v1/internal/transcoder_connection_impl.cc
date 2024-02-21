@@ -71,10 +71,12 @@ TranscoderServiceConnectionImpl::CreateJob(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateJob(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::video::transcoder::v1::CreateJobRequest const&
-                 request) { return stub_->CreateJob(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreateJob(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::video::transcoder::v1::Job>
@@ -86,19 +88,22 @@ TranscoderServiceConnectionImpl::ListJobs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::video::transcoder::v1::Job>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<video_transcoder_v1::TranscoderServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::video::transcoder::v1::ListJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::video::transcoder::v1::ListJobsRequest const&
-                       request) { return stub->ListJobs(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListJobs(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::video::transcoder::v1::ListJobsResponse r) {
         std::vector<google::cloud::video::transcoder::v1::Job> result(
@@ -117,11 +122,11 @@ TranscoderServiceConnectionImpl::GetJob(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetJob(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::video::transcoder::v1::GetJobRequest const& request) {
-        return stub_->GetJob(context, request);
+        return stub_->GetJob(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status TranscoderServiceConnectionImpl::DeleteJob(
@@ -130,10 +135,12 @@ Status TranscoderServiceConnectionImpl::DeleteJob(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteJob(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::video::transcoder::v1::DeleteJobRequest const&
-                 request) { return stub_->DeleteJob(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DeleteJob(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
@@ -145,10 +152,12 @@ TranscoderServiceConnectionImpl::CreateJobTemplate(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateJobTemplate(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
-              request) { return stub_->CreateJobTemplate(context, request); },
-      request, __func__);
+              request) {
+        return stub_->CreateJobTemplate(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::video::transcoder::v1::JobTemplate>
@@ -160,22 +169,23 @@ TranscoderServiceConnectionImpl::ListJobTemplates(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::video::transcoder::v1::JobTemplate>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<video_transcoder_v1::TranscoderServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::video::transcoder::v1::ListJobTemplatesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::video::transcoder::v1::
                        ListJobTemplatesRequest const& request) {
-              return stub->ListJobTemplates(context, request);
+              return stub->ListJobTemplates(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::video::transcoder::v1::ListJobTemplatesResponse r) {
         std::vector<google::cloud::video::transcoder::v1::JobTemplate> result(
@@ -194,10 +204,12 @@ TranscoderServiceConnectionImpl::GetJobTemplate(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetJobTemplate(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
-                 request) { return stub_->GetJobTemplate(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetJobTemplate(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status TranscoderServiceConnectionImpl::DeleteJobTemplate(
@@ -208,10 +220,12 @@ Status TranscoderServiceConnectionImpl::DeleteJobTemplate(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteJobTemplate(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
-              request) { return stub_->DeleteJobTemplate(context, request); },
-      request, __func__);
+              request) {
+        return stub_->DeleteJobTemplate(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

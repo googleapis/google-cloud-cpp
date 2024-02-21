@@ -54,30 +54,30 @@ EndpointServiceMetadata::AsyncCreateEndpoint(
 
 StatusOr<google::cloud::aiplatform::v1::Endpoint>
 EndpointServiceMetadata::GetEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetEndpointRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetEndpoint(context, request);
+  return child_->GetEndpoint(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListEndpointsResponse>
 EndpointServiceMetadata::ListEndpoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListEndpointsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListEndpoints(context, request);
+  return child_->ListEndpoints(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Endpoint>
 EndpointServiceMetadata::UpdateEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateEndpointRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("endpoint.name=",
                            internal::UrlEncode(request.endpoint().name())));
-  return child_->UpdateEndpoint(context, request);
+  return child_->UpdateEndpoint(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

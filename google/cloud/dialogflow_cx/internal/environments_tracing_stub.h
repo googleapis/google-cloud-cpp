@@ -39,12 +39,12 @@ class EnvironmentsTracingStub : public EnvironmentsStub {
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListEnvironmentsResponse>
   ListEnvironments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Environment> GetEnvironment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request)
       override;
 
@@ -61,13 +61,13 @@ class EnvironmentsTracingStub : public EnvironmentsStub {
           request) override;
 
   Status DeleteEnvironment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryResponse>
   LookupEnvironmentHistory(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest const&
           request) override;
 
@@ -79,7 +79,7 @@ class EnvironmentsTracingStub : public EnvironmentsStub {
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListContinuousTestResultsResponse>
   ListContinuousTestResults(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest const&
           request) override;
 

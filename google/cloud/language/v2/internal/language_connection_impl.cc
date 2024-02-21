@@ -67,11 +67,11 @@ LanguageServiceConnectionImpl::AnalyzeSentiment(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AnalyzeSentiment(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::language::v2::AnalyzeSentimentRequest const& request) {
-        return stub_->AnalyzeSentiment(context, request);
+        return stub_->AnalyzeSentiment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
@@ -82,11 +82,11 @@ LanguageServiceConnectionImpl::AnalyzeEntities(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AnalyzeEntities(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::language::v2::AnalyzeEntitiesRequest const& request) {
-        return stub_->AnalyzeEntities(context, request);
+        return stub_->AnalyzeEntities(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::language::v2::ClassifyTextResponse>
@@ -96,11 +96,11 @@ LanguageServiceConnectionImpl::ClassifyText(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ClassifyText(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::language::v2::ClassifyTextRequest const& request) {
-        return stub_->ClassifyText(context, request);
+        return stub_->ClassifyText(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::language::v2::ModerateTextResponse>
@@ -110,11 +110,11 @@ LanguageServiceConnectionImpl::ModerateText(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ModerateText(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::language::v2::ModerateTextRequest const& request) {
-        return stub_->ModerateText(context, request);
+        return stub_->ModerateText(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::language::v2::AnnotateTextResponse>
@@ -124,11 +124,11 @@ LanguageServiceConnectionImpl::AnnotateText(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AnnotateText(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::language::v2::AnnotateTextRequest const& request) {
-        return stub_->AnnotateText(context, request);
+        return stub_->AnnotateText(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

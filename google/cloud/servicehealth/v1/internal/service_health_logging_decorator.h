@@ -39,36 +39,36 @@ class ServiceHealthLogging : public ServiceHealthStub {
                        std::set<std::string> const& components);
 
   StatusOr<google::cloud::servicehealth::v1::ListEventsResponse> ListEvents(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicehealth::v1::ListEventsRequest const& request)
       override;
 
   StatusOr<google::cloud::servicehealth::v1::Event> GetEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicehealth::v1::GetEventRequest const& request)
       override;
 
   StatusOr<google::cloud::servicehealth::v1::ListOrganizationEventsResponse>
   ListOrganizationEvents(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicehealth::v1::ListOrganizationEventsRequest const&
           request) override;
 
   StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>
   GetOrganizationEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
           request) override;
 
   StatusOr<google::cloud::servicehealth::v1::ListOrganizationImpactsResponse>
   ListOrganizationImpacts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicehealth::v1::ListOrganizationImpactsRequest const&
           request) override;
 
   StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>
   GetOrganizationImpact(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
           request) override;
 

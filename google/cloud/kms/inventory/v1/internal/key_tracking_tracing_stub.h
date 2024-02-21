@@ -40,13 +40,13 @@ class KeyTrackingServiceTracingStub : public KeyTrackingServiceStub {
 
   StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
   GetProtectedResourcesSummary(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::inventory::v1::
           GetProtectedResourcesSummaryRequest const& request) override;
 
   StatusOr<google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse>
   SearchProtectedResources(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const&
           request) override;
 

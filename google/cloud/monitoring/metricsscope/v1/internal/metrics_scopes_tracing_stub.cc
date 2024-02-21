@@ -33,7 +33,7 @@ MetricsScopesTracingStub::MetricsScopesTracingStub(
 
 StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
 MetricsScopesTracingStub::GetMetricsScope(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -41,13 +41,13 @@ MetricsScopesTracingStub::GetMetricsScope(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetMetricsScope(context, request));
+                           child_->GetMetricsScope(context, options, request));
 }
 
 StatusOr<google::monitoring::metricsscope::v1::
              ListMetricsScopesByMonitoredProjectResponse>
 MetricsScopesTracingStub::ListMetricsScopesByMonitoredProject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::metricsscope::v1::
         ListMetricsScopesByMonitoredProjectRequest const& request) {
   auto span =
@@ -57,7 +57,7 @@ MetricsScopesTracingStub::ListMetricsScopesByMonitoredProject(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
-      child_->ListMetricsScopesByMonitoredProject(context, request));
+      child_->ListMetricsScopesByMonitoredProject(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

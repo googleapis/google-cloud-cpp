@@ -33,25 +33,26 @@ SchemaServiceTracingStub::SchemaServiceTracingStub(
 
 StatusOr<google::cloud::discoveryengine::v1::Schema>
 SchemaServiceTracingStub::GetSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetSchemaRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.discoveryengine.v1.SchemaService", "GetSchema");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetSchema(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetSchema(context, options, request));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListSchemasResponse>
 SchemaServiceTracingStub::ListSchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ListSchemasRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.discoveryengine.v1.SchemaService", "ListSchemas");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListSchemas(context, request));
+                           child_->ListSchemas(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

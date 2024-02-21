@@ -44,12 +44,12 @@ PredictionServiceMetadata::PredictionServiceMetadata(
 
 StatusOr<google::cloud::retail::v2::PredictResponse>
 PredictionServiceMetadata::Predict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::PredictRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("placement=", internal::UrlEncode(request.placement())));
-  return child_->Predict(context, request);
+  return child_->Predict(context, options, request);
 }
 
 void PredictionServiceMetadata::SetMetadata(grpc::ClientContext& context,

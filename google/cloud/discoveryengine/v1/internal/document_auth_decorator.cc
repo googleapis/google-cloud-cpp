@@ -33,46 +33,46 @@ DocumentServiceAuth::DocumentServiceAuth(
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
 DocumentServiceAuth::GetDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetDocumentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDocument(context, request);
+  return child_->GetDocument(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListDocumentsResponse>
 DocumentServiceAuth::ListDocuments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ListDocumentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDocuments(context, request);
+  return child_->ListDocuments(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
 DocumentServiceAuth::CreateDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::CreateDocumentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateDocument(context, request);
+  return child_->CreateDocument(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
 DocumentServiceAuth::UpdateDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateDocument(context, request);
+  return child_->UpdateDocument(context, options, request);
 }
 
 Status DocumentServiceAuth::DeleteDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteDocument(context, request);
+  return child_->DeleteDocument(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

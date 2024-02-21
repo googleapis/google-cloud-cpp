@@ -33,28 +33,28 @@ BigtableTableAdminAuth::BigtableTableAdminAuth(
 
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminAuth::CreateTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::CreateTableRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateTable(context, request);
+  return child_->CreateTable(context, options, request);
 }
 
 StatusOr<google::bigtable::admin::v2::ListTablesResponse>
 BigtableTableAdminAuth::ListTables(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::ListTablesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTables(context, request);
+  return child_->ListTables(context, options, request);
 }
 
 StatusOr<google::bigtable::admin::v2::Table> BigtableTableAdminAuth::GetTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::GetTableRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTable(context, request);
+  return child_->GetTable(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -77,11 +77,11 @@ BigtableTableAdminAuth::AsyncUpdateTable(
 }
 
 Status BigtableTableAdminAuth::DeleteTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::DeleteTableRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteTable(context, request);
+  return child_->DeleteTable(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -105,38 +105,38 @@ BigtableTableAdminAuth::AsyncUndeleteTable(
 
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminAuth::ModifyColumnFamilies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ModifyColumnFamilies(context, request);
+  return child_->ModifyColumnFamilies(context, options, request);
 }
 
 Status BigtableTableAdminAuth::DropRowRange(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::DropRowRangeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DropRowRange(context, request);
+  return child_->DropRowRange(context, options, request);
 }
 
 StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
 BigtableTableAdminAuth::GenerateConsistencyToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateConsistencyToken(context, request);
+  return child_->GenerateConsistencyToken(context, options, request);
 }
 
 StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
 BigtableTableAdminAuth::CheckConsistency(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CheckConsistency(context, request);
+  return child_->CheckConsistency(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -159,37 +159,37 @@ BigtableTableAdminAuth::AsyncCreateBackup(
 }
 
 StatusOr<google::bigtable::admin::v2::Backup> BigtableTableAdminAuth::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::GetBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetBackup(context, request);
+  return child_->GetBackup(context, options, request);
 }
 
 StatusOr<google::bigtable::admin::v2::Backup>
 BigtableTableAdminAuth::UpdateBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::UpdateBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateBackup(context, request);
+  return child_->UpdateBackup(context, options, request);
 }
 
 Status BigtableTableAdminAuth::DeleteBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::DeleteBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteBackup(context, request);
+  return child_->DeleteBackup(context, options, request);
 }
 
 StatusOr<google::bigtable::admin::v2::ListBackupsResponse>
 BigtableTableAdminAuth::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::ListBackupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBackups(context, request);
+  return child_->ListBackups(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -231,28 +231,28 @@ BigtableTableAdminAuth::AsyncCopyBackup(
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminAuth::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminAuth::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 BigtableTableAdminAuth::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>

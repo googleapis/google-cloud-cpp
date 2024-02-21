@@ -33,12 +33,12 @@ MigrationServiceAuth::MigrationServiceAuth(
 
 StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse>
 MigrationServiceAuth::SearchMigratableResources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SearchMigratableResources(context, request);
+  return child_->SearchMigratableResources(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

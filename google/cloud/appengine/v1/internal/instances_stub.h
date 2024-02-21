@@ -40,11 +40,11 @@ class InstancesStub {
   virtual ~InstancesStub() = 0;
 
   virtual StatusOr<google::appengine::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListInstancesRequest const& request) = 0;
 
   virtual StatusOr<google::appengine::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetInstanceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(
@@ -78,11 +78,11 @@ class DefaultInstancesStub : public InstancesStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::appengine::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListInstancesRequest const& request) override;
 
   StatusOr<google::appengine::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteInstance(

@@ -33,7 +33,7 @@ SystemPolicyV1TracingStub::SystemPolicyV1TracingStub(
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
 SystemPolicyV1TracingStub::GetSystemPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -41,7 +41,7 @@ SystemPolicyV1TracingStub::GetSystemPolicy(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetSystemPolicy(context, request));
+                           child_->GetSystemPolicy(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

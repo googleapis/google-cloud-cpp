@@ -40,11 +40,11 @@ class ServicesMetadata : public ServicesStub {
                    std::string api_client_header = "");
 
   StatusOr<google::appengine::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListServicesRequest const& request) override;
 
   StatusOr<google::appengine::v1::Service> GetService(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetServiceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateService(

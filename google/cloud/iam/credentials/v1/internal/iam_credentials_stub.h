@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_CREDENTIALS_V1_INTERNAL_IAM_CREDENTIALS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_CREDENTIALS_V1_INTERNAL_IAM_CREDENTIALS_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/iam/credentials/v1/iamcredentials.grpc.pb.h>
@@ -36,21 +37,21 @@ class IAMCredentialsStub {
 
   virtual StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::credentials::v1::GenerateAccessTokenRequest const&
           request) = 0;
 
   virtual StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
   GenerateIdToken(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::credentials::v1::GenerateIdTokenRequest const& request) = 0;
 
   virtual StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::credentials::v1::SignBlobRequest const& request) = 0;
 
   virtual StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::credentials::v1::SignJwtRequest const& request) = 0;
 };
 
@@ -64,21 +65,21 @@ class DefaultIAMCredentialsStub : public IAMCredentialsStub {
 
   StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::credentials::v1::GenerateAccessTokenRequest const& request)
       override;
 
   StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
-  GenerateIdToken(grpc::ClientContext& context,
+  GenerateIdToken(grpc::ClientContext& context, Options const& options,
                   google::iam::credentials::v1::GenerateIdTokenRequest const&
                       request) override;
 
   StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::credentials::v1::SignBlobRequest const& request) override;
 
   StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::credentials::v1::SignJwtRequest const& request) override;
 
  private:

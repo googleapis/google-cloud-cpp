@@ -34,47 +34,47 @@ ParticipantsAuth::ParticipantsAuth(
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsAuth::CreateParticipant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateParticipantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateParticipant(context, request);
+  return child_->CreateParticipant(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsAuth::GetParticipant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetParticipantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetParticipant(context, request);
+  return child_->GetParticipant(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ListParticipantsResponse>
 ParticipantsAuth::ListParticipants(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListParticipantsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListParticipants(context, request);
+  return child_->ListParticipants(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsAuth::UpdateParticipant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateParticipantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateParticipant(context, request);
+  return child_->UpdateParticipant(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
 ParticipantsAuth::AnalyzeContent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::AnalyzeContentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->AnalyzeContent(context, request);
+  return child_->AnalyzeContent(context, options, request);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -97,29 +97,29 @@ ParticipantsAuth::AsyncStreamingAnalyzeContent(
 
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 ParticipantsAuth::SuggestArticles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::SuggestArticlesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SuggestArticles(context, request);
+  return child_->SuggestArticles(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
 ParticipantsAuth::SuggestFaqAnswers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SuggestFaqAnswers(context, request);
+  return child_->SuggestFaqAnswers(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
 ParticipantsAuth::SuggestSmartReplies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SuggestSmartReplies(context, request);
+  return child_->SuggestSmartReplies(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

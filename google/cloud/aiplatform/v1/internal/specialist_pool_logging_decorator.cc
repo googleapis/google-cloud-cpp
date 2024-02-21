@@ -54,28 +54,28 @@ SpecialistPoolServiceLogging::AsyncCreateSpecialistPool(
 
 StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
 SpecialistPoolServiceLogging::GetSpecialistPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetSpecialistPoolRequest const&
                  request) {
-        return child_->GetSpecialistPool(context, request);
+        return child_->GetSpecialistPool(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListSpecialistPoolsResponse>
 SpecialistPoolServiceLogging::ListSpecialistPools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const&
                  request) {
-        return child_->ListSpecialistPools(context, request);
+        return child_->ListSpecialistPools(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

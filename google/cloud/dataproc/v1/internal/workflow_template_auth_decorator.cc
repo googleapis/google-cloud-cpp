@@ -33,20 +33,20 @@ WorkflowTemplateServiceAuth::WorkflowTemplateServiceAuth(
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceAuth::CreateWorkflowTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateWorkflowTemplate(context, request);
+  return child_->CreateWorkflowTemplate(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceAuth::GetWorkflowTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetWorkflowTemplate(context, request);
+  return child_->GetWorkflowTemplate(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -91,28 +91,28 @@ WorkflowTemplateServiceAuth::AsyncInstantiateInlineWorkflowTemplate(
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceAuth::UpdateWorkflowTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateWorkflowTemplate(context, request);
+  return child_->UpdateWorkflowTemplate(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::ListWorkflowTemplatesResponse>
 WorkflowTemplateServiceAuth::ListWorkflowTemplates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::ListWorkflowTemplatesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListWorkflowTemplates(context, request);
+  return child_->ListWorkflowTemplates(context, options, request);
 }
 
 Status WorkflowTemplateServiceAuth::DeleteWorkflowTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteWorkflowTemplate(context, request);
+  return child_->DeleteWorkflowTemplate(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

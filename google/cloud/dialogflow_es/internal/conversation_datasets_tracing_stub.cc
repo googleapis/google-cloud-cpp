@@ -49,7 +49,7 @@ ConversationDatasetsTracingStub::AsyncCreateConversationDataset(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
 ConversationDatasetsTracingStub::GetConversationDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
         request) {
   auto span =
@@ -57,13 +57,14 @@ ConversationDatasetsTracingStub::GetConversationDataset(
                              "GetConversationDataset");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetConversationDataset(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GetConversationDataset(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationDatasetsResponse>
 ConversationDatasetsTracingStub::ListConversationDatasets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListConversationDatasetsRequest const&
         request) {
   auto span =
@@ -71,8 +72,9 @@ ConversationDatasetsTracingStub::ListConversationDatasets(
                              "ListConversationDatasets");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListConversationDatasets(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListConversationDatasets(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

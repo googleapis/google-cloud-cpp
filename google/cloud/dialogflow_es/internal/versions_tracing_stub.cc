@@ -32,61 +32,61 @@ VersionsTracingStub::VersionsTracingStub(std::shared_ptr<VersionsStub> child)
 
 StatusOr<google::cloud::dialogflow::v2::ListVersionsResponse>
 VersionsTracingStub::ListVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListVersionsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Versions",
                                      "ListVersions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListVersions(context, request));
+                           child_->ListVersions(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Version>
 VersionsTracingStub::GetVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetVersionRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Versions",
                                      "GetVersion");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetVersion(context, request));
+                           child_->GetVersion(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Version>
 VersionsTracingStub::CreateVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateVersionRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Versions",
                                      "CreateVersion");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateVersion(context, request));
+                           child_->CreateVersion(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Version>
 VersionsTracingStub::UpdateVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateVersionRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Versions",
                                      "UpdateVersion");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateVersion(context, request));
+                           child_->UpdateVersion(context, options, request));
 }
 
 Status VersionsTracingStub::DeleteVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteVersionRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Versions",
                                      "DeleteVersion");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteVersion(context, request));
+                           child_->DeleteVersion(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

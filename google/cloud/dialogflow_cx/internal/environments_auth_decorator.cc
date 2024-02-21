@@ -33,20 +33,20 @@ EnvironmentsAuth::EnvironmentsAuth(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListEnvironmentsResponse>
 EnvironmentsAuth::ListEnvironments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEnvironments(context, request);
+  return child_->ListEnvironments(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Environment>
 EnvironmentsAuth::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEnvironment(context, request);
+  return child_->GetEnvironment(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -90,22 +90,22 @@ EnvironmentsAuth::AsyncUpdateEnvironment(
 }
 
 Status EnvironmentsAuth::DeleteEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteEnvironment(context, request);
+  return child_->DeleteEnvironment(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryResponse>
 EnvironmentsAuth::LookupEnvironmentHistory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->LookupEnvironmentHistory(context, request);
+  return child_->LookupEnvironmentHistory(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -130,12 +130,12 @@ EnvironmentsAuth::AsyncRunContinuousTest(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListContinuousTestResultsResponse>
 EnvironmentsAuth::ListContinuousTestResults(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListContinuousTestResults(context, request);
+  return child_->ListContinuousTestResults(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

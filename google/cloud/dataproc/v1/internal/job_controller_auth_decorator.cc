@@ -32,11 +32,11 @@ JobControllerAuth::JobControllerAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerAuth::SubmitJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::SubmitJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SubmitJob(context, request);
+  return child_->SubmitJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -59,44 +59,44 @@ JobControllerAuth::AsyncSubmitJobAsOperation(
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerAuth::GetJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetJob(context, request);
+  return child_->GetJob(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::ListJobsResponse>
 JobControllerAuth::ListJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::ListJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListJobs(context, request);
+  return child_->ListJobs(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerAuth::UpdateJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::UpdateJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateJob(context, request);
+  return child_->UpdateJob(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerAuth::CancelJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::CancelJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CancelJob(context, request);
+  return child_->CancelJob(context, options, request);
 }
 
 Status JobControllerAuth::DeleteJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::DeleteJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteJob(context, request);
+  return child_->DeleteJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

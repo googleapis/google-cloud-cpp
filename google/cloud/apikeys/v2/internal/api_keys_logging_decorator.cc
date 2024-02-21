@@ -50,37 +50,37 @@ future<StatusOr<google::longrunning::Operation>> ApiKeysLogging::AsyncCreateKey(
 }
 
 StatusOr<google::api::apikeys::v2::ListKeysResponse> ApiKeysLogging::ListKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::ListKeysRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::apikeys::v2::ListKeysRequest const& request) {
-        return child_->ListKeys(context, request);
+        return child_->ListKeys(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::apikeys::v2::Key> ApiKeysLogging::GetKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::GetKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::apikeys::v2::GetKeyRequest const& request) {
-        return child_->GetKey(context, request);
+        return child_->GetKey(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
 ApiKeysLogging::GetKeyString(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::GetKeyStringRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::apikeys::v2::GetKeyStringRequest const& request) {
-        return child_->GetKeyString(context, request);
+        return child_->GetKeyString(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>> ApiKeysLogging::AsyncUpdateKey(
@@ -128,14 +128,14 @@ ApiKeysLogging::AsyncUndeleteKey(
 }
 
 StatusOr<google::api::apikeys::v2::LookupKeyResponse> ApiKeysLogging::LookupKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::LookupKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::apikeys::v2::LookupKeyRequest const& request) {
-        return child_->LookupKey(context, request);
+        return child_->LookupKey(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

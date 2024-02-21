@@ -44,22 +44,22 @@ class ModelServiceStub {
       google::cloud::aiplatform::v1::UploadModelRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Model> GetModel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetModelRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ListModelsResponse>
   ListModels(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListModelsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ListModelVersionsResponse>
   ListModelVersions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListModelVersionsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Model> UpdateModel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::UpdateModelRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
@@ -82,7 +82,7 @@ class ModelServiceStub {
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Model> MergeVersionAliases(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::MergeVersionAliasesRequest const&
           request) = 0;
 
@@ -98,46 +98,46 @@ class ModelServiceStub {
 
   virtual StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
   ImportModelEvaluation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ImportModelEvaluationRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
   BatchImportModelEvaluationSlices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::
           BatchImportModelEvaluationSlicesRequest const& request) = 0;
 
   virtual StatusOr<
       google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
   BatchImportEvaluatedAnnotations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::
           BatchImportEvaluatedAnnotationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
   GetModelEvaluation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetModelEvaluationRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ListModelEvaluationsResponse>
   ListModelEvaluations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListModelEvaluationsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ModelEvaluationSlice>
   GetModelEvaluationSlice(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::aiplatform::v1::ListModelEvaluationSlicesResponse>
   ListModelEvaluationSlices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest const&
           request) = 0;
 
@@ -169,21 +169,21 @@ class DefaultModelServiceStub : public ModelServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Model> GetModel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetModelRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListModelsResponse> ListModels(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListModelsRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListModelVersionsResponse>
   ListModelVersions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListModelVersionsRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Model> UpdateModel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::UpdateModelRequest const& request)
       override;
 
@@ -207,7 +207,7 @@ class DefaultModelServiceStub : public ModelServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Model> MergeVersionAliases(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request)
       override;
 
@@ -224,44 +224,44 @@ class DefaultModelServiceStub : public ModelServiceStub {
 
   StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
   ImportModelEvaluation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ImportModelEvaluationRequest const&
           request) override;
 
   StatusOr<
       google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
   BatchImportModelEvaluationSlices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::
           BatchImportModelEvaluationSlicesRequest const& request) override;
 
   StatusOr<
       google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
   BatchImportEvaluatedAnnotations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::
           BatchImportEvaluatedAnnotationsRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ModelEvaluation> GetModelEvaluation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListModelEvaluationsResponse>
   ListModelEvaluations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListModelEvaluationsRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ModelEvaluationSlice>
   GetModelEvaluationSlice(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListModelEvaluationSlicesResponse>
   ListModelEvaluationSlices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest const&
           request) override;
 

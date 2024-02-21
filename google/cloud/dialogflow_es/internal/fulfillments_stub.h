@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_FULFILLMENTS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_FULFILLMENTS_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/v2/fulfillment.grpc.pb.h>
@@ -35,12 +36,12 @@ class FulfillmentsStub {
   virtual ~FulfillmentsStub() = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::Fulfillment> GetFulfillment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::Fulfillment>
   UpdateFulfillment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::UpdateFulfillmentRequest const&
           request) = 0;
 };
@@ -54,12 +55,12 @@ class DefaultFulfillmentsStub : public FulfillmentsStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dialogflow::v2::Fulfillment> GetFulfillment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetFulfillmentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Fulfillment> UpdateFulfillment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request)
       override;
 

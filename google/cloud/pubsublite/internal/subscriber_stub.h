@@ -21,6 +21,7 @@
 
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/pubsublite/v1/subscriber.grpc.pb.h>

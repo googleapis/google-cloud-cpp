@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_V1_INTERNAL_FIREWALL_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_V1_INTERNAL_FIREWALL_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
@@ -37,28 +38,28 @@ class FirewallStub {
 
   virtual StatusOr<google::appengine::v1::ListIngressRulesResponse>
   ListIngressRules(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListIngressRulesRequest const& request) = 0;
 
   virtual StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
   BatchUpdateIngressRules(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::BatchUpdateIngressRulesRequest const& request) = 0;
 
   virtual StatusOr<google::appengine::v1::FirewallRule> CreateIngressRule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::CreateIngressRuleRequest const& request) = 0;
 
   virtual StatusOr<google::appengine::v1::FirewallRule> GetIngressRule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetIngressRuleRequest const& request) = 0;
 
   virtual StatusOr<google::appengine::v1::FirewallRule> UpdateIngressRule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::UpdateIngressRuleRequest const& request) = 0;
 
   virtual Status DeleteIngressRule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::DeleteIngressRuleRequest const& request) = 0;
 };
 
@@ -69,29 +70,29 @@ class DefaultFirewallStub : public FirewallStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::appengine::v1::ListIngressRulesResponse> ListIngressRules(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListIngressRulesRequest const& request) override;
 
   StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
   BatchUpdateIngressRules(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::BatchUpdateIngressRulesRequest const& request)
       override;
 
   StatusOr<google::appengine::v1::FirewallRule> CreateIngressRule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::CreateIngressRuleRequest const& request) override;
 
   StatusOr<google::appengine::v1::FirewallRule> GetIngressRule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetIngressRuleRequest const& request) override;
 
   StatusOr<google::appengine::v1::FirewallRule> UpdateIngressRule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::UpdateIngressRuleRequest const& request) override;
 
   Status DeleteIngressRule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::DeleteIngressRuleRequest const& request) override;
 
  private:

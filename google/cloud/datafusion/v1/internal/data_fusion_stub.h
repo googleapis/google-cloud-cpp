@@ -40,17 +40,17 @@ class DataFusionStub {
 
   virtual StatusOr<google::cloud::datafusion::v1::ListAvailableVersionsResponse>
   ListAvailableVersions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datafusion::v1::ListAvailableVersionsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::datafusion::v1::ListInstancesResponse>
   ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datafusion::v1::ListInstancesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::datafusion::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datafusion::v1::GetInstanceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
@@ -95,17 +95,17 @@ class DefaultDataFusionStub : public DataFusionStub {
 
   StatusOr<google::cloud::datafusion::v1::ListAvailableVersionsResponse>
   ListAvailableVersions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datafusion::v1::ListAvailableVersionsRequest const&
           request) override;
 
   StatusOr<google::cloud::datafusion::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datafusion::v1::ListInstancesRequest const& request)
       override;
 
   StatusOr<google::cloud::datafusion::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datafusion::v1::GetInstanceRequest const& request)
       override;
 

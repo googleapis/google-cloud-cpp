@@ -42,19 +42,19 @@ TpuMetadata::TpuMetadata(std::shared_ptr<TpuStub> child,
               : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::tpu::v2::ListNodesResponse> TpuMetadata::ListNodes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::ListNodesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListNodes(context, request);
+  return child_->ListNodes(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v2::Node> TpuMetadata::GetNode(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::GetNodeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetNode(context, request);
+  return child_->GetNode(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> TpuMetadata::AsyncCreateNode(
@@ -105,55 +105,55 @@ future<StatusOr<google::longrunning::Operation>> TpuMetadata::AsyncUpdateNode(
 
 StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
 TpuMetadata::GenerateServiceIdentity(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::GenerateServiceIdentityRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->GenerateServiceIdentity(context, request);
+  return child_->GenerateServiceIdentity(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v2::ListAcceleratorTypesResponse>
 TpuMetadata::ListAcceleratorTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::ListAcceleratorTypesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListAcceleratorTypes(context, request);
+  return child_->ListAcceleratorTypes(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v2::AcceleratorType>
 TpuMetadata::GetAcceleratorType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::GetAcceleratorTypeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAcceleratorType(context, request);
+  return child_->GetAcceleratorType(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v2::ListRuntimeVersionsResponse>
 TpuMetadata::ListRuntimeVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::ListRuntimeVersionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListRuntimeVersions(context, request);
+  return child_->ListRuntimeVersions(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v2::RuntimeVersion> TpuMetadata::GetRuntimeVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::GetRuntimeVersionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetRuntimeVersion(context, request);
+  return child_->GetRuntimeVersion(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v2::GetGuestAttributesResponse>
 TpuMetadata::GetGuestAttributes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::GetGuestAttributesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetGuestAttributes(context, request);
+  return child_->GetGuestAttributes(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> TpuMetadata::AsyncGetOperation(

@@ -152,12 +152,12 @@ OsConfigZonalServiceConnectionImpl::GetOSPolicyAssignment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetOSPolicyAssignment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const&
                  request) {
-        return stub_->GetOSPolicyAssignment(context, request);
+        return stub_->GetOSPolicyAssignment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>
@@ -170,21 +170,22 @@ OsConfigZonalServiceConnectionImpl::ListOSPolicyAssignments(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<osconfig_v1::OsConfigZonalServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::osconfig::v1::
                        ListOSPolicyAssignmentsRequest const& request) {
-              return stub->ListOSPolicyAssignments(context, request);
+              return stub->ListOSPolicyAssignments(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::osconfig::v1::ListOSPolicyAssignmentsResponse r) {
         std::vector<google::cloud::osconfig::v1::OSPolicyAssignment> result(
@@ -206,21 +207,23 @@ OsConfigZonalServiceConnectionImpl::ListOSPolicyAssignmentRevisions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::osconfig::v1::OSPolicyAssignment>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<osconfig_v1::OsConfigZonalServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::osconfig::v1::
               ListOSPolicyAssignmentRevisionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::osconfig::v1::
                        ListOSPolicyAssignmentRevisionsRequest const& request) {
-              return stub->ListOSPolicyAssignmentRevisions(context, request);
+              return stub->ListOSPolicyAssignmentRevisions(context, options,
+                                                           request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsResponse
              r) {
@@ -281,12 +284,12 @@ OsConfigZonalServiceConnectionImpl::GetOSPolicyAssignmentReport(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetOSPolicyAssignmentReport(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const&
               request) {
-        return stub_->GetOSPolicyAssignmentReport(context, request);
+        return stub_->GetOSPolicyAssignmentReport(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::osconfig::v1::OSPolicyAssignmentReport>
@@ -299,21 +302,23 @@ OsConfigZonalServiceConnectionImpl::ListOSPolicyAssignmentReports(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::osconfig::v1::OSPolicyAssignmentReport>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<osconfig_v1::OsConfigZonalServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::osconfig::v1::
               ListOSPolicyAssignmentReportsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::osconfig::v1::
                        ListOSPolicyAssignmentReportsRequest const& request) {
-              return stub->ListOSPolicyAssignmentReports(context, request);
+              return stub->ListOSPolicyAssignmentReports(context, options,
+                                                         request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsResponse r) {
         std::vector<google::cloud::osconfig::v1::OSPolicyAssignmentReport>
@@ -331,11 +336,11 @@ OsConfigZonalServiceConnectionImpl::GetInventory(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetInventory(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::GetInventoryRequest const& request) {
-        return stub_->GetInventory(context, request);
+        return stub_->GetInventory(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::osconfig::v1::Inventory>
@@ -347,20 +352,21 @@ OsConfigZonalServiceConnectionImpl::ListInventories(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::osconfig::v1::Inventory>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<osconfig_v1::OsConfigZonalServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::osconfig::v1::ListInventoriesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::osconfig::v1::ListInventoriesRequest const&
                        request) {
-              return stub->ListInventories(context, request);
+              return stub->ListInventories(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::osconfig::v1::ListInventoriesResponse r) {
         std::vector<google::cloud::osconfig::v1::Inventory> result(
@@ -378,12 +384,12 @@ OsConfigZonalServiceConnectionImpl::GetVulnerabilityReport(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetVulnerabilityReport(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::GetVulnerabilityReportRequest const&
                  request) {
-        return stub_->GetVulnerabilityReport(context, request);
+        return stub_->GetVulnerabilityReport(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::osconfig::v1::VulnerabilityReport>
@@ -396,21 +402,22 @@ OsConfigZonalServiceConnectionImpl::ListVulnerabilityReports(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::osconfig::v1::VulnerabilityReport>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<osconfig_v1::OsConfigZonalServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::osconfig::v1::ListVulnerabilityReportsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::osconfig::v1::
                        ListVulnerabilityReportsRequest const& request) {
-              return stub->ListVulnerabilityReports(context, request);
+              return stub->ListVulnerabilityReports(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::osconfig::v1::ListVulnerabilityReportsResponse r) {
         std::vector<google::cloud::osconfig::v1::VulnerabilityReport> result(

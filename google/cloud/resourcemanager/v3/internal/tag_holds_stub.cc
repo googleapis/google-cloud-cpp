@@ -69,7 +69,7 @@ DefaultTagHoldsStub::AsyncDeleteTagHold(
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse>
 DefaultTagHoldsStub::ListTagHolds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::ListTagHoldsRequest const& request) {
   google::cloud::resourcemanager::v3::ListTagHoldsResponse response;
   auto status = grpc_stub_->ListTagHolds(&context, request, &response);

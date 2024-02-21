@@ -69,10 +69,12 @@ RuleSetServiceConnectionImpl::CreateRuleSet(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateRuleSet(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::CreateRuleSetRequest const&
-                 request) { return stub_->CreateRuleSet(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreateRuleSet(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
@@ -82,10 +84,12 @@ RuleSetServiceConnectionImpl::GetRuleSet(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRuleSet(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::GetRuleSetRequest const&
-                 request) { return stub_->GetRuleSet(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetRuleSet(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
@@ -95,10 +99,12 @@ RuleSetServiceConnectionImpl::UpdateRuleSet(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateRuleSet(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const&
-                 request) { return stub_->UpdateRuleSet(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->UpdateRuleSet(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status RuleSetServiceConnectionImpl::DeleteRuleSet(
@@ -107,10 +113,12 @@ Status RuleSetServiceConnectionImpl::DeleteRuleSet(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteRuleSet(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const&
-                 request) { return stub_->DeleteRuleSet(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DeleteRuleSet(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::contentwarehouse::v1::RuleSet>
@@ -122,19 +130,22 @@ RuleSetServiceConnectionImpl::ListRuleSets(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::contentwarehouse::v1::RuleSet>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<contentwarehouse_v1::RuleSetServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::contentwarehouse::v1::ListRuleSetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::contentwarehouse::v1::ListRuleSetsRequest const&
-                    request) { return stub->ListRuleSets(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListRuleSets(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::contentwarehouse::v1::ListRuleSetsResponse r) {
         std::vector<google::cloud::contentwarehouse::v1::RuleSet> result(

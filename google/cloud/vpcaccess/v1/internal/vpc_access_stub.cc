@@ -51,7 +51,7 @@ DefaultVpcAccessServiceStub::AsyncCreateConnector(
 
 StatusOr<google::cloud::vpcaccess::v1::Connector>
 DefaultVpcAccessServiceStub::GetConnector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
   google::cloud::vpcaccess::v1::Connector response;
   auto status = grpc_stub_->GetConnector(&context, request, &response);
@@ -63,7 +63,7 @@ DefaultVpcAccessServiceStub::GetConnector(
 
 StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse>
 DefaultVpcAccessServiceStub::ListConnectors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vpcaccess::v1::ListConnectorsRequest const& request) {
   google::cloud::vpcaccess::v1::ListConnectorsResponse response;
   auto status = grpc_stub_->ListConnectors(&context, request, &response);

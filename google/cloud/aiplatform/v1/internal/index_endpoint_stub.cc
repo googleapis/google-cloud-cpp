@@ -51,7 +51,7 @@ DefaultIndexEndpointServiceStub::AsyncCreateIndexEndpoint(
 
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
 DefaultIndexEndpointServiceStub::GetIndexEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request) {
   google::cloud::aiplatform::v1::IndexEndpoint response;
   auto status = grpc_stub_->GetIndexEndpoint(&context, request, &response);
@@ -63,7 +63,7 @@ DefaultIndexEndpointServiceStub::GetIndexEndpoint(
 
 StatusOr<google::cloud::aiplatform::v1::ListIndexEndpointsResponse>
 DefaultIndexEndpointServiceStub::ListIndexEndpoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListIndexEndpointsRequest const& request) {
   google::cloud::aiplatform::v1::ListIndexEndpointsResponse response;
   auto status = grpc_stub_->ListIndexEndpoints(&context, request, &response);
@@ -75,7 +75,7 @@ DefaultIndexEndpointServiceStub::ListIndexEndpoints(
 
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
 DefaultIndexEndpointServiceStub::UpdateIndexEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const& request) {
   google::cloud::aiplatform::v1::IndexEndpoint response;
   auto status = grpc_stub_->UpdateIndexEndpoint(&context, request, &response);

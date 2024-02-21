@@ -37,14 +37,14 @@ DocumentProcessorServiceLogging::DocumentProcessorServiceLogging(
 
 StatusOr<google::cloud::documentai::v1::ProcessResponse>
 DocumentProcessorServiceLogging::ProcessDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::ProcessRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::documentai::v1::ProcessRequest const& request) {
-        return child_->ProcessDocument(context, request);
+        return child_->ProcessDocument(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -65,67 +65,67 @@ DocumentProcessorServiceLogging::AsyncBatchProcessDocuments(
 
 StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
 DocumentProcessorServiceLogging::FetchProcessorTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::FetchProcessorTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::documentai::v1::FetchProcessorTypesRequest const&
                  request) {
-        return child_->FetchProcessorTypes(context, request);
+        return child_->FetchProcessorTypes(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::documentai::v1::ListProcessorTypesResponse>
 DocumentProcessorServiceLogging::ListProcessorTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::ListProcessorTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::documentai::v1::ListProcessorTypesRequest const&
                  request) {
-        return child_->ListProcessorTypes(context, request);
+        return child_->ListProcessorTypes(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::documentai::v1::ProcessorType>
 DocumentProcessorServiceLogging::GetProcessorType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::GetProcessorTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::documentai::v1::GetProcessorTypeRequest const&
                  request) {
-        return child_->GetProcessorType(context, request);
+        return child_->GetProcessorType(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::documentai::v1::ListProcessorsResponse>
 DocumentProcessorServiceLogging::ListProcessors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::ListProcessorsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::documentai::v1::ListProcessorsRequest const& request) {
-        return child_->ListProcessors(context, request);
+        return child_->ListProcessors(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::documentai::v1::Processor>
 DocumentProcessorServiceLogging::GetProcessor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::GetProcessorRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::documentai::v1::GetProcessorRequest const& request) {
-        return child_->GetProcessor(context, request);
+        return child_->GetProcessor(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -148,29 +148,29 @@ DocumentProcessorServiceLogging::AsyncTrainProcessorVersion(
 
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DocumentProcessorServiceLogging::GetProcessorVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::GetProcessorVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::documentai::v1::GetProcessorVersionRequest const&
                  request) {
-        return child_->GetProcessorVersion(context, request);
+        return child_->GetProcessorVersion(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::documentai::v1::ListProcessorVersionsResponse>
 DocumentProcessorServiceLogging::ListProcessorVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::ListProcessorVersionsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::documentai::v1::ListProcessorVersionsRequest const&
                  request) {
-        return child_->ListProcessorVersions(context, request);
+        return child_->ListProcessorVersions(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -229,13 +229,15 @@ DocumentProcessorServiceLogging::AsyncUndeployProcessorVersion(
 
 StatusOr<google::cloud::documentai::v1::Processor>
 DocumentProcessorServiceLogging::CreateProcessor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::CreateProcessorRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::documentai::v1::CreateProcessorRequest const&
-                 request) { return child_->CreateProcessor(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->CreateProcessor(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -343,26 +345,28 @@ DocumentProcessorServiceLogging::AsyncEvaluateProcessorVersion(
 
 StatusOr<google::cloud::documentai::v1::Evaluation>
 DocumentProcessorServiceLogging::GetEvaluation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::GetEvaluationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::documentai::v1::GetEvaluationRequest const& request) {
-        return child_->GetEvaluation(context, request);
+        return child_->GetEvaluation(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::documentai::v1::ListEvaluationsResponse>
 DocumentProcessorServiceLogging::ListEvaluations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::ListEvaluationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::documentai::v1::ListEvaluationsRequest const&
-                 request) { return child_->ListEvaluations(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListEvaluations(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

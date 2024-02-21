@@ -32,87 +32,87 @@ AdaptationAuth::AdaptationAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::speech::v1::PhraseSet> AdaptationAuth::CreatePhraseSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::CreatePhraseSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreatePhraseSet(context, request);
+  return child_->CreatePhraseSet(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v1::PhraseSet> AdaptationAuth::GetPhraseSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::GetPhraseSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetPhraseSet(context, request);
+  return child_->GetPhraseSet(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v1::ListPhraseSetResponse>
 AdaptationAuth::ListPhraseSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::ListPhraseSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListPhraseSet(context, request);
+  return child_->ListPhraseSet(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v1::PhraseSet> AdaptationAuth::UpdatePhraseSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::UpdatePhraseSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdatePhraseSet(context, request);
+  return child_->UpdatePhraseSet(context, options, request);
 }
 
 Status AdaptationAuth::DeletePhraseSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::DeletePhraseSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeletePhraseSet(context, request);
+  return child_->DeletePhraseSet(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
 AdaptationAuth::CreateCustomClass(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::CreateCustomClassRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateCustomClass(context, request);
+  return child_->CreateCustomClass(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass> AdaptationAuth::GetCustomClass(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::GetCustomClassRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCustomClass(context, request);
+  return child_->GetCustomClass(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v1::ListCustomClassesResponse>
 AdaptationAuth::ListCustomClasses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::ListCustomClassesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCustomClasses(context, request);
+  return child_->ListCustomClasses(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v1::CustomClass>
 AdaptationAuth::UpdateCustomClass(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::UpdateCustomClassRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateCustomClass(context, request);
+  return child_->UpdateCustomClass(context, options, request);
 }
 
 Status AdaptationAuth::DeleteCustomClass(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::DeleteCustomClassRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteCustomClass(context, request);
+  return child_->DeleteCustomClass(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

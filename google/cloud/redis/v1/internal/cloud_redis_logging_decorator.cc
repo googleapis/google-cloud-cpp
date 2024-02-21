@@ -37,38 +37,38 @@ CloudRedisLogging::CloudRedisLogging(std::shared_ptr<CloudRedisStub> child,
 
 StatusOr<google::cloud::redis::v1::ListInstancesResponse>
 CloudRedisLogging::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::redis::v1::ListInstancesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::redis::v1::ListInstancesRequest const& request) {
-        return child_->ListInstances(context, request);
+        return child_->ListInstances(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::redis::v1::Instance> CloudRedisLogging::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::redis::v1::GetInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::redis::v1::GetInstanceRequest const& request) {
-        return child_->GetInstance(context, request);
+        return child_->GetInstance(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::redis::v1::InstanceAuthString>
 CloudRedisLogging::GetInstanceAuthString(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::redis::v1::GetInstanceAuthStringRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::redis::v1::GetInstanceAuthStringRequest const&
                  request) {
-        return child_->GetInstanceAuthString(context, request);
+        return child_->GetInstanceAuthString(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

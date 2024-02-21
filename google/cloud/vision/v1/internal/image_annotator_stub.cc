@@ -33,7 +33,7 @@ ImageAnnotatorStub::~ImageAnnotatorStub() = default;
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
 DefaultImageAnnotatorStub::BatchAnnotateImages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) {
   google::cloud::vision::v1::BatchAnnotateImagesResponse response;
   auto status = grpc_stub_->BatchAnnotateImages(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultImageAnnotatorStub::BatchAnnotateImages(
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
 DefaultImageAnnotatorStub::BatchAnnotateFiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
   google::cloud::vision::v1::BatchAnnotateFilesResponse response;
   auto status = grpc_stub_->BatchAnnotateFiles(&context, request, &response);

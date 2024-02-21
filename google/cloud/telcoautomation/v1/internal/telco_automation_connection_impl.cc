@@ -79,21 +79,22 @@ TelcoAutomationConnectionImpl::ListOrchestrationClusters(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::telcoautomation::v1::OrchestrationCluster>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::telcoautomation::v1::
               ListOrchestrationClustersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::telcoautomation::v1::
                        ListOrchestrationClustersRequest const& request) {
-              return stub->ListOrchestrationClusters(context, request);
+              return stub->ListOrchestrationClusters(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::telcoautomation::v1::ListOrchestrationClustersResponse
              r) {
@@ -113,12 +114,12 @@ TelcoAutomationConnectionImpl::GetOrchestrationCluster(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetOrchestrationCluster(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::telcoautomation::v1::
                  GetOrchestrationClusterRequest const& request) {
-        return stub_->GetOrchestrationCluster(context, request);
+        return stub_->GetOrchestrationCluster(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>
@@ -208,19 +209,22 @@ TelcoAutomationConnectionImpl::ListEdgeSlms(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::telcoautomation::v1::EdgeSlm>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::telcoautomation::v1::ListEdgeSlmsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::telcoautomation::v1::ListEdgeSlmsRequest const&
-                    request) { return stub->ListEdgeSlms(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListEdgeSlms(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::telcoautomation::v1::ListEdgeSlmsResponse r) {
         std::vector<google::cloud::telcoautomation::v1::EdgeSlm> result(
@@ -238,10 +242,12 @@ TelcoAutomationConnectionImpl::GetEdgeSlm(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEdgeSlm(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::telcoautomation::v1::GetEdgeSlmRequest const&
-                 request) { return stub_->GetEdgeSlm(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetEdgeSlm(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>
@@ -327,10 +333,12 @@ TelcoAutomationConnectionImpl::CreateBlueprint(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateBlueprint(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::telcoautomation::v1::CreateBlueprintRequest const&
-                 request) { return stub_->CreateBlueprint(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreateBlueprint(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
@@ -340,10 +348,12 @@ TelcoAutomationConnectionImpl::UpdateBlueprint(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateBlueprint(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::telcoautomation::v1::UpdateBlueprintRequest const&
-                 request) { return stub_->UpdateBlueprint(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->UpdateBlueprint(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
@@ -353,10 +363,12 @@ TelcoAutomationConnectionImpl::GetBlueprint(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetBlueprint(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::telcoautomation::v1::GetBlueprintRequest const&
-                 request) { return stub_->GetBlueprint(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetBlueprint(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status TelcoAutomationConnectionImpl::DeleteBlueprint(
@@ -365,10 +377,12 @@ Status TelcoAutomationConnectionImpl::DeleteBlueprint(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteBlueprint(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::telcoautomation::v1::DeleteBlueprintRequest const&
-                 request) { return stub_->DeleteBlueprint(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DeleteBlueprint(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Blueprint>
@@ -380,19 +394,22 @@ TelcoAutomationConnectionImpl::ListBlueprints(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::telcoautomation::v1::Blueprint>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::telcoautomation::v1::ListBlueprintsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::telcoautomation::v1::ListBlueprintsRequest const&
-                    request) { return stub->ListBlueprints(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListBlueprints(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::telcoautomation::v1::ListBlueprintsResponse r) {
         std::vector<google::cloud::telcoautomation::v1::Blueprint> result(
@@ -411,10 +428,12 @@ TelcoAutomationConnectionImpl::ApproveBlueprint(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ApproveBlueprint(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::telcoautomation::v1::ApproveBlueprintRequest const&
-                 request) { return stub_->ApproveBlueprint(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->ApproveBlueprint(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
@@ -425,10 +444,12 @@ TelcoAutomationConnectionImpl::ProposeBlueprint(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ProposeBlueprint(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::telcoautomation::v1::ProposeBlueprintRequest const&
-                 request) { return stub_->ProposeBlueprint(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->ProposeBlueprint(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
@@ -438,10 +459,12 @@ TelcoAutomationConnectionImpl::RejectBlueprint(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RejectBlueprint(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::telcoautomation::v1::RejectBlueprintRequest const&
-                 request) { return stub_->RejectBlueprint(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->RejectBlueprint(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Blueprint>
@@ -454,21 +477,21 @@ TelcoAutomationConnectionImpl::ListBlueprintRevisions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::telcoautomation::v1::Blueprint>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::telcoautomation::v1::
-              ListBlueprintRevisionsRequest const& r) {
+          Options const& options, google::cloud::telcoautomation::v1::
+                                      ListBlueprintRevisionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::telcoautomation::v1::
                        ListBlueprintRevisionsRequest const& request) {
-              return stub->ListBlueprintRevisions(context, request);
+              return stub->ListBlueprintRevisions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::telcoautomation::v1::ListBlueprintRevisionsResponse r) {
         std::vector<google::cloud::telcoautomation::v1::Blueprint> result(
@@ -490,21 +513,22 @@ TelcoAutomationConnectionImpl::SearchBlueprintRevisions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::telcoautomation::v1::Blueprint>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::telcoautomation::v1::
               SearchBlueprintRevisionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::telcoautomation::v1::
                        SearchBlueprintRevisionsRequest const& request) {
-              return stub->SearchBlueprintRevisions(context, request);
+              return stub->SearchBlueprintRevisions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::telcoautomation::v1::SearchBlueprintRevisionsResponse
              r) {
@@ -527,21 +551,22 @@ TelcoAutomationConnectionImpl::SearchDeploymentRevisions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::telcoautomation::v1::Deployment>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::telcoautomation::v1::
               SearchDeploymentRevisionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::telcoautomation::v1::
                        SearchDeploymentRevisionsRequest const& request) {
-              return stub->SearchDeploymentRevisions(context, request);
+              return stub->SearchDeploymentRevisions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::telcoautomation::v1::SearchDeploymentRevisionsResponse
              r) {
@@ -561,12 +586,12 @@ TelcoAutomationConnectionImpl::DiscardBlueprintChanges(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DiscardBlueprintChanges(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::telcoautomation::v1::
                  DiscardBlueprintChangesRequest const& request) {
-        return stub_->DiscardBlueprintChanges(context, request);
+        return stub_->DiscardBlueprintChanges(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::telcoautomation::v1::PublicBlueprint>
@@ -579,21 +604,22 @@ TelcoAutomationConnectionImpl::ListPublicBlueprints(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::telcoautomation::v1::PublicBlueprint>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::telcoautomation::v1::
                        ListPublicBlueprintsRequest const& request) {
-              return stub->ListPublicBlueprints(context, request);
+              return stub->ListPublicBlueprints(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::telcoautomation::v1::ListPublicBlueprintsResponse r) {
         std::vector<google::cloud::telcoautomation::v1::PublicBlueprint> result(
@@ -613,10 +639,12 @@ TelcoAutomationConnectionImpl::GetPublicBlueprint(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPublicBlueprint(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const&
-              request) { return stub_->GetPublicBlueprint(context, request); },
-      request, __func__);
+              request) {
+        return stub_->GetPublicBlueprint(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
@@ -627,10 +655,12 @@ TelcoAutomationConnectionImpl::CreateDeployment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateDeployment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::telcoautomation::v1::CreateDeploymentRequest const&
-                 request) { return stub_->CreateDeployment(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreateDeployment(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
@@ -641,10 +671,12 @@ TelcoAutomationConnectionImpl::UpdateDeployment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateDeployment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::telcoautomation::v1::UpdateDeploymentRequest const&
-                 request) { return stub_->UpdateDeployment(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->UpdateDeployment(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
@@ -654,10 +686,12 @@ TelcoAutomationConnectionImpl::GetDeployment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDeployment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::telcoautomation::v1::GetDeploymentRequest const&
-                 request) { return stub_->GetDeployment(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetDeployment(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status TelcoAutomationConnectionImpl::RemoveDeployment(
@@ -667,10 +701,12 @@ Status TelcoAutomationConnectionImpl::RemoveDeployment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RemoveDeployment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::telcoautomation::v1::RemoveDeploymentRequest const&
-                 request) { return stub_->RemoveDeployment(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->RemoveDeployment(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::telcoautomation::v1::Deployment>
@@ -682,20 +718,21 @@ TelcoAutomationConnectionImpl::ListDeployments(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::telcoautomation::v1::Deployment>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::telcoautomation::v1::ListDeploymentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::telcoautomation::v1::
                        ListDeploymentsRequest const& request) {
-              return stub->ListDeployments(context, request);
+              return stub->ListDeployments(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::telcoautomation::v1::ListDeploymentsResponse r) {
         std::vector<google::cloud::telcoautomation::v1::Deployment> result(
@@ -717,21 +754,21 @@ TelcoAutomationConnectionImpl::ListDeploymentRevisions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::telcoautomation::v1::Deployment>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::telcoautomation::v1::
-              ListDeploymentRevisionsRequest const& r) {
+          Options const& options, google::cloud::telcoautomation::v1::
+                                      ListDeploymentRevisionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::telcoautomation::v1::
                        ListDeploymentRevisionsRequest const& request) {
-              return stub->ListDeploymentRevisions(context, request);
+              return stub->ListDeploymentRevisions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::telcoautomation::v1::ListDeploymentRevisionsResponse
              r) {
@@ -751,12 +788,12 @@ TelcoAutomationConnectionImpl::DiscardDeploymentChanges(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DiscardDeploymentChanges(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::telcoautomation::v1::
                  DiscardDeploymentChangesRequest const& request) {
-        return stub_->DiscardDeploymentChanges(context, request);
+        return stub_->DiscardDeploymentChanges(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
@@ -766,10 +803,12 @@ TelcoAutomationConnectionImpl::ApplyDeployment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ApplyDeployment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::telcoautomation::v1::ApplyDeploymentRequest const&
-                 request) { return stub_->ApplyDeployment(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->ApplyDeployment(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::ComputeDeploymentStatusResponse>
@@ -780,12 +819,12 @@ TelcoAutomationConnectionImpl::ComputeDeploymentStatus(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ComputeDeploymentStatus(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::telcoautomation::v1::
                  ComputeDeploymentStatusRequest const& request) {
-        return stub_->ComputeDeploymentStatus(context, request);
+        return stub_->ComputeDeploymentStatus(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
@@ -797,10 +836,12 @@ TelcoAutomationConnectionImpl::RollbackDeployment(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RollbackDeployment(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::telcoautomation::v1::RollbackDeploymentRequest const&
-              request) { return stub_->RollbackDeployment(context, request); },
-      request, __func__);
+              request) {
+        return stub_->RollbackDeployment(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
@@ -811,12 +852,12 @@ TelcoAutomationConnectionImpl::GetHydratedDeployment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetHydratedDeployment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::telcoautomation::v1::
                  GetHydratedDeploymentRequest const& request) {
-        return stub_->GetHydratedDeployment(context, request);
+        return stub_->GetHydratedDeployment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::telcoautomation::v1::HydratedDeployment>
@@ -830,21 +871,21 @@ TelcoAutomationConnectionImpl::ListHydratedDeployments(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::telcoautomation::v1::HydratedDeployment>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<telcoautomation_v1::TelcoAutomationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::telcoautomation::v1::
-              ListHydratedDeploymentsRequest const& r) {
+          Options const& options, google::cloud::telcoautomation::v1::
+                                      ListHydratedDeploymentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::telcoautomation::v1::
                        ListHydratedDeploymentsRequest const& request) {
-              return stub->ListHydratedDeployments(context, request);
+              return stub->ListHydratedDeployments(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::telcoautomation::v1::ListHydratedDeploymentsResponse
              r) {
@@ -864,12 +905,12 @@ TelcoAutomationConnectionImpl::UpdateHydratedDeployment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateHydratedDeployment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::telcoautomation::v1::
                  UpdateHydratedDeploymentRequest const& request) {
-        return stub_->UpdateHydratedDeployment(context, request);
+        return stub_->UpdateHydratedDeployment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
@@ -880,12 +921,12 @@ TelcoAutomationConnectionImpl::ApplyHydratedDeployment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ApplyHydratedDeployment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::telcoautomation::v1::
                  ApplyHydratedDeploymentRequest const& request) {
-        return stub_->ApplyHydratedDeployment(context, request);
+        return stub_->ApplyHydratedDeployment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

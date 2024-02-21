@@ -40,7 +40,7 @@ class ModelGardenServiceMetadata : public ModelGardenServiceStub {
       std::string api_client_header = "");
 
   StatusOr<google::cloud::aiplatform::v1::PublisherModel> GetPublisherModel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetPublisherModelRequest const& request)
       override;
 

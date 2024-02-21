@@ -33,37 +33,37 @@ CloudRedisTracingStub::CloudRedisTracingStub(
 
 StatusOr<google::cloud::redis::v1::ListInstancesResponse>
 CloudRedisTracingStub::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::redis::v1::ListInstancesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.redis.v1.CloudRedis",
                                      "ListInstances");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListInstances(context, request));
+                           child_->ListInstances(context, options, request));
 }
 
 StatusOr<google::cloud::redis::v1::Instance> CloudRedisTracingStub::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::redis::v1::GetInstanceRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.redis.v1.CloudRedis", "GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetInstance(context, request));
+                           child_->GetInstance(context, options, request));
 }
 
 StatusOr<google::cloud::redis::v1::InstanceAuthString>
 CloudRedisTracingStub::GetInstanceAuthString(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::redis::v1::GetInstanceAuthStringRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.redis.v1.CloudRedis",
                                      "GetInstanceAuthString");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetInstanceAuthString(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetInstanceAuthString(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

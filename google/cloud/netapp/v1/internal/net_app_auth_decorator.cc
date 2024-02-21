@@ -33,11 +33,11 @@ NetAppAuth::NetAppAuth(
 
 StatusOr<google::cloud::netapp::v1::ListStoragePoolsResponse>
 NetAppAuth::ListStoragePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListStoragePoolsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListStoragePools(context, request);
+  return child_->ListStoragePools(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -60,11 +60,11 @@ NetAppAuth::AsyncCreateStoragePool(
 }
 
 StatusOr<google::cloud::netapp::v1::StoragePool> NetAppAuth::GetStoragePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetStoragePoolRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetStoragePool(context, request);
+  return child_->GetStoragePool(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -107,19 +107,19 @@ NetAppAuth::AsyncDeleteStoragePool(
 
 StatusOr<google::cloud::netapp::v1::ListVolumesResponse>
 NetAppAuth::ListVolumes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListVolumesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListVolumes(context, request);
+  return child_->ListVolumes(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::Volume> NetAppAuth::GetVolume(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetVolumeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetVolume(context, request);
+  return child_->GetVolume(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> NetAppAuth::AsyncCreateVolume(
@@ -196,19 +196,19 @@ future<StatusOr<google::longrunning::Operation>> NetAppAuth::AsyncRevertVolume(
 
 StatusOr<google::cloud::netapp::v1::ListSnapshotsResponse>
 NetAppAuth::ListSnapshots(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListSnapshotsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSnapshots(context, request);
+  return child_->ListSnapshots(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::Snapshot> NetAppAuth::GetSnapshot(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetSnapshotRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetSnapshot(context, request);
+  return child_->GetSnapshot(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -270,20 +270,20 @@ NetAppAuth::AsyncUpdateSnapshot(
 
 StatusOr<google::cloud::netapp::v1::ListActiveDirectoriesResponse>
 NetAppAuth::ListActiveDirectories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListActiveDirectoriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListActiveDirectories(context, request);
+  return child_->ListActiveDirectories(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::ActiveDirectory>
 NetAppAuth::GetActiveDirectory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetActiveDirectoryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetActiveDirectory(context, request);
+  return child_->GetActiveDirectory(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -345,11 +345,11 @@ NetAppAuth::AsyncDeleteActiveDirectory(
 
 StatusOr<google::cloud::netapp::v1::ListKmsConfigsResponse>
 NetAppAuth::ListKmsConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListKmsConfigsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListKmsConfigs(context, request);
+  return child_->ListKmsConfigs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -372,11 +372,11 @@ NetAppAuth::AsyncCreateKmsConfig(
 }
 
 StatusOr<google::cloud::netapp::v1::KmsConfig> NetAppAuth::GetKmsConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetKmsConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetKmsConfig(context, request);
+  return child_->GetKmsConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -419,11 +419,11 @@ NetAppAuth::AsyncEncryptVolumes(
 
 StatusOr<google::cloud::netapp::v1::VerifyKmsConfigResponse>
 NetAppAuth::VerifyKmsConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::VerifyKmsConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->VerifyKmsConfig(context, request);
+  return child_->VerifyKmsConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -447,19 +447,19 @@ NetAppAuth::AsyncDeleteKmsConfig(
 
 StatusOr<google::cloud::netapp::v1::ListReplicationsResponse>
 NetAppAuth::ListReplications(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListReplicationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListReplications(context, request);
+  return child_->ListReplications(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::Replication> NetAppAuth::GetReplication(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetReplicationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetReplication(context, request);
+  return child_->GetReplication(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -597,20 +597,20 @@ NetAppAuth::AsyncCreateBackupVault(
 }
 
 StatusOr<google::cloud::netapp::v1::BackupVault> NetAppAuth::GetBackupVault(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetBackupVaultRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetBackupVault(context, request);
+  return child_->GetBackupVault(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::ListBackupVaultsResponse>
 NetAppAuth::ListBackupVaults(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListBackupVaultsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBackupVaults(context, request);
+  return child_->ListBackupVaults(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -670,20 +670,20 @@ future<StatusOr<google::longrunning::Operation>> NetAppAuth::AsyncCreateBackup(
 }
 
 StatusOr<google::cloud::netapp::v1::Backup> NetAppAuth::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetBackup(context, request);
+  return child_->GetBackup(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::ListBackupsResponse>
 NetAppAuth::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListBackupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBackups(context, request);
+  return child_->ListBackups(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> NetAppAuth::AsyncDeleteBackup(
@@ -742,20 +742,20 @@ NetAppAuth::AsyncCreateBackupPolicy(
 }
 
 StatusOr<google::cloud::netapp::v1::BackupPolicy> NetAppAuth::GetBackupPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetBackupPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetBackupPolicy(context, request);
+  return child_->GetBackupPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::netapp::v1::ListBackupPoliciesResponse>
 NetAppAuth::ListBackupPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListBackupPoliciesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBackupPolicies(context, request);
+  return child_->ListBackupPolicies(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

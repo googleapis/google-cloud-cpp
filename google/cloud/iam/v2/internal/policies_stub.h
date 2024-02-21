@@ -39,11 +39,11 @@ class PoliciesStub {
   virtual ~PoliciesStub() = 0;
 
   virtual StatusOr<google::iam::v2::ListPoliciesResponse> ListPolicies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v2::ListPoliciesRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v2::Policy> GetPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v2::GetPolicyRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreatePolicy(
@@ -81,11 +81,11 @@ class DefaultPoliciesStub : public PoliciesStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::iam::v2::ListPoliciesResponse> ListPolicies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v2::ListPoliciesRequest const& request) override;
 
   StatusOr<google::iam::v2::Policy> GetPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v2::GetPolicyRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreatePolicy(

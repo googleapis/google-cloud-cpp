@@ -44,11 +44,11 @@ PredictionServiceMetadata::PredictionServiceMetadata(
 
 StatusOr<google::cloud::automl::v1::PredictResponse>
 PredictionServiceMetadata::Predict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::PredictRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->Predict(context, request);
+  return child_->Predict(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

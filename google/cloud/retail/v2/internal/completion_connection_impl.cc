@@ -72,11 +72,11 @@ CompletionServiceConnectionImpl::CompleteQuery(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CompleteQuery(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::CompleteQueryRequest const& request) {
-        return stub_->CompleteQuery(context, request);
+        return stub_->CompleteQuery(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>

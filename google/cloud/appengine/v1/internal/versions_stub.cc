@@ -33,7 +33,7 @@ VersionsStub::~VersionsStub() = default;
 
 StatusOr<google::appengine::v1::ListVersionsResponse>
 DefaultVersionsStub::ListVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::ListVersionsRequest const& request) {
   google::appengine::v1::ListVersionsResponse response;
   auto status = grpc_stub_->ListVersions(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultVersionsStub::ListVersions(
 }
 
 StatusOr<google::appengine::v1::Version> DefaultVersionsStub::GetVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::GetVersionRequest const& request) {
   google::appengine::v1::Version response;
   auto status = grpc_stub_->GetVersion(&context, request, &response);

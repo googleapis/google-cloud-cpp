@@ -72,10 +72,12 @@ SystemPolicyV1ConnectionImpl::GetSystemPolicy(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSystemPolicy(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
-              request) { return stub_->GetSystemPolicy(context, request); },
-      request, __func__);
+              request) {
+        return stub_->GetSystemPolicy(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

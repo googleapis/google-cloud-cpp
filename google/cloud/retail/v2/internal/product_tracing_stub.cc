@@ -33,61 +33,61 @@ ProductServiceTracingStub::ProductServiceTracingStub(
 
 StatusOr<google::cloud::retail::v2::Product>
 ProductServiceTracingStub::CreateProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::CreateProductRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
                                      "CreateProduct");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateProduct(context, request));
+                           child_->CreateProduct(context, options, request));
 }
 
 StatusOr<google::cloud::retail::v2::Product>
 ProductServiceTracingStub::GetProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::GetProductRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
                                      "GetProduct");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetProduct(context, request));
+                           child_->GetProduct(context, options, request));
 }
 
 StatusOr<google::cloud::retail::v2::ListProductsResponse>
 ProductServiceTracingStub::ListProducts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::ListProductsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
                                      "ListProducts");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListProducts(context, request));
+                           child_->ListProducts(context, options, request));
 }
 
 StatusOr<google::cloud::retail::v2::Product>
 ProductServiceTracingStub::UpdateProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::UpdateProductRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
                                      "UpdateProduct");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateProduct(context, request));
+                           child_->UpdateProduct(context, options, request));
 }
 
 Status ProductServiceTracingStub::DeleteProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::DeleteProductRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ProductService",
                                      "DeleteProduct");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteProduct(context, request));
+                           child_->DeleteProduct(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

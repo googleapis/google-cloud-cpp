@@ -32,20 +32,20 @@ RevisionsAuth::RevisionsAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::run::v2::Revision> RevisionsAuth::GetRevision(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetRevisionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetRevision(context, request);
+  return child_->GetRevision(context, options, request);
 }
 
 StatusOr<google::cloud::run::v2::ListRevisionsResponse>
 RevisionsAuth::ListRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::ListRevisionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListRevisions(context, request);
+  return child_->ListRevisions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

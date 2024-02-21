@@ -48,7 +48,7 @@ DefaultCursorServiceStub::AsyncStreamingCommitCursor(
 
 StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse>
 DefaultCursorServiceStub::CommitCursor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::pubsublite::v1::CommitCursorRequest const& request) {
   google::cloud::pubsublite::v1::CommitCursorResponse response;
   auto status = grpc_stub_->CommitCursor(&context, request, &response);
@@ -60,7 +60,7 @@ DefaultCursorServiceStub::CommitCursor(
 
 StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse>
 DefaultCursorServiceStub::ListPartitionCursors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request) {
   google::cloud::pubsublite::v1::ListPartitionCursorsResponse response;
   auto status = grpc_stub_->ListPartitionCursors(&context, request, &response);

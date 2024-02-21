@@ -33,11 +33,11 @@ QueryServiceAuth::QueryServiceAuth(
 
 StatusOr<google::monitoring::v3::QueryTimeSeriesResponse>
 QueryServiceAuth::QueryTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::QueryTimeSeriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->QueryTimeSeries(context, request);
+  return child_->QueryTimeSeries(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

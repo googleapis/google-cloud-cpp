@@ -32,7 +32,7 @@ ModelGardenServiceStub::~ModelGardenServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::PublisherModel>
 DefaultModelGardenServiceStub::GetPublisherModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) {
   google::cloud::aiplatform::v1::PublisherModel response;
   auto status = grpc_stub_->GetPublisherModel(&context, request, &response);

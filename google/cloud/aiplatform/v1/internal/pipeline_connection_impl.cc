@@ -75,12 +75,12 @@ PipelineServiceConnectionImpl::CreateTrainingPipeline(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateTrainingPipeline(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const&
                  request) {
-        return stub_->CreateTrainingPipeline(context, request);
+        return stub_->CreateTrainingPipeline(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
@@ -90,12 +90,12 @@ PipelineServiceConnectionImpl::GetTrainingPipeline(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTrainingPipeline(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetTrainingPipelineRequest const&
                  request) {
-        return stub_->GetTrainingPipeline(context, request);
+        return stub_->GetTrainingPipeline(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::TrainingPipeline>
@@ -108,21 +108,22 @@ PipelineServiceConnectionImpl::ListTrainingPipelines(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::TrainingPipeline>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::PipelineServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListTrainingPipelinesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::
                        ListTrainingPipelinesRequest const& request) {
-              return stub->ListTrainingPipelines(context, request);
+              return stub->ListTrainingPipelines(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListTrainingPipelinesResponse r) {
         std::vector<google::cloud::aiplatform::v1::TrainingPipeline> result(
@@ -179,12 +180,12 @@ Status PipelineServiceConnectionImpl::CancelTrainingPipeline(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CancelTrainingPipeline(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
                  request) {
-        return stub_->CancelTrainingPipeline(context, request);
+        return stub_->CancelTrainingPipeline(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::PipelineJob>
@@ -194,12 +195,12 @@ PipelineServiceConnectionImpl::CreatePipelineJob(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreatePipelineJob(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::CreatePipelineJobRequest const&
                  request) {
-        return stub_->CreatePipelineJob(context, request);
+        return stub_->CreatePipelineJob(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::PipelineJob>
@@ -210,11 +211,11 @@ PipelineServiceConnectionImpl::GetPipelineJob(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPipelineJob(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::GetPipelineJobRequest const& request) {
-        return stub_->GetPipelineJob(context, request);
+        return stub_->GetPipelineJob(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::PipelineJob>
@@ -226,20 +227,21 @@ PipelineServiceConnectionImpl::ListPipelineJobs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::PipelineJob>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::PipelineServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListPipelineJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::ListPipelineJobsRequest const&
                        request) {
-              return stub->ListPipelineJobs(context, request);
+              return stub->ListPipelineJobs(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListPipelineJobsResponse r) {
         std::vector<google::cloud::aiplatform::v1::PipelineJob> result(
@@ -294,12 +296,12 @@ Status PipelineServiceConnectionImpl::CancelPipelineJob(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CancelPipelineJob(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::CancelPipelineJobRequest const&
                  request) {
-        return stub_->CancelPipelineJob(context, request);
+        return stub_->CancelPipelineJob(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

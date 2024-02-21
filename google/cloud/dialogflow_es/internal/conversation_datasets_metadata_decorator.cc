@@ -56,22 +56,22 @@ ConversationDatasetsMetadata::AsyncCreateConversationDataset(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
 ConversationDatasetsMetadata::GetConversationDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetConversationDataset(context, request);
+  return child_->GetConversationDataset(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationDatasetsResponse>
 ConversationDatasetsMetadata::ListConversationDatasets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListConversationDatasetsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListConversationDatasets(context, request);
+  return child_->ListConversationDatasets(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

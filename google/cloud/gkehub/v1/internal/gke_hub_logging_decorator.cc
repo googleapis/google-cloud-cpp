@@ -37,48 +37,48 @@ GkeHubLogging::GkeHubLogging(std::shared_ptr<GkeHubStub> child,
 
 StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse>
 GkeHubLogging::ListMemberships(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkehub::v1::ListMembershipsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkehub::v1::ListMembershipsRequest const& request) {
-        return child_->ListMemberships(context, request);
+        return child_->ListMemberships(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse>
 GkeHubLogging::ListFeatures(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkehub::v1::ListFeaturesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkehub::v1::ListFeaturesRequest const& request) {
-        return child_->ListFeatures(context, request);
+        return child_->ListFeatures(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkehub::v1::Membership> GkeHubLogging::GetMembership(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkehub::v1::GetMembershipRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkehub::v1::GetMembershipRequest const& request) {
-        return child_->GetMembership(context, request);
+        return child_->GetMembership(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkehub::v1::Feature> GkeHubLogging::GetFeature(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkehub::v1::GetFeatureRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkehub::v1::GetFeatureRequest const& request) {
-        return child_->GetFeature(context, request);
+        return child_->GetFeature(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -179,15 +179,15 @@ GkeHubLogging::AsyncUpdateFeature(
 
 StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
 GkeHubLogging::GenerateConnectManifest(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkehub::v1::GenerateConnectManifestRequest const&
                  request) {
-        return child_->GenerateConnectManifest(context, request);
+        return child_->GenerateConnectManifest(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

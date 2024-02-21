@@ -32,7 +32,7 @@ ServiceControllerStub::~ServiceControllerStub() = default;
 
 StatusOr<google::api::servicecontrol::v2::CheckResponse>
 DefaultServiceControllerStub::Check(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicecontrol::v2::CheckRequest const& request) {
   google::api::servicecontrol::v2::CheckResponse response;
   auto status = grpc_stub_->Check(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultServiceControllerStub::Check(
 
 StatusOr<google::api::servicecontrol::v2::ReportResponse>
 DefaultServiceControllerStub::Report(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicecontrol::v2::ReportRequest const& request) {
   google::api::servicecontrol::v2::ReportResponse response;
   auto status = grpc_stub_->Report(&context, request, &response);

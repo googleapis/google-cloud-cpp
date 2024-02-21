@@ -51,29 +51,29 @@ DatasetServiceAuth::AsyncCreateDataset(
 }
 
 StatusOr<google::cloud::aiplatform::v1::Dataset> DatasetServiceAuth::GetDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetDatasetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDataset(context, request);
+  return child_->GetDataset(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Dataset>
 DatasetServiceAuth::UpdateDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateDatasetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateDataset(context, request);
+  return child_->UpdateDataset(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListDatasetsResponse>
 DatasetServiceAuth::ListDatasets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListDatasetsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDatasets(context, request);
+  return child_->ListDatasets(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -173,20 +173,20 @@ DatasetServiceAuth::AsyncDeleteDatasetVersion(
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
 DatasetServiceAuth::GetDatasetVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDatasetVersion(context, request);
+  return child_->GetDatasetVersion(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListDatasetVersionsResponse>
 DatasetServiceAuth::ListDatasetVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListDatasetVersionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDatasetVersions(context, request);
+  return child_->ListDatasetVersions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -211,29 +211,29 @@ DatasetServiceAuth::AsyncRestoreDatasetVersion(
 
 StatusOr<google::cloud::aiplatform::v1::ListDataItemsResponse>
 DatasetServiceAuth::ListDataItems(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListDataItemsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDataItems(context, request);
+  return child_->ListDataItems(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::SearchDataItemsResponse>
 DatasetServiceAuth::SearchDataItems(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::SearchDataItemsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SearchDataItems(context, request);
+  return child_->SearchDataItems(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListSavedQueriesResponse>
 DatasetServiceAuth::ListSavedQueries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListSavedQueriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSavedQueries(context, request);
+  return child_->ListSavedQueries(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -257,20 +257,20 @@ DatasetServiceAuth::AsyncDeleteSavedQuery(
 
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
 DatasetServiceAuth::GetAnnotationSpec(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAnnotationSpec(context, request);
+  return child_->GetAnnotationSpec(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListAnnotationsResponse>
 DatasetServiceAuth::ListAnnotations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListAnnotationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAnnotations(context, request);
+  return child_->ListAnnotations(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

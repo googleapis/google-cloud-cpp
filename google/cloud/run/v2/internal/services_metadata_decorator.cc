@@ -74,7 +74,7 @@ ServicesMetadata::AsyncCreateService(
 }
 
 StatusOr<google::cloud::run::v2::Service> ServicesMetadata::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetServiceRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -93,17 +93,16 @@ StatusOr<google::cloud::run::v2::Service> ServicesMetadata::GetService(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->GetService(context, request);
+  return child_->GetService(context, options, request);
 }
 
 StatusOr<google::cloud::run::v2::ListServicesResponse>
 ServicesMetadata::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::ListServicesRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -122,12 +121,11 @@ ServicesMetadata::ListServices(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->ListServices(context, request);
+  return child_->ListServices(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -189,31 +187,31 @@ ServicesMetadata::AsyncDeleteService(
 }
 
 StatusOr<google::iam::v1::Policy> ServicesMetadata::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> ServicesMetadata::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ServicesMetadata::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

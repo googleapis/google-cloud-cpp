@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_INTERNAL_MODEL_GARDEN_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_INTERNAL_MODEL_GARDEN_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/aiplatform/v1/model_garden_service.grpc.pb.h>
@@ -36,7 +37,7 @@ class ModelGardenServiceStub {
 
   virtual StatusOr<google::cloud::aiplatform::v1::PublisherModel>
   GetPublisherModel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetPublisherModelRequest const&
           request) = 0;
 };
@@ -50,7 +51,7 @@ class DefaultModelGardenServiceStub : public ModelGardenServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::aiplatform::v1::PublisherModel> GetPublisherModel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetPublisherModelRequest const& request)
       override;
 

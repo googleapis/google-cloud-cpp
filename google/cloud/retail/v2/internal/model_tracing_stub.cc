@@ -45,69 +45,70 @@ ModelServiceTracingStub::AsyncCreateModel(
 }
 
 StatusOr<google::cloud::retail::v2::Model> ModelServiceTracingStub::GetModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::GetModelRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.retail.v2.ModelService", "GetModel");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetModel(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetModel(context, options, request));
 }
 
 StatusOr<google::cloud::retail::v2::Model> ModelServiceTracingStub::PauseModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::PauseModelRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ModelService",
                                      "PauseModel");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->PauseModel(context, request));
+                           child_->PauseModel(context, options, request));
 }
 
 StatusOr<google::cloud::retail::v2::Model> ModelServiceTracingStub::ResumeModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::ResumeModelRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ModelService",
                                      "ResumeModel");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ResumeModel(context, request));
+                           child_->ResumeModel(context, options, request));
 }
 
 Status ModelServiceTracingStub::DeleteModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::DeleteModelRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ModelService",
                                      "DeleteModel");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteModel(context, request));
+                           child_->DeleteModel(context, options, request));
 }
 
 StatusOr<google::cloud::retail::v2::ListModelsResponse>
 ModelServiceTracingStub::ListModels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::ListModelsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ModelService",
                                      "ListModels");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListModels(context, request));
+                           child_->ListModels(context, options, request));
 }
 
 StatusOr<google::cloud::retail::v2::Model> ModelServiceTracingStub::UpdateModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::UpdateModelRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.retail.v2.ModelService",
                                      "UpdateModel");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateModel(context, request));
+                           child_->UpdateModel(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

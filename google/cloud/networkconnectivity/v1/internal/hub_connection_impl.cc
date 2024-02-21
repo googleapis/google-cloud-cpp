@@ -77,19 +77,22 @@ HubServiceConnectionImpl::ListHubs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkconnectivity::v1::Hub>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::networkconnectivity::v1::ListHubsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::networkconnectivity::v1::ListHubsRequest const&
-                    request) { return stub->ListHubs(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListHubs(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::networkconnectivity::v1::ListHubsResponse r) {
         std::vector<google::cloud::networkconnectivity::v1::Hub> result(
@@ -107,10 +110,10 @@ HubServiceConnectionImpl::GetHub(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetHub(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::GetHubRequest const&
-                 request) { return stub_->GetHub(context, request); },
-      request, __func__);
+                 request) { return stub_->GetHub(context, options, request); },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
@@ -230,21 +233,22 @@ HubServiceConnectionImpl::ListHubSpokes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkconnectivity::v1::Spoke>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::networkconnectivity::v1::ListHubSpokesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::networkconnectivity::v1::
                        ListHubSpokesRequest const& request) {
-              return stub->ListHubSpokes(context, request);
+              return stub->ListHubSpokes(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::networkconnectivity::v1::ListHubSpokesResponse r) {
         std::vector<google::cloud::networkconnectivity::v1::Spoke> result(
@@ -264,19 +268,22 @@ HubServiceConnectionImpl::ListSpokes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkconnectivity::v1::Spoke>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::networkconnectivity::v1::ListSpokesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::networkconnectivity::v1::ListSpokesRequest const&
-                    request) { return stub->ListSpokes(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListSpokes(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::networkconnectivity::v1::ListSpokesResponse r) {
         std::vector<google::cloud::networkconnectivity::v1::Spoke> result(
@@ -294,10 +301,12 @@ HubServiceConnectionImpl::GetSpoke(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSpoke(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::GetSpokeRequest const&
-                 request) { return stub_->GetSpoke(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetSpoke(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
@@ -497,10 +506,12 @@ HubServiceConnectionImpl::GetRouteTable(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRouteTable(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
-                 request) { return stub_->GetRouteTable(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetRouteTable(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::Route>
@@ -510,10 +521,12 @@ HubServiceConnectionImpl::GetRoute(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRoute(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::GetRouteRequest const&
-                 request) { return stub_->GetRoute(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetRoute(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::networkconnectivity::v1::Route>
@@ -525,19 +538,22 @@ HubServiceConnectionImpl::ListRoutes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkconnectivity::v1::Route>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::networkconnectivity::v1::ListRoutesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::networkconnectivity::v1::ListRoutesRequest const&
-                    request) { return stub->ListRoutes(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListRoutes(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::networkconnectivity::v1::ListRoutesResponse r) {
         std::vector<google::cloud::networkconnectivity::v1::Route> result(
@@ -557,21 +573,22 @@ HubServiceConnectionImpl::ListRouteTables(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkconnectivity::v1::RouteTable>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::networkconnectivity::v1::ListRouteTablesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::networkconnectivity::v1::
                        ListRouteTablesRequest const& request) {
-              return stub->ListRouteTables(context, request);
+              return stub->ListRouteTables(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::networkconnectivity::v1::ListRouteTablesResponse r) {
         std::vector<google::cloud::networkconnectivity::v1::RouteTable> result(
@@ -589,10 +606,12 @@ HubServiceConnectionImpl::GetGroup(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetGroup(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::GetGroupRequest const&
-                 request) { return stub_->GetGroup(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetGroup(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::networkconnectivity::v1::Group>
@@ -604,19 +623,22 @@ HubServiceConnectionImpl::ListGroups(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkconnectivity::v1::Group>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<networkconnectivity_v1::HubServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::networkconnectivity::v1::ListGroupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::networkconnectivity::v1::ListGroupsRequest const&
-                    request) { return stub->ListGroups(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListGroups(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::networkconnectivity::v1::ListGroupsResponse r) {
         std::vector<google::cloud::networkconnectivity::v1::Group> result(

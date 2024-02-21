@@ -47,27 +47,27 @@ SpecialistPoolServiceTracingStub::AsyncCreateSpecialistPool(
 
 StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
 SpecialistPoolServiceTracingStub::GetSpecialistPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.SpecialistPoolService", "GetSpecialistPool");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetSpecialistPool(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetSpecialistPool(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListSpecialistPoolsResponse>
 SpecialistPoolServiceTracingStub::ListSpecialistPools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.aiplatform.v1.SpecialistPoolService",
                              "ListSpecialistPools");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListSpecialistPools(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListSpecialistPools(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

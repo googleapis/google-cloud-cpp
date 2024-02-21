@@ -40,30 +40,30 @@ class EdgeNetworkMetadata : public EdgeNetworkStub {
                       std::string api_client_header = "");
 
   StatusOr<google::cloud::edgenetwork::v1::InitializeZoneResponse>
-  InitializeZone(grpc::ClientContext& context,
+  InitializeZone(grpc::ClientContext& context, Options const& options,
                  google::cloud::edgenetwork::v1::InitializeZoneRequest const&
                      request) override;
 
   StatusOr<google::cloud::edgenetwork::v1::ListZonesResponse> ListZones(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgenetwork::v1::ListZonesRequest const& request) override;
 
   StatusOr<google::cloud::edgenetwork::v1::Zone> GetZone(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgenetwork::v1::GetZoneRequest const& request) override;
 
   StatusOr<google::cloud::edgenetwork::v1::ListNetworksResponse> ListNetworks(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgenetwork::v1::ListNetworksRequest const& request)
       override;
 
   StatusOr<google::cloud::edgenetwork::v1::Network> GetNetwork(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgenetwork::v1::GetNetworkRequest const& request)
       override;
 
   StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse>
-  DiagnoseNetwork(grpc::ClientContext& context,
+  DiagnoseNetwork(grpc::ClientContext& context, Options const& options,
                   google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const&
                       request) override;
 
@@ -80,12 +80,12 @@ class EdgeNetworkMetadata : public EdgeNetworkStub {
       override;
 
   StatusOr<google::cloud::edgenetwork::v1::ListSubnetsResponse> ListSubnets(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgenetwork::v1::ListSubnetsRequest const& request)
       override;
 
   StatusOr<google::cloud::edgenetwork::v1::Subnet> GetSubnet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgenetwork::v1::GetSubnetRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateSubnet(
@@ -108,30 +108,30 @@ class EdgeNetworkMetadata : public EdgeNetworkStub {
 
   StatusOr<google::cloud::edgenetwork::v1::ListInterconnectsResponse>
   ListInterconnects(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgenetwork::v1::ListInterconnectsRequest const& request)
       override;
 
   StatusOr<google::cloud::edgenetwork::v1::Interconnect> GetInterconnect(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgenetwork::v1::GetInterconnectRequest const& request)
       override;
 
   StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse>
   DiagnoseInterconnect(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const&
           request) override;
 
   StatusOr<google::cloud::edgenetwork::v1::ListInterconnectAttachmentsResponse>
   ListInterconnectAttachments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgenetwork::v1::ListInterconnectAttachmentsRequest const&
           request) override;
 
   StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>
   GetInterconnectAttachment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgenetwork::v1::GetInterconnectAttachmentRequest const&
           request) override;
 
@@ -150,16 +150,16 @@ class EdgeNetworkMetadata : public EdgeNetworkStub {
           request) override;
 
   StatusOr<google::cloud::edgenetwork::v1::ListRoutersResponse> ListRouters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgenetwork::v1::ListRoutersRequest const& request)
       override;
 
   StatusOr<google::cloud::edgenetwork::v1::Router> GetRouter(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::edgenetwork::v1::GetRouterRequest const& request) override;
 
   StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse>
-  DiagnoseRouter(grpc::ClientContext& context,
+  DiagnoseRouter(grpc::ClientContext& context, Options const& options,
                  google::cloud::edgenetwork::v1::DiagnoseRouterRequest const&
                      request) override;
 

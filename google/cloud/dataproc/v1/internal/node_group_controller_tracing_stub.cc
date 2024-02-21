@@ -59,14 +59,14 @@ NodeGroupControllerTracingStub::AsyncResizeNodeGroup(
 
 StatusOr<google::cloud::dataproc::v1::NodeGroup>
 NodeGroupControllerTracingStub::GetNodeGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetNodeGroupRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dataproc.v1.NodeGroupController", "GetNodeGroup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetNodeGroup(context, request));
+                           child_->GetNodeGroup(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

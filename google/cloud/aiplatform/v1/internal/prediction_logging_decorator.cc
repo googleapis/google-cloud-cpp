@@ -39,25 +39,25 @@ PredictionServiceLogging::PredictionServiceLogging(
 
 StatusOr<google::cloud::aiplatform::v1::PredictResponse>
 PredictionServiceLogging::Predict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::PredictRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::PredictRequest const& request) {
-        return child_->Predict(context, request);
+        return child_->Predict(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::HttpBody> PredictionServiceLogging::RawPredict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::RawPredictRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::RawPredictRequest const& request) {
-        return child_->RawPredict(context, request);
+        return child_->RawPredict(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 std::unique_ptr<
@@ -87,28 +87,28 @@ PredictionServiceLogging::StreamRawPredict(
 
 StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
 PredictionServiceLogging::DirectPredict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::DirectPredictRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::DirectPredictRequest const& request) {
-        return child_->DirectPredict(context, request);
+        return child_->DirectPredict(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
 PredictionServiceLogging::DirectRawPredict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::DirectRawPredictRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::DirectRawPredictRequest const&
                  request) {
-        return child_->DirectRawPredict(context, request);
+        return child_->DirectRawPredict(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -222,25 +222,27 @@ PredictionServiceLogging::AsyncStreamingRawPredict(
 
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
 PredictionServiceLogging::Explain(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ExplainRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ExplainRequest const& request) {
-        return child_->Explain(context, request);
+        return child_->Explain(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
 PredictionServiceLogging::GenerateContent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GenerateContentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GenerateContentRequest const&
-                 request) { return child_->GenerateContent(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GenerateContent(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<

@@ -39,7 +39,7 @@ class PredictionServiceAuth : public PredictionServiceStub {
       std::shared_ptr<PredictionServiceStub> child);
 
   StatusOr<google::cloud::retail::v2::PredictResponse> Predict(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::PredictRequest const& request) override;
 
  private:

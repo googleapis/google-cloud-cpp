@@ -193,12 +193,12 @@ AttachedClustersConnectionImpl::GetAttachedCluster(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAttachedCluster(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
                  request) {
-        return stub_->GetAttachedCluster(context, request);
+        return stub_->GetAttachedCluster(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -211,21 +211,22 @@ AttachedClustersConnectionImpl::ListAttachedClusters(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::gkemulticloud::v1::AttachedCluster>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<gkemulticloud_v1::AttachedClustersRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::gkemulticloud::v1::ListAttachedClustersRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::gkemulticloud::v1::
                        ListAttachedClustersRequest const& request) {
-              return stub->ListAttachedClusters(context, request);
+              return stub->ListAttachedClusters(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::gkemulticloud::v1::ListAttachedClustersResponse r) {
         std::vector<google::cloud::gkemulticloud::v1::AttachedCluster> result(
@@ -283,12 +284,12 @@ AttachedClustersConnectionImpl::GetAttachedServerConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAttachedServerConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::
                  GetAttachedServerConfigRequest const& request) {
-        return stub_->GetAttachedServerConfig(context, request);
+        return stub_->GetAttachedServerConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::
@@ -301,12 +302,13 @@ AttachedClustersConnectionImpl::GenerateAttachedClusterInstallManifest(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateAttachedClusterInstallManifest(
           request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::
                  GenerateAttachedClusterInstallManifestRequest const& request) {
-        return stub_->GenerateAttachedClusterInstallManifest(context, request);
+        return stub_->GenerateAttachedClusterInstallManifest(context, options,
+                                                             request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<
@@ -318,12 +320,13 @@ AttachedClustersConnectionImpl::GenerateAttachedClusterAgentToken(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateAttachedClusterAgentToken(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::
                  GenerateAttachedClusterAgentTokenRequest const& request) {
-        return stub_->GenerateAttachedClusterAgentToken(context, request);
+        return stub_->GenerateAttachedClusterAgentToken(context, options,
+                                                        request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -33,14 +33,14 @@ LookupServiceTracingStub::LookupServiceTracingStub(
 
 StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
 LookupServiceTracingStub::ResolveService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::ResolveServiceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.servicedirectory.v1.LookupService", "ResolveService");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ResolveService(context, request));
+                           child_->ResolveService(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

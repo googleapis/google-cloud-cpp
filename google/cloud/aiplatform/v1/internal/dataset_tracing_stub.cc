@@ -46,38 +46,38 @@ DatasetServiceTracingStub::AsyncCreateDataset(
 
 StatusOr<google::cloud::aiplatform::v1::Dataset>
 DatasetServiceTracingStub::GetDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetDatasetRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.DatasetService", "GetDataset");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetDataset(context, request));
+                           child_->GetDataset(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Dataset>
 DatasetServiceTracingStub::UpdateDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateDatasetRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.DatasetService", "UpdateDataset");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateDataset(context, request));
+                           child_->UpdateDataset(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListDatasetsResponse>
 DatasetServiceTracingStub::ListDatasets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListDatasetsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.DatasetService", "ListDatasets");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListDatasets(context, request));
+                           child_->ListDatasets(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -147,26 +147,26 @@ DatasetServiceTracingStub::AsyncDeleteDatasetVersion(
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
 DatasetServiceTracingStub::GetDatasetVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.DatasetService", "GetDatasetVersion");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetDatasetVersion(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetDatasetVersion(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListDatasetVersionsResponse>
 DatasetServiceTracingStub::ListDatasetVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListDatasetVersionsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.DatasetService", "ListDatasetVersions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListDatasetVersions(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListDatasetVersions(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -185,38 +185,38 @@ DatasetServiceTracingStub::AsyncRestoreDatasetVersion(
 
 StatusOr<google::cloud::aiplatform::v1::ListDataItemsResponse>
 DatasetServiceTracingStub::ListDataItems(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListDataItemsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.DatasetService", "ListDataItems");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListDataItems(context, request));
+                           child_->ListDataItems(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::SearchDataItemsResponse>
 DatasetServiceTracingStub::SearchDataItems(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::SearchDataItemsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.DatasetService", "SearchDataItems");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->SearchDataItems(context, request));
+                           child_->SearchDataItems(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListSavedQueriesResponse>
 DatasetServiceTracingStub::ListSavedQueries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListSavedQueriesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.DatasetService", "ListSavedQueries");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListSavedQueries(context, request));
+                           child_->ListSavedQueries(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -234,26 +234,26 @@ DatasetServiceTracingStub::AsyncDeleteSavedQuery(
 
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
 DatasetServiceTracingStub::GetAnnotationSpec(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.DatasetService", "GetAnnotationSpec");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetAnnotationSpec(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetAnnotationSpec(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListAnnotationsResponse>
 DatasetServiceTracingStub::ListAnnotations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListAnnotationsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.DatasetService", "ListAnnotations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListAnnotations(context, request));
+                           child_->ListAnnotations(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

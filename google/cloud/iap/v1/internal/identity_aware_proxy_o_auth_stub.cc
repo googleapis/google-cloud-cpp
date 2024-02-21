@@ -33,7 +33,7 @@ IdentityAwareProxyOAuthServiceStub::~IdentityAwareProxyOAuthServiceStub() =
 
 StatusOr<google::cloud::iap::v1::ListBrandsResponse>
 DefaultIdentityAwareProxyOAuthServiceStub::ListBrands(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::iap::v1::ListBrandsRequest const& request) {
   google::cloud::iap::v1::ListBrandsResponse response;
   auto status = grpc_stub_->ListBrands(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultIdentityAwareProxyOAuthServiceStub::ListBrands(
 
 StatusOr<google::cloud::iap::v1::Brand>
 DefaultIdentityAwareProxyOAuthServiceStub::CreateBrand(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::iap::v1::CreateBrandRequest const& request) {
   google::cloud::iap::v1::Brand response;
   auto status = grpc_stub_->CreateBrand(&context, request, &response);
@@ -57,7 +57,7 @@ DefaultIdentityAwareProxyOAuthServiceStub::CreateBrand(
 
 StatusOr<google::cloud::iap::v1::Brand>
 DefaultIdentityAwareProxyOAuthServiceStub::GetBrand(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::iap::v1::GetBrandRequest const& request) {
   google::cloud::iap::v1::Brand response;
   auto status = grpc_stub_->GetBrand(&context, request, &response);
@@ -69,7 +69,7 @@ DefaultIdentityAwareProxyOAuthServiceStub::GetBrand(
 
 StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
 DefaultIdentityAwareProxyOAuthServiceStub::CreateIdentityAwareProxyClient(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&
         request) {
   google::cloud::iap::v1::IdentityAwareProxyClient response;
@@ -83,7 +83,7 @@ DefaultIdentityAwareProxyOAuthServiceStub::CreateIdentityAwareProxyClient(
 
 StatusOr<google::cloud::iap::v1::ListIdentityAwareProxyClientsResponse>
 DefaultIdentityAwareProxyOAuthServiceStub::ListIdentityAwareProxyClients(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest const&
         request) {
   google::cloud::iap::v1::ListIdentityAwareProxyClientsResponse response;
@@ -97,7 +97,7 @@ DefaultIdentityAwareProxyOAuthServiceStub::ListIdentityAwareProxyClients(
 
 StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
 DefaultIdentityAwareProxyOAuthServiceStub::GetIdentityAwareProxyClient(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request) {
   google::cloud::iap::v1::IdentityAwareProxyClient response;
   auto status =
@@ -110,7 +110,7 @@ DefaultIdentityAwareProxyOAuthServiceStub::GetIdentityAwareProxyClient(
 
 StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
 DefaultIdentityAwareProxyOAuthServiceStub::ResetIdentityAwareProxyClientSecret(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const&
         request) {
   google::cloud::iap::v1::IdentityAwareProxyClient response;
@@ -124,7 +124,7 @@ DefaultIdentityAwareProxyOAuthServiceStub::ResetIdentityAwareProxyClientSecret(
 
 Status
 DefaultIdentityAwareProxyOAuthServiceStub::DeleteIdentityAwareProxyClient(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&
         request) {
   google::protobuf::Empty response;

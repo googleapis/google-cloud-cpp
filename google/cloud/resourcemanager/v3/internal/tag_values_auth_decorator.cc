@@ -33,30 +33,30 @@ TagValuesAuth::TagValuesAuth(
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagValuesResponse>
 TagValuesAuth::ListTagValues(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListTagValuesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTagValues(context, request);
+  return child_->ListTagValues(context, options, request);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::TagValue>
 TagValuesAuth::GetTagValue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::GetTagValueRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTagValue(context, request);
+  return child_->GetTagValue(context, options, request);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::TagValue>
 TagValuesAuth::GetNamespacedTagValue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::GetNamespacedTagValueRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetNamespacedTagValue(context, request);
+  return child_->GetNamespacedTagValue(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -117,28 +117,28 @@ TagValuesAuth::AsyncDeleteTagValue(
 }
 
 StatusOr<google::iam::v1::Policy> TagValuesAuth::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> TagValuesAuth::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 TagValuesAuth::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

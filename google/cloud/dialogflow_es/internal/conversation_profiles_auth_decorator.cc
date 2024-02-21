@@ -33,51 +33,51 @@ ConversationProfilesAuth::ConversationProfilesAuth(
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationProfilesResponse>
 ConversationProfilesAuth::ListConversationProfiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListConversationProfilesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListConversationProfiles(context, request);
+  return child_->ListConversationProfiles(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 ConversationProfilesAuth::GetConversationProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetConversationProfileRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetConversationProfile(context, request);
+  return child_->GetConversationProfile(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 ConversationProfilesAuth::CreateConversationProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateConversationProfile(context, request);
+  return child_->CreateConversationProfile(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 ConversationProfilesAuth::UpdateConversationProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateConversationProfile(context, request);
+  return child_->UpdateConversationProfile(context, options, request);
 }
 
 Status ConversationProfilesAuth::DeleteConversationProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteConversationProfile(context, request);
+  return child_->DeleteConversationProfile(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

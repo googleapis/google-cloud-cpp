@@ -33,7 +33,7 @@ WorkflowTemplateServiceStub::~WorkflowTemplateServiceStub() = default;
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 DefaultWorkflowTemplateServiceStub::CreateWorkflowTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request) {
   google::cloud::dataproc::v1::WorkflowTemplate response;
   auto status =
@@ -46,7 +46,7 @@ DefaultWorkflowTemplateServiceStub::CreateWorkflowTemplate(
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 DefaultWorkflowTemplateServiceStub::GetWorkflowTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request) {
   google::cloud::dataproc::v1::WorkflowTemplate response;
   auto status = grpc_stub_->GetWorkflowTemplate(&context, request, &response);
@@ -99,7 +99,7 @@ DefaultWorkflowTemplateServiceStub::AsyncInstantiateInlineWorkflowTemplate(
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 DefaultWorkflowTemplateServiceStub::UpdateWorkflowTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request) {
   google::cloud::dataproc::v1::WorkflowTemplate response;
   auto status =
@@ -112,7 +112,7 @@ DefaultWorkflowTemplateServiceStub::UpdateWorkflowTemplate(
 
 StatusOr<google::cloud::dataproc::v1::ListWorkflowTemplatesResponse>
 DefaultWorkflowTemplateServiceStub::ListWorkflowTemplates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::ListWorkflowTemplatesRequest const& request) {
   google::cloud::dataproc::v1::ListWorkflowTemplatesResponse response;
   auto status = grpc_stub_->ListWorkflowTemplates(&context, request, &response);
@@ -123,7 +123,7 @@ DefaultWorkflowTemplateServiceStub::ListWorkflowTemplates(
 }
 
 Status DefaultWorkflowTemplateServiceStub::DeleteWorkflowTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request) {
   google::protobuf::Empty response;
   auto status =

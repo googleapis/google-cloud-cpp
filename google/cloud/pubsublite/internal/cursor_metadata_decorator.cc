@@ -54,21 +54,21 @@ CursorServiceMetadata::AsyncStreamingCommitCursor(
 
 StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse>
 CursorServiceMetadata::CommitCursor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::CommitCursorRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("subscription=",
                            internal::UrlEncode(request.subscription())));
-  return child_->CommitCursor(context, request);
+  return child_->CommitCursor(context, options, request);
 }
 
 StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse>
 CursorServiceMetadata::ListPartitionCursors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListPartitionCursors(context, request);
+  return child_->ListPartitionCursors(context, options, request);
 }
 
 void CursorServiceMetadata::SetMetadata(grpc::ClientContext& context,

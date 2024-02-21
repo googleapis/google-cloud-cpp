@@ -37,40 +37,42 @@ TagKeysLogging::TagKeysLogging(std::shared_ptr<TagKeysStub> child,
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagKeysResponse>
 TagKeysLogging::ListTagKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListTagKeysRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::resourcemanager::v3::ListTagKeysRequest const&
-                 request) { return child_->ListTagKeys(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListTagKeys(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::TagKey> TagKeysLogging::GetTagKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::GetTagKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::resourcemanager::v3::GetTagKeyRequest const& request) {
-        return child_->GetTagKey(context, request);
+        return child_->GetTagKey(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::TagKey>
 TagKeysLogging::GetNamespacedTagKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const&
               request) {
-        return child_->GetNamespacedTagKey(context, request);
+        return child_->GetNamespacedTagKey(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -125,37 +127,37 @@ TagKeysLogging::AsyncDeleteTagKey(
 }
 
 StatusOr<google::iam::v1::Policy> TagKeysLogging::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
-        return child_->GetIamPolicy(context, request);
+        return child_->GetIamPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> TagKeysLogging::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
-        return child_->SetIamPolicy(context, request);
+        return child_->SetIamPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 TagKeysLogging::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
-        return child_->TestIamPermissions(context, request);
+        return child_->TestIamPermissions(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

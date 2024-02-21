@@ -59,28 +59,28 @@ CursorServiceLogging::AsyncStreamingCommitCursor(
 
 StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse>
 CursorServiceLogging::CommitCursor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::CommitCursorRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::pubsublite::v1::CommitCursorRequest const& request) {
-        return child_->CommitCursor(context, request);
+        return child_->CommitCursor(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse>
 CursorServiceLogging::ListPartitionCursors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::pubsublite::v1::ListPartitionCursorsRequest const&
                  request) {
-        return child_->ListPartitionCursors(context, request);
+        return child_->ListPartitionCursors(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

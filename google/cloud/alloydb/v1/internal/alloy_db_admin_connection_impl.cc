@@ -73,20 +73,21 @@ AlloyDBAdminConnectionImpl::ListClusters(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::alloydb::v1::Cluster>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<alloydb_v1::AlloyDBAdminRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::alloydb::v1::ListClustersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::alloydb::v1::ListClustersRequest const&
                        request) {
-              return stub->ListClusters(context, request);
+              return stub->ListClusters(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::alloydb::v1::ListClustersResponse r) {
         std::vector<google::cloud::alloydb::v1::Cluster> result(
@@ -104,11 +105,11 @@ AlloyDBAdminConnectionImpl::GetCluster(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCluster(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::GetClusterRequest const& request) {
-        return stub_->GetCluster(context, request);
+        return stub_->GetCluster(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Cluster>>
@@ -343,20 +344,21 @@ AlloyDBAdminConnectionImpl::ListInstances(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::alloydb::v1::Instance>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<alloydb_v1::AlloyDBAdminRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::alloydb::v1::ListInstancesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::alloydb::v1::ListInstancesRequest const&
                        request) {
-              return stub->ListInstances(context, request);
+              return stub->ListInstances(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::alloydb::v1::ListInstancesResponse r) {
         std::vector<google::cloud::alloydb::v1::Instance> result(
@@ -374,11 +376,11 @@ AlloyDBAdminConnectionImpl::GetInstance(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetInstance(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::GetInstanceRequest const& request) {
-        return stub_->GetInstance(context, request);
+        return stub_->GetInstance(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Instance>>
@@ -687,20 +689,21 @@ AlloyDBAdminConnectionImpl::ListBackups(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::alloydb::v1::Backup>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<alloydb_v1::AlloyDBAdminRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::alloydb::v1::ListBackupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::alloydb::v1::ListBackupsRequest const& request) {
-              return stub->ListBackups(context, request);
+              return stub->ListBackups(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::alloydb::v1::ListBackupsResponse r) {
         std::vector<google::cloud::alloydb::v1::Backup> result(
@@ -718,11 +721,11 @@ AlloyDBAdminConnectionImpl::GetBackup(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetBackup(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::GetBackupRequest const& request) {
-        return stub_->GetBackup(context, request);
+        return stub_->GetBackup(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::alloydb::v1::Backup>>
@@ -846,21 +849,23 @@ AlloyDBAdminConnectionImpl::ListSupportedDatabaseFlags(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::alloydb::v1::SupportedDatabaseFlag>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<alloydb_v1::AlloyDBAdminRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::alloydb::v1::
                        ListSupportedDatabaseFlagsRequest const& request) {
-              return stub->ListSupportedDatabaseFlags(context, request);
+              return stub->ListSupportedDatabaseFlags(context, options,
+                                                      request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::alloydb::v1::ListSupportedDatabaseFlagsResponse r) {
         std::vector<google::cloud::alloydb::v1::SupportedDatabaseFlag> result(
@@ -879,12 +884,12 @@ AlloyDBAdminConnectionImpl::GenerateClientCertificate(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateClientCertificate(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
                  request) {
-        return stub_->GenerateClientCertificate(context, request);
+        return stub_->GenerateClientCertificate(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
@@ -895,11 +900,11 @@ AlloyDBAdminConnectionImpl::GetConnectionInfo(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetConnectionInfo(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::alloydb::v1::GetConnectionInfoRequest const& request) {
-        return stub_->GetConnectionInfo(context, request);
+        return stub_->GetConnectionInfo(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::alloydb::v1::User>
@@ -911,20 +916,21 @@ AlloyDBAdminConnectionImpl::ListUsers(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::alloydb::v1::User>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<alloydb_v1::AlloyDBAdminRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::alloydb::v1::ListUsersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::alloydb::v1::ListUsersRequest const& request) {
-              return stub->ListUsers(context, request);
+              return stub->ListUsers(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::alloydb::v1::ListUsersResponse r) {
         std::vector<google::cloud::alloydb::v1::User> result(r.users().size());
@@ -940,11 +946,11 @@ StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminConnectionImpl::GetUser(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetUser(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::GetUserRequest const& request) {
-        return stub_->GetUser(context, request);
+        return stub_->GetUser(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::alloydb::v1::User>
@@ -954,11 +960,11 @@ AlloyDBAdminConnectionImpl::CreateUser(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateUser(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::CreateUserRequest const& request) {
-        return stub_->CreateUser(context, request);
+        return stub_->CreateUser(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::alloydb::v1::User>
@@ -968,11 +974,11 @@ AlloyDBAdminConnectionImpl::UpdateUser(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateUser(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::UpdateUserRequest const& request) {
-        return stub_->UpdateUser(context, request);
+        return stub_->UpdateUser(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status AlloyDBAdminConnectionImpl::DeleteUser(
@@ -981,11 +987,11 @@ Status AlloyDBAdminConnectionImpl::DeleteUser(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteUser(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::DeleteUserRequest const& request) {
-        return stub_->DeleteUser(context, request);
+        return stub_->DeleteUser(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

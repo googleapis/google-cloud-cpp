@@ -33,21 +33,21 @@ DatastreamAuth::DatastreamAuth(
 
 StatusOr<google::cloud::datastream::v1::ListConnectionProfilesResponse>
 DatastreamAuth::ListConnectionProfiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::ListConnectionProfilesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListConnectionProfiles(context, request);
+  return child_->ListConnectionProfiles(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::ConnectionProfile>
 DatastreamAuth::GetConnectionProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::GetConnectionProfileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetConnectionProfile(context, request);
+  return child_->GetConnectionProfile(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -112,29 +112,29 @@ DatastreamAuth::AsyncDeleteConnectionProfile(
 
 StatusOr<google::cloud::datastream::v1::DiscoverConnectionProfileResponse>
 DatastreamAuth::DiscoverConnectionProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::DiscoverConnectionProfileRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DiscoverConnectionProfile(context, request);
+  return child_->DiscoverConnectionProfile(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::ListStreamsResponse>
 DatastreamAuth::ListStreams(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::ListStreamsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListStreams(context, request);
+  return child_->ListStreams(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::Stream> DatastreamAuth::GetStream(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::GetStreamRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetStream(context, request);
+  return child_->GetStream(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -196,56 +196,56 @@ DatastreamAuth::AsyncDeleteStream(
 
 StatusOr<google::cloud::datastream::v1::StreamObject>
 DatastreamAuth::GetStreamObject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::GetStreamObjectRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetStreamObject(context, request);
+  return child_->GetStreamObject(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::StreamObject>
 DatastreamAuth::LookupStreamObject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::LookupStreamObjectRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->LookupStreamObject(context, request);
+  return child_->LookupStreamObject(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::ListStreamObjectsResponse>
 DatastreamAuth::ListStreamObjects(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::ListStreamObjectsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListStreamObjects(context, request);
+  return child_->ListStreamObjects(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::StartBackfillJobResponse>
 DatastreamAuth::StartBackfillJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::StartBackfillJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->StartBackfillJob(context, request);
+  return child_->StartBackfillJob(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::StopBackfillJobResponse>
 DatastreamAuth::StopBackfillJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::StopBackfillJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->StopBackfillJob(context, request);
+  return child_->StopBackfillJob(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::FetchStaticIpsResponse>
 DatastreamAuth::FetchStaticIps(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::FetchStaticIpsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->FetchStaticIps(context, request);
+  return child_->FetchStaticIps(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -270,21 +270,21 @@ DatastreamAuth::AsyncCreatePrivateConnection(
 
 StatusOr<google::cloud::datastream::v1::PrivateConnection>
 DatastreamAuth::GetPrivateConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::GetPrivateConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetPrivateConnection(context, request);
+  return child_->GetPrivateConnection(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::ListPrivateConnectionsResponse>
 DatastreamAuth::ListPrivateConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::ListPrivateConnectionsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListPrivateConnections(context, request);
+  return child_->ListPrivateConnections(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -327,20 +327,20 @@ DatastreamAuth::AsyncCreateRoute(
 }
 
 StatusOr<google::cloud::datastream::v1::Route> DatastreamAuth::GetRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::GetRouteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetRoute(context, request);
+  return child_->GetRoute(context, options, request);
 }
 
 StatusOr<google::cloud::datastream::v1::ListRoutesResponse>
 DatastreamAuth::ListRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::ListRoutesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListRoutes(context, request);
+  return child_->ListRoutes(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

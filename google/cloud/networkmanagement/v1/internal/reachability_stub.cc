@@ -33,7 +33,7 @@ ReachabilityServiceStub::~ReachabilityServiceStub() = default;
 
 StatusOr<google::cloud::networkmanagement::v1::ListConnectivityTestsResponse>
 DefaultReachabilityServiceStub::ListConnectivityTests(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networkmanagement::v1::ListConnectivityTestsRequest const&
         request) {
   google::cloud::networkmanagement::v1::ListConnectivityTestsResponse response;
@@ -46,7 +46,7 @@ DefaultReachabilityServiceStub::ListConnectivityTests(
 
 StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
 DefaultReachabilityServiceStub::GetConnectivityTest(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
         request) {
   google::cloud::networkmanagement::v1::ConnectivityTest response;

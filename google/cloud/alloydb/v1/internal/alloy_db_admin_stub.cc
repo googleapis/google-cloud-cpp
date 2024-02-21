@@ -33,7 +33,7 @@ AlloyDBAdminStub::~AlloyDBAdminStub() = default;
 
 StatusOr<google::cloud::alloydb::v1::ListClustersResponse>
 DefaultAlloyDBAdminStub::ListClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::ListClustersRequest const& request) {
   google::cloud::alloydb::v1::ListClustersResponse response;
   auto status = grpc_stub_->ListClusters(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultAlloyDBAdminStub::ListClusters(
 
 StatusOr<google::cloud::alloydb::v1::Cluster>
 DefaultAlloyDBAdminStub::GetCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::GetClusterRequest const& request) {
   google::cloud::alloydb::v1::Cluster response;
   auto status = grpc_stub_->GetCluster(&context, request, &response);
@@ -160,7 +160,7 @@ DefaultAlloyDBAdminStub::AsyncCreateSecondaryCluster(
 
 StatusOr<google::cloud::alloydb::v1::ListInstancesResponse>
 DefaultAlloyDBAdminStub::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::ListInstancesRequest const& request) {
   google::cloud::alloydb::v1::ListInstancesResponse response;
   auto status = grpc_stub_->ListInstances(&context, request, &response);
@@ -172,7 +172,7 @@ DefaultAlloyDBAdminStub::ListInstances(
 
 StatusOr<google::cloud::alloydb::v1::Instance>
 DefaultAlloyDBAdminStub::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::GetInstanceRequest const& request) {
   google::cloud::alloydb::v1::Instance response;
   auto status = grpc_stub_->GetInstance(&context, request, &response);
@@ -322,7 +322,7 @@ DefaultAlloyDBAdminStub::AsyncRestartInstance(
 
 StatusOr<google::cloud::alloydb::v1::ListBackupsResponse>
 DefaultAlloyDBAdminStub::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::ListBackupsRequest const& request) {
   google::cloud::alloydb::v1::ListBackupsResponse response;
   auto status = grpc_stub_->ListBackups(&context, request, &response);
@@ -333,7 +333,7 @@ DefaultAlloyDBAdminStub::ListBackups(
 }
 
 StatusOr<google::cloud::alloydb::v1::Backup> DefaultAlloyDBAdminStub::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::GetBackupRequest const& request) {
   google::cloud::alloydb::v1::Backup response;
   auto status = grpc_stub_->GetBackup(&context, request, &response);
@@ -396,7 +396,7 @@ DefaultAlloyDBAdminStub::AsyncDeleteBackup(
 
 StatusOr<google::cloud::alloydb::v1::ListSupportedDatabaseFlagsResponse>
 DefaultAlloyDBAdminStub::ListSupportedDatabaseFlags(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest const&
         request) {
   google::cloud::alloydb::v1::ListSupportedDatabaseFlagsResponse response;
@@ -410,7 +410,7 @@ DefaultAlloyDBAdminStub::ListSupportedDatabaseFlags(
 
 StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
 DefaultAlloyDBAdminStub::GenerateClientCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
         request) {
   google::cloud::alloydb::v1::GenerateClientCertificateResponse response;
@@ -424,7 +424,7 @@ DefaultAlloyDBAdminStub::GenerateClientCertificate(
 
 StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
 DefaultAlloyDBAdminStub::GetConnectionInfo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::GetConnectionInfoRequest const& request) {
   google::cloud::alloydb::v1::ConnectionInfo response;
   auto status = grpc_stub_->GetConnectionInfo(&context, request, &response);
@@ -436,7 +436,7 @@ DefaultAlloyDBAdminStub::GetConnectionInfo(
 
 StatusOr<google::cloud::alloydb::v1::ListUsersResponse>
 DefaultAlloyDBAdminStub::ListUsers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::ListUsersRequest const& request) {
   google::cloud::alloydb::v1::ListUsersResponse response;
   auto status = grpc_stub_->ListUsers(&context, request, &response);
@@ -447,7 +447,7 @@ DefaultAlloyDBAdminStub::ListUsers(
 }
 
 StatusOr<google::cloud::alloydb::v1::User> DefaultAlloyDBAdminStub::GetUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::GetUserRequest const& request) {
   google::cloud::alloydb::v1::User response;
   auto status = grpc_stub_->GetUser(&context, request, &response);
@@ -458,7 +458,7 @@ StatusOr<google::cloud::alloydb::v1::User> DefaultAlloyDBAdminStub::GetUser(
 }
 
 StatusOr<google::cloud::alloydb::v1::User> DefaultAlloyDBAdminStub::CreateUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::CreateUserRequest const& request) {
   google::cloud::alloydb::v1::User response;
   auto status = grpc_stub_->CreateUser(&context, request, &response);
@@ -469,7 +469,7 @@ StatusOr<google::cloud::alloydb::v1::User> DefaultAlloyDBAdminStub::CreateUser(
 }
 
 StatusOr<google::cloud::alloydb::v1::User> DefaultAlloyDBAdminStub::UpdateUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::UpdateUserRequest const& request) {
   google::cloud::alloydb::v1::User response;
   auto status = grpc_stub_->UpdateUser(&context, request, &response);
@@ -480,7 +480,7 @@ StatusOr<google::cloud::alloydb::v1::User> DefaultAlloyDBAdminStub::UpdateUser(
 }
 
 Status DefaultAlloyDBAdminStub::DeleteUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::DeleteUserRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteUser(&context, request, &response);

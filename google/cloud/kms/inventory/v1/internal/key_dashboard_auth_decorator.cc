@@ -33,11 +33,11 @@ KeyDashboardServiceAuth::KeyDashboardServiceAuth(
 
 StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
 KeyDashboardServiceAuth::ListCryptoKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCryptoKeys(context, request);
+  return child_->ListCryptoKeys(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

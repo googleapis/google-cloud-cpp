@@ -86,26 +86,27 @@ SecurityCenterManagementConnectionImpl::
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::securitycentermanagement::v1::
                       EffectiveSecurityHealthAnalyticsCustomModule>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            securitycentermanagement_v1::SecurityCenterManagementRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::securitycentermanagement::v1::
               ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
                   r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::securitycentermanagement::v1::
                     ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
                         request) {
               return stub->ListEffectiveSecurityHealthAnalyticsCustomModules(
-                  context, request);
+                  context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::securitycentermanagement::v1::
              ListEffectiveSecurityHealthAnalyticsCustomModulesResponse r) {
@@ -132,14 +133,14 @@ SecurityCenterManagementConnectionImpl::
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)
           ->GetEffectiveSecurityHealthAnalyticsCustomModule(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycentermanagement::v1::
                  GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const&
                      request) {
-        return stub_->GetEffectiveSecurityHealthAnalyticsCustomModule(context,
-                                                                      request);
+        return stub_->GetEffectiveSecurityHealthAnalyticsCustomModule(
+            context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::securitycentermanagement::v1::
@@ -157,24 +158,25 @@ SecurityCenterManagementConnectionImpl::
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::securitycentermanagement::v1::
                       SecurityHealthAnalyticsCustomModule>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            securitycentermanagement_v1::SecurityCenterManagementRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::securitycentermanagement::v1::
               ListSecurityHealthAnalyticsCustomModulesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::securitycentermanagement::v1::
                        ListSecurityHealthAnalyticsCustomModulesRequest const&
                            request) {
-              return stub->ListSecurityHealthAnalyticsCustomModules(context,
-                                                                    request);
+              return stub->ListSecurityHealthAnalyticsCustomModules(
+                  context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::securitycentermanagement::v1::
              ListSecurityHealthAnalyticsCustomModulesResponse r) {
@@ -202,26 +204,27 @@ SecurityCenterManagementConnectionImpl::
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::securitycentermanagement::v1::
                       SecurityHealthAnalyticsCustomModule>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            securitycentermanagement_v1::SecurityCenterManagementRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::securitycentermanagement::v1::
               ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
                   r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::securitycentermanagement::v1::
                     ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
                         request) {
               return stub->ListDescendantSecurityHealthAnalyticsCustomModules(
-                  context, request);
+                  context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::securitycentermanagement::v1::
              ListDescendantSecurityHealthAnalyticsCustomModulesResponse r) {
@@ -244,12 +247,13 @@ SecurityCenterManagementConnectionImpl::GetSecurityHealthAnalyticsCustomModule(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSecurityHealthAnalyticsCustomModule(
           request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycentermanagement::v1::
                  GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
-        return stub_->GetSecurityHealthAnalyticsCustomModule(context, request);
+        return stub_->GetSecurityHealthAnalyticsCustomModule(context, options,
+                                                             request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
@@ -264,13 +268,13 @@ SecurityCenterManagementConnectionImpl::
       idempotency_policy(*current)->CreateSecurityHealthAnalyticsCustomModule(
           request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::securitycentermanagement::v1::
               CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
-        return stub_->CreateSecurityHealthAnalyticsCustomModule(context,
-                                                                request);
+        return stub_->CreateSecurityHealthAnalyticsCustomModule(
+            context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
@@ -285,13 +289,13 @@ SecurityCenterManagementConnectionImpl::
       idempotency_policy(*current)->UpdateSecurityHealthAnalyticsCustomModule(
           request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::securitycentermanagement::v1::
               UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
-        return stub_->UpdateSecurityHealthAnalyticsCustomModule(context,
-                                                                request);
+        return stub_->UpdateSecurityHealthAnalyticsCustomModule(
+            context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status SecurityCenterManagementConnectionImpl::
@@ -304,13 +308,13 @@ Status SecurityCenterManagementConnectionImpl::
       idempotency_policy(*current)->DeleteSecurityHealthAnalyticsCustomModule(
           request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::securitycentermanagement::v1::
               DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
-        return stub_->DeleteSecurityHealthAnalyticsCustomModule(context,
-                                                                request);
+        return stub_->DeleteSecurityHealthAnalyticsCustomModule(
+            context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
@@ -324,14 +328,14 @@ SecurityCenterManagementConnectionImpl::
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SimulateSecurityHealthAnalyticsCustomModule(
           request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycentermanagement::v1::
                  SimulateSecurityHealthAnalyticsCustomModuleRequest const&
                      request) {
-        return stub_->SimulateSecurityHealthAnalyticsCustomModule(context,
-                                                                  request);
+        return stub_->SimulateSecurityHealthAnalyticsCustomModule(
+            context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::securitycentermanagement::v1::
@@ -349,25 +353,26 @@ SecurityCenterManagementConnectionImpl::
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::securitycentermanagement::v1::
                       EffectiveEventThreatDetectionCustomModule>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            securitycentermanagement_v1::SecurityCenterManagementRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::securitycentermanagement::v1::
               ListEffectiveEventThreatDetectionCustomModulesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::securitycentermanagement::v1::
                     ListEffectiveEventThreatDetectionCustomModulesRequest const&
                         request) {
               return stub->ListEffectiveEventThreatDetectionCustomModules(
-                  context, request);
+                  context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::securitycentermanagement::v1::
              ListEffectiveEventThreatDetectionCustomModulesResponse r) {
@@ -393,14 +398,14 @@ SecurityCenterManagementConnectionImpl::
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)
           ->GetEffectiveEventThreatDetectionCustomModule(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycentermanagement::v1::
                  GetEffectiveEventThreatDetectionCustomModuleRequest const&
                      request) {
-        return stub_->GetEffectiveEventThreatDetectionCustomModule(context,
-                                                                   request);
+        return stub_->GetEffectiveEventThreatDetectionCustomModule(
+            context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::securitycentermanagement::v1::
@@ -417,24 +422,25 @@ SecurityCenterManagementConnectionImpl::ListEventThreatDetectionCustomModules(
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::securitycentermanagement::v1::
                       EventThreatDetectionCustomModule>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            securitycentermanagement_v1::SecurityCenterManagementRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::securitycentermanagement::v1::
               ListEventThreatDetectionCustomModulesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::securitycentermanagement::v1::
                        ListEventThreatDetectionCustomModulesRequest const&
                            request) {
-              return stub->ListEventThreatDetectionCustomModules(context,
-                                                                 request);
+              return stub->ListEventThreatDetectionCustomModules(
+                  context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::securitycentermanagement::v1::
              ListEventThreatDetectionCustomModulesResponse r) {
@@ -462,25 +468,26 @@ SecurityCenterManagementConnectionImpl::
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::securitycentermanagement::v1::
                       EventThreatDetectionCustomModule>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            securitycentermanagement_v1::SecurityCenterManagementRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::securitycentermanagement::v1::
               ListDescendantEventThreatDetectionCustomModulesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::securitycentermanagement::v1::
                     ListDescendantEventThreatDetectionCustomModulesRequest const&
                         request) {
               return stub->ListDescendantEventThreatDetectionCustomModules(
-                  context, request);
+                  context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::securitycentermanagement::v1::
              ListDescendantEventThreatDetectionCustomModulesResponse r) {
@@ -503,12 +510,13 @@ SecurityCenterManagementConnectionImpl::GetEventThreatDetectionCustomModule(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEventThreatDetectionCustomModule(
           request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycentermanagement::v1::
                  GetEventThreatDetectionCustomModuleRequest const& request) {
-        return stub_->GetEventThreatDetectionCustomModule(context, request);
+        return stub_->GetEventThreatDetectionCustomModule(context, options,
+                                                          request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
@@ -521,12 +529,13 @@ SecurityCenterManagementConnectionImpl::CreateEventThreatDetectionCustomModule(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateEventThreatDetectionCustomModule(
           request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycentermanagement::v1::
                  CreateEventThreatDetectionCustomModuleRequest const& request) {
-        return stub_->CreateEventThreatDetectionCustomModule(context, request);
+        return stub_->CreateEventThreatDetectionCustomModule(context, options,
+                                                             request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
@@ -539,12 +548,13 @@ SecurityCenterManagementConnectionImpl::UpdateEventThreatDetectionCustomModule(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateEventThreatDetectionCustomModule(
           request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycentermanagement::v1::
                  UpdateEventThreatDetectionCustomModuleRequest const& request) {
-        return stub_->UpdateEventThreatDetectionCustomModule(context, request);
+        return stub_->UpdateEventThreatDetectionCustomModule(context, options,
+                                                             request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status
@@ -556,12 +566,13 @@ SecurityCenterManagementConnectionImpl::DeleteEventThreatDetectionCustomModule(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteEventThreatDetectionCustomModule(
           request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::securitycentermanagement::v1::
                  DeleteEventThreatDetectionCustomModuleRequest const& request) {
-        return stub_->DeleteEventThreatDetectionCustomModule(context, request);
+        return stub_->DeleteEventThreatDetectionCustomModule(context, options,
+                                                             request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::securitycentermanagement::v1::
@@ -576,13 +587,13 @@ SecurityCenterManagementConnectionImpl::
       idempotency_policy(*current)->ValidateEventThreatDetectionCustomModule(
           request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::securitycentermanagement::v1::
               ValidateEventThreatDetectionCustomModuleRequest const& request) {
-        return stub_->ValidateEventThreatDetectionCustomModule(context,
+        return stub_->ValidateEventThreatDetectionCustomModule(context, options,
                                                                request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

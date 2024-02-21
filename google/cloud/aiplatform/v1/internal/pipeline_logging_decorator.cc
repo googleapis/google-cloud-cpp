@@ -37,43 +37,43 @@ PipelineServiceLogging::PipelineServiceLogging(
 
 StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
 PipelineServiceLogging::CreateTrainingPipeline(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::CreateTrainingPipelineRequest const&
                  request) {
-        return child_->CreateTrainingPipeline(context, request);
+        return child_->CreateTrainingPipeline(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TrainingPipeline>
 PipelineServiceLogging::GetTrainingPipeline(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetTrainingPipelineRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetTrainingPipelineRequest const&
                  request) {
-        return child_->GetTrainingPipeline(context, request);
+        return child_->GetTrainingPipeline(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListTrainingPipelinesResponse>
 PipelineServiceLogging::ListTrainingPipelines(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListTrainingPipelinesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ListTrainingPipelinesRequest const&
                  request) {
-        return child_->ListTrainingPipelines(context, request);
+        return child_->ListTrainingPipelines(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -95,55 +95,55 @@ PipelineServiceLogging::AsyncDeleteTrainingPipeline(
 }
 
 Status PipelineServiceLogging::CancelTrainingPipeline(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::CancelTrainingPipelineRequest const&
                  request) {
-        return child_->CancelTrainingPipeline(context, request);
+        return child_->CancelTrainingPipeline(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::PipelineJob>
 PipelineServiceLogging::CreatePipelineJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreatePipelineJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::CreatePipelineJobRequest const&
                  request) {
-        return child_->CreatePipelineJob(context, request);
+        return child_->CreatePipelineJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::PipelineJob>
 PipelineServiceLogging::GetPipelineJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetPipelineJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::GetPipelineJobRequest const& request) {
-        return child_->GetPipelineJob(context, request);
+        return child_->GetPipelineJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListPipelineJobsResponse>
 PipelineServiceLogging::ListPipelineJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListPipelineJobsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ListPipelineJobsRequest const&
                  request) {
-        return child_->ListPipelineJobs(context, request);
+        return child_->ListPipelineJobs(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -164,15 +164,15 @@ PipelineServiceLogging::AsyncDeletePipelineJob(
 }
 
 Status PipelineServiceLogging::CancelPipelineJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelPipelineJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::CancelPipelineJobRequest const&
                  request) {
-        return child_->CancelPipelineJob(context, request);
+        return child_->CancelPipelineJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

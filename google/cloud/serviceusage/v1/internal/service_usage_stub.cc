@@ -68,7 +68,7 @@ DefaultServiceUsageStub::AsyncDisableService(
 
 StatusOr<google::api::serviceusage::v1::Service>
 DefaultServiceUsageStub::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::serviceusage::v1::GetServiceRequest const& request) {
   google::api::serviceusage::v1::Service response;
   auto status = grpc_stub_->GetService(&context, request, &response);
@@ -80,7 +80,7 @@ DefaultServiceUsageStub::GetService(
 
 StatusOr<google::api::serviceusage::v1::ListServicesResponse>
 DefaultServiceUsageStub::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::serviceusage::v1::ListServicesRequest const& request) {
   google::api::serviceusage::v1::ListServicesResponse response;
   auto status = grpc_stub_->ListServices(&context, request, &response);
@@ -110,7 +110,7 @@ DefaultServiceUsageStub::AsyncBatchEnableServices(
 
 StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
 DefaultServiceUsageStub::BatchGetServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::serviceusage::v1::BatchGetServicesRequest const& request) {
   google::api::serviceusage::v1::BatchGetServicesResponse response;
   auto status = grpc_stub_->BatchGetServices(&context, request, &response);

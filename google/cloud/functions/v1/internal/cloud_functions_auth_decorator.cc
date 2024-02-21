@@ -33,20 +33,20 @@ CloudFunctionsServiceAuth::CloudFunctionsServiceAuth(
 
 StatusOr<google::cloud::functions::v1::ListFunctionsResponse>
 CloudFunctionsServiceAuth::ListFunctions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::ListFunctionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListFunctions(context, request);
+  return child_->ListFunctions(context, options, request);
 }
 
 StatusOr<google::cloud::functions::v1::CloudFunction>
 CloudFunctionsServiceAuth::GetFunction(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::GetFunctionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetFunction(context, request);
+  return child_->GetFunction(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -108,54 +108,54 @@ CloudFunctionsServiceAuth::AsyncDeleteFunction(
 
 StatusOr<google::cloud::functions::v1::CallFunctionResponse>
 CloudFunctionsServiceAuth::CallFunction(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::CallFunctionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CallFunction(context, request);
+  return child_->CallFunction(context, options, request);
 }
 
 StatusOr<google::cloud::functions::v1::GenerateUploadUrlResponse>
 CloudFunctionsServiceAuth::GenerateUploadUrl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::GenerateUploadUrlRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateUploadUrl(context, request);
+  return child_->GenerateUploadUrl(context, options, request);
 }
 
 StatusOr<google::cloud::functions::v1::GenerateDownloadUrlResponse>
 CloudFunctionsServiceAuth::GenerateDownloadUrl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::functions::v1::GenerateDownloadUrlRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateDownloadUrl(context, request);
+  return child_->GenerateDownloadUrl(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> CloudFunctionsServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> CloudFunctionsServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 CloudFunctionsServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

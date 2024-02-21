@@ -33,7 +33,7 @@ AutoscalingPolicyServiceTracingStub::AutoscalingPolicyServiceTracingStub(
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceTracingStub::CreateAutoscalingPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -41,13 +41,14 @@ AutoscalingPolicyServiceTracingStub::CreateAutoscalingPolicy(
       "CreateAutoscalingPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateAutoscalingPolicy(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateAutoscalingPolicy(context, options, request));
 }
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceTracingStub::UpdateAutoscalingPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -55,26 +56,27 @@ AutoscalingPolicyServiceTracingStub::UpdateAutoscalingPolicy(
       "UpdateAutoscalingPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateAutoscalingPolicy(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateAutoscalingPolicy(context, options, request));
 }
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceTracingStub::GetAutoscalingPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dataproc.v1.AutoscalingPolicyService",
       "GetAutoscalingPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetAutoscalingPolicy(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetAutoscalingPolicy(context, options, request));
 }
 
 StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse>
 AutoscalingPolicyServiceTracingStub::ListAutoscalingPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -82,12 +84,13 @@ AutoscalingPolicyServiceTracingStub::ListAutoscalingPolicies(
       "ListAutoscalingPolicies");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListAutoscalingPolicies(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListAutoscalingPolicies(context, options, request));
 }
 
 Status AutoscalingPolicyServiceTracingStub::DeleteAutoscalingPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -95,8 +98,9 @@ Status AutoscalingPolicyServiceTracingStub::DeleteAutoscalingPolicy(
       "DeleteAutoscalingPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteAutoscalingPolicy(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteAutoscalingPolicy(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

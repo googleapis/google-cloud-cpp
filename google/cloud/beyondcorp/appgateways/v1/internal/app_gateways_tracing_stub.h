@@ -40,13 +40,13 @@ class AppGatewaysServiceTracingStub : public AppGatewaysServiceStub {
 
   StatusOr<google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse>
   ListAppGateways(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest const&
           request) override;
 
   StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
   GetAppGateway(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
           request) override;
 

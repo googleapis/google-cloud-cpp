@@ -37,25 +37,25 @@ AlloyDBAdminLogging::AlloyDBAdminLogging(
 
 StatusOr<google::cloud::alloydb::v1::ListClustersResponse>
 AlloyDBAdminLogging::ListClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListClustersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::ListClustersRequest const& request) {
-        return child_->ListClusters(context, request);
+        return child_->ListClusters(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::alloydb::v1::Cluster> AlloyDBAdminLogging::GetCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::GetClusterRequest const& request) {
-        return child_->GetCluster(context, request);
+        return child_->GetCluster(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -157,25 +157,25 @@ AlloyDBAdminLogging::AsyncCreateSecondaryCluster(
 
 StatusOr<google::cloud::alloydb::v1::ListInstancesResponse>
 AlloyDBAdminLogging::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListInstancesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::ListInstancesRequest const& request) {
-        return child_->ListInstances(context, request);
+        return child_->ListInstances(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::alloydb::v1::Instance> AlloyDBAdminLogging::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::GetInstanceRequest const& request) {
-        return child_->GetInstance(context, request);
+        return child_->GetInstance(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -310,25 +310,25 @@ AlloyDBAdminLogging::AsyncRestartInstance(
 
 StatusOr<google::cloud::alloydb::v1::ListBackupsResponse>
 AlloyDBAdminLogging::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListBackupsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::ListBackupsRequest const& request) {
-        return child_->ListBackups(context, request);
+        return child_->ListBackups(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::alloydb::v1::Backup> AlloyDBAdminLogging::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::GetBackupRequest const& request) {
-        return child_->GetBackup(context, request);
+        return child_->GetBackup(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -381,100 +381,100 @@ AlloyDBAdminLogging::AsyncDeleteBackup(
 
 StatusOr<google::cloud::alloydb::v1::ListSupportedDatabaseFlagsResponse>
 AlloyDBAdminLogging::ListSupportedDatabaseFlags(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest const&
               request) {
-        return child_->ListSupportedDatabaseFlags(context, request);
+        return child_->ListSupportedDatabaseFlags(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
 AlloyDBAdminLogging::GenerateClientCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
                  request) {
-        return child_->GenerateClientCertificate(context, request);
+        return child_->GenerateClientCertificate(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
 AlloyDBAdminLogging::GetConnectionInfo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetConnectionInfoRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::alloydb::v1::GetConnectionInfoRequest const& request) {
-        return child_->GetConnectionInfo(context, request);
+        return child_->GetConnectionInfo(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::alloydb::v1::ListUsersResponse>
 AlloyDBAdminLogging::ListUsers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListUsersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::ListUsersRequest const& request) {
-        return child_->ListUsers(context, request);
+        return child_->ListUsers(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminLogging::GetUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetUserRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::GetUserRequest const& request) {
-        return child_->GetUser(context, request);
+        return child_->GetUser(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminLogging::CreateUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::CreateUserRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::CreateUserRequest const& request) {
-        return child_->CreateUser(context, request);
+        return child_->CreateUser(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminLogging::UpdateUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::UpdateUserRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::UpdateUserRequest const& request) {
-        return child_->UpdateUser(context, request);
+        return child_->UpdateUser(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status AlloyDBAdminLogging::DeleteUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::DeleteUserRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::alloydb::v1::DeleteUserRequest const& request) {
-        return child_->DeleteUser(context, request);
+        return child_->DeleteUser(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -32,7 +32,7 @@ ContextsStub::~ContextsStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::ListContextsResponse>
 DefaultContextsStub::ListContexts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::ListContextsRequest const& request) {
   google::cloud::dialogflow::v2::ListContextsResponse response;
   auto status = grpc_stub_->ListContexts(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultContextsStub::ListContexts(
 
 StatusOr<google::cloud::dialogflow::v2::Context>
 DefaultContextsStub::GetContext(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::GetContextRequest const& request) {
   google::cloud::dialogflow::v2::Context response;
   auto status = grpc_stub_->GetContext(&context, request, &response);
@@ -56,7 +56,7 @@ DefaultContextsStub::GetContext(
 
 StatusOr<google::cloud::dialogflow::v2::Context>
 DefaultContextsStub::CreateContext(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::CreateContextRequest const& request) {
   google::cloud::dialogflow::v2::Context response;
   auto status = grpc_stub_->CreateContext(&context, request, &response);
@@ -68,7 +68,7 @@ DefaultContextsStub::CreateContext(
 
 StatusOr<google::cloud::dialogflow::v2::Context>
 DefaultContextsStub::UpdateContext(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::UpdateContextRequest const& request) {
   google::cloud::dialogflow::v2::Context response;
   auto status = grpc_stub_->UpdateContext(&context, request, &response);
@@ -79,7 +79,7 @@ DefaultContextsStub::UpdateContext(
 }
 
 Status DefaultContextsStub::DeleteContext(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::DeleteContextRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteContext(&context, request, &response);
@@ -90,7 +90,7 @@ Status DefaultContextsStub::DeleteContext(
 }
 
 Status DefaultContextsStub::DeleteAllContexts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteAllContexts(&context, request, &response);

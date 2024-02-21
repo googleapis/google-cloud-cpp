@@ -109,11 +109,11 @@ BatchControllerConnectionImpl::GetBatch(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetBatch(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataproc::v1::GetBatchRequest const& request) {
-        return stub_->GetBatch(context, request);
+        return stub_->GetBatch(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::dataproc::v1::Batch>
@@ -125,18 +125,21 @@ BatchControllerConnectionImpl::ListBatches(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dataproc::v1::Batch>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dataproc_v1::BatchControllerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dataproc::v1::ListBatchesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::dataproc::v1::ListBatchesRequest const&
-                       request) { return stub->ListBatches(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListBatches(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::dataproc::v1::ListBatchesResponse r) {
         std::vector<google::cloud::dataproc::v1::Batch> result(
@@ -153,11 +156,11 @@ Status BatchControllerConnectionImpl::DeleteBatch(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteBatch(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataproc::v1::DeleteBatchRequest const& request) {
-        return stub_->DeleteBatch(context, request);
+        return stub_->DeleteBatch(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -40,27 +40,27 @@ class AgentsLogging : public AgentsStub {
                 std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListAgentsResponse> ListAgents(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::ListAgentsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Agent> GetAgent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetAgentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Agent> CreateAgent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Agent> UpdateAgent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request)
       override;
 
   Status DeleteAgent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request)
       override;
 
@@ -77,25 +77,25 @@ class AgentsLogging : public AgentsStub {
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
-  ValidateAgent(grpc::ClientContext& context,
+  ValidateAgent(grpc::ClientContext& context, Options const& options,
                 google::cloud::dialogflow::cx::v3::ValidateAgentRequest const&
                     request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
   GetAgentValidationResult(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
   GetGenerativeSettings(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
   UpdateGenerativeSettings(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
           request) override;
 

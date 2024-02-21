@@ -51,20 +51,20 @@ IndexServiceAuth::AsyncCreateIndex(
 }
 
 StatusOr<google::cloud::aiplatform::v1::Index> IndexServiceAuth::GetIndex(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetIndexRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIndex(context, request);
+  return child_->GetIndex(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListIndexesResponse>
 IndexServiceAuth::ListIndexes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListIndexesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListIndexes(context, request);
+  return child_->ListIndexes(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -107,20 +107,20 @@ IndexServiceAuth::AsyncDeleteIndex(
 
 StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
 IndexServiceAuth::UpsertDatapoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpsertDatapoints(context, request);
+  return child_->UpsertDatapoints(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>
 IndexServiceAuth::RemoveDatapoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RemoveDatapoints(context, request);
+  return child_->RemoveDatapoints(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

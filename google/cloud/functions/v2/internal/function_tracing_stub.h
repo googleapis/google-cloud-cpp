@@ -39,11 +39,11 @@ class FunctionServiceTracingStub : public FunctionServiceStub {
       std::shared_ptr<FunctionServiceStub> child);
 
   StatusOr<google::cloud::functions::v2::Function> GetFunction(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v2::GetFunctionRequest const& request) override;
 
   StatusOr<google::cloud::functions::v2::ListFunctionsResponse> ListFunctions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v2::ListFunctionsRequest const& request)
       override;
 
@@ -67,18 +67,18 @@ class FunctionServiceTracingStub : public FunctionServiceStub {
 
   StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>
   GenerateUploadUrl(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v2::GenerateUploadUrlRequest const& request)
       override;
 
   StatusOr<google::cloud::functions::v2::GenerateDownloadUrlResponse>
   GenerateDownloadUrl(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v2::GenerateDownloadUrlRequest const& request)
       override;
 
   StatusOr<google::cloud::functions::v2::ListRuntimesResponse> ListRuntimes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v2::ListRuntimesRequest const& request)
       override;
 

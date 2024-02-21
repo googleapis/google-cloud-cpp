@@ -71,18 +71,21 @@ IntentsConnectionImpl::ListIntents(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::Intent>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dialogflow_cx::IntentsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dialogflow::cx::v3::ListIntentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::dialogflow::cx::v3::ListIntentsRequest const&
-                       request) { return stub->ListIntents(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListIntents(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::dialogflow::cx::v3::ListIntentsResponse r) {
         std::vector<google::cloud::dialogflow::cx::v3::Intent> result(
@@ -101,11 +104,11 @@ IntentsConnectionImpl::GetIntent(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetIntent(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::cx::v3::GetIntentRequest const& request) {
-        return stub_->GetIntent(context, request);
+        return stub_->GetIntent(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Intent>
@@ -115,10 +118,12 @@ IntentsConnectionImpl::CreateIntent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateIntent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::CreateIntentRequest const&
-                 request) { return stub_->CreateIntent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreateIntent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Intent>
@@ -128,10 +133,12 @@ IntentsConnectionImpl::UpdateIntent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateIntent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::UpdateIntentRequest const&
-                 request) { return stub_->UpdateIntent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->UpdateIntent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status IntentsConnectionImpl::DeleteIntent(
@@ -140,10 +147,12 @@ Status IntentsConnectionImpl::DeleteIntent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteIntent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::DeleteIntentRequest const&
-                 request) { return stub_->DeleteIntent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DeleteIntent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportIntentsResponse>>

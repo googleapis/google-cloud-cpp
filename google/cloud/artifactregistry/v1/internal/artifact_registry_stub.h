@@ -41,52 +41,52 @@ class ArtifactRegistryStub {
   virtual StatusOr<
       google::devtools::artifactregistry::v1::ListDockerImagesResponse>
   ListDockerImages(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::ListDockerImagesRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::DockerImage>
   GetDockerImage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetDockerImageRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::devtools::artifactregistry::v1::ListMavenArtifactsResponse>
   ListMavenArtifacts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::ListMavenArtifactsRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
   GetMavenArtifact(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::devtools::artifactregistry::v1::ListNpmPackagesResponse>
   ListNpmPackages(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::ListNpmPackagesRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
   GetNpmPackage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::devtools::artifactregistry::v1::ListPythonPackagesResponse>
   ListPythonPackages(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::ListPythonPackagesRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
   GetPythonPackage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
           request) = 0;
 
@@ -107,13 +107,13 @@ class ArtifactRegistryStub {
   virtual StatusOr<
       google::devtools::artifactregistry::v1::ListRepositoriesResponse>
   ListRepositories(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::ListRepositoriesRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::Repository>
   GetRepository(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetRepositoryRequest const&
           request) = 0;
 
@@ -126,7 +126,7 @@ class ArtifactRegistryStub {
 
   virtual StatusOr<google::devtools::artifactregistry::v1::Repository>
   UpdateRepository(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
           request) = 0;
 
@@ -139,12 +139,12 @@ class ArtifactRegistryStub {
 
   virtual StatusOr<google::devtools::artifactregistry::v1::ListPackagesResponse>
   ListPackages(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::ListPackagesRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::Package> GetPackage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetPackageRequest const&
           request) = 0;
 
@@ -156,12 +156,12 @@ class ArtifactRegistryStub {
 
   virtual StatusOr<google::devtools::artifactregistry::v1::ListVersionsResponse>
   ListVersions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::ListVersionsRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::Version> GetVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetVersionRequest const&
           request) = 0;
 
@@ -179,72 +179,72 @@ class ArtifactRegistryStub {
           request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>
-  ListFiles(grpc::ClientContext& context,
+  ListFiles(grpc::ClientContext& context, Options const& options,
             google::devtools::artifactregistry::v1::ListFilesRequest const&
                 request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::File> GetFile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetFileRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::ListTagsResponse>
-  ListTags(grpc::ClientContext& context,
+  ListTags(grpc::ClientContext& context, Options const& options,
            google::devtools::artifactregistry::v1::ListTagsRequest const&
                request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::Tag> GetTag(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetTagRequest const& request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::Tag> CreateTag(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::CreateTagRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::Tag> UpdateTag(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::UpdateTagRequest const&
           request) = 0;
 
   virtual Status DeleteTag(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::DeleteTagRequest const&
           request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
   GetProjectSettings(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
-  UpdateProjectSettings(grpc::ClientContext& context,
+  UpdateProjectSettings(grpc::ClientContext& context, Options const& options,
                         google::devtools::artifactregistry::v1::
                             UpdateProjectSettingsRequest const& request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
   GetVPCSCConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
   UpdateVPCSCConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
           request) = 0;
 
@@ -271,47 +271,47 @@ class DefaultArtifactRegistryStub : public ArtifactRegistryStub {
 
   StatusOr<google::devtools::artifactregistry::v1::ListDockerImagesResponse>
   ListDockerImages(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::ListDockerImagesRequest const&
           request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::DockerImage> GetDockerImage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetDockerImageRequest const&
           request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::ListMavenArtifactsResponse>
   ListMavenArtifacts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::ListMavenArtifactsRequest const&
           request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
   GetMavenArtifact(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
           request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::ListNpmPackagesResponse>
   ListNpmPackages(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::ListNpmPackagesRequest const&
           request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::NpmPackage> GetNpmPackage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
           request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::ListPythonPackagesResponse>
   ListPythonPackages(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::ListPythonPackagesRequest const&
           request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
   GetPythonPackage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
           request) override;
 
@@ -329,12 +329,12 @@ class DefaultArtifactRegistryStub : public ArtifactRegistryStub {
 
   StatusOr<google::devtools::artifactregistry::v1::ListRepositoriesResponse>
   ListRepositories(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::ListRepositoriesRequest const&
           request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::Repository> GetRepository(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetRepositoryRequest const&
           request) override;
 
@@ -345,7 +345,7 @@ class DefaultArtifactRegistryStub : public ArtifactRegistryStub {
           request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::Repository> UpdateRepository(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
           request) override;
 
@@ -357,12 +357,12 @@ class DefaultArtifactRegistryStub : public ArtifactRegistryStub {
 
   StatusOr<google::devtools::artifactregistry::v1::ListPackagesResponse>
   ListPackages(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::ListPackagesRequest const&
           request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::Package> GetPackage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetPackageRequest const& request)
       override;
 
@@ -374,12 +374,12 @@ class DefaultArtifactRegistryStub : public ArtifactRegistryStub {
 
   StatusOr<google::devtools::artifactregistry::v1::ListVersionsResponse>
   ListVersions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::ListVersionsRequest const&
           request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::Version> GetVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetVersionRequest const& request)
       override;
 
@@ -396,72 +396,72 @@ class DefaultArtifactRegistryStub : public ArtifactRegistryStub {
           request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse> ListFiles(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::ListFilesRequest const& request)
       override;
 
   StatusOr<google::devtools::artifactregistry::v1::File> GetFile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetFileRequest const& request)
       override;
 
   StatusOr<google::devtools::artifactregistry::v1::ListTagsResponse> ListTags(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::ListTagsRequest const& request)
       override;
 
   StatusOr<google::devtools::artifactregistry::v1::Tag> GetTag(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetTagRequest const& request)
       override;
 
   StatusOr<google::devtools::artifactregistry::v1::Tag> CreateTag(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::CreateTagRequest const& request)
       override;
 
   StatusOr<google::devtools::artifactregistry::v1::Tag> UpdateTag(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::UpdateTagRequest const& request)
       override;
 
   Status DeleteTag(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::DeleteTagRequest const& request)
       override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
   GetProjectSettings(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&
           request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
   UpdateProjectSettings(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::
           UpdateProjectSettingsRequest const& request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig> GetVPCSCConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
           request) override;
 
   StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
   UpdateVPCSCConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
           request) override;
 

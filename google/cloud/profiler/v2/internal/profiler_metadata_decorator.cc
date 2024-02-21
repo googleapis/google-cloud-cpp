@@ -44,31 +44,31 @@ ProfilerServiceMetadata::ProfilerServiceMetadata(
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceMetadata::CreateProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateProfile(context, request);
+  return child_->CreateProfile(context, options, request);
 }
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceMetadata::CreateOfflineProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateOfflineProfile(context, request);
+  return child_->CreateOfflineProfile(context, options, request);
 }
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceMetadata::UpdateProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("profile.name=",
                            internal::UrlEncode(request.profile().name())));
-  return child_->UpdateProfile(context, request);
+  return child_->UpdateProfile(context, options, request);
 }
 
 void ProfilerServiceMetadata::SetMetadata(grpc::ClientContext& context,

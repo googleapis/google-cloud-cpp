@@ -64,20 +64,20 @@ ServiceUsageMetadata::AsyncDisableService(
 
 StatusOr<google::api::serviceusage::v1::Service>
 ServiceUsageMetadata::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::serviceusage::v1::GetServiceRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetService(context, request);
+  return child_->GetService(context, options, request);
 }
 
 StatusOr<google::api::serviceusage::v1::ListServicesResponse>
 ServiceUsageMetadata::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::serviceusage::v1::ListServicesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListServices(context, request);
+  return child_->ListServices(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -93,11 +93,11 @@ ServiceUsageMetadata::AsyncBatchEnableServices(
 
 StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
 ServiceUsageMetadata::BatchGetServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::serviceusage::v1::BatchGetServicesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->BatchGetServices(context, request);
+  return child_->BatchGetServices(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

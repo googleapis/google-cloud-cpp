@@ -45,13 +45,13 @@ class CursorServiceTracingStub : public CursorServiceStub {
       std::shared_ptr<grpc::ClientContext> context) override;
 
   StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse> CommitCursor(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::CommitCursorRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse>
   ListPartitionCursors(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request)
       override;
 

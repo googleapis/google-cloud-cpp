@@ -32,7 +32,7 @@ ExecutionsStub::~ExecutionsStub() = default;
 
 StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse>
 DefaultExecutionsStub::ListExecutions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::workflows::executions::v1::ListExecutionsRequest const&
         request) {
   google::cloud::workflows::executions::v1::ListExecutionsResponse response;
@@ -45,7 +45,7 @@ DefaultExecutionsStub::ListExecutions(
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 DefaultExecutionsStub::CreateExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::workflows::executions::v1::CreateExecutionRequest const&
         request) {
   google::cloud::workflows::executions::v1::Execution response;
@@ -58,7 +58,7 @@ DefaultExecutionsStub::CreateExecution(
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 DefaultExecutionsStub::GetExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::workflows::executions::v1::GetExecutionRequest const&
         request) {
   google::cloud::workflows::executions::v1::Execution response;
@@ -71,7 +71,7 @@ DefaultExecutionsStub::GetExecution(
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 DefaultExecutionsStub::CancelExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::workflows::executions::v1::CancelExecutionRequest const&
         request) {
   google::cloud::workflows::executions::v1::Execution response;

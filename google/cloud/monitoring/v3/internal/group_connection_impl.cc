@@ -68,19 +68,20 @@ GroupServiceConnectionImpl::ListGroups(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::monitoring::v3::Group>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<monitoring_v3::GroupServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::monitoring::v3::ListGroupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::monitoring::v3::ListGroupsRequest const& request) {
-              return stub->ListGroups(context, request);
+              return stub->ListGroups(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::monitoring::v3::ListGroupsResponse r) {
         std::vector<google::monitoring::v3::Group> result(r.group().size());
@@ -96,11 +97,11 @@ StatusOr<google::monitoring::v3::Group> GroupServiceConnectionImpl::GetGroup(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetGroup(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::GetGroupRequest const& request) {
-        return stub_->GetGroup(context, request);
+        return stub_->GetGroup(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceConnectionImpl::CreateGroup(
@@ -109,11 +110,11 @@ StatusOr<google::monitoring::v3::Group> GroupServiceConnectionImpl::CreateGroup(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateGroup(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::CreateGroupRequest const& request) {
-        return stub_->CreateGroup(context, request);
+        return stub_->CreateGroup(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceConnectionImpl::UpdateGroup(
@@ -122,11 +123,11 @@ StatusOr<google::monitoring::v3::Group> GroupServiceConnectionImpl::UpdateGroup(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateGroup(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::UpdateGroupRequest const& request) {
-        return stub_->UpdateGroup(context, request);
+        return stub_->UpdateGroup(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status GroupServiceConnectionImpl::DeleteGroup(
@@ -135,11 +136,11 @@ Status GroupServiceConnectionImpl::DeleteGroup(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteGroup(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::DeleteGroupRequest const& request) {
-        return stub_->DeleteGroup(context, request);
+        return stub_->DeleteGroup(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::api::MonitoredResource>
@@ -151,20 +152,21 @@ GroupServiceConnectionImpl::ListGroupMembers(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::api::MonitoredResource>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<monitoring_v3::GroupServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::monitoring::v3::ListGroupMembersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::monitoring::v3::ListGroupMembersRequest const&
                        request) {
-              return stub->ListGroupMembers(context, request);
+              return stub->ListGroupMembers(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::monitoring::v3::ListGroupMembersResponse r) {
         std::vector<google::api::MonitoredResource> result(r.members().size());

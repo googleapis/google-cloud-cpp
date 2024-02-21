@@ -52,7 +52,7 @@ class NodeGroupControllerLogging : public NodeGroupControllerStub {
       override;
 
   StatusOr<google::cloud::dataproc::v1::NodeGroup> GetNodeGroup(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::GetNodeGroupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

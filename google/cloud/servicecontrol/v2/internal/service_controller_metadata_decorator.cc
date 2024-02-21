@@ -44,22 +44,22 @@ ServiceControllerMetadata::ServiceControllerMetadata(
 
 StatusOr<google::api::servicecontrol::v2::CheckResponse>
 ServiceControllerMetadata::Check(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicecontrol::v2::CheckRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("service_name=",
                            internal::UrlEncode(request.service_name())));
-  return child_->Check(context, request);
+  return child_->Check(context, options, request);
 }
 
 StatusOr<google::api::servicecontrol::v2::ReportResponse>
 ServiceControllerMetadata::Report(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicecontrol::v2::ReportRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("service_name=",
                            internal::UrlEncode(request.service_name())));
-  return child_->Report(context, request);
+  return child_->Report(context, options, request);
 }
 
 void ServiceControllerMetadata::SetMetadata(grpc::ClientContext& context,

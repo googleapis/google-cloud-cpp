@@ -33,25 +33,26 @@ VmMigrationTracingStub::VmMigrationTracingStub(
 
 StatusOr<google::cloud::vmmigration::v1::ListSourcesResponse>
 VmMigrationTracingStub::ListSources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListSourcesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
                                      "ListSources");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListSources(context, request));
+                           child_->ListSources(context, options, request));
 }
 
 StatusOr<google::cloud::vmmigration::v1::Source>
 VmMigrationTracingStub::GetSource(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetSourceRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
                                      "GetSource");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetSource(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetSource(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -95,40 +96,41 @@ VmMigrationTracingStub::AsyncDeleteSource(
 
 StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
 VmMigrationTracingStub::FetchInventory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::FetchInventoryRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
                                      "FetchInventory");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->FetchInventory(context, request));
+                           child_->FetchInventory(context, options, request));
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListUtilizationReportsResponse>
 VmMigrationTracingStub::ListUtilizationReports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListUtilizationReportsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
                                      "ListUtilizationReports");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListUtilizationReports(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListUtilizationReports(context, options, request));
 }
 
 StatusOr<google::cloud::vmmigration::v1::UtilizationReport>
 VmMigrationTracingStub::GetUtilizationReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetUtilizationReportRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
                                      "GetUtilizationReport");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetUtilizationReport(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetUtilizationReport(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -161,28 +163,30 @@ VmMigrationTracingStub::AsyncDeleteUtilizationReport(
 
 StatusOr<google::cloud::vmmigration::v1::ListDatacenterConnectorsResponse>
 VmMigrationTracingStub::ListDatacenterConnectors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
                                      "ListDatacenterConnectors");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListDatacenterConnectors(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListDatacenterConnectors(context, options, request));
 }
 
 StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
 VmMigrationTracingStub::GetDatacenterConnector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
                                      "GetDatacenterConnector");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetDatacenterConnector(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GetDatacenterConnector(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -243,26 +247,26 @@ VmMigrationTracingStub::AsyncCreateMigratingVm(
 
 StatusOr<google::cloud::vmmigration::v1::ListMigratingVmsResponse>
 VmMigrationTracingStub::ListMigratingVms(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListMigratingVmsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
                                      "ListMigratingVms");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListMigratingVms(context, request));
+                           child_->ListMigratingVms(context, options, request));
 }
 
 StatusOr<google::cloud::vmmigration::v1::MigratingVm>
 VmMigrationTracingStub::GetMigratingVm(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetMigratingVmRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
                                      "GetMigratingVm");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetMigratingVm(context, request));
+                           child_->GetMigratingVm(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -371,26 +375,26 @@ VmMigrationTracingStub::AsyncCancelCloneJob(
 
 StatusOr<google::cloud::vmmigration::v1::ListCloneJobsResponse>
 VmMigrationTracingStub::ListCloneJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListCloneJobsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
                                      "ListCloneJobs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListCloneJobs(context, request));
+                           child_->ListCloneJobs(context, options, request));
 }
 
 StatusOr<google::cloud::vmmigration::v1::CloneJob>
 VmMigrationTracingStub::GetCloneJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetCloneJobRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
                                      "GetCloneJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetCloneJob(context, request));
+                           child_->GetCloneJob(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -421,49 +425,50 @@ VmMigrationTracingStub::AsyncCancelCutoverJob(
 
 StatusOr<google::cloud::vmmigration::v1::ListCutoverJobsResponse>
 VmMigrationTracingStub::ListCutoverJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListCutoverJobsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
                                      "ListCutoverJobs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListCutoverJobs(context, request));
+                           child_->ListCutoverJobs(context, options, request));
 }
 
 StatusOr<google::cloud::vmmigration::v1::CutoverJob>
 VmMigrationTracingStub::GetCutoverJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetCutoverJobRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
                                      "GetCutoverJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetCutoverJob(context, request));
+                           child_->GetCutoverJob(context, options, request));
 }
 
 StatusOr<google::cloud::vmmigration::v1::ListGroupsResponse>
 VmMigrationTracingStub::ListGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListGroupsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
                                      "ListGroups");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListGroups(context, request));
+                           child_->ListGroups(context, options, request));
 }
 
 StatusOr<google::cloud::vmmigration::v1::Group>
 VmMigrationTracingStub::GetGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetGroupRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
                                      "GetGroup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetGroup(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetGroup(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -534,26 +539,26 @@ VmMigrationTracingStub::AsyncRemoveGroupMigration(
 
 StatusOr<google::cloud::vmmigration::v1::ListTargetProjectsResponse>
 VmMigrationTracingStub::ListTargetProjects(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListTargetProjectsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
                                      "ListTargetProjects");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListTargetProjects(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListTargetProjects(context, options, request));
 }
 
 StatusOr<google::cloud::vmmigration::v1::TargetProject>
 VmMigrationTracingStub::GetTargetProject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetTargetProjectRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
                                      "GetTargetProject");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetTargetProject(context, request));
+                           child_->GetTargetProject(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -597,27 +602,27 @@ VmMigrationTracingStub::AsyncDeleteTargetProject(
 
 StatusOr<google::cloud::vmmigration::v1::ListReplicationCyclesResponse>
 VmMigrationTracingStub::ListReplicationCycles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::ListReplicationCyclesRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
                                      "ListReplicationCycles");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListReplicationCycles(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListReplicationCycles(context, options, request));
 }
 
 StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
 VmMigrationTracingStub::GetReplicationCycle(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vmmigration.v1.VmMigration",
                                      "GetReplicationCycle");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetReplicationCycle(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetReplicationCycle(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

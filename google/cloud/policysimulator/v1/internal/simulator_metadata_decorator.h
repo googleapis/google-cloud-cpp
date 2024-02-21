@@ -40,7 +40,7 @@ class SimulatorMetadata : public SimulatorStub {
                     std::string api_client_header = "");
 
   StatusOr<google::cloud::policysimulator::v1::Replay> GetReplay(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::policysimulator::v1::GetReplayRequest const& request)
       override;
 
@@ -52,7 +52,7 @@ class SimulatorMetadata : public SimulatorStub {
 
   StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse>
   ListReplayResults(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::policysimulator::v1::ListReplayResultsRequest const&
           request) override;
 

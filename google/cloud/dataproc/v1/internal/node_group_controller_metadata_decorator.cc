@@ -64,11 +64,11 @@ NodeGroupControllerMetadata::AsyncResizeNodeGroup(
 
 StatusOr<google::cloud::dataproc::v1::NodeGroup>
 NodeGroupControllerMetadata::GetNodeGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetNodeGroupRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetNodeGroup(context, request);
+  return child_->GetNodeGroup(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

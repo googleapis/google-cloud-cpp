@@ -51,7 +51,7 @@ DefaultTensorboardServiceStub::AsyncCreateTensorboard(
 
 StatusOr<google::cloud::aiplatform::v1::Tensorboard>
 DefaultTensorboardServiceStub::GetTensorboard(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetTensorboardRequest const& request) {
   google::cloud::aiplatform::v1::Tensorboard response;
   auto status = grpc_stub_->GetTensorboard(&context, request, &response);
@@ -81,7 +81,7 @@ DefaultTensorboardServiceStub::AsyncUpdateTensorboard(
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardsResponse>
 DefaultTensorboardServiceStub::ListTensorboards(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListTensorboardsRequest const& request) {
   google::cloud::aiplatform::v1::ListTensorboardsResponse response;
   auto status = grpc_stub_->ListTensorboards(&context, request, &response);
@@ -111,7 +111,7 @@ DefaultTensorboardServiceStub::AsyncDeleteTensorboard(
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
 DefaultTensorboardServiceStub::ReadTensorboardUsage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request) {
   google::cloud::aiplatform::v1::ReadTensorboardUsageResponse response;
   auto status = grpc_stub_->ReadTensorboardUsage(&context, request, &response);
@@ -123,7 +123,7 @@ DefaultTensorboardServiceStub::ReadTensorboardUsage(
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
 DefaultTensorboardServiceStub::ReadTensorboardSize(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request) {
   google::cloud::aiplatform::v1::ReadTensorboardSizeResponse response;
   auto status = grpc_stub_->ReadTensorboardSize(&context, request, &response);
@@ -135,7 +135,7 @@ DefaultTensorboardServiceStub::ReadTensorboardSize(
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 DefaultTensorboardServiceStub::CreateTensorboardExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&
         request) {
   google::cloud::aiplatform::v1::TensorboardExperiment response;
@@ -149,7 +149,7 @@ DefaultTensorboardServiceStub::CreateTensorboardExperiment(
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 DefaultTensorboardServiceStub::GetTensorboardExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const&
         request) {
   google::cloud::aiplatform::v1::TensorboardExperiment response;
@@ -163,7 +163,7 @@ DefaultTensorboardServiceStub::GetTensorboardExperiment(
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 DefaultTensorboardServiceStub::UpdateTensorboardExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const&
         request) {
   google::cloud::aiplatform::v1::TensorboardExperiment response;
@@ -177,7 +177,7 @@ DefaultTensorboardServiceStub::UpdateTensorboardExperiment(
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardExperimentsResponse>
 DefaultTensorboardServiceStub::ListTensorboardExperiments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest const&
         request) {
   google::cloud::aiplatform::v1::ListTensorboardExperimentsResponse response;
@@ -211,7 +211,7 @@ DefaultTensorboardServiceStub::AsyncDeleteTensorboardExperiment(
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 DefaultTensorboardServiceStub::CreateTensorboardRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CreateTensorboardRunRequest const& request) {
   google::cloud::aiplatform::v1::TensorboardRun response;
   auto status = grpc_stub_->CreateTensorboardRun(&context, request, &response);
@@ -223,7 +223,7 @@ DefaultTensorboardServiceStub::CreateTensorboardRun(
 
 StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardRunsResponse>
 DefaultTensorboardServiceStub::BatchCreateTensorboardRuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const&
         request) {
   google::cloud::aiplatform::v1::BatchCreateTensorboardRunsResponse response;
@@ -237,7 +237,7 @@ DefaultTensorboardServiceStub::BatchCreateTensorboardRuns(
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 DefaultTensorboardServiceStub::GetTensorboardRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetTensorboardRunRequest const& request) {
   google::cloud::aiplatform::v1::TensorboardRun response;
   auto status = grpc_stub_->GetTensorboardRun(&context, request, &response);
@@ -249,7 +249,7 @@ DefaultTensorboardServiceStub::GetTensorboardRun(
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 DefaultTensorboardServiceStub::UpdateTensorboardRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const& request) {
   google::cloud::aiplatform::v1::TensorboardRun response;
   auto status = grpc_stub_->UpdateTensorboardRun(&context, request, &response);
@@ -261,7 +261,7 @@ DefaultTensorboardServiceStub::UpdateTensorboardRun(
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardRunsResponse>
 DefaultTensorboardServiceStub::ListTensorboardRuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListTensorboardRunsRequest const& request) {
   google::cloud::aiplatform::v1::ListTensorboardRunsResponse response;
   auto status = grpc_stub_->ListTensorboardRuns(&context, request, &response);
@@ -292,7 +292,7 @@ DefaultTensorboardServiceStub::AsyncDeleteTensorboardRun(
 StatusOr<
     google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
 DefaultTensorboardServiceStub::BatchCreateTensorboardTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::
         BatchCreateTensorboardTimeSeriesRequest const& request) {
   google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse
@@ -307,7 +307,7 @@ DefaultTensorboardServiceStub::BatchCreateTensorboardTimeSeries(
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
 DefaultTensorboardServiceStub::CreateTensorboardTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const&
         request) {
   google::cloud::aiplatform::v1::TensorboardTimeSeries response;
@@ -321,7 +321,7 @@ DefaultTensorboardServiceStub::CreateTensorboardTimeSeries(
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
 DefaultTensorboardServiceStub::GetTensorboardTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const&
         request) {
   google::cloud::aiplatform::v1::TensorboardTimeSeries response;
@@ -335,7 +335,7 @@ DefaultTensorboardServiceStub::GetTensorboardTimeSeries(
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
 DefaultTensorboardServiceStub::UpdateTensorboardTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const&
         request) {
   google::cloud::aiplatform::v1::TensorboardTimeSeries response;
@@ -349,7 +349,7 @@ DefaultTensorboardServiceStub::UpdateTensorboardTimeSeries(
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardTimeSeriesResponse>
 DefaultTensorboardServiceStub::ListTensorboardTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest const&
         request) {
   google::cloud::aiplatform::v1::ListTensorboardTimeSeriesResponse response;
@@ -384,7 +384,7 @@ DefaultTensorboardServiceStub::AsyncDeleteTensorboardTimeSeries(
 StatusOr<
     google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>
 DefaultTensorboardServiceStub::BatchReadTensorboardTimeSeriesData(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::
         BatchReadTensorboardTimeSeriesDataRequest const& request) {
   google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse
@@ -399,7 +399,7 @@ DefaultTensorboardServiceStub::BatchReadTensorboardTimeSeriesData(
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataResponse>
 DefaultTensorboardServiceStub::ReadTensorboardTimeSeriesData(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest const&
         request) {
   google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataResponse response;
@@ -425,7 +425,7 @@ DefaultTensorboardServiceStub::ReadTensorboardBlobData(
 
 StatusOr<google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse>
 DefaultTensorboardServiceStub::WriteTensorboardExperimentData(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::WriteTensorboardExperimentDataRequest const&
         request) {
   google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse
@@ -440,7 +440,7 @@ DefaultTensorboardServiceStub::WriteTensorboardExperimentData(
 
 StatusOr<google::cloud::aiplatform::v1::WriteTensorboardRunDataResponse>
 DefaultTensorboardServiceStub::WriteTensorboardRunData(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const&
         request) {
   google::cloud::aiplatform::v1::WriteTensorboardRunDataResponse response;
@@ -454,7 +454,7 @@ DefaultTensorboardServiceStub::WriteTensorboardRunData(
 
 StatusOr<google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataResponse>
 DefaultTensorboardServiceStub::ExportTensorboardTimeSeriesData(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest const&
         request) {
   google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataResponse

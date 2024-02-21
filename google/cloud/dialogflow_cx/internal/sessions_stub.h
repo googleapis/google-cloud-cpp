@@ -39,7 +39,7 @@ class SessionsStub {
   virtual ~SessionsStub() = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
-  DetectIntent(grpc::ClientContext& context,
+  DetectIntent(grpc::ClientContext& context, Options const& options,
                google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
                    request) = 0;
 
@@ -58,17 +58,17 @@ class SessionsStub {
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>
   MatchIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
-  FulfillIntent(grpc::ClientContext& context,
+  FulfillIntent(grpc::ClientContext& context, Options const& options,
                 google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&
                     request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
   SubmitAnswerFeedback(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
           request) = 0;
 };
@@ -82,7 +82,7 @@ class DefaultSessionsStub : public SessionsStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
-  DetectIntent(grpc::ClientContext& context,
+  DetectIntent(grpc::ClientContext& context, Options const& options,
                google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
                    request) override;
 
@@ -101,18 +101,18 @@ class DefaultSessionsStub : public SessionsStub {
       std::shared_ptr<grpc::ClientContext> context) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse> MatchIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
-  FulfillIntent(grpc::ClientContext& context,
+  FulfillIntent(grpc::ClientContext& context, Options const& options,
                 google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&
                     request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
   SubmitAnswerFeedback(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
           request) override;
 

@@ -38,12 +38,12 @@ class DomainsTracingStub : public DomainsStub {
   explicit DomainsTracingStub(std::shared_ptr<DomainsStub> child);
 
   StatusOr<google::cloud::domains::v1::SearchDomainsResponse> SearchDomains(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::SearchDomainsRequest const& request) override;
 
   StatusOr<google::cloud::domains::v1::RetrieveRegisterParametersResponse>
   RetrieveRegisterParameters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::RetrieveRegisterParametersRequest const&
           request) override;
 
@@ -55,7 +55,7 @@ class DomainsTracingStub : public DomainsStub {
 
   StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>
   RetrieveTransferParameters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::RetrieveTransferParametersRequest const&
           request) override;
 
@@ -66,12 +66,12 @@ class DomainsTracingStub : public DomainsStub {
       override;
 
   StatusOr<google::cloud::domains::v1::ListRegistrationsResponse>
-  ListRegistrations(grpc::ClientContext& context,
+  ListRegistrations(grpc::ClientContext& context, Options const& options,
                     google::cloud::domains::v1::ListRegistrationsRequest const&
                         request) override;
 
   StatusOr<google::cloud::domains::v1::Registration> GetRegistration(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::GetRegistrationRequest const& request)
       override;
 
@@ -115,13 +115,13 @@ class DomainsTracingStub : public DomainsStub {
 
   StatusOr<google::cloud::domains::v1::AuthorizationCode>
   RetrieveAuthorizationCode(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&
           request) override;
 
   StatusOr<google::cloud::domains::v1::AuthorizationCode>
   ResetAuthorizationCode(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::domains::v1::ResetAuthorizationCodeRequest const& request)
       override;
 

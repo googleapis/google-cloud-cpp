@@ -33,26 +33,26 @@ ChangelogsTracingStub::ChangelogsTracingStub(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListChangelogsResponse>
 ChangelogsTracingStub::ListChangelogs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListChangelogsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Changelogs",
                                      "ListChangelogs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListChangelogs(context, request));
+                           child_->ListChangelogs(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Changelog>
 ChangelogsTracingStub::GetChangelog(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Changelogs",
                                      "GetChangelog");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetChangelog(context, request));
+                           child_->GetChangelog(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

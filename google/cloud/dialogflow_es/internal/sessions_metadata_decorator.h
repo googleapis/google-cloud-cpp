@@ -39,7 +39,7 @@ class SessionsMetadata : public SessionsStub {
                    std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse> DetectIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::DetectIntentRequest const& request)
       override;
 

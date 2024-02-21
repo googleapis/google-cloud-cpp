@@ -32,7 +32,7 @@ ConnectionServiceStub::~ConnectionServiceStub() = default;
 
 StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
 DefaultConnectionServiceStub::ListConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request) {
   google::cloud::apigeeconnect::v1::ListConnectionsResponse response;
   auto status = grpc_stub_->ListConnections(&context, request, &response);

@@ -46,26 +46,26 @@ BackupForGKETracingStub::AsyncCreateBackupPlan(
 
 StatusOr<google::cloud::gkebackup::v1::ListBackupPlansResponse>
 BackupForGKETracingStub::ListBackupPlans(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::ListBackupPlansRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "ListBackupPlans");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListBackupPlans(context, request));
+                           child_->ListBackupPlans(context, options, request));
 }
 
 StatusOr<google::cloud::gkebackup::v1::BackupPlan>
 BackupForGKETracingStub::GetBackupPlan(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::GetBackupPlanRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "GetBackupPlan");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetBackupPlan(context, request));
+                           child_->GetBackupPlan(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -109,25 +109,26 @@ BackupForGKETracingStub::AsyncCreateBackup(
 
 StatusOr<google::cloud::gkebackup::v1::ListBackupsResponse>
 BackupForGKETracingStub::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::ListBackupsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "ListBackups");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListBackups(context, request));
+                           child_->ListBackups(context, options, request));
 }
 
 StatusOr<google::cloud::gkebackup::v1::Backup>
 BackupForGKETracingStub::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::GetBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "GetBackup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetBackup(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetBackup(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -158,26 +159,26 @@ BackupForGKETracingStub::AsyncDeleteBackup(
 
 StatusOr<google::cloud::gkebackup::v1::ListVolumeBackupsResponse>
 BackupForGKETracingStub::ListVolumeBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::ListVolumeBackupsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "ListVolumeBackups");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListVolumeBackups(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListVolumeBackups(context, options, request));
 }
 
 StatusOr<google::cloud::gkebackup::v1::VolumeBackup>
 BackupForGKETracingStub::GetVolumeBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::GetVolumeBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "GetVolumeBackup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetVolumeBackup(context, request));
+                           child_->GetVolumeBackup(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -195,26 +196,26 @@ BackupForGKETracingStub::AsyncCreateRestorePlan(
 
 StatusOr<google::cloud::gkebackup::v1::ListRestorePlansResponse>
 BackupForGKETracingStub::ListRestorePlans(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::ListRestorePlansRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "ListRestorePlans");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListRestorePlans(context, request));
+                           child_->ListRestorePlans(context, options, request));
 }
 
 StatusOr<google::cloud::gkebackup::v1::RestorePlan>
 BackupForGKETracingStub::GetRestorePlan(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::GetRestorePlanRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "GetRestorePlan");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetRestorePlan(context, request));
+                           child_->GetRestorePlan(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -258,26 +259,26 @@ BackupForGKETracingStub::AsyncCreateRestore(
 
 StatusOr<google::cloud::gkebackup::v1::ListRestoresResponse>
 BackupForGKETracingStub::ListRestores(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::ListRestoresRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "ListRestores");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListRestores(context, request));
+                           child_->ListRestores(context, options, request));
 }
 
 StatusOr<google::cloud::gkebackup::v1::Restore>
 BackupForGKETracingStub::GetRestore(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::GetRestoreRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "GetRestore");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetRestore(context, request));
+                           child_->GetRestore(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -308,26 +309,26 @@ BackupForGKETracingStub::AsyncDeleteRestore(
 
 StatusOr<google::cloud::gkebackup::v1::ListVolumeRestoresResponse>
 BackupForGKETracingStub::ListVolumeRestores(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::ListVolumeRestoresRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "ListVolumeRestores");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListVolumeRestores(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListVolumeRestores(context, options, request));
 }
 
 StatusOr<google::cloud::gkebackup::v1::VolumeRestore>
 BackupForGKETracingStub::GetVolumeRestore(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkebackup.v1.BackupForGKE",
                                      "GetVolumeRestore");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetVolumeRestore(context, request));
+                           child_->GetVolumeRestore(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

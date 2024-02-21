@@ -32,7 +32,7 @@ DataTransferServiceStub::~DataTransferServiceStub() = default;
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource>
 DefaultDataTransferServiceStub::GetDataSource(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
         request) {
   google::cloud::bigquery::datatransfer::v1::DataSource response;
@@ -45,7 +45,7 @@ DefaultDataTransferServiceStub::GetDataSource(
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::ListDataSourcesResponse>
 DefaultDataTransferServiceStub::ListDataSources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest const&
         request) {
   google::cloud::bigquery::datatransfer::v1::ListDataSourcesResponse response;
@@ -58,7 +58,7 @@ DefaultDataTransferServiceStub::ListDataSources(
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
 DefaultDataTransferServiceStub::CreateTransferConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datatransfer::v1::
         CreateTransferConfigRequest const& request) {
   google::cloud::bigquery::datatransfer::v1::TransferConfig response;
@@ -71,7 +71,7 @@ DefaultDataTransferServiceStub::CreateTransferConfig(
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
 DefaultDataTransferServiceStub::UpdateTransferConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datatransfer::v1::
         UpdateTransferConfigRequest const& request) {
   google::cloud::bigquery::datatransfer::v1::TransferConfig response;
@@ -83,7 +83,7 @@ DefaultDataTransferServiceStub::UpdateTransferConfig(
 }
 
 Status DefaultDataTransferServiceStub::DeleteTransferConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datatransfer::v1::
         DeleteTransferConfigRequest const& request) {
   google::protobuf::Empty response;
@@ -96,7 +96,7 @@ Status DefaultDataTransferServiceStub::DeleteTransferConfig(
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
 DefaultDataTransferServiceStub::GetTransferConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const&
         request) {
   google::cloud::bigquery::datatransfer::v1::TransferConfig response;
@@ -109,7 +109,7 @@ DefaultDataTransferServiceStub::GetTransferConfig(
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::ListTransferConfigsResponse>
 DefaultDataTransferServiceStub::ListTransferConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest const&
         request) {
   google::cloud::bigquery::datatransfer::v1::ListTransferConfigsResponse
@@ -124,7 +124,7 @@ DefaultDataTransferServiceStub::ListTransferConfigs(
 StatusOr<
     google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
 DefaultDataTransferServiceStub::ScheduleTransferRuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datatransfer::v1::
         ScheduleTransferRunsRequest const& request) {
   google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse
@@ -139,7 +139,7 @@ DefaultDataTransferServiceStub::ScheduleTransferRuns(
 StatusOr<
     google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse>
 DefaultDataTransferServiceStub::StartManualTransferRuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datatransfer::v1::
         StartManualTransferRunsRequest const& request) {
   google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse
@@ -154,7 +154,7 @@ DefaultDataTransferServiceStub::StartManualTransferRuns(
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun>
 DefaultDataTransferServiceStub::GetTransferRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const&
         request) {
   google::cloud::bigquery::datatransfer::v1::TransferRun response;
@@ -166,7 +166,7 @@ DefaultDataTransferServiceStub::GetTransferRun(
 }
 
 Status DefaultDataTransferServiceStub::DeleteTransferRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const&
         request) {
   google::protobuf::Empty response;
@@ -179,7 +179,7 @@ Status DefaultDataTransferServiceStub::DeleteTransferRun(
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::ListTransferRunsResponse>
 DefaultDataTransferServiceStub::ListTransferRuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest const&
         request) {
   google::cloud::bigquery::datatransfer::v1::ListTransferRunsResponse response;
@@ -192,7 +192,7 @@ DefaultDataTransferServiceStub::ListTransferRuns(
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::ListTransferLogsResponse>
 DefaultDataTransferServiceStub::ListTransferLogs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest const&
         request) {
   google::cloud::bigquery::datatransfer::v1::ListTransferLogsResponse response;
@@ -205,7 +205,7 @@ DefaultDataTransferServiceStub::ListTransferLogs(
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>
 DefaultDataTransferServiceStub::CheckValidCreds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const&
         request) {
   google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse response;
@@ -217,7 +217,7 @@ DefaultDataTransferServiceStub::CheckValidCreds(
 }
 
 Status DefaultDataTransferServiceStub::EnrollDataSources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
         request) {
   google::protobuf::Empty response;
@@ -229,7 +229,7 @@ Status DefaultDataTransferServiceStub::EnrollDataSources(
 }
 
 Status DefaultDataTransferServiceStub::UnenrollDataSources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datatransfer::v1::UnenrollDataSourcesRequest const&
         request) {
   google::protobuf::Empty response;

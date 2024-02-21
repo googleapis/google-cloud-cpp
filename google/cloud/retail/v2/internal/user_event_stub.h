@@ -39,11 +39,11 @@ class UserEventServiceStub {
   virtual ~UserEventServiceStub() = 0;
 
   virtual StatusOr<google::cloud::retail::v2::UserEvent> WriteUserEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::WriteUserEventRequest const& request) = 0;
 
   virtual StatusOr<google::api::HttpBody> CollectUserEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::CollectUserEventRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncPurgeUserEvents(
@@ -85,11 +85,11 @@ class DefaultUserEventServiceStub : public UserEventServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::retail::v2::UserEvent> WriteUserEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::WriteUserEventRequest const& request) override;
 
   StatusOr<google::api::HttpBody> CollectUserEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::CollectUserEventRequest const& request)
       override;
 

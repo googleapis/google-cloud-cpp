@@ -49,28 +49,28 @@ future<StatusOr<google::longrunning::Operation>> ApiKeysAuth::AsyncCreateKey(
 }
 
 StatusOr<google::api::apikeys::v2::ListKeysResponse> ApiKeysAuth::ListKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::ListKeysRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListKeys(context, request);
+  return child_->ListKeys(context, options, request);
 }
 
 StatusOr<google::api::apikeys::v2::Key> ApiKeysAuth::GetKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::GetKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetKey(context, request);
+  return child_->GetKey(context, options, request);
 }
 
 StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
 ApiKeysAuth::GetKeyString(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::GetKeyStringRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetKeyString(context, request);
+  return child_->GetKeyString(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> ApiKeysAuth::AsyncUpdateKey(
@@ -126,11 +126,11 @@ future<StatusOr<google::longrunning::Operation>> ApiKeysAuth::AsyncUndeleteKey(
 }
 
 StatusOr<google::api::apikeys::v2::LookupKeyResponse> ApiKeysAuth::LookupKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::LookupKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->LookupKey(context, request);
+  return child_->LookupKey(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> ApiKeysAuth::AsyncGetOperation(

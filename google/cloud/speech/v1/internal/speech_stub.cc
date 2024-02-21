@@ -34,7 +34,7 @@ SpeechStub::~SpeechStub() = default;
 
 StatusOr<google::cloud::speech::v1::RecognizeResponse>
 DefaultSpeechStub::Recognize(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::speech::v1::RecognizeRequest const& request) {
   google::cloud::speech::v1::RecognizeResponse response;
   auto status = grpc_stub_->Recognize(&context, request, &response);

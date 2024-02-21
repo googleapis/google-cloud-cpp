@@ -62,10 +62,12 @@ Status TraceServiceConnectionImpl::BatchWriteSpans(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->BatchWriteSpans(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::cloudtrace::v2::BatchWriteSpansRequest const&
-                 request) { return stub_->BatchWriteSpans(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->BatchWriteSpans(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::devtools::cloudtrace::v2::Span>
@@ -75,11 +77,11 @@ TraceServiceConnectionImpl::CreateSpan(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateSpan(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::cloudtrace::v2::Span const& request) {
-        return stub_->CreateSpan(context, request);
+        return stub_->CreateSpan(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

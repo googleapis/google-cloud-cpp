@@ -33,11 +33,11 @@ LookupServiceAuth::LookupServiceAuth(
 
 StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
 LookupServiceAuth::ResolveService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::ResolveServiceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ResolveService(context, request);
+  return child_->ResolveService(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -40,7 +40,7 @@ class CompletionServiceStub {
 
   virtual StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
   CompleteQuery(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::CompleteQueryRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
@@ -72,7 +72,7 @@ class DefaultCompletionServiceStub : public CompletionServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::retail::v2::CompleteQueryResponse> CompleteQuery(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::CompleteQueryRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportCompletionData(

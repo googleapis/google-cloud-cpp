@@ -33,46 +33,46 @@ EntityTypesAuth::EntityTypesAuth(
 
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesAuth::GetEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEntityType(context, request);
+  return child_->GetEntityType(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesAuth::CreateEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateEntityType(context, request);
+  return child_->CreateEntityType(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesAuth::UpdateEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateEntityType(context, request);
+  return child_->UpdateEntityType(context, options, request);
 }
 
 Status EntityTypesAuth::DeleteEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteEntityType(context, request);
+  return child_->DeleteEntityType(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
 EntityTypesAuth::ListEntityTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEntityTypes(context, request);
+  return child_->ListEntityTypes(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

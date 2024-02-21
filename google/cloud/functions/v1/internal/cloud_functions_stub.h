@@ -41,11 +41,11 @@ class CloudFunctionsServiceStub {
 
   virtual StatusOr<google::cloud::functions::v1::ListFunctionsResponse>
   ListFunctions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v1::ListFunctionsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::functions::v1::CloudFunction> GetFunction(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v1::GetFunctionRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateFunction(
@@ -65,32 +65,32 @@ class CloudFunctionsServiceStub {
 
   virtual StatusOr<google::cloud::functions::v1::CallFunctionResponse>
   CallFunction(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v1::CallFunctionRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::functions::v1::GenerateUploadUrlResponse>
   GenerateUploadUrl(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v1::GenerateUploadUrlRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::functions::v1::GenerateDownloadUrlResponse>
   GenerateDownloadUrl(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v1::GenerateDownloadUrlRequest const&
           request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -115,12 +115,12 @@ class DefaultCloudFunctionsServiceStub : public CloudFunctionsServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::functions::v1::ListFunctionsResponse> ListFunctions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v1::ListFunctionsRequest const& request)
       override;
 
   StatusOr<google::cloud::functions::v1::CloudFunction> GetFunction(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v1::GetFunctionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateFunction(
@@ -142,32 +142,32 @@ class DefaultCloudFunctionsServiceStub : public CloudFunctionsServiceStub {
       override;
 
   StatusOr<google::cloud::functions::v1::CallFunctionResponse> CallFunction(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v1::CallFunctionRequest const& request)
       override;
 
   StatusOr<google::cloud::functions::v1::GenerateUploadUrlResponse>
   GenerateUploadUrl(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v1::GenerateUploadUrlRequest const& request)
       override;
 
   StatusOr<google::cloud::functions::v1::GenerateDownloadUrlResponse>
   GenerateDownloadUrl(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v1::GenerateDownloadUrlRequest const& request)
       override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

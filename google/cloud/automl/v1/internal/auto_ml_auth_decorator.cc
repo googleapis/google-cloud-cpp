@@ -50,28 +50,28 @@ future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncCreateDataset(
 }
 
 StatusOr<google::cloud::automl::v1::Dataset> AutoMlAuth::GetDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::GetDatasetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDataset(context, request);
+  return child_->GetDataset(context, options, request);
 }
 
 StatusOr<google::cloud::automl::v1::ListDatasetsResponse>
 AutoMlAuth::ListDatasets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::ListDatasetsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDatasets(context, request);
+  return child_->ListDatasets(context, options, request);
 }
 
 StatusOr<google::cloud::automl::v1::Dataset> AutoMlAuth::UpdateDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::UpdateDatasetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateDataset(context, request);
+  return child_->UpdateDataset(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncDeleteDataset(
@@ -130,11 +130,11 @@ future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncExportData(
 
 StatusOr<google::cloud::automl::v1::AnnotationSpec>
 AutoMlAuth::GetAnnotationSpec(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::GetAnnotationSpecRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAnnotationSpec(context, request);
+  return child_->GetAnnotationSpec(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncCreateModel(
@@ -156,19 +156,19 @@ future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncCreateModel(
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlAuth::GetModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::GetModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetModel(context, request);
+  return child_->GetModel(context, options, request);
 }
 
 StatusOr<google::cloud::automl::v1::ListModelsResponse> AutoMlAuth::ListModels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::ListModelsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListModels(context, request);
+  return child_->ListModels(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncDeleteModel(
@@ -190,11 +190,11 @@ future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncDeleteModel(
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlAuth::UpdateModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::UpdateModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateModel(context, request);
+  return child_->UpdateModel(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncDeployModel(
@@ -253,20 +253,20 @@ future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncExportModel(
 
 StatusOr<google::cloud::automl::v1::ModelEvaluation>
 AutoMlAuth::GetModelEvaluation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::GetModelEvaluationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetModelEvaluation(context, request);
+  return child_->GetModelEvaluation(context, options, request);
 }
 
 StatusOr<google::cloud::automl::v1::ListModelEvaluationsResponse>
 AutoMlAuth::ListModelEvaluations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::ListModelEvaluationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListModelEvaluations(context, request);
+  return child_->ListModelEvaluations(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> AutoMlAuth::AsyncGetOperation(

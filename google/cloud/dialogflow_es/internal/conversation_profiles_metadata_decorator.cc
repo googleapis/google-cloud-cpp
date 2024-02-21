@@ -44,53 +44,53 @@ ConversationProfilesMetadata::ConversationProfilesMetadata(
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationProfilesResponse>
 ConversationProfilesMetadata::ListConversationProfiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListConversationProfilesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListConversationProfiles(context, request);
+  return child_->ListConversationProfiles(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 ConversationProfilesMetadata::GetConversationProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetConversationProfileRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetConversationProfile(context, request);
+  return child_->GetConversationProfile(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 ConversationProfilesMetadata::CreateConversationProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateConversationProfile(context, request);
+  return child_->CreateConversationProfile(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 ConversationProfilesMetadata::UpdateConversationProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("conversation_profile.name=",
                    internal::UrlEncode(request.conversation_profile().name())));
-  return child_->UpdateConversationProfile(context, request);
+  return child_->UpdateConversationProfile(context, options, request);
 }
 
 Status ConversationProfilesMetadata::DeleteConversationProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteConversationProfile(context, request);
+  return child_->DeleteConversationProfile(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

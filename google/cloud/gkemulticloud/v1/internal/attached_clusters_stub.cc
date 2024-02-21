@@ -93,7 +93,7 @@ DefaultAttachedClustersStub::AsyncImportAttachedCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
 DefaultAttachedClustersStub::GetAttachedCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
         request) {
   google::cloud::gkemulticloud::v1::AttachedCluster response;
@@ -106,7 +106,7 @@ DefaultAttachedClustersStub::GetAttachedCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAttachedClustersResponse>
 DefaultAttachedClustersStub::ListAttachedClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkemulticloud::v1::ListAttachedClustersRequest const&
         request) {
   google::cloud::gkemulticloud::v1::ListAttachedClustersResponse response;
@@ -139,7 +139,7 @@ DefaultAttachedClustersStub::AsyncDeleteAttachedCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
 DefaultAttachedClustersStub::GetAttachedServerConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&
         request) {
   google::cloud::gkemulticloud::v1::AttachedServerConfig response;
@@ -154,7 +154,7 @@ DefaultAttachedClustersStub::GetAttachedServerConfig(
 StatusOr<google::cloud::gkemulticloud::v1::
              GenerateAttachedClusterInstallManifestResponse>
 DefaultAttachedClustersStub::GenerateAttachedClusterInstallManifest(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkemulticloud::v1::
         GenerateAttachedClusterInstallManifestRequest const& request) {
   google::cloud::gkemulticloud::v1::
@@ -170,7 +170,7 @@ DefaultAttachedClustersStub::GenerateAttachedClusterInstallManifest(
 StatusOr<
     google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
 DefaultAttachedClustersStub::GenerateAttachedClusterAgentToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkemulticloud::v1::
         GenerateAttachedClusterAgentTokenRequest const& request) {
   google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse

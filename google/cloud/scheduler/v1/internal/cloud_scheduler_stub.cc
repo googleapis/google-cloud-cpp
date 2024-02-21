@@ -32,7 +32,7 @@ CloudSchedulerStub::~CloudSchedulerStub() = default;
 
 StatusOr<google::cloud::scheduler::v1::ListJobsResponse>
 DefaultCloudSchedulerStub::ListJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::scheduler::v1::ListJobsRequest const& request) {
   google::cloud::scheduler::v1::ListJobsResponse response;
   auto status = grpc_stub_->ListJobs(&context, request, &response);
@@ -43,7 +43,7 @@ DefaultCloudSchedulerStub::ListJobs(
 }
 
 StatusOr<google::cloud::scheduler::v1::Job> DefaultCloudSchedulerStub::GetJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::scheduler::v1::GetJobRequest const& request) {
   google::cloud::scheduler::v1::Job response;
   auto status = grpc_stub_->GetJob(&context, request, &response);
@@ -55,7 +55,7 @@ StatusOr<google::cloud::scheduler::v1::Job> DefaultCloudSchedulerStub::GetJob(
 
 StatusOr<google::cloud::scheduler::v1::Job>
 DefaultCloudSchedulerStub::CreateJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::scheduler::v1::CreateJobRequest const& request) {
   google::cloud::scheduler::v1::Job response;
   auto status = grpc_stub_->CreateJob(&context, request, &response);
@@ -67,7 +67,7 @@ DefaultCloudSchedulerStub::CreateJob(
 
 StatusOr<google::cloud::scheduler::v1::Job>
 DefaultCloudSchedulerStub::UpdateJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::scheduler::v1::UpdateJobRequest const& request) {
   google::cloud::scheduler::v1::Job response;
   auto status = grpc_stub_->UpdateJob(&context, request, &response);
@@ -78,7 +78,7 @@ DefaultCloudSchedulerStub::UpdateJob(
 }
 
 Status DefaultCloudSchedulerStub::DeleteJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::scheduler::v1::DeleteJobRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteJob(&context, request, &response);
@@ -89,7 +89,7 @@ Status DefaultCloudSchedulerStub::DeleteJob(
 }
 
 StatusOr<google::cloud::scheduler::v1::Job> DefaultCloudSchedulerStub::PauseJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::scheduler::v1::PauseJobRequest const& request) {
   google::cloud::scheduler::v1::Job response;
   auto status = grpc_stub_->PauseJob(&context, request, &response);
@@ -101,7 +101,7 @@ StatusOr<google::cloud::scheduler::v1::Job> DefaultCloudSchedulerStub::PauseJob(
 
 StatusOr<google::cloud::scheduler::v1::Job>
 DefaultCloudSchedulerStub::ResumeJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::scheduler::v1::ResumeJobRequest const& request) {
   google::cloud::scheduler::v1::Job response;
   auto status = grpc_stub_->ResumeJob(&context, request, &response);
@@ -112,7 +112,7 @@ DefaultCloudSchedulerStub::ResumeJob(
 }
 
 StatusOr<google::cloud::scheduler::v1::Job> DefaultCloudSchedulerStub::RunJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::scheduler::v1::RunJobRequest const& request) {
   google::cloud::scheduler::v1::Job response;
   auto status = grpc_stub_->RunJob(&context, request, &response);

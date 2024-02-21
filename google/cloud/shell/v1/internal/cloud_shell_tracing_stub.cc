@@ -33,14 +33,14 @@ CloudShellServiceTracingStub::CloudShellServiceTracingStub(
 
 StatusOr<google::cloud::shell::v1::Environment>
 CloudShellServiceTracingStub::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::shell::v1::GetEnvironmentRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.shell.v1.CloudShellService",
                                      "GetEnvironment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetEnvironment(context, request));
+                           child_->GetEnvironment(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

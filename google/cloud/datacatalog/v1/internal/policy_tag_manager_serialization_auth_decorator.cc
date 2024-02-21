@@ -33,29 +33,29 @@ PolicyTagManagerSerializationAuth::PolicyTagManagerSerializationAuth(
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerSerializationAuth::ReplaceTaxonomy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ReplaceTaxonomy(context, request);
+  return child_->ReplaceTaxonomy(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
 PolicyTagManagerSerializationAuth::ImportTaxonomies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ImportTaxonomies(context, request);
+  return child_->ImportTaxonomies(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
 PolicyTagManagerSerializationAuth::ExportTaxonomies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ExportTaxonomies(context, request);
+  return child_->ExportTaxonomies(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

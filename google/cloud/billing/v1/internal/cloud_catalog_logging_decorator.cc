@@ -37,26 +37,26 @@ CloudCatalogLogging::CloudCatalogLogging(
 
 StatusOr<google::cloud::billing::v1::ListServicesResponse>
 CloudCatalogLogging::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::v1::ListServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::billing::v1::ListServicesRequest const& request) {
-        return child_->ListServices(context, request);
+        return child_->ListServices(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::billing::v1::ListSkusResponse>
 CloudCatalogLogging::ListSkus(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::v1::ListSkusRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::billing::v1::ListSkusRequest const& request) {
-        return child_->ListSkus(context, request);
+        return child_->ListSkus(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

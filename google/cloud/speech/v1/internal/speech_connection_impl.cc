@@ -68,11 +68,11 @@ SpeechConnectionImpl::Recognize(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Recognize(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v1::RecognizeRequest const& request) {
-        return stub_->Recognize(context, request);
+        return stub_->Recognize(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>

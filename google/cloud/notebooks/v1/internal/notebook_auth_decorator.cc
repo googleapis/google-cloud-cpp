@@ -33,20 +33,20 @@ NotebookServiceAuth::NotebookServiceAuth(
 
 StatusOr<google::cloud::notebooks::v1::ListInstancesResponse>
 NotebookServiceAuth::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::ListInstancesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListInstances(context, request);
+  return child_->ListInstances(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v1::Instance>
 NotebookServiceAuth::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::GetInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetInstance(context, request);
+  return child_->GetInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -187,12 +187,12 @@ NotebookServiceAuth::AsyncSetInstanceLabels(
 
 StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
 NotebookServiceAuth::UpdateInstanceMetadataItems(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateInstanceMetadataItems(context, request);
+  return child_->UpdateInstanceMetadataItems(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -292,20 +292,20 @@ NotebookServiceAuth::AsyncReportInstanceInfo(
 
 StatusOr<google::cloud::notebooks::v1::IsInstanceUpgradeableResponse>
 NotebookServiceAuth::IsInstanceUpgradeable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::IsInstanceUpgradeableRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->IsInstanceUpgradeable(context, request);
+  return child_->IsInstanceUpgradeable(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v1::GetInstanceHealthResponse>
 NotebookServiceAuth::GetInstanceHealth(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::GetInstanceHealthRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetInstanceHealth(context, request);
+  return child_->GetInstanceHealth(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -387,20 +387,20 @@ NotebookServiceAuth::AsyncUpgradeInstanceInternal(
 
 StatusOr<google::cloud::notebooks::v1::ListEnvironmentsResponse>
 NotebookServiceAuth::ListEnvironments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::ListEnvironmentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEnvironments(context, request);
+  return child_->ListEnvironments(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v1::Environment>
 NotebookServiceAuth::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::GetEnvironmentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEnvironment(context, request);
+  return child_->GetEnvironment(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -443,20 +443,20 @@ NotebookServiceAuth::AsyncDeleteEnvironment(
 
 StatusOr<google::cloud::notebooks::v1::ListSchedulesResponse>
 NotebookServiceAuth::ListSchedules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::ListSchedulesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSchedules(context, request);
+  return child_->ListSchedules(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v1::Schedule>
 NotebookServiceAuth::GetSchedule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::GetScheduleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetSchedule(context, request);
+  return child_->GetSchedule(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -518,20 +518,20 @@ NotebookServiceAuth::AsyncTriggerSchedule(
 
 StatusOr<google::cloud::notebooks::v1::ListExecutionsResponse>
 NotebookServiceAuth::ListExecutions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::ListExecutionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListExecutions(context, request);
+  return child_->ListExecutions(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v1::Execution>
 NotebookServiceAuth::GetExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::GetExecutionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetExecution(context, request);
+  return child_->GetExecution(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

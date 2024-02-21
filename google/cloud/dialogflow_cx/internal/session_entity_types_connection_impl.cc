@@ -71,21 +71,21 @@ SessionEntityTypesConnectionImpl::ListSessionEntityTypes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::SessionEntityType>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dialogflow_cx::SessionEntityTypesRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::dialogflow::cx::v3::
-              ListSessionEntityTypesRequest const& r) {
+          Options const& options, google::cloud::dialogflow::cx::v3::
+                                      ListSessionEntityTypesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::dialogflow::cx::v3::
                        ListSessionEntityTypesRequest const& request) {
-              return stub->ListSessionEntityTypes(context, request);
+              return stub->ListSessionEntityTypes(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dialogflow::cx::v3::ListSessionEntityTypesResponse r) {
         std::vector<google::cloud::dialogflow::cx::v3::SessionEntityType>
@@ -105,12 +105,12 @@ SessionEntityTypesConnectionImpl::GetSessionEntityType(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSessionEntityType(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const&
               request) {
-        return stub_->GetSessionEntityType(context, request);
+        return stub_->GetSessionEntityType(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
@@ -121,12 +121,12 @@ SessionEntityTypesConnectionImpl::CreateSessionEntityType(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateSessionEntityType(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::
                  CreateSessionEntityTypeRequest const& request) {
-        return stub_->CreateSessionEntityType(context, request);
+        return stub_->CreateSessionEntityType(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
@@ -137,12 +137,12 @@ SessionEntityTypesConnectionImpl::UpdateSessionEntityType(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateSessionEntityType(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::
                  UpdateSessionEntityTypeRequest const& request) {
-        return stub_->UpdateSessionEntityType(context, request);
+        return stub_->UpdateSessionEntityType(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status SessionEntityTypesConnectionImpl::DeleteSessionEntityType(
@@ -152,12 +152,12 @@ Status SessionEntityTypesConnectionImpl::DeleteSessionEntityType(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteSessionEntityType(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::
                  DeleteSessionEntityTypeRequest const& request) {
-        return stub_->DeleteSessionEntityType(context, request);
+        return stub_->DeleteSessionEntityType(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

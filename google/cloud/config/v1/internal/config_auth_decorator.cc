@@ -33,19 +33,19 @@ ConfigAuth::ConfigAuth(
 
 StatusOr<google::cloud::config::v1::ListDeploymentsResponse>
 ConfigAuth::ListDeployments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::ListDeploymentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDeployments(context, request);
+  return child_->ListDeployments(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::Deployment> ConfigAuth::GetDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::GetDeploymentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDeployment(context, request);
+  return child_->GetDeployment(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -107,71 +107,71 @@ ConfigAuth::AsyncDeleteDeployment(
 
 StatusOr<google::cloud::config::v1::ListRevisionsResponse>
 ConfigAuth::ListRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::ListRevisionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListRevisions(context, request);
+  return child_->ListRevisions(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::Revision> ConfigAuth::GetRevision(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::GetRevisionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetRevision(context, request);
+  return child_->GetRevision(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::Resource> ConfigAuth::GetResource(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::GetResourceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetResource(context, request);
+  return child_->GetResource(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::ListResourcesResponse>
 ConfigAuth::ListResources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::ListResourcesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListResources(context, request);
+  return child_->ListResources(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::Statefile>
 ConfigAuth::ExportDeploymentStatefile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::ExportDeploymentStatefileRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ExportDeploymentStatefile(context, request);
+  return child_->ExportDeploymentStatefile(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::Statefile>
 ConfigAuth::ExportRevisionStatefile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::ExportRevisionStatefileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ExportRevisionStatefile(context, request);
+  return child_->ExportRevisionStatefile(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::Statefile> ConfigAuth::ImportStatefile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::ImportStatefileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ImportStatefile(context, request);
+  return child_->ImportStatefile(context, options, request);
 }
 
 Status ConfigAuth::DeleteStatefile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::DeleteStatefileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteStatefile(context, request);
+  return child_->DeleteStatefile(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -213,11 +213,11 @@ ConfigAuth::AsyncUnlockDeployment(
 }
 
 StatusOr<google::cloud::config::v1::LockInfo> ConfigAuth::ExportLockInfo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::ExportLockInfoRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ExportLockInfo(context, request);
+  return child_->ExportLockInfo(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> ConfigAuth::AsyncCreatePreview(
@@ -239,20 +239,20 @@ future<StatusOr<google::longrunning::Operation>> ConfigAuth::AsyncCreatePreview(
 }
 
 StatusOr<google::cloud::config::v1::Preview> ConfigAuth::GetPreview(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::GetPreviewRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetPreview(context, request);
+  return child_->GetPreview(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::ListPreviewsResponse>
 ConfigAuth::ListPreviews(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::ListPreviewsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListPreviews(context, request);
+  return child_->ListPreviews(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> ConfigAuth::AsyncDeletePreview(
@@ -275,11 +275,11 @@ future<StatusOr<google::longrunning::Operation>> ConfigAuth::AsyncDeletePreview(
 
 StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
 ConfigAuth::ExportPreviewResult(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::ExportPreviewResultRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ExportPreviewResult(context, request);
+  return child_->ExportPreviewResult(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> ConfigAuth::AsyncGetOperation(

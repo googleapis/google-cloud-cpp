@@ -37,94 +37,106 @@ DocumentServiceLogging::DocumentServiceLogging(
 
 StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>
 DocumentServiceLogging::CreateDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::CreateDocumentRequest const&
-                 request) { return child_->CreateDocument(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->CreateDocument(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::Document>
 DocumentServiceLogging::GetDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::GetDocumentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::GetDocumentRequest const&
-                 request) { return child_->GetDocument(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetDocument(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>
 DocumentServiceLogging::UpdateDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::UpdateDocumentRequest const&
-                 request) { return child_->UpdateDocument(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->UpdateDocument(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status DocumentServiceLogging::DeleteDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::DeleteDocumentRequest const&
-                 request) { return child_->DeleteDocument(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->DeleteDocument(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SearchDocumentsResponse>
 DocumentServiceLogging::SearchDocuments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::SearchDocumentsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::SearchDocumentsRequest const&
-                 request) { return child_->SearchDocuments(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->SearchDocuments(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::Document>
 DocumentServiceLogging::LockDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::LockDocumentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::LockDocumentRequest const&
-                 request) { return child_->LockDocument(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->LockDocument(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse>
 DocumentServiceLogging::FetchAcl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::FetchAclRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::contentwarehouse::v1::FetchAclRequest const& request) {
-        return child_->FetchAcl(context, request);
+        return child_->FetchAcl(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse>
 DocumentServiceLogging::SetAcl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::SetAclRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::contentwarehouse::v1::SetAclRequest const& request) {
-        return child_->SetAcl(context, request);
+        return child_->SetAcl(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

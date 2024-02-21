@@ -33,51 +33,51 @@ SessionEntityTypesAuth::SessionEntityTypesAuth(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListSessionEntityTypesResponse>
 SessionEntityTypesAuth::ListSessionEntityTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSessionEntityTypes(context, request);
+  return child_->ListSessionEntityTypes(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
 SessionEntityTypesAuth::GetSessionEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetSessionEntityType(context, request);
+  return child_->GetSessionEntityType(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
 SessionEntityTypesAuth::CreateSessionEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateSessionEntityType(context, request);
+  return child_->CreateSessionEntityType(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
 SessionEntityTypesAuth::UpdateSessionEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateSessionEntityType(context, request);
+  return child_->UpdateSessionEntityType(context, options, request);
 }
 
 Status SessionEntityTypesAuth::DeleteSessionEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteSessionEntityType(context, request);
+  return child_->DeleteSessionEntityType(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

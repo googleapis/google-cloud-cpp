@@ -37,148 +37,164 @@ PolicyTagManagerLogging::PolicyTagManagerLogging(
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerLogging::CreateTaxonomy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::CreateTaxonomyRequest const&
-                 request) { return child_->CreateTaxonomy(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->CreateTaxonomy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status PolicyTagManagerLogging::DeleteTaxonomy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::DeleteTaxonomyRequest const&
-                 request) { return child_->DeleteTaxonomy(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->DeleteTaxonomy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerLogging::UpdateTaxonomy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::UpdateTaxonomyRequest const&
-                 request) { return child_->UpdateTaxonomy(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->UpdateTaxonomy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ListTaxonomiesResponse>
 PolicyTagManagerLogging::ListTaxonomies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ListTaxonomiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::ListTaxonomiesRequest const&
-                 request) { return child_->ListTaxonomies(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListTaxonomies(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerLogging::GetTaxonomy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) {
-        return child_->GetTaxonomy(context, request);
+        return child_->GetTaxonomy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerLogging::CreatePolicyTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::CreatePolicyTagRequest const&
-                 request) { return child_->CreatePolicyTag(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->CreatePolicyTag(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status PolicyTagManagerLogging::DeletePolicyTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::DeletePolicyTagRequest const&
-                 request) { return child_->DeletePolicyTag(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->DeletePolicyTag(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerLogging::UpdatePolicyTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::UpdatePolicyTagRequest const&
-                 request) { return child_->UpdatePolicyTag(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->UpdatePolicyTag(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ListPolicyTagsResponse>
 PolicyTagManagerLogging::ListPolicyTags(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ListPolicyTagsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::ListPolicyTagsRequest const&
-                 request) { return child_->ListPolicyTags(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListPolicyTags(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerLogging::GetPolicyTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) {
-        return child_->GetPolicyTag(context, request);
+        return child_->GetPolicyTag(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> PolicyTagManagerLogging::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
-        return child_->GetIamPolicy(context, request);
+        return child_->GetIamPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> PolicyTagManagerLogging::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
-        return child_->SetIamPolicy(context, request);
+        return child_->SetIamPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 PolicyTagManagerLogging::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
-        return child_->TestIamPermissions(context, request);
+        return child_->TestIamPermissions(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -32,7 +32,7 @@ AlertPolicyServiceStub::~AlertPolicyServiceStub() = default;
 
 StatusOr<google::monitoring::v3::ListAlertPoliciesResponse>
 DefaultAlertPolicyServiceStub::ListAlertPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::ListAlertPoliciesRequest const& request) {
   google::monitoring::v3::ListAlertPoliciesResponse response;
   auto status = grpc_stub_->ListAlertPolicies(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultAlertPolicyServiceStub::ListAlertPolicies(
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 DefaultAlertPolicyServiceStub::GetAlertPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::GetAlertPolicyRequest const& request) {
   google::monitoring::v3::AlertPolicy response;
   auto status = grpc_stub_->GetAlertPolicy(&context, request, &response);
@@ -56,7 +56,7 @@ DefaultAlertPolicyServiceStub::GetAlertPolicy(
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 DefaultAlertPolicyServiceStub::CreateAlertPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::CreateAlertPolicyRequest const& request) {
   google::monitoring::v3::AlertPolicy response;
   auto status = grpc_stub_->CreateAlertPolicy(&context, request, &response);
@@ -67,7 +67,7 @@ DefaultAlertPolicyServiceStub::CreateAlertPolicy(
 }
 
 Status DefaultAlertPolicyServiceStub::DeleteAlertPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::DeleteAlertPolicyRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteAlertPolicy(&context, request, &response);
@@ -79,7 +79,7 @@ Status DefaultAlertPolicyServiceStub::DeleteAlertPolicy(
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 DefaultAlertPolicyServiceStub::UpdateAlertPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::UpdateAlertPolicyRequest const& request) {
   google::monitoring::v3::AlertPolicy response;
   auto status = grpc_stub_->UpdateAlertPolicy(&context, request, &response);

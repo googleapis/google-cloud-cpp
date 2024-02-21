@@ -33,7 +33,7 @@ BigtableTableAdminStub::~BigtableTableAdminStub() = default;
 
 StatusOr<google::bigtable::admin::v2::Table>
 DefaultBigtableTableAdminStub::CreateTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::CreateTableRequest const& request) {
   google::bigtable::admin::v2::Table response;
   auto status = grpc_stub_->CreateTable(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultBigtableTableAdminStub::CreateTable(
 
 StatusOr<google::bigtable::admin::v2::ListTablesResponse>
 DefaultBigtableTableAdminStub::ListTables(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::ListTablesRequest const& request) {
   google::bigtable::admin::v2::ListTablesResponse response;
   auto status = grpc_stub_->ListTables(&context, request, &response);
@@ -57,7 +57,7 @@ DefaultBigtableTableAdminStub::ListTables(
 
 StatusOr<google::bigtable::admin::v2::Table>
 DefaultBigtableTableAdminStub::GetTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::GetTableRequest const& request) {
   google::bigtable::admin::v2::Table response;
   auto status = grpc_stub_->GetTable(&context, request, &response);
@@ -85,7 +85,7 @@ DefaultBigtableTableAdminStub::AsyncUpdateTable(
 }
 
 Status DefaultBigtableTableAdminStub::DeleteTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::DeleteTableRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteTable(&context, request, &response);
@@ -114,7 +114,7 @@ DefaultBigtableTableAdminStub::AsyncUndeleteTable(
 
 StatusOr<google::bigtable::admin::v2::Table>
 DefaultBigtableTableAdminStub::ModifyColumnFamilies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request) {
   google::bigtable::admin::v2::Table response;
   auto status = grpc_stub_->ModifyColumnFamilies(&context, request, &response);
@@ -125,7 +125,7 @@ DefaultBigtableTableAdminStub::ModifyColumnFamilies(
 }
 
 Status DefaultBigtableTableAdminStub::DropRowRange(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::DropRowRangeRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DropRowRange(&context, request, &response);
@@ -137,7 +137,7 @@ Status DefaultBigtableTableAdminStub::DropRowRange(
 
 StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
 DefaultBigtableTableAdminStub::GenerateConsistencyToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
         request) {
   google::bigtable::admin::v2::GenerateConsistencyTokenResponse response;
@@ -151,7 +151,7 @@ DefaultBigtableTableAdminStub::GenerateConsistencyToken(
 
 StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
 DefaultBigtableTableAdminStub::CheckConsistency(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
   google::bigtable::admin::v2::CheckConsistencyResponse response;
   auto status = grpc_stub_->CheckConsistency(&context, request, &response);
@@ -180,7 +180,7 @@ DefaultBigtableTableAdminStub::AsyncCreateBackup(
 
 StatusOr<google::bigtable::admin::v2::Backup>
 DefaultBigtableTableAdminStub::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::GetBackupRequest const& request) {
   google::bigtable::admin::v2::Backup response;
   auto status = grpc_stub_->GetBackup(&context, request, &response);
@@ -192,7 +192,7 @@ DefaultBigtableTableAdminStub::GetBackup(
 
 StatusOr<google::bigtable::admin::v2::Backup>
 DefaultBigtableTableAdminStub::UpdateBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::UpdateBackupRequest const& request) {
   google::bigtable::admin::v2::Backup response;
   auto status = grpc_stub_->UpdateBackup(&context, request, &response);
@@ -203,7 +203,7 @@ DefaultBigtableTableAdminStub::UpdateBackup(
 }
 
 Status DefaultBigtableTableAdminStub::DeleteBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::DeleteBackupRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteBackup(&context, request, &response);
@@ -215,7 +215,7 @@ Status DefaultBigtableTableAdminStub::DeleteBackup(
 
 StatusOr<google::bigtable::admin::v2::ListBackupsResponse>
 DefaultBigtableTableAdminStub::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::ListBackupsRequest const& request) {
   google::bigtable::admin::v2::ListBackupsResponse response;
   auto status = grpc_stub_->ListBackups(&context, request, &response);
@@ -260,7 +260,7 @@ DefaultBigtableTableAdminStub::AsyncCopyBackup(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultBigtableTableAdminStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -271,7 +271,7 @@ StatusOr<google::iam::v1::Policy> DefaultBigtableTableAdminStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultBigtableTableAdminStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -283,7 +283,7 @@ StatusOr<google::iam::v1::Policy> DefaultBigtableTableAdminStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultBigtableTableAdminStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);

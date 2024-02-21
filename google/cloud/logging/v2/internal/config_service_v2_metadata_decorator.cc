@@ -44,19 +44,19 @@ ConfigServiceV2Metadata::ConfigServiceV2Metadata(
 
 StatusOr<google::logging::v2::ListBucketsResponse>
 ConfigServiceV2Metadata::ListBuckets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListBucketsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListBuckets(context, request);
+  return child_->ListBuckets(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogBucket> ConfigServiceV2Metadata::GetBucket(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::GetBucketRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetBucket(context, request);
+  return child_->GetBucket(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -82,120 +82,120 @@ ConfigServiceV2Metadata::AsyncUpdateBucketAsync(
 }
 
 StatusOr<google::logging::v2::LogBucket> ConfigServiceV2Metadata::CreateBucket(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::CreateBucketRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateBucket(context, request);
+  return child_->CreateBucket(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogBucket> ConfigServiceV2Metadata::UpdateBucket(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::UpdateBucketRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->UpdateBucket(context, request);
+  return child_->UpdateBucket(context, options, request);
 }
 
 Status ConfigServiceV2Metadata::DeleteBucket(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::DeleteBucketRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteBucket(context, request);
+  return child_->DeleteBucket(context, options, request);
 }
 
 Status ConfigServiceV2Metadata::UndeleteBucket(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::UndeleteBucketRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->UndeleteBucket(context, request);
+  return child_->UndeleteBucket(context, options, request);
 }
 
 StatusOr<google::logging::v2::ListViewsResponse>
 ConfigServiceV2Metadata::ListViews(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListViewsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListViews(context, request);
+  return child_->ListViews(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogView> ConfigServiceV2Metadata::GetView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::GetViewRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetView(context, request);
+  return child_->GetView(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogView> ConfigServiceV2Metadata::CreateView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::CreateViewRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateView(context, request);
+  return child_->CreateView(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogView> ConfigServiceV2Metadata::UpdateView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::UpdateViewRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->UpdateView(context, request);
+  return child_->UpdateView(context, options, request);
 }
 
 Status ConfigServiceV2Metadata::DeleteView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::DeleteViewRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteView(context, request);
+  return child_->DeleteView(context, options, request);
 }
 
 StatusOr<google::logging::v2::ListSinksResponse>
 ConfigServiceV2Metadata::ListSinks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListSinksRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListSinks(context, request);
+  return child_->ListSinks(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogSink> ConfigServiceV2Metadata::GetSink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::GetSinkRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("sink_name=", internal::UrlEncode(request.sink_name())));
-  return child_->GetSink(context, request);
+  return child_->GetSink(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogSink> ConfigServiceV2Metadata::CreateSink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::CreateSinkRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateSink(context, request);
+  return child_->CreateSink(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogSink> ConfigServiceV2Metadata::UpdateSink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::UpdateSinkRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("sink_name=", internal::UrlEncode(request.sink_name())));
-  return child_->UpdateSink(context, request);
+  return child_->UpdateSink(context, options, request);
 }
 
 Status ConfigServiceV2Metadata::DeleteSink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::DeleteSinkRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("sink_name=", internal::UrlEncode(request.sink_name())));
-  return child_->DeleteSink(context, request);
+  return child_->DeleteSink(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -220,97 +220,97 @@ ConfigServiceV2Metadata::AsyncDeleteLink(
 
 StatusOr<google::logging::v2::ListLinksResponse>
 ConfigServiceV2Metadata::ListLinks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListLinksRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListLinks(context, request);
+  return child_->ListLinks(context, options, request);
 }
 
 StatusOr<google::logging::v2::Link> ConfigServiceV2Metadata::GetLink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::GetLinkRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetLink(context, request);
+  return child_->GetLink(context, options, request);
 }
 
 StatusOr<google::logging::v2::ListExclusionsResponse>
 ConfigServiceV2Metadata::ListExclusions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListExclusionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListExclusions(context, request);
+  return child_->ListExclusions(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogExclusion>
 ConfigServiceV2Metadata::GetExclusion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::GetExclusionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetExclusion(context, request);
+  return child_->GetExclusion(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogExclusion>
 ConfigServiceV2Metadata::CreateExclusion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::CreateExclusionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateExclusion(context, request);
+  return child_->CreateExclusion(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogExclusion>
 ConfigServiceV2Metadata::UpdateExclusion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::UpdateExclusionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->UpdateExclusion(context, request);
+  return child_->UpdateExclusion(context, options, request);
 }
 
 Status ConfigServiceV2Metadata::DeleteExclusion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::DeleteExclusionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteExclusion(context, request);
+  return child_->DeleteExclusion(context, options, request);
 }
 
 StatusOr<google::logging::v2::CmekSettings>
 ConfigServiceV2Metadata::GetCmekSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::GetCmekSettingsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetCmekSettings(context, request);
+  return child_->GetCmekSettings(context, options, request);
 }
 
 StatusOr<google::logging::v2::CmekSettings>
 ConfigServiceV2Metadata::UpdateCmekSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::UpdateCmekSettingsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->UpdateCmekSettings(context, request);
+  return child_->UpdateCmekSettings(context, options, request);
 }
 
 StatusOr<google::logging::v2::Settings> ConfigServiceV2Metadata::GetSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::GetSettingsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetSettings(context, request);
+  return child_->GetSettings(context, options, request);
 }
 
 StatusOr<google::logging::v2::Settings> ConfigServiceV2Metadata::UpdateSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::UpdateSettingsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->UpdateSettings(context, request);
+  return child_->UpdateSettings(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

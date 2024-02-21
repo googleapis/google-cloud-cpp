@@ -33,20 +33,20 @@ ManagedNotebookServiceAuth::ManagedNotebookServiceAuth(
 
 StatusOr<google::cloud::notebooks::v1::ListRuntimesResponse>
 ManagedNotebookServiceAuth::ListRuntimes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::ListRuntimesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListRuntimes(context, request);
+  return child_->ListRuntimes(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v1::Runtime>
 ManagedNotebookServiceAuth::GetRuntime(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::GetRuntimeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetRuntime(context, request);
+  return child_->GetRuntime(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -222,12 +222,12 @@ ManagedNotebookServiceAuth::AsyncReportRuntimeEvent(
 
 StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
 ManagedNotebookServiceAuth::RefreshRuntimeTokenInternal(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RefreshRuntimeTokenInternal(context, request);
+  return child_->RefreshRuntimeTokenInternal(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

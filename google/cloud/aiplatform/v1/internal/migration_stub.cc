@@ -33,7 +33,7 @@ MigrationServiceStub::~MigrationServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse>
 DefaultMigrationServiceStub::SearchMigratableResources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
         request) {
   google::cloud::aiplatform::v1::SearchMigratableResourcesResponse response;

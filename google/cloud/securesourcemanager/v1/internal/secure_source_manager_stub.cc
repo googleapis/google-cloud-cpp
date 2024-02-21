@@ -33,7 +33,7 @@ SecureSourceManagerStub::~SecureSourceManagerStub() = default;
 
 StatusOr<google::cloud::securesourcemanager::v1::ListInstancesResponse>
 DefaultSecureSourceManagerStub::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::securesourcemanager::v1::ListInstancesRequest const&
         request) {
   google::cloud::securesourcemanager::v1::ListInstancesResponse response;
@@ -46,7 +46,7 @@ DefaultSecureSourceManagerStub::ListInstances(
 
 StatusOr<google::cloud::securesourcemanager::v1::Instance>
 DefaultSecureSourceManagerStub::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::securesourcemanager::v1::GetInstanceRequest const& request) {
   google::cloud::securesourcemanager::v1::Instance response;
   auto status = grpc_stub_->GetInstance(&context, request, &response);
@@ -98,7 +98,7 @@ DefaultSecureSourceManagerStub::AsyncDeleteInstance(
 
 StatusOr<google::cloud::securesourcemanager::v1::ListRepositoriesResponse>
 DefaultSecureSourceManagerStub::ListRepositories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::securesourcemanager::v1::ListRepositoriesRequest const&
         request) {
   google::cloud::securesourcemanager::v1::ListRepositoriesResponse response;
@@ -111,7 +111,7 @@ DefaultSecureSourceManagerStub::ListRepositories(
 
 StatusOr<google::cloud::securesourcemanager::v1::Repository>
 DefaultSecureSourceManagerStub::GetRepository(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::securesourcemanager::v1::GetRepositoryRequest const&
         request) {
   google::cloud::securesourcemanager::v1::Repository response;
@@ -164,7 +164,7 @@ DefaultSecureSourceManagerStub::AsyncDeleteRepository(
 
 StatusOr<google::iam::v1::Policy>
 DefaultSecureSourceManagerStub::GetIamPolicyRepo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicyRepo(&context, request, &response);
@@ -176,7 +176,7 @@ DefaultSecureSourceManagerStub::GetIamPolicyRepo(
 
 StatusOr<google::iam::v1::Policy>
 DefaultSecureSourceManagerStub::SetIamPolicyRepo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicyRepo(&context, request, &response);
@@ -188,7 +188,7 @@ DefaultSecureSourceManagerStub::SetIamPolicyRepo(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultSecureSourceManagerStub::TestIamPermissionsRepo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status =

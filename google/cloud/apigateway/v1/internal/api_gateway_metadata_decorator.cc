@@ -44,20 +44,20 @@ ApiGatewayServiceMetadata::ApiGatewayServiceMetadata(
 
 StatusOr<google::cloud::apigateway::v1::ListGatewaysResponse>
 ApiGatewayServiceMetadata::ListGateways(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::ListGatewaysRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListGateways(context, request);
+  return child_->ListGateways(context, options, request);
 }
 
 StatusOr<google::cloud::apigateway::v1::Gateway>
 ApiGatewayServiceMetadata::GetGateway(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::GetGatewayRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetGateway(context, request);
+  return child_->GetGateway(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -93,19 +93,19 @@ ApiGatewayServiceMetadata::AsyncDeleteGateway(
 
 StatusOr<google::cloud::apigateway::v1::ListApisResponse>
 ApiGatewayServiceMetadata::ListApis(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::ListApisRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListApis(context, request);
+  return child_->ListApis(context, options, request);
 }
 
 StatusOr<google::cloud::apigateway::v1::Api> ApiGatewayServiceMetadata::GetApi(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::GetApiRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetApi(context, request);
+  return child_->GetApi(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -141,20 +141,20 @@ ApiGatewayServiceMetadata::AsyncDeleteApi(
 
 StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>
 ApiGatewayServiceMetadata::ListApiConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::ListApiConfigsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListApiConfigs(context, request);
+  return child_->ListApiConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::apigateway::v1::ApiConfig>
 ApiGatewayServiceMetadata::GetApiConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::GetApiConfigRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetApiConfig(context, request);
+  return child_->GetApiConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

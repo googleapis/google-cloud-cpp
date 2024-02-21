@@ -32,25 +32,25 @@ VersionsTracingStub::VersionsTracingStub(std::shared_ptr<VersionsStub> child)
 
 StatusOr<google::appengine::v1::ListVersionsResponse>
 VersionsTracingStub::ListVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListVersionsRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.appengine.v1.Versions", "ListVersions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListVersions(context, request));
+                           child_->ListVersions(context, options, request));
 }
 
 StatusOr<google::appengine::v1::Version> VersionsTracingStub::GetVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetVersionRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.appengine.v1.Versions", "GetVersion");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetVersion(context, request));
+                           child_->GetVersion(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

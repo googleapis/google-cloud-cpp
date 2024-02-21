@@ -34,8 +34,9 @@ AppConnectorsServiceStub::~AppConnectorsServiceStub() = default;
 StatusOr<
     google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsResponse>
 DefaultAppConnectorsServiceStub::ListAppConnectors(
-    grpc::ClientContext& context, google::cloud::beyondcorp::appconnectors::v1::
-                                      ListAppConnectorsRequest const& request) {
+    grpc::ClientContext& context, Options const&,
+    google::cloud::beyondcorp::appconnectors::v1::
+        ListAppConnectorsRequest const& request) {
   google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsResponse
       response;
   auto status = grpc_stub_->ListAppConnectors(&context, request, &response);
@@ -47,7 +48,7 @@ DefaultAppConnectorsServiceStub::ListAppConnectors(
 
 StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
 DefaultAppConnectorsServiceStub::GetAppConnector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const&
         request) {
   google::cloud::beyondcorp::appconnectors::v1::AppConnector response;

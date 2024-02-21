@@ -37,27 +37,27 @@ NotebookServiceLogging::NotebookServiceLogging(
 
 StatusOr<google::cloud::notebooks::v2::ListInstancesResponse>
 NotebookServiceLogging::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v2::ListInstancesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::notebooks::v2::ListInstancesRequest const& request) {
-        return child_->ListInstances(context, request);
+        return child_->ListInstances(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::notebooks::v2::Instance>
 NotebookServiceLogging::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v2::GetInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::notebooks::v2::GetInstanceRequest const& request) {
-        return child_->GetInstance(context, request);
+        return child_->GetInstance(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -158,17 +158,17 @@ NotebookServiceLogging::AsyncResetInstance(
 
 StatusOr<google::cloud::notebooks::v2::CheckInstanceUpgradabilityResponse>
 NotebookServiceLogging::CheckInstanceUpgradability(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v2::CheckInstanceUpgradabilityRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::notebooks::v2::CheckInstanceUpgradabilityRequest const&
               request) {
-        return child_->CheckInstanceUpgradability(context, request);
+        return child_->CheckInstanceUpgradability(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

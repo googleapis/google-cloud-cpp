@@ -46,12 +46,12 @@ class FeaturestoreServiceStub {
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Featurestore> GetFeaturestore(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ListFeaturestoresResponse>
   ListFeaturestores(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListFeaturestoresRequest const&
           request) = 0;
 
@@ -77,16 +77,16 @@ class FeaturestoreServiceStub {
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::EntityType> GetEntityType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetEntityTypeRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ListEntityTypesResponse>
   ListEntityTypes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListEntityTypesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::EntityType> UpdateEntityType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::UpdateEntityTypeRequest const&
           request) = 0;
 
@@ -110,16 +110,16 @@ class FeaturestoreServiceStub {
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetFeatureRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ListFeaturesResponse>
   ListFeatures(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListFeaturesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Feature> UpdateFeature(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteFeature(
@@ -157,7 +157,7 @@ class FeaturestoreServiceStub {
 
   virtual StatusOr<google::cloud::aiplatform::v1::SearchFeaturesResponse>
   SearchFeatures(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::SearchFeaturesRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -188,13 +188,13 @@ class DefaultFeaturestoreServiceStub : public FeaturestoreServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Featurestore> GetFeaturestore(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListFeaturestoresResponse>
   ListFeaturestores(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListFeaturestoresRequest const& request)
       override;
 
@@ -217,17 +217,17 @@ class DefaultFeaturestoreServiceStub : public FeaturestoreServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::EntityType> GetEntityType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetEntityTypeRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListEntityTypesResponse>
-  ListEntityTypes(grpc::ClientContext& context,
+  ListEntityTypes(grpc::ClientContext& context, Options const& options,
                   google::cloud::aiplatform::v1::ListEntityTypesRequest const&
                       request) override;
 
   StatusOr<google::cloud::aiplatform::v1::EntityType> UpdateEntityType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request)
       override;
 
@@ -250,16 +250,16 @@ class DefaultFeaturestoreServiceStub : public FeaturestoreServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetFeatureRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListFeaturesResponse> ListFeatures(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListFeaturesRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Feature> UpdateFeature(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::UpdateFeatureRequest const& request)
       override;
 
@@ -294,7 +294,7 @@ class DefaultFeaturestoreServiceStub : public FeaturestoreServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::SearchFeaturesResponse>
-  SearchFeatures(grpc::ClientContext& context,
+  SearchFeatures(grpc::ClientContext& context, Options const& options,
                  google::cloud::aiplatform::v1::SearchFeaturesRequest const&
                      request) override;
 

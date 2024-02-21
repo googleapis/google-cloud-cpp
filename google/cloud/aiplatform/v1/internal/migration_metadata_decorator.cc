@@ -44,12 +44,12 @@ MigrationServiceMetadata::MigrationServiceMetadata(
 
 StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse>
 MigrationServiceMetadata::SearchMigratableResources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->SearchMigratableResources(context, request);
+  return child_->SearchMigratableResources(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

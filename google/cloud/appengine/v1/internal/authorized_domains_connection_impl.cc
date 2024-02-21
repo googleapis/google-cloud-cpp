@@ -71,20 +71,21 @@ AuthorizedDomainsConnectionImpl::ListAuthorizedDomains(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::appengine::v1::AuthorizedDomain>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<appengine_v1::AuthorizedDomainsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::appengine::v1::ListAuthorizedDomainsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::appengine::v1::ListAuthorizedDomainsRequest const&
                        request) {
-              return stub->ListAuthorizedDomains(context, request);
+              return stub->ListAuthorizedDomains(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::appengine::v1::ListAuthorizedDomainsResponse r) {
         std::vector<google::appengine::v1::AuthorizedDomain> result(

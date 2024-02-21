@@ -88,23 +88,23 @@ DatastoreAdminMetadata::AsyncDeleteIndex(
 }
 
 StatusOr<google::datastore::admin::v1::Index> DatastoreAdminMetadata::GetIndex(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::admin::v1::GetIndexRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "index_id=", internal::UrlEncode(request.index_id())));
-  return child_->GetIndex(context, request);
+  return child_->GetIndex(context, options, request);
 }
 
 StatusOr<google::datastore::admin::v1::ListIndexesResponse>
 DatastoreAdminMetadata::ListIndexes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::admin::v1::ListIndexesRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id())));
-  return child_->ListIndexes(context, request);
+  return child_->ListIndexes(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

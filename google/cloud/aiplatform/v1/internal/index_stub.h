@@ -44,12 +44,12 @@ class IndexServiceStub {
       google::cloud::aiplatform::v1::CreateIndexRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Index> GetIndex(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetIndexRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ListIndexesResponse>
   ListIndexes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListIndexesRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateIndex(
@@ -63,12 +63,12 @@ class IndexServiceStub {
       google::cloud::aiplatform::v1::DeleteIndexRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
-  UpsertDatapoints(grpc::ClientContext& context,
+  UpsertDatapoints(grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::UpsertDatapointsRequest const&
                        request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>
-  RemoveDatapoints(grpc::ClientContext& context,
+  RemoveDatapoints(grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::RemoveDatapointsRequest const&
                        request) = 0;
 
@@ -100,11 +100,11 @@ class DefaultIndexServiceStub : public IndexServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Index> GetIndex(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetIndexRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListIndexesResponse> ListIndexes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListIndexesRequest const& request)
       override;
 
@@ -121,12 +121,12 @@ class DefaultIndexServiceStub : public IndexServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
-  UpsertDatapoints(grpc::ClientContext& context,
+  UpsertDatapoints(grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::UpsertDatapointsRequest const&
                        request) override;
 
   StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>
-  RemoveDatapoints(grpc::ClientContext& context,
+  RemoveDatapoints(grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::RemoveDatapointsRequest const&
                        request) override;
 

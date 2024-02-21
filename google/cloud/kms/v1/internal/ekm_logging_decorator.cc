@@ -37,86 +37,86 @@ EkmServiceLogging::EkmServiceLogging(std::shared_ptr<EkmServiceStub> child,
 
 StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse>
 EkmServiceLogging::ListEkmConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::ListEkmConnectionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::ListEkmConnectionsRequest const& request) {
-        return child_->ListEkmConnections(context, request);
+        return child_->ListEkmConnections(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceLogging::GetEkmConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetEkmConnectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::GetEkmConnectionRequest const& request) {
-        return child_->GetEkmConnection(context, request);
+        return child_->GetEkmConnection(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceLogging::CreateEkmConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::CreateEkmConnectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::kms::v1::CreateEkmConnectionRequest const& request) {
-        return child_->CreateEkmConnection(context, request);
+        return child_->CreateEkmConnection(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceLogging::UpdateEkmConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) {
-        return child_->UpdateEkmConnection(context, request);
+        return child_->UpdateEkmConnection(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceLogging::GetEkmConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetEkmConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::GetEkmConfigRequest const& request) {
-        return child_->GetEkmConfig(context, request);
+        return child_->GetEkmConfig(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceLogging::UpdateEkmConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
-        return child_->UpdateEkmConfig(context, request);
+        return child_->UpdateEkmConfig(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
 EkmServiceLogging::VerifyConnectivity(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
-        return child_->VerifyConnectivity(context, request);
+        return child_->VerifyConnectivity(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -33,26 +33,26 @@ ApiGatewayServiceTracingStub::ApiGatewayServiceTracingStub(
 
 StatusOr<google::cloud::apigateway::v1::ListGatewaysResponse>
 ApiGatewayServiceTracingStub::ListGateways(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::ListGatewaysRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.apigateway.v1.ApiGatewayService", "ListGateways");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListGateways(context, request));
+                           child_->ListGateways(context, options, request));
 }
 
 StatusOr<google::cloud::apigateway::v1::Gateway>
 ApiGatewayServiceTracingStub::GetGateway(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::GetGatewayRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.apigateway.v1.ApiGatewayService", "GetGateway");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetGateway(context, request));
+                           child_->GetGateway(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -96,24 +96,26 @@ ApiGatewayServiceTracingStub::AsyncDeleteGateway(
 
 StatusOr<google::cloud::apigateway::v1::ListApisResponse>
 ApiGatewayServiceTracingStub::ListApis(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::ListApisRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.apigateway.v1.ApiGatewayService", "ListApis");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->ListApis(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListApis(context, options, request));
 }
 
 StatusOr<google::cloud::apigateway::v1::Api>
 ApiGatewayServiceTracingStub::GetApi(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::GetApiRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.apigateway.v1.ApiGatewayService", "GetApi");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetApi(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetApi(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -157,26 +159,26 @@ ApiGatewayServiceTracingStub::AsyncDeleteApi(
 
 StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>
 ApiGatewayServiceTracingStub::ListApiConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::ListApiConfigsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.apigateway.v1.ApiGatewayService", "ListApiConfigs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListApiConfigs(context, request));
+                           child_->ListApiConfigs(context, options, request));
 }
 
 StatusOr<google::cloud::apigateway::v1::ApiConfig>
 ApiGatewayServiceTracingStub::GetApiConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::GetApiConfigRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.apigateway.v1.ApiGatewayService", "GetApiConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetApiConfig(context, request));
+                           child_->GetApiConfig(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

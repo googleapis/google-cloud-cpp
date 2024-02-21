@@ -38,7 +38,7 @@ class ApplicationsTracingStub : public ApplicationsStub {
   explicit ApplicationsTracingStub(std::shared_ptr<ApplicationsStub> child);
 
   StatusOr<google::appengine::v1::Application> GetApplication(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetApplicationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateApplication(

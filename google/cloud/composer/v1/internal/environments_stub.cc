@@ -52,7 +52,7 @@ DefaultEnvironmentsStub::AsyncCreateEnvironment(
 
 StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
 DefaultEnvironmentsStub::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         GetEnvironmentRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::Environment response;
@@ -66,7 +66,7 @@ DefaultEnvironmentsStub::GetEnvironment(
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              ListEnvironmentsResponse>
 DefaultEnvironmentsStub::ListEnvironments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         ListEnvironmentsRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::ListEnvironmentsResponse
@@ -119,7 +119,7 @@ DefaultEnvironmentsStub::AsyncDeleteEnvironment(
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              ExecuteAirflowCommandResponse>
 DefaultEnvironmentsStub::ExecuteAirflowCommand(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         ExecuteAirflowCommandRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::
@@ -134,7 +134,7 @@ DefaultEnvironmentsStub::ExecuteAirflowCommand(
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              StopAirflowCommandResponse>
 DefaultEnvironmentsStub::StopAirflowCommand(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         StopAirflowCommandRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::StopAirflowCommandResponse
@@ -149,7 +149,7 @@ DefaultEnvironmentsStub::StopAirflowCommand(
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              PollAirflowCommandResponse>
 DefaultEnvironmentsStub::PollAirflowCommand(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         PollAirflowCommandRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::PollAirflowCommandResponse
@@ -164,7 +164,7 @@ DefaultEnvironmentsStub::PollAirflowCommand(
 StatusOr<
     google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse>
 DefaultEnvironmentsStub::ListWorkloads(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         ListWorkloadsRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse
@@ -179,7 +179,7 @@ DefaultEnvironmentsStub::ListWorkloads(
 StatusOr<
     google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
 DefaultEnvironmentsStub::CreateUserWorkloadsSecret(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         CreateUserWorkloadsSecretRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret
@@ -195,7 +195,7 @@ DefaultEnvironmentsStub::CreateUserWorkloadsSecret(
 StatusOr<
     google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
 DefaultEnvironmentsStub::GetUserWorkloadsSecret(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         GetUserWorkloadsSecretRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret
@@ -211,7 +211,7 @@ DefaultEnvironmentsStub::GetUserWorkloadsSecret(
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              ListUserWorkloadsSecretsResponse>
 DefaultEnvironmentsStub::ListUserWorkloadsSecrets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         ListUserWorkloadsSecretsRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::
@@ -227,7 +227,7 @@ DefaultEnvironmentsStub::ListUserWorkloadsSecrets(
 StatusOr<
     google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
 DefaultEnvironmentsStub::UpdateUserWorkloadsSecret(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         UpdateUserWorkloadsSecretRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret
@@ -241,7 +241,7 @@ DefaultEnvironmentsStub::UpdateUserWorkloadsSecret(
 }
 
 Status DefaultEnvironmentsStub::DeleteUserWorkloadsSecret(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         DeleteUserWorkloadsSecretRequest const& request) {
   google::protobuf::Empty response;
@@ -256,7 +256,7 @@ Status DefaultEnvironmentsStub::DeleteUserWorkloadsSecret(
 StatusOr<
     google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
 DefaultEnvironmentsStub::CreateUserWorkloadsConfigMap(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         CreateUserWorkloadsConfigMapRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap
@@ -272,7 +272,7 @@ DefaultEnvironmentsStub::CreateUserWorkloadsConfigMap(
 StatusOr<
     google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
 DefaultEnvironmentsStub::GetUserWorkloadsConfigMap(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         GetUserWorkloadsConfigMapRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap
@@ -288,7 +288,7 @@ DefaultEnvironmentsStub::GetUserWorkloadsConfigMap(
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              ListUserWorkloadsConfigMapsResponse>
 DefaultEnvironmentsStub::ListUserWorkloadsConfigMaps(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         ListUserWorkloadsConfigMapsRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::
@@ -304,7 +304,7 @@ DefaultEnvironmentsStub::ListUserWorkloadsConfigMaps(
 StatusOr<
     google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap>
 DefaultEnvironmentsStub::UpdateUserWorkloadsConfigMap(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         UpdateUserWorkloadsConfigMapRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::UserWorkloadsConfigMap
@@ -318,7 +318,7 @@ DefaultEnvironmentsStub::UpdateUserWorkloadsConfigMap(
 }
 
 Status DefaultEnvironmentsStub::DeleteUserWorkloadsConfigMap(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         DeleteUserWorkloadsConfigMapRequest const& request) {
   google::protobuf::Empty response;
@@ -390,7 +390,7 @@ DefaultEnvironmentsStub::AsyncDatabaseFailover(
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              FetchDatabasePropertiesResponse>
 DefaultEnvironmentsStub::FetchDatabaseProperties(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         FetchDatabasePropertiesRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::

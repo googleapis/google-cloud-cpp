@@ -44,27 +44,27 @@ TagKeysMetadata::TagKeysMetadata(
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagKeysResponse>
 TagKeysMetadata::ListTagKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListTagKeysRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->ListTagKeys(context, request);
+  SetMetadata(context, options);
+  return child_->ListTagKeys(context, options, request);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::TagKey> TagKeysMetadata::GetTagKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::GetTagKeyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetTagKey(context, request);
+  return child_->GetTagKey(context, options, request);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::TagKey>
 TagKeysMetadata::GetNamespacedTagKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->GetNamespacedTagKey(context, request);
+  SetMetadata(context, options);
+  return child_->GetNamespacedTagKey(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -98,31 +98,31 @@ TagKeysMetadata::AsyncDeleteTagKey(
 }
 
 StatusOr<google::iam::v1::Policy> TagKeysMetadata::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> TagKeysMetadata::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 TagKeysMetadata::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -55,31 +55,31 @@ IndexEndpointServiceMetadata::AsyncCreateIndexEndpoint(
 
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
 IndexEndpointServiceMetadata::GetIndexEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetIndexEndpoint(context, request);
+  return child_->GetIndexEndpoint(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListIndexEndpointsResponse>
 IndexEndpointServiceMetadata::ListIndexEndpoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListIndexEndpointsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListIndexEndpoints(context, request);
+  return child_->ListIndexEndpoints(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
 IndexEndpointServiceMetadata::UpdateIndexEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("index_endpoint.name=",
                    internal::UrlEncode(request.index_endpoint().name())));
-  return child_->UpdateIndexEndpoint(context, request);
+  return child_->UpdateIndexEndpoint(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

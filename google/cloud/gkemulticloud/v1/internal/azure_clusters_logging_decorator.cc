@@ -54,26 +54,28 @@ AzureClustersLogging::AsyncCreateAzureClient(
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureClient>
 AzureClustersLogging::GetAzureClient(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::GetAzureClientRequest const&
-                 request) { return child_->GetAzureClient(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetAzureClient(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureClientsResponse>
 AzureClustersLogging::ListAzureClients(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::ListAzureClientsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::ListAzureClientsRequest const&
                  request) {
-        return child_->ListAzureClients(context, request);
+        return child_->ListAzureClients(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -131,26 +133,28 @@ AzureClustersLogging::AsyncUpdateAzureCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>
 AzureClustersLogging::GetAzureCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::GetAzureClusterRequest const&
-                 request) { return child_->GetAzureCluster(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetAzureCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureClustersResponse>
 AzureClustersLogging::ListAzureClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::ListAzureClustersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::ListAzureClustersRequest const&
                  request) {
-        return child_->ListAzureClusters(context, request);
+        return child_->ListAzureClusters(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -174,30 +178,31 @@ AzureClustersLogging::AsyncDeleteAzureCluster(
 StatusOr<
     google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
 AzureClustersLogging::GenerateAzureClusterAgentToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::
         GenerateAzureClusterAgentTokenRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::
                  GenerateAzureClusterAgentTokenRequest const& request) {
-        return child_->GenerateAzureClusterAgentToken(context, request);
+        return child_->GenerateAzureClusterAgentToken(context, options,
+                                                      request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
 AzureClustersLogging::GenerateAzureAccessToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::
                  GenerateAzureAccessTokenRequest const& request) {
-        return child_->GenerateAzureAccessToken(context, request);
+        return child_->GenerateAzureAccessToken(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -238,29 +243,29 @@ AzureClustersLogging::AsyncUpdateAzureNodePool(
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>
 AzureClustersLogging::GetAzureNodePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const&
                  request) {
-        return child_->GetAzureNodePool(context, request);
+        return child_->GetAzureNodePool(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureNodePoolsResponse>
 AzureClustersLogging::ListAzureNodePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest const&
                  request) {
-        return child_->ListAzureNodePools(context, request);
+        return child_->ListAzureNodePools(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -283,46 +288,46 @@ AzureClustersLogging::AsyncDeleteAzureNodePool(
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
 AzureClustersLogging::GetAzureOpenIdConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
               request) {
-        return child_->GetAzureOpenIdConfig(context, request);
+        return child_->GetAzureOpenIdConfig(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
 AzureClustersLogging::GetAzureJsonWebKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
                  request) {
-        return child_->GetAzureJsonWebKeys(context, request);
+        return child_->GetAzureJsonWebKeys(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
 AzureClustersLogging::GetAzureServerConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&
               request) {
-        return child_->GetAzureServerConfig(context, request);
+        return child_->GetAzureServerConfig(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

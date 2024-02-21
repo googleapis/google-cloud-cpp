@@ -21,6 +21,7 @@
 
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/pubsublite/v1/cursor.grpc.pb.h>
@@ -44,12 +45,12 @@ class CursorServiceStub {
 
   virtual StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse>
   CommitCursor(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::CommitCursorRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse>
   ListPartitionCursors(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::ListPartitionCursorsRequest const&
           request) = 0;
 };
@@ -70,13 +71,13 @@ class DefaultCursorServiceStub : public CursorServiceStub {
       std::shared_ptr<grpc::ClientContext> context) override;
 
   StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse> CommitCursor(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::CommitCursorRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse>
   ListPartitionCursors(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request)
       override;
 

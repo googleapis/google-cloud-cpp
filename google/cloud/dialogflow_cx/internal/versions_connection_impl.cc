@@ -72,20 +72,21 @@ VersionsConnectionImpl::ListVersions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::Version>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dialogflow_cx::VersionsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dialogflow::cx::v3::ListVersionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::dialogflow::cx::v3::ListVersionsRequest const&
                        request) {
-              return stub->ListVersions(context, request);
+              return stub->ListVersions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dialogflow::cx::v3::ListVersionsResponse r) {
         std::vector<google::cloud::dialogflow::cx::v3::Version> result(
@@ -104,11 +105,11 @@ VersionsConnectionImpl::GetVersion(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetVersion(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::cx::v3::GetVersionRequest const& request) {
-        return stub_->GetVersion(context, request);
+        return stub_->GetVersion(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Version>>
@@ -156,10 +157,12 @@ VersionsConnectionImpl::UpdateVersion(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateVersion(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::UpdateVersionRequest const&
-                 request) { return stub_->UpdateVersion(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->UpdateVersion(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status VersionsConnectionImpl::DeleteVersion(
@@ -168,10 +171,12 @@ Status VersionsConnectionImpl::DeleteVersion(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteVersion(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::DeleteVersionRequest const&
-                 request) { return stub_->DeleteVersion(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DeleteVersion(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::protobuf::Struct>> VersionsConnectionImpl::LoadVersion(
@@ -217,10 +222,12 @@ VersionsConnectionImpl::CompareVersions(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CompareVersions(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::CompareVersionsRequest const&
-                 request) { return stub_->CompareVersions(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CompareVersions(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -41,35 +41,35 @@ class CloudChannelServiceMetadata : public CloudChannelServiceStub {
       std::string api_client_header = "");
 
   StatusOr<google::cloud::channel::v1::ListCustomersResponse> ListCustomers(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::ListCustomersRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::Customer> GetCustomer(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::GetCustomerRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::CheckCloudIdentityAccountsExistResponse>
   CheckCloudIdentityAccountsExist(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::CheckCloudIdentityAccountsExistRequest const&
           request) override;
 
   StatusOr<google::cloud::channel::v1::Customer> CreateCustomer(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::CreateCustomerRequest const& request)
       override;
 
   StatusOr<google::cloud::channel::v1::Customer> UpdateCustomer(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::UpdateCustomerRequest const& request)
       override;
 
-  Status DeleteCustomer(grpc::ClientContext& context,
+  Status DeleteCustomer(grpc::ClientContext& context, Options const& options,
                         google::cloud::channel::v1::DeleteCustomerRequest const&
                             request) override;
 
   StatusOr<google::cloud::channel::v1::Customer> ImportCustomer(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::ImportCustomerRequest const& request)
       override;
 
@@ -80,24 +80,24 @@ class CloudChannelServiceMetadata : public CloudChannelServiceStub {
       override;
 
   StatusOr<google::cloud::channel::v1::ListEntitlementsResponse>
-  ListEntitlements(grpc::ClientContext& context,
+  ListEntitlements(grpc::ClientContext& context, Options const& options,
                    google::cloud::channel::v1::ListEntitlementsRequest const&
                        request) override;
 
   StatusOr<google::cloud::channel::v1::ListTransferableSkusResponse>
   ListTransferableSkus(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::ListTransferableSkusRequest const& request)
       override;
 
   StatusOr<google::cloud::channel::v1::ListTransferableOffersResponse>
   ListTransferableOffers(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::ListTransferableOffersRequest const& request)
       override;
 
   StatusOr<google::cloud::channel::v1::Entitlement> GetEntitlement(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::GetEntitlementRequest const& request)
       override;
 
@@ -163,151 +163,151 @@ class CloudChannelServiceMetadata : public CloudChannelServiceStub {
 
   StatusOr<google::cloud::channel::v1::ListChannelPartnerLinksResponse>
   ListChannelPartnerLinks(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::ListChannelPartnerLinksRequest const& request)
       override;
 
   StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
   GetChannelPartnerLink(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::GetChannelPartnerLinkRequest const& request)
       override;
 
   StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
   CreateChannelPartnerLink(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::CreateChannelPartnerLinkRequest const&
           request) override;
 
   StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
   UpdateChannelPartnerLink(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&
           request) override;
 
   StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
   GetCustomerRepricingConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
           request) override;
 
   StatusOr<google::cloud::channel::v1::ListCustomerRepricingConfigsResponse>
   ListCustomerRepricingConfigs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::ListCustomerRepricingConfigsRequest const&
           request) override;
 
   StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
   CreateCustomerRepricingConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
           request) override;
 
   StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
   UpdateCustomerRepricingConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
           request) override;
 
   Status DeleteCustomerRepricingConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
           request) override;
 
   StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
   GetChannelPartnerRepricingConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
           request) override;
 
   StatusOr<
       google::cloud::channel::v1::ListChannelPartnerRepricingConfigsResponse>
   ListChannelPartnerRepricingConfigs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::
           ListChannelPartnerRepricingConfigsRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
   CreateChannelPartnerRepricingConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::
           CreateChannelPartnerRepricingConfigRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
   UpdateChannelPartnerRepricingConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::
           UpdateChannelPartnerRepricingConfigRequest const& request) override;
 
   Status DeleteChannelPartnerRepricingConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::
           DeleteChannelPartnerRepricingConfigRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::ListSkuGroupsResponse> ListSkuGroups(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::ListSkuGroupsRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::ListSkuGroupBillableSkusResponse>
   ListSkuGroupBillableSkus(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const&
           request) override;
 
   StatusOr<google::cloud::channel::v1::Offer> LookupOffer(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::LookupOfferRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::ListProductsResponse> ListProducts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::ListProductsRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::ListSkusResponse> ListSkus(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::ListSkusRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::ListOffersResponse> ListOffers(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::ListOffersRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::ListPurchasableSkusResponse>
   ListPurchasableSkus(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::ListPurchasableSkusRequest const& request)
       override;
 
   StatusOr<google::cloud::channel::v1::ListPurchasableOffersResponse>
   ListPurchasableOffers(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::ListPurchasableOffersRequest const& request)
       override;
 
   StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
   QueryEligibleBillingAccounts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
           request) override;
 
   StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
   RegisterSubscriber(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::RegisterSubscriberRequest const& request)
       override;
 
   StatusOr<google::cloud::channel::v1::UnregisterSubscriberResponse>
   UnregisterSubscriber(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::UnregisterSubscriberRequest const& request)
       override;
 
   StatusOr<google::cloud::channel::v1::ListSubscribersResponse> ListSubscribers(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::ListSubscribersRequest const& request)
       override;
 
   StatusOr<google::cloud::channel::v1::ListEntitlementChangesResponse>
   ListEntitlementChanges(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::ListEntitlementChangesRequest const& request)
       override;
 

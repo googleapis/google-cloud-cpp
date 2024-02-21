@@ -52,20 +52,20 @@ BackupForGKEAuth::AsyncCreateBackupPlan(
 
 StatusOr<google::cloud::gkebackup::v1::ListBackupPlansResponse>
 BackupForGKEAuth::ListBackupPlans(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::ListBackupPlansRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBackupPlans(context, request);
+  return child_->ListBackupPlans(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::BackupPlan>
 BackupForGKEAuth::GetBackupPlan(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::GetBackupPlanRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetBackupPlan(context, request);
+  return child_->GetBackupPlan(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -127,19 +127,19 @@ BackupForGKEAuth::AsyncCreateBackup(
 
 StatusOr<google::cloud::gkebackup::v1::ListBackupsResponse>
 BackupForGKEAuth::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::ListBackupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBackups(context, request);
+  return child_->ListBackups(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::Backup> BackupForGKEAuth::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::GetBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetBackup(context, request);
+  return child_->GetBackup(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -182,20 +182,20 @@ BackupForGKEAuth::AsyncDeleteBackup(
 
 StatusOr<google::cloud::gkebackup::v1::ListVolumeBackupsResponse>
 BackupForGKEAuth::ListVolumeBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::ListVolumeBackupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListVolumeBackups(context, request);
+  return child_->ListVolumeBackups(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::VolumeBackup>
 BackupForGKEAuth::GetVolumeBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::GetVolumeBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetVolumeBackup(context, request);
+  return child_->GetVolumeBackup(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -219,20 +219,20 @@ BackupForGKEAuth::AsyncCreateRestorePlan(
 
 StatusOr<google::cloud::gkebackup::v1::ListRestorePlansResponse>
 BackupForGKEAuth::ListRestorePlans(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::ListRestorePlansRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListRestorePlans(context, request);
+  return child_->ListRestorePlans(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::RestorePlan>
 BackupForGKEAuth::GetRestorePlan(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::GetRestorePlanRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetRestorePlan(context, request);
+  return child_->GetRestorePlan(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -294,19 +294,19 @@ BackupForGKEAuth::AsyncCreateRestore(
 
 StatusOr<google::cloud::gkebackup::v1::ListRestoresResponse>
 BackupForGKEAuth::ListRestores(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::ListRestoresRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListRestores(context, request);
+  return child_->ListRestores(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::Restore> BackupForGKEAuth::GetRestore(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::GetRestoreRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetRestore(context, request);
+  return child_->GetRestore(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -349,20 +349,20 @@ BackupForGKEAuth::AsyncDeleteRestore(
 
 StatusOr<google::cloud::gkebackup::v1::ListVolumeRestoresResponse>
 BackupForGKEAuth::ListVolumeRestores(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::ListVolumeRestoresRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListVolumeRestores(context, request);
+  return child_->ListVolumeRestores(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::VolumeRestore>
 BackupForGKEAuth::GetVolumeRestore(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetVolumeRestore(context, request);
+  return child_->GetVolumeRestore(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

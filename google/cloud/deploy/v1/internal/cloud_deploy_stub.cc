@@ -33,7 +33,7 @@ CloudDeployStub::~CloudDeployStub() = default;
 
 StatusOr<google::cloud::deploy::v1::ListDeliveryPipelinesResponse>
 DefaultCloudDeployStub::ListDeliveryPipelines(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::ListDeliveryPipelinesRequest const& request) {
   google::cloud::deploy::v1::ListDeliveryPipelinesResponse response;
   auto status = grpc_stub_->ListDeliveryPipelines(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultCloudDeployStub::ListDeliveryPipelines(
 
 StatusOr<google::cloud::deploy::v1::DeliveryPipeline>
 DefaultCloudDeployStub::GetDeliveryPipeline(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::GetDeliveryPipelineRequest const& request) {
   google::cloud::deploy::v1::DeliveryPipeline response;
   auto status = grpc_stub_->GetDeliveryPipeline(&context, request, &response);
@@ -111,7 +111,7 @@ DefaultCloudDeployStub::AsyncDeleteDeliveryPipeline(
 
 StatusOr<google::cloud::deploy::v1::ListTargetsResponse>
 DefaultCloudDeployStub::ListTargets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::ListTargetsRequest const& request) {
   google::cloud::deploy::v1::ListTargetsResponse response;
   auto status = grpc_stub_->ListTargets(&context, request, &response);
@@ -123,7 +123,7 @@ DefaultCloudDeployStub::ListTargets(
 
 StatusOr<google::cloud::deploy::v1::RollbackTargetResponse>
 DefaultCloudDeployStub::RollbackTarget(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::RollbackTargetRequest const& request) {
   google::cloud::deploy::v1::RollbackTargetResponse response;
   auto status = grpc_stub_->RollbackTarget(&context, request, &response);
@@ -134,7 +134,7 @@ DefaultCloudDeployStub::RollbackTarget(
 }
 
 StatusOr<google::cloud::deploy::v1::Target> DefaultCloudDeployStub::GetTarget(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::GetTargetRequest const& request) {
   google::cloud::deploy::v1::Target response;
   auto status = grpc_stub_->GetTarget(&context, request, &response);
@@ -197,7 +197,7 @@ DefaultCloudDeployStub::AsyncDeleteTarget(
 
 StatusOr<google::cloud::deploy::v1::ListCustomTargetTypesResponse>
 DefaultCloudDeployStub::ListCustomTargetTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::ListCustomTargetTypesRequest const& request) {
   google::cloud::deploy::v1::ListCustomTargetTypesResponse response;
   auto status = grpc_stub_->ListCustomTargetTypes(&context, request, &response);
@@ -209,7 +209,7 @@ DefaultCloudDeployStub::ListCustomTargetTypes(
 
 StatusOr<google::cloud::deploy::v1::CustomTargetType>
 DefaultCloudDeployStub::GetCustomTargetType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request) {
   google::cloud::deploy::v1::CustomTargetType response;
   auto status = grpc_stub_->GetCustomTargetType(&context, request, &response);
@@ -275,7 +275,7 @@ DefaultCloudDeployStub::AsyncDeleteCustomTargetType(
 
 StatusOr<google::cloud::deploy::v1::ListReleasesResponse>
 DefaultCloudDeployStub::ListReleases(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::ListReleasesRequest const& request) {
   google::cloud::deploy::v1::ListReleasesResponse response;
   auto status = grpc_stub_->ListReleases(&context, request, &response);
@@ -286,7 +286,7 @@ DefaultCloudDeployStub::ListReleases(
 }
 
 StatusOr<google::cloud::deploy::v1::Release> DefaultCloudDeployStub::GetRelease(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::GetReleaseRequest const& request) {
   google::cloud::deploy::v1::Release response;
   auto status = grpc_stub_->GetRelease(&context, request, &response);
@@ -315,7 +315,7 @@ DefaultCloudDeployStub::AsyncCreateRelease(
 
 StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse>
 DefaultCloudDeployStub::AbandonRelease(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::AbandonReleaseRequest const& request) {
   google::cloud::deploy::v1::AbandonReleaseResponse response;
   auto status = grpc_stub_->AbandonRelease(&context, request, &response);
@@ -327,7 +327,7 @@ DefaultCloudDeployStub::AbandonRelease(
 
 StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>
 DefaultCloudDeployStub::ApproveRollout(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::ApproveRolloutRequest const& request) {
   google::cloud::deploy::v1::ApproveRolloutResponse response;
   auto status = grpc_stub_->ApproveRollout(&context, request, &response);
@@ -339,7 +339,7 @@ DefaultCloudDeployStub::ApproveRollout(
 
 StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>
 DefaultCloudDeployStub::AdvanceRollout(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::AdvanceRolloutRequest const& request) {
   google::cloud::deploy::v1::AdvanceRolloutResponse response;
   auto status = grpc_stub_->AdvanceRollout(&context, request, &response);
@@ -351,7 +351,7 @@ DefaultCloudDeployStub::AdvanceRollout(
 
 StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>
 DefaultCloudDeployStub::CancelRollout(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::CancelRolloutRequest const& request) {
   google::cloud::deploy::v1::CancelRolloutResponse response;
   auto status = grpc_stub_->CancelRollout(&context, request, &response);
@@ -363,7 +363,7 @@ DefaultCloudDeployStub::CancelRollout(
 
 StatusOr<google::cloud::deploy::v1::ListRolloutsResponse>
 DefaultCloudDeployStub::ListRollouts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::ListRolloutsRequest const& request) {
   google::cloud::deploy::v1::ListRolloutsResponse response;
   auto status = grpc_stub_->ListRollouts(&context, request, &response);
@@ -374,7 +374,7 @@ DefaultCloudDeployStub::ListRollouts(
 }
 
 StatusOr<google::cloud::deploy::v1::Rollout> DefaultCloudDeployStub::GetRollout(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::GetRolloutRequest const& request) {
   google::cloud::deploy::v1::Rollout response;
   auto status = grpc_stub_->GetRollout(&context, request, &response);
@@ -403,7 +403,7 @@ DefaultCloudDeployStub::AsyncCreateRollout(
 
 StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>
 DefaultCloudDeployStub::IgnoreJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::IgnoreJobRequest const& request) {
   google::cloud::deploy::v1::IgnoreJobResponse response;
   auto status = grpc_stub_->IgnoreJob(&context, request, &response);
@@ -415,7 +415,7 @@ DefaultCloudDeployStub::IgnoreJob(
 
 StatusOr<google::cloud::deploy::v1::RetryJobResponse>
 DefaultCloudDeployStub::RetryJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::RetryJobRequest const& request) {
   google::cloud::deploy::v1::RetryJobResponse response;
   auto status = grpc_stub_->RetryJob(&context, request, &response);
@@ -427,7 +427,7 @@ DefaultCloudDeployStub::RetryJob(
 
 StatusOr<google::cloud::deploy::v1::ListJobRunsResponse>
 DefaultCloudDeployStub::ListJobRuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::ListJobRunsRequest const& request) {
   google::cloud::deploy::v1::ListJobRunsResponse response;
   auto status = grpc_stub_->ListJobRuns(&context, request, &response);
@@ -438,7 +438,7 @@ DefaultCloudDeployStub::ListJobRuns(
 }
 
 StatusOr<google::cloud::deploy::v1::JobRun> DefaultCloudDeployStub::GetJobRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::GetJobRunRequest const& request) {
   google::cloud::deploy::v1::JobRun response;
   auto status = grpc_stub_->GetJobRun(&context, request, &response);
@@ -450,7 +450,7 @@ StatusOr<google::cloud::deploy::v1::JobRun> DefaultCloudDeployStub::GetJobRun(
 
 StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>
 DefaultCloudDeployStub::TerminateJobRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::TerminateJobRunRequest const& request) {
   google::cloud::deploy::v1::TerminateJobRunResponse response;
   auto status = grpc_stub_->TerminateJobRun(&context, request, &response);
@@ -461,7 +461,7 @@ DefaultCloudDeployStub::TerminateJobRun(
 }
 
 StatusOr<google::cloud::deploy::v1::Config> DefaultCloudDeployStub::GetConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::GetConfigRequest const& request) {
   google::cloud::deploy::v1::Config response;
   auto status = grpc_stub_->GetConfig(&context, request, &response);
@@ -524,7 +524,7 @@ DefaultCloudDeployStub::AsyncDeleteAutomation(
 
 StatusOr<google::cloud::deploy::v1::Automation>
 DefaultCloudDeployStub::GetAutomation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::GetAutomationRequest const& request) {
   google::cloud::deploy::v1::Automation response;
   auto status = grpc_stub_->GetAutomation(&context, request, &response);
@@ -536,7 +536,7 @@ DefaultCloudDeployStub::GetAutomation(
 
 StatusOr<google::cloud::deploy::v1::ListAutomationsResponse>
 DefaultCloudDeployStub::ListAutomations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::ListAutomationsRequest const& request) {
   google::cloud::deploy::v1::ListAutomationsResponse response;
   auto status = grpc_stub_->ListAutomations(&context, request, &response);
@@ -548,7 +548,7 @@ DefaultCloudDeployStub::ListAutomations(
 
 StatusOr<google::cloud::deploy::v1::AutomationRun>
 DefaultCloudDeployStub::GetAutomationRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::GetAutomationRunRequest const& request) {
   google::cloud::deploy::v1::AutomationRun response;
   auto status = grpc_stub_->GetAutomationRun(&context, request, &response);
@@ -560,7 +560,7 @@ DefaultCloudDeployStub::GetAutomationRun(
 
 StatusOr<google::cloud::deploy::v1::ListAutomationRunsResponse>
 DefaultCloudDeployStub::ListAutomationRuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::ListAutomationRunsRequest const& request) {
   google::cloud::deploy::v1::ListAutomationRunsResponse response;
   auto status = grpc_stub_->ListAutomationRuns(&context, request, &response);
@@ -572,7 +572,7 @@ DefaultCloudDeployStub::ListAutomationRuns(
 
 StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse>
 DefaultCloudDeployStub::CancelAutomationRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::deploy::v1::CancelAutomationRunRequest const& request) {
   google::cloud::deploy::v1::CancelAutomationRunResponse response;
   auto status = grpc_stub_->CancelAutomationRun(&context, request, &response);

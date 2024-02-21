@@ -41,12 +41,12 @@ class UserEventServiceMetadata : public UserEventServiceStub {
       std::string api_client_header = "");
 
   StatusOr<google::cloud::discoveryengine::v1::UserEvent> WriteUserEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::WriteUserEventRequest const& request)
       override;
 
   StatusOr<google::api::HttpBody> CollectUserEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::CollectUserEventRequest const&
           request) override;
 

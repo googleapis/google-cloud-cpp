@@ -61,11 +61,11 @@ StatusOr<google::cloud::run::v2::Task> TasksConnectionImpl::GetTask(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTask(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::run::v2::GetTaskRequest const& request) {
-        return stub_->GetTask(context, request);
+        return stub_->GetTask(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::run::v2::Task> TasksConnectionImpl::ListTasks(
@@ -76,19 +76,20 @@ StreamRange<google::cloud::run::v2::Task> TasksConnectionImpl::ListTasks(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::run::v2::Task>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<run_v2::TasksRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::run::v2::ListTasksRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::run::v2::ListTasksRequest const& request) {
-              return stub->ListTasks(context, request);
+              return stub->ListTasks(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::run::v2::ListTasksResponse r) {
         std::vector<google::cloud::run::v2::Task> result(r.tasks().size());

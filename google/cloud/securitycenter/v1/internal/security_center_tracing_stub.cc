@@ -46,7 +46,7 @@ SecurityCenterTracingStub::AsyncBulkMuteFindings(
 
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 SecurityCenterTracingStub::CreateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::
         CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto span =
@@ -54,50 +54,50 @@ SecurityCenterTracingStub::CreateSecurityHealthAnalyticsCustomModule(
                              "CreateSecurityHealthAnalyticsCustomModule");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->CreateSecurityHealthAnalyticsCustomModule(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateSecurityHealthAnalyticsCustomModule(
+                               context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterTracingStub::CreateSource(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::CreateSourceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "CreateSource");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateSource(context, request));
+                           child_->CreateSource(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
 SecurityCenterTracingStub::CreateFinding(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::CreateFindingRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "CreateFinding");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateFinding(context, request));
+                           child_->CreateFinding(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::MuteConfig>
 SecurityCenterTracingStub::CreateMuteConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::CreateMuteConfigRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "CreateMuteConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateMuteConfig(context, request));
+                           child_->CreateMuteConfig(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
 SecurityCenterTracingStub::CreateNotificationConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::CreateNotificationConfigRequest const&
         request) {
   auto span =
@@ -105,23 +105,24 @@ SecurityCenterTracingStub::CreateNotificationConfig(
                              "CreateNotificationConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateNotificationConfig(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateNotificationConfig(context, options, request));
 }
 
 Status SecurityCenterTracingStub::DeleteMuteConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::DeleteMuteConfigRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "DeleteMuteConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteMuteConfig(context, request));
+                           child_->DeleteMuteConfig(context, options, request));
 }
 
 Status SecurityCenterTracingStub::DeleteNotificationConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&
         request) {
   auto span =
@@ -129,12 +130,13 @@ Status SecurityCenterTracingStub::DeleteNotificationConfig(
                              "DeleteNotificationConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteNotificationConfig(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteNotificationConfig(context, options, request));
 }
 
 Status SecurityCenterTracingStub::DeleteSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::
         DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto span =
@@ -142,63 +144,63 @@ Status SecurityCenterTracingStub::DeleteSecurityHealthAnalyticsCustomModule(
                              "DeleteSecurityHealthAnalyticsCustomModule");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->DeleteSecurityHealthAnalyticsCustomModule(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteSecurityHealthAnalyticsCustomModule(
+                               context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterTracingStub::GetBigQueryExport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "GetBigQueryExport");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetBigQueryExport(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetBigQueryExport(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy> SecurityCenterTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetIamPolicy(context, request));
+                           child_->GetIamPolicy(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::MuteConfig>
 SecurityCenterTracingStub::GetMuteConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::GetMuteConfigRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "GetMuteConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetMuteConfig(context, request));
+                           child_->GetMuteConfig(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
 SecurityCenterTracingStub::GetNotificationConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::GetNotificationConfigRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "GetNotificationConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetNotificationConfig(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetNotificationConfig(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
 SecurityCenterTracingStub::GetOrganizationSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const&
         request) {
   auto span =
@@ -206,14 +208,15 @@ SecurityCenterTracingStub::GetOrganizationSettings(
                              "GetOrganizationSettings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetOrganizationSettings(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GetOrganizationSettings(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::
              EffectiveSecurityHealthAnalyticsCustomModule>
 SecurityCenterTracingStub::GetEffectiveSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::
         GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto span =
@@ -223,13 +226,13 @@ SecurityCenterTracingStub::GetEffectiveSecurityHealthAnalyticsCustomModule(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
-      child_->GetEffectiveSecurityHealthAnalyticsCustomModule(context,
+      child_->GetEffectiveSecurityHealthAnalyticsCustomModule(context, options,
                                                               request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 SecurityCenterTracingStub::GetSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::
         GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto span =
@@ -237,62 +240,63 @@ SecurityCenterTracingStub::GetSecurityHealthAnalyticsCustomModule(
                              "GetSecurityHealthAnalyticsCustomModule");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->GetSecurityHealthAnalyticsCustomModule(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetSecurityHealthAnalyticsCustomModule(
+                               context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterTracingStub::GetSource(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::GetSourceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "GetSource");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetSource(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetSource(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::GroupAssetsResponse>
 SecurityCenterTracingStub::GroupAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::GroupAssetsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "GroupAssets");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GroupAssets(context, request));
+                           child_->GroupAssets(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::GroupFindingsResponse>
 SecurityCenterTracingStub::GroupFindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::GroupFindingsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "GroupFindings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GroupFindings(context, request));
+                           child_->GroupFindings(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListAssetsResponse>
 SecurityCenterTracingStub::ListAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::ListAssetsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "ListAssets");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListAssets(context, request));
+                           child_->ListAssets(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::
              ListDescendantSecurityHealthAnalyticsCustomModulesResponse>
 SecurityCenterTracingStub::ListDescendantSecurityHealthAnalyticsCustomModules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::
         ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
             request) {
@@ -303,37 +307,37 @@ SecurityCenterTracingStub::ListDescendantSecurityHealthAnalyticsCustomModules(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
-      child_->ListDescendantSecurityHealthAnalyticsCustomModules(context,
-                                                                 request));
+      child_->ListDescendantSecurityHealthAnalyticsCustomModules(
+          context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListFindingsResponse>
 SecurityCenterTracingStub::ListFindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::ListFindingsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "ListFindings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListFindings(context, request));
+                           child_->ListFindings(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListMuteConfigsResponse>
 SecurityCenterTracingStub::ListMuteConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::ListMuteConfigsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "ListMuteConfigs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListMuteConfigs(context, request));
+                           child_->ListMuteConfigs(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListNotificationConfigsResponse>
 SecurityCenterTracingStub::ListNotificationConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::ListNotificationConfigsRequest const&
         request) {
   auto span =
@@ -341,14 +345,15 @@ SecurityCenterTracingStub::ListNotificationConfigs(
                              "ListNotificationConfigs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListNotificationConfigs(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListNotificationConfigs(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::
              ListEffectiveSecurityHealthAnalyticsCustomModulesResponse>
 SecurityCenterTracingStub::ListEffectiveSecurityHealthAnalyticsCustomModules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::
         ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
             request) {
@@ -359,14 +364,14 @@ SecurityCenterTracingStub::ListEffectiveSecurityHealthAnalyticsCustomModules(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
-      child_->ListEffectiveSecurityHealthAnalyticsCustomModules(context,
-                                                                request));
+      child_->ListEffectiveSecurityHealthAnalyticsCustomModules(
+          context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::
              ListSecurityHealthAnalyticsCustomModulesResponse>
 SecurityCenterTracingStub::ListSecurityHealthAnalyticsCustomModules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::
         ListSecurityHealthAnalyticsCustomModulesRequest const& request) {
   auto span =
@@ -374,21 +379,21 @@ SecurityCenterTracingStub::ListSecurityHealthAnalyticsCustomModules(
                              "ListSecurityHealthAnalyticsCustomModules");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->ListSecurityHealthAnalyticsCustomModules(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListSecurityHealthAnalyticsCustomModules(
+                               context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListSourcesResponse>
 SecurityCenterTracingStub::ListSources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::ListSourcesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "ListSources");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListSources(context, request));
+                           child_->ListSources(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -407,54 +412,55 @@ SecurityCenterTracingStub::AsyncRunAssetDiscovery(
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
 SecurityCenterTracingStub::SetFindingState(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::SetFindingStateRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "SetFindingState");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->SetFindingState(context, request));
+                           child_->SetFindingState(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
 SecurityCenterTracingStub::SetMute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::SetMuteRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "SetMute");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->SetMute(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->SetMute(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy> SecurityCenterTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->SetIamPolicy(context, request));
+                           child_->SetIamPolicy(context, options, request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 SecurityCenterTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::
              SimulateSecurityHealthAnalyticsCustomModuleResponse>
 SecurityCenterTracingStub::SimulateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::
         SimulateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto span =
@@ -462,51 +468,51 @@ SecurityCenterTracingStub::SimulateSecurityHealthAnalyticsCustomModule(
                              "SimulateSecurityHealthAnalyticsCustomModule");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->SimulateSecurityHealthAnalyticsCustomModule(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->SimulateSecurityHealthAnalyticsCustomModule(
+                               context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
 SecurityCenterTracingStub::UpdateExternalSystem(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "UpdateExternalSystem");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateExternalSystem(context, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateExternalSystem(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
 SecurityCenterTracingStub::UpdateFinding(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::UpdateFindingRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "UpdateFinding");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateFinding(context, request));
+                           child_->UpdateFinding(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::MuteConfig>
 SecurityCenterTracingStub::UpdateMuteConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::UpdateMuteConfigRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "UpdateMuteConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateMuteConfig(context, request));
+                           child_->UpdateMuteConfig(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
 SecurityCenterTracingStub::UpdateNotificationConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::UpdateNotificationConfigRequest const&
         request) {
   auto span =
@@ -514,13 +520,14 @@ SecurityCenterTracingStub::UpdateNotificationConfig(
                              "UpdateNotificationConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateNotificationConfig(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateNotificationConfig(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
 SecurityCenterTracingStub::UpdateOrganizationSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::UpdateOrganizationSettingsRequest const&
         request) {
   auto span =
@@ -529,12 +536,13 @@ SecurityCenterTracingStub::UpdateOrganizationSettings(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
-      context, *span, child_->UpdateOrganizationSettings(context, request));
+      context, *span,
+      child_->UpdateOrganizationSettings(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 SecurityCenterTracingStub::UpdateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::
         UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto span =
@@ -542,85 +550,85 @@ SecurityCenterTracingStub::UpdateSecurityHealthAnalyticsCustomModule(
                              "UpdateSecurityHealthAnalyticsCustomModule");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->UpdateSecurityHealthAnalyticsCustomModule(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateSecurityHealthAnalyticsCustomModule(
+                               context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterTracingStub::UpdateSource(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::UpdateSourceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "UpdateSource");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateSource(context, request));
+                           child_->UpdateSource(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::SecurityMarks>
 SecurityCenterTracingStub::UpdateSecurityMarks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "UpdateSecurityMarks");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateSecurityMarks(context, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateSecurityMarks(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterTracingStub::CreateBigQueryExport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "CreateBigQueryExport");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateBigQueryExport(context, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateBigQueryExport(context, options, request));
 }
 
 Status SecurityCenterTracingStub::DeleteBigQueryExport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "DeleteBigQueryExport");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteBigQueryExport(context, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteBigQueryExport(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterTracingStub::UpdateBigQueryExport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "UpdateBigQueryExport");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateBigQueryExport(context, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateBigQueryExport(context, options, request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListBigQueryExportsResponse>
 SecurityCenterTracingStub::ListBigQueryExports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::ListBigQueryExportsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "ListBigQueryExports");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListBigQueryExports(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListBigQueryExports(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

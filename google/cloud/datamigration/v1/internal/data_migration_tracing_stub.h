@@ -39,12 +39,12 @@ class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
       std::shared_ptr<DataMigrationServiceStub> child);
 
   StatusOr<google::cloud::clouddms::v1::ListMigrationJobsResponse>
-  ListMigrationJobs(grpc::ClientContext& context,
+  ListMigrationJobs(grpc::ClientContext& context, Options const& options,
                     google::cloud::clouddms::v1::ListMigrationJobsRequest const&
                         request) override;
 
   StatusOr<google::cloud::clouddms::v1::MigrationJob> GetMigrationJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::clouddms::v1::GetMigrationJobRequest const& request)
       override;
 
@@ -103,23 +103,23 @@ class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
       override;
 
   StatusOr<google::cloud::clouddms::v1::SshScript> GenerateSshScript(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::clouddms::v1::GenerateSshScriptRequest const& request)
       override;
 
   StatusOr<google::cloud::clouddms::v1::TcpProxyScript> GenerateTcpProxyScript(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request)
       override;
 
   StatusOr<google::cloud::clouddms::v1::ListConnectionProfilesResponse>
   ListConnectionProfiles(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::clouddms::v1::ListConnectionProfilesRequest const& request)
       override;
 
   StatusOr<google::cloud::clouddms::v1::ConnectionProfile> GetConnectionProfile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::clouddms::v1::GetConnectionProfileRequest const& request)
       override;
 
@@ -148,13 +148,13 @@ class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
           request) override;
 
   StatusOr<google::cloud::clouddms::v1::PrivateConnection> GetPrivateConnection(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request)
       override;
 
   StatusOr<google::cloud::clouddms::v1::ListPrivateConnectionsResponse>
   ListPrivateConnections(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::clouddms::v1::ListPrivateConnectionsRequest const& request)
       override;
 
@@ -166,13 +166,13 @@ class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
 
   StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
   GetConversionWorkspace(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::clouddms::v1::GetConversionWorkspaceRequest const& request)
       override;
 
   StatusOr<google::cloud::clouddms::v1::ListConversionWorkspacesResponse>
   ListConversionWorkspaces(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::clouddms::v1::ListConversionWorkspacesRequest const&
           request) override;
 
@@ -198,22 +198,22 @@ class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
           request) override;
 
   StatusOr<google::cloud::clouddms::v1::MappingRule> CreateMappingRule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::clouddms::v1::CreateMappingRuleRequest const& request)
       override;
 
   Status DeleteMappingRule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request)
       override;
 
   StatusOr<google::cloud::clouddms::v1::ListMappingRulesResponse>
-  ListMappingRules(grpc::ClientContext& context,
+  ListMappingRules(grpc::ClientContext& context, Options const& options,
                    google::cloud::clouddms::v1::ListMappingRulesRequest const&
                        request) override;
 
   StatusOr<google::cloud::clouddms::v1::MappingRule> GetMappingRule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::clouddms::v1::GetMappingRuleRequest const& request)
       override;
 
@@ -259,25 +259,25 @@ class DataMigrationServiceTracingStub : public DataMigrationServiceStub {
 
   StatusOr<google::cloud::clouddms::v1::DescribeDatabaseEntitiesResponse>
   DescribeDatabaseEntities(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest const&
           request) override;
 
   StatusOr<google::cloud::clouddms::v1::SearchBackgroundJobsResponse>
   SearchBackgroundJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request)
       override;
 
   StatusOr<
       google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse>
   DescribeConversionWorkspaceRevisions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::clouddms::v1::
           DescribeConversionWorkspaceRevisionsRequest const& request) override;
 
   StatusOr<google::cloud::clouddms::v1::FetchStaticIpsResponse> FetchStaticIps(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::clouddms::v1::FetchStaticIpsRequest const& request)
       override;
 

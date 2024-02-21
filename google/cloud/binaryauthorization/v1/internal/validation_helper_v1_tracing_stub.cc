@@ -34,7 +34,7 @@ ValidationHelperV1TracingStub::ValidationHelperV1TracingStub(
 StatusOr<google::cloud::binaryauthorization::v1::
              ValidateAttestationOccurrenceResponse>
 ValidationHelperV1TracingStub::ValidateAttestationOccurrence(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::binaryauthorization::v1::
         ValidateAttestationOccurrenceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
@@ -43,7 +43,8 @@ ValidationHelperV1TracingStub::ValidateAttestationOccurrence(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
-      context, *span, child_->ValidateAttestationOccurrence(context, request));
+      context, *span,
+      child_->ValidateAttestationOccurrence(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

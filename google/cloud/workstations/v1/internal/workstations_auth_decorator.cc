@@ -33,22 +33,22 @@ WorkstationsAuth::WorkstationsAuth(
 
 StatusOr<google::cloud::workstations::v1::WorkstationCluster>
 WorkstationsAuth::GetWorkstationCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workstations::v1::GetWorkstationClusterRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetWorkstationCluster(context, request);
+  return child_->GetWorkstationCluster(context, options, request);
 }
 
 StatusOr<google::cloud::workstations::v1::ListWorkstationClustersResponse>
 WorkstationsAuth::ListWorkstationClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workstations::v1::ListWorkstationClustersRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListWorkstationClusters(context, request);
+  return child_->ListWorkstationClusters(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -113,32 +113,32 @@ WorkstationsAuth::AsyncDeleteWorkstationCluster(
 
 StatusOr<google::cloud::workstations::v1::WorkstationConfig>
 WorkstationsAuth::GetWorkstationConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workstations::v1::GetWorkstationConfigRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetWorkstationConfig(context, request);
+  return child_->GetWorkstationConfig(context, options, request);
 }
 
 StatusOr<google::cloud::workstations::v1::ListWorkstationConfigsResponse>
 WorkstationsAuth::ListWorkstationConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workstations::v1::ListWorkstationConfigsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListWorkstationConfigs(context, request);
+  return child_->ListWorkstationConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::workstations::v1::ListUsableWorkstationConfigsResponse>
 WorkstationsAuth::ListUsableWorkstationConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListUsableWorkstationConfigs(context, request);
+  return child_->ListUsableWorkstationConfigs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -203,30 +203,30 @@ WorkstationsAuth::AsyncDeleteWorkstationConfig(
 
 StatusOr<google::cloud::workstations::v1::Workstation>
 WorkstationsAuth::GetWorkstation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workstations::v1::GetWorkstationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetWorkstation(context, request);
+  return child_->GetWorkstation(context, options, request);
 }
 
 StatusOr<google::cloud::workstations::v1::ListWorkstationsResponse>
 WorkstationsAuth::ListWorkstations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workstations::v1::ListWorkstationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListWorkstations(context, request);
+  return child_->ListWorkstations(context, options, request);
 }
 
 StatusOr<google::cloud::workstations::v1::ListUsableWorkstationsResponse>
 WorkstationsAuth::ListUsableWorkstations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workstations::v1::ListUsableWorkstationsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListUsableWorkstations(context, request);
+  return child_->ListUsableWorkstations(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -326,12 +326,12 @@ WorkstationsAuth::AsyncStopWorkstation(
 
 StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>
 WorkstationsAuth::GenerateAccessToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workstations::v1::GenerateAccessTokenRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateAccessToken(context, request);
+  return child_->GenerateAccessToken(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -33,81 +33,81 @@ MetricServiceAuth::MetricServiceAuth(
 
 StatusOr<google::monitoring::v3::ListMonitoredResourceDescriptorsResponse>
 MetricServiceAuth::ListMonitoredResourceDescriptors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListMonitoredResourceDescriptors(context, request);
+  return child_->ListMonitoredResourceDescriptors(context, options, request);
 }
 
 StatusOr<google::api::MonitoredResourceDescriptor>
 MetricServiceAuth::GetMonitoredResourceDescriptor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetMonitoredResourceDescriptor(context, request);
+  return child_->GetMonitoredResourceDescriptor(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::ListMetricDescriptorsResponse>
 MetricServiceAuth::ListMetricDescriptors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListMetricDescriptorsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListMetricDescriptors(context, request);
+  return child_->ListMetricDescriptors(context, options, request);
 }
 
 StatusOr<google::api::MetricDescriptor> MetricServiceAuth::GetMetricDescriptor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetMetricDescriptorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetMetricDescriptor(context, request);
+  return child_->GetMetricDescriptor(context, options, request);
 }
 
 StatusOr<google::api::MetricDescriptor>
 MetricServiceAuth::CreateMetricDescriptor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateMetricDescriptorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateMetricDescriptor(context, request);
+  return child_->CreateMetricDescriptor(context, options, request);
 }
 
 Status MetricServiceAuth::DeleteMetricDescriptor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::DeleteMetricDescriptorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteMetricDescriptor(context, request);
+  return child_->DeleteMetricDescriptor(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::ListTimeSeriesResponse>
 MetricServiceAuth::ListTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListTimeSeriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTimeSeries(context, request);
+  return child_->ListTimeSeries(context, options, request);
 }
 
 Status MetricServiceAuth::CreateTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateTimeSeries(context, request);
+  return child_->CreateTimeSeries(context, options, request);
 }
 
 Status MetricServiceAuth::CreateServiceTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateServiceTimeSeries(context, request);
+  return child_->CreateServiceTimeSeries(context, options, request);
 }
 
 future<Status> MetricServiceAuth::AsyncCreateTimeSeries(

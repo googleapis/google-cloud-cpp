@@ -65,11 +65,11 @@ EventServiceConnectionImpl::CreateClientEvent(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateClientEvent(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::talent::v4::CreateClientEventRequest const& request) {
-        return stub_->CreateClientEvent(context, request);
+        return stub_->CreateClientEvent(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

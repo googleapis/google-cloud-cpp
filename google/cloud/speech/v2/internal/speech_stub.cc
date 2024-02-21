@@ -51,7 +51,7 @@ DefaultSpeechStub::AsyncCreateRecognizer(
 
 StatusOr<google::cloud::speech::v2::ListRecognizersResponse>
 DefaultSpeechStub::ListRecognizers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::speech::v2::ListRecognizersRequest const& request) {
   google::cloud::speech::v2::ListRecognizersResponse response;
   auto status = grpc_stub_->ListRecognizers(&context, request, &response);
@@ -63,7 +63,7 @@ DefaultSpeechStub::ListRecognizers(
 
 StatusOr<google::cloud::speech::v2::Recognizer>
 DefaultSpeechStub::GetRecognizer(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::speech::v2::GetRecognizerRequest const& request) {
   google::cloud::speech::v2::Recognizer response;
   auto status = grpc_stub_->GetRecognizer(&context, request, &response);
@@ -127,7 +127,7 @@ DefaultSpeechStub::AsyncUndeleteRecognizer(
 
 StatusOr<google::cloud::speech::v2::RecognizeResponse>
 DefaultSpeechStub::Recognize(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::speech::v2::RecognizeRequest const& request) {
   google::cloud::speech::v2::RecognizeResponse response;
   auto status = grpc_stub_->Recognize(&context, request, &response);
@@ -170,7 +170,7 @@ DefaultSpeechStub::AsyncBatchRecognize(
 }
 
 StatusOr<google::cloud::speech::v2::Config> DefaultSpeechStub::GetConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::speech::v2::GetConfigRequest const& request) {
   google::cloud::speech::v2::Config response;
   auto status = grpc_stub_->GetConfig(&context, request, &response);
@@ -181,7 +181,7 @@ StatusOr<google::cloud::speech::v2::Config> DefaultSpeechStub::GetConfig(
 }
 
 StatusOr<google::cloud::speech::v2::Config> DefaultSpeechStub::UpdateConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::speech::v2::UpdateConfigRequest const& request) {
   google::cloud::speech::v2::Config response;
   auto status = grpc_stub_->UpdateConfig(&context, request, &response);
@@ -210,7 +210,7 @@ DefaultSpeechStub::AsyncCreateCustomClass(
 
 StatusOr<google::cloud::speech::v2::ListCustomClassesResponse>
 DefaultSpeechStub::ListCustomClasses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::speech::v2::ListCustomClassesRequest const& request) {
   google::cloud::speech::v2::ListCustomClassesResponse response;
   auto status = grpc_stub_->ListCustomClasses(&context, request, &response);
@@ -222,7 +222,7 @@ DefaultSpeechStub::ListCustomClasses(
 
 StatusOr<google::cloud::speech::v2::CustomClass>
 DefaultSpeechStub::GetCustomClass(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::speech::v2::GetCustomClassRequest const& request) {
   google::cloud::speech::v2::CustomClass response;
   auto status = grpc_stub_->GetCustomClass(&context, request, &response);
@@ -303,7 +303,7 @@ DefaultSpeechStub::AsyncCreatePhraseSet(
 
 StatusOr<google::cloud::speech::v2::ListPhraseSetsResponse>
 DefaultSpeechStub::ListPhraseSets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::speech::v2::ListPhraseSetsRequest const& request) {
   google::cloud::speech::v2::ListPhraseSetsResponse response;
   auto status = grpc_stub_->ListPhraseSets(&context, request, &response);
@@ -314,7 +314,7 @@ DefaultSpeechStub::ListPhraseSets(
 }
 
 StatusOr<google::cloud::speech::v2::PhraseSet> DefaultSpeechStub::GetPhraseSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::speech::v2::GetPhraseSetRequest const& request) {
   google::cloud::speech::v2::PhraseSet response;
   auto status = grpc_stub_->GetPhraseSet(&context, request, &response);

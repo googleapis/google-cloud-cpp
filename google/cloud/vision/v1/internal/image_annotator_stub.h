@@ -40,12 +40,12 @@ class ImageAnnotatorStub {
 
   virtual StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
   BatchAnnotateImages(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
   BatchAnnotateFiles(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
@@ -84,12 +84,12 @@ class DefaultImageAnnotatorStub : public ImageAnnotatorStub {
 
   StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
   BatchAnnotateImages(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vision::v1::BatchAnnotateImagesRequest const& request)
       override;
 
   StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
-  BatchAnnotateFiles(grpc::ClientContext& context,
+  BatchAnnotateFiles(grpc::ClientContext& context, Options const& options,
                      google::cloud::vision::v1::BatchAnnotateFilesRequest const&
                          request) override;
 

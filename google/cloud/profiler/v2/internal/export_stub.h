@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_INTERNAL_EXPORT_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PROFILER_V2_INTERNAL_EXPORT_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/devtools/cloudprofiler/v2/profiler.grpc.pb.h>
@@ -35,7 +36,7 @@ class ExportServiceStub {
   virtual ~ExportServiceStub() = 0;
 
   virtual StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse>
-  ListProfiles(grpc::ClientContext& context,
+  ListProfiles(grpc::ClientContext& context, Options const& options,
                google::devtools::cloudprofiler::v2::ListProfilesRequest const&
                    request) = 0;
 };
@@ -49,7 +50,7 @@ class DefaultExportServiceStub : public ExportServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse>
-  ListProfiles(grpc::ClientContext& context,
+  ListProfiles(grpc::ClientContext& context, Options const& options,
                google::devtools::cloudprofiler::v2::ListProfilesRequest const&
                    request) override;
 

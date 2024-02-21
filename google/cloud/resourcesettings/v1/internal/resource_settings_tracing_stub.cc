@@ -33,7 +33,7 @@ ResourceSettingsServiceTracingStub::ResourceSettingsServiceTracingStub(
 
 StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
 ResourceSettingsServiceTracingStub::ListSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcesettings::v1::ListSettingsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.resourcesettings.v1.ResourceSettingsService",
@@ -41,24 +41,24 @@ ResourceSettingsServiceTracingStub::ListSettings(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListSettings(context, request));
+                           child_->ListSettings(context, options, request));
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceTracingStub::GetSetting(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcesettings::v1::GetSettingRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.resourcesettings.v1.ResourceSettingsService", "GetSetting");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetSetting(context, request));
+                           child_->GetSetting(context, options, request));
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceTracingStub::UpdateSetting(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.resourcesettings.v1.ResourceSettingsService",
@@ -66,7 +66,7 @@ ResourceSettingsServiceTracingStub::UpdateSetting(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateSetting(context, request));
+                           child_->UpdateSetting(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

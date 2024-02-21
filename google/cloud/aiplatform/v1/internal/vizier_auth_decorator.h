@@ -40,25 +40,25 @@ class VizierServiceAuth : public VizierServiceStub {
       std::shared_ptr<VizierServiceStub> child);
 
   StatusOr<google::cloud::aiplatform::v1::Study> CreateStudy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CreateStudyRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Study> GetStudy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetStudyRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListStudiesResponse> ListStudies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListStudiesRequest const& request)
       override;
 
-  Status DeleteStudy(grpc::ClientContext& context,
+  Status DeleteStudy(grpc::ClientContext& context, Options const& options,
                      google::cloud::aiplatform::v1::DeleteStudyRequest const&
                          request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Study> LookupStudy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::LookupStudyRequest const& request)
       override;
 
@@ -69,29 +69,29 @@ class VizierServiceAuth : public VizierServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Trial> CreateTrial(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CreateTrialRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Trial> GetTrial(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetTrialRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListTrialsResponse> ListTrials(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListTrialsRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Trial> AddTrialMeasurement(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Trial> CompleteTrial(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CompleteTrialRequest const& request)
       override;
 
-  Status DeleteTrial(grpc::ClientContext& context,
+  Status DeleteTrial(grpc::ClientContext& context, Options const& options,
                      google::cloud::aiplatform::v1::DeleteTrialRequest const&
                          request) override;
 
@@ -103,12 +103,12 @@ class VizierServiceAuth : public VizierServiceStub {
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Trial> StopTrial(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::StopTrialRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>
   ListOptimalTrials(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request)
       override;
 

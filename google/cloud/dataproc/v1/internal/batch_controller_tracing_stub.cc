@@ -46,36 +46,37 @@ BatchControllerTracingStub::AsyncCreateBatch(
 
 StatusOr<google::cloud::dataproc::v1::Batch>
 BatchControllerTracingStub::GetBatch(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetBatchRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.BatchController",
                                      "GetBatch");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetBatch(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetBatch(context, options, request));
 }
 
 StatusOr<google::cloud::dataproc::v1::ListBatchesResponse>
 BatchControllerTracingStub::ListBatches(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::ListBatchesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.BatchController",
                                      "ListBatches");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListBatches(context, request));
+                           child_->ListBatches(context, options, request));
 }
 
 Status BatchControllerTracingStub::DeleteBatch(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::DeleteBatchRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.BatchController",
                                      "DeleteBatch");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteBatch(context, request));
+                           child_->DeleteBatch(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

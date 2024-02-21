@@ -33,7 +33,7 @@ PoliciesStub::~PoliciesStub() = default;
 
 StatusOr<google::iam::v2::ListPoliciesResponse>
 DefaultPoliciesStub::ListPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v2::ListPoliciesRequest const& request) {
   google::iam::v2::ListPoliciesResponse response;
   auto status = grpc_stub_->ListPolicies(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultPoliciesStub::ListPolicies(
 }
 
 StatusOr<google::iam::v2::Policy> DefaultPoliciesStub::GetPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v2::GetPolicyRequest const& request) {
   google::iam::v2::Policy response;
   auto status = grpc_stub_->GetPolicy(&context, request, &response);

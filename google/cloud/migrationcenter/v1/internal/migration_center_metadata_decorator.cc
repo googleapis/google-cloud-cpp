@@ -44,77 +44,77 @@ MigrationCenterMetadata::MigrationCenterMetadata(
 
 StatusOr<google::cloud::migrationcenter::v1::ListAssetsResponse>
 MigrationCenterMetadata::ListAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::ListAssetsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListAssets(context, request);
+  return child_->ListAssets(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Asset>
 MigrationCenterMetadata::GetAsset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::GetAssetRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAsset(context, request);
+  return child_->GetAsset(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Asset>
 MigrationCenterMetadata::UpdateAsset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::UpdateAssetRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("asset.name=", internal::UrlEncode(request.asset().name())));
-  return child_->UpdateAsset(context, request);
+  return child_->UpdateAsset(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::BatchUpdateAssetsResponse>
 MigrationCenterMetadata::BatchUpdateAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::BatchUpdateAssetsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->BatchUpdateAssets(context, request);
+  return child_->BatchUpdateAssets(context, options, request);
 }
 
 Status MigrationCenterMetadata::DeleteAsset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::DeleteAssetRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteAsset(context, request);
+  return child_->DeleteAsset(context, options, request);
 }
 
 Status MigrationCenterMetadata::BatchDeleteAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::BatchDeleteAssetsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->BatchDeleteAssets(context, request);
+  return child_->BatchDeleteAssets(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ReportAssetFramesResponse>
 MigrationCenterMetadata::ReportAssetFrames(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::ReportAssetFramesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ReportAssetFrames(context, request);
+  return child_->ReportAssetFrames(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::AggregateAssetsValuesResponse>
 MigrationCenterMetadata::AggregateAssetsValues(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::AggregateAssetsValuesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AggregateAssetsValues(context, request);
+  return child_->AggregateAssetsValues(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -129,20 +129,20 @@ MigrationCenterMetadata::AsyncCreateImportJob(
 
 StatusOr<google::cloud::migrationcenter::v1::ListImportJobsResponse>
 MigrationCenterMetadata::ListImportJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::ListImportJobsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListImportJobs(context, request);
+  return child_->ListImportJobs(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ImportJob>
 MigrationCenterMetadata::GetImportJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::GetImportJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetImportJob(context, request);
+  return child_->GetImportJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -190,22 +190,22 @@ MigrationCenterMetadata::AsyncRunImportJob(
 
 StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>
 MigrationCenterMetadata::GetImportDataFile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::GetImportDataFileRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetImportDataFile(context, request);
+  return child_->GetImportDataFile(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListImportDataFilesResponse>
 MigrationCenterMetadata::ListImportDataFiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::ListImportDataFilesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListImportDataFiles(context, request);
+  return child_->ListImportDataFiles(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -234,20 +234,20 @@ MigrationCenterMetadata::AsyncDeleteImportDataFile(
 
 StatusOr<google::cloud::migrationcenter::v1::ListGroupsResponse>
 MigrationCenterMetadata::ListGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::ListGroupsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListGroups(context, request);
+  return child_->ListGroups(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Group>
 MigrationCenterMetadata::GetGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::GetGroupRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetGroup(context, request);
+  return child_->GetGroup(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -307,38 +307,38 @@ MigrationCenterMetadata::AsyncRemoveAssetsFromGroup(
 
 StatusOr<google::cloud::migrationcenter::v1::ListErrorFramesResponse>
 MigrationCenterMetadata::ListErrorFrames(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::ListErrorFramesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListErrorFrames(context, request);
+  return child_->ListErrorFrames(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ErrorFrame>
 MigrationCenterMetadata::GetErrorFrame(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::GetErrorFrameRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetErrorFrame(context, request);
+  return child_->GetErrorFrame(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListSourcesResponse>
 MigrationCenterMetadata::ListSources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::ListSourcesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListSources(context, request);
+  return child_->ListSources(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Source>
 MigrationCenterMetadata::GetSource(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::GetSourceRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetSource(context, request);
+  return child_->GetSource(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -374,22 +374,22 @@ MigrationCenterMetadata::AsyncDeleteSource(
 
 StatusOr<google::cloud::migrationcenter::v1::ListPreferenceSetsResponse>
 MigrationCenterMetadata::ListPreferenceSets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::ListPreferenceSetsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListPreferenceSets(context, request);
+  return child_->ListPreferenceSets(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>
 MigrationCenterMetadata::GetPreferenceSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::GetPreferenceSetRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetPreferenceSet(context, request);
+  return child_->GetPreferenceSet(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -432,11 +432,11 @@ MigrationCenterMetadata::AsyncDeletePreferenceSet(
 
 StatusOr<google::cloud::migrationcenter::v1::Settings>
 MigrationCenterMetadata::GetSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::GetSettingsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetSettings(context, request);
+  return child_->GetSettings(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -464,21 +464,21 @@ MigrationCenterMetadata::AsyncCreateReportConfig(
 
 StatusOr<google::cloud::migrationcenter::v1::ReportConfig>
 MigrationCenterMetadata::GetReportConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::GetReportConfigRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetReportConfig(context, request);
+  return child_->GetReportConfig(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListReportConfigsResponse>
 MigrationCenterMetadata::ListReportConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::ListReportConfigsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListReportConfigs(context, request);
+  return child_->ListReportConfigs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -505,20 +505,20 @@ MigrationCenterMetadata::AsyncCreateReport(
 
 StatusOr<google::cloud::migrationcenter::v1::Report>
 MigrationCenterMetadata::GetReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::GetReportRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetReport(context, request);
+  return child_->GetReport(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListReportsResponse>
 MigrationCenterMetadata::ListReports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::ListReportsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListReports(context, request);
+  return child_->ListReports(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

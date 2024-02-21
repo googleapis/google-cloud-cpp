@@ -105,11 +105,11 @@ StatusOr<google::cloud::automl::v1::Dataset> AutoMlConnectionImpl::GetDataset(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDataset(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::automl::v1::GetDatasetRequest const& request) {
-        return stub_->GetDataset(context, request);
+        return stub_->GetDataset(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::automl::v1::Dataset>
@@ -121,20 +121,21 @@ AutoMlConnectionImpl::ListDatasets(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::automl::v1::Dataset>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<automl_v1::AutoMlRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::automl::v1::ListDatasetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::automl::v1::ListDatasetsRequest const& request) {
-              return stub->ListDatasets(context, request);
+              return stub->ListDatasets(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::automl::v1::ListDatasetsResponse r) {
         std::vector<google::cloud::automl::v1::Dataset> result(
@@ -152,11 +153,11 @@ AutoMlConnectionImpl::UpdateDataset(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateDataset(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::automl::v1::UpdateDatasetRequest const& request) {
-        return stub_->UpdateDataset(context, request);
+        return stub_->UpdateDataset(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
@@ -276,11 +277,11 @@ AutoMlConnectionImpl::GetAnnotationSpec(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAnnotationSpec(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::automl::v1::GetAnnotationSpecRequest const& request) {
-        return stub_->GetAnnotationSpec(context, request);
+        return stub_->GetAnnotationSpec(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::automl::v1::Model>>
@@ -325,11 +326,11 @@ StatusOr<google::cloud::automl::v1::Model> AutoMlConnectionImpl::GetModel(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetModel(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::automl::v1::GetModelRequest const& request) {
-        return stub_->GetModel(context, request);
+        return stub_->GetModel(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::automl::v1::Model> AutoMlConnectionImpl::ListModels(
@@ -340,20 +341,21 @@ StreamRange<google::cloud::automl::v1::Model> AutoMlConnectionImpl::ListModels(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::automl::v1::Model>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<automl_v1::AutoMlRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::automl::v1::ListModelsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::automl::v1::ListModelsRequest const& request) {
-              return stub->ListModels(context, request);
+              return stub->ListModels(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::automl::v1::ListModelsResponse r) {
         std::vector<google::cloud::automl::v1::Model> result(r.model().size());
@@ -405,11 +407,11 @@ StatusOr<google::cloud::automl::v1::Model> AutoMlConnectionImpl::UpdateModel(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateModel(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::automl::v1::UpdateModelRequest const& request) {
-        return stub_->UpdateModel(context, request);
+        return stub_->UpdateModel(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
@@ -529,11 +531,11 @@ AutoMlConnectionImpl::GetModelEvaluation(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetModelEvaluation(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::automl::v1::GetModelEvaluationRequest const& request) {
-        return stub_->GetModelEvaluation(context, request);
+        return stub_->GetModelEvaluation(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::automl::v1::ModelEvaluation>
@@ -546,20 +548,21 @@ AutoMlConnectionImpl::ListModelEvaluations(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::automl::v1::ModelEvaluation>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<automl_v1::AutoMlRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::automl::v1::ListModelEvaluationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::automl::v1::ListModelEvaluationsRequest const&
                        request) {
-              return stub->ListModelEvaluations(context, request);
+              return stub->ListModelEvaluations(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::automl::v1::ListModelEvaluationsResponse r) {
         std::vector<google::cloud::automl::v1::ModelEvaluation> result(

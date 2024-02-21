@@ -32,7 +32,7 @@ ConversationsStub::~ConversationsStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
 DefaultConversationsStub::CreateConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::CreateConversationRequest const& request) {
   google::cloud::dialogflow::v2::Conversation response;
   auto status = grpc_stub_->CreateConversation(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultConversationsStub::CreateConversation(
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationsResponse>
 DefaultConversationsStub::ListConversations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::ListConversationsRequest const& request) {
   google::cloud::dialogflow::v2::ListConversationsResponse response;
   auto status = grpc_stub_->ListConversations(&context, request, &response);
@@ -56,7 +56,7 @@ DefaultConversationsStub::ListConversations(
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
 DefaultConversationsStub::GetConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::GetConversationRequest const& request) {
   google::cloud::dialogflow::v2::Conversation response;
   auto status = grpc_stub_->GetConversation(&context, request, &response);
@@ -68,7 +68,7 @@ DefaultConversationsStub::GetConversation(
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
 DefaultConversationsStub::CompleteConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::CompleteConversationRequest const& request) {
   google::cloud::dialogflow::v2::Conversation response;
   auto status = grpc_stub_->CompleteConversation(&context, request, &response);
@@ -80,7 +80,7 @@ DefaultConversationsStub::CompleteConversation(
 
 StatusOr<google::cloud::dialogflow::v2::ListMessagesResponse>
 DefaultConversationsStub::ListMessages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::ListMessagesRequest const& request) {
   google::cloud::dialogflow::v2::ListMessagesResponse response;
   auto status = grpc_stub_->ListMessages(&context, request, &response);
@@ -92,7 +92,7 @@ DefaultConversationsStub::ListMessages(
 
 StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
 DefaultConversationsStub::SuggestConversationSummary(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
         request) {
   google::cloud::dialogflow::v2::SuggestConversationSummaryResponse response;
@@ -106,7 +106,7 @@ DefaultConversationsStub::SuggestConversationSummary(
 
 StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
 DefaultConversationsStub::GenerateStatelessSummary(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
         request) {
   google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse response;
@@ -120,7 +120,7 @@ DefaultConversationsStub::GenerateStatelessSummary(
 
 StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
 DefaultConversationsStub::SearchKnowledge(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request) {
   google::cloud::dialogflow::v2::SearchKnowledgeResponse response;
   auto status = grpc_stub_->SearchKnowledge(&context, request, &response);

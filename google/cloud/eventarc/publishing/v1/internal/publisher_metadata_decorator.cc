@@ -45,23 +45,23 @@ PublisherMetadata::PublisherMetadata(
 StatusOr<google::cloud::eventarc::publishing::v1::
              PublishChannelConnectionEventsResponse>
 PublisherMetadata::PublishChannelConnectionEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::publishing::v1::
         PublishChannelConnectionEventsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("channel_connection=",
                            internal::UrlEncode(request.channel_connection())));
-  return child_->PublishChannelConnectionEvents(context, request);
+  return child_->PublishChannelConnectionEvents(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
 PublisherMetadata::PublishEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("channel=", internal::UrlEncode(request.channel())));
-  return child_->PublishEvents(context, request);
+  return child_->PublishEvents(context, options, request);
 }
 
 void PublisherMetadata::SetMetadata(grpc::ClientContext& context,

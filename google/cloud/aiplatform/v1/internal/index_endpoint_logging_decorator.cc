@@ -54,41 +54,41 @@ IndexEndpointServiceLogging::AsyncCreateIndexEndpoint(
 
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
 IndexEndpointServiceLogging::GetIndexEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetIndexEndpointRequest const&
                  request) {
-        return child_->GetIndexEndpoint(context, request);
+        return child_->GetIndexEndpoint(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListIndexEndpointsResponse>
 IndexEndpointServiceLogging::ListIndexEndpoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListIndexEndpointsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ListIndexEndpointsRequest const&
                  request) {
-        return child_->ListIndexEndpoints(context, request);
+        return child_->ListIndexEndpoints(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>
 IndexEndpointServiceLogging::UpdateIndexEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const&
                  request) {
-        return child_->UpdateIndexEndpoint(context, request);
+        return child_->UpdateIndexEndpoint(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

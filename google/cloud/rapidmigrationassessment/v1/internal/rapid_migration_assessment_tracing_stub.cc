@@ -64,7 +64,7 @@ RapidMigrationAssessmentTracingStub::AsyncCreateAnnotation(
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>
 RapidMigrationAssessmentTracingStub::GetAnnotation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::rapidmigrationassessment::v1::GetAnnotationRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -73,12 +73,12 @@ RapidMigrationAssessmentTracingStub::GetAnnotation(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetAnnotation(context, request));
+                           child_->GetAnnotation(context, options, request));
 }
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::ListCollectorsResponse>
 RapidMigrationAssessmentTracingStub::ListCollectors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::rapidmigrationassessment::v1::ListCollectorsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -87,12 +87,12 @@ RapidMigrationAssessmentTracingStub::ListCollectors(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListCollectors(context, request));
+                           child_->ListCollectors(context, options, request));
 }
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>
 RapidMigrationAssessmentTracingStub::GetCollector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::rapidmigrationassessment::v1::GetCollectorRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -101,7 +101,7 @@ RapidMigrationAssessmentTracingStub::GetCollector(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetCollector(context, request));
+                           child_->GetCollector(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

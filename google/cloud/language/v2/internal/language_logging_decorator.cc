@@ -37,64 +37,64 @@ LanguageServiceLogging::LanguageServiceLogging(
 
 StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
 LanguageServiceLogging::AnalyzeSentiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v2::AnalyzeSentimentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::language::v2::AnalyzeSentimentRequest const& request) {
-        return child_->AnalyzeSentiment(context, request);
+        return child_->AnalyzeSentiment(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
 LanguageServiceLogging::AnalyzeEntities(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v2::AnalyzeEntitiesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::language::v2::AnalyzeEntitiesRequest const& request) {
-        return child_->AnalyzeEntities(context, request);
+        return child_->AnalyzeEntities(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::language::v2::ClassifyTextResponse>
 LanguageServiceLogging::ClassifyText(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v2::ClassifyTextRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::language::v2::ClassifyTextRequest const& request) {
-        return child_->ClassifyText(context, request);
+        return child_->ClassifyText(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::language::v2::ModerateTextResponse>
 LanguageServiceLogging::ModerateText(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v2::ModerateTextRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::language::v2::ModerateTextRequest const& request) {
-        return child_->ModerateText(context, request);
+        return child_->ModerateText(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::language::v2::AnnotateTextResponse>
 LanguageServiceLogging::AnnotateText(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v2::AnnotateTextRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::language::v2::AnnotateTextRequest const& request) {
-        return child_->AnnotateText(context, request);
+        return child_->AnnotateText(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

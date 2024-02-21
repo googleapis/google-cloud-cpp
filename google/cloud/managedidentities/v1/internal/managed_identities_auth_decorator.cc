@@ -53,30 +53,30 @@ ManagedIdentitiesServiceAuth::AsyncCreateMicrosoftAdDomain(
 
 StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
 ManagedIdentitiesServiceAuth::ResetAdminPassword(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ResetAdminPassword(context, request);
+  return child_->ResetAdminPassword(context, options, request);
 }
 
 StatusOr<google::cloud::managedidentities::v1::ListDomainsResponse>
 ManagedIdentitiesServiceAuth::ListDomains(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::managedidentities::v1::ListDomainsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDomains(context, request);
+  return child_->ListDomains(context, options, request);
 }
 
 StatusOr<google::cloud::managedidentities::v1::Domain>
 ManagedIdentitiesServiceAuth::GetDomain(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::managedidentities::v1::GetDomainRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDomain(context, request);
+  return child_->GetDomain(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

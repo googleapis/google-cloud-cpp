@@ -70,11 +70,11 @@ StatusOr<google::iam::v1::Policy> ContainerAnalysisConnectionImpl::SetIamPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
-        return stub_->SetIamPolicy(context, request);
+        return stub_->SetIamPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::Policy> ContainerAnalysisConnectionImpl::GetIamPolicy(
@@ -83,11 +83,11 @@ StatusOr<google::iam::v1::Policy> ContainerAnalysisConnectionImpl::GetIamPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
-        return stub_->GetIamPolicy(context, request);
+        return stub_->GetIamPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
@@ -97,11 +97,11 @@ ContainerAnalysisConnectionImpl::TestIamPermissions(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TestIamPermissions(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
-        return stub_->TestIamPermissions(context, request);
+        return stub_->TestIamPermissions(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<
@@ -113,12 +113,13 @@ ContainerAnalysisConnectionImpl::GetVulnerabilityOccurrencesSummary(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetVulnerabilityOccurrencesSummary(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::containeranalysis::v1::
                  GetVulnerabilityOccurrencesSummaryRequest const& request) {
-        return stub_->GetVulnerabilityOccurrencesSummary(context, request);
+        return stub_->GetVulnerabilityOccurrencesSummary(context, options,
+                                                         request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

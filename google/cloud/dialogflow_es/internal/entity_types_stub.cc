@@ -33,7 +33,7 @@ EntityTypesStub::~EntityTypesStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::ListEntityTypesResponse>
 DefaultEntityTypesStub::ListEntityTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::ListEntityTypesRequest const& request) {
   google::cloud::dialogflow::v2::ListEntityTypesResponse response;
   auto status = grpc_stub_->ListEntityTypes(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultEntityTypesStub::ListEntityTypes(
 
 StatusOr<google::cloud::dialogflow::v2::EntityType>
 DefaultEntityTypesStub::GetEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::GetEntityTypeRequest const& request) {
   google::cloud::dialogflow::v2::EntityType response;
   auto status = grpc_stub_->GetEntityType(&context, request, &response);
@@ -57,7 +57,7 @@ DefaultEntityTypesStub::GetEntityType(
 
 StatusOr<google::cloud::dialogflow::v2::EntityType>
 DefaultEntityTypesStub::CreateEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::CreateEntityTypeRequest const& request) {
   google::cloud::dialogflow::v2::EntityType response;
   auto status = grpc_stub_->CreateEntityType(&context, request, &response);
@@ -69,7 +69,7 @@ DefaultEntityTypesStub::CreateEntityType(
 
 StatusOr<google::cloud::dialogflow::v2::EntityType>
 DefaultEntityTypesStub::UpdateEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::UpdateEntityTypeRequest const& request) {
   google::cloud::dialogflow::v2::EntityType response;
   auto status = grpc_stub_->UpdateEntityType(&context, request, &response);
@@ -80,7 +80,7 @@ DefaultEntityTypesStub::UpdateEntityType(
 }
 
 Status DefaultEntityTypesStub::DeleteEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::DeleteEntityTypeRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteEntityType(&context, request, &response);

@@ -43,20 +43,20 @@ TraceServiceMetadata::TraceServiceMetadata(
               : std::move(api_client_header)) {}
 
 Status TraceServiceMetadata::BatchWriteSpans(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->BatchWriteSpans(context, request);
+  return child_->BatchWriteSpans(context, options, request);
 }
 
 StatusOr<google::devtools::cloudtrace::v2::Span>
 TraceServiceMetadata::CreateSpan(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v2::Span const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->CreateSpan(context, request);
+  return child_->CreateSpan(context, options, request);
 }
 
 void TraceServiceMetadata::SetMetadata(grpc::ClientContext& context,

@@ -33,7 +33,7 @@ ConversationProfilesStub::~ConversationProfilesStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationProfilesResponse>
 DefaultConversationProfilesStub::ListConversationProfiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::ListConversationProfilesRequest const&
         request) {
   google::cloud::dialogflow::v2::ListConversationProfilesResponse response;
@@ -47,7 +47,7 @@ DefaultConversationProfilesStub::ListConversationProfiles(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 DefaultConversationProfilesStub::GetConversationProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::GetConversationProfileRequest const&
         request) {
   google::cloud::dialogflow::v2::ConversationProfile response;
@@ -61,7 +61,7 @@ DefaultConversationProfilesStub::GetConversationProfile(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 DefaultConversationProfilesStub::CreateConversationProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
         request) {
   google::cloud::dialogflow::v2::ConversationProfile response;
@@ -75,7 +75,7 @@ DefaultConversationProfilesStub::CreateConversationProfile(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 DefaultConversationProfilesStub::UpdateConversationProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
         request) {
   google::cloud::dialogflow::v2::ConversationProfile response;
@@ -88,7 +88,7 @@ DefaultConversationProfilesStub::UpdateConversationProfile(
 }
 
 Status DefaultConversationProfilesStub::DeleteConversationProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
         request) {
   google::protobuf::Empty response;

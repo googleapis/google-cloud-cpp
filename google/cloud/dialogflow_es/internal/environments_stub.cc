@@ -32,7 +32,7 @@ EnvironmentsStub::~EnvironmentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::ListEnvironmentsResponse>
 DefaultEnvironmentsStub::ListEnvironments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::ListEnvironmentsRequest const& request) {
   google::cloud::dialogflow::v2::ListEnvironmentsResponse response;
   auto status = grpc_stub_->ListEnvironments(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultEnvironmentsStub::ListEnvironments(
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
 DefaultEnvironmentsStub::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::GetEnvironmentRequest const& request) {
   google::cloud::dialogflow::v2::Environment response;
   auto status = grpc_stub_->GetEnvironment(&context, request, &response);
@@ -56,7 +56,7 @@ DefaultEnvironmentsStub::GetEnvironment(
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
 DefaultEnvironmentsStub::CreateEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request) {
   google::cloud::dialogflow::v2::Environment response;
   auto status = grpc_stub_->CreateEnvironment(&context, request, &response);
@@ -68,7 +68,7 @@ DefaultEnvironmentsStub::CreateEnvironment(
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
 DefaultEnvironmentsStub::UpdateEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request) {
   google::cloud::dialogflow::v2::Environment response;
   auto status = grpc_stub_->UpdateEnvironment(&context, request, &response);
@@ -79,7 +79,7 @@ DefaultEnvironmentsStub::UpdateEnvironment(
 }
 
 Status DefaultEnvironmentsStub::DeleteEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteEnvironment(&context, request, &response);
@@ -91,7 +91,7 @@ Status DefaultEnvironmentsStub::DeleteEnvironment(
 
 StatusOr<google::cloud::dialogflow::v2::EnvironmentHistory>
 DefaultEnvironmentsStub::GetEnvironmentHistory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest const&
         request) {
   google::cloud::dialogflow::v2::EnvironmentHistory response;

@@ -32,7 +32,7 @@ TextToSpeechStub::~TextToSpeechStub() = default;
 
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
 DefaultTextToSpeechStub::ListVoices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
   google::cloud::texttospeech::v1::ListVoicesResponse response;
   auto status = grpc_stub_->ListVoices(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultTextToSpeechStub::ListVoices(
 
 StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
 DefaultTextToSpeechStub::SynthesizeSpeech(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
   google::cloud::texttospeech::v1::SynthesizeSpeechResponse response;
   auto status = grpc_stub_->SynthesizeSpeech(&context, request, &response);

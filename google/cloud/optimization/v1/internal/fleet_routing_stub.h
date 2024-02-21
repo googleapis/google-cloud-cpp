@@ -40,7 +40,7 @@ class FleetRoutingStub {
 
   virtual StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
   OptimizeTours(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::optimization::v1::OptimizeToursRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
@@ -72,7 +72,7 @@ class DefaultFleetRoutingStub : public FleetRoutingStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
-  OptimizeTours(grpc::ClientContext& context,
+  OptimizeTours(grpc::ClientContext& context, Options const& options,
                 google::cloud::optimization::v1::OptimizeToursRequest const&
                     request) override;
 

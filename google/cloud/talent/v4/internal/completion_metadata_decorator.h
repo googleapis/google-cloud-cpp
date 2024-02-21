@@ -39,7 +39,7 @@ class CompletionMetadata : public CompletionStub {
                      std::string api_client_header = "");
 
   StatusOr<google::cloud::talent::v4::CompleteQueryResponse> CompleteQuery(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::CompleteQueryRequest const& request) override;
 
  private:

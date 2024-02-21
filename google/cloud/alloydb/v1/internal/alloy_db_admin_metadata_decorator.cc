@@ -44,19 +44,19 @@ AlloyDBAdminMetadata::AlloyDBAdminMetadata(
 
 StatusOr<google::cloud::alloydb::v1::ListClustersResponse>
 AlloyDBAdminMetadata::ListClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListClustersRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListClusters(context, request);
+  return child_->ListClusters(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::Cluster> AlloyDBAdminMetadata::GetCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetClusterRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetCluster(context, request);
+  return child_->GetCluster(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -123,20 +123,20 @@ AlloyDBAdminMetadata::AsyncCreateSecondaryCluster(
 
 StatusOr<google::cloud::alloydb::v1::ListInstancesResponse>
 AlloyDBAdminMetadata::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListInstancesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListInstances(context, request);
+  return child_->ListInstances(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::Instance>
 AlloyDBAdminMetadata::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetInstanceRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetInstance(context, request);
+  return child_->GetInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -225,19 +225,19 @@ AlloyDBAdminMetadata::AsyncRestartInstance(
 
 StatusOr<google::cloud::alloydb::v1::ListBackupsResponse>
 AlloyDBAdminMetadata::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListBackupsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListBackups(context, request);
+  return child_->ListBackups(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::Backup> AlloyDBAdminMetadata::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetBackupRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetBackup(context, request);
+  return child_->GetBackup(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -273,73 +273,73 @@ AlloyDBAdminMetadata::AsyncDeleteBackup(
 
 StatusOr<google::cloud::alloydb::v1::ListSupportedDatabaseFlagsResponse>
 AlloyDBAdminMetadata::ListSupportedDatabaseFlags(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListSupportedDatabaseFlags(context, request);
+  return child_->ListSupportedDatabaseFlags(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
 AlloyDBAdminMetadata::GenerateClientCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->GenerateClientCertificate(context, request);
+  return child_->GenerateClientCertificate(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
 AlloyDBAdminMetadata::GetConnectionInfo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetConnectionInfoRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->GetConnectionInfo(context, request);
+  return child_->GetConnectionInfo(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::ListUsersResponse>
 AlloyDBAdminMetadata::ListUsers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListUsersRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListUsers(context, request);
+  return child_->ListUsers(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminMetadata::GetUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetUserRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetUser(context, request);
+  return child_->GetUser(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminMetadata::CreateUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::CreateUserRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateUser(context, request);
+  return child_->CreateUser(context, options, request);
 }
 
 StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminMetadata::UpdateUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::UpdateUserRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("user.name=", internal::UrlEncode(request.user().name())));
-  return child_->UpdateUser(context, request);
+  return child_->UpdateUser(context, options, request);
 }
 
 Status AlloyDBAdminMetadata::DeleteUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::DeleteUserRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteUser(context, request);
+  return child_->DeleteUser(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

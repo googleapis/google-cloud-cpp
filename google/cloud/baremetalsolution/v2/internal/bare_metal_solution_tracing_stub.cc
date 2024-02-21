@@ -33,26 +33,26 @@ BareMetalSolutionTracingStub::BareMetalSolutionTracingStub(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListInstancesResponse>
 BareMetalSolutionTracingStub::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListInstancesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.baremetalsolution.v2.BareMetalSolution", "ListInstances");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListInstances(context, request));
+                           child_->ListInstances(context, options, request));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Instance>
 BareMetalSolutionTracingStub::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::GetInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.baremetalsolution.v2.BareMetalSolution", "GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetInstance(context, request));
+                           child_->GetInstance(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -71,7 +71,7 @@ BareMetalSolutionTracingStub::AsyncUpdateInstance(
 
 StatusOr<google::cloud::baremetalsolution::v2::Instance>
 BareMetalSolutionTracingStub::RenameInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -79,7 +79,7 @@ BareMetalSolutionTracingStub::RenameInstance(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->RenameInstance(context, request));
+                           child_->RenameInstance(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -168,60 +168,61 @@ BareMetalSolutionTracingStub::AsyncDetachLun(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListSSHKeysResponse>
 BareMetalSolutionTracingStub::ListSSHKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListSSHKeysRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.baremetalsolution.v2.BareMetalSolution", "ListSSHKeys");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListSSHKeys(context, request));
+                           child_->ListSSHKeys(context, options, request));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::SSHKey>
 BareMetalSolutionTracingStub::CreateSSHKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.baremetalsolution.v2.BareMetalSolution", "CreateSSHKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateSSHKey(context, request));
+                           child_->CreateSSHKey(context, options, request));
 }
 
 Status BareMetalSolutionTracingStub::DeleteSSHKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.baremetalsolution.v2.BareMetalSolution", "DeleteSSHKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteSSHKey(context, request));
+                           child_->DeleteSSHKey(context, options, request));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListVolumesResponse>
 BareMetalSolutionTracingStub::ListVolumes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListVolumesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.baremetalsolution.v2.BareMetalSolution", "ListVolumes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListVolumes(context, request));
+                           child_->ListVolumes(context, options, request));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Volume>
 BareMetalSolutionTracingStub::GetVolume(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::GetVolumeRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.baremetalsolution.v2.BareMetalSolution", "GetVolume");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetVolume(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetVolume(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -239,14 +240,14 @@ BareMetalSolutionTracingStub::AsyncUpdateVolume(
 
 StatusOr<google::cloud::baremetalsolution::v2::Volume>
 BareMetalSolutionTracingStub::RenameVolume(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.baremetalsolution.v2.BareMetalSolution", "RenameVolume");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->RenameVolume(context, request));
+                           child_->RenameVolume(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -277,19 +278,19 @@ BareMetalSolutionTracingStub::AsyncResizeVolume(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListNetworksResponse>
 BareMetalSolutionTracingStub::ListNetworks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListNetworksRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.baremetalsolution.v2.BareMetalSolution", "ListNetworks");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListNetworks(context, request));
+                           child_->ListNetworks(context, options, request));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>
 BareMetalSolutionTracingStub::ListNetworkUsage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -298,19 +299,19 @@ BareMetalSolutionTracingStub::ListNetworkUsage(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListNetworkUsage(context, request));
+                           child_->ListNetworkUsage(context, options, request));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Network>
 BareMetalSolutionTracingStub::GetNetwork(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::GetNetworkRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.baremetalsolution.v2.BareMetalSolution", "GetNetwork");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetNetwork(context, request));
+                           child_->GetNetwork(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -328,7 +329,7 @@ BareMetalSolutionTracingStub::AsyncUpdateNetwork(
 
 StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
 BareMetalSolutionTracingStub::CreateVolumeSnapshot(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -336,8 +337,8 @@ BareMetalSolutionTracingStub::CreateVolumeSnapshot(
       "CreateVolumeSnapshot");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateVolumeSnapshot(context, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateVolumeSnapshot(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -356,7 +357,7 @@ BareMetalSolutionTracingStub::AsyncRestoreVolumeSnapshot(
 }
 
 Status BareMetalSolutionTracingStub::DeleteVolumeSnapshot(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -364,13 +365,13 @@ Status BareMetalSolutionTracingStub::DeleteVolumeSnapshot(
       "DeleteVolumeSnapshot");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteVolumeSnapshot(context, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteVolumeSnapshot(context, options, request));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
 BareMetalSolutionTracingStub::GetVolumeSnapshot(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -378,13 +379,13 @@ BareMetalSolutionTracingStub::GetVolumeSnapshot(
       "GetVolumeSnapshot");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetVolumeSnapshot(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetVolumeSnapshot(context, options, request));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListVolumeSnapshotsResponse>
 BareMetalSolutionTracingStub::ListVolumeSnapshots(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -392,30 +393,32 @@ BareMetalSolutionTracingStub::ListVolumeSnapshots(
       "ListVolumeSnapshots");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListVolumeSnapshots(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListVolumeSnapshots(context, options, request));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Lun>
 BareMetalSolutionTracingStub::GetLun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::GetLunRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.baremetalsolution.v2.BareMetalSolution", "GetLun");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetLun(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetLun(context, options, request));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListLunsResponse>
 BareMetalSolutionTracingStub::ListLuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListLunsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.baremetalsolution.v2.BareMetalSolution", "ListLuns");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->ListLuns(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListLuns(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -433,26 +436,26 @@ BareMetalSolutionTracingStub::AsyncEvictLun(
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
 BareMetalSolutionTracingStub::GetNfsShare(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.baremetalsolution.v2.BareMetalSolution", "GetNfsShare");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetNfsShare(context, request));
+                           child_->GetNfsShare(context, options, request));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListNfsSharesResponse>
 BareMetalSolutionTracingStub::ListNfsShares(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListNfsSharesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.baremetalsolution.v2.BareMetalSolution", "ListNfsShares");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListNfsShares(context, request));
+                           child_->ListNfsShares(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -485,7 +488,7 @@ BareMetalSolutionTracingStub::AsyncCreateNfsShare(
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
 BareMetalSolutionTracingStub::RenameNfsShare(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::RenameNfsShareRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -493,7 +496,7 @@ BareMetalSolutionTracingStub::RenameNfsShare(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->RenameNfsShare(context, request));
+                           child_->RenameNfsShare(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -512,7 +515,7 @@ BareMetalSolutionTracingStub::AsyncDeleteNfsShare(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListProvisioningQuotasResponse>
 BareMetalSolutionTracingStub::ListProvisioningQuotas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -520,13 +523,14 @@ BareMetalSolutionTracingStub::ListProvisioningQuotas(
       "ListProvisioningQuotas");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListProvisioningQuotas(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListProvisioningQuotas(context, options, request));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
 BareMetalSolutionTracingStub::SubmitProvisioningConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::SubmitProvisioningConfigRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -534,13 +538,14 @@ BareMetalSolutionTracingStub::SubmitProvisioningConfig(
       "SubmitProvisioningConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->SubmitProvisioningConfig(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->SubmitProvisioningConfig(context, options, request));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 BareMetalSolutionTracingStub::GetProvisioningConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -548,13 +553,13 @@ BareMetalSolutionTracingStub::GetProvisioningConfig(
       "GetProvisioningConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetProvisioningConfig(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetProvisioningConfig(context, options, request));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 BareMetalSolutionTracingStub::CreateProvisioningConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::CreateProvisioningConfigRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -562,13 +567,14 @@ BareMetalSolutionTracingStub::CreateProvisioningConfig(
       "CreateProvisioningConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateProvisioningConfig(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateProvisioningConfig(context, options, request));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 BareMetalSolutionTracingStub::UpdateProvisioningConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::UpdateProvisioningConfigRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -576,32 +582,33 @@ BareMetalSolutionTracingStub::UpdateProvisioningConfig(
       "UpdateProvisioningConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateProvisioningConfig(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateProvisioningConfig(context, options, request));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Network>
 BareMetalSolutionTracingStub::RenameNetwork(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::RenameNetworkRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.baremetalsolution.v2.BareMetalSolution", "RenameNetwork");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->RenameNetwork(context, request));
+                           child_->RenameNetwork(context, options, request));
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListOSImagesResponse>
 BareMetalSolutionTracingStub::ListOSImages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListOSImagesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.baremetalsolution.v2.BareMetalSolution", "ListOSImages");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListOSImages(context, request));
+                           child_->ListOSImages(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

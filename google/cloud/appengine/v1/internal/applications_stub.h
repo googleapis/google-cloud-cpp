@@ -40,7 +40,7 @@ class ApplicationsStub {
   virtual ~ApplicationsStub() = 0;
 
   virtual StatusOr<google::appengine::v1::Application> GetApplication(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetApplicationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
@@ -82,7 +82,7 @@ class DefaultApplicationsStub : public ApplicationsStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::appengine::v1::Application> GetApplication(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetApplicationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateApplication(

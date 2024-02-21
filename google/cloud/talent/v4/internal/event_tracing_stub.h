@@ -38,7 +38,7 @@ class EventServiceTracingStub : public EventServiceStub {
   explicit EventServiceTracingStub(std::shared_ptr<EventServiceStub> child);
 
   StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::CreateClientEventRequest const& request)
       override;
 

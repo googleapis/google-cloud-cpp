@@ -33,12 +33,12 @@ BigQueryReadAuth::BigQueryReadAuth(
 
 StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
 BigQueryReadAuth::CreateReadSession(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateReadSession(context, request);
+  return child_->CreateReadSession(context, options, request);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -55,12 +55,12 @@ BigQueryReadAuth::ReadRows(
 
 StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
 BigQueryReadAuth::SplitReadStream(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SplitReadStream(context, request);
+  return child_->SplitReadStream(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

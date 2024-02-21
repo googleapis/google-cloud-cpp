@@ -37,14 +37,14 @@ PredictionServiceLogging::PredictionServiceLogging(
 
 StatusOr<google::cloud::automl::v1::PredictResponse>
 PredictionServiceLogging::Predict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::PredictRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::automl::v1::PredictRequest const& request) {
-        return child_->Predict(context, request);
+        return child_->Predict(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

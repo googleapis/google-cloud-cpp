@@ -37,80 +37,80 @@ EnvironmentsLogging::EnvironmentsLogging(
 
 StatusOr<google::cloud::dialogflow::v2::ListEnvironmentsResponse>
 EnvironmentsLogging::ListEnvironments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListEnvironmentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::ListEnvironmentsRequest const&
                  request) {
-        return child_->ListEnvironments(context, request);
+        return child_->ListEnvironments(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
 EnvironmentsLogging::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetEnvironmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::v2::GetEnvironmentRequest const& request) {
-        return child_->GetEnvironment(context, request);
+        return child_->GetEnvironment(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
 EnvironmentsLogging::CreateEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::CreateEnvironmentRequest const&
                  request) {
-        return child_->CreateEnvironment(context, request);
+        return child_->CreateEnvironment(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
 EnvironmentsLogging::UpdateEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::UpdateEnvironmentRequest const&
                  request) {
-        return child_->UpdateEnvironment(context, request);
+        return child_->UpdateEnvironment(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status EnvironmentsLogging::DeleteEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::DeleteEnvironmentRequest const&
                  request) {
-        return child_->DeleteEnvironment(context, request);
+        return child_->DeleteEnvironment(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::v2::EnvironmentHistory>
 EnvironmentsLogging::GetEnvironmentHistory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest const&
                  request) {
-        return child_->GetEnvironmentHistory(context, request);
+        return child_->GetEnvironmentHistory(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

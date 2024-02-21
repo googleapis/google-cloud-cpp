@@ -68,20 +68,21 @@ QueryServiceConnectionImpl::QueryTimeSeries(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::monitoring::v3::TimeSeriesData>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<monitoring_v3::QueryServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::monitoring::v3::QueryTimeSeriesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::monitoring::v3::QueryTimeSeriesRequest const& request) {
-              return stub->QueryTimeSeries(context, request);
+              return stub->QueryTimeSeries(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::monitoring::v3::QueryTimeSeriesResponse r) {
         std::vector<google::monitoring::v3::TimeSeriesData> result(

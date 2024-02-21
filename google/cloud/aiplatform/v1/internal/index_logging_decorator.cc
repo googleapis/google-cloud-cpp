@@ -52,26 +52,26 @@ IndexServiceLogging::AsyncCreateIndex(
 }
 
 StatusOr<google::cloud::aiplatform::v1::Index> IndexServiceLogging::GetIndex(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetIndexRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetIndexRequest const& request) {
-        return child_->GetIndex(context, request);
+        return child_->GetIndex(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListIndexesResponse>
 IndexServiceLogging::ListIndexes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListIndexesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ListIndexesRequest const& request) {
-        return child_->ListIndexes(context, request);
+        return child_->ListIndexes(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -108,28 +108,28 @@ IndexServiceLogging::AsyncDeleteIndex(
 
 StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
 IndexServiceLogging::UpsertDatapoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::UpsertDatapointsRequest const&
                  request) {
-        return child_->UpsertDatapoints(context, request);
+        return child_->UpsertDatapoints(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>
 IndexServiceLogging::RemoveDatapoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::RemoveDatapointsRequest const&
                  request) {
-        return child_->RemoveDatapoints(context, request);
+        return child_->RemoveDatapoints(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

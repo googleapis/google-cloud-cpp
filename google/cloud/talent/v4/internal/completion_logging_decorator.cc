@@ -37,14 +37,14 @@ CompletionLogging::CompletionLogging(std::shared_ptr<CompletionStub> child,
 
 StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
 CompletionLogging::CompleteQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::CompleteQueryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::CompleteQueryRequest const& request) {
-        return child_->CompleteQuery(context, request);
+        return child_->CompleteQuery(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

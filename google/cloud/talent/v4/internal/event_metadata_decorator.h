@@ -39,7 +39,7 @@ class EventServiceMetadata : public EventServiceStub {
                        std::string api_client_header = "");
 
   StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::CreateClientEventRequest const& request)
       override;
 

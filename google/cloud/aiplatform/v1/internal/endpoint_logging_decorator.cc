@@ -53,40 +53,40 @@ EndpointServiceLogging::AsyncCreateEndpoint(
 
 StatusOr<google::cloud::aiplatform::v1::Endpoint>
 EndpointServiceLogging::GetEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetEndpointRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetEndpointRequest const& request) {
-        return child_->GetEndpoint(context, request);
+        return child_->GetEndpoint(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListEndpointsResponse>
 EndpointServiceLogging::ListEndpoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListEndpointsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::ListEndpointsRequest const& request) {
-        return child_->ListEndpoints(context, request);
+        return child_->ListEndpoints(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Endpoint>
 EndpointServiceLogging::UpdateEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateEndpointRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::UpdateEndpointRequest const& request) {
-        return child_->UpdateEndpoint(context, request);
+        return child_->UpdateEndpoint(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

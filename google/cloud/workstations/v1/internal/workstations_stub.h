@@ -40,14 +40,14 @@ class WorkstationsStub {
 
   virtual StatusOr<google::cloud::workstations::v1::WorkstationCluster>
   GetWorkstationCluster(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workstations::v1::GetWorkstationClusterRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::workstations::v1::ListWorkstationClustersResponse>
   ListWorkstationClusters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workstations::v1::ListWorkstationClustersRequest const&
           request) = 0;
 
@@ -74,21 +74,21 @@ class WorkstationsStub {
 
   virtual StatusOr<google::cloud::workstations::v1::WorkstationConfig>
   GetWorkstationConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workstations::v1::GetWorkstationConfigRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::workstations::v1::ListWorkstationConfigsResponse>
   ListWorkstationConfigs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workstations::v1::ListWorkstationConfigsRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::workstations::v1::ListUsableWorkstationConfigsResponse>
   ListUsableWorkstationConfigs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workstations::v1::
           ListUsableWorkstationConfigsRequest const& request) = 0;
 
@@ -114,20 +114,20 @@ class WorkstationsStub {
           request) = 0;
 
   virtual StatusOr<google::cloud::workstations::v1::Workstation> GetWorkstation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workstations::v1::GetWorkstationRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::workstations::v1::ListWorkstationsResponse>
   ListWorkstations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workstations::v1::ListWorkstationsRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::workstations::v1::ListUsableWorkstationsResponse>
   ListUsableWorkstations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workstations::v1::ListUsableWorkstationsRequest const&
           request) = 0;
 
@@ -167,7 +167,7 @@ class WorkstationsStub {
 
   virtual StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workstations::v1::GenerateAccessTokenRequest const&
           request) = 0;
 
@@ -194,13 +194,13 @@ class DefaultWorkstationsStub : public WorkstationsStub {
 
   StatusOr<google::cloud::workstations::v1::WorkstationCluster>
   GetWorkstationCluster(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workstations::v1::GetWorkstationClusterRequest const&
           request) override;
 
   StatusOr<google::cloud::workstations::v1::ListWorkstationClustersResponse>
   ListWorkstationClusters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workstations::v1::ListWorkstationClustersRequest const&
           request) override;
 
@@ -227,20 +227,20 @@ class DefaultWorkstationsStub : public WorkstationsStub {
 
   StatusOr<google::cloud::workstations::v1::WorkstationConfig>
   GetWorkstationConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workstations::v1::GetWorkstationConfigRequest const&
           request) override;
 
   StatusOr<google::cloud::workstations::v1::ListWorkstationConfigsResponse>
   ListWorkstationConfigs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workstations::v1::ListWorkstationConfigsRequest const&
           request) override;
 
   StatusOr<
       google::cloud::workstations::v1::ListUsableWorkstationConfigsResponse>
   ListUsableWorkstationConfigs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workstations::v1::
           ListUsableWorkstationConfigsRequest const& request) override;
 
@@ -263,19 +263,19 @@ class DefaultWorkstationsStub : public WorkstationsStub {
           request) override;
 
   StatusOr<google::cloud::workstations::v1::Workstation> GetWorkstation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workstations::v1::GetWorkstationRequest const& request)
       override;
 
   StatusOr<google::cloud::workstations::v1::ListWorkstationsResponse>
   ListWorkstations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workstations::v1::ListWorkstationsRequest const& request)
       override;
 
   StatusOr<google::cloud::workstations::v1::ListUsableWorkstationsResponse>
   ListUsableWorkstations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workstations::v1::ListUsableWorkstationsRequest const&
           request) override;
 
@@ -311,7 +311,7 @@ class DefaultWorkstationsStub : public WorkstationsStub {
 
   StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workstations::v1::GenerateAccessTokenRequest const&
           request) override;
 

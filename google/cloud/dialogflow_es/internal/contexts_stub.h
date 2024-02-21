@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_CONTEXTS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_CONTEXTS_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/v2/context.grpc.pb.h>
@@ -36,27 +37,27 @@ class ContextsStub {
 
   virtual StatusOr<google::cloud::dialogflow::v2::ListContextsResponse>
   ListContexts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListContextsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::Context> GetContext(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetContextRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::Context> CreateContext(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::CreateContextRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::Context> UpdateContext(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::UpdateContextRequest const& request) = 0;
 
   virtual Status DeleteContext(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::DeleteContextRequest const& request) = 0;
 
   virtual Status DeleteAllContexts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::DeleteAllContextsRequest const&
           request) = 0;
 };
@@ -69,31 +70,31 @@ class DefaultContextsStub : public ContextsStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dialogflow::v2::ListContextsResponse> ListContexts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListContextsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Context> GetContext(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetContextRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::Context> CreateContext(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::CreateContextRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Context> UpdateContext(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::UpdateContextRequest const& request)
       override;
 
   Status DeleteContext(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::DeleteContextRequest const& request)
       override;
 
   Status DeleteAllContexts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request)
       override;
 

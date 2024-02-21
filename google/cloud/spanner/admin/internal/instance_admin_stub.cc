@@ -33,7 +33,7 @@ InstanceAdminStub::~InstanceAdminStub() = default;
 
 StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
 DefaultInstanceAdminStub::ListInstanceConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&
         request) {
   google::spanner::admin::instance::v1::ListInstanceConfigsResponse response;
@@ -46,7 +46,7 @@ DefaultInstanceAdminStub::ListInstanceConfigs(
 
 StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
 DefaultInstanceAdminStub::GetInstanceConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
         request) {
   google::spanner::admin::instance::v1::InstanceConfig response;
@@ -96,7 +96,7 @@ DefaultInstanceAdminStub::AsyncUpdateInstanceConfig(
 }
 
 Status DefaultInstanceAdminStub::DeleteInstanceConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
         request) {
   google::protobuf::Empty response;
@@ -110,7 +110,7 @@ Status DefaultInstanceAdminStub::DeleteInstanceConfig(
 StatusOr<
     google::spanner::admin::instance::v1::ListInstanceConfigOperationsResponse>
 DefaultInstanceAdminStub::ListInstanceConfigOperations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::instance::v1::
         ListInstanceConfigOperationsRequest const& request) {
   google::spanner::admin::instance::v1::ListInstanceConfigOperationsResponse
@@ -125,7 +125,7 @@ DefaultInstanceAdminStub::ListInstanceConfigOperations(
 
 StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
 DefaultInstanceAdminStub::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::instance::v1::ListInstancesRequest const& request) {
   google::spanner::admin::instance::v1::ListInstancesResponse response;
   auto status = grpc_stub_->ListInstances(&context, request, &response);
@@ -137,7 +137,7 @@ DefaultInstanceAdminStub::ListInstances(
 
 StatusOr<google::spanner::admin::instance::v1::Instance>
 DefaultInstanceAdminStub::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
   google::spanner::admin::instance::v1::Instance response;
   auto status = grpc_stub_->GetInstance(&context, request, &response);
@@ -186,7 +186,7 @@ DefaultInstanceAdminStub::AsyncUpdateInstance(
 }
 
 Status DefaultInstanceAdminStub::DeleteInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::instance::v1::DeleteInstanceRequest const&
         request) {
   google::protobuf::Empty response;
@@ -198,7 +198,7 @@ Status DefaultInstanceAdminStub::DeleteInstance(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultInstanceAdminStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -209,7 +209,7 @@ StatusOr<google::iam::v1::Policy> DefaultInstanceAdminStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultInstanceAdminStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -221,7 +221,7 @@ StatusOr<google::iam::v1::Policy> DefaultInstanceAdminStub::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultInstanceAdminStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);

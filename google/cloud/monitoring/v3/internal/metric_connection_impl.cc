@@ -71,21 +71,23 @@ MetricServiceConnectionImpl::ListMonitoredResourceDescriptors(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::api::MonitoredResourceDescriptor>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<monitoring_v3::MetricServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::monitoring::v3::
                        ListMonitoredResourceDescriptorsRequest const& request) {
-              return stub->ListMonitoredResourceDescriptors(context, request);
+              return stub->ListMonitoredResourceDescriptors(context, options,
+                                                            request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::monitoring::v3::ListMonitoredResourceDescriptorsResponse r) {
         std::vector<google::api::MonitoredResourceDescriptor> result(
@@ -105,12 +107,12 @@ MetricServiceConnectionImpl::GetMonitoredResourceDescriptor(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetMonitoredResourceDescriptor(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
               request) {
-        return stub_->GetMonitoredResourceDescriptor(context, request);
+        return stub_->GetMonitoredResourceDescriptor(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::api::MetricDescriptor>
@@ -123,20 +125,21 @@ MetricServiceConnectionImpl::ListMetricDescriptors(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::api::MetricDescriptor>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<monitoring_v3::MetricServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::monitoring::v3::ListMetricDescriptorsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::monitoring::v3::ListMetricDescriptorsRequest const&
                        request) {
-              return stub->ListMetricDescriptors(context, request);
+              return stub->ListMetricDescriptors(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::monitoring::v3::ListMetricDescriptorsResponse r) {
         std::vector<google::api::MetricDescriptor> result(
@@ -155,11 +158,11 @@ MetricServiceConnectionImpl::GetMetricDescriptor(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetMetricDescriptor(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::monitoring::v3::GetMetricDescriptorRequest const& request) {
-        return stub_->GetMetricDescriptor(context, request);
+        return stub_->GetMetricDescriptor(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::api::MetricDescriptor>
@@ -169,12 +172,12 @@ MetricServiceConnectionImpl::CreateMetricDescriptor(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateMetricDescriptor(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::CreateMetricDescriptorRequest const&
                  request) {
-        return stub_->CreateMetricDescriptor(context, request);
+        return stub_->CreateMetricDescriptor(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status MetricServiceConnectionImpl::DeleteMetricDescriptor(
@@ -183,12 +186,12 @@ Status MetricServiceConnectionImpl::DeleteMetricDescriptor(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteMetricDescriptor(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::DeleteMetricDescriptorRequest const&
                  request) {
-        return stub_->DeleteMetricDescriptor(context, request);
+        return stub_->DeleteMetricDescriptor(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::monitoring::v3::TimeSeries>
@@ -200,20 +203,21 @@ MetricServiceConnectionImpl::ListTimeSeries(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::monitoring::v3::TimeSeries>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<monitoring_v3::MetricServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::monitoring::v3::ListTimeSeriesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::monitoring::v3::ListTimeSeriesRequest const& request) {
-              return stub->ListTimeSeries(context, request);
+              return stub->ListTimeSeries(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::monitoring::v3::ListTimeSeriesResponse r) {
         std::vector<google::monitoring::v3::TimeSeries> result(
@@ -230,11 +234,11 @@ Status MetricServiceConnectionImpl::CreateTimeSeries(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateTimeSeries(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-        return stub_->CreateTimeSeries(context, request);
+        return stub_->CreateTimeSeries(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status MetricServiceConnectionImpl::CreateServiceTimeSeries(
@@ -243,11 +247,11 @@ Status MetricServiceConnectionImpl::CreateServiceTimeSeries(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateServiceTimeSeries(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-        return stub_->CreateServiceTimeSeries(context, request);
+        return stub_->CreateServiceTimeSeries(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<Status> MetricServiceConnectionImpl::AsyncCreateTimeSeries(

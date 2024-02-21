@@ -40,11 +40,11 @@ class WorkflowsStub {
 
   virtual StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse>
   ListWorkflows(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workflows::v1::ListWorkflowsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::workflows::v1::Workflow> GetWorkflow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workflows::v1::GetWorkflowRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkflow(
@@ -83,12 +83,12 @@ class DefaultWorkflowsStub : public WorkflowsStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse> ListWorkflows(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workflows::v1::ListWorkflowsRequest const& request)
       override;
 
   StatusOr<google::cloud::workflows::v1::Workflow> GetWorkflow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workflows::v1::GetWorkflowRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkflow(

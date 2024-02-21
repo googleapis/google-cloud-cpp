@@ -33,48 +33,49 @@ StorageControlTracingStub::StorageControlTracingStub(
 
 StatusOr<google::storage::control::v2::Folder>
 StorageControlTracingStub::CreateFolder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::CreateFolderRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
                                      "CreateFolder");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateFolder(context, request));
+                           child_->CreateFolder(context, options, request));
 }
 
 Status StorageControlTracingStub::DeleteFolder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::DeleteFolderRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
                                      "DeleteFolder");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteFolder(context, request));
+                           child_->DeleteFolder(context, options, request));
 }
 
 StatusOr<google::storage::control::v2::Folder>
 StorageControlTracingStub::GetFolder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::GetFolderRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
                                      "GetFolder");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetFolder(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetFolder(context, options, request));
 }
 
 StatusOr<google::storage::control::v2::ListFoldersResponse>
 StorageControlTracingStub::ListFolders(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::ListFoldersRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
                                      "ListFolders");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListFolders(context, request));
+                           child_->ListFolders(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -92,14 +93,14 @@ StorageControlTracingStub::AsyncRenameFolder(
 
 StatusOr<google::storage::control::v2::StorageLayout>
 StorageControlTracingStub::GetStorageLayout(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::GetStorageLayoutRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.control.v2.StorageControl",
                                      "GetStorageLayout");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetStorageLayout(context, request));
+                           child_->GetStorageLayout(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

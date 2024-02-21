@@ -52,20 +52,20 @@ CursorServiceAuth::AsyncStreamingCommitCursor(
 
 StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse>
 CursorServiceAuth::CommitCursor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::CommitCursorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CommitCursor(context, request);
+  return child_->CommitCursor(context, options, request);
 }
 
 StatusOr<google::cloud::pubsublite::v1::ListPartitionCursorsResponse>
 CursorServiceAuth::ListPartitionCursors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ListPartitionCursorsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListPartitionCursors(context, request);
+  return child_->ListPartitionCursors(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

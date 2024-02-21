@@ -112,26 +112,26 @@ ClusterControllerMetadata::AsyncDeleteCluster(
 
 StatusOr<google::cloud::dataproc::v1::Cluster>
 ClusterControllerMetadata::GetCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetClusterRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat(
           "project_id=", internal::UrlEncode(request.project_id()), "&",
           "region=", internal::UrlEncode(request.region()), "&",
           "cluster_name=", internal::UrlEncode(request.cluster_name())));
-  return child_->GetCluster(context, request);
+  return child_->GetCluster(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::ListClustersResponse>
 ClusterControllerMetadata::ListClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::ListClustersRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "region=", internal::UrlEncode(request.region())));
-  return child_->ListClusters(context, request);
+  return child_->ListClusters(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

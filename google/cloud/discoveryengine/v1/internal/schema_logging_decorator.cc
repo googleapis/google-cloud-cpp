@@ -37,26 +37,28 @@ SchemaServiceLogging::SchemaServiceLogging(
 
 StatusOr<google::cloud::discoveryengine::v1::Schema>
 SchemaServiceLogging::GetSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetSchemaRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::discoveryengine::v1::GetSchemaRequest const& request) {
-        return child_->GetSchema(context, request);
+        return child_->GetSchema(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListSchemasResponse>
 SchemaServiceLogging::ListSchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ListSchemasRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::discoveryengine::v1::ListSchemasRequest const&
-                 request) { return child_->ListSchemas(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListSchemas(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

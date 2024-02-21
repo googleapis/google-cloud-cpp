@@ -31,7 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TraceServiceStub::~TraceServiceStub() = default;
 
 Status DefaultTraceServiceStub::BatchWriteSpans(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->BatchWriteSpans(&context, request, &response);
@@ -43,7 +43,7 @@ Status DefaultTraceServiceStub::BatchWriteSpans(
 
 StatusOr<google::devtools::cloudtrace::v2::Span>
 DefaultTraceServiceStub::CreateSpan(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudtrace::v2::Span const& request) {
   google::devtools::cloudtrace::v2::Span response;
   auto status = grpc_stub_->CreateSpan(&context, request, &response);

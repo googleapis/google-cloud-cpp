@@ -33,7 +33,7 @@ NotebookServiceStub::~NotebookServiceStub() = default;
 
 StatusOr<google::cloud::notebooks::v1::ListInstancesResponse>
 DefaultNotebookServiceStub::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::notebooks::v1::ListInstancesRequest const& request) {
   google::cloud::notebooks::v1::ListInstancesResponse response;
   auto status = grpc_stub_->ListInstances(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultNotebookServiceStub::ListInstances(
 
 StatusOr<google::cloud::notebooks::v1::Instance>
 DefaultNotebookServiceStub::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::notebooks::v1::GetInstanceRequest const& request) {
   google::cloud::notebooks::v1::Instance response;
   auto status = grpc_stub_->GetInstance(&context, request, &response);
@@ -186,7 +186,7 @@ DefaultNotebookServiceStub::AsyncSetInstanceLabels(
 
 StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
 DefaultNotebookServiceStub::UpdateInstanceMetadataItems(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
         request) {
   google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse response;
@@ -286,7 +286,7 @@ DefaultNotebookServiceStub::AsyncReportInstanceInfo(
 
 StatusOr<google::cloud::notebooks::v1::IsInstanceUpgradeableResponse>
 DefaultNotebookServiceStub::IsInstanceUpgradeable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::notebooks::v1::IsInstanceUpgradeableRequest const& request) {
   google::cloud::notebooks::v1::IsInstanceUpgradeableResponse response;
   auto status = grpc_stub_->IsInstanceUpgradeable(&context, request, &response);
@@ -298,7 +298,7 @@ DefaultNotebookServiceStub::IsInstanceUpgradeable(
 
 StatusOr<google::cloud::notebooks::v1::GetInstanceHealthResponse>
 DefaultNotebookServiceStub::GetInstanceHealth(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::notebooks::v1::GetInstanceHealthRequest const& request) {
   google::cloud::notebooks::v1::GetInstanceHealthResponse response;
   auto status = grpc_stub_->GetInstanceHealth(&context, request, &response);
@@ -383,7 +383,7 @@ DefaultNotebookServiceStub::AsyncUpgradeInstanceInternal(
 
 StatusOr<google::cloud::notebooks::v1::ListEnvironmentsResponse>
 DefaultNotebookServiceStub::ListEnvironments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::notebooks::v1::ListEnvironmentsRequest const& request) {
   google::cloud::notebooks::v1::ListEnvironmentsResponse response;
   auto status = grpc_stub_->ListEnvironments(&context, request, &response);
@@ -395,7 +395,7 @@ DefaultNotebookServiceStub::ListEnvironments(
 
 StatusOr<google::cloud::notebooks::v1::Environment>
 DefaultNotebookServiceStub::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::notebooks::v1::GetEnvironmentRequest const& request) {
   google::cloud::notebooks::v1::Environment response;
   auto status = grpc_stub_->GetEnvironment(&context, request, &response);
@@ -443,7 +443,7 @@ DefaultNotebookServiceStub::AsyncDeleteEnvironment(
 
 StatusOr<google::cloud::notebooks::v1::ListSchedulesResponse>
 DefaultNotebookServiceStub::ListSchedules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::notebooks::v1::ListSchedulesRequest const& request) {
   google::cloud::notebooks::v1::ListSchedulesResponse response;
   auto status = grpc_stub_->ListSchedules(&context, request, &response);
@@ -455,7 +455,7 @@ DefaultNotebookServiceStub::ListSchedules(
 
 StatusOr<google::cloud::notebooks::v1::Schedule>
 DefaultNotebookServiceStub::GetSchedule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::notebooks::v1::GetScheduleRequest const& request) {
   google::cloud::notebooks::v1::Schedule response;
   auto status = grpc_stub_->GetSchedule(&context, request, &response);
@@ -519,7 +519,7 @@ DefaultNotebookServiceStub::AsyncTriggerSchedule(
 
 StatusOr<google::cloud::notebooks::v1::ListExecutionsResponse>
 DefaultNotebookServiceStub::ListExecutions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::notebooks::v1::ListExecutionsRequest const& request) {
   google::cloud::notebooks::v1::ListExecutionsResponse response;
   auto status = grpc_stub_->ListExecutions(&context, request, &response);
@@ -531,7 +531,7 @@ DefaultNotebookServiceStub::ListExecutions(
 
 StatusOr<google::cloud::notebooks::v1::Execution>
 DefaultNotebookServiceStub::GetExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::notebooks::v1::GetExecutionRequest const& request) {
   google::cloud::notebooks::v1::Execution response;
   auto status = grpc_stub_->GetExecution(&context, request, &response);

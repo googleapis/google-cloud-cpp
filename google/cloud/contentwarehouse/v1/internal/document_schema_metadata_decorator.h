@@ -41,30 +41,30 @@ class DocumentSchemaServiceMetadata : public DocumentSchemaServiceStub {
 
   StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
   CreateDocumentSchema(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
           request) override;
 
   StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
   UpdateDocumentSchema(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
           request) override;
 
   StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
   GetDocumentSchema(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
           request) override;
 
   Status DeleteDocumentSchema(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
           request) override;
 
   StatusOr<google::cloud::contentwarehouse::v1::ListDocumentSchemasResponse>
   ListDocumentSchemas(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const&
           request) override;
 

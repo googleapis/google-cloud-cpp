@@ -37,66 +37,66 @@ AuthorizedCertificatesLogging::AuthorizedCertificatesLogging(
 
 StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse>
 AuthorizedCertificatesLogging::ListAuthorizedCertificates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListAuthorizedCertificatesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::ListAuthorizedCertificatesRequest const&
                  request) {
-        return child_->ListAuthorizedCertificates(context, request);
+        return child_->ListAuthorizedCertificates(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesLogging::GetAuthorizedCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetAuthorizedCertificateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::GetAuthorizedCertificateRequest const&
                  request) {
-        return child_->GetAuthorizedCertificate(context, request);
+        return child_->GetAuthorizedCertificate(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesLogging::CreateAuthorizedCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::CreateAuthorizedCertificateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::CreateAuthorizedCertificateRequest const&
                  request) {
-        return child_->CreateAuthorizedCertificate(context, request);
+        return child_->CreateAuthorizedCertificate(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesLogging::UpdateAuthorizedCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::UpdateAuthorizedCertificateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::UpdateAuthorizedCertificateRequest const&
                  request) {
-        return child_->UpdateAuthorizedCertificate(context, request);
+        return child_->UpdateAuthorizedCertificate(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status AuthorizedCertificatesLogging::DeleteAuthorizedCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::DeleteAuthorizedCertificateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::DeleteAuthorizedCertificateRequest const&
                  request) {
-        return child_->DeleteAuthorizedCertificate(context, request);
+        return child_->DeleteAuthorizedCertificate(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

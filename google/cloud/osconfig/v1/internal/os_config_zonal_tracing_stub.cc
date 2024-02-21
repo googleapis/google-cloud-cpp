@@ -63,19 +63,19 @@ OsConfigZonalServiceTracingStub::AsyncUpdateOSPolicyAssignment(
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
 OsConfigZonalServiceTracingStub::GetOSPolicyAssignment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.osconfig.v1.OsConfigZonalService", "GetOSPolicyAssignment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetOSPolicyAssignment(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetOSPolicyAssignment(context, options, request));
 }
 
 StatusOr<google::cloud::osconfig::v1::ListOSPolicyAssignmentsResponse>
 OsConfigZonalServiceTracingStub::ListOSPolicyAssignments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest const&
         request) {
   auto span =
@@ -83,13 +83,14 @@ OsConfigZonalServiceTracingStub::ListOSPolicyAssignments(
                              "ListOSPolicyAssignments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListOSPolicyAssignments(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListOSPolicyAssignments(context, options, request));
 }
 
 StatusOr<google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsResponse>
 OsConfigZonalServiceTracingStub::ListOSPolicyAssignmentRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest const&
         request) {
   auto span =
@@ -99,7 +100,7 @@ OsConfigZonalServiceTracingStub::ListOSPolicyAssignmentRevisions(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
-      child_->ListOSPolicyAssignmentRevisions(context, request));
+      child_->ListOSPolicyAssignmentRevisions(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -119,7 +120,7 @@ OsConfigZonalServiceTracingStub::AsyncDeleteOSPolicyAssignment(
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>
 OsConfigZonalServiceTracingStub::GetOSPolicyAssignmentReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const&
         request) {
   auto span =
@@ -128,12 +129,13 @@ OsConfigZonalServiceTracingStub::GetOSPolicyAssignmentReport(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
-      context, *span, child_->GetOSPolicyAssignmentReport(context, request));
+      context, *span,
+      child_->GetOSPolicyAssignmentReport(context, options, request));
 }
 
 StatusOr<google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsResponse>
 OsConfigZonalServiceTracingStub::ListOSPolicyAssignmentReports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest const&
         request) {
   auto span =
@@ -142,49 +144,51 @@ OsConfigZonalServiceTracingStub::ListOSPolicyAssignmentReports(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
-      context, *span, child_->ListOSPolicyAssignmentReports(context, request));
+      context, *span,
+      child_->ListOSPolicyAssignmentReports(context, options, request));
 }
 
 StatusOr<google::cloud::osconfig::v1::Inventory>
 OsConfigZonalServiceTracingStub::GetInventory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetInventoryRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.osconfig.v1.OsConfigZonalService", "GetInventory");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetInventory(context, request));
+                           child_->GetInventory(context, options, request));
 }
 
 StatusOr<google::cloud::osconfig::v1::ListInventoriesResponse>
 OsConfigZonalServiceTracingStub::ListInventories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListInventoriesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.osconfig.v1.OsConfigZonalService", "ListInventories");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListInventories(context, request));
+                           child_->ListInventories(context, options, request));
 }
 
 StatusOr<google::cloud::osconfig::v1::VulnerabilityReport>
 OsConfigZonalServiceTracingStub::GetVulnerabilityReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetVulnerabilityReportRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.osconfig.v1.OsConfigZonalService",
                              "GetVulnerabilityReport");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetVulnerabilityReport(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GetVulnerabilityReport(context, options, request));
 }
 
 StatusOr<google::cloud::osconfig::v1::ListVulnerabilityReportsResponse>
 OsConfigZonalServiceTracingStub::ListVulnerabilityReports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListVulnerabilityReportsRequest const&
         request) {
   auto span =
@@ -192,8 +196,9 @@ OsConfigZonalServiceTracingStub::ListVulnerabilityReports(
                              "ListVulnerabilityReports");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListVulnerabilityReports(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListVulnerabilityReports(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

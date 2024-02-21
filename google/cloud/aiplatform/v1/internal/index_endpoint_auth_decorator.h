@@ -46,18 +46,18 @@ class IndexEndpointServiceAuth : public IndexEndpointServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::IndexEndpoint> GetIndexEndpoint(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListIndexEndpointsResponse>
   ListIndexEndpoints(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListIndexEndpointsRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::IndexEndpoint> UpdateIndexEndpoint(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::UpdateIndexEndpointRequest const& request)
       override;
 

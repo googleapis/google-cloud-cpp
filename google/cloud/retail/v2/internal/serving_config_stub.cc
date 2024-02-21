@@ -32,7 +32,7 @@ ServingConfigServiceStub::~ServingConfigServiceStub() = default;
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 DefaultServingConfigServiceStub::CreateServingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::CreateServingConfigRequest const& request) {
   google::cloud::retail::v2::ServingConfig response;
   auto status = grpc_stub_->CreateServingConfig(&context, request, &response);
@@ -43,7 +43,7 @@ DefaultServingConfigServiceStub::CreateServingConfig(
 }
 
 Status DefaultServingConfigServiceStub::DeleteServingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::DeleteServingConfigRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteServingConfig(&context, request, &response);
@@ -55,7 +55,7 @@ Status DefaultServingConfigServiceStub::DeleteServingConfig(
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 DefaultServingConfigServiceStub::UpdateServingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::UpdateServingConfigRequest const& request) {
   google::cloud::retail::v2::ServingConfig response;
   auto status = grpc_stub_->UpdateServingConfig(&context, request, &response);
@@ -67,7 +67,7 @@ DefaultServingConfigServiceStub::UpdateServingConfig(
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 DefaultServingConfigServiceStub::GetServingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::GetServingConfigRequest const& request) {
   google::cloud::retail::v2::ServingConfig response;
   auto status = grpc_stub_->GetServingConfig(&context, request, &response);
@@ -79,7 +79,7 @@ DefaultServingConfigServiceStub::GetServingConfig(
 
 StatusOr<google::cloud::retail::v2::ListServingConfigsResponse>
 DefaultServingConfigServiceStub::ListServingConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::ListServingConfigsRequest const& request) {
   google::cloud::retail::v2::ListServingConfigsResponse response;
   auto status = grpc_stub_->ListServingConfigs(&context, request, &response);
@@ -91,7 +91,7 @@ DefaultServingConfigServiceStub::ListServingConfigs(
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 DefaultServingConfigServiceStub::AddControl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::AddControlRequest const& request) {
   google::cloud::retail::v2::ServingConfig response;
   auto status = grpc_stub_->AddControl(&context, request, &response);
@@ -103,7 +103,7 @@ DefaultServingConfigServiceStub::AddControl(
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 DefaultServingConfigServiceStub::RemoveControl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::RemoveControlRequest const& request) {
   google::cloud::retail::v2::ServingConfig response;
   auto status = grpc_stub_->RemoveControl(&context, request, &response);

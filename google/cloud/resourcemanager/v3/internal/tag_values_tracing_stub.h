@@ -38,17 +38,17 @@ class TagValuesTracingStub : public TagValuesStub {
   explicit TagValuesTracingStub(std::shared_ptr<TagValuesStub> child);
 
   StatusOr<google::cloud::resourcemanager::v3::ListTagValuesResponse>
-  ListTagValues(grpc::ClientContext& context,
+  ListTagValues(grpc::ClientContext& context, Options const& options,
                 google::cloud::resourcemanager::v3::ListTagValuesRequest const&
                     request) override;
 
   StatusOr<google::cloud::resourcemanager::v3::TagValue> GetTagValue(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcemanager::v3::GetTagValueRequest const& request)
       override;
 
   StatusOr<google::cloud::resourcemanager::v3::TagValue> GetNamespacedTagValue(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcemanager::v3::GetNamespacedTagValueRequest const&
           request) override;
 
@@ -71,15 +71,15 @@ class TagValuesTracingStub : public TagValuesStub {
       override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

@@ -33,41 +33,41 @@ DocumentLinkServiceAuth::DocumentLinkServiceAuth(
 
 StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
 DocumentLinkServiceAuth::ListLinkedTargets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListLinkedTargets(context, request);
+  return child_->ListLinkedTargets(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::ListLinkedSourcesResponse>
 DocumentLinkServiceAuth::ListLinkedSources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListLinkedSources(context, request);
+  return child_->ListLinkedSources(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>
 DocumentLinkServiceAuth::CreateDocumentLink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateDocumentLink(context, request);
+  return child_->CreateDocumentLink(context, options, request);
 }
 
 Status DocumentLinkServiceAuth::DeleteDocumentLink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteDocumentLink(context, request);
+  return child_->DeleteDocumentLink(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -39,12 +39,12 @@ class FunctionServiceStub {
   virtual ~FunctionServiceStub() = 0;
 
   virtual StatusOr<google::cloud::functions::v2::Function> GetFunction(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v2::GetFunctionRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::functions::v2::ListFunctionsResponse>
   ListFunctions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v2::ListFunctionsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateFunction(
@@ -64,19 +64,19 @@ class FunctionServiceStub {
 
   virtual StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>
   GenerateUploadUrl(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v2::GenerateUploadUrlRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::functions::v2::GenerateDownloadUrlResponse>
   GenerateDownloadUrl(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v2::GenerateDownloadUrlRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::functions::v2::ListRuntimesResponse>
   ListRuntimes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v2::ListRuntimesRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -101,11 +101,11 @@ class DefaultFunctionServiceStub : public FunctionServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::functions::v2::Function> GetFunction(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v2::GetFunctionRequest const& request) override;
 
   StatusOr<google::cloud::functions::v2::ListFunctionsResponse> ListFunctions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v2::ListFunctionsRequest const& request)
       override;
 
@@ -129,18 +129,18 @@ class DefaultFunctionServiceStub : public FunctionServiceStub {
 
   StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>
   GenerateUploadUrl(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v2::GenerateUploadUrlRequest const& request)
       override;
 
   StatusOr<google::cloud::functions::v2::GenerateDownloadUrlResponse>
   GenerateDownloadUrl(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v2::GenerateDownloadUrlRequest const& request)
       override;
 
   StatusOr<google::cloud::functions::v2::ListRuntimesResponse> ListRuntimes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v2::ListRuntimesRequest const& request)
       override;
 

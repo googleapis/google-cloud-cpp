@@ -40,12 +40,12 @@ class WorkflowsMetadata : public WorkflowsStub {
                     std::string api_client_header = "");
 
   StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse> ListWorkflows(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workflows::v1::ListWorkflowsRequest const& request)
       override;
 
   StatusOr<google::cloud::workflows::v1::Workflow> GetWorkflow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workflows::v1::GetWorkflowRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateWorkflow(

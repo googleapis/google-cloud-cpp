@@ -44,18 +44,18 @@ TextToSpeechMetadata::TextToSpeechMetadata(
 
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
 TextToSpeechMetadata::ListVoices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->ListVoices(context, request);
+  SetMetadata(context, options);
+  return child_->ListVoices(context, options, request);
 }
 
 StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
 TextToSpeechMetadata::SynthesizeSpeech(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->SynthesizeSpeech(context, request);
+  SetMetadata(context, options);
+  return child_->SynthesizeSpeech(context, options, request);
 }
 
 void TextToSpeechMetadata::SetMetadata(grpc::ClientContext& context,

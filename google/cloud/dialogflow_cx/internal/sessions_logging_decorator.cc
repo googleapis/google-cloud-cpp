@@ -39,13 +39,15 @@ SessionsLogging::SessionsLogging(std::shared_ptr<SessionsStub> child,
 
 StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
 SessionsLogging::DetectIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
-                 request) { return child_->DetectIntent(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->DetectIntent(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -96,39 +98,43 @@ SessionsLogging::AsyncStreamingDetectIntent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>
 SessionsLogging::MatchIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::MatchIntentRequest const&
-                 request) { return child_->MatchIntent(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->MatchIntent(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
 SessionsLogging::FulfillIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&
-                 request) { return child_->FulfillIntent(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->FulfillIntent(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
 SessionsLogging::SubmitAnswerFeedback(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
               request) {
-        return child_->SubmitAnswerFeedback(context, request);
+        return child_->SubmitAnswerFeedback(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

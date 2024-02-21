@@ -46,27 +46,27 @@ CloudChannelReportsServiceTracingStub::AsyncRunReportJob(
 
 StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
 CloudChannelReportsServiceTracingStub::FetchReportResults(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::FetchReportResultsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.channel.v1.CloudChannelReportsService",
       "FetchReportResults");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->FetchReportResults(context, request));
+  return internal::EndSpan(
+      context, *span, child_->FetchReportResults(context, options, request));
 }
 
 StatusOr<google::cloud::channel::v1::ListReportsResponse>
 CloudChannelReportsServiceTracingStub::ListReports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListReportsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.channel.v1.CloudChannelReportsService", "ListReports");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListReports(context, request));
+                           child_->ListReports(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

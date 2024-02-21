@@ -33,7 +33,7 @@ ParticipantsStub::~ParticipantsStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 DefaultParticipantsStub::CreateParticipant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::CreateParticipantRequest const& request) {
   google::cloud::dialogflow::v2::Participant response;
   auto status = grpc_stub_->CreateParticipant(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultParticipantsStub::CreateParticipant(
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 DefaultParticipantsStub::GetParticipant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::GetParticipantRequest const& request) {
   google::cloud::dialogflow::v2::Participant response;
   auto status = grpc_stub_->GetParticipant(&context, request, &response);
@@ -57,7 +57,7 @@ DefaultParticipantsStub::GetParticipant(
 
 StatusOr<google::cloud::dialogflow::v2::ListParticipantsResponse>
 DefaultParticipantsStub::ListParticipants(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::ListParticipantsRequest const& request) {
   google::cloud::dialogflow::v2::ListParticipantsResponse response;
   auto status = grpc_stub_->ListParticipants(&context, request, &response);
@@ -69,7 +69,7 @@ DefaultParticipantsStub::ListParticipants(
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 DefaultParticipantsStub::UpdateParticipant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::UpdateParticipantRequest const& request) {
   google::cloud::dialogflow::v2::Participant response;
   auto status = grpc_stub_->UpdateParticipant(&context, request, &response);
@@ -81,7 +81,7 @@ DefaultParticipantsStub::UpdateParticipant(
 
 StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
 DefaultParticipantsStub::AnalyzeContent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::AnalyzeContentRequest const& request) {
   google::cloud::dialogflow::v2::AnalyzeContentResponse response;
   auto status = grpc_stub_->AnalyzeContent(&context, request, &response);
@@ -108,7 +108,7 @@ DefaultParticipantsStub::AsyncStreamingAnalyzeContent(
 
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 DefaultParticipantsStub::SuggestArticles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::SuggestArticlesRequest const& request) {
   google::cloud::dialogflow::v2::SuggestArticlesResponse response;
   auto status = grpc_stub_->SuggestArticles(&context, request, &response);
@@ -120,7 +120,7 @@ DefaultParticipantsStub::SuggestArticles(
 
 StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
 DefaultParticipantsStub::SuggestFaqAnswers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request) {
   google::cloud::dialogflow::v2::SuggestFaqAnswersResponse response;
   auto status = grpc_stub_->SuggestFaqAnswers(&context, request, &response);
@@ -132,7 +132,7 @@ DefaultParticipantsStub::SuggestFaqAnswers(
 
 StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
 DefaultParticipantsStub::SuggestSmartReplies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request) {
   google::cloud::dialogflow::v2::SuggestSmartRepliesResponse response;
   auto status = grpc_stub_->SuggestSmartReplies(&context, request, &response);

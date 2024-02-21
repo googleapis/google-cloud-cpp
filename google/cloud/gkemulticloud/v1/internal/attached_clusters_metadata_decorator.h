@@ -60,13 +60,13 @@ class AttachedClustersMetadata : public AttachedClustersStub {
 
   StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
   GetAttachedCluster(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
           request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::ListAttachedClustersResponse>
   ListAttachedClusters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::ListAttachedClustersRequest const&
           request) override;
 
@@ -78,14 +78,14 @@ class AttachedClustersMetadata : public AttachedClustersStub {
 
   StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
   GetAttachedServerConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&
           request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::
                GenerateAttachedClusterInstallManifestResponse>
   GenerateAttachedClusterInstallManifest(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::
           GenerateAttachedClusterInstallManifestRequest const& request)
       override;
@@ -93,7 +93,7 @@ class AttachedClustersMetadata : public AttachedClustersStub {
   StatusOr<google::cloud::gkemulticloud::v1::
                GenerateAttachedClusterAgentTokenResponse>
   GenerateAttachedClusterAgentToken(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::
           GenerateAttachedClusterAgentTokenRequest const& request) override;
 

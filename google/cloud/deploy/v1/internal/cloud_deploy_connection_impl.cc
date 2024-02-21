@@ -72,21 +72,22 @@ CloudDeployConnectionImpl::ListDeliveryPipelines(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::deploy::v1::DeliveryPipeline>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<deploy_v1::CloudDeployRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::deploy::v1::ListDeliveryPipelinesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::deploy::v1::ListDeliveryPipelinesRequest const&
                     request) {
-              return stub->ListDeliveryPipelines(context, request);
+              return stub->ListDeliveryPipelines(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::deploy::v1::ListDeliveryPipelinesResponse r) {
         std::vector<google::cloud::deploy::v1::DeliveryPipeline> result(
@@ -104,12 +105,12 @@ CloudDeployConnectionImpl::GetDeliveryPipeline(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDeliveryPipeline(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::deploy::v1::GetDeliveryPipelineRequest const&
                  request) {
-        return stub_->GetDeliveryPipeline(context, request);
+        return stub_->GetDeliveryPipeline(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
@@ -235,20 +236,21 @@ CloudDeployConnectionImpl::ListTargets(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::deploy::v1::Target>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<deploy_v1::CloudDeployRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::deploy::v1::ListTargetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::deploy::v1::ListTargetsRequest const& request) {
-              return stub->ListTargets(context, request);
+              return stub->ListTargets(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::deploy::v1::ListTargetsResponse r) {
         std::vector<google::cloud::deploy::v1::Target> result(
@@ -266,11 +268,11 @@ CloudDeployConnectionImpl::RollbackTarget(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RollbackTarget(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::deploy::v1::RollbackTargetRequest const& request) {
-        return stub_->RollbackTarget(context, request);
+        return stub_->RollbackTarget(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::deploy::v1::Target>
@@ -280,11 +282,11 @@ CloudDeployConnectionImpl::GetTarget(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTarget(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::deploy::v1::GetTargetRequest const& request) {
-        return stub_->GetTarget(context, request);
+        return stub_->GetTarget(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::deploy::v1::Target>>
@@ -408,21 +410,22 @@ CloudDeployConnectionImpl::ListCustomTargetTypes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::deploy::v1::CustomTargetType>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<deploy_v1::CloudDeployRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::deploy::v1::ListCustomTargetTypesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::deploy::v1::ListCustomTargetTypesRequest const&
                     request) {
-              return stub->ListCustomTargetTypes(context, request);
+              return stub->ListCustomTargetTypes(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::deploy::v1::ListCustomTargetTypesResponse r) {
         std::vector<google::cloud::deploy::v1::CustomTargetType> result(
@@ -440,12 +443,12 @@ CloudDeployConnectionImpl::GetCustomTargetType(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCustomTargetType(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::deploy::v1::GetCustomTargetTypeRequest const&
                  request) {
-        return stub_->GetCustomTargetType(context, request);
+        return stub_->GetCustomTargetType(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
@@ -571,20 +574,21 @@ CloudDeployConnectionImpl::ListReleases(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::deploy::v1::Release>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<deploy_v1::CloudDeployRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::deploy::v1::ListReleasesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::deploy::v1::ListReleasesRequest const& request) {
-              return stub->ListReleases(context, request);
+              return stub->ListReleases(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::deploy::v1::ListReleasesResponse r) {
         std::vector<google::cloud::deploy::v1::Release> result(
@@ -602,11 +606,11 @@ CloudDeployConnectionImpl::GetRelease(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRelease(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::deploy::v1::GetReleaseRequest const& request) {
-        return stub_->GetRelease(context, request);
+        return stub_->GetRelease(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::deploy::v1::Release>>
@@ -653,11 +657,11 @@ CloudDeployConnectionImpl::AbandonRelease(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AbandonRelease(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::deploy::v1::AbandonReleaseRequest const& request) {
-        return stub_->AbandonRelease(context, request);
+        return stub_->AbandonRelease(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>
@@ -667,11 +671,11 @@ CloudDeployConnectionImpl::ApproveRollout(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ApproveRollout(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::deploy::v1::ApproveRolloutRequest const& request) {
-        return stub_->ApproveRollout(context, request);
+        return stub_->ApproveRollout(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>
@@ -681,11 +685,11 @@ CloudDeployConnectionImpl::AdvanceRollout(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AdvanceRollout(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::deploy::v1::AdvanceRolloutRequest const& request) {
-        return stub_->AdvanceRollout(context, request);
+        return stub_->AdvanceRollout(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>
@@ -695,11 +699,11 @@ CloudDeployConnectionImpl::CancelRollout(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CancelRollout(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::deploy::v1::CancelRolloutRequest const& request) {
-        return stub_->CancelRollout(context, request);
+        return stub_->CancelRollout(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::deploy::v1::Rollout>
@@ -711,20 +715,21 @@ CloudDeployConnectionImpl::ListRollouts(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::deploy::v1::Rollout>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<deploy_v1::CloudDeployRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::deploy::v1::ListRolloutsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::deploy::v1::ListRolloutsRequest const& request) {
-              return stub->ListRollouts(context, request);
+              return stub->ListRollouts(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::deploy::v1::ListRolloutsResponse r) {
         std::vector<google::cloud::deploy::v1::Rollout> result(
@@ -742,11 +747,11 @@ CloudDeployConnectionImpl::GetRollout(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRollout(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::deploy::v1::GetRolloutRequest const& request) {
-        return stub_->GetRollout(context, request);
+        return stub_->GetRollout(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::deploy::v1::Rollout>>
@@ -793,11 +798,11 @@ CloudDeployConnectionImpl::IgnoreJob(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->IgnoreJob(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::deploy::v1::IgnoreJobRequest const& request) {
-        return stub_->IgnoreJob(context, request);
+        return stub_->IgnoreJob(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::deploy::v1::RetryJobResponse>
@@ -807,11 +812,11 @@ CloudDeployConnectionImpl::RetryJob(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RetryJob(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::deploy::v1::RetryJobRequest const& request) {
-        return stub_->RetryJob(context, request);
+        return stub_->RetryJob(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::deploy::v1::JobRun>
@@ -823,20 +828,21 @@ CloudDeployConnectionImpl::ListJobRuns(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::deploy::v1::JobRun>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<deploy_v1::CloudDeployRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::deploy::v1::ListJobRunsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::deploy::v1::ListJobRunsRequest const& request) {
-              return stub->ListJobRuns(context, request);
+              return stub->ListJobRuns(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::deploy::v1::ListJobRunsResponse r) {
         std::vector<google::cloud::deploy::v1::JobRun> result(
@@ -854,11 +860,11 @@ CloudDeployConnectionImpl::GetJobRun(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetJobRun(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::deploy::v1::GetJobRunRequest const& request) {
-        return stub_->GetJobRun(context, request);
+        return stub_->GetJobRun(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>
@@ -868,11 +874,11 @@ CloudDeployConnectionImpl::TerminateJobRun(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TerminateJobRun(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::deploy::v1::TerminateJobRunRequest const& request) {
-        return stub_->TerminateJobRun(context, request);
+        return stub_->TerminateJobRun(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::deploy::v1::Config>
@@ -882,11 +888,11 @@ CloudDeployConnectionImpl::GetConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::deploy::v1::GetConfigRequest const& request) {
-        return stub_->GetConfig(context, request);
+        return stub_->GetConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::deploy::v1::Automation>>
@@ -1007,11 +1013,11 @@ CloudDeployConnectionImpl::GetAutomation(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAutomation(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::deploy::v1::GetAutomationRequest const& request) {
-        return stub_->GetAutomation(context, request);
+        return stub_->GetAutomation(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::deploy::v1::Automation>
@@ -1023,20 +1029,21 @@ CloudDeployConnectionImpl::ListAutomations(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::deploy::v1::Automation>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<deploy_v1::CloudDeployRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::deploy::v1::ListAutomationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::deploy::v1::ListAutomationsRequest const&
                        request) {
-              return stub->ListAutomations(context, request);
+              return stub->ListAutomations(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::deploy::v1::ListAutomationsResponse r) {
         std::vector<google::cloud::deploy::v1::Automation> result(
@@ -1055,11 +1062,11 @@ CloudDeployConnectionImpl::GetAutomationRun(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAutomationRun(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::deploy::v1::GetAutomationRunRequest const& request) {
-        return stub_->GetAutomationRun(context, request);
+        return stub_->GetAutomationRun(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::deploy::v1::AutomationRun>
@@ -1071,20 +1078,21 @@ CloudDeployConnectionImpl::ListAutomationRuns(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::deploy::v1::AutomationRun>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<deploy_v1::CloudDeployRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::deploy::v1::ListAutomationRunsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::deploy::v1::ListAutomationRunsRequest const&
                        request) {
-              return stub->ListAutomationRuns(context, request);
+              return stub->ListAutomationRuns(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::deploy::v1::ListAutomationRunsResponse r) {
         std::vector<google::cloud::deploy::v1::AutomationRun> result(
@@ -1102,12 +1110,12 @@ CloudDeployConnectionImpl::CancelAutomationRun(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CancelAutomationRun(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::deploy::v1::CancelAutomationRunRequest const&
                  request) {
-        return stub_->CancelAutomationRun(context, request);
+        return stub_->CancelAutomationRun(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

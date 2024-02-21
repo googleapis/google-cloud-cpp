@@ -37,17 +37,17 @@ MigrationServiceLogging::MigrationServiceLogging(
 
 StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse>
 MigrationServiceLogging::SearchMigratableResources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
               request) {
-        return child_->SearchMigratableResources(context, request);
+        return child_->SearchMigratableResources(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

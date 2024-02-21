@@ -44,44 +44,44 @@ IntentsMetadata::IntentsMetadata(
 
 StatusOr<google::cloud::dialogflow::v2::ListIntentsResponse>
 IntentsMetadata::ListIntents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListIntentsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListIntents(context, request);
+  return child_->ListIntents(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Intent> IntentsMetadata::GetIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetIntentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetIntent(context, request);
+  return child_->GetIntent(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Intent> IntentsMetadata::CreateIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateIntentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateIntent(context, request);
+  return child_->CreateIntent(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Intent> IntentsMetadata::UpdateIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateIntentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("intent.name=",
                            internal::UrlEncode(request.intent().name())));
-  return child_->UpdateIntent(context, request);
+  return child_->UpdateIntent(context, options, request);
 }
 
 Status IntentsMetadata::DeleteIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteIntentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteIntent(context, request);
+  return child_->DeleteIntent(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

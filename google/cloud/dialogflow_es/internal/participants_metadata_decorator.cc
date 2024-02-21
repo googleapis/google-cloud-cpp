@@ -44,49 +44,49 @@ ParticipantsMetadata::ParticipantsMetadata(
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsMetadata::CreateParticipant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateParticipantRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateParticipant(context, request);
+  return child_->CreateParticipant(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsMetadata::GetParticipant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetParticipantRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetParticipant(context, request);
+  return child_->GetParticipant(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ListParticipantsResponse>
 ParticipantsMetadata::ListParticipants(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListParticipantsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListParticipants(context, request);
+  return child_->ListParticipants(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsMetadata::UpdateParticipant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateParticipantRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("participant.name=",
                            internal::UrlEncode(request.participant().name())));
-  return child_->UpdateParticipant(context, request);
+  return child_->UpdateParticipant(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
 ParticipantsMetadata::AnalyzeContent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::AnalyzeContentRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("participant=", internal::UrlEncode(request.participant())));
-  return child_->AnalyzeContent(context, request);
+  return child_->AnalyzeContent(context, options, request);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -101,29 +101,29 @@ ParticipantsMetadata::AsyncStreamingAnalyzeContent(
 
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 ParticipantsMetadata::SuggestArticles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::SuggestArticlesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->SuggestArticles(context, request);
+  return child_->SuggestArticles(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
 ParticipantsMetadata::SuggestFaqAnswers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->SuggestFaqAnswers(context, request);
+  return child_->SuggestFaqAnswers(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
 ParticipantsMetadata::SuggestSmartReplies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->SuggestSmartReplies(context, request);
+  return child_->SuggestSmartReplies(context, options, request);
 }
 
 void ParticipantsMetadata::SetMetadata(grpc::ClientContext& context,

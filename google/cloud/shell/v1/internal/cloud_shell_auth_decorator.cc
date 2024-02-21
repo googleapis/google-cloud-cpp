@@ -33,11 +33,11 @@ CloudShellServiceAuth::CloudShellServiceAuth(
 
 StatusOr<google::cloud::shell::v1::Environment>
 CloudShellServiceAuth::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::shell::v1::GetEnvironmentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEnvironment(context, request);
+  return child_->GetEnvironment(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

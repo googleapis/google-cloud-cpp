@@ -34,22 +34,22 @@ PublisherAuth::PublisherAuth(
 StatusOr<google::cloud::eventarc::publishing::v1::
              PublishChannelConnectionEventsResponse>
 PublisherAuth::PublishChannelConnectionEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::publishing::v1::
         PublishChannelConnectionEventsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->PublishChannelConnectionEvents(context, request);
+  return child_->PublishChannelConnectionEvents(context, options, request);
 }
 
 StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
 PublisherAuth::PublishEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->PublishEvents(context, request);
+  return child_->PublishEvents(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

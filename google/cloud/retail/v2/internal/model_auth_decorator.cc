@@ -51,52 +51,52 @@ ModelServiceAuth::AsyncCreateModel(
 }
 
 StatusOr<google::cloud::retail::v2::Model> ModelServiceAuth::GetModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::GetModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetModel(context, request);
+  return child_->GetModel(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::Model> ModelServiceAuth::PauseModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::PauseModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->PauseModel(context, request);
+  return child_->PauseModel(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::Model> ModelServiceAuth::ResumeModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::ResumeModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ResumeModel(context, request);
+  return child_->ResumeModel(context, options, request);
 }
 
 Status ModelServiceAuth::DeleteModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::DeleteModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteModel(context, request);
+  return child_->DeleteModel(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ListModelsResponse>
 ModelServiceAuth::ListModels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::ListModelsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListModels(context, request);
+  return child_->ListModels(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::Model> ModelServiceAuth::UpdateModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::UpdateModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateModel(context, request);
+  return child_->UpdateModel(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

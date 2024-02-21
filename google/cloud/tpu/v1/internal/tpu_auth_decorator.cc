@@ -32,19 +32,19 @@ TpuAuth::TpuAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::tpu::v1::ListNodesResponse> TpuAuth::ListNodes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v1::ListNodesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListNodes(context, request);
+  return child_->ListNodes(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v1::Node> TpuAuth::GetNode(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v1::GetNodeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetNode(context, request);
+  return child_->GetNode(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> TpuAuth::AsyncCreateNode(
@@ -137,37 +137,37 @@ future<StatusOr<google::longrunning::Operation>> TpuAuth::AsyncStartNode(
 
 StatusOr<google::cloud::tpu::v1::ListTensorFlowVersionsResponse>
 TpuAuth::ListTensorFlowVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v1::ListTensorFlowVersionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTensorFlowVersions(context, request);
+  return child_->ListTensorFlowVersions(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v1::TensorFlowVersion>
 TpuAuth::GetTensorFlowVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTensorFlowVersion(context, request);
+  return child_->GetTensorFlowVersion(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v1::ListAcceleratorTypesResponse>
 TpuAuth::ListAcceleratorTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v1::ListAcceleratorTypesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAcceleratorTypes(context, request);
+  return child_->ListAcceleratorTypes(context, options, request);
 }
 
 StatusOr<google::cloud::tpu::v1::AcceleratorType> TpuAuth::GetAcceleratorType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAcceleratorType(context, request);
+  return child_->GetAcceleratorType(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> TpuAuth::AsyncGetOperation(

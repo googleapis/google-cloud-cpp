@@ -33,20 +33,20 @@ SchemaServiceAuth::SchemaServiceAuth(
 
 StatusOr<google::cloud::discoveryengine::v1::Schema>
 SchemaServiceAuth::GetSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetSchemaRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetSchema(context, request);
+  return child_->GetSchema(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListSchemasResponse>
 SchemaServiceAuth::ListSchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ListSchemasRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSchemas(context, request);
+  return child_->ListSchemas(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

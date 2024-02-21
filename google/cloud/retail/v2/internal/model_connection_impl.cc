@@ -105,11 +105,11 @@ StatusOr<google::cloud::retail::v2::Model> ModelServiceConnectionImpl::GetModel(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetModel(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::GetModelRequest const& request) {
-        return stub_->GetModel(context, request);
+        return stub_->GetModel(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::retail::v2::Model>
@@ -119,11 +119,11 @@ ModelServiceConnectionImpl::PauseModel(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->PauseModel(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::PauseModelRequest const& request) {
-        return stub_->PauseModel(context, request);
+        return stub_->PauseModel(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::retail::v2::Model>
@@ -133,11 +133,11 @@ ModelServiceConnectionImpl::ResumeModel(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ResumeModel(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::ResumeModelRequest const& request) {
-        return stub_->ResumeModel(context, request);
+        return stub_->ResumeModel(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status ModelServiceConnectionImpl::DeleteModel(
@@ -146,11 +146,11 @@ Status ModelServiceConnectionImpl::DeleteModel(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteModel(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::DeleteModelRequest const& request) {
-        return stub_->DeleteModel(context, request);
+        return stub_->DeleteModel(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::retail::v2::Model>
@@ -162,20 +162,21 @@ ModelServiceConnectionImpl::ListModels(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::retail::v2::Model>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<retail_v2::ModelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::retail::v2::ListModelsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::retail::v2::ListModelsRequest const& request) {
-              return stub->ListModels(context, request);
+              return stub->ListModels(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::retail::v2::ListModelsResponse r) {
         std::vector<google::cloud::retail::v2::Model> result(r.models().size());
@@ -192,11 +193,11 @@ ModelServiceConnectionImpl::UpdateModel(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateModel(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::UpdateModelRequest const& request) {
-        return stub_->UpdateModel(context, request);
+        return stub_->UpdateModel(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::retail::v2::TuneModelResponse>>

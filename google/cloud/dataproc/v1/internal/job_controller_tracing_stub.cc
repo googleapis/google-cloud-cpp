@@ -32,13 +32,14 @@ JobControllerTracingStub::JobControllerTracingStub(
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerTracingStub::SubmitJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::SubmitJobRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.JobController",
                                      "SubmitJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->SubmitJob(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->SubmitJob(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -55,54 +56,59 @@ JobControllerTracingStub::AsyncSubmitJobAsOperation(
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerTracingStub::GetJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetJobRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.JobController",
                                      "GetJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetJob(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetJob(context, options, request));
 }
 
 StatusOr<google::cloud::dataproc::v1::ListJobsResponse>
 JobControllerTracingStub::ListJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::ListJobsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.JobController",
                                      "ListJobs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->ListJobs(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListJobs(context, options, request));
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerTracingStub::UpdateJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::UpdateJobRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.JobController",
                                      "UpdateJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->UpdateJob(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateJob(context, options, request));
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerTracingStub::CancelJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::CancelJobRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.JobController",
                                      "CancelJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->CancelJob(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->CancelJob(context, options, request));
 }
 
 Status JobControllerTracingStub::DeleteJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::DeleteJobRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dataproc.v1.JobController",
                                      "DeleteJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->DeleteJob(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteJob(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

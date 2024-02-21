@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEINSIGHTS_V1_INTERNAL_STORAGE_INSIGHTS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEINSIGHTS_V1_INTERNAL_STORAGE_INSIGHTS_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/storageinsights/v1/storageinsights.grpc.pb.h>
@@ -37,43 +38,43 @@ class StorageInsightsStub {
   virtual StatusOr<
       google::cloud::storageinsights::v1::ListReportConfigsResponse>
   ListReportConfigs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::ListReportConfigsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::storageinsights::v1::ReportConfig>
   GetReportConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::GetReportConfigRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::storageinsights::v1::ReportConfig>
   CreateReportConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::CreateReportConfigRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::storageinsights::v1::ReportConfig>
   UpdateReportConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
           request) = 0;
 
   virtual Status DeleteReportConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::storageinsights::v1::ListReportDetailsResponse>
   ListReportDetails(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::ListReportDetailsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::storageinsights::v1::ReportDetail>
   GetReportDetail(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::GetReportDetailRequest const&
           request) = 0;
 };
@@ -88,38 +89,38 @@ class DefaultStorageInsightsStub : public StorageInsightsStub {
 
   StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse>
   ListReportConfigs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::ListReportConfigsRequest const&
           request) override;
 
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> GetReportConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::GetReportConfigRequest const& request)
       override;
 
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> CreateReportConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::CreateReportConfigRequest const&
           request) override;
 
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> UpdateReportConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
           request) override;
 
   Status DeleteReportConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
           request) override;
 
   StatusOr<google::cloud::storageinsights::v1::ListReportDetailsResponse>
   ListReportDetails(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::ListReportDetailsRequest const&
           request) override;
 
   StatusOr<google::cloud::storageinsights::v1::ReportDetail> GetReportDetail(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::GetReportDetailRequest const& request)
       override;
 

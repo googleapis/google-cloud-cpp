@@ -32,7 +32,7 @@ IamCheckerStub::~IamCheckerStub() = default;
 
 StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
 DefaultIamCheckerStub::TroubleshootIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const&
         request) {
   google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse

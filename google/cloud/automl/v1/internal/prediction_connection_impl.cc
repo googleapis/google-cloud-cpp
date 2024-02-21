@@ -72,11 +72,11 @@ PredictionServiceConnectionImpl::Predict(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Predict(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::automl::v1::PredictRequest const& request) {
-        return stub_->Predict(context, request);
+        return stub_->Predict(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>

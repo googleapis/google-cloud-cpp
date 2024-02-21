@@ -32,36 +32,36 @@ AgentsAuth::AgentsAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::dialogflow::v2::Agent> AgentsAuth::GetAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetAgentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAgent(context, request);
+  return child_->GetAgent(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Agent> AgentsAuth::SetAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::SetAgentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetAgent(context, request);
+  return child_->SetAgent(context, options, request);
 }
 
 Status AgentsAuth::DeleteAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteAgentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteAgent(context, request);
+  return child_->DeleteAgent(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SearchAgentsResponse>
 AgentsAuth::SearchAgents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::SearchAgentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SearchAgents(context, request);
+  return child_->SearchAgents(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncTrainAgent(
@@ -138,11 +138,11 @@ future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncRestoreAgent(
 
 StatusOr<google::cloud::dialogflow::v2::ValidationResult>
 AgentsAuth::GetValidationResult(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetValidationResultRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetValidationResult(context, request);
+  return child_->GetValidationResult(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncGetOperation(

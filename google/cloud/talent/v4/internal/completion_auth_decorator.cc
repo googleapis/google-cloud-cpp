@@ -33,11 +33,11 @@ CompletionAuth::CompletionAuth(
 
 StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
 CompletionAuth::CompleteQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::CompleteQueryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CompleteQuery(context, request);
+  return child_->CompleteQuery(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

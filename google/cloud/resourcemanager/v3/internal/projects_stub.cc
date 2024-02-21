@@ -33,7 +33,7 @@ ProjectsStub::~ProjectsStub() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::Project>
 DefaultProjectsStub::GetProject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::GetProjectRequest const& request) {
   google::cloud::resourcemanager::v3::Project response;
   auto status = grpc_stub_->GetProject(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultProjectsStub::GetProject(
 
 StatusOr<google::cloud::resourcemanager::v3::ListProjectsResponse>
 DefaultProjectsStub::ListProjects(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::ListProjectsRequest const& request) {
   google::cloud::resourcemanager::v3::ListProjectsResponse response;
   auto status = grpc_stub_->ListProjects(&context, request, &response);
@@ -57,7 +57,7 @@ DefaultProjectsStub::ListProjects(
 
 StatusOr<google::cloud::resourcemanager::v3::SearchProjectsResponse>
 DefaultProjectsStub::SearchProjects(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::SearchProjectsRequest const& request) {
   google::cloud::resourcemanager::v3::SearchProjectsResponse response;
   auto status = grpc_stub_->SearchProjects(&context, request, &response);
@@ -158,7 +158,7 @@ DefaultProjectsStub::AsyncUndeleteProject(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultProjectsStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -169,7 +169,7 @@ StatusOr<google::iam::v1::Policy> DefaultProjectsStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultProjectsStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -181,7 +181,7 @@ StatusOr<google::iam::v1::Policy> DefaultProjectsStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultProjectsStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);

@@ -55,37 +55,43 @@ ManagedIdentitiesServiceLogging::AsyncCreateMicrosoftAdDomain(
 
 StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
 ManagedIdentitiesServiceLogging::ResetAdminPassword(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
-              request) { return child_->ResetAdminPassword(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->ResetAdminPassword(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::managedidentities::v1::ListDomainsResponse>
 ManagedIdentitiesServiceLogging::ListDomains(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::managedidentities::v1::ListDomainsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::managedidentities::v1::ListDomainsRequest const&
-                 request) { return child_->ListDomains(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListDomains(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::managedidentities::v1::Domain>
 ManagedIdentitiesServiceLogging::GetDomain(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::managedidentities::v1::GetDomainRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::managedidentities::v1::GetDomainRequest const&
-                 request) { return child_->GetDomain(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetDomain(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

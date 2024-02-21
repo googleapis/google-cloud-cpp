@@ -110,11 +110,11 @@ DatasetServiceConnectionImpl::GetDataset(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDataset(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetDatasetRequest const& request) {
-        return stub_->GetDataset(context, request);
+        return stub_->GetDataset(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Dataset>
@@ -125,11 +125,11 @@ DatasetServiceConnectionImpl::UpdateDataset(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateDataset(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::UpdateDatasetRequest const& request) {
-        return stub_->UpdateDataset(context, request);
+        return stub_->UpdateDataset(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::Dataset>
@@ -141,20 +141,21 @@ DatasetServiceConnectionImpl::ListDatasets(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Dataset>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::DatasetServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListDatasetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::ListDatasetsRequest const&
                        request) {
-              return stub->ListDatasets(context, request);
+              return stub->ListDatasets(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListDatasetsResponse r) {
         std::vector<google::cloud::aiplatform::v1::Dataset> result(
@@ -357,12 +358,12 @@ DatasetServiceConnectionImpl::GetDatasetVersion(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDatasetVersion(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetDatasetVersionRequest const&
                  request) {
-        return stub_->GetDatasetVersion(context, request);
+        return stub_->GetDatasetVersion(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::DatasetVersion>
@@ -374,21 +375,22 @@ DatasetServiceConnectionImpl::ListDatasetVersions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::DatasetVersion>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::DatasetServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListDatasetVersionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::aiplatform::v1::ListDatasetVersionsRequest const&
                     request) {
-              return stub->ListDatasetVersions(context, request);
+              return stub->ListDatasetVersions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListDatasetVersionsResponse r) {
         std::vector<google::cloud::aiplatform::v1::DatasetVersion> result(
@@ -447,20 +449,21 @@ DatasetServiceConnectionImpl::ListDataItems(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::DataItem>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::DatasetServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListDataItemsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::ListDataItemsRequest const&
                        request) {
-              return stub->ListDataItems(context, request);
+              return stub->ListDataItems(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListDataItemsResponse r) {
         std::vector<google::cloud::aiplatform::v1::DataItem> result(
@@ -480,20 +483,21 @@ DatasetServiceConnectionImpl::SearchDataItems(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::DataItemView>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::DatasetServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::SearchDataItemsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::SearchDataItemsRequest const&
                        request) {
-              return stub->SearchDataItems(context, request);
+              return stub->SearchDataItems(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::SearchDataItemsResponse r) {
         std::vector<google::cloud::aiplatform::v1::DataItemView> result(
@@ -513,20 +517,21 @@ DatasetServiceConnectionImpl::ListSavedQueries(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::SavedQuery>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::DatasetServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListSavedQueriesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::ListSavedQueriesRequest const&
                        request) {
-              return stub->ListSavedQueries(context, request);
+              return stub->ListSavedQueries(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListSavedQueriesResponse r) {
         std::vector<google::cloud::aiplatform::v1::SavedQuery> result(
@@ -582,12 +587,12 @@ DatasetServiceConnectionImpl::GetAnnotationSpec(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAnnotationSpec(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetAnnotationSpecRequest const&
                  request) {
-        return stub_->GetAnnotationSpec(context, request);
+        return stub_->GetAnnotationSpec(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::Annotation>
@@ -599,20 +604,21 @@ DatasetServiceConnectionImpl::ListAnnotations(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Annotation>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::DatasetServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListAnnotationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::ListAnnotationsRequest const&
                        request) {
-              return stub->ListAnnotations(context, request);
+              return stub->ListAnnotations(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListAnnotationsResponse r) {
         std::vector<google::cloud::aiplatform::v1::Annotation> result(

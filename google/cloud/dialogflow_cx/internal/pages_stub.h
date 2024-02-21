@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_PAGES_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_PAGES_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/cx/v3/page.grpc.pb.h>
@@ -36,23 +37,23 @@ class PagesStub {
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::ListPagesResponse>
   ListPages(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::ListPagesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Page> GetPage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetPageRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Page> CreatePage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::CreatePageRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Page> UpdatePage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request) = 0;
 
   virtual Status DeletePage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::DeletePageRequest const& request) = 0;
 };
 
@@ -64,26 +65,26 @@ class DefaultPagesStub : public PagesStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListPagesResponse> ListPages(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::ListPagesRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Page> GetPage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetPageRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Page> CreatePage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::CreatePageRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Page> UpdatePage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request)
       override;
 
-  Status DeletePage(grpc::ClientContext& context,
+  Status DeletePage(grpc::ClientContext& context, Options const& options,
                     google::cloud::dialogflow::cx::v3::DeletePageRequest const&
                         request) override;
 

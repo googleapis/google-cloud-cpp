@@ -77,21 +77,22 @@ MigrationServiceConnectionImpl::SearchMigratableResources(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::MigratableResource>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::MigrationServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::
                        SearchMigratableResourcesRequest const& request) {
-              return stub->SearchMigratableResources(context, request);
+              return stub->SearchMigratableResources(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::SearchMigratableResourcesResponse r) {
         std::vector<google::cloud::aiplatform::v1::MigratableResource> result(

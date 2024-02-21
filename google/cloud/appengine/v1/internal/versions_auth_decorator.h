@@ -40,11 +40,11 @@ class VersionsAuth : public VersionsStub {
       std::shared_ptr<VersionsStub> child);
 
   StatusOr<google::appengine::v1::ListVersionsResponse> ListVersions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListVersionsRequest const& request) override;
 
   StatusOr<google::appengine::v1::Version> GetVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetVersionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateVersion(

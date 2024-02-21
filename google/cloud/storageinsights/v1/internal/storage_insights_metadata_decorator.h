@@ -41,38 +41,38 @@ class StorageInsightsMetadata : public StorageInsightsStub {
 
   StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse>
   ListReportConfigs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::ListReportConfigsRequest const&
           request) override;
 
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> GetReportConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::GetReportConfigRequest const& request)
       override;
 
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> CreateReportConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::CreateReportConfigRequest const&
           request) override;
 
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> UpdateReportConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
           request) override;
 
   Status DeleteReportConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
           request) override;
 
   StatusOr<google::cloud::storageinsights::v1::ListReportDetailsResponse>
   ListReportDetails(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::ListReportDetailsRequest const&
           request) override;
 
   StatusOr<google::cloud::storageinsights::v1::ReportDetail> GetReportDetail(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::storageinsights::v1::GetReportDetailRequest const& request)
       override;
 

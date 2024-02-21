@@ -84,22 +84,22 @@ ReachabilityServiceConnectionImpl::ListConnectivityTests(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            networkmanagement_v1::ReachabilityServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::networkmanagement::v1::
-              ListConnectivityTestsRequest const& r) {
+          Options const& options, google::cloud::networkmanagement::v1::
+                                      ListConnectivityTestsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::networkmanagement::v1::
                        ListConnectivityTestsRequest const& request) {
-              return stub->ListConnectivityTests(context, request);
+              return stub->ListConnectivityTests(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::networkmanagement::v1::ListConnectivityTestsResponse
              r) {
@@ -119,12 +119,12 @@ ReachabilityServiceConnectionImpl::GetConnectivityTest(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetConnectivityTest(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkmanagement::v1::
                  GetConnectivityTestRequest const& request) {
-        return stub_->GetConnectivityTest(context, request);
+        return stub_->GetConnectivityTest(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>

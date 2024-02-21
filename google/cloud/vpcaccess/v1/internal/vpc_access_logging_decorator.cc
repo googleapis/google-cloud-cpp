@@ -53,27 +53,27 @@ VpcAccessServiceLogging::AsyncCreateConnector(
 
 StatusOr<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceLogging::GetConnector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
-        return child_->GetConnector(context, request);
+        return child_->GetConnector(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse>
 VpcAccessServiceLogging::ListConnectors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vpcaccess::v1::ListConnectorsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::vpcaccess::v1::ListConnectorsRequest const& request) {
-        return child_->ListConnectors(context, request);
+        return child_->ListConnectors(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -46,7 +46,7 @@ DefaultAgentEndpointServiceStub::ReceiveTaskNotification(
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
 DefaultAgentEndpointServiceStub::StartNextTask(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
         request) {
   google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse response;
@@ -59,7 +59,7 @@ DefaultAgentEndpointServiceStub::StartNextTask(
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
 DefaultAgentEndpointServiceStub::ReportTaskProgress(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const&
         request) {
   google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse
@@ -73,7 +73,7 @@ DefaultAgentEndpointServiceStub::ReportTaskProgress(
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
 DefaultAgentEndpointServiceStub::ReportTaskComplete(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const&
         request) {
   google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse
@@ -87,7 +87,7 @@ DefaultAgentEndpointServiceStub::ReportTaskComplete(
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
 DefaultAgentEndpointServiceStub::RegisterAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
         request) {
   google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse response;
@@ -100,7 +100,7 @@ DefaultAgentEndpointServiceStub::RegisterAgent(
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
 DefaultAgentEndpointServiceStub::ReportInventory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
         request) {
   google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse response;

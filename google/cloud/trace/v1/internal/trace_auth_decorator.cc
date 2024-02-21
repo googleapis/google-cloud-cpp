@@ -33,27 +33,27 @@ TraceServiceAuth::TraceServiceAuth(
 
 StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse>
 TraceServiceAuth::ListTraces(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v1::ListTracesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTraces(context, request);
+  return child_->ListTraces(context, options, request);
 }
 
 StatusOr<google::devtools::cloudtrace::v1::Trace> TraceServiceAuth::GetTrace(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTrace(context, request);
+  return child_->GetTrace(context, options, request);
 }
 
 Status TraceServiceAuth::PatchTraces(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->PatchTraces(context, request);
+  return child_->PatchTraces(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

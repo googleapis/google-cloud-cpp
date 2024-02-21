@@ -37,28 +37,28 @@ FulfillmentsLogging::FulfillmentsLogging(
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 FulfillmentsLogging::GetFulfillment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) {
-        return child_->GetFulfillment(context, request);
+        return child_->GetFulfillment(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 FulfillmentsLogging::UpdateFulfillment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::UpdateFulfillmentRequest const&
                  request) {
-        return child_->UpdateFulfillment(context, request);
+        return child_->UpdateFulfillment(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -40,12 +40,12 @@ class HubServiceStub {
   virtual ~HubServiceStub() = 0;
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::ListHubsResponse>
-  ListHubs(grpc::ClientContext& context,
+  ListHubs(grpc::ClientContext& context, Options const& options,
            google::cloud::networkconnectivity::v1::ListHubsRequest const&
                request) = 0;
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::Hub> GetHub(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::GetHubRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateHub(
@@ -69,17 +69,17 @@ class HubServiceStub {
   virtual StatusOr<
       google::cloud::networkconnectivity::v1::ListHubSpokesResponse>
   ListHubSpokes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::ListHubSpokesRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::ListSpokesResponse>
-  ListSpokes(grpc::ClientContext& context,
+  ListSpokes(grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::ListSpokesRequest const&
                  request) = 0;
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::Spoke> GetSpoke(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::GetSpokeRequest const&
           request) = 0;
 
@@ -115,34 +115,34 @@ class HubServiceStub {
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::RouteTable>
   GetRouteTable(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::Route> GetRoute(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::GetRouteRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::ListRoutesResponse>
-  ListRoutes(grpc::ClientContext& context,
+  ListRoutes(grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::ListRoutesRequest const&
                  request) = 0;
 
   virtual StatusOr<
       google::cloud::networkconnectivity::v1::ListRouteTablesResponse>
   ListRouteTables(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::ListRouteTablesRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::Group> GetGroup(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::GetGroupRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::ListGroupsResponse>
-  ListGroups(grpc::ClientContext& context,
+  ListGroups(grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::ListGroupsRequest const&
                  request) = 0;
 
@@ -168,12 +168,12 @@ class DefaultHubServiceStub : public HubServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::networkconnectivity::v1::ListHubsResponse> ListHubs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::ListHubsRequest const& request)
       override;
 
   StatusOr<google::cloud::networkconnectivity::v1::Hub> GetHub(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::GetHubRequest const& request)
       override;
 
@@ -197,17 +197,17 @@ class DefaultHubServiceStub : public HubServiceStub {
 
   StatusOr<google::cloud::networkconnectivity::v1::ListHubSpokesResponse>
   ListHubSpokes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::ListHubSpokesRequest const&
           request) override;
 
   StatusOr<google::cloud::networkconnectivity::v1::ListSpokesResponse>
-  ListSpokes(grpc::ClientContext& context,
+  ListSpokes(grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::ListSpokesRequest const&
                  request) override;
 
   StatusOr<google::cloud::networkconnectivity::v1::Spoke> GetSpoke(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::GetSpokeRequest const& request)
       override;
 
@@ -242,33 +242,33 @@ class DefaultHubServiceStub : public HubServiceStub {
       override;
 
   StatusOr<google::cloud::networkconnectivity::v1::RouteTable> GetRouteTable(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
           request) override;
 
   StatusOr<google::cloud::networkconnectivity::v1::Route> GetRoute(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::GetRouteRequest const& request)
       override;
 
   StatusOr<google::cloud::networkconnectivity::v1::ListRoutesResponse>
-  ListRoutes(grpc::ClientContext& context,
+  ListRoutes(grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::ListRoutesRequest const&
                  request) override;
 
   StatusOr<google::cloud::networkconnectivity::v1::ListRouteTablesResponse>
   ListRouteTables(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::ListRouteTablesRequest const&
           request) override;
 
   StatusOr<google::cloud::networkconnectivity::v1::Group> GetGroup(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::GetGroupRequest const& request)
       override;
 
   StatusOr<google::cloud::networkconnectivity::v1::ListGroupsResponse>
-  ListGroups(grpc::ClientContext& context,
+  ListGroups(grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::ListGroupsRequest const&
                  request) override;
 

@@ -32,62 +32,62 @@ TestCasesTracingStub::TestCasesTracingStub(std::shared_ptr<TestCasesStub> child)
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTestCasesResponse>
 TestCasesTracingStub::ListTestCases(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListTestCasesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
                                      "ListTestCases");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListTestCases(context, request));
+                           child_->ListTestCases(context, options, request));
 }
 
 Status TestCasesTracingStub::BatchDeleteTestCases(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
                                      "BatchDeleteTestCases");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->BatchDeleteTestCases(context, request));
+  return internal::EndSpan(
+      context, *span, child_->BatchDeleteTestCases(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesTracingStub::GetTestCase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
                                      "GetTestCase");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetTestCase(context, request));
+                           child_->GetTestCase(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesTracingStub::CreateTestCase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
                                      "CreateTestCase");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateTestCase(context, request));
+                           child_->CreateTestCase(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesTracingStub::UpdateTestCase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
                                      "UpdateTestCase");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateTestCase(context, request));
+                           child_->UpdateTestCase(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -119,15 +119,15 @@ TestCasesTracingStub::AsyncBatchRunTestCases(
 
 StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
 TestCasesTracingStub::CalculateCoverage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
                                      "CalculateCoverage");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CalculateCoverage(context, request));
+  return internal::EndSpan(
+      context, *span, child_->CalculateCoverage(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -158,28 +158,28 @@ TestCasesTracingStub::AsyncExportTestCases(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTestCaseResultsResponse>
 TestCasesTracingStub::ListTestCaseResults(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
                                      "ListTestCaseResults");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListTestCaseResults(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListTestCaseResults(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult>
 TestCasesTracingStub::GetTestCaseResult(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.TestCases",
                                      "GetTestCaseResult");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetTestCaseResult(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetTestCaseResult(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

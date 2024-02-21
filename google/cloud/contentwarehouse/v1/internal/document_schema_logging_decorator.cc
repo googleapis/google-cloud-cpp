@@ -37,71 +37,73 @@ DocumentSchemaServiceLogging::DocumentSchemaServiceLogging(
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DocumentSchemaServiceLogging::CreateDocumentSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::
                  CreateDocumentSchemaRequest const& request) {
-        return child_->CreateDocumentSchema(context, request);
+        return child_->CreateDocumentSchema(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DocumentSchemaServiceLogging::UpdateDocumentSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::
                  UpdateDocumentSchemaRequest const& request) {
-        return child_->UpdateDocumentSchema(context, request);
+        return child_->UpdateDocumentSchema(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DocumentSchemaServiceLogging::GetDocumentSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
-              request) { return child_->GetDocumentSchema(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->GetDocumentSchema(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status DocumentSchemaServiceLogging::DeleteDocumentSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::
                  DeleteDocumentSchemaRequest const& request) {
-        return child_->DeleteDocumentSchema(context, request);
+        return child_->DeleteDocumentSchema(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::ListDocumentSchemasResponse>
 DocumentSchemaServiceLogging::ListDocumentSchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const&
               request) {
-        return child_->ListDocumentSchemas(context, request);
+        return child_->ListDocumentSchemas(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

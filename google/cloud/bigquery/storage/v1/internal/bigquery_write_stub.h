@@ -21,6 +21,7 @@
 
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/bigquery/storage/v1/storage.grpc.pb.h>
@@ -38,7 +39,7 @@ class BigQueryWriteStub {
 
   virtual StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
   CreateWriteStream(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
           request) = 0;
 
@@ -50,26 +51,26 @@ class BigQueryWriteStub {
 
   virtual StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
   GetWriteStream(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
   FinalizeWriteStream(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
   BatchCommitWriteStreams(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::storage::v1::
           BatchCommitWriteStreamsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>
-  FlushRows(grpc::ClientContext& context,
+  FlushRows(grpc::ClientContext& context, Options const& options,
             google::cloud::bigquery::storage::v1::FlushRowsRequest const&
                 request) = 0;
 };
@@ -83,7 +84,7 @@ class DefaultBigQueryWriteStub : public BigQueryWriteStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> CreateWriteStream(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
           request) override;
 
@@ -94,25 +95,25 @@ class DefaultBigQueryWriteStub : public BigQueryWriteStub {
                   std::shared_ptr<grpc::ClientContext> context) override;
 
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> GetWriteStream(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
           request) override;
 
   StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
   FinalizeWriteStream(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
           request) override;
 
   StatusOr<
       google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
   BatchCommitWriteStreams(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::storage::v1::
           BatchCommitWriteStreamsRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse> FlushRows(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::storage::v1::FlushRowsRequest const& request)
       override;
 

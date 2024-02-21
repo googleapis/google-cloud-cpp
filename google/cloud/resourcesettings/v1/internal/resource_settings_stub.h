@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_INTERNAL_RESOURCE_SETTINGS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_INTERNAL_RESOURCE_SETTINGS_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/resourcesettings/v1/resource_settings.grpc.pb.h>
@@ -35,17 +36,17 @@ class ResourceSettingsServiceStub {
   virtual ~ResourceSettingsServiceStub() = 0;
 
   virtual StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
-  ListSettings(grpc::ClientContext& context,
+  ListSettings(grpc::ClientContext& context, Options const& options,
                google::cloud::resourcesettings::v1::ListSettingsRequest const&
                    request) = 0;
 
   virtual StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcesettings::v1::GetSettingRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::resourcesettings::v1::Setting> UpdateSetting(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcesettings::v1::UpdateSettingRequest const&
           request) = 0;
 };
@@ -59,17 +60,17 @@ class DefaultResourceSettingsServiceStub : public ResourceSettingsServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
-  ListSettings(grpc::ClientContext& context,
+  ListSettings(grpc::ClientContext& context, Options const& options,
                google::cloud::resourcesettings::v1::ListSettingsRequest const&
                    request) override;
 
   StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcesettings::v1::GetSettingRequest const& request)
       override;
 
   StatusOr<google::cloud::resourcesettings::v1::Setting> UpdateSetting(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcesettings::v1::UpdateSettingRequest const& request)
       override;
 

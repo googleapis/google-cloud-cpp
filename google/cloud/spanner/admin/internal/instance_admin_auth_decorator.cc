@@ -33,22 +33,22 @@ InstanceAdminAuth::InstanceAdminAuth(
 
 StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
 InstanceAdminAuth::ListInstanceConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListInstanceConfigs(context, request);
+  return child_->ListInstanceConfigs(context, options, request);
 }
 
 StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
 InstanceAdminAuth::GetInstanceConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetInstanceConfig(context, request);
+  return child_->GetInstanceConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -92,41 +92,41 @@ InstanceAdminAuth::AsyncUpdateInstanceConfig(
 }
 
 Status InstanceAdminAuth::DeleteInstanceConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteInstanceConfig(context, request);
+  return child_->DeleteInstanceConfig(context, options, request);
 }
 
 StatusOr<
     google::spanner::admin::instance::v1::ListInstanceConfigOperationsResponse>
 InstanceAdminAuth::ListInstanceConfigOperations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::admin::instance::v1::
         ListInstanceConfigOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListInstanceConfigOperations(context, request);
+  return child_->ListInstanceConfigOperations(context, options, request);
 }
 
 StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
 InstanceAdminAuth::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::admin::instance::v1::ListInstancesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListInstances(context, request);
+  return child_->ListInstances(context, options, request);
 }
 
 StatusOr<google::spanner::admin::instance::v1::Instance>
 InstanceAdminAuth::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetInstance(context, request);
+  return child_->GetInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -170,37 +170,37 @@ InstanceAdminAuth::AsyncUpdateInstance(
 }
 
 Status InstanceAdminAuth::DeleteInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::admin::instance::v1::DeleteInstanceRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteInstance(context, request);
+  return child_->DeleteInstance(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> InstanceAdminAuth::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> InstanceAdminAuth::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 InstanceAdminAuth::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

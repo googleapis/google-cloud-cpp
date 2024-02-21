@@ -39,35 +39,35 @@ class CloudSchedulerLogging : public CloudSchedulerStub {
                         std::set<std::string> const& components);
 
   StatusOr<google::cloud::scheduler::v1::ListJobsResponse> ListJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::scheduler::v1::ListJobsRequest const& request) override;
 
   StatusOr<google::cloud::scheduler::v1::Job> GetJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::scheduler::v1::GetJobRequest const& request) override;
 
   StatusOr<google::cloud::scheduler::v1::Job> CreateJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::scheduler::v1::CreateJobRequest const& request) override;
 
   StatusOr<google::cloud::scheduler::v1::Job> UpdateJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::scheduler::v1::UpdateJobRequest const& request) override;
 
   Status DeleteJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::scheduler::v1::DeleteJobRequest const& request) override;
 
   StatusOr<google::cloud::scheduler::v1::Job> PauseJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::scheduler::v1::PauseJobRequest const& request) override;
 
   StatusOr<google::cloud::scheduler::v1::Job> ResumeJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::scheduler::v1::ResumeJobRequest const& request) override;
 
   StatusOr<google::cloud::scheduler::v1::Job> RunJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::scheduler::v1::RunJobRequest const& request) override;
 
  private:

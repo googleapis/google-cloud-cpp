@@ -40,11 +40,11 @@ class ConfigStub {
 
   virtual StatusOr<google::cloud::config::v1::ListDeploymentsResponse>
   ListDeployments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::ListDeploymentsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::config::v1::Deployment> GetDeployment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::GetDeploymentRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
@@ -67,40 +67,40 @@ class ConfigStub {
 
   virtual StatusOr<google::cloud::config::v1::ListRevisionsResponse>
   ListRevisions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::ListRevisionsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::config::v1::Revision> GetRevision(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::GetRevisionRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::config::v1::Resource> GetResource(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::GetResourceRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::config::v1::ListResourcesResponse>
   ListResources(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::ListResourcesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::config::v1::Statefile>
   ExportDeploymentStatefile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::ExportDeploymentStatefileRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::config::v1::Statefile>
   ExportRevisionStatefile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::ExportRevisionStatefileRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::config::v1::Statefile> ImportStatefile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::ImportStatefileRequest const& request) = 0;
 
   virtual Status DeleteStatefile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::DeleteStatefileRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncLockDeployment(
@@ -115,7 +115,7 @@ class ConfigStub {
       google::cloud::config::v1::UnlockDeploymentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::config::v1::LockInfo> ExportLockInfo(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::ExportLockInfoRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreatePreview(
@@ -124,12 +124,12 @@ class ConfigStub {
       google::cloud::config::v1::CreatePreviewRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::config::v1::Preview> GetPreview(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::GetPreviewRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::config::v1::ListPreviewsResponse>
   ListPreviews(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::ListPreviewsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeletePreview(
@@ -139,7 +139,7 @@ class ConfigStub {
 
   virtual StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
   ExportPreviewResult(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::ExportPreviewResultRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -163,12 +163,12 @@ class DefaultConfigStub : public ConfigStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::config::v1::ListDeploymentsResponse> ListDeployments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::ListDeploymentsRequest const& request)
       override;
 
   StatusOr<google::cloud::config::v1::Deployment> GetDeployment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::GetDeploymentRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDeployment(
@@ -190,38 +190,38 @@ class DefaultConfigStub : public ConfigStub {
       override;
 
   StatusOr<google::cloud::config::v1::ListRevisionsResponse> ListRevisions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::ListRevisionsRequest const& request) override;
 
   StatusOr<google::cloud::config::v1::Revision> GetRevision(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::GetRevisionRequest const& request) override;
 
   StatusOr<google::cloud::config::v1::Resource> GetResource(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::GetResourceRequest const& request) override;
 
   StatusOr<google::cloud::config::v1::ListResourcesResponse> ListResources(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::ListResourcesRequest const& request) override;
 
   StatusOr<google::cloud::config::v1::Statefile> ExportDeploymentStatefile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::ExportDeploymentStatefileRequest const&
           request) override;
 
   StatusOr<google::cloud::config::v1::Statefile> ExportRevisionStatefile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::ExportRevisionStatefileRequest const& request)
       override;
 
   StatusOr<google::cloud::config::v1::Statefile> ImportStatefile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::ImportStatefileRequest const& request)
       override;
 
   Status DeleteStatefile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::DeleteStatefileRequest const& request)
       override;
 
@@ -237,7 +237,7 @@ class DefaultConfigStub : public ConfigStub {
       override;
 
   StatusOr<google::cloud::config::v1::LockInfo> ExportLockInfo(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::ExportLockInfoRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreatePreview(
@@ -246,11 +246,11 @@ class DefaultConfigStub : public ConfigStub {
       google::cloud::config::v1::CreatePreviewRequest const& request) override;
 
   StatusOr<google::cloud::config::v1::Preview> GetPreview(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::GetPreviewRequest const& request) override;
 
   StatusOr<google::cloud::config::v1::ListPreviewsResponse> ListPreviews(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::ListPreviewsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeletePreview(
@@ -260,7 +260,7 @@ class DefaultConfigStub : public ConfigStub {
 
   StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
   ExportPreviewResult(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::config::v1::ExportPreviewResultRequest const& request)
       override;
 

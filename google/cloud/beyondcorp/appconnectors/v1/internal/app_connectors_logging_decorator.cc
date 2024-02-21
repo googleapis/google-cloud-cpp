@@ -38,29 +38,30 @@ AppConnectorsServiceLogging::AppConnectorsServiceLogging(
 StatusOr<
     google::cloud::beyondcorp::appconnectors::v1::ListAppConnectorsResponse>
 AppConnectorsServiceLogging::ListAppConnectors(
-    grpc::ClientContext& context, google::cloud::beyondcorp::appconnectors::v1::
-                                      ListAppConnectorsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::beyondcorp::appconnectors::v1::
+        ListAppConnectorsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::beyondcorp::appconnectors::v1::
                  ListAppConnectorsRequest const& request) {
-        return child_->ListAppConnectors(context, request);
+        return child_->ListAppConnectors(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::beyondcorp::appconnectors::v1::AppConnector>
 AppConnectorsServiceLogging::GetAppConnector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::beyondcorp::appconnectors::v1::GetAppConnectorRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::beyondcorp::appconnectors::v1::
                  GetAppConnectorRequest const& request) {
-        return child_->GetAppConnector(context, request);
+        return child_->GetAppConnector(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

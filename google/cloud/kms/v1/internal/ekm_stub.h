@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_INTERNAL_EKM_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_INTERNAL_EKM_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/kms/v1/ekm_service.grpc.pb.h>
@@ -36,32 +37,32 @@ class EkmServiceStub {
 
   virtual StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse>
   ListEkmConnections(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::ListEkmConnectionsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::kms::v1::EkmConnection> GetEkmConnection(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::GetEkmConnectionRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::kms::v1::EkmConnection> CreateEkmConnection(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::CreateEkmConnectionRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::kms::v1::EkmConnection> UpdateEkmConnection(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::kms::v1::EkmConfig> GetEkmConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::GetEkmConfigRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::kms::v1::EkmConfig> UpdateEkmConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::UpdateEkmConfigRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
   VerifyConnectivity(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::VerifyConnectivityRequest const& request) = 0;
 };
 
@@ -73,34 +74,34 @@ class DefaultEkmServiceStub : public EkmServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse>
-  ListEkmConnections(grpc::ClientContext& context,
+  ListEkmConnections(grpc::ClientContext& context, Options const& options,
                      google::cloud::kms::v1::ListEkmConnectionsRequest const&
                          request) override;
 
   StatusOr<google::cloud::kms::v1::EkmConnection> GetEkmConnection(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::GetEkmConnectionRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::EkmConnection> CreateEkmConnection(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::CreateEkmConnectionRequest const& request)
       override;
 
   StatusOr<google::cloud::kms::v1::EkmConnection> UpdateEkmConnection(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::UpdateEkmConnectionRequest const& request)
       override;
 
   StatusOr<google::cloud::kms::v1::EkmConfig> GetEkmConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::GetEkmConfigRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::EkmConfig> UpdateEkmConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::kms::v1::UpdateEkmConfigRequest const& request) override;
 
   StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
-  VerifyConnectivity(grpc::ClientContext& context,
+  VerifyConnectivity(grpc::ClientContext& context, Options const& options,
                      google::cloud::kms::v1::VerifyConnectivityRequest const&
                          request) override;
 

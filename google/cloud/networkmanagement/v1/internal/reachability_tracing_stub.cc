@@ -33,7 +33,7 @@ ReachabilityServiceTracingStub::ReachabilityServiceTracingStub(
 
 StatusOr<google::cloud::networkmanagement::v1::ListConnectivityTestsResponse>
 ReachabilityServiceTracingStub::ListConnectivityTests(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkmanagement::v1::ListConnectivityTestsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -41,13 +41,13 @@ ReachabilityServiceTracingStub::ListConnectivityTests(
       "ListConnectivityTests");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListConnectivityTests(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListConnectivityTests(context, options, request));
 }
 
 StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
 ReachabilityServiceTracingStub::GetConnectivityTest(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -55,8 +55,8 @@ ReachabilityServiceTracingStub::GetConnectivityTest(
       "GetConnectivityTest");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetConnectivityTest(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetConnectivityTest(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

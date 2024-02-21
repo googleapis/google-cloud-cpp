@@ -37,27 +37,27 @@ ApiGatewayServiceLogging::ApiGatewayServiceLogging(
 
 StatusOr<google::cloud::apigateway::v1::ListGatewaysResponse>
 ApiGatewayServiceLogging::ListGateways(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::ListGatewaysRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::apigateway::v1::ListGatewaysRequest const& request) {
-        return child_->ListGateways(context, request);
+        return child_->ListGateways(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::apigateway::v1::Gateway>
 ApiGatewayServiceLogging::GetGateway(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::GetGatewayRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::apigateway::v1::GetGatewayRequest const& request) {
-        return child_->GetGateway(context, request);
+        return child_->GetGateway(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -110,25 +110,25 @@ ApiGatewayServiceLogging::AsyncDeleteGateway(
 
 StatusOr<google::cloud::apigateway::v1::ListApisResponse>
 ApiGatewayServiceLogging::ListApis(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::ListApisRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::apigateway::v1::ListApisRequest const& request) {
-        return child_->ListApis(context, request);
+        return child_->ListApis(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::apigateway::v1::Api> ApiGatewayServiceLogging::GetApi(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::GetApiRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::apigateway::v1::GetApiRequest const& request) {
-        return child_->GetApi(context, request);
+        return child_->GetApi(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -178,28 +178,28 @@ ApiGatewayServiceLogging::AsyncDeleteApi(
 
 StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>
 ApiGatewayServiceLogging::ListApiConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::ListApiConfigsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::apigateway::v1::ListApiConfigsRequest const& request) {
-        return child_->ListApiConfigs(context, request);
+        return child_->ListApiConfigs(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::apigateway::v1::ApiConfig>
 ApiGatewayServiceLogging::GetApiConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::GetApiConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::apigateway::v1::GetApiConfigRequest const& request) {
-        return child_->GetApiConfig(context, request);
+        return child_->GetApiConfig(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

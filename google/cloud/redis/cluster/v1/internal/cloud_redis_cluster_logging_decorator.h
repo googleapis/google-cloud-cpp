@@ -40,12 +40,12 @@ class CloudRedisClusterLogging : public CloudRedisClusterStub {
                            std::set<std::string> const& components);
 
   StatusOr<google::cloud::redis::cluster::v1::ListClustersResponse>
-  ListClusters(grpc::ClientContext& context,
+  ListClusters(grpc::ClientContext& context, Options const& options,
                google::cloud::redis::cluster::v1::ListClustersRequest const&
                    request) override;
 
   StatusOr<google::cloud::redis::cluster::v1::Cluster> GetCluster(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::redis::cluster::v1::GetClusterRequest const& request)
       override;
 

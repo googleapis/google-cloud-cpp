@@ -105,19 +105,20 @@ StreamRange<google::api::apikeys::v2::Key> ApiKeysConnectionImpl::ListKeys(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::api::apikeys::v2::Key>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<apikeys_v2::ApiKeysRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::api::apikeys::v2::ListKeysRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::api::apikeys::v2::ListKeysRequest const& request) {
-              return stub->ListKeys(context, request);
+              return stub->ListKeys(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::api::apikeys::v2::ListKeysResponse r) {
         std::vector<google::api::apikeys::v2::Key> result(r.keys().size());
@@ -133,11 +134,11 @@ StatusOr<google::api::apikeys::v2::Key> ApiKeysConnectionImpl::GetKey(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetKey(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::apikeys::v2::GetKeyRequest const& request) {
-        return stub_->GetKey(context, request);
+        return stub_->GetKey(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
@@ -147,11 +148,11 @@ ApiKeysConnectionImpl::GetKeyString(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetKeyString(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::apikeys::v2::GetKeyStringRequest const& request) {
-        return stub_->GetKeyString(context, request);
+        return stub_->GetKeyString(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::api::apikeys::v2::Key>>
@@ -267,11 +268,11 @@ ApiKeysConnectionImpl::LookupKey(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->LookupKey(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::apikeys::v2::LookupKeyRequest const& request) {
-        return stub_->LookupKey(context, request);
+        return stub_->LookupKey(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

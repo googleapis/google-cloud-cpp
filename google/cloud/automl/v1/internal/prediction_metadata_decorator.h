@@ -41,7 +41,7 @@ class PredictionServiceMetadata : public PredictionServiceStub {
       std::string api_client_header = "");
 
   StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::automl::v1::PredictRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchPredict(

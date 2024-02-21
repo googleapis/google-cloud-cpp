@@ -40,7 +40,7 @@ class TagBindingsStub {
 
   virtual StatusOr<google::cloud::resourcemanager::v3::ListTagBindingsResponse>
   ListTagBindings(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcemanager::v3::ListTagBindingsRequest const&
           request) = 0;
 
@@ -61,7 +61,7 @@ class TagBindingsStub {
   virtual StatusOr<
       google::cloud::resourcemanager::v3::ListEffectiveTagsResponse>
   ListEffectiveTags(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const&
           request) = 0;
 
@@ -88,7 +88,7 @@ class DefaultTagBindingsStub : public TagBindingsStub {
 
   StatusOr<google::cloud::resourcemanager::v3::ListTagBindingsResponse>
   ListTagBindings(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcemanager::v3::ListTagBindingsRequest const& request)
       override;
 
@@ -106,7 +106,7 @@ class DefaultTagBindingsStub : public TagBindingsStub {
 
   StatusOr<google::cloud::resourcemanager::v3::ListEffectiveTagsResponse>
   ListEffectiveTags(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const&
           request) override;
 

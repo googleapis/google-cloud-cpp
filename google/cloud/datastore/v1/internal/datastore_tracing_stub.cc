@@ -31,91 +31,95 @@ DatastoreTracingStub::DatastoreTracingStub(std::shared_ptr<DatastoreStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::datastore::v1::LookupResponse> DatastoreTracingStub::Lookup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::LookupRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.datastore.v1.Datastore", "Lookup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->Lookup(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->Lookup(context, options, request));
 }
 
 StatusOr<google::datastore::v1::RunQueryResponse>
 DatastoreTracingStub::RunQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::RunQueryRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.datastore.v1.Datastore", "RunQuery");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->RunQuery(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->RunQuery(context, options, request));
 }
 
 StatusOr<google::datastore::v1::RunAggregationQueryResponse>
 DatastoreTracingStub::RunAggregationQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::RunAggregationQueryRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.datastore.v1.Datastore",
                                      "RunAggregationQuery");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->RunAggregationQuery(context, request));
+  return internal::EndSpan(
+      context, *span, child_->RunAggregationQuery(context, options, request));
 }
 
 StatusOr<google::datastore::v1::BeginTransactionResponse>
 DatastoreTracingStub::BeginTransaction(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::BeginTransactionRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.datastore.v1.Datastore",
                                      "BeginTransaction");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->BeginTransaction(context, request));
+                           child_->BeginTransaction(context, options, request));
 }
 
 StatusOr<google::datastore::v1::CommitResponse> DatastoreTracingStub::Commit(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::CommitRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.datastore.v1.Datastore", "Commit");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->Commit(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->Commit(context, options, request));
 }
 
 StatusOr<google::datastore::v1::RollbackResponse>
 DatastoreTracingStub::Rollback(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::RollbackRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.datastore.v1.Datastore", "Rollback");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->Rollback(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->Rollback(context, options, request));
 }
 
 StatusOr<google::datastore::v1::AllocateIdsResponse>
 DatastoreTracingStub::AllocateIds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::AllocateIdsRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.datastore.v1.Datastore", "AllocateIds");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->AllocateIds(context, request));
+                           child_->AllocateIds(context, options, request));
 }
 
 StatusOr<google::datastore::v1::ReserveIdsResponse>
 DatastoreTracingStub::ReserveIds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::ReserveIdsRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.datastore.v1.Datastore", "ReserveIds");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ReserveIds(context, request));
+                           child_->ReserveIds(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

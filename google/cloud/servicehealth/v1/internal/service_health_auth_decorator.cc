@@ -33,59 +33,59 @@ ServiceHealthAuth::ServiceHealthAuth(
 
 StatusOr<google::cloud::servicehealth::v1::ListEventsResponse>
 ServiceHealthAuth::ListEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::ListEventsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEvents(context, request);
+  return child_->ListEvents(context, options, request);
 }
 
 StatusOr<google::cloud::servicehealth::v1::Event> ServiceHealthAuth::GetEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::GetEventRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEvent(context, request);
+  return child_->GetEvent(context, options, request);
 }
 
 StatusOr<google::cloud::servicehealth::v1::ListOrganizationEventsResponse>
 ServiceHealthAuth::ListOrganizationEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::ListOrganizationEventsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListOrganizationEvents(context, request);
+  return child_->ListOrganizationEvents(context, options, request);
 }
 
 StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>
 ServiceHealthAuth::GetOrganizationEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetOrganizationEvent(context, request);
+  return child_->GetOrganizationEvent(context, options, request);
 }
 
 StatusOr<google::cloud::servicehealth::v1::ListOrganizationImpactsResponse>
 ServiceHealthAuth::ListOrganizationImpacts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::ListOrganizationImpactsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListOrganizationImpacts(context, request);
+  return child_->ListOrganizationImpacts(context, options, request);
 }
 
 StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>
 ServiceHealthAuth::GetOrganizationImpact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetOrganizationImpact(context, request);
+  return child_->GetOrganizationImpact(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

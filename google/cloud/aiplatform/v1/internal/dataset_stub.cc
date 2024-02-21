@@ -50,7 +50,7 @@ DefaultDatasetServiceStub::AsyncCreateDataset(
 
 StatusOr<google::cloud::aiplatform::v1::Dataset>
 DefaultDatasetServiceStub::GetDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetDatasetRequest const& request) {
   google::cloud::aiplatform::v1::Dataset response;
   auto status = grpc_stub_->GetDataset(&context, request, &response);
@@ -62,7 +62,7 @@ DefaultDatasetServiceStub::GetDataset(
 
 StatusOr<google::cloud::aiplatform::v1::Dataset>
 DefaultDatasetServiceStub::UpdateDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::UpdateDatasetRequest const& request) {
   google::cloud::aiplatform::v1::Dataset response;
   auto status = grpc_stub_->UpdateDataset(&context, request, &response);
@@ -74,7 +74,7 @@ DefaultDatasetServiceStub::UpdateDataset(
 
 StatusOr<google::cloud::aiplatform::v1::ListDatasetsResponse>
 DefaultDatasetServiceStub::ListDatasets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListDatasetsRequest const& request) {
   google::cloud::aiplatform::v1::ListDatasetsResponse response;
   auto status = grpc_stub_->ListDatasets(&context, request, &response);
@@ -173,7 +173,7 @@ DefaultDatasetServiceStub::AsyncDeleteDatasetVersion(
 
 StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
 DefaultDatasetServiceStub::GetDatasetVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request) {
   google::cloud::aiplatform::v1::DatasetVersion response;
   auto status = grpc_stub_->GetDatasetVersion(&context, request, &response);
@@ -185,7 +185,7 @@ DefaultDatasetServiceStub::GetDatasetVersion(
 
 StatusOr<google::cloud::aiplatform::v1::ListDatasetVersionsResponse>
 DefaultDatasetServiceStub::ListDatasetVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListDatasetVersionsRequest const& request) {
   google::cloud::aiplatform::v1::ListDatasetVersionsResponse response;
   auto status = grpc_stub_->ListDatasetVersions(&context, request, &response);
@@ -216,7 +216,7 @@ DefaultDatasetServiceStub::AsyncRestoreDatasetVersion(
 
 StatusOr<google::cloud::aiplatform::v1::ListDataItemsResponse>
 DefaultDatasetServiceStub::ListDataItems(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListDataItemsRequest const& request) {
   google::cloud::aiplatform::v1::ListDataItemsResponse response;
   auto status = grpc_stub_->ListDataItems(&context, request, &response);
@@ -228,7 +228,7 @@ DefaultDatasetServiceStub::ListDataItems(
 
 StatusOr<google::cloud::aiplatform::v1::SearchDataItemsResponse>
 DefaultDatasetServiceStub::SearchDataItems(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::SearchDataItemsRequest const& request) {
   google::cloud::aiplatform::v1::SearchDataItemsResponse response;
   auto status = grpc_stub_->SearchDataItems(&context, request, &response);
@@ -240,7 +240,7 @@ DefaultDatasetServiceStub::SearchDataItems(
 
 StatusOr<google::cloud::aiplatform::v1::ListSavedQueriesResponse>
 DefaultDatasetServiceStub::ListSavedQueries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListSavedQueriesRequest const& request) {
   google::cloud::aiplatform::v1::ListSavedQueriesResponse response;
   auto status = grpc_stub_->ListSavedQueries(&context, request, &response);
@@ -270,7 +270,7 @@ DefaultDatasetServiceStub::AsyncDeleteSavedQuery(
 
 StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
 DefaultDatasetServiceStub::GetAnnotationSpec(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request) {
   google::cloud::aiplatform::v1::AnnotationSpec response;
   auto status = grpc_stub_->GetAnnotationSpec(&context, request, &response);
@@ -282,7 +282,7 @@ DefaultDatasetServiceStub::GetAnnotationSpec(
 
 StatusOr<google::cloud::aiplatform::v1::ListAnnotationsResponse>
 DefaultDatasetServiceStub::ListAnnotations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListAnnotationsRequest const& request) {
   google::cloud::aiplatform::v1::ListAnnotationsResponse response;
   auto status = grpc_stub_->ListAnnotations(&context, request, &response);

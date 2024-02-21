@@ -32,44 +32,44 @@ ProductServiceAuth::ProductServiceAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::retail::v2::Product> ProductServiceAuth::CreateProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::CreateProductRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateProduct(context, request);
+  return child_->CreateProduct(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::Product> ProductServiceAuth::GetProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::GetProductRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetProduct(context, request);
+  return child_->GetProduct(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ListProductsResponse>
 ProductServiceAuth::ListProducts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::ListProductsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListProducts(context, request);
+  return child_->ListProducts(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::Product> ProductServiceAuth::UpdateProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::UpdateProductRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateProduct(context, request);
+  return child_->UpdateProduct(context, options, request);
 }
 
 Status ProductServiceAuth::DeleteProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::DeleteProductRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteProduct(context, request);
+  return child_->DeleteProduct(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

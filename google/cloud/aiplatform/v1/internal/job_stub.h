@@ -39,16 +39,16 @@ class JobServiceStub {
   virtual ~JobServiceStub() = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::CustomJob> CreateCustomJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CreateCustomJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::CustomJob> GetCustomJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetCustomJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ListCustomJobsResponse>
   ListCustomJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListCustomJobsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteCustomJob(
@@ -57,24 +57,24 @@ class JobServiceStub {
       google::cloud::aiplatform::v1::DeleteCustomJobRequest const& request) = 0;
 
   virtual Status CancelCustomJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
   CreateDataLabelingJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
   GetDataLabelingJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetDataLabelingJobRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ListDataLabelingJobsResponse>
   ListDataLabelingJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListDataLabelingJobsRequest const&
           request) = 0;
 
@@ -86,26 +86,26 @@ class JobServiceStub {
           request) = 0;
 
   virtual Status CancelDataLabelingJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
   CreateHyperparameterTuningJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
   GetHyperparameterTuningJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::aiplatform::v1::ListHyperparameterTuningJobsResponse>
   ListHyperparameterTuningJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest const&
           request) = 0;
 
@@ -117,21 +117,21 @@ class JobServiceStub {
           request) = 0;
 
   virtual Status CancelHyperparameterTuningJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::NasJob> CreateNasJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CreateNasJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::NasJob> GetNasJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetNasJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ListNasJobsResponse>
   ListNasJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListNasJobsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteNasJob(
@@ -140,37 +140,37 @@ class JobServiceStub {
       google::cloud::aiplatform::v1::DeleteNasJobRequest const& request) = 0;
 
   virtual Status CancelNasJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelNasJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::NasTrialDetail>
   GetNasTrialDetail(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetNasTrialDetailRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ListNasTrialDetailsResponse>
   ListNasTrialDetails(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListNasTrialDetailsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
   CreateBatchPredictionJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
   GetBatchPredictionJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::aiplatform::v1::ListBatchPredictionJobsResponse>
   ListBatchPredictionJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest const&
           request) = 0;
 
@@ -182,34 +182,34 @@ class JobServiceStub {
           request) = 0;
 
   virtual Status CancelBatchPredictionJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
   CreateModelDeploymentMonitoringJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::
           CreateModelDeploymentMonitoringJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::
                        SearchModelDeploymentMonitoringStatsAnomaliesResponse>
   SearchModelDeploymentMonitoringStatsAnomalies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::
           SearchModelDeploymentMonitoringStatsAnomaliesRequest const&
               request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
   GetModelDeploymentMonitoringJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::
           GetModelDeploymentMonitoringJobRequest const& request) = 0;
 
   virtual StatusOr<
       google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsResponse>
   ListModelDeploymentMonitoringJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::
           ListModelDeploymentMonitoringJobsRequest const& request) = 0;
 
@@ -228,12 +228,12 @@ class JobServiceStub {
           DeleteModelDeploymentMonitoringJobRequest const& request) = 0;
 
   virtual Status PauseModelDeploymentMonitoringJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::
           PauseModelDeploymentMonitoringJobRequest const& request) = 0;
 
   virtual Status ResumeModelDeploymentMonitoringJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::
           ResumeModelDeploymentMonitoringJobRequest const& request) = 0;
 
@@ -258,17 +258,17 @@ class DefaultJobServiceStub : public JobServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::aiplatform::v1::CustomJob> CreateCustomJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CreateCustomJobRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::CustomJob> GetCustomJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetCustomJobRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListCustomJobsResponse>
-  ListCustomJobs(grpc::ClientContext& context,
+  ListCustomJobs(grpc::ClientContext& context, Options const& options,
                  google::cloud::aiplatform::v1::ListCustomJobsRequest const&
                      request) override;
 
@@ -279,24 +279,24 @@ class DefaultJobServiceStub : public JobServiceStub {
       override;
 
   Status CancelCustomJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelCustomJobRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
   CreateDataLabelingJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::DataLabelingJob> GetDataLabelingJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListDataLabelingJobsResponse>
   ListDataLabelingJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListDataLabelingJobsRequest const& request)
       override;
 
@@ -307,25 +307,25 @@ class DefaultJobServiceStub : public JobServiceStub {
           request) override;
 
   Status CancelDataLabelingJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
   CreateHyperparameterTuningJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
   GetHyperparameterTuningJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListHyperparameterTuningJobsResponse>
   ListHyperparameterTuningJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest const&
           request) override;
 
@@ -337,21 +337,21 @@ class DefaultJobServiceStub : public JobServiceStub {
           request) override;
 
   Status CancelHyperparameterTuningJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::NasJob> CreateNasJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CreateNasJobRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::NasJob> GetNasJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetNasJobRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListNasJobsResponse> ListNasJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListNasJobsRequest const& request)
       override;
 
@@ -361,36 +361,36 @@ class DefaultJobServiceStub : public JobServiceStub {
       google::cloud::aiplatform::v1::DeleteNasJobRequest const& request)
       override;
 
-  Status CancelNasJob(grpc::ClientContext& context,
+  Status CancelNasJob(grpc::ClientContext& context, Options const& options,
                       google::cloud::aiplatform::v1::CancelNasJobRequest const&
                           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::NasTrialDetail> GetNasTrialDetail(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListNasTrialDetailsResponse>
   ListNasTrialDetails(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListNasTrialDetailsRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
   CreateBatchPredictionJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
   GetBatchPredictionJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListBatchPredictionJobsResponse>
   ListBatchPredictionJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest const&
           request) override;
 
@@ -402,34 +402,34 @@ class DefaultJobServiceStub : public JobServiceStub {
           request) override;
 
   Status CancelBatchPredictionJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
   CreateModelDeploymentMonitoringJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::
           CreateModelDeploymentMonitoringJobRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::
                SearchModelDeploymentMonitoringStatsAnomaliesResponse>
   SearchModelDeploymentMonitoringStatsAnomalies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::
           SearchModelDeploymentMonitoringStatsAnomaliesRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
   GetModelDeploymentMonitoringJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::
           GetModelDeploymentMonitoringJobRequest const& request) override;
 
   StatusOr<
       google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsResponse>
   ListModelDeploymentMonitoringJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::
           ListModelDeploymentMonitoringJobsRequest const& request) override;
 
@@ -448,12 +448,12 @@ class DefaultJobServiceStub : public JobServiceStub {
           DeleteModelDeploymentMonitoringJobRequest const& request) override;
 
   Status PauseModelDeploymentMonitoringJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::
           PauseModelDeploymentMonitoringJobRequest const& request) override;
 
   Status ResumeModelDeploymentMonitoringJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::
           ResumeModelDeploymentMonitoringJobRequest const& request) override;
 

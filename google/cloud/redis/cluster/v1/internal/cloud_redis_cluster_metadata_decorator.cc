@@ -44,20 +44,20 @@ CloudRedisClusterMetadata::CloudRedisClusterMetadata(
 
 StatusOr<google::cloud::redis::cluster::v1::ListClustersResponse>
 CloudRedisClusterMetadata::ListClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::redis::cluster::v1::ListClustersRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListClusters(context, request);
+  return child_->ListClusters(context, options, request);
 }
 
 StatusOr<google::cloud::redis::cluster::v1::Cluster>
 CloudRedisClusterMetadata::GetCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::redis::cluster::v1::GetClusterRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetCluster(context, request);
+  return child_->GetCluster(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

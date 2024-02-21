@@ -38,15 +38,15 @@ class CloudRedisTracingStub : public CloudRedisStub {
   explicit CloudRedisTracingStub(std::shared_ptr<CloudRedisStub> child);
 
   StatusOr<google::cloud::redis::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::redis::v1::ListInstancesRequest const& request) override;
 
   StatusOr<google::cloud::redis::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::redis::v1::GetInstanceRequest const& request) override;
 
   StatusOr<google::cloud::redis::v1::InstanceAuthString> GetInstanceAuthString(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::redis::v1::GetInstanceAuthStringRequest const& request)
       override;
 

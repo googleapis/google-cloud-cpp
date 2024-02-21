@@ -37,30 +37,30 @@ KeyTrackingServiceLogging::KeyTrackingServiceLogging(
 
 StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
 KeyTrackingServiceLogging::GetProtectedResourcesSummary(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::inventory::v1::
         GetProtectedResourcesSummaryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::inventory::v1::
                  GetProtectedResourcesSummaryRequest const& request) {
-        return child_->GetProtectedResourcesSummary(context, request);
+        return child_->GetProtectedResourcesSummary(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse>
 KeyTrackingServiceLogging::SearchProtectedResources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::inventory::v1::
                  SearchProtectedResourcesRequest const& request) {
-        return child_->SearchProtectedResources(context, request);
+        return child_->SearchProtectedResources(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

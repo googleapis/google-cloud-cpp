@@ -40,12 +40,12 @@ class ConnectorsMetadata : public ConnectorsStub {
                      std::string api_client_header = "");
 
   StatusOr<google::cloud::connectors::v1::ListConnectionsResponse>
-  ListConnections(grpc::ClientContext& context,
+  ListConnections(grpc::ClientContext& context, Options const& options,
                   google::cloud::connectors::v1::ListConnectionsRequest const&
                       request) override;
 
   StatusOr<google::cloud::connectors::v1::Connection> GetConnection(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::connectors::v1::GetConnectionRequest const& request)
       override;
 
@@ -68,39 +68,39 @@ class ConnectorsMetadata : public ConnectorsStub {
       override;
 
   StatusOr<google::cloud::connectors::v1::ListProvidersResponse> ListProviders(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::connectors::v1::ListProvidersRequest const& request)
       override;
 
   StatusOr<google::cloud::connectors::v1::Provider> GetProvider(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::connectors::v1::GetProviderRequest const& request)
       override;
 
   StatusOr<google::cloud::connectors::v1::ListConnectorsResponse>
-  ListConnectors(grpc::ClientContext& context,
+  ListConnectors(grpc::ClientContext& context, Options const& options,
                  google::cloud::connectors::v1::ListConnectorsRequest const&
                      request) override;
 
   StatusOr<google::cloud::connectors::v1::Connector> GetConnector(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::connectors::v1::GetConnectorRequest const& request)
       override;
 
   StatusOr<google::cloud::connectors::v1::ListConnectorVersionsResponse>
   ListConnectorVersions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::connectors::v1::ListConnectorVersionsRequest const&
           request) override;
 
   StatusOr<google::cloud::connectors::v1::ConnectorVersion> GetConnectorVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::connectors::v1::GetConnectorVersionRequest const& request)
       override;
 
   StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
   GetConnectionSchemaMetadata(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
           request) override;
 
@@ -113,23 +113,23 @@ class ConnectorsMetadata : public ConnectorsStub {
 
   StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse>
   ListRuntimeEntitySchemas(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest const&
           request) override;
 
   StatusOr<google::cloud::connectors::v1::ListRuntimeActionSchemasResponse>
   ListRuntimeActionSchemas(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::connectors::v1::ListRuntimeActionSchemasRequest const&
           request) override;
 
   StatusOr<google::cloud::connectors::v1::RuntimeConfig> GetRuntimeConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::connectors::v1::GetRuntimeConfigRequest const& request)
       override;
 
   StatusOr<google::cloud::connectors::v1::Settings> GetGlobalSettings(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::connectors::v1::GetGlobalSettingsRequest const& request)
       override;
 

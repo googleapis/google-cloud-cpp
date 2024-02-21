@@ -44,126 +44,126 @@ WebSecurityScannerMetadata::WebSecurityScannerMetadata(
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 WebSecurityScannerMetadata::CreateScanConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateScanConfig(context, request);
+  return child_->CreateScanConfig(context, options, request);
 }
 
 Status WebSecurityScannerMetadata::DeleteScanConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteScanConfig(context, request);
+  return child_->DeleteScanConfig(context, options, request);
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 WebSecurityScannerMetadata::GetScanConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetScanConfig(context, request);
+  return child_->GetScanConfig(context, options, request);
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ListScanConfigsResponse>
 WebSecurityScannerMetadata::ListScanConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::websecurityscanner::v1::ListScanConfigsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListScanConfigs(context, request);
+  return child_->ListScanConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 WebSecurityScannerMetadata::UpdateScanConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("scan_config.name=",
                            internal::UrlEncode(request.scan_config().name())));
-  return child_->UpdateScanConfig(context, request);
+  return child_->UpdateScanConfig(context, options, request);
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 WebSecurityScannerMetadata::StartScanRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::websecurityscanner::v1::StartScanRunRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->StartScanRun(context, request);
+  return child_->StartScanRun(context, options, request);
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 WebSecurityScannerMetadata::GetScanRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::websecurityscanner::v1::GetScanRunRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetScanRun(context, request);
+  return child_->GetScanRun(context, options, request);
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ListScanRunsResponse>
 WebSecurityScannerMetadata::ListScanRuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::websecurityscanner::v1::ListScanRunsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListScanRuns(context, request);
+  return child_->ListScanRuns(context, options, request);
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 WebSecurityScannerMetadata::StopScanRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::websecurityscanner::v1::StopScanRunRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->StopScanRun(context, request);
+  return child_->StopScanRun(context, options, request);
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ListCrawledUrlsResponse>
 WebSecurityScannerMetadata::ListCrawledUrls(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListCrawledUrls(context, request);
+  return child_->ListCrawledUrls(context, options, request);
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::Finding>
 WebSecurityScannerMetadata::GetFinding(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::websecurityscanner::v1::GetFindingRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetFinding(context, request);
+  return child_->GetFinding(context, options, request);
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ListFindingsResponse>
 WebSecurityScannerMetadata::ListFindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::websecurityscanner::v1::ListFindingsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListFindings(context, request);
+  return child_->ListFindings(context, options, request);
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
 WebSecurityScannerMetadata::ListFindingTypeStats(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListFindingTypeStats(context, request);
+  return child_->ListFindingTypeStats(context, options, request);
 }
 
 void WebSecurityScannerMetadata::SetMetadata(

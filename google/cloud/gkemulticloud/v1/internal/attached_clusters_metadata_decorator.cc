@@ -82,22 +82,22 @@ AttachedClustersMetadata::AsyncImportAttachedCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
 AttachedClustersMetadata::GetAttachedCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAttachedCluster(context, request);
+  return child_->GetAttachedCluster(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAttachedClustersResponse>
 AttachedClustersMetadata::ListAttachedClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::ListAttachedClustersRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListAttachedClusters(context, request);
+  return child_->ListAttachedClusters(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -114,35 +114,36 @@ AttachedClustersMetadata::AsyncDeleteAttachedCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
 AttachedClustersMetadata::GetAttachedServerConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAttachedServerConfig(context, request);
+  return child_->GetAttachedServerConfig(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::
              GenerateAttachedClusterInstallManifestResponse>
 AttachedClustersMetadata::GenerateAttachedClusterInstallManifest(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::
         GenerateAttachedClusterInstallManifestRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->GenerateAttachedClusterInstallManifest(context, request);
+  return child_->GenerateAttachedClusterInstallManifest(context, options,
+                                                        request);
 }
 
 StatusOr<
     google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
 AttachedClustersMetadata::GenerateAttachedClusterAgentToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::
         GenerateAttachedClusterAgentTokenRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("attached_cluster=",
                            internal::UrlEncode(request.attached_cluster())));
-  return child_->GenerateAttachedClusterAgentToken(context, request);
+  return child_->GenerateAttachedClusterAgentToken(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

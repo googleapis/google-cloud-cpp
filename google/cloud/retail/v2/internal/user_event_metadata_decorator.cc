@@ -44,19 +44,19 @@ UserEventServiceMetadata::UserEventServiceMetadata(
 
 StatusOr<google::cloud::retail::v2::UserEvent>
 UserEventServiceMetadata::WriteUserEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::WriteUserEventRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->WriteUserEvent(context, request);
+  return child_->WriteUserEvent(context, options, request);
 }
 
 StatusOr<google::api::HttpBody> UserEventServiceMetadata::CollectUserEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::CollectUserEventRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CollectUserEvent(context, request);
+  return child_->CollectUserEvent(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

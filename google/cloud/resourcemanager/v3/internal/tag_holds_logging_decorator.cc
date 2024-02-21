@@ -71,13 +71,15 @@ TagHoldsLogging::AsyncDeleteTagHold(
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse>
 TagHoldsLogging::ListTagHolds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListTagHoldsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::resourcemanager::v3::ListTagHoldsRequest const&
-                 request) { return child_->ListTagHolds(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListTagHolds(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

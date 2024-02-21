@@ -33,28 +33,28 @@ JobServiceAuth::JobServiceAuth(
 
 StatusOr<google::cloud::aiplatform::v1::CustomJob>
 JobServiceAuth::CreateCustomJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateCustomJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateCustomJob(context, request);
+  return child_->CreateCustomJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::CustomJob> JobServiceAuth::GetCustomJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetCustomJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCustomJob(context, request);
+  return child_->GetCustomJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListCustomJobsResponse>
 JobServiceAuth::ListCustomJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListCustomJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCustomJobs(context, request);
+  return child_->ListCustomJobs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -77,39 +77,39 @@ JobServiceAuth::AsyncDeleteCustomJob(
 }
 
 Status JobServiceAuth::CancelCustomJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelCustomJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CancelCustomJob(context, request);
+  return child_->CancelCustomJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
 JobServiceAuth::CreateDataLabelingJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateDataLabelingJobRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateDataLabelingJob(context, request);
+  return child_->CreateDataLabelingJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DataLabelingJob>
 JobServiceAuth::GetDataLabelingJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetDataLabelingJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDataLabelingJob(context, request);
+  return child_->GetDataLabelingJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListDataLabelingJobsResponse>
 JobServiceAuth::ListDataLabelingJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListDataLabelingJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDataLabelingJobs(context, request);
+  return child_->ListDataLabelingJobs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -133,42 +133,42 @@ JobServiceAuth::AsyncDeleteDataLabelingJob(
 }
 
 Status JobServiceAuth::CancelDataLabelingJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelDataLabelingJobRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CancelDataLabelingJob(context, request);
+  return child_->CancelDataLabelingJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
 JobServiceAuth::CreateHyperparameterTuningJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateHyperparameterTuningJobRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateHyperparameterTuningJob(context, request);
+  return child_->CreateHyperparameterTuningJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::HyperparameterTuningJob>
 JobServiceAuth::GetHyperparameterTuningJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetHyperparameterTuningJobRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetHyperparameterTuningJob(context, request);
+  return child_->GetHyperparameterTuningJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListHyperparameterTuningJobsResponse>
 JobServiceAuth::ListHyperparameterTuningJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListHyperparameterTuningJobsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListHyperparameterTuningJobs(context, request);
+  return child_->ListHyperparameterTuningJobs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -192,37 +192,37 @@ JobServiceAuth::AsyncDeleteHyperparameterTuningJob(
 }
 
 Status JobServiceAuth::CancelHyperparameterTuningJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelHyperparameterTuningJobRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CancelHyperparameterTuningJob(context, request);
+  return child_->CancelHyperparameterTuningJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::NasJob> JobServiceAuth::CreateNasJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateNasJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateNasJob(context, request);
+  return child_->CreateNasJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::NasJob> JobServiceAuth::GetNasJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetNasJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetNasJob(context, request);
+  return child_->GetNasJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListNasJobsResponse>
 JobServiceAuth::ListNasJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListNasJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListNasJobs(context, request);
+  return child_->ListNasJobs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -245,59 +245,59 @@ JobServiceAuth::AsyncDeleteNasJob(
 }
 
 Status JobServiceAuth::CancelNasJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelNasJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CancelNasJob(context, request);
+  return child_->CancelNasJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::NasTrialDetail>
 JobServiceAuth::GetNasTrialDetail(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetNasTrialDetailRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetNasTrialDetail(context, request);
+  return child_->GetNasTrialDetail(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListNasTrialDetailsResponse>
 JobServiceAuth::ListNasTrialDetails(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListNasTrialDetailsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListNasTrialDetails(context, request);
+  return child_->ListNasTrialDetails(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
 JobServiceAuth::CreateBatchPredictionJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateBatchPredictionJobRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateBatchPredictionJob(context, request);
+  return child_->CreateBatchPredictionJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchPredictionJob>
 JobServiceAuth::GetBatchPredictionJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetBatchPredictionJobRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetBatchPredictionJob(context, request);
+  return child_->GetBatchPredictionJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListBatchPredictionJobsResponse>
 JobServiceAuth::ListBatchPredictionJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListBatchPredictionJobsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBatchPredictionJobs(context, request);
+  return child_->ListBatchPredictionJobs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -321,55 +321,55 @@ JobServiceAuth::AsyncDeleteBatchPredictionJob(
 }
 
 Status JobServiceAuth::CancelBatchPredictionJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CancelBatchPredictionJobRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CancelBatchPredictionJob(context, request);
+  return child_->CancelBatchPredictionJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
 JobServiceAuth::CreateModelDeploymentMonitoringJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         CreateModelDeploymentMonitoringJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateModelDeploymentMonitoringJob(context, request);
+  return child_->CreateModelDeploymentMonitoringJob(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::
              SearchModelDeploymentMonitoringStatsAnomaliesResponse>
 JobServiceAuth::SearchModelDeploymentMonitoringStatsAnomalies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         SearchModelDeploymentMonitoringStatsAnomaliesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SearchModelDeploymentMonitoringStatsAnomalies(context,
+  return child_->SearchModelDeploymentMonitoringStatsAnomalies(context, options,
                                                                request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelDeploymentMonitoringJob>
 JobServiceAuth::GetModelDeploymentMonitoringJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetModelDeploymentMonitoringJobRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetModelDeploymentMonitoringJob(context, request);
+  return child_->GetModelDeploymentMonitoringJob(context, options, request);
 }
 
 StatusOr<
     google::cloud::aiplatform::v1::ListModelDeploymentMonitoringJobsResponse>
 JobServiceAuth::ListModelDeploymentMonitoringJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         ListModelDeploymentMonitoringJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListModelDeploymentMonitoringJobs(context, request);
+  return child_->ListModelDeploymentMonitoringJobs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -413,21 +413,21 @@ JobServiceAuth::AsyncDeleteModelDeploymentMonitoringJob(
 }
 
 Status JobServiceAuth::PauseModelDeploymentMonitoringJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         PauseModelDeploymentMonitoringJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->PauseModelDeploymentMonitoringJob(context, request);
+  return child_->PauseModelDeploymentMonitoringJob(context, options, request);
 }
 
 Status JobServiceAuth::ResumeModelDeploymentMonitoringJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         ResumeModelDeploymentMonitoringJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ResumeModelDeploymentMonitoringJob(context, request);
+  return child_->ResumeModelDeploymentMonitoringJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

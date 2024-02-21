@@ -37,28 +37,28 @@ WorkflowTemplateServiceLogging::WorkflowTemplateServiceLogging(
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceLogging::CreateWorkflowTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const&
                  request) {
-        return child_->CreateWorkflowTemplate(context, request);
+        return child_->CreateWorkflowTemplate(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceLogging::GetWorkflowTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataproc::v1::GetWorkflowTemplateRequest const&
                  request) {
-        return child_->GetWorkflowTemplate(context, request);
+        return child_->GetWorkflowTemplate(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -99,40 +99,40 @@ WorkflowTemplateServiceLogging::AsyncInstantiateInlineWorkflowTemplate(
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceLogging::UpdateWorkflowTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const&
                  request) {
-        return child_->UpdateWorkflowTemplate(context, request);
+        return child_->UpdateWorkflowTemplate(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataproc::v1::ListWorkflowTemplatesResponse>
 WorkflowTemplateServiceLogging::ListWorkflowTemplates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::ListWorkflowTemplatesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataproc::v1::ListWorkflowTemplatesRequest const&
                  request) {
-        return child_->ListWorkflowTemplates(context, request);
+        return child_->ListWorkflowTemplates(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status WorkflowTemplateServiceLogging::DeleteWorkflowTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const&
                  request) {
-        return child_->DeleteWorkflowTemplate(context, request);
+        return child_->DeleteWorkflowTemplate(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

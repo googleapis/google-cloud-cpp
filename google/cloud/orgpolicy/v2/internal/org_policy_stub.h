@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_V2_INTERNAL_ORG_POLICY_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ORGPOLICY_V2_INTERNAL_ORG_POLICY_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/orgpolicy/v2/orgpolicy.grpc.pb.h>
@@ -36,61 +37,61 @@ class OrgPolicyStub {
 
   virtual StatusOr<google::cloud::orgpolicy::v2::ListConstraintsResponse>
   ListConstraints(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::ListConstraintsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::orgpolicy::v2::ListPoliciesResponse>
   ListPolicies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::ListPoliciesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::orgpolicy::v2::Policy> GetPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::GetPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::orgpolicy::v2::Policy> GetEffectivePolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::orgpolicy::v2::Policy> CreatePolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::orgpolicy::v2::Policy> UpdatePolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) = 0;
 
   virtual Status DeletePolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
   CreateCustomConstraint(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
   UpdateCustomConstraint(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
   GetCustomConstraint(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::GetCustomConstraintRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::orgpolicy::v2::ListCustomConstraintsResponse>
   ListCustomConstraints(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::ListCustomConstraintsRequest const&
           request) = 0;
 
   virtual Status DeleteCustomConstraint(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
           request) = 0;
 };
@@ -103,63 +104,63 @@ class DefaultOrgPolicyStub : public OrgPolicyStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::orgpolicy::v2::ListConstraintsResponse>
-  ListConstraints(grpc::ClientContext& context,
+  ListConstraints(grpc::ClientContext& context, Options const& options,
                   google::cloud::orgpolicy::v2::ListConstraintsRequest const&
                       request) override;
 
   StatusOr<google::cloud::orgpolicy::v2::ListPoliciesResponse> ListPolicies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::ListPoliciesRequest const& request)
       override;
 
   StatusOr<google::cloud::orgpolicy::v2::Policy> GetPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::GetPolicyRequest const& request) override;
 
   StatusOr<google::cloud::orgpolicy::v2::Policy> GetEffectivePolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request)
       override;
 
   StatusOr<google::cloud::orgpolicy::v2::Policy> CreatePolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::CreatePolicyRequest const& request)
       override;
 
   StatusOr<google::cloud::orgpolicy::v2::Policy> UpdatePolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request)
       override;
 
-  Status DeletePolicy(grpc::ClientContext& context,
+  Status DeletePolicy(grpc::ClientContext& context, Options const& options,
                       google::cloud::orgpolicy::v2::DeletePolicyRequest const&
                           request) override;
 
   StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
   CreateCustomConstraint(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
           request) override;
 
   StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
   UpdateCustomConstraint(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
           request) override;
 
   StatusOr<google::cloud::orgpolicy::v2::CustomConstraint> GetCustomConstraint(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request)
       override;
 
   StatusOr<google::cloud::orgpolicy::v2::ListCustomConstraintsResponse>
   ListCustomConstraints(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::ListCustomConstraintsRequest const& request)
       override;
 
   Status DeleteCustomConstraint(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
           request) override;
 

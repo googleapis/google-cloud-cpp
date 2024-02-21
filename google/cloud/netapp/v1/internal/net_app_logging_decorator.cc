@@ -37,15 +37,15 @@ NetAppLogging::NetAppLogging(std::shared_ptr<NetAppStub> child,
 
 StatusOr<google::cloud::netapp::v1::ListStoragePoolsResponse>
 NetAppLogging::ListStoragePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListStoragePoolsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::netapp::v1::ListStoragePoolsRequest const& request) {
-        return child_->ListStoragePools(context, request);
+        return child_->ListStoragePools(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -65,14 +65,14 @@ NetAppLogging::AsyncCreateStoragePool(
 }
 
 StatusOr<google::cloud::netapp::v1::StoragePool> NetAppLogging::GetStoragePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetStoragePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::GetStoragePoolRequest const& request) {
-        return child_->GetStoragePool(context, request);
+        return child_->GetStoragePool(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -109,25 +109,25 @@ NetAppLogging::AsyncDeleteStoragePool(
 
 StatusOr<google::cloud::netapp::v1::ListVolumesResponse>
 NetAppLogging::ListVolumes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListVolumesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::ListVolumesRequest const& request) {
-        return child_->ListVolumes(context, request);
+        return child_->ListVolumes(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::netapp::v1::Volume> NetAppLogging::GetVolume(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetVolumeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::GetVolumeRequest const& request) {
-        return child_->GetVolume(context, request);
+        return child_->GetVolume(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -196,25 +196,25 @@ NetAppLogging::AsyncRevertVolume(
 
 StatusOr<google::cloud::netapp::v1::ListSnapshotsResponse>
 NetAppLogging::ListSnapshots(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListSnapshotsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::ListSnapshotsRequest const& request) {
-        return child_->ListSnapshots(context, request);
+        return child_->ListSnapshots(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::netapp::v1::Snapshot> NetAppLogging::GetSnapshot(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetSnapshotRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::GetSnapshotRequest const& request) {
-        return child_->GetSnapshot(context, request);
+        return child_->GetSnapshot(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -267,28 +267,28 @@ NetAppLogging::AsyncUpdateSnapshot(
 
 StatusOr<google::cloud::netapp::v1::ListActiveDirectoriesResponse>
 NetAppLogging::ListActiveDirectories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListActiveDirectoriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::ListActiveDirectoriesRequest const&
                  request) {
-        return child_->ListActiveDirectories(context, request);
+        return child_->ListActiveDirectories(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::netapp::v1::ActiveDirectory>
 NetAppLogging::GetActiveDirectory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetActiveDirectoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::netapp::v1::GetActiveDirectoryRequest const& request) {
-        return child_->GetActiveDirectory(context, request);
+        return child_->GetActiveDirectory(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -344,14 +344,14 @@ NetAppLogging::AsyncDeleteActiveDirectory(
 
 StatusOr<google::cloud::netapp::v1::ListKmsConfigsResponse>
 NetAppLogging::ListKmsConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListKmsConfigsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::ListKmsConfigsRequest const& request) {
-        return child_->ListKmsConfigs(context, request);
+        return child_->ListKmsConfigs(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -371,14 +371,14 @@ NetAppLogging::AsyncCreateKmsConfig(
 }
 
 StatusOr<google::cloud::netapp::v1::KmsConfig> NetAppLogging::GetKmsConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetKmsConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::GetKmsConfigRequest const& request) {
-        return child_->GetKmsConfig(context, request);
+        return child_->GetKmsConfig(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -415,14 +415,14 @@ NetAppLogging::AsyncEncryptVolumes(
 
 StatusOr<google::cloud::netapp::v1::VerifyKmsConfigResponse>
 NetAppLogging::VerifyKmsConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::VerifyKmsConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::VerifyKmsConfigRequest const& request) {
-        return child_->VerifyKmsConfig(context, request);
+        return child_->VerifyKmsConfig(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -443,26 +443,26 @@ NetAppLogging::AsyncDeleteKmsConfig(
 
 StatusOr<google::cloud::netapp::v1::ListReplicationsResponse>
 NetAppLogging::ListReplications(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListReplicationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::netapp::v1::ListReplicationsRequest const& request) {
-        return child_->ListReplications(context, request);
+        return child_->ListReplications(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::netapp::v1::Replication> NetAppLogging::GetReplication(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetReplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::GetReplicationRequest const& request) {
-        return child_->GetReplication(context, request);
+        return child_->GetReplication(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -580,27 +580,27 @@ NetAppLogging::AsyncCreateBackupVault(
 }
 
 StatusOr<google::cloud::netapp::v1::BackupVault> NetAppLogging::GetBackupVault(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetBackupVaultRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::GetBackupVaultRequest const& request) {
-        return child_->GetBackupVault(context, request);
+        return child_->GetBackupVault(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::netapp::v1::ListBackupVaultsResponse>
 NetAppLogging::ListBackupVaults(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListBackupVaultsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::netapp::v1::ListBackupVaultsRequest const& request) {
-        return child_->ListBackupVaults(context, request);
+        return child_->ListBackupVaults(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -652,26 +652,26 @@ NetAppLogging::AsyncCreateBackup(
 }
 
 StatusOr<google::cloud::netapp::v1::Backup> NetAppLogging::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetBackupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::GetBackupRequest const& request) {
-        return child_->GetBackup(context, request);
+        return child_->GetBackup(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::netapp::v1::ListBackupsResponse>
 NetAppLogging::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListBackupsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::ListBackupsRequest const& request) {
-        return child_->ListBackups(context, request);
+        return child_->ListBackups(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -724,27 +724,27 @@ NetAppLogging::AsyncCreateBackupPolicy(
 
 StatusOr<google::cloud::netapp::v1::BackupPolicy>
 NetAppLogging::GetBackupPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::GetBackupPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::GetBackupPolicyRequest const& request) {
-        return child_->GetBackupPolicy(context, request);
+        return child_->GetBackupPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::netapp::v1::ListBackupPoliciesResponse>
 NetAppLogging::ListBackupPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::netapp::v1::ListBackupPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::netapp::v1::ListBackupPoliciesRequest const& request) {
-        return child_->ListBackupPolicies(context, request);
+        return child_->ListBackupPolicies(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -33,22 +33,22 @@ NetworkSecurityAuth::NetworkSecurityAuth(
 
 StatusOr<google::cloud::networksecurity::v1::ListAuthorizationPoliciesResponse>
 NetworkSecurityAuth::ListAuthorizationPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networksecurity::v1::ListAuthorizationPoliciesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAuthorizationPolicies(context, request);
+  return child_->ListAuthorizationPolicies(context, options, request);
 }
 
 StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>
 NetworkSecurityAuth::GetAuthorizationPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networksecurity::v1::GetAuthorizationPolicyRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAuthorizationPolicy(context, request);
+  return child_->GetAuthorizationPolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -113,22 +113,22 @@ NetworkSecurityAuth::AsyncDeleteAuthorizationPolicy(
 
 StatusOr<google::cloud::networksecurity::v1::ListServerTlsPoliciesResponse>
 NetworkSecurityAuth::ListServerTlsPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListServerTlsPolicies(context, request);
+  return child_->ListServerTlsPolicies(context, options, request);
 }
 
 StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>
 NetworkSecurityAuth::GetServerTlsPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networksecurity::v1::GetServerTlsPolicyRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetServerTlsPolicy(context, request);
+  return child_->GetServerTlsPolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -193,22 +193,22 @@ NetworkSecurityAuth::AsyncDeleteServerTlsPolicy(
 
 StatusOr<google::cloud::networksecurity::v1::ListClientTlsPoliciesResponse>
 NetworkSecurityAuth::ListClientTlsPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networksecurity::v1::ListClientTlsPoliciesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListClientTlsPolicies(context, request);
+  return child_->ListClientTlsPolicies(context, options, request);
 }
 
 StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>
 NetworkSecurityAuth::GetClientTlsPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networksecurity::v1::GetClientTlsPolicyRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetClientTlsPolicy(context, request);
+  return child_->GetClientTlsPolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

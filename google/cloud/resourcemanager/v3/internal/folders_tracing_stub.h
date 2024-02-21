@@ -38,17 +38,17 @@ class FoldersTracingStub : public FoldersStub {
   explicit FoldersTracingStub(std::shared_ptr<FoldersStub> child);
 
   StatusOr<google::cloud::resourcemanager::v3::Folder> GetFolder(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcemanager::v3::GetFolderRequest const& request)
       override;
 
   StatusOr<google::cloud::resourcemanager::v3::ListFoldersResponse> ListFolders(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcemanager::v3::ListFoldersRequest const& request)
       override;
 
   StatusOr<google::cloud::resourcemanager::v3::SearchFoldersResponse>
-  SearchFolders(grpc::ClientContext& context,
+  SearchFolders(grpc::ClientContext& context, Options const& options,
                 google::cloud::resourcemanager::v3::SearchFoldersRequest const&
                     request) override;
 
@@ -83,15 +83,15 @@ class FoldersTracingStub : public FoldersStub {
       override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

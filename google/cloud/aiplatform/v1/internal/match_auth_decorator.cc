@@ -33,20 +33,20 @@ MatchServiceAuth::MatchServiceAuth(
 
 StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse>
 MatchServiceAuth::FindNeighbors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::FindNeighborsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->FindNeighbors(context, request);
+  return child_->FindNeighbors(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
 MatchServiceAuth::ReadIndexDatapoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ReadIndexDatapoints(context, request);
+  return child_->ReadIndexDatapoints(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

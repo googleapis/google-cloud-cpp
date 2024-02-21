@@ -33,14 +33,14 @@ ScheduleServiceTracingStub::ScheduleServiceTracingStub(
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 ScheduleServiceTracingStub::CreateSchedule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateScheduleRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.ScheduleService", "CreateSchedule");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateSchedule(context, request));
+                           child_->CreateSchedule(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -58,60 +58,60 @@ ScheduleServiceTracingStub::AsyncDeleteSchedule(
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 ScheduleServiceTracingStub::GetSchedule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetScheduleRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.ScheduleService", "GetSchedule");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetSchedule(context, request));
+                           child_->GetSchedule(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListSchedulesResponse>
 ScheduleServiceTracingStub::ListSchedules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListSchedulesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.ScheduleService", "ListSchedules");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListSchedules(context, request));
+                           child_->ListSchedules(context, options, request));
 }
 
 Status ScheduleServiceTracingStub::PauseSchedule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::PauseScheduleRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.ScheduleService", "PauseSchedule");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->PauseSchedule(context, request));
+                           child_->PauseSchedule(context, options, request));
 }
 
 Status ScheduleServiceTracingStub::ResumeSchedule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ResumeScheduleRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.ScheduleService", "ResumeSchedule");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ResumeSchedule(context, request));
+                           child_->ResumeSchedule(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 ScheduleServiceTracingStub::UpdateSchedule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateScheduleRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.ScheduleService", "UpdateSchedule");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateSchedule(context, request));
+                           child_->UpdateSchedule(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

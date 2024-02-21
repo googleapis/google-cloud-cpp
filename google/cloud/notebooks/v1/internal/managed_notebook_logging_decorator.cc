@@ -37,26 +37,26 @@ ManagedNotebookServiceLogging::ManagedNotebookServiceLogging(
 
 StatusOr<google::cloud::notebooks::v1::ListRuntimesResponse>
 ManagedNotebookServiceLogging::ListRuntimes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::ListRuntimesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::notebooks::v1::ListRuntimesRequest const& request) {
-        return child_->ListRuntimes(context, request);
+        return child_->ListRuntimes(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::notebooks::v1::Runtime>
 ManagedNotebookServiceLogging::GetRuntime(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::GetRuntimeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::notebooks::v1::GetRuntimeRequest const& request) {
-        return child_->GetRuntime(context, request);
+        return child_->GetRuntime(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -206,16 +206,16 @@ ManagedNotebookServiceLogging::AsyncReportRuntimeEvent(
 
 StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
 ManagedNotebookServiceLogging::RefreshRuntimeTokenInternal(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::notebooks::v1::
                  RefreshRuntimeTokenInternalRequest const& request) {
-        return child_->RefreshRuntimeTokenInternal(context, request);
+        return child_->RefreshRuntimeTokenInternal(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

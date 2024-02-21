@@ -33,7 +33,7 @@ DataMigrationServiceStub::~DataMigrationServiceStub() = default;
 
 StatusOr<google::cloud::clouddms::v1::ListMigrationJobsResponse>
 DefaultDataMigrationServiceStub::ListMigrationJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::ListMigrationJobsRequest const& request) {
   google::cloud::clouddms::v1::ListMigrationJobsResponse response;
   auto status = grpc_stub_->ListMigrationJobs(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultDataMigrationServiceStub::ListMigrationJobs(
 
 StatusOr<google::cloud::clouddms::v1::MigrationJob>
 DefaultDataMigrationServiceStub::GetMigrationJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::GetMigrationJobRequest const& request) {
   google::cloud::clouddms::v1::MigrationJob response;
   auto status = grpc_stub_->GetMigrationJob(&context, request, &response);
@@ -219,7 +219,7 @@ DefaultDataMigrationServiceStub::AsyncRestartMigrationJob(
 
 StatusOr<google::cloud::clouddms::v1::SshScript>
 DefaultDataMigrationServiceStub::GenerateSshScript(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::GenerateSshScriptRequest const& request) {
   google::cloud::clouddms::v1::SshScript response;
   auto status = grpc_stub_->GenerateSshScript(&context, request, &response);
@@ -231,7 +231,7 @@ DefaultDataMigrationServiceStub::GenerateSshScript(
 
 StatusOr<google::cloud::clouddms::v1::TcpProxyScript>
 DefaultDataMigrationServiceStub::GenerateTcpProxyScript(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request) {
   google::cloud::clouddms::v1::TcpProxyScript response;
   auto status =
@@ -244,7 +244,7 @@ DefaultDataMigrationServiceStub::GenerateTcpProxyScript(
 
 StatusOr<google::cloud::clouddms::v1::ListConnectionProfilesResponse>
 DefaultDataMigrationServiceStub::ListConnectionProfiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::ListConnectionProfilesRequest const& request) {
   google::cloud::clouddms::v1::ListConnectionProfilesResponse response;
   auto status =
@@ -257,7 +257,7 @@ DefaultDataMigrationServiceStub::ListConnectionProfiles(
 
 StatusOr<google::cloud::clouddms::v1::ConnectionProfile>
 DefaultDataMigrationServiceStub::GetConnectionProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::GetConnectionProfileRequest const& request) {
   google::cloud::clouddms::v1::ConnectionProfile response;
   auto status = grpc_stub_->GetConnectionProfile(&context, request, &response);
@@ -345,7 +345,7 @@ DefaultDataMigrationServiceStub::AsyncCreatePrivateConnection(
 
 StatusOr<google::cloud::clouddms::v1::PrivateConnection>
 DefaultDataMigrationServiceStub::GetPrivateConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request) {
   google::cloud::clouddms::v1::PrivateConnection response;
   auto status = grpc_stub_->GetPrivateConnection(&context, request, &response);
@@ -357,7 +357,7 @@ DefaultDataMigrationServiceStub::GetPrivateConnection(
 
 StatusOr<google::cloud::clouddms::v1::ListPrivateConnectionsResponse>
 DefaultDataMigrationServiceStub::ListPrivateConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::ListPrivateConnectionsRequest const& request) {
   google::cloud::clouddms::v1::ListPrivateConnectionsResponse response;
   auto status =
@@ -389,7 +389,7 @@ DefaultDataMigrationServiceStub::AsyncDeletePrivateConnection(
 
 StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
 DefaultDataMigrationServiceStub::GetConversionWorkspace(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::GetConversionWorkspaceRequest const& request) {
   google::cloud::clouddms::v1::ConversionWorkspace response;
   auto status =
@@ -402,7 +402,7 @@ DefaultDataMigrationServiceStub::GetConversionWorkspace(
 
 StatusOr<google::cloud::clouddms::v1::ListConversionWorkspacesResponse>
 DefaultDataMigrationServiceStub::ListConversionWorkspaces(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::ListConversionWorkspacesRequest const&
         request) {
   google::cloud::clouddms::v1::ListConversionWorkspacesResponse response;
@@ -476,7 +476,7 @@ DefaultDataMigrationServiceStub::AsyncDeleteConversionWorkspace(
 
 StatusOr<google::cloud::clouddms::v1::MappingRule>
 DefaultDataMigrationServiceStub::CreateMappingRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::CreateMappingRuleRequest const& request) {
   google::cloud::clouddms::v1::MappingRule response;
   auto status = grpc_stub_->CreateMappingRule(&context, request, &response);
@@ -487,7 +487,7 @@ DefaultDataMigrationServiceStub::CreateMappingRule(
 }
 
 Status DefaultDataMigrationServiceStub::DeleteMappingRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteMappingRule(&context, request, &response);
@@ -499,7 +499,7 @@ Status DefaultDataMigrationServiceStub::DeleteMappingRule(
 
 StatusOr<google::cloud::clouddms::v1::ListMappingRulesResponse>
 DefaultDataMigrationServiceStub::ListMappingRules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::ListMappingRulesRequest const& request) {
   google::cloud::clouddms::v1::ListMappingRulesResponse response;
   auto status = grpc_stub_->ListMappingRules(&context, request, &response);
@@ -511,7 +511,7 @@ DefaultDataMigrationServiceStub::ListMappingRules(
 
 StatusOr<google::cloud::clouddms::v1::MappingRule>
 DefaultDataMigrationServiceStub::GetMappingRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::GetMappingRuleRequest const& request) {
   google::cloud::clouddms::v1::MappingRule response;
   auto status = grpc_stub_->GetMappingRule(&context, request, &response);
@@ -641,7 +641,7 @@ DefaultDataMigrationServiceStub::AsyncApplyConversionWorkspace(
 
 StatusOr<google::cloud::clouddms::v1::DescribeDatabaseEntitiesResponse>
 DefaultDataMigrationServiceStub::DescribeDatabaseEntities(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest const&
         request) {
   google::cloud::clouddms::v1::DescribeDatabaseEntitiesResponse response;
@@ -655,7 +655,7 @@ DefaultDataMigrationServiceStub::DescribeDatabaseEntities(
 
 StatusOr<google::cloud::clouddms::v1::SearchBackgroundJobsResponse>
 DefaultDataMigrationServiceStub::SearchBackgroundJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request) {
   google::cloud::clouddms::v1::SearchBackgroundJobsResponse response;
   auto status = grpc_stub_->SearchBackgroundJobs(&context, request, &response);
@@ -668,7 +668,7 @@ DefaultDataMigrationServiceStub::SearchBackgroundJobs(
 StatusOr<
     google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse>
 DefaultDataMigrationServiceStub::DescribeConversionWorkspaceRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::
         DescribeConversionWorkspaceRevisionsRequest const& request) {
   google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse
@@ -683,7 +683,7 @@ DefaultDataMigrationServiceStub::DescribeConversionWorkspaceRevisions(
 
 StatusOr<google::cloud::clouddms::v1::FetchStaticIpsResponse>
 DefaultDataMigrationServiceStub::FetchStaticIps(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::clouddms::v1::FetchStaticIpsRequest const& request) {
   google::cloud::clouddms::v1::FetchStaticIpsResponse response;
   auto status = grpc_stub_->FetchStaticIps(&context, request, &response);

@@ -113,10 +113,12 @@ FeaturestoreServiceConnectionImpl::GetFeaturestore(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetFeaturestore(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetFeaturestoreRequest const&
-                 request) { return stub_->GetFeaturestore(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetFeaturestore(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::Featurestore>
@@ -128,21 +130,22 @@ FeaturestoreServiceConnectionImpl::ListFeaturestores(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Featurestore>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::FeaturestoreServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListFeaturestoresRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::aiplatform::v1::ListFeaturestoresRequest const&
                     request) {
-              return stub->ListFeaturestores(context, request);
+              return stub->ListFeaturestores(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListFeaturestoresResponse r) {
         std::vector<google::cloud::aiplatform::v1::Featurestore> result(
@@ -275,11 +278,11 @@ FeaturestoreServiceConnectionImpl::GetEntityType(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEntityType(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::GetEntityTypeRequest const& request) {
-        return stub_->GetEntityType(context, request);
+        return stub_->GetEntityType(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::EntityType>
@@ -291,20 +294,21 @@ FeaturestoreServiceConnectionImpl::ListEntityTypes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::EntityType>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::FeaturestoreServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListEntityTypesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::ListEntityTypesRequest const&
                        request) {
-              return stub->ListEntityTypes(context, request);
+              return stub->ListEntityTypes(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListEntityTypesResponse r) {
         std::vector<google::cloud::aiplatform::v1::EntityType> result(
@@ -322,10 +326,12 @@ FeaturestoreServiceConnectionImpl::UpdateEntityType(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateEntityType(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::UpdateEntityTypeRequest const&
-                 request) { return stub_->UpdateEntityType(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->UpdateEntityType(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -448,11 +454,11 @@ FeaturestoreServiceConnectionImpl::GetFeature(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetFeature(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetFeatureRequest const& request) {
-        return stub_->GetFeature(context, request);
+        return stub_->GetFeature(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::Feature>
@@ -464,20 +470,21 @@ FeaturestoreServiceConnectionImpl::ListFeatures(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Feature>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::FeaturestoreServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListFeaturesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::ListFeaturesRequest const&
                        request) {
-              return stub->ListFeatures(context, request);
+              return stub->ListFeatures(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListFeaturesResponse r) {
         std::vector<google::cloud::aiplatform::v1::Feature> result(
@@ -496,11 +503,11 @@ FeaturestoreServiceConnectionImpl::UpdateFeature(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateFeature(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
-        return stub_->UpdateFeature(context, request);
+        return stub_->UpdateFeature(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -702,20 +709,21 @@ FeaturestoreServiceConnectionImpl::SearchFeatures(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Feature>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::FeaturestoreServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::SearchFeaturesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::SearchFeaturesRequest const&
                        request) {
-              return stub->SearchFeatures(context, request);
+              return stub->SearchFeatures(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::SearchFeaturesResponse r) {
         std::vector<google::cloud::aiplatform::v1::Feature> result(

@@ -33,7 +33,7 @@ AgentsStub::~AgentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListAgentsResponse>
 DefaultAgentsStub::ListAgents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ListAgentsRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListAgentsResponse response;
   auto status = grpc_stub_->ListAgents(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultAgentsStub::ListAgents(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent> DefaultAgentsStub::GetAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetAgentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Agent response;
   auto status = grpc_stub_->GetAgent(&context, request, &response);
@@ -56,7 +56,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Agent> DefaultAgentsStub::GetAgent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent>
 DefaultAgentsStub::CreateAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Agent response;
   auto status = grpc_stub_->CreateAgent(&context, request, &response);
@@ -68,7 +68,7 @@ DefaultAgentsStub::CreateAgent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent>
 DefaultAgentsStub::UpdateAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Agent response;
   auto status = grpc_stub_->UpdateAgent(&context, request, &response);
@@ -79,7 +79,7 @@ DefaultAgentsStub::UpdateAgent(
 }
 
 Status DefaultAgentsStub::DeleteAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteAgent(&context, request, &response);
@@ -127,7 +127,7 @@ DefaultAgentsStub::AsyncRestoreAgent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
 DefaultAgentsStub::ValidateAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request) {
   google::cloud::dialogflow::cx::v3::AgentValidationResult response;
   auto status = grpc_stub_->ValidateAgent(&context, request, &response);
@@ -139,7 +139,7 @@ DefaultAgentsStub::ValidateAgent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
 DefaultAgentsStub::GetAgentValidationResult(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::AgentValidationResult response;
@@ -153,7 +153,7 @@ DefaultAgentsStub::GetAgentValidationResult(
 
 StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
 DefaultAgentsStub::GetGenerativeSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::GenerativeSettings response;
@@ -166,7 +166,7 @@ DefaultAgentsStub::GetGenerativeSettings(
 
 StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
 DefaultAgentsStub::UpdateGenerativeSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::GenerativeSettings response;

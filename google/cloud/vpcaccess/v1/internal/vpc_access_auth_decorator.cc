@@ -52,20 +52,20 @@ VpcAccessServiceAuth::AsyncCreateConnector(
 
 StatusOr<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceAuth::GetConnector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetConnector(context, request);
+  return child_->GetConnector(context, options, request);
 }
 
 StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse>
 VpcAccessServiceAuth::ListConnectors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vpcaccess::v1::ListConnectorsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListConnectors(context, request);
+  return child_->ListConnectors(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

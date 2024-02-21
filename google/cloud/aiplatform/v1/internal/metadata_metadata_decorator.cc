@@ -55,20 +55,20 @@ MetadataServiceMetadata::AsyncCreateMetadataStore(
 
 StatusOr<google::cloud::aiplatform::v1::MetadataStore>
 MetadataServiceMetadata::GetMetadataStore(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetMetadataStoreRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetMetadataStore(context, request);
+  return child_->GetMetadataStore(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListMetadataStoresResponse>
 MetadataServiceMetadata::ListMetadataStores(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListMetadataStoresRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListMetadataStores(context, request);
+  return child_->ListMetadataStores(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -84,39 +84,39 @@ MetadataServiceMetadata::AsyncDeleteMetadataStore(
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
 MetadataServiceMetadata::CreateArtifact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateArtifactRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateArtifact(context, request);
+  return child_->CreateArtifact(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
 MetadataServiceMetadata::GetArtifact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetArtifactRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetArtifact(context, request);
+  return child_->GetArtifact(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListArtifactsResponse>
 MetadataServiceMetadata::ListArtifacts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListArtifactsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListArtifacts(context, request);
+  return child_->ListArtifacts(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
 MetadataServiceMetadata::UpdateArtifact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateArtifactRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("artifact.name=",
                            internal::UrlEncode(request.artifact().name())));
-  return child_->UpdateArtifact(context, request);
+  return child_->UpdateArtifact(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -141,39 +141,39 @@ MetadataServiceMetadata::AsyncPurgeArtifacts(
 
 StatusOr<google::cloud::aiplatform::v1::Context>
 MetadataServiceMetadata::CreateContext(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateContextRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateContext(context, request);
+  return child_->CreateContext(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Context>
 MetadataServiceMetadata::GetContext(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetContextRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetContext(context, request);
+  return child_->GetContext(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListContextsResponse>
 MetadataServiceMetadata::ListContexts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListContextsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListContexts(context, request);
+  return child_->ListContexts(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Context>
 MetadataServiceMetadata::UpdateContext(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateContextRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("context.name=",
                            internal::UrlEncode(request.context().name())));
-  return child_->UpdateContext(context, request);
+  return child_->UpdateContext(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -199,78 +199,78 @@ MetadataServiceMetadata::AsyncPurgeContexts(
 StatusOr<
     google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse>
 MetadataServiceMetadata::AddContextArtifactsAndExecutions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         AddContextArtifactsAndExecutionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("context=", internal::UrlEncode(request.context())));
-  return child_->AddContextArtifactsAndExecutions(context, request);
+  return child_->AddContextArtifactsAndExecutions(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::AddContextChildrenResponse>
 MetadataServiceMetadata::AddContextChildren(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::AddContextChildrenRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("context=", internal::UrlEncode(request.context())));
-  return child_->AddContextChildren(context, request);
+  return child_->AddContextChildren(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::RemoveContextChildrenResponse>
 MetadataServiceMetadata::RemoveContextChildren(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::RemoveContextChildrenRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("context=", internal::UrlEncode(request.context())));
-  return child_->RemoveContextChildren(context, request);
+  return child_->RemoveContextChildren(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
 MetadataServiceMetadata::QueryContextLineageSubgraph(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::QueryContextLineageSubgraphRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("context=", internal::UrlEncode(request.context())));
-  return child_->QueryContextLineageSubgraph(context, request);
+  return child_->QueryContextLineageSubgraph(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Execution>
 MetadataServiceMetadata::CreateExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateExecutionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateExecution(context, request);
+  return child_->CreateExecution(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Execution>
 MetadataServiceMetadata::GetExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetExecutionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetExecution(context, request);
+  return child_->GetExecution(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListExecutionsResponse>
 MetadataServiceMetadata::ListExecutions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListExecutionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListExecutions(context, request);
+  return child_->ListExecutions(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Execution>
 MetadataServiceMetadata::UpdateExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateExecutionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("execution.name=",
                            internal::UrlEncode(request.execution().name())));
-  return child_->UpdateExecution(context, request);
+  return child_->UpdateExecution(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -295,61 +295,61 @@ MetadataServiceMetadata::AsyncPurgeExecutions(
 
 StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>
 MetadataServiceMetadata::AddExecutionEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::AddExecutionEventsRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("execution=", internal::UrlEncode(request.execution())));
-  return child_->AddExecutionEvents(context, request);
+  return child_->AddExecutionEvents(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
 MetadataServiceMetadata::QueryExecutionInputsAndOutputs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::QueryExecutionInputsAndOutputsRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("execution=", internal::UrlEncode(request.execution())));
-  return child_->QueryExecutionInputsAndOutputs(context, request);
+  return child_->QueryExecutionInputsAndOutputs(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::MetadataSchema>
 MetadataServiceMetadata::CreateMetadataSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateMetadataSchemaRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateMetadataSchema(context, request);
+  return child_->CreateMetadataSchema(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::MetadataSchema>
 MetadataServiceMetadata::GetMetadataSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetMetadataSchemaRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetMetadataSchema(context, request);
+  return child_->GetMetadataSchema(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListMetadataSchemasResponse>
 MetadataServiceMetadata::ListMetadataSchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListMetadataSchemasRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListMetadataSchemas(context, request);
+  return child_->ListMetadataSchemas(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
 MetadataServiceMetadata::QueryArtifactLineageSubgraph(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::QueryArtifactLineageSubgraphRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("artifact=", internal::UrlEncode(request.artifact())));
-  return child_->QueryArtifactLineageSubgraph(context, request);
+  return child_->QueryArtifactLineageSubgraph(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

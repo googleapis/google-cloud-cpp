@@ -33,86 +33,86 @@ DataPolicyServiceAuth::DataPolicyServiceAuth(
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DataPolicyServiceAuth::CreateDataPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateDataPolicy(context, request);
+  return child_->CreateDataPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DataPolicyServiceAuth::UpdateDataPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateDataPolicy(context, request);
+  return child_->UpdateDataPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DataPolicyServiceAuth::RenameDataPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RenameDataPolicy(context, request);
+  return child_->RenameDataPolicy(context, options, request);
 }
 
 Status DataPolicyServiceAuth::DeleteDataPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteDataPolicy(context, request);
+  return child_->DeleteDataPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DataPolicyServiceAuth::GetDataPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDataPolicy(context, request);
+  return child_->GetDataPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::ListDataPoliciesResponse>
 DataPolicyServiceAuth::ListDataPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDataPolicies(context, request);
+  return child_->ListDataPolicies(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> DataPolicyServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> DataPolicyServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DataPolicyServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

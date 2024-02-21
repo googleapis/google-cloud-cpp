@@ -40,13 +40,13 @@ class AccessContextManagerStub {
 
   virtual StatusOr<
       google::identity::accesscontextmanager::v1::ListAccessPoliciesResponse>
-  ListAccessPolicies(grpc::ClientContext& context,
+  ListAccessPolicies(grpc::ClientContext& context, Options const& options,
                      google::identity::accesscontextmanager::v1::
                          ListAccessPoliciesRequest const& request) = 0;
 
   virtual StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
   GetAccessPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const&
           request) = 0;
 
@@ -74,13 +74,13 @@ class AccessContextManagerStub {
   virtual StatusOr<
       google::identity::accesscontextmanager::v1::ListAccessLevelsResponse>
   ListAccessLevels(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::identity::accesscontextmanager::v1::ListAccessLevelsRequest const&
           request) = 0;
 
   virtual StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
   GetAccessLevel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::identity::accesscontextmanager::v1::GetAccessLevelRequest const&
           request) = 0;
 
@@ -114,12 +114,12 @@ class AccessContextManagerStub {
 
   virtual StatusOr<
       google::identity::accesscontextmanager::v1::ListServicePerimetersResponse>
-  ListServicePerimeters(grpc::ClientContext& context,
+  ListServicePerimeters(grpc::ClientContext& context, Options const& options,
                         google::identity::accesscontextmanager::v1::
                             ListServicePerimetersRequest const& request) = 0;
 
   virtual StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
-  GetServicePerimeter(grpc::ClientContext& context,
+  GetServicePerimeter(grpc::ClientContext& context, Options const& options,
                       google::identity::accesscontextmanager::v1::
                           GetServicePerimeterRequest const& request) = 0;
 
@@ -161,14 +161,14 @@ class AccessContextManagerStub {
   virtual StatusOr<google::identity::accesscontextmanager::v1::
                        ListGcpUserAccessBindingsResponse>
   ListGcpUserAccessBindings(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::identity::accesscontextmanager::v1::
           ListGcpUserAccessBindingsRequest const& request) = 0;
 
   virtual StatusOr<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
   GetGcpUserAccessBinding(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::identity::accesscontextmanager::v1::
           GetGcpUserAccessBindingRequest const& request) = 0;
 
@@ -194,16 +194,16 @@ class AccessContextManagerStub {
           DeleteGcpUserAccessBindingRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -229,13 +229,13 @@ class DefaultAccessContextManagerStub : public AccessContextManagerStub {
 
   StatusOr<
       google::identity::accesscontextmanager::v1::ListAccessPoliciesResponse>
-  ListAccessPolicies(grpc::ClientContext& context,
+  ListAccessPolicies(grpc::ClientContext& context, Options const& options,
                      google::identity::accesscontextmanager::v1::
                          ListAccessPoliciesRequest const& request) override;
 
   StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
   GetAccessPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const&
           request) override;
 
@@ -259,13 +259,13 @@ class DefaultAccessContextManagerStub : public AccessContextManagerStub {
 
   StatusOr<google::identity::accesscontextmanager::v1::ListAccessLevelsResponse>
   ListAccessLevels(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::identity::accesscontextmanager::v1::ListAccessLevelsRequest const&
           request) override;
 
   StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
   GetAccessLevel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::identity::accesscontextmanager::v1::GetAccessLevelRequest const&
           request) override;
 
@@ -296,12 +296,12 @@ class DefaultAccessContextManagerStub : public AccessContextManagerStub {
   StatusOr<
       google::identity::accesscontextmanager::v1::ListServicePerimetersResponse>
   ListServicePerimeters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::identity::accesscontextmanager::v1::
           ListServicePerimetersRequest const& request) override;
 
   StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
-  GetServicePerimeter(grpc::ClientContext& context,
+  GetServicePerimeter(grpc::ClientContext& context, Options const& options,
                       google::identity::accesscontextmanager::v1::
                           GetServicePerimeterRequest const& request) override;
 
@@ -339,13 +339,13 @@ class DefaultAccessContextManagerStub : public AccessContextManagerStub {
   StatusOr<google::identity::accesscontextmanager::v1::
                ListGcpUserAccessBindingsResponse>
   ListGcpUserAccessBindings(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::identity::accesscontextmanager::v1::
           ListGcpUserAccessBindingsRequest const& request) override;
 
   StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
   GetGcpUserAccessBinding(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::identity::accesscontextmanager::v1::
           GetGcpUserAccessBindingRequest const& request) override;
 
@@ -371,15 +371,15 @@ class DefaultAccessContextManagerStub : public AccessContextManagerStub {
           DeleteGcpUserAccessBindingRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

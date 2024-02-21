@@ -36,159 +36,160 @@ GrafeasLogging::GrafeasLogging(std::shared_ptr<GrafeasStub> child,
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<grafeas::v1::Occurrence> GrafeasLogging::GetOccurrence(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::GetOccurrenceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              grafeas::v1::GetOccurrenceRequest const& request) {
-        return child_->GetOccurrence(context, request);
+        return child_->GetOccurrence(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<grafeas::v1::ListOccurrencesResponse> GrafeasLogging::ListOccurrences(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::ListOccurrencesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              grafeas::v1::ListOccurrencesRequest const& request) {
-        return child_->ListOccurrences(context, request);
+        return child_->ListOccurrences(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status GrafeasLogging::DeleteOccurrence(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::DeleteOccurrenceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              grafeas::v1::DeleteOccurrenceRequest const& request) {
-        return child_->DeleteOccurrence(context, request);
+        return child_->DeleteOccurrence(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<grafeas::v1::Occurrence> GrafeasLogging::CreateOccurrence(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::CreateOccurrenceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              grafeas::v1::CreateOccurrenceRequest const& request) {
-        return child_->CreateOccurrence(context, request);
+        return child_->CreateOccurrence(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>
 GrafeasLogging::BatchCreateOccurrences(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::BatchCreateOccurrencesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              grafeas::v1::BatchCreateOccurrencesRequest const& request) {
-        return child_->BatchCreateOccurrences(context, request);
+        return child_->BatchCreateOccurrences(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<grafeas::v1::Occurrence> GrafeasLogging::UpdateOccurrence(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::UpdateOccurrenceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              grafeas::v1::UpdateOccurrenceRequest const& request) {
-        return child_->UpdateOccurrence(context, request);
+        return child_->UpdateOccurrence(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<grafeas::v1::Note> GrafeasLogging::GetOccurrenceNote(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::GetOccurrenceNoteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              grafeas::v1::GetOccurrenceNoteRequest const& request) {
-        return child_->GetOccurrenceNote(context, request);
+        return child_->GetOccurrenceNote(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<grafeas::v1::Note> GrafeasLogging::GetNote(
-    grpc::ClientContext& context, grafeas::v1::GetNoteRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    grafeas::v1::GetNoteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              grafeas::v1::GetNoteRequest const& request) {
-        return child_->GetNote(context, request);
+        return child_->GetNote(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<grafeas::v1::ListNotesResponse> GrafeasLogging::ListNotes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::ListNotesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              grafeas::v1::ListNotesRequest const& request) {
-        return child_->ListNotes(context, request);
+        return child_->ListNotes(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status GrafeasLogging::DeleteNote(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::DeleteNoteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              grafeas::v1::DeleteNoteRequest const& request) {
-        return child_->DeleteNote(context, request);
+        return child_->DeleteNote(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<grafeas::v1::Note> GrafeasLogging::CreateNote(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::CreateNoteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              grafeas::v1::CreateNoteRequest const& request) {
-        return child_->CreateNote(context, request);
+        return child_->CreateNote(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<grafeas::v1::BatchCreateNotesResponse>
 GrafeasLogging::BatchCreateNotes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::BatchCreateNotesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              grafeas::v1::BatchCreateNotesRequest const& request) {
-        return child_->BatchCreateNotes(context, request);
+        return child_->BatchCreateNotes(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<grafeas::v1::Note> GrafeasLogging::UpdateNote(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::UpdateNoteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              grafeas::v1::UpdateNoteRequest const& request) {
-        return child_->UpdateNote(context, request);
+        return child_->UpdateNote(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<grafeas::v1::ListNoteOccurrencesResponse>
 GrafeasLogging::ListNoteOccurrences(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::ListNoteOccurrencesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              grafeas::v1::ListNoteOccurrencesRequest const& request) {
-        return child_->ListNoteOccurrences(context, request);
+        return child_->ListNoteOccurrences(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

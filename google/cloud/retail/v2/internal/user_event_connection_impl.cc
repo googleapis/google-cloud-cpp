@@ -70,11 +70,11 @@ UserEventServiceConnectionImpl::WriteUserEvent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->WriteUserEvent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::WriteUserEventRequest const& request) {
-        return stub_->WriteUserEvent(context, request);
+        return stub_->WriteUserEvent(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::api::HttpBody>
@@ -85,11 +85,11 @@ UserEventServiceConnectionImpl::CollectUserEvent(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CollectUserEvent(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::retail::v2::CollectUserEventRequest const& request) {
-        return stub_->CollectUserEvent(context, request);
+        return stub_->CollectUserEvent(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>

@@ -33,19 +33,19 @@ VersionsAuth::VersionsAuth(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListVersionsResponse>
 VersionsAuth::ListVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListVersionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListVersions(context, request);
+  return child_->ListVersions(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Version> VersionsAuth::GetVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetVersion(context, request);
+  return child_->GetVersion(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -69,19 +69,19 @@ VersionsAuth::AsyncCreateVersion(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Version>
 VersionsAuth::UpdateVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateVersion(context, request);
+  return child_->UpdateVersion(context, options, request);
 }
 
 Status VersionsAuth::DeleteVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteVersion(context, request);
+  return child_->DeleteVersion(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> VersionsAuth::AsyncLoadVersion(
@@ -104,11 +104,11 @@ future<StatusOr<google::longrunning::Operation>> VersionsAuth::AsyncLoadVersion(
 
 StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>
 VersionsAuth::CompareVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CompareVersionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CompareVersions(context, request);
+  return child_->CompareVersions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

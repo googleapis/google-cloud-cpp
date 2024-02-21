@@ -36,48 +36,48 @@ SnoozeServiceLogging::SnoozeServiceLogging(
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceLogging::CreateSnooze(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateSnoozeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::CreateSnoozeRequest const& request) {
-        return child_->CreateSnooze(context, request);
+        return child_->CreateSnooze(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::v3::ListSnoozesResponse>
 SnoozeServiceLogging::ListSnoozes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListSnoozesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::ListSnoozesRequest const& request) {
-        return child_->ListSnoozes(context, request);
+        return child_->ListSnoozes(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceLogging::GetSnooze(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetSnoozeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::GetSnoozeRequest const& request) {
-        return child_->GetSnooze(context, request);
+        return child_->GetSnooze(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceLogging::UpdateSnooze(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::UpdateSnoozeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::UpdateSnoozeRequest const& request) {
-        return child_->UpdateSnooze(context, request);
+        return child_->UpdateSnooze(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

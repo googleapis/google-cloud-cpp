@@ -40,19 +40,19 @@ class AgentsAuth : public AgentsStub {
       std::shared_ptr<AgentsStub> child);
 
   StatusOr<google::cloud::dialogflow::v2::Agent> GetAgent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetAgentRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::Agent> SetAgent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::SetAgentRequest const& request) override;
 
-  Status DeleteAgent(grpc::ClientContext& context,
+  Status DeleteAgent(grpc::ClientContext& context, Options const& options,
                      google::cloud::dialogflow::v2::DeleteAgentRequest const&
                          request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SearchAgentsResponse> SearchAgents(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::SearchAgentsRequest const& request)
       override;
 
@@ -80,7 +80,7 @@ class AgentsAuth : public AgentsStub {
       override;
 
   StatusOr<google::cloud::dialogflow::v2::ValidationResult> GetValidationResult(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetValidationResultRequest const& request)
       override;
 

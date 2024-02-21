@@ -33,28 +33,29 @@ WorkflowTemplateServiceTracingStub::WorkflowTemplateServiceTracingStub(
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceTracingStub::CreateWorkflowTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.dataproc.v1.WorkflowTemplateService",
                              "CreateWorkflowTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateWorkflowTemplate(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateWorkflowTemplate(context, options, request));
 }
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceTracingStub::GetWorkflowTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.dataproc.v1.WorkflowTemplateService",
                              "GetWorkflowTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetWorkflowTemplate(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetWorkflowTemplate(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -91,40 +92,42 @@ WorkflowTemplateServiceTracingStub::AsyncInstantiateInlineWorkflowTemplate(
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceTracingStub::UpdateWorkflowTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.dataproc.v1.WorkflowTemplateService",
                              "UpdateWorkflowTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateWorkflowTemplate(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateWorkflowTemplate(context, options, request));
 }
 
 StatusOr<google::cloud::dataproc::v1::ListWorkflowTemplatesResponse>
 WorkflowTemplateServiceTracingStub::ListWorkflowTemplates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::ListWorkflowTemplatesRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.dataproc.v1.WorkflowTemplateService",
                              "ListWorkflowTemplates");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListWorkflowTemplates(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListWorkflowTemplates(context, options, request));
 }
 
 Status WorkflowTemplateServiceTracingStub::DeleteWorkflowTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.dataproc.v1.WorkflowTemplateService",
                              "DeleteWorkflowTemplate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteWorkflowTemplate(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteWorkflowTemplate(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

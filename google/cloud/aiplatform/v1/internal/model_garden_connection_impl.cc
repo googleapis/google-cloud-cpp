@@ -67,12 +67,12 @@ ModelGardenServiceConnectionImpl::GetPublisherModel(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPublisherModel(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetPublisherModelRequest const&
                  request) {
-        return stub_->GetPublisherModel(context, request);
+        return stub_->GetPublisherModel(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

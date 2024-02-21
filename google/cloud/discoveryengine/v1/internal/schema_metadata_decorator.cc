@@ -44,20 +44,20 @@ SchemaServiceMetadata::SchemaServiceMetadata(
 
 StatusOr<google::cloud::discoveryengine::v1::Schema>
 SchemaServiceMetadata::GetSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetSchemaRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetSchema(context, request);
+  return child_->GetSchema(context, options, request);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListSchemasResponse>
 SchemaServiceMetadata::ListSchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ListSchemasRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListSchemas(context, request);
+  return child_->ListSchemas(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

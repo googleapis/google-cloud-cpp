@@ -44,11 +44,11 @@ IamCheckerMetadata::IamCheckerMetadata(
 
 StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
 IamCheckerMetadata::TroubleshootIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->TroubleshootIamPolicy(context, request);
+  SetMetadata(context, options);
+  return child_->TroubleshootIamPolicy(context, options, request);
 }
 
 void IamCheckerMetadata::SetMetadata(grpc::ClientContext& context,

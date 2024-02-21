@@ -44,20 +44,20 @@ ManagedNotebookServiceMetadata::ManagedNotebookServiceMetadata(
 
 StatusOr<google::cloud::notebooks::v1::ListRuntimesResponse>
 ManagedNotebookServiceMetadata::ListRuntimes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::ListRuntimesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListRuntimes(context, request);
+  return child_->ListRuntimes(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v1::Runtime>
 ManagedNotebookServiceMetadata::GetRuntime(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::GetRuntimeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetRuntime(context, request);
+  return child_->GetRuntime(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -154,12 +154,12 @@ ManagedNotebookServiceMetadata::AsyncReportRuntimeEvent(
 
 StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
 ManagedNotebookServiceMetadata::RefreshRuntimeTokenInternal(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->RefreshRuntimeTokenInternal(context, request);
+  return child_->RefreshRuntimeTokenInternal(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

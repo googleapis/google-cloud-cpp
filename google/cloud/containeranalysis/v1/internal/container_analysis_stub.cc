@@ -31,7 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ContainerAnalysisStub::~ContainerAnalysisStub() = default;
 
 StatusOr<google::iam::v1::Policy> DefaultContainerAnalysisStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -42,7 +42,7 @@ StatusOr<google::iam::v1::Policy> DefaultContainerAnalysisStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultContainerAnalysisStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -54,7 +54,7 @@ StatusOr<google::iam::v1::Policy> DefaultContainerAnalysisStub::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultContainerAnalysisStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
@@ -67,7 +67,7 @@ DefaultContainerAnalysisStub::TestIamPermissions(
 StatusOr<
     google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary>
 DefaultContainerAnalysisStub::GetVulnerabilityOccurrencesSummary(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::containeranalysis::v1::
         GetVulnerabilityOccurrencesSummaryRequest const& request) {
   google::devtools::containeranalysis::v1::VulnerabilityOccurrencesSummary

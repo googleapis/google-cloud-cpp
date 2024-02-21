@@ -33,7 +33,7 @@ ConfigServiceV2Stub::~ConfigServiceV2Stub() = default;
 
 StatusOr<google::logging::v2::ListBucketsResponse>
 DefaultConfigServiceV2Stub::ListBuckets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::ListBucketsRequest const& request) {
   google::logging::v2::ListBucketsResponse response;
   auto status = grpc_stub_->ListBuckets(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultConfigServiceV2Stub::ListBuckets(
 }
 
 StatusOr<google::logging::v2::LogBucket> DefaultConfigServiceV2Stub::GetBucket(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::GetBucketRequest const& request) {
   google::logging::v2::LogBucket response;
   auto status = grpc_stub_->GetBucket(&context, request, &response);
@@ -88,7 +88,7 @@ DefaultConfigServiceV2Stub::AsyncUpdateBucketAsync(
 
 StatusOr<google::logging::v2::LogBucket>
 DefaultConfigServiceV2Stub::CreateBucket(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::CreateBucketRequest const& request) {
   google::logging::v2::LogBucket response;
   auto status = grpc_stub_->CreateBucket(&context, request, &response);
@@ -100,7 +100,7 @@ DefaultConfigServiceV2Stub::CreateBucket(
 
 StatusOr<google::logging::v2::LogBucket>
 DefaultConfigServiceV2Stub::UpdateBucket(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::UpdateBucketRequest const& request) {
   google::logging::v2::LogBucket response;
   auto status = grpc_stub_->UpdateBucket(&context, request, &response);
@@ -111,7 +111,7 @@ DefaultConfigServiceV2Stub::UpdateBucket(
 }
 
 Status DefaultConfigServiceV2Stub::DeleteBucket(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::DeleteBucketRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteBucket(&context, request, &response);
@@ -122,7 +122,7 @@ Status DefaultConfigServiceV2Stub::DeleteBucket(
 }
 
 Status DefaultConfigServiceV2Stub::UndeleteBucket(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::UndeleteBucketRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->UndeleteBucket(&context, request, &response);
@@ -134,7 +134,7 @@ Status DefaultConfigServiceV2Stub::UndeleteBucket(
 
 StatusOr<google::logging::v2::ListViewsResponse>
 DefaultConfigServiceV2Stub::ListViews(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::ListViewsRequest const& request) {
   google::logging::v2::ListViewsResponse response;
   auto status = grpc_stub_->ListViews(&context, request, &response);
@@ -145,7 +145,7 @@ DefaultConfigServiceV2Stub::ListViews(
 }
 
 StatusOr<google::logging::v2::LogView> DefaultConfigServiceV2Stub::GetView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::GetViewRequest const& request) {
   google::logging::v2::LogView response;
   auto status = grpc_stub_->GetView(&context, request, &response);
@@ -156,7 +156,7 @@ StatusOr<google::logging::v2::LogView> DefaultConfigServiceV2Stub::GetView(
 }
 
 StatusOr<google::logging::v2::LogView> DefaultConfigServiceV2Stub::CreateView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::CreateViewRequest const& request) {
   google::logging::v2::LogView response;
   auto status = grpc_stub_->CreateView(&context, request, &response);
@@ -167,7 +167,7 @@ StatusOr<google::logging::v2::LogView> DefaultConfigServiceV2Stub::CreateView(
 }
 
 StatusOr<google::logging::v2::LogView> DefaultConfigServiceV2Stub::UpdateView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::UpdateViewRequest const& request) {
   google::logging::v2::LogView response;
   auto status = grpc_stub_->UpdateView(&context, request, &response);
@@ -178,7 +178,7 @@ StatusOr<google::logging::v2::LogView> DefaultConfigServiceV2Stub::UpdateView(
 }
 
 Status DefaultConfigServiceV2Stub::DeleteView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::DeleteViewRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteView(&context, request, &response);
@@ -190,7 +190,7 @@ Status DefaultConfigServiceV2Stub::DeleteView(
 
 StatusOr<google::logging::v2::ListSinksResponse>
 DefaultConfigServiceV2Stub::ListSinks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::ListSinksRequest const& request) {
   google::logging::v2::ListSinksResponse response;
   auto status = grpc_stub_->ListSinks(&context, request, &response);
@@ -201,7 +201,7 @@ DefaultConfigServiceV2Stub::ListSinks(
 }
 
 StatusOr<google::logging::v2::LogSink> DefaultConfigServiceV2Stub::GetSink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::GetSinkRequest const& request) {
   google::logging::v2::LogSink response;
   auto status = grpc_stub_->GetSink(&context, request, &response);
@@ -212,7 +212,7 @@ StatusOr<google::logging::v2::LogSink> DefaultConfigServiceV2Stub::GetSink(
 }
 
 StatusOr<google::logging::v2::LogSink> DefaultConfigServiceV2Stub::CreateSink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::CreateSinkRequest const& request) {
   google::logging::v2::LogSink response;
   auto status = grpc_stub_->CreateSink(&context, request, &response);
@@ -223,7 +223,7 @@ StatusOr<google::logging::v2::LogSink> DefaultConfigServiceV2Stub::CreateSink(
 }
 
 StatusOr<google::logging::v2::LogSink> DefaultConfigServiceV2Stub::UpdateSink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::UpdateSinkRequest const& request) {
   google::logging::v2::LogSink response;
   auto status = grpc_stub_->UpdateSink(&context, request, &response);
@@ -234,7 +234,7 @@ StatusOr<google::logging::v2::LogSink> DefaultConfigServiceV2Stub::UpdateSink(
 }
 
 Status DefaultConfigServiceV2Stub::DeleteSink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::DeleteSinkRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteSink(&context, request, &response);
@@ -278,7 +278,7 @@ DefaultConfigServiceV2Stub::AsyncDeleteLink(
 
 StatusOr<google::logging::v2::ListLinksResponse>
 DefaultConfigServiceV2Stub::ListLinks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::ListLinksRequest const& request) {
   google::logging::v2::ListLinksResponse response;
   auto status = grpc_stub_->ListLinks(&context, request, &response);
@@ -289,7 +289,7 @@ DefaultConfigServiceV2Stub::ListLinks(
 }
 
 StatusOr<google::logging::v2::Link> DefaultConfigServiceV2Stub::GetLink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::GetLinkRequest const& request) {
   google::logging::v2::Link response;
   auto status = grpc_stub_->GetLink(&context, request, &response);
@@ -301,7 +301,7 @@ StatusOr<google::logging::v2::Link> DefaultConfigServiceV2Stub::GetLink(
 
 StatusOr<google::logging::v2::ListExclusionsResponse>
 DefaultConfigServiceV2Stub::ListExclusions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::ListExclusionsRequest const& request) {
   google::logging::v2::ListExclusionsResponse response;
   auto status = grpc_stub_->ListExclusions(&context, request, &response);
@@ -313,7 +313,7 @@ DefaultConfigServiceV2Stub::ListExclusions(
 
 StatusOr<google::logging::v2::LogExclusion>
 DefaultConfigServiceV2Stub::GetExclusion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::GetExclusionRequest const& request) {
   google::logging::v2::LogExclusion response;
   auto status = grpc_stub_->GetExclusion(&context, request, &response);
@@ -325,7 +325,7 @@ DefaultConfigServiceV2Stub::GetExclusion(
 
 StatusOr<google::logging::v2::LogExclusion>
 DefaultConfigServiceV2Stub::CreateExclusion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::CreateExclusionRequest const& request) {
   google::logging::v2::LogExclusion response;
   auto status = grpc_stub_->CreateExclusion(&context, request, &response);
@@ -337,7 +337,7 @@ DefaultConfigServiceV2Stub::CreateExclusion(
 
 StatusOr<google::logging::v2::LogExclusion>
 DefaultConfigServiceV2Stub::UpdateExclusion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::UpdateExclusionRequest const& request) {
   google::logging::v2::LogExclusion response;
   auto status = grpc_stub_->UpdateExclusion(&context, request, &response);
@@ -348,7 +348,7 @@ DefaultConfigServiceV2Stub::UpdateExclusion(
 }
 
 Status DefaultConfigServiceV2Stub::DeleteExclusion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::DeleteExclusionRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteExclusion(&context, request, &response);
@@ -360,7 +360,7 @@ Status DefaultConfigServiceV2Stub::DeleteExclusion(
 
 StatusOr<google::logging::v2::CmekSettings>
 DefaultConfigServiceV2Stub::GetCmekSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::GetCmekSettingsRequest const& request) {
   google::logging::v2::CmekSettings response;
   auto status = grpc_stub_->GetCmekSettings(&context, request, &response);
@@ -372,7 +372,7 @@ DefaultConfigServiceV2Stub::GetCmekSettings(
 
 StatusOr<google::logging::v2::CmekSettings>
 DefaultConfigServiceV2Stub::UpdateCmekSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::UpdateCmekSettingsRequest const& request) {
   google::logging::v2::CmekSettings response;
   auto status = grpc_stub_->UpdateCmekSettings(&context, request, &response);
@@ -383,7 +383,7 @@ DefaultConfigServiceV2Stub::UpdateCmekSettings(
 }
 
 StatusOr<google::logging::v2::Settings> DefaultConfigServiceV2Stub::GetSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::GetSettingsRequest const& request) {
   google::logging::v2::Settings response;
   auto status = grpc_stub_->GetSettings(&context, request, &response);
@@ -395,7 +395,7 @@ StatusOr<google::logging::v2::Settings> DefaultConfigServiceV2Stub::GetSettings(
 
 StatusOr<google::logging::v2::Settings>
 DefaultConfigServiceV2Stub::UpdateSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::UpdateSettingsRequest const& request) {
   google::logging::v2::Settings response;
   auto status = grpc_stub_->UpdateSettings(&context, request, &response);

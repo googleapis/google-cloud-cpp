@@ -33,7 +33,7 @@ MigrationServiceTracingStub::MigrationServiceTracingStub(
 
 StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse>
 MigrationServiceTracingStub::SearchMigratableResources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
         request) {
   auto span =
@@ -41,8 +41,9 @@ MigrationServiceTracingStub::SearchMigratableResources(
                              "SearchMigratableResources");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->SearchMigratableResources(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->SearchMigratableResources(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

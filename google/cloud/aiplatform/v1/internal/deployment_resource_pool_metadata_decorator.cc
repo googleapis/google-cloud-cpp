@@ -56,22 +56,22 @@ DeploymentResourcePoolServiceMetadata::AsyncCreateDeploymentResourcePool(
 
 StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
 DeploymentResourcePoolServiceMetadata::GetDeploymentResourcePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDeploymentResourcePool(context, request);
+  return child_->GetDeploymentResourcePool(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse>
 DeploymentResourcePoolServiceMetadata::ListDeploymentResourcePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDeploymentResourcePools(context, request);
+  return child_->ListDeploymentResourcePools(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

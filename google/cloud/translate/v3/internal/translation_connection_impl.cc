@@ -75,11 +75,11 @@ TranslationServiceConnectionImpl::TranslateText(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TranslateText(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::translation::v3::TranslateTextRequest const& request) {
-        return stub_->TranslateText(context, request);
+        return stub_->TranslateText(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
@@ -89,10 +89,12 @@ TranslationServiceConnectionImpl::DetectLanguage(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DetectLanguage(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::translation::v3::DetectLanguageRequest const&
-                 request) { return stub_->DetectLanguage(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DetectLanguage(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::translation::v3::SupportedLanguages>
@@ -103,12 +105,12 @@ TranslationServiceConnectionImpl::GetSupportedLanguages(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSupportedLanguages(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::translation::v3::GetSupportedLanguagesRequest const&
                  request) {
-        return stub_->GetSupportedLanguages(context, request);
+        return stub_->GetSupportedLanguages(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>
@@ -118,12 +120,12 @@ TranslationServiceConnectionImpl::TranslateDocument(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TranslateDocument(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::translation::v3::TranslateDocumentRequest const&
                  request) {
-        return stub_->TranslateDocument(context, request);
+        return stub_->TranslateDocument(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
@@ -250,20 +252,21 @@ TranslationServiceConnectionImpl::ListGlossaries(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::translation::v3::Glossary>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::translation::v3::ListGlossariesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::translation::v3::ListGlossariesRequest const&
                        request) {
-              return stub->ListGlossaries(context, request);
+              return stub->ListGlossaries(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::translation::v3::ListGlossariesResponse r) {
         std::vector<google::cloud::translation::v3::Glossary> result(
@@ -282,11 +285,11 @@ TranslationServiceConnectionImpl::GetGlossary(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetGlossary(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::translation::v3::GetGlossaryRequest const& request) {
-        return stub_->GetGlossary(context, request);
+        return stub_->GetGlossary(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>
@@ -336,12 +339,12 @@ TranslationServiceConnectionImpl::CreateAdaptiveMtDataset(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateAdaptiveMtDataset(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
               request) {
-        return stub_->CreateAdaptiveMtDataset(context, request);
+        return stub_->CreateAdaptiveMtDataset(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status TranslationServiceConnectionImpl::DeleteAdaptiveMtDataset(
@@ -352,12 +355,12 @@ Status TranslationServiceConnectionImpl::DeleteAdaptiveMtDataset(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteAdaptiveMtDataset(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
               request) {
-        return stub_->DeleteAdaptiveMtDataset(context, request);
+        return stub_->DeleteAdaptiveMtDataset(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
@@ -368,12 +371,12 @@ TranslationServiceConnectionImpl::GetAdaptiveMtDataset(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAdaptiveMtDataset(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
                  request) {
-        return stub_->GetAdaptiveMtDataset(context, request);
+        return stub_->GetAdaptiveMtDataset(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::translation::v3::AdaptiveMtDataset>
@@ -386,21 +389,22 @@ TranslationServiceConnectionImpl::ListAdaptiveMtDatasets(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::translation::v3::AdaptiveMtDataset>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::translation::v3::
                        ListAdaptiveMtDatasetsRequest const& request) {
-              return stub->ListAdaptiveMtDatasets(context, request);
+              return stub->ListAdaptiveMtDatasets(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::translation::v3::ListAdaptiveMtDatasetsResponse r) {
         std::vector<google::cloud::translation::v3::AdaptiveMtDataset> result(
@@ -418,12 +422,12 @@ TranslationServiceConnectionImpl::AdaptiveMtTranslate(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AdaptiveMtTranslate(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::translation::v3::AdaptiveMtTranslateRequest const&
                  request) {
-        return stub_->AdaptiveMtTranslate(context, request);
+        return stub_->AdaptiveMtTranslate(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtFile>
@@ -433,12 +437,12 @@ TranslationServiceConnectionImpl::GetAdaptiveMtFile(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAdaptiveMtFile(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::translation::v3::GetAdaptiveMtFileRequest const&
                  request) {
-        return stub_->GetAdaptiveMtFile(context, request);
+        return stub_->GetAdaptiveMtFile(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status TranslationServiceConnectionImpl::DeleteAdaptiveMtFile(
@@ -448,12 +452,12 @@ Status TranslationServiceConnectionImpl::DeleteAdaptiveMtFile(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteAdaptiveMtFile(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&
                  request) {
-        return stub_->DeleteAdaptiveMtFile(context, request);
+        return stub_->DeleteAdaptiveMtFile(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
@@ -464,12 +468,12 @@ TranslationServiceConnectionImpl::ImportAdaptiveMtFile(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ImportAdaptiveMtFile(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
                  request) {
-        return stub_->ImportAdaptiveMtFile(context, request);
+        return stub_->ImportAdaptiveMtFile(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::translation::v3::AdaptiveMtFile>
@@ -481,20 +485,21 @@ TranslationServiceConnectionImpl::ListAdaptiveMtFiles(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::translation::v3::AdaptiveMtFile>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::translation::v3::ListAdaptiveMtFilesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::translation::v3::
                        ListAdaptiveMtFilesRequest const& request) {
-              return stub->ListAdaptiveMtFiles(context, request);
+              return stub->ListAdaptiveMtFiles(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::translation::v3::ListAdaptiveMtFilesResponse r) {
         std::vector<google::cloud::translation::v3::AdaptiveMtFile> result(
@@ -515,21 +520,22 @@ TranslationServiceConnectionImpl::ListAdaptiveMtSentences(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::translation::v3::AdaptiveMtSentence>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<translate_v3::TranslationServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::translation::v3::ListAdaptiveMtSentencesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::translation::v3::
                        ListAdaptiveMtSentencesRequest const& request) {
-              return stub->ListAdaptiveMtSentences(context, request);
+              return stub->ListAdaptiveMtSentences(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::translation::v3::ListAdaptiveMtSentencesResponse r) {
         std::vector<google::cloud::translation::v3::AdaptiveMtSentence> result(

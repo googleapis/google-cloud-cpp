@@ -41,12 +41,12 @@ class VmwareEngineMetadata : public VmwareEngineStub {
 
   StatusOr<google::cloud::vmwareengine::v1::ListPrivateCloudsResponse>
   ListPrivateClouds(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::ListPrivateCloudsRequest const& request)
       override;
 
   StatusOr<google::cloud::vmwareengine::v1::PrivateCloud> GetPrivateCloud(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::GetPrivateCloudRequest const& request)
       override;
 
@@ -75,12 +75,12 @@ class VmwareEngineMetadata : public VmwareEngineStub {
           request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::ListClustersResponse> ListClusters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::ListClustersRequest const& request)
       override;
 
   StatusOr<google::cloud::vmwareengine::v1::Cluster> GetCluster(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::GetClusterRequest const& request)
       override;
 
@@ -103,29 +103,29 @@ class VmwareEngineMetadata : public VmwareEngineStub {
       override;
 
   StatusOr<google::cloud::vmwareengine::v1::ListNodesResponse> ListNodes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::ListNodesRequest const& request)
       override;
 
   StatusOr<google::cloud::vmwareengine::v1::Node> GetNode(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::GetNodeRequest const& request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::ListExternalAddressesResponse>
   ListExternalAddresses(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::ListExternalAddressesRequest const&
           request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::
                FetchNetworkPolicyExternalAddressesResponse>
   FetchNetworkPolicyExternalAddresses(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::
           FetchNetworkPolicyExternalAddressesRequest const& request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::ExternalAddress> GetExternalAddress(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::GetExternalAddressRequest const& request)
       override;
 
@@ -148,12 +148,12 @@ class VmwareEngineMetadata : public VmwareEngineStub {
           request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::ListSubnetsResponse> ListSubnets(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::ListSubnetsRequest const& request)
       override;
 
   StatusOr<google::cloud::vmwareengine::v1::Subnet> GetSubnet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::GetSubnetRequest const& request)
       override;
 
@@ -165,13 +165,13 @@ class VmwareEngineMetadata : public VmwareEngineStub {
 
   StatusOr<google::cloud::vmwareengine::v1::ListExternalAccessRulesResponse>
   ListExternalAccessRules(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::ListExternalAccessRulesRequest const&
           request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>
   GetExternalAccessRule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest const&
           request) override;
 
@@ -198,12 +198,12 @@ class VmwareEngineMetadata : public VmwareEngineStub {
 
   StatusOr<google::cloud::vmwareengine::v1::ListLoggingServersResponse>
   ListLoggingServers(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::ListLoggingServersRequest const& request)
       override;
 
   StatusOr<google::cloud::vmwareengine::v1::LoggingServer> GetLoggingServer(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::GetLoggingServerRequest const& request)
       override;
 
@@ -226,22 +226,22 @@ class VmwareEngineMetadata : public VmwareEngineStub {
           request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::ListNodeTypesResponse>
-  ListNodeTypes(grpc::ClientContext& context,
+  ListNodeTypes(grpc::ClientContext& context, Options const& options,
                 google::cloud::vmwareengine::v1::ListNodeTypesRequest const&
                     request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::NodeType> GetNodeType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::GetNodeTypeRequest const& request)
       override;
 
   StatusOr<google::cloud::vmwareengine::v1::Credentials> ShowNsxCredentials(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::ShowNsxCredentialsRequest const& request)
       override;
 
   StatusOr<google::cloud::vmwareengine::v1::Credentials> ShowVcenterCredentials(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::ShowVcenterCredentialsRequest const&
           request) override;
 
@@ -258,7 +258,7 @@ class VmwareEngineMetadata : public VmwareEngineStub {
           request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::DnsForwarding> GetDnsForwarding(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::GetDnsForwardingRequest const& request)
       override;
 
@@ -269,13 +269,13 @@ class VmwareEngineMetadata : public VmwareEngineStub {
           request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::NetworkPeering> GetNetworkPeering(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::GetNetworkPeeringRequest const& request)
       override;
 
   StatusOr<google::cloud::vmwareengine::v1::ListNetworkPeeringsResponse>
   ListNetworkPeerings(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest const&
           request) override;
 
@@ -299,7 +299,7 @@ class VmwareEngineMetadata : public VmwareEngineStub {
 
   StatusOr<google::cloud::vmwareengine::v1::ListPeeringRoutesResponse>
   ListPeeringRoutes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::ListPeeringRoutesRequest const& request)
       override;
 
@@ -311,24 +311,24 @@ class VmwareEngineMetadata : public VmwareEngineStub {
 
   StatusOr<google::cloud::vmwareengine::v1::ListHcxActivationKeysResponse>
   ListHcxActivationKeys(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::ListHcxActivationKeysRequest const&
           request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>
   GetHcxActivationKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::GetHcxActivationKeyRequest const&
           request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy> GetNetworkPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::GetNetworkPolicyRequest const& request)
       override;
 
   StatusOr<google::cloud::vmwareengine::v1::ListNetworkPoliciesResponse>
   ListNetworkPolicies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest const&
           request) override;
 
@@ -353,13 +353,13 @@ class VmwareEngineMetadata : public VmwareEngineStub {
   StatusOr<
       google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsResponse>
   ListManagementDnsZoneBindings(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::
           ListManagementDnsZoneBindingsRequest const& request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>
   GetManagementDnsZoneBinding(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::GetManagementDnsZoneBindingRequest const&
           request) override;
 
@@ -414,13 +414,13 @@ class VmwareEngineMetadata : public VmwareEngineStub {
 
   StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
   GetVmwareEngineNetwork(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::GetVmwareEngineNetworkRequest const&
           request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::ListVmwareEngineNetworksResponse>
   ListVmwareEngineNetworks(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest const&
           request) override;
 
@@ -432,13 +432,13 @@ class VmwareEngineMetadata : public VmwareEngineStub {
 
   StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
   GetPrivateConnection(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
           request) override;
 
   StatusOr<google::cloud::vmwareengine::v1::ListPrivateConnectionsResponse>
   ListPrivateConnections(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest const&
           request) override;
 
@@ -457,7 +457,7 @@ class VmwareEngineMetadata : public VmwareEngineStub {
   StatusOr<google::cloud::vmwareengine::v1::
                ListPrivateConnectionPeeringRoutesResponse>
   ListPrivateConnectionPeeringRoutes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::
           ListPrivateConnectionPeeringRoutesRequest const& request) override;
 
@@ -469,7 +469,7 @@ class VmwareEngineMetadata : public VmwareEngineStub {
 
   StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
   GetDnsBindPermission(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const&
           request) override;
 

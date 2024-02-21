@@ -33,38 +33,38 @@ TopicStatsServiceTracingStub::TopicStatsServiceTracingStub(
 
 StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
 TopicStatsServiceTracingStub::ComputeMessageStats(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.pubsublite.v1.TopicStatsService", "ComputeMessageStats");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ComputeMessageStats(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ComputeMessageStats(context, options, request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
 TopicStatsServiceTracingStub::ComputeHeadCursor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.pubsublite.v1.TopicStatsService", "ComputeHeadCursor");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ComputeHeadCursor(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ComputeHeadCursor(context, options, request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
 TopicStatsServiceTracingStub::ComputeTimeCursor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.pubsublite.v1.TopicStatsService", "ComputeTimeCursor");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ComputeTimeCursor(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ComputeTimeCursor(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

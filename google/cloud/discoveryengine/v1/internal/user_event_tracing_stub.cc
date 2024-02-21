@@ -33,18 +33,18 @@ UserEventServiceTracingStub::UserEventServiceTracingStub(
 
 StatusOr<google::cloud::discoveryengine::v1::UserEvent>
 UserEventServiceTracingStub::WriteUserEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::WriteUserEventRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.discoveryengine.v1.UserEventService", "WriteUserEvent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->WriteUserEvent(context, request));
+                           child_->WriteUserEvent(context, options, request));
 }
 
 StatusOr<google::api::HttpBody> UserEventServiceTracingStub::CollectUserEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::CollectUserEventRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -52,7 +52,7 @@ StatusOr<google::api::HttpBody> UserEventServiceTracingStub::CollectUserEvent(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CollectUserEvent(context, request));
+                           child_->CollectUserEvent(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

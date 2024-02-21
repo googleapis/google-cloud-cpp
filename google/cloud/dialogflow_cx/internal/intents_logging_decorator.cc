@@ -37,57 +37,65 @@ IntentsLogging::IntentsLogging(std::shared_ptr<IntentsStub> child,
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListIntentsResponse>
 IntentsLogging::ListIntents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListIntentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::ListIntentsRequest const&
-                 request) { return child_->ListIntents(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListIntents(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Intent> IntentsLogging::GetIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetIntentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::cx::v3::GetIntentRequest const& request) {
-        return child_->GetIntent(context, request);
+        return child_->GetIntent(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Intent>
 IntentsLogging::CreateIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateIntentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::CreateIntentRequest const&
-                 request) { return child_->CreateIntent(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->CreateIntent(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Intent>
 IntentsLogging::UpdateIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateIntentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::UpdateIntentRequest const&
-                 request) { return child_->UpdateIntent(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->UpdateIntent(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status IntentsLogging::DeleteIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::DeleteIntentRequest const&
-                 request) { return child_->DeleteIntent(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->DeleteIntent(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

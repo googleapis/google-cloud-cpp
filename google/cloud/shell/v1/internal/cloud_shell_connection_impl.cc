@@ -70,11 +70,11 @@ CloudShellServiceConnectionImpl::GetEnvironment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEnvironment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::shell::v1::GetEnvironmentRequest const& request) {
-        return stub_->GetEnvironment(context, request);
+        return stub_->GetEnvironment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>

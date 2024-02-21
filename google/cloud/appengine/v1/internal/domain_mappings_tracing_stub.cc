@@ -33,26 +33,26 @@ DomainMappingsTracingStub::DomainMappingsTracingStub(
 
 StatusOr<google::appengine::v1::ListDomainMappingsResponse>
 DomainMappingsTracingStub::ListDomainMappings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListDomainMappingsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings",
                                      "ListDomainMappings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListDomainMappings(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListDomainMappings(context, options, request));
 }
 
 StatusOr<google::appengine::v1::DomainMapping>
 DomainMappingsTracingStub::GetDomainMapping(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetDomainMappingRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.appengine.v1.DomainMappings",
                                      "GetDomainMapping");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetDomainMapping(context, request));
+                           child_->GetDomainMapping(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -37,35 +37,41 @@ ResourceSettingsServiceLogging::ResourceSettingsServiceLogging(
 
 StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
 ResourceSettingsServiceLogging::ListSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcesettings::v1::ListSettingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::resourcesettings::v1::ListSettingsRequest const&
-                 request) { return child_->ListSettings(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListSettings(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceLogging::GetSetting(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcesettings::v1::GetSettingRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::resourcesettings::v1::GetSettingRequest const&
-                 request) { return child_->GetSetting(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetSetting(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceLogging::UpdateSetting(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::resourcesettings::v1::UpdateSettingRequest const&
-                 request) { return child_->UpdateSetting(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->UpdateSetting(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

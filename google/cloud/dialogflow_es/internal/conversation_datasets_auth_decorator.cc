@@ -53,22 +53,22 @@ ConversationDatasetsAuth::AsyncCreateConversationDataset(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
 ConversationDatasetsAuth::GetConversationDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetConversationDataset(context, request);
+  return child_->GetConversationDataset(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationDatasetsResponse>
 ConversationDatasetsAuth::ListConversationDatasets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListConversationDatasetsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListConversationDatasets(context, request);
+  return child_->ListConversationDatasets(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

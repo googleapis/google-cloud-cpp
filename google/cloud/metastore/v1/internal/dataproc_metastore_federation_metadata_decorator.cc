@@ -44,20 +44,20 @@ DataprocMetastoreFederationMetadata::DataprocMetastoreFederationMetadata(
 
 StatusOr<google::cloud::metastore::v1::ListFederationsResponse>
 DataprocMetastoreFederationMetadata::ListFederations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::ListFederationsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListFederations(context, request);
+  return child_->ListFederations(context, options, request);
 }
 
 StatusOr<google::cloud::metastore::v1::Federation>
 DataprocMetastoreFederationMetadata::GetFederation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::GetFederationRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetFederation(context, request);
+  return child_->GetFederation(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -37,27 +37,27 @@ NotebookServiceLogging::NotebookServiceLogging(
 
 StatusOr<google::cloud::notebooks::v1::ListInstancesResponse>
 NotebookServiceLogging::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::ListInstancesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::notebooks::v1::ListInstancesRequest const& request) {
-        return child_->ListInstances(context, request);
+        return child_->ListInstances(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::notebooks::v1::Instance>
 NotebookServiceLogging::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::GetInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::notebooks::v1::GetInstanceRequest const& request) {
-        return child_->GetInstance(context, request);
+        return child_->GetInstance(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -183,16 +183,16 @@ NotebookServiceLogging::AsyncSetInstanceLabels(
 
 StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
 NotebookServiceLogging::UpdateInstanceMetadataItems(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::notebooks::v1::
                  UpdateInstanceMetadataItemsRequest const& request) {
-        return child_->UpdateInstanceMetadataItems(context, request);
+        return child_->UpdateInstanceMetadataItems(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -278,28 +278,28 @@ NotebookServiceLogging::AsyncReportInstanceInfo(
 
 StatusOr<google::cloud::notebooks::v1::IsInstanceUpgradeableResponse>
 NotebookServiceLogging::IsInstanceUpgradeable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::IsInstanceUpgradeableRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::notebooks::v1::IsInstanceUpgradeableRequest const&
                  request) {
-        return child_->IsInstanceUpgradeable(context, request);
+        return child_->IsInstanceUpgradeable(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::notebooks::v1::GetInstanceHealthResponse>
 NotebookServiceLogging::GetInstanceHealth(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::GetInstanceHealthRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::notebooks::v1::GetInstanceHealthRequest const&
                  request) {
-        return child_->GetInstanceHealth(context, request);
+        return child_->GetInstanceHealth(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -372,28 +372,28 @@ NotebookServiceLogging::AsyncUpgradeInstanceInternal(
 
 StatusOr<google::cloud::notebooks::v1::ListEnvironmentsResponse>
 NotebookServiceLogging::ListEnvironments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::ListEnvironmentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::notebooks::v1::ListEnvironmentsRequest const&
                  request) {
-        return child_->ListEnvironments(context, request);
+        return child_->ListEnvironments(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::notebooks::v1::Environment>
 NotebookServiceLogging::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::GetEnvironmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::notebooks::v1::GetEnvironmentRequest const& request) {
-        return child_->GetEnvironment(context, request);
+        return child_->GetEnvironment(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -432,27 +432,27 @@ NotebookServiceLogging::AsyncDeleteEnvironment(
 
 StatusOr<google::cloud::notebooks::v1::ListSchedulesResponse>
 NotebookServiceLogging::ListSchedules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::ListSchedulesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::notebooks::v1::ListSchedulesRequest const& request) {
-        return child_->ListSchedules(context, request);
+        return child_->ListSchedules(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::notebooks::v1::Schedule>
 NotebookServiceLogging::GetSchedule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::GetScheduleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::notebooks::v1::GetScheduleRequest const& request) {
-        return child_->GetSchedule(context, request);
+        return child_->GetSchedule(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -505,27 +505,27 @@ NotebookServiceLogging::AsyncTriggerSchedule(
 
 StatusOr<google::cloud::notebooks::v1::ListExecutionsResponse>
 NotebookServiceLogging::ListExecutions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::ListExecutionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::notebooks::v1::ListExecutionsRequest const& request) {
-        return child_->ListExecutions(context, request);
+        return child_->ListExecutions(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::notebooks::v1::Execution>
 NotebookServiceLogging::GetExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::GetExecutionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::notebooks::v1::GetExecutionRequest const& request) {
-        return child_->GetExecution(context, request);
+        return child_->GetExecution(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

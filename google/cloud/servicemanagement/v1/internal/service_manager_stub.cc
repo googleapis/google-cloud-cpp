@@ -33,7 +33,7 @@ ServiceManagerStub::~ServiceManagerStub() = default;
 
 StatusOr<google::api::servicemanagement::v1::ListServicesResponse>
 DefaultServiceManagerStub::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicemanagement::v1::ListServicesRequest const& request) {
   google::api::servicemanagement::v1::ListServicesResponse response;
   auto status = grpc_stub_->ListServices(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultServiceManagerStub::ListServices(
 
 StatusOr<google::api::servicemanagement::v1::ManagedService>
 DefaultServiceManagerStub::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicemanagement::v1::GetServiceRequest const& request) {
   google::api::servicemanagement::v1::ManagedService response;
   auto status = grpc_stub_->GetService(&context, request, &response);
@@ -111,7 +111,7 @@ DefaultServiceManagerStub::AsyncUndeleteService(
 
 StatusOr<google::api::servicemanagement::v1::ListServiceConfigsResponse>
 DefaultServiceManagerStub::ListServiceConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicemanagement::v1::ListServiceConfigsRequest const&
         request) {
   google::api::servicemanagement::v1::ListServiceConfigsResponse response;
@@ -123,7 +123,7 @@ DefaultServiceManagerStub::ListServiceConfigs(
 }
 
 StatusOr<google::api::Service> DefaultServiceManagerStub::GetServiceConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicemanagement::v1::GetServiceConfigRequest const&
         request) {
   google::api::Service response;
@@ -135,7 +135,7 @@ StatusOr<google::api::Service> DefaultServiceManagerStub::GetServiceConfig(
 }
 
 StatusOr<google::api::Service> DefaultServiceManagerStub::CreateServiceConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicemanagement::v1::CreateServiceConfigRequest const&
         request) {
   google::api::Service response;
@@ -168,7 +168,7 @@ DefaultServiceManagerStub::AsyncSubmitConfigSource(
 
 StatusOr<google::api::servicemanagement::v1::ListServiceRolloutsResponse>
 DefaultServiceManagerStub::ListServiceRollouts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicemanagement::v1::ListServiceRolloutsRequest const&
         request) {
   google::api::servicemanagement::v1::ListServiceRolloutsResponse response;
@@ -181,7 +181,7 @@ DefaultServiceManagerStub::ListServiceRollouts(
 
 StatusOr<google::api::servicemanagement::v1::Rollout>
 DefaultServiceManagerStub::GetServiceRollout(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicemanagement::v1::GetServiceRolloutRequest const&
         request) {
   google::api::servicemanagement::v1::Rollout response;
@@ -214,7 +214,7 @@ DefaultServiceManagerStub::AsyncCreateServiceRollout(
 
 StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>
 DefaultServiceManagerStub::GenerateConfigReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicemanagement::v1::GenerateConfigReportRequest const&
         request) {
   google::api::servicemanagement::v1::GenerateConfigReportResponse response;

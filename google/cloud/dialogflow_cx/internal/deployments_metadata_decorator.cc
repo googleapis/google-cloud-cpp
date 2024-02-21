@@ -44,20 +44,20 @@ DeploymentsMetadata::DeploymentsMetadata(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListDeploymentsResponse>
 DeploymentsMetadata::ListDeployments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListDeploymentsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDeployments(context, request);
+  return child_->ListDeployments(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Deployment>
 DeploymentsMetadata::GetDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDeployment(context, request);
+  return child_->GetDeployment(context, options, request);
 }
 
 void DeploymentsMetadata::SetMetadata(grpc::ClientContext& context,

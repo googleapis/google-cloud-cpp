@@ -44,51 +44,51 @@ AutoscalingPolicyServiceMetadata::AutoscalingPolicyServiceMetadata(
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceMetadata::CreateAutoscalingPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateAutoscalingPolicy(context, request);
+  return child_->CreateAutoscalingPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceMetadata::UpdateAutoscalingPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("policy.name=",
                            internal::UrlEncode(request.policy().name())));
-  return child_->UpdateAutoscalingPolicy(context, request);
+  return child_->UpdateAutoscalingPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceMetadata::GetAutoscalingPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAutoscalingPolicy(context, request);
+  return child_->GetAutoscalingPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse>
 AutoscalingPolicyServiceMetadata::ListAutoscalingPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListAutoscalingPolicies(context, request);
+  return child_->ListAutoscalingPolicies(context, options, request);
 }
 
 Status AutoscalingPolicyServiceMetadata::DeleteAutoscalingPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteAutoscalingPolicy(context, request);
+  return child_->DeleteAutoscalingPolicy(context, options, request);
 }
 
 void AutoscalingPolicyServiceMetadata::SetMetadata(

@@ -44,76 +44,76 @@ DocumentServiceMetadata::DocumentServiceMetadata(
 
 StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>
 DocumentServiceMetadata::CreateDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateDocument(context, request);
+  return child_->CreateDocument(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::Document>
 DocumentServiceMetadata::GetDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::GetDocumentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDocument(context, request);
+  return child_->GetDocument(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>
 DocumentServiceMetadata::UpdateDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->UpdateDocument(context, request);
+  return child_->UpdateDocument(context, options, request);
 }
 
 Status DocumentServiceMetadata::DeleteDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteDocument(context, request);
+  return child_->DeleteDocument(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SearchDocumentsResponse>
 DocumentServiceMetadata::SearchDocuments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::SearchDocumentsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->SearchDocuments(context, request);
+  return child_->SearchDocuments(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::Document>
 DocumentServiceMetadata::LockDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::LockDocumentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->LockDocument(context, request);
+  return child_->LockDocument(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse>
 DocumentServiceMetadata::FetchAcl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::FetchAclRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->FetchAcl(context, request);
+  return child_->FetchAcl(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse>
 DocumentServiceMetadata::SetAcl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::SetAclRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->SetAcl(context, request);
+  return child_->SetAcl(context, options, request);
 }
 
 void DocumentServiceMetadata::SetMetadata(grpc::ClientContext& context,

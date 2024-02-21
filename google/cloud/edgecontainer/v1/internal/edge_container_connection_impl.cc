@@ -76,20 +76,21 @@ EdgeContainerConnectionImpl::ListClusters(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::edgecontainer::v1::Cluster>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<edgecontainer_v1::EdgeContainerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::edgecontainer::v1::ListClustersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::edgecontainer::v1::ListClustersRequest const&
                        request) {
-              return stub->ListClusters(context, request);
+              return stub->ListClusters(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::edgecontainer::v1::ListClustersResponse r) {
         std::vector<google::cloud::edgecontainer::v1::Cluster> result(
@@ -108,11 +109,11 @@ EdgeContainerConnectionImpl::GetCluster(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCluster(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::edgecontainer::v1::GetClusterRequest const& request) {
-        return stub_->GetCluster(context, request);
+        return stub_->GetCluster(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
@@ -237,12 +238,12 @@ EdgeContainerConnectionImpl::GenerateAccessToken(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateAccessToken(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
                  request) {
-        return stub_->GenerateAccessToken(context, request);
+        return stub_->GenerateAccessToken(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::edgecontainer::v1::NodePool>
@@ -254,20 +255,21 @@ EdgeContainerConnectionImpl::ListNodePools(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::edgecontainer::v1::NodePool>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<edgecontainer_v1::EdgeContainerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::edgecontainer::v1::ListNodePoolsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::edgecontainer::v1::ListNodePoolsRequest const&
                        request) {
-              return stub->ListNodePools(context, request);
+              return stub->ListNodePools(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::edgecontainer::v1::ListNodePoolsResponse r) {
         std::vector<google::cloud::edgecontainer::v1::NodePool> result(
@@ -286,11 +288,11 @@ EdgeContainerConnectionImpl::GetNodePool(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNodePool(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::edgecontainer::v1::GetNodePoolRequest const& request) {
-        return stub_->GetNodePool(context, request);
+        return stub_->GetNodePool(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
@@ -416,20 +418,21 @@ EdgeContainerConnectionImpl::ListMachines(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::edgecontainer::v1::Machine>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<edgecontainer_v1::EdgeContainerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::edgecontainer::v1::ListMachinesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::edgecontainer::v1::ListMachinesRequest const&
                        request) {
-              return stub->ListMachines(context, request);
+              return stub->ListMachines(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::edgecontainer::v1::ListMachinesResponse r) {
         std::vector<google::cloud::edgecontainer::v1::Machine> result(
@@ -448,11 +451,11 @@ EdgeContainerConnectionImpl::GetMachine(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetMachine(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::edgecontainer::v1::GetMachineRequest const& request) {
-        return stub_->GetMachine(context, request);
+        return stub_->GetMachine(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::edgecontainer::v1::VpnConnection>
@@ -464,21 +467,22 @@ EdgeContainerConnectionImpl::ListVpnConnections(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::edgecontainer::v1::VpnConnection>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<edgecontainer_v1::EdgeContainerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::edgecontainer::v1::ListVpnConnectionsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::edgecontainer::v1::
                        ListVpnConnectionsRequest const& request) {
-              return stub->ListVpnConnections(context, request);
+              return stub->ListVpnConnections(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::edgecontainer::v1::ListVpnConnectionsResponse r) {
         std::vector<google::cloud::edgecontainer::v1::VpnConnection> result(
@@ -496,10 +500,12 @@ EdgeContainerConnectionImpl::GetVpnConnection(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetVpnConnection(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgecontainer::v1::GetVpnConnectionRequest const&
-                 request) { return stub_->GetVpnConnection(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetVpnConnection(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>

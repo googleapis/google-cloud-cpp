@@ -33,19 +33,19 @@ ConfigServiceV2Auth::ConfigServiceV2Auth(
 
 StatusOr<google::logging::v2::ListBucketsResponse>
 ConfigServiceV2Auth::ListBuckets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListBucketsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBuckets(context, request);
+  return child_->ListBuckets(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogBucket> ConfigServiceV2Auth::GetBucket(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::GetBucketRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetBucket(context, request);
+  return child_->GetBucket(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -87,115 +87,115 @@ ConfigServiceV2Auth::AsyncUpdateBucketAsync(
 }
 
 StatusOr<google::logging::v2::LogBucket> ConfigServiceV2Auth::CreateBucket(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::CreateBucketRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateBucket(context, request);
+  return child_->CreateBucket(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogBucket> ConfigServiceV2Auth::UpdateBucket(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::UpdateBucketRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateBucket(context, request);
+  return child_->UpdateBucket(context, options, request);
 }
 
 Status ConfigServiceV2Auth::DeleteBucket(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::DeleteBucketRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteBucket(context, request);
+  return child_->DeleteBucket(context, options, request);
 }
 
 Status ConfigServiceV2Auth::UndeleteBucket(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::UndeleteBucketRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UndeleteBucket(context, request);
+  return child_->UndeleteBucket(context, options, request);
 }
 
 StatusOr<google::logging::v2::ListViewsResponse> ConfigServiceV2Auth::ListViews(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListViewsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListViews(context, request);
+  return child_->ListViews(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogView> ConfigServiceV2Auth::GetView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::GetViewRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetView(context, request);
+  return child_->GetView(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogView> ConfigServiceV2Auth::CreateView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::CreateViewRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateView(context, request);
+  return child_->CreateView(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogView> ConfigServiceV2Auth::UpdateView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::UpdateViewRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateView(context, request);
+  return child_->UpdateView(context, options, request);
 }
 
 Status ConfigServiceV2Auth::DeleteView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::DeleteViewRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteView(context, request);
+  return child_->DeleteView(context, options, request);
 }
 
 StatusOr<google::logging::v2::ListSinksResponse> ConfigServiceV2Auth::ListSinks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListSinksRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSinks(context, request);
+  return child_->ListSinks(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogSink> ConfigServiceV2Auth::GetSink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::GetSinkRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetSink(context, request);
+  return child_->GetSink(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogSink> ConfigServiceV2Auth::CreateSink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::CreateSinkRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateSink(context, request);
+  return child_->CreateSink(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogSink> ConfigServiceV2Auth::UpdateSink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::UpdateSinkRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateSink(context, request);
+  return child_->UpdateSink(context, options, request);
 }
 
 Status ConfigServiceV2Auth::DeleteSink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::DeleteSinkRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteSink(context, request);
+  return child_->DeleteSink(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -237,96 +237,96 @@ ConfigServiceV2Auth::AsyncDeleteLink(
 }
 
 StatusOr<google::logging::v2::ListLinksResponse> ConfigServiceV2Auth::ListLinks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListLinksRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListLinks(context, request);
+  return child_->ListLinks(context, options, request);
 }
 
 StatusOr<google::logging::v2::Link> ConfigServiceV2Auth::GetLink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::GetLinkRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetLink(context, request);
+  return child_->GetLink(context, options, request);
 }
 
 StatusOr<google::logging::v2::ListExclusionsResponse>
 ConfigServiceV2Auth::ListExclusions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListExclusionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListExclusions(context, request);
+  return child_->ListExclusions(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogExclusion> ConfigServiceV2Auth::GetExclusion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::GetExclusionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetExclusion(context, request);
+  return child_->GetExclusion(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogExclusion>
 ConfigServiceV2Auth::CreateExclusion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::CreateExclusionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateExclusion(context, request);
+  return child_->CreateExclusion(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogExclusion>
 ConfigServiceV2Auth::UpdateExclusion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::UpdateExclusionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateExclusion(context, request);
+  return child_->UpdateExclusion(context, options, request);
 }
 
 Status ConfigServiceV2Auth::DeleteExclusion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::DeleteExclusionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteExclusion(context, request);
+  return child_->DeleteExclusion(context, options, request);
 }
 
 StatusOr<google::logging::v2::CmekSettings>
 ConfigServiceV2Auth::GetCmekSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::GetCmekSettingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCmekSettings(context, request);
+  return child_->GetCmekSettings(context, options, request);
 }
 
 StatusOr<google::logging::v2::CmekSettings>
 ConfigServiceV2Auth::UpdateCmekSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::UpdateCmekSettingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateCmekSettings(context, request);
+  return child_->UpdateCmekSettings(context, options, request);
 }
 
 StatusOr<google::logging::v2::Settings> ConfigServiceV2Auth::GetSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::GetSettingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetSettings(context, request);
+  return child_->GetSettings(context, options, request);
 }
 
 StatusOr<google::logging::v2::Settings> ConfigServiceV2Auth::UpdateSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::UpdateSettingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateSettings(context, request);
+  return child_->UpdateSettings(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

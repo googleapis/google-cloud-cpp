@@ -44,342 +44,342 @@ DlpServiceMetadata::DlpServiceMetadata(
 
 StatusOr<google::privacy::dlp::v2::InspectContentResponse>
 DlpServiceMetadata::InspectContent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::InspectContentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->InspectContent(context, request);
+  return child_->InspectContent(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::RedactImageResponse>
 DlpServiceMetadata::RedactImage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::RedactImageRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->RedactImage(context, request);
+  return child_->RedactImage(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::DeidentifyContentResponse>
 DlpServiceMetadata::DeidentifyContent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::DeidentifyContentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->DeidentifyContent(context, request);
+  return child_->DeidentifyContent(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::ReidentifyContentResponse>
 DlpServiceMetadata::ReidentifyContent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ReidentifyContentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ReidentifyContent(context, request);
+  return child_->ReidentifyContent(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::ListInfoTypesResponse>
 DlpServiceMetadata::ListInfoTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ListInfoTypesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->ListInfoTypes(context, request);
+  SetMetadata(context, options);
+  return child_->ListInfoTypes(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceMetadata::CreateInspectTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::CreateInspectTemplateRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateInspectTemplate(context, request);
+  return child_->CreateInspectTemplate(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceMetadata::UpdateInspectTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::UpdateInspectTemplateRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->UpdateInspectTemplate(context, request);
+  return child_->UpdateInspectTemplate(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::InspectTemplate>
 DlpServiceMetadata::GetInspectTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::GetInspectTemplateRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetInspectTemplate(context, request);
+  return child_->GetInspectTemplate(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::ListInspectTemplatesResponse>
 DlpServiceMetadata::ListInspectTemplates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ListInspectTemplatesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListInspectTemplates(context, request);
+  return child_->ListInspectTemplates(context, options, request);
 }
 
 Status DlpServiceMetadata::DeleteInspectTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::DeleteInspectTemplateRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteInspectTemplate(context, request);
+  return child_->DeleteInspectTemplate(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceMetadata::CreateDeidentifyTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::CreateDeidentifyTemplateRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateDeidentifyTemplate(context, request);
+  return child_->CreateDeidentifyTemplate(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceMetadata::UpdateDeidentifyTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::UpdateDeidentifyTemplateRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->UpdateDeidentifyTemplate(context, request);
+  return child_->UpdateDeidentifyTemplate(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::DeidentifyTemplate>
 DlpServiceMetadata::GetDeidentifyTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::GetDeidentifyTemplateRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDeidentifyTemplate(context, request);
+  return child_->GetDeidentifyTemplate(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::ListDeidentifyTemplatesResponse>
 DlpServiceMetadata::ListDeidentifyTemplates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ListDeidentifyTemplatesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDeidentifyTemplates(context, request);
+  return child_->ListDeidentifyTemplates(context, options, request);
 }
 
 Status DlpServiceMetadata::DeleteDeidentifyTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::DeleteDeidentifyTemplateRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteDeidentifyTemplate(context, request);
+  return child_->DeleteDeidentifyTemplate(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::JobTrigger>
 DlpServiceMetadata::CreateJobTrigger(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::CreateJobTriggerRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateJobTrigger(context, request);
+  return child_->CreateJobTrigger(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::JobTrigger>
 DlpServiceMetadata::UpdateJobTrigger(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::UpdateJobTriggerRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->UpdateJobTrigger(context, request);
+  return child_->UpdateJobTrigger(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DlpServiceMetadata::HybridInspectJobTrigger(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::HybridInspectJobTriggerRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->HybridInspectJobTrigger(context, request);
+  return child_->HybridInspectJobTrigger(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::JobTrigger>
 DlpServiceMetadata::GetJobTrigger(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::GetJobTriggerRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetJobTrigger(context, request);
+  return child_->GetJobTrigger(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::ListJobTriggersResponse>
 DlpServiceMetadata::ListJobTriggers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ListJobTriggersRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListJobTriggers(context, request);
+  return child_->ListJobTriggers(context, options, request);
 }
 
 Status DlpServiceMetadata::DeleteJobTrigger(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::DeleteJobTriggerRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteJobTrigger(context, request);
+  return child_->DeleteJobTrigger(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::DlpJob>
 DlpServiceMetadata::ActivateJobTrigger(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ActivateJobTriggerRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->ActivateJobTrigger(context, request);
+  return child_->ActivateJobTrigger(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
 DlpServiceMetadata::CreateDiscoveryConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::CreateDiscoveryConfigRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateDiscoveryConfig(context, request);
+  return child_->CreateDiscoveryConfig(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
 DlpServiceMetadata::UpdateDiscoveryConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::UpdateDiscoveryConfigRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->UpdateDiscoveryConfig(context, request);
+  return child_->UpdateDiscoveryConfig(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::DiscoveryConfig>
 DlpServiceMetadata::GetDiscoveryConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::GetDiscoveryConfigRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDiscoveryConfig(context, request);
+  return child_->GetDiscoveryConfig(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::ListDiscoveryConfigsResponse>
 DlpServiceMetadata::ListDiscoveryConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ListDiscoveryConfigsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDiscoveryConfigs(context, request);
+  return child_->ListDiscoveryConfigs(context, options, request);
 }
 
 Status DlpServiceMetadata::DeleteDiscoveryConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::DeleteDiscoveryConfigRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteDiscoveryConfig(context, request);
+  return child_->DeleteDiscoveryConfig(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceMetadata::CreateDlpJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::CreateDlpJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateDlpJob(context, request);
+  return child_->CreateDlpJob(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::ListDlpJobsResponse>
 DlpServiceMetadata::ListDlpJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ListDlpJobsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDlpJobs(context, request);
+  return child_->ListDlpJobs(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::DlpJob> DlpServiceMetadata::GetDlpJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::GetDlpJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDlpJob(context, request);
+  return child_->GetDlpJob(context, options, request);
 }
 
 Status DlpServiceMetadata::DeleteDlpJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::DeleteDlpJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteDlpJob(context, request);
+  return child_->DeleteDlpJob(context, options, request);
 }
 
 Status DlpServiceMetadata::CancelDlpJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::CancelDlpJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->CancelDlpJob(context, request);
+  return child_->CancelDlpJob(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
 DlpServiceMetadata::CreateStoredInfoType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::CreateStoredInfoTypeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateStoredInfoType(context, request);
+  return child_->CreateStoredInfoType(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
 DlpServiceMetadata::UpdateStoredInfoType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::UpdateStoredInfoTypeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->UpdateStoredInfoType(context, request);
+  return child_->UpdateStoredInfoType(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::StoredInfoType>
 DlpServiceMetadata::GetStoredInfoType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::GetStoredInfoTypeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetStoredInfoType(context, request);
+  return child_->GetStoredInfoType(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::ListStoredInfoTypesResponse>
 DlpServiceMetadata::ListStoredInfoTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::ListStoredInfoTypesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListStoredInfoTypes(context, request);
+  return child_->ListStoredInfoTypes(context, options, request);
 }
 
 Status DlpServiceMetadata::DeleteStoredInfoType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteStoredInfoType(context, request);
+  return child_->DeleteStoredInfoType(context, options, request);
 }
 
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DlpServiceMetadata::HybridInspectDlpJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->HybridInspectDlpJob(context, request);
+  return child_->HybridInspectDlpJob(context, options, request);
 }
 
 Status DlpServiceMetadata::FinishDlpJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::privacy::dlp::v2::FinishDlpJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->FinishDlpJob(context, request);
+  return child_->FinishDlpJob(context, options, request);
 }
 
 void DlpServiceMetadata::SetMetadata(grpc::ClientContext& context,

@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_QUERY_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_QUERY_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/monitoring/v3/query_service.grpc.pb.h>
@@ -36,7 +37,7 @@ class QueryServiceStub {
 
   virtual StatusOr<google::monitoring::v3::QueryTimeSeriesResponse>
   QueryTimeSeries(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::QueryTimeSeriesRequest const& request) = 0;
 };
 
@@ -48,7 +49,7 @@ class DefaultQueryServiceStub : public QueryServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::monitoring::v3::QueryTimeSeriesResponse> QueryTimeSeries(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::QueryTimeSeriesRequest const& request) override;
 
  private:

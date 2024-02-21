@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V2_INTERNAL_LANGUAGE_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LANGUAGE_V2_INTERNAL_LANGUAGE_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/language/v2/language_service.grpc.pb.h>
@@ -36,27 +37,27 @@ class LanguageServiceStub {
 
   virtual StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
   AnalyzeSentiment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::language::v2::AnalyzeSentimentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
   AnalyzeEntities(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::language::v2::AnalyzeEntitiesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::language::v2::ClassifyTextResponse>
   ClassifyText(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::language::v2::ClassifyTextRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::language::v2::ModerateTextResponse>
   ModerateText(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::language::v2::ModerateTextRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::language::v2::AnnotateTextResponse>
   AnnotateText(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::language::v2::AnnotateTextRequest const& request) = 0;
 };
 
@@ -69,25 +70,25 @@ class DefaultLanguageServiceStub : public LanguageServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
-  AnalyzeSentiment(grpc::ClientContext& context,
+  AnalyzeSentiment(grpc::ClientContext& context, Options const& options,
                    google::cloud::language::v2::AnalyzeSentimentRequest const&
                        request) override;
 
   StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
-  AnalyzeEntities(grpc::ClientContext& context,
+  AnalyzeEntities(grpc::ClientContext& context, Options const& options,
                   google::cloud::language::v2::AnalyzeEntitiesRequest const&
                       request) override;
 
   StatusOr<google::cloud::language::v2::ClassifyTextResponse> ClassifyText(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::language::v2::ClassifyTextRequest const& request) override;
 
   StatusOr<google::cloud::language::v2::ModerateTextResponse> ModerateText(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::language::v2::ModerateTextRequest const& request) override;
 
   StatusOr<google::cloud::language::v2::AnnotateTextResponse> AnnotateText(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::language::v2::AnnotateTextRequest const& request) override;
 
  private:

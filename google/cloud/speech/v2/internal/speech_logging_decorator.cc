@@ -54,25 +54,25 @@ SpeechLogging::AsyncCreateRecognizer(
 
 StatusOr<google::cloud::speech::v2::ListRecognizersResponse>
 SpeechLogging::ListRecognizers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::ListRecognizersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v2::ListRecognizersRequest const& request) {
-        return child_->ListRecognizers(context, request);
+        return child_->ListRecognizers(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::speech::v2::Recognizer> SpeechLogging::GetRecognizer(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::GetRecognizerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v2::GetRecognizerRequest const& request) {
-        return child_->GetRecognizer(context, request);
+        return child_->GetRecognizer(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -124,14 +124,14 @@ SpeechLogging::AsyncUndeleteRecognizer(
 }
 
 StatusOr<google::cloud::speech::v2::RecognizeResponse> SpeechLogging::Recognize(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::RecognizeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v2::RecognizeRequest const& request) {
-        return child_->Recognize(context, request);
+        return child_->Recognize(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -172,25 +172,25 @@ SpeechLogging::AsyncBatchRecognize(
 }
 
 StatusOr<google::cloud::speech::v2::Config> SpeechLogging::GetConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::GetConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v2::GetConfigRequest const& request) {
-        return child_->GetConfig(context, request);
+        return child_->GetConfig(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::speech::v2::Config> SpeechLogging::UpdateConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::UpdateConfigRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v2::UpdateConfigRequest const& request) {
-        return child_->UpdateConfig(context, request);
+        return child_->UpdateConfig(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -211,26 +211,26 @@ SpeechLogging::AsyncCreateCustomClass(
 
 StatusOr<google::cloud::speech::v2::ListCustomClassesResponse>
 SpeechLogging::ListCustomClasses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::ListCustomClassesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::speech::v2::ListCustomClassesRequest const& request) {
-        return child_->ListCustomClasses(context, request);
+        return child_->ListCustomClasses(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::speech::v2::CustomClass> SpeechLogging::GetCustomClass(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::GetCustomClassRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v2::GetCustomClassRequest const& request) {
-        return child_->GetCustomClass(context, request);
+        return child_->GetCustomClass(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -300,25 +300,25 @@ SpeechLogging::AsyncCreatePhraseSet(
 
 StatusOr<google::cloud::speech::v2::ListPhraseSetsResponse>
 SpeechLogging::ListPhraseSets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::ListPhraseSetsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v2::ListPhraseSetsRequest const& request) {
-        return child_->ListPhraseSets(context, request);
+        return child_->ListPhraseSets(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::speech::v2::PhraseSet> SpeechLogging::GetPhraseSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::GetPhraseSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v2::GetPhraseSetRequest const& request) {
-        return child_->GetPhraseSet(context, request);
+        return child_->GetPhraseSet(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

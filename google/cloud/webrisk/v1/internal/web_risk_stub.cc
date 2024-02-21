@@ -33,7 +33,7 @@ WebRiskServiceStub::~WebRiskServiceStub() = default;
 
 StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
 DefaultWebRiskServiceStub::ComputeThreatListDiff(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request) {
   google::cloud::webrisk::v1::ComputeThreatListDiffResponse response;
   auto status = grpc_stub_->ComputeThreatListDiff(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultWebRiskServiceStub::ComputeThreatListDiff(
 
 StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
 DefaultWebRiskServiceStub::SearchUris(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::webrisk::v1::SearchUrisRequest const& request) {
   google::cloud::webrisk::v1::SearchUrisResponse response;
   auto status = grpc_stub_->SearchUris(&context, request, &response);
@@ -57,7 +57,7 @@ DefaultWebRiskServiceStub::SearchUris(
 
 StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
 DefaultWebRiskServiceStub::SearchHashes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::webrisk::v1::SearchHashesRequest const& request) {
   google::cloud::webrisk::v1::SearchHashesResponse response;
   auto status = grpc_stub_->SearchHashes(&context, request, &response);
@@ -69,7 +69,7 @@ DefaultWebRiskServiceStub::SearchHashes(
 
 StatusOr<google::cloud::webrisk::v1::Submission>
 DefaultWebRiskServiceStub::CreateSubmission(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::webrisk::v1::CreateSubmissionRequest const& request) {
   google::cloud::webrisk::v1::Submission response;
   auto status = grpc_stub_->CreateSubmission(&context, request, &response);

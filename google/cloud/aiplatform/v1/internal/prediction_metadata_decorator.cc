@@ -44,21 +44,21 @@ PredictionServiceMetadata::PredictionServiceMetadata(
 
 StatusOr<google::cloud::aiplatform::v1::PredictResponse>
 PredictionServiceMetadata::Predict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::PredictRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("endpoint=", internal::UrlEncode(request.endpoint())));
-  return child_->Predict(context, request);
+  return child_->Predict(context, options, request);
 }
 
 StatusOr<google::api::HttpBody> PredictionServiceMetadata::RawPredict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::RawPredictRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("endpoint=", internal::UrlEncode(request.endpoint())));
-  return child_->RawPredict(context, request);
+  return child_->RawPredict(context, options, request);
 }
 
 std::unique_ptr<
@@ -74,22 +74,22 @@ PredictionServiceMetadata::StreamRawPredict(
 
 StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
 PredictionServiceMetadata::DirectPredict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::DirectPredictRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("endpoint=", internal::UrlEncode(request.endpoint())));
-  return child_->DirectPredict(context, request);
+  return child_->DirectPredict(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
 PredictionServiceMetadata::DirectRawPredict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::DirectRawPredictRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("endpoint=", internal::UrlEncode(request.endpoint())));
-  return child_->DirectRawPredict(context, request);
+  return child_->DirectRawPredict(context, options, request);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -145,21 +145,21 @@ PredictionServiceMetadata::AsyncStreamingRawPredict(
 
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
 PredictionServiceMetadata::Explain(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ExplainRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("endpoint=", internal::UrlEncode(request.endpoint())));
-  return child_->Explain(context, request);
+  return child_->Explain(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
 PredictionServiceMetadata::GenerateContent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GenerateContentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("model=", internal::UrlEncode(request.model())));
-  return child_->GenerateContent(context, request);
+  return child_->GenerateContent(context, options, request);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<

@@ -55,7 +55,7 @@ DefaultBigtableStub::SampleRowKeys(
 
 StatusOr<google::bigtable::v2::MutateRowResponse>
 DefaultBigtableStub::MutateRow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::v2::MutateRowRequest const& request) {
   google::bigtable::v2::MutateRowResponse response;
   auto status = grpc_stub_->MutateRow(&context, request, &response);
@@ -78,7 +78,7 @@ DefaultBigtableStub::MutateRows(
 
 StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
 DefaultBigtableStub::CheckAndMutateRow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::v2::CheckAndMutateRowRequest const& request) {
   google::bigtable::v2::CheckAndMutateRowResponse response;
   auto status = grpc_stub_->CheckAndMutateRow(&context, request, &response);
@@ -90,7 +90,7 @@ DefaultBigtableStub::CheckAndMutateRow(
 
 StatusOr<google::bigtable::v2::PingAndWarmResponse>
 DefaultBigtableStub::PingAndWarm(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::v2::PingAndWarmRequest const& request) {
   google::bigtable::v2::PingAndWarmResponse response;
   auto status = grpc_stub_->PingAndWarm(&context, request, &response);
@@ -102,7 +102,7 @@ DefaultBigtableStub::PingAndWarm(
 
 StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>
 DefaultBigtableStub::ReadModifyWriteRow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
   google::bigtable::v2::ReadModifyWriteRowResponse response;
   auto status = grpc_stub_->ReadModifyWriteRow(&context, request, &response);

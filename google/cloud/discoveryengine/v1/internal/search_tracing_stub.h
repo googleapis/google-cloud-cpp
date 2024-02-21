@@ -38,7 +38,7 @@ class SearchServiceTracingStub : public SearchServiceStub {
   explicit SearchServiceTracingStub(std::shared_ptr<SearchServiceStub> child);
 
   StatusOr<google::cloud::discoveryengine::v1::SearchResponse> Search(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::SearchRequest const& request)
       override;
 

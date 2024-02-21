@@ -39,7 +39,7 @@ class CompletionLogging : public CompletionStub {
                     std::set<std::string> const& components);
 
   StatusOr<google::cloud::talent::v4::CompleteQueryResponse> CompleteQuery(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::CompleteQueryRequest const& request) override;
 
  private:

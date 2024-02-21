@@ -32,56 +32,58 @@ PagesTracingStub::PagesTracingStub(std::shared_ptr<PagesStub> child)
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListPagesResponse>
 PagesTracingStub::ListPages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListPagesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Pages",
                                      "ListPages");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->ListPages(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListPages(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesTracingStub::GetPage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetPageRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Pages", "GetPage");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetPage(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetPage(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesTracingStub::CreatePage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreatePageRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Pages",
                                      "CreatePage");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreatePage(context, request));
+                           child_->CreatePage(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesTracingStub::UpdatePage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Pages",
                                      "UpdatePage");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdatePage(context, request));
+                           child_->UpdatePage(context, options, request));
 }
 
 Status PagesTracingStub::DeletePage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeletePageRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Pages",
                                      "DeletePage");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeletePage(context, request));
+                           child_->DeletePage(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -77,20 +77,21 @@ ManagedNotebookServiceConnectionImpl::ListRuntimes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::notebooks::v1::Runtime>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<notebooks_v1::ManagedNotebookServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::notebooks::v1::ListRuntimesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::notebooks::v1::ListRuntimesRequest const&
                        request) {
-              return stub->ListRuntimes(context, request);
+              return stub->ListRuntimes(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::notebooks::v1::ListRuntimesResponse r) {
         std::vector<google::cloud::notebooks::v1::Runtime> result(
@@ -108,11 +109,11 @@ ManagedNotebookServiceConnectionImpl::GetRuntime(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRuntime(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::notebooks::v1::GetRuntimeRequest const& request) {
-        return stub_->GetRuntime(context, request);
+        return stub_->GetRuntime(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -456,12 +457,12 @@ ManagedNotebookServiceConnectionImpl::RefreshRuntimeTokenInternal(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RefreshRuntimeTokenInternal(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::notebooks::v1::
                  RefreshRuntimeTokenInternalRequest const& request) {
-        return stub_->RefreshRuntimeTokenInternal(context, request);
+        return stub_->RefreshRuntimeTokenInternal(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>

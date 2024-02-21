@@ -39,29 +39,29 @@ class FirewallMetadata : public FirewallStub {
                    std::string api_client_header = "");
 
   StatusOr<google::appengine::v1::ListIngressRulesResponse> ListIngressRules(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListIngressRulesRequest const& request) override;
 
   StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
   BatchUpdateIngressRules(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::BatchUpdateIngressRulesRequest const& request)
       override;
 
   StatusOr<google::appengine::v1::FirewallRule> CreateIngressRule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::CreateIngressRuleRequest const& request) override;
 
   StatusOr<google::appengine::v1::FirewallRule> GetIngressRule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetIngressRuleRequest const& request) override;
 
   StatusOr<google::appengine::v1::FirewallRule> UpdateIngressRule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::UpdateIngressRuleRequest const& request) override;
 
   Status DeleteIngressRule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::DeleteIngressRuleRequest const& request) override;
 
  private:

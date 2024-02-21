@@ -33,26 +33,26 @@ CloudMemcacheTracingStub::CloudMemcacheTracingStub(
 
 StatusOr<google::cloud::memcache::v1::ListInstancesResponse>
 CloudMemcacheTracingStub::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::memcache::v1::ListInstancesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
                                      "ListInstances");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListInstances(context, request));
+                           child_->ListInstances(context, options, request));
 }
 
 StatusOr<google::cloud::memcache::v1::Instance>
 CloudMemcacheTracingStub::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::memcache::v1::GetInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.memcache.v1.CloudMemcache",
                                      "GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetInstance(context, request));
+                           child_->GetInstance(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -32,7 +32,7 @@ KnowledgeBasesStub::~KnowledgeBasesStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::ListKnowledgeBasesResponse>
 DefaultKnowledgeBasesStub::ListKnowledgeBases(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const& request) {
   google::cloud::dialogflow::v2::ListKnowledgeBasesResponse response;
   auto status = grpc_stub_->ListKnowledgeBases(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultKnowledgeBasesStub::ListKnowledgeBases(
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 DefaultKnowledgeBasesStub::GetKnowledgeBase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request) {
   google::cloud::dialogflow::v2::KnowledgeBase response;
   auto status = grpc_stub_->GetKnowledgeBase(&context, request, &response);
@@ -56,7 +56,7 @@ DefaultKnowledgeBasesStub::GetKnowledgeBase(
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 DefaultKnowledgeBasesStub::CreateKnowledgeBase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request) {
   google::cloud::dialogflow::v2::KnowledgeBase response;
   auto status = grpc_stub_->CreateKnowledgeBase(&context, request, &response);
@@ -67,7 +67,7 @@ DefaultKnowledgeBasesStub::CreateKnowledgeBase(
 }
 
 Status DefaultKnowledgeBasesStub::DeleteKnowledgeBase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteKnowledgeBase(&context, request, &response);
@@ -79,7 +79,7 @@ Status DefaultKnowledgeBasesStub::DeleteKnowledgeBase(
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 DefaultKnowledgeBasesStub::UpdateKnowledgeBase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request) {
   google::cloud::dialogflow::v2::KnowledgeBase response;
   auto status = grpc_stub_->UpdateKnowledgeBase(&context, request, &response);

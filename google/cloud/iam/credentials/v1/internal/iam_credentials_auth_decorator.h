@@ -40,21 +40,21 @@ class IAMCredentialsAuth : public IAMCredentialsStub {
 
   StatusOr<google::iam::credentials::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::credentials::v1::GenerateAccessTokenRequest const& request)
       override;
 
   StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
-  GenerateIdToken(grpc::ClientContext& context,
+  GenerateIdToken(grpc::ClientContext& context, Options const& options,
                   google::iam::credentials::v1::GenerateIdTokenRequest const&
                       request) override;
 
   StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::credentials::v1::SignBlobRequest const& request) override;
 
   StatusOr<google::iam::credentials::v1::SignJwtResponse> SignJwt(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::credentials::v1::SignJwtRequest const& request) override;
 
  private:

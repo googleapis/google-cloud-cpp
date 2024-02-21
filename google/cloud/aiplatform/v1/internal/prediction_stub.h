@@ -39,11 +39,11 @@ class PredictionServiceStub {
   virtual ~PredictionServiceStub() = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::PredictResponse> Predict(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::PredictRequest const& request) = 0;
 
   virtual StatusOr<google::api::HttpBody> RawPredict(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::RawPredictRequest const& request) = 0;
 
   virtual std::unique_ptr<
@@ -55,11 +55,11 @@ class PredictionServiceStub {
 
   virtual StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
   DirectPredict(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::DirectPredictRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
-  DirectRawPredict(grpc::ClientContext& context,
+  DirectRawPredict(grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::DirectRawPredictRequest const&
                        request) = 0;
 
@@ -95,12 +95,12 @@ class PredictionServiceStub {
                            std::shared_ptr<grpc::ClientContext> context) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ExplainRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
   GenerateContent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GenerateContentRequest const& request) = 0;
 
   virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -119,11 +119,11 @@ class DefaultPredictionServiceStub : public PredictionServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::aiplatform::v1::PredictResponse> Predict(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::PredictRequest const& request) override;
 
   StatusOr<google::api::HttpBody> RawPredict(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::RawPredictRequest const& request) override;
 
   std::unique_ptr<
@@ -134,12 +134,12 @@ class DefaultPredictionServiceStub : public PredictionServiceStub {
                        request) override;
 
   StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse> DirectPredict(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::DirectPredictRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
-  DirectRawPredict(grpc::ClientContext& context,
+  DirectRawPredict(grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::DirectRawPredictRequest const&
                        request) override;
 
@@ -178,11 +178,11 @@ class DefaultPredictionServiceStub : public PredictionServiceStub {
       std::shared_ptr<grpc::ClientContext> context) override;
 
   StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ExplainRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
-  GenerateContent(grpc::ClientContext& context,
+  GenerateContent(grpc::ClientContext& context, Options const& options,
                   google::cloud::aiplatform::v1::GenerateContentRequest const&
                       request) override;
 

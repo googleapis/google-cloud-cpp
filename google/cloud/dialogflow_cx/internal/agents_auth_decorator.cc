@@ -33,43 +33,43 @@ AgentsAuth::AgentsAuth(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListAgentsResponse>
 AgentsAuth::ListAgents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListAgentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAgents(context, request);
+  return child_->ListAgents(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent> AgentsAuth::GetAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetAgentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAgent(context, request);
+  return child_->GetAgent(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent> AgentsAuth::CreateAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateAgent(context, request);
+  return child_->CreateAgent(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent> AgentsAuth::UpdateAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateAgent(context, request);
+  return child_->UpdateAgent(context, options, request);
 }
 
 Status AgentsAuth::DeleteAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteAgent(context, request);
+  return child_->DeleteAgent(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncExportAgent(
@@ -110,41 +110,41 @@ future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncRestoreAgent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
 AgentsAuth::ValidateAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ValidateAgent(context, request);
+  return child_->ValidateAgent(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
 AgentsAuth::GetAgentValidationResult(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAgentValidationResult(context, request);
+  return child_->GetAgentValidationResult(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
 AgentsAuth::GetGenerativeSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetGenerativeSettings(context, request);
+  return child_->GetGenerativeSettings(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
 AgentsAuth::UpdateGenerativeSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateGenerativeSettings(context, request);
+  return child_->UpdateGenerativeSettings(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> AgentsAuth::AsyncGetOperation(

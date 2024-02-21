@@ -32,11 +32,11 @@ ApplicationsAuth::ApplicationsAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::appengine::v1::Application> ApplicationsAuth::GetApplication(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetApplicationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetApplication(context, request);
+  return child_->GetApplication(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

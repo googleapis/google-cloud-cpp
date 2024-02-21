@@ -49,19 +49,19 @@ future<StatusOr<google::longrunning::Operation>> JobsAuth::AsyncCreateJob(
 }
 
 StatusOr<google::cloud::run::v2::Job> JobsAuth::GetJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetJob(context, request);
+  return child_->GetJob(context, options, request);
 }
 
 StatusOr<google::cloud::run::v2::ListJobsResponse> JobsAuth::ListJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::ListJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListJobs(context, request);
+  return child_->ListJobs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> JobsAuth::AsyncUpdateJob(
@@ -116,28 +116,28 @@ future<StatusOr<google::longrunning::Operation>> JobsAuth::AsyncRunJob(
 }
 
 StatusOr<google::iam::v1::Policy> JobsAuth::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> JobsAuth::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 JobsAuth::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> JobsAuth::AsyncGetOperation(

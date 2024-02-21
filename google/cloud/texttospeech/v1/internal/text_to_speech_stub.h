@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_V1_INTERNAL_TEXT_TO_SPEECH_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TEXTTOSPEECH_V1_INTERNAL_TEXT_TO_SPEECH_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/texttospeech/v1/cloud_tts.grpc.pb.h>
@@ -36,12 +37,12 @@ class TextToSpeechStub {
 
   virtual StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
   ListVoices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::texttospeech::v1::ListVoicesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
   SynthesizeSpeech(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::texttospeech::v1::SynthesizeSpeechRequest const&
           request) = 0;
 };
@@ -55,13 +56,13 @@ class DefaultTextToSpeechStub : public TextToSpeechStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::texttospeech::v1::ListVoicesRequest const& request)
       override;
 
   StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
   SynthesizeSpeech(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request)
       override;
 

@@ -39,7 +39,7 @@ class QuotaControllerAuth : public QuotaControllerStub {
       std::shared_ptr<QuotaControllerStub> child);
 
   StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
-  AllocateQuota(grpc::ClientContext& context,
+  AllocateQuota(grpc::ClientContext& context, Options const& options,
                 google::api::servicecontrol::v1::AllocateQuotaRequest const&
                     request) override;
 

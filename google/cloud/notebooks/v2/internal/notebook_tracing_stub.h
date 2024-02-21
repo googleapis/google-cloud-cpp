@@ -39,12 +39,12 @@ class NotebookServiceTracingStub : public NotebookServiceStub {
       std::shared_ptr<NotebookServiceStub> child);
 
   StatusOr<google::cloud::notebooks::v2::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::notebooks::v2::ListInstancesRequest const& request)
       override;
 
   StatusOr<google::cloud::notebooks::v2::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::notebooks::v2::GetInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
@@ -85,7 +85,7 @@ class NotebookServiceTracingStub : public NotebookServiceStub {
 
   StatusOr<google::cloud::notebooks::v2::CheckInstanceUpgradabilityResponse>
   CheckInstanceUpgradability(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::notebooks::v2::CheckInstanceUpgradabilityRequest const&
           request) override;
 

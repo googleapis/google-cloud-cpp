@@ -38,11 +38,11 @@ class AlloyDBAdminTracingStub : public AlloyDBAdminStub {
   explicit AlloyDBAdminTracingStub(std::shared_ptr<AlloyDBAdminStub> child);
 
   StatusOr<google::cloud::alloydb::v1::ListClustersResponse> ListClusters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::alloydb::v1::ListClustersRequest const& request) override;
 
   StatusOr<google::cloud::alloydb::v1::Cluster> GetCluster(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::alloydb::v1::GetClusterRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCluster(
@@ -79,11 +79,11 @@ class AlloyDBAdminTracingStub : public AlloyDBAdminStub {
       override;
 
   StatusOr<google::cloud::alloydb::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::alloydb::v1::ListInstancesRequest const& request) override;
 
   StatusOr<google::cloud::alloydb::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::alloydb::v1::GetInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
@@ -134,11 +134,11 @@ class AlloyDBAdminTracingStub : public AlloyDBAdminStub {
       override;
 
   StatusOr<google::cloud::alloydb::v1::ListBackupsResponse> ListBackups(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::alloydb::v1::ListBackupsRequest const& request) override;
 
   StatusOr<google::cloud::alloydb::v1::Backup> GetBackup(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::alloydb::v1::GetBackupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
@@ -158,39 +158,39 @@ class AlloyDBAdminTracingStub : public AlloyDBAdminStub {
 
   StatusOr<google::cloud::alloydb::v1::ListSupportedDatabaseFlagsResponse>
   ListSupportedDatabaseFlags(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest const&
           request) override;
 
   StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
   GenerateClientCertificate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
           request) override;
 
   StatusOr<google::cloud::alloydb::v1::ConnectionInfo> GetConnectionInfo(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::alloydb::v1::GetConnectionInfoRequest const& request)
       override;
 
   StatusOr<google::cloud::alloydb::v1::ListUsersResponse> ListUsers(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::alloydb::v1::ListUsersRequest const& request) override;
 
   StatusOr<google::cloud::alloydb::v1::User> GetUser(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::alloydb::v1::GetUserRequest const& request) override;
 
   StatusOr<google::cloud::alloydb::v1::User> CreateUser(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::alloydb::v1::CreateUserRequest const& request) override;
 
   StatusOr<google::cloud::alloydb::v1::User> UpdateUser(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::alloydb::v1::UpdateUserRequest const& request) override;
 
   Status DeleteUser(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::alloydb::v1::DeleteUserRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

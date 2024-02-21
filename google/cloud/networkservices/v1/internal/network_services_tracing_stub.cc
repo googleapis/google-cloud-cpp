@@ -33,7 +33,7 @@ NetworkServicesTracingStub::NetworkServicesTracingStub(
 
 StatusOr<google::cloud::networkservices::v1::ListEndpointPoliciesResponse>
 NetworkServicesTracingStub::ListEndpointPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListEndpointPoliciesRequest const&
         request) {
   auto span =
@@ -41,21 +41,21 @@ NetworkServicesTracingStub::ListEndpointPolicies(
                              "ListEndpointPolicies");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListEndpointPolicies(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListEndpointPolicies(context, options, request));
 }
 
 StatusOr<google::cloud::networkservices::v1::EndpointPolicy>
 NetworkServicesTracingStub::GetEndpointPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetEndpointPolicyRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkservices.v1.NetworkServices", "GetEndpointPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetEndpointPolicy(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetEndpointPolicy(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -105,26 +105,26 @@ NetworkServicesTracingStub::AsyncDeleteEndpointPolicy(
 
 StatusOr<google::cloud::networkservices::v1::ListGatewaysResponse>
 NetworkServicesTracingStub::ListGateways(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListGatewaysRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkservices.v1.NetworkServices", "ListGateways");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListGateways(context, request));
+                           child_->ListGateways(context, options, request));
 }
 
 StatusOr<google::cloud::networkservices::v1::Gateway>
 NetworkServicesTracingStub::GetGateway(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetGatewayRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkservices.v1.NetworkServices", "GetGateway");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetGateway(context, request));
+                           child_->GetGateway(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -168,26 +168,26 @@ NetworkServicesTracingStub::AsyncDeleteGateway(
 
 StatusOr<google::cloud::networkservices::v1::ListGrpcRoutesResponse>
 NetworkServicesTracingStub::ListGrpcRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListGrpcRoutesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkservices.v1.NetworkServices", "ListGrpcRoutes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListGrpcRoutes(context, request));
+                           child_->ListGrpcRoutes(context, options, request));
 }
 
 StatusOr<google::cloud::networkservices::v1::GrpcRoute>
 NetworkServicesTracingStub::GetGrpcRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetGrpcRouteRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkservices.v1.NetworkServices", "GetGrpcRoute");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetGrpcRoute(context, request));
+                           child_->GetGrpcRoute(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -231,26 +231,26 @@ NetworkServicesTracingStub::AsyncDeleteGrpcRoute(
 
 StatusOr<google::cloud::networkservices::v1::ListHttpRoutesResponse>
 NetworkServicesTracingStub::ListHttpRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListHttpRoutesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkservices.v1.NetworkServices", "ListHttpRoutes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListHttpRoutes(context, request));
+                           child_->ListHttpRoutes(context, options, request));
 }
 
 StatusOr<google::cloud::networkservices::v1::HttpRoute>
 NetworkServicesTracingStub::GetHttpRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetHttpRouteRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkservices.v1.NetworkServices", "GetHttpRoute");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetHttpRoute(context, request));
+                           child_->GetHttpRoute(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -294,26 +294,26 @@ NetworkServicesTracingStub::AsyncDeleteHttpRoute(
 
 StatusOr<google::cloud::networkservices::v1::ListTcpRoutesResponse>
 NetworkServicesTracingStub::ListTcpRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListTcpRoutesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkservices.v1.NetworkServices", "ListTcpRoutes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListTcpRoutes(context, request));
+                           child_->ListTcpRoutes(context, options, request));
 }
 
 StatusOr<google::cloud::networkservices::v1::TcpRoute>
 NetworkServicesTracingStub::GetTcpRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetTcpRouteRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkservices.v1.NetworkServices", "GetTcpRoute");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetTcpRoute(context, request));
+                           child_->GetTcpRoute(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -357,26 +357,26 @@ NetworkServicesTracingStub::AsyncDeleteTcpRoute(
 
 StatusOr<google::cloud::networkservices::v1::ListTlsRoutesResponse>
 NetworkServicesTracingStub::ListTlsRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListTlsRoutesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkservices.v1.NetworkServices", "ListTlsRoutes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListTlsRoutes(context, request));
+                           child_->ListTlsRoutes(context, options, request));
 }
 
 StatusOr<google::cloud::networkservices::v1::TlsRoute>
 NetworkServicesTracingStub::GetTlsRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetTlsRouteRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkservices.v1.NetworkServices", "GetTlsRoute");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetTlsRoute(context, request));
+                           child_->GetTlsRoute(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -420,28 +420,28 @@ NetworkServicesTracingStub::AsyncDeleteTlsRoute(
 
 StatusOr<google::cloud::networkservices::v1::ListServiceBindingsResponse>
 NetworkServicesTracingStub::ListServiceBindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListServiceBindingsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkservices.v1.NetworkServices", "ListServiceBindings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListServiceBindings(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListServiceBindings(context, options, request));
 }
 
 StatusOr<google::cloud::networkservices::v1::ServiceBinding>
 NetworkServicesTracingStub::GetServiceBinding(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetServiceBindingRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkservices.v1.NetworkServices", "GetServiceBinding");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetServiceBinding(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetServiceBinding(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -476,25 +476,26 @@ NetworkServicesTracingStub::AsyncDeleteServiceBinding(
 
 StatusOr<google::cloud::networkservices::v1::ListMeshesResponse>
 NetworkServicesTracingStub::ListMeshes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListMeshesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkservices.v1.NetworkServices", "ListMeshes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListMeshes(context, request));
+                           child_->ListMeshes(context, options, request));
 }
 
 StatusOr<google::cloud::networkservices::v1::Mesh>
 NetworkServicesTracingStub::GetMesh(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetMeshRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.networkservices.v1.NetworkServices", "GetMesh");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetMesh(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetMesh(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

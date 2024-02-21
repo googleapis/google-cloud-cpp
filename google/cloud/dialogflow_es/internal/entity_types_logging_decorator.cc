@@ -37,64 +37,66 @@ EntityTypesLogging::EntityTypesLogging(std::shared_ptr<EntityTypesStub> child,
 
 StatusOr<google::cloud::dialogflow::v2::ListEntityTypesResponse>
 EntityTypesLogging::ListEntityTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListEntityTypesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::ListEntityTypesRequest const&
-                 request) { return child_->ListEntityTypes(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListEntityTypes(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::v2::EntityType>
 EntityTypesLogging::GetEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetEntityTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::v2::GetEntityTypeRequest const& request) {
-        return child_->GetEntityType(context, request);
+        return child_->GetEntityType(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::v2::EntityType>
 EntityTypesLogging::CreateEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateEntityTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::CreateEntityTypeRequest const&
                  request) {
-        return child_->CreateEntityType(context, request);
+        return child_->CreateEntityType(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::v2::EntityType>
 EntityTypesLogging::UpdateEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateEntityTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::UpdateEntityTypeRequest const&
                  request) {
-        return child_->UpdateEntityType(context, request);
+        return child_->UpdateEntityType(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status EntityTypesLogging::DeleteEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteEntityTypeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::DeleteEntityTypeRequest const&
                  request) {
-        return child_->DeleteEntityType(context, request);
+        return child_->DeleteEntityType(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

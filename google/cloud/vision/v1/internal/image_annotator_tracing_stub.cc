@@ -33,26 +33,26 @@ ImageAnnotatorTracingStub::ImageAnnotatorTracingStub(
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
 ImageAnnotatorTracingStub::BatchAnnotateImages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ImageAnnotator",
                                      "BatchAnnotateImages");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->BatchAnnotateImages(context, request));
+  return internal::EndSpan(
+      context, *span, child_->BatchAnnotateImages(context, options, request));
 }
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
 ImageAnnotatorTracingStub::BatchAnnotateFiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.vision.v1.ImageAnnotator",
                                      "BatchAnnotateFiles");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->BatchAnnotateFiles(context, request));
+  return internal::EndSpan(
+      context, *span, child_->BatchAnnotateFiles(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

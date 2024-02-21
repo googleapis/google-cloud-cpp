@@ -47,13 +47,13 @@ class ConversationModelsAuth : public ConversationModelsStub {
 
   StatusOr<google::cloud::dialogflow::v2::ConversationModel>
   GetConversationModel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetConversationModelRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::ListConversationModelsResponse>
   ListConversationModels(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListConversationModelsRequest const&
           request) override;
 
@@ -78,14 +78,14 @@ class ConversationModelsAuth : public ConversationModelsStub {
 
   StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
   GetConversationModelEvaluation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::
           GetConversationModelEvaluationRequest const& request) override;
 
   StatusOr<
       google::cloud::dialogflow::v2::ListConversationModelEvaluationsResponse>
   ListConversationModelEvaluations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::
           ListConversationModelEvaluationsRequest const& request) override;
 

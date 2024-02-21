@@ -46,12 +46,12 @@ class SpeechAuth : public SpeechStub {
       override;
 
   StatusOr<google::cloud::speech::v2::ListRecognizersResponse> ListRecognizers(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::ListRecognizersRequest const& request)
       override;
 
   StatusOr<google::cloud::speech::v2::Recognizer> GetRecognizer(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::GetRecognizerRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateRecognizer(
@@ -73,7 +73,7 @@ class SpeechAuth : public SpeechStub {
       override;
 
   StatusOr<google::cloud::speech::v2::RecognizeResponse> Recognize(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::RecognizeRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -89,11 +89,11 @@ class SpeechAuth : public SpeechStub {
       google::cloud::speech::v2::BatchRecognizeRequest const& request) override;
 
   StatusOr<google::cloud::speech::v2::Config> GetConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::GetConfigRequest const& request) override;
 
   StatusOr<google::cloud::speech::v2::Config> UpdateConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::UpdateConfigRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCustomClass(
@@ -103,12 +103,12 @@ class SpeechAuth : public SpeechStub {
       override;
 
   StatusOr<google::cloud::speech::v2::ListCustomClassesResponse>
-  ListCustomClasses(grpc::ClientContext& context,
+  ListCustomClasses(grpc::ClientContext& context, Options const& options,
                     google::cloud::speech::v2::ListCustomClassesRequest const&
                         request) override;
 
   StatusOr<google::cloud::speech::v2::CustomClass> GetCustomClass(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::GetCustomClassRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateCustomClass(
@@ -136,11 +136,11 @@ class SpeechAuth : public SpeechStub {
       override;
 
   StatusOr<google::cloud::speech::v2::ListPhraseSetsResponse> ListPhraseSets(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::ListPhraseSetsRequest const& request) override;
 
   StatusOr<google::cloud::speech::v2::PhraseSet> GetPhraseSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::speech::v2::GetPhraseSetRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdatePhraseSet(

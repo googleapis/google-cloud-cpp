@@ -37,14 +37,14 @@ SpeechLogging::SpeechLogging(std::shared_ptr<SpeechStub> child,
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::cloud::speech::v1::RecognizeResponse> SpeechLogging::Recognize(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::RecognizeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v1::RecognizeRequest const& request) {
-        return child_->Recognize(context, request);
+        return child_->Recognize(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

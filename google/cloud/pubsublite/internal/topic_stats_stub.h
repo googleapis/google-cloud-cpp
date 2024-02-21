@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_STATS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUBLITE_INTERNAL_TOPIC_STATS_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/pubsublite/v1/topic_stats.grpc.pb.h>
@@ -36,19 +37,19 @@ class TopicStatsServiceStub {
 
   virtual StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
   ComputeMessageStats(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::ComputeMessageStatsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
   ComputeHeadCursor(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::ComputeHeadCursorRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
   ComputeTimeCursor(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::ComputeTimeCursorRequest const&
           request) = 0;
 };
@@ -63,19 +64,19 @@ class DefaultTopicStatsServiceStub : public TopicStatsServiceStub {
 
   StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
   ComputeMessageStats(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
   ComputeHeadCursor(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
   ComputeTimeCursor(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request)
       override;
 

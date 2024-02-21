@@ -67,11 +67,11 @@ SnoozeServiceConnectionImpl::CreateSnooze(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateSnooze(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::CreateSnoozeRequest const& request) {
-        return stub_->CreateSnooze(context, request);
+        return stub_->CreateSnooze(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::monitoring::v3::Snooze>
@@ -83,19 +83,20 @@ SnoozeServiceConnectionImpl::ListSnoozes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::monitoring::v3::Snooze>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<monitoring_v3::SnoozeServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::monitoring::v3::ListSnoozesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::monitoring::v3::ListSnoozesRequest const& request) {
-              return stub->ListSnoozes(context, request);
+              return stub->ListSnoozes(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::monitoring::v3::ListSnoozesResponse r) {
         std::vector<google::monitoring::v3::Snooze> result(r.snoozes().size());
@@ -111,11 +112,11 @@ StatusOr<google::monitoring::v3::Snooze> SnoozeServiceConnectionImpl::GetSnooze(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSnooze(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::GetSnoozeRequest const& request) {
-        return stub_->GetSnooze(context, request);
+        return stub_->GetSnooze(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::monitoring::v3::Snooze>
@@ -125,11 +126,11 @@ SnoozeServiceConnectionImpl::UpdateSnooze(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateSnooze(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::UpdateSnoozeRequest const& request) {
-        return stub_->UpdateSnooze(context, request);
+        return stub_->UpdateSnooze(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

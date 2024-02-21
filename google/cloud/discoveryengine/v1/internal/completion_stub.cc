@@ -33,7 +33,7 @@ CompletionServiceStub::~CompletionServiceStub() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
 DefaultCompletionServiceStub::CompleteQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::discoveryengine::v1::CompleteQueryRequest const& request) {
   google::cloud::discoveryengine::v1::CompleteQueryResponse response;
   auto status = grpc_stub_->CompleteQuery(&context, request, &response);

@@ -37,31 +37,31 @@ NetworkServicesLogging::NetworkServicesLogging(
 
 StatusOr<google::cloud::networkservices::v1::ListEndpointPoliciesResponse>
 NetworkServicesLogging::ListEndpointPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListEndpointPoliciesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::networkservices::v1::ListEndpointPoliciesRequest const&
               request) {
-        return child_->ListEndpointPolicies(context, request);
+        return child_->ListEndpointPolicies(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkservices::v1::EndpointPolicy>
 NetworkServicesLogging::GetEndpointPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetEndpointPolicyRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkservices::v1::GetEndpointPolicyRequest const&
                  request) {
-        return child_->GetEndpointPolicy(context, request);
+        return child_->GetEndpointPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -120,24 +120,28 @@ NetworkServicesLogging::AsyncDeleteEndpointPolicy(
 
 StatusOr<google::cloud::networkservices::v1::ListGatewaysResponse>
 NetworkServicesLogging::ListGateways(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListGatewaysRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkservices::v1::ListGatewaysRequest const&
-                 request) { return child_->ListGateways(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListGateways(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkservices::v1::Gateway>
 NetworkServicesLogging::GetGateway(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetGatewayRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkservices::v1::GetGatewayRequest const&
-                 request) { return child_->GetGateway(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetGateway(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -193,24 +197,28 @@ NetworkServicesLogging::AsyncDeleteGateway(
 
 StatusOr<google::cloud::networkservices::v1::ListGrpcRoutesResponse>
 NetworkServicesLogging::ListGrpcRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListGrpcRoutesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkservices::v1::ListGrpcRoutesRequest const&
-                 request) { return child_->ListGrpcRoutes(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListGrpcRoutes(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkservices::v1::GrpcRoute>
 NetworkServicesLogging::GetGrpcRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetGrpcRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkservices::v1::GetGrpcRouteRequest const&
-                 request) { return child_->GetGrpcRoute(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetGrpcRoute(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -266,24 +274,28 @@ NetworkServicesLogging::AsyncDeleteGrpcRoute(
 
 StatusOr<google::cloud::networkservices::v1::ListHttpRoutesResponse>
 NetworkServicesLogging::ListHttpRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListHttpRoutesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkservices::v1::ListHttpRoutesRequest const&
-                 request) { return child_->ListHttpRoutes(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListHttpRoutes(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkservices::v1::HttpRoute>
 NetworkServicesLogging::GetHttpRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetHttpRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkservices::v1::GetHttpRouteRequest const&
-                 request) { return child_->GetHttpRoute(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetHttpRoute(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -339,24 +351,28 @@ NetworkServicesLogging::AsyncDeleteHttpRoute(
 
 StatusOr<google::cloud::networkservices::v1::ListTcpRoutesResponse>
 NetworkServicesLogging::ListTcpRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListTcpRoutesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkservices::v1::ListTcpRoutesRequest const&
-                 request) { return child_->ListTcpRoutes(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListTcpRoutes(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkservices::v1::TcpRoute>
 NetworkServicesLogging::GetTcpRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetTcpRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkservices::v1::GetTcpRouteRequest const&
-                 request) { return child_->GetTcpRoute(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetTcpRoute(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -412,24 +428,28 @@ NetworkServicesLogging::AsyncDeleteTcpRoute(
 
 StatusOr<google::cloud::networkservices::v1::ListTlsRoutesResponse>
 NetworkServicesLogging::ListTlsRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListTlsRoutesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkservices::v1::ListTlsRoutesRequest const&
-                 request) { return child_->ListTlsRoutes(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListTlsRoutes(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkservices::v1::TlsRoute>
 NetworkServicesLogging::GetTlsRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetTlsRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkservices::v1::GetTlsRouteRequest const&
-                 request) { return child_->GetTlsRoute(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetTlsRoute(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -485,31 +505,31 @@ NetworkServicesLogging::AsyncDeleteTlsRoute(
 
 StatusOr<google::cloud::networkservices::v1::ListServiceBindingsResponse>
 NetworkServicesLogging::ListServiceBindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListServiceBindingsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::networkservices::v1::ListServiceBindingsRequest const&
               request) {
-        return child_->ListServiceBindings(context, request);
+        return child_->ListServiceBindings(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkservices::v1::ServiceBinding>
 NetworkServicesLogging::GetServiceBinding(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetServiceBindingRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkservices::v1::GetServiceBindingRequest const&
                  request) {
-        return child_->GetServiceBinding(context, request);
+        return child_->GetServiceBinding(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -550,26 +570,28 @@ NetworkServicesLogging::AsyncDeleteServiceBinding(
 
 StatusOr<google::cloud::networkservices::v1::ListMeshesResponse>
 NetworkServicesLogging::ListMeshes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListMeshesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkservices::v1::ListMeshesRequest const&
-                 request) { return child_->ListMeshes(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListMeshes(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkservices::v1::Mesh>
 NetworkServicesLogging::GetMesh(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetMeshRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::networkservices::v1::GetMeshRequest const& request) {
-        return child_->GetMesh(context, request);
+        return child_->GetMesh(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

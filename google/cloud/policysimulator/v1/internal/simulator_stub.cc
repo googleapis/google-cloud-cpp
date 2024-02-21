@@ -33,7 +33,7 @@ SimulatorStub::~SimulatorStub() = default;
 
 StatusOr<google::cloud::policysimulator::v1::Replay>
 DefaultSimulatorStub::GetReplay(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::policysimulator::v1::GetReplayRequest const& request) {
   google::cloud::policysimulator::v1::Replay response;
   auto status = grpc_stub_->GetReplay(&context, request, &response);
@@ -63,7 +63,7 @@ DefaultSimulatorStub::AsyncCreateReplay(
 
 StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse>
 DefaultSimulatorStub::ListReplayResults(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::policysimulator::v1::ListReplayResultsRequest const&
         request) {
   google::cloud::policysimulator::v1::ListReplayResultsResponse response;

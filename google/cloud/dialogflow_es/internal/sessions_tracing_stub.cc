@@ -33,14 +33,14 @@ SessionsTracingStub::SessionsTracingStub(std::shared_ptr<SessionsStub> child)
 
 StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>
 SessionsTracingStub::DetectIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DetectIntentRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Sessions",
                                      "DetectIntent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DetectIntent(context, request));
+                           child_->DetectIntent(context, options, request));
 }
 
 std::unique_ptr<AsyncStreamingReadWriteRpc<

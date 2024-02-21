@@ -34,12 +34,12 @@ PolicyTroubleshooterAuth::PolicyTroubleshooterAuth(
 StatusOr<
     google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
 PolicyTroubleshooterAuth::TroubleshootIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::policytroubleshooter::iam::v3::
         TroubleshootIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TroubleshootIamPolicy(context, request);
+  return child_->TroubleshootIamPolicy(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -33,65 +33,65 @@ CloudChannelServiceAuth::CloudChannelServiceAuth(
 
 StatusOr<google::cloud::channel::v1::ListCustomersResponse>
 CloudChannelServiceAuth::ListCustomers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListCustomersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCustomers(context, request);
+  return child_->ListCustomers(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
 CloudChannelServiceAuth::GetCustomer(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::GetCustomerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCustomer(context, request);
+  return child_->GetCustomer(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::CheckCloudIdentityAccountsExistResponse>
 CloudChannelServiceAuth::CheckCloudIdentityAccountsExist(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::CheckCloudIdentityAccountsExistRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CheckCloudIdentityAccountsExist(context, request);
+  return child_->CheckCloudIdentityAccountsExist(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
 CloudChannelServiceAuth::CreateCustomer(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::CreateCustomerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateCustomer(context, request);
+  return child_->CreateCustomer(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
 CloudChannelServiceAuth::UpdateCustomer(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::UpdateCustomerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateCustomer(context, request);
+  return child_->UpdateCustomer(context, options, request);
 }
 
 Status CloudChannelServiceAuth::DeleteCustomer(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::DeleteCustomerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteCustomer(context, request);
+  return child_->DeleteCustomer(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
 CloudChannelServiceAuth::ImportCustomer(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ImportCustomerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ImportCustomer(context, request);
+  return child_->ImportCustomer(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -115,38 +115,38 @@ CloudChannelServiceAuth::AsyncProvisionCloudIdentity(
 
 StatusOr<google::cloud::channel::v1::ListEntitlementsResponse>
 CloudChannelServiceAuth::ListEntitlements(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListEntitlementsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEntitlements(context, request);
+  return child_->ListEntitlements(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListTransferableSkusResponse>
 CloudChannelServiceAuth::ListTransferableSkus(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListTransferableSkusRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTransferableSkus(context, request);
+  return child_->ListTransferableSkus(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListTransferableOffersResponse>
 CloudChannelServiceAuth::ListTransferableOffers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListTransferableOffersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTransferableOffers(context, request);
+  return child_->ListTransferableOffers(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::Entitlement>
 CloudChannelServiceAuth::GetEntitlement(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::GetEntitlementRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEntitlement(context, request);
+  return child_->GetEntitlement(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -342,257 +342,257 @@ CloudChannelServiceAuth::AsyncTransferEntitlementsToGoogle(
 
 StatusOr<google::cloud::channel::v1::ListChannelPartnerLinksResponse>
 CloudChannelServiceAuth::ListChannelPartnerLinks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListChannelPartnerLinksRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListChannelPartnerLinks(context, request);
+  return child_->ListChannelPartnerLinks(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
 CloudChannelServiceAuth::GetChannelPartnerLink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::GetChannelPartnerLinkRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetChannelPartnerLink(context, request);
+  return child_->GetChannelPartnerLink(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
 CloudChannelServiceAuth::CreateChannelPartnerLink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::CreateChannelPartnerLinkRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateChannelPartnerLink(context, request);
+  return child_->CreateChannelPartnerLink(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
 CloudChannelServiceAuth::UpdateChannelPartnerLink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateChannelPartnerLink(context, request);
+  return child_->UpdateChannelPartnerLink(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
 CloudChannelServiceAuth::GetCustomerRepricingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCustomerRepricingConfig(context, request);
+  return child_->GetCustomerRepricingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListCustomerRepricingConfigsResponse>
 CloudChannelServiceAuth::ListCustomerRepricingConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListCustomerRepricingConfigsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCustomerRepricingConfigs(context, request);
+  return child_->ListCustomerRepricingConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
 CloudChannelServiceAuth::CreateCustomerRepricingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateCustomerRepricingConfig(context, request);
+  return child_->CreateCustomerRepricingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
 CloudChannelServiceAuth::UpdateCustomerRepricingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateCustomerRepricingConfig(context, request);
+  return child_->UpdateCustomerRepricingConfig(context, options, request);
 }
 
 Status CloudChannelServiceAuth::DeleteCustomerRepricingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteCustomerRepricingConfig(context, request);
+  return child_->DeleteCustomerRepricingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
 CloudChannelServiceAuth::GetChannelPartnerRepricingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetChannelPartnerRepricingConfig(context, request);
+  return child_->GetChannelPartnerRepricingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListChannelPartnerRepricingConfigsResponse>
 CloudChannelServiceAuth::ListChannelPartnerRepricingConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListChannelPartnerRepricingConfigs(context, request);
+  return child_->ListChannelPartnerRepricingConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
 CloudChannelServiceAuth::CreateChannelPartnerRepricingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::
         CreateChannelPartnerRepricingConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateChannelPartnerRepricingConfig(context, request);
+  return child_->CreateChannelPartnerRepricingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
 CloudChannelServiceAuth::UpdateChannelPartnerRepricingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::
         UpdateChannelPartnerRepricingConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateChannelPartnerRepricingConfig(context, request);
+  return child_->UpdateChannelPartnerRepricingConfig(context, options, request);
 }
 
 Status CloudChannelServiceAuth::DeleteChannelPartnerRepricingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::
         DeleteChannelPartnerRepricingConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteChannelPartnerRepricingConfig(context, request);
+  return child_->DeleteChannelPartnerRepricingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListSkuGroupsResponse>
 CloudChannelServiceAuth::ListSkuGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListSkuGroupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSkuGroups(context, request);
+  return child_->ListSkuGroups(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListSkuGroupBillableSkusResponse>
 CloudChannelServiceAuth::ListSkuGroupBillableSkus(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListSkuGroupBillableSkusRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSkuGroupBillableSkus(context, request);
+  return child_->ListSkuGroupBillableSkus(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::Offer>
 CloudChannelServiceAuth::LookupOffer(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::LookupOfferRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->LookupOffer(context, request);
+  return child_->LookupOffer(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListProductsResponse>
 CloudChannelServiceAuth::ListProducts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListProductsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListProducts(context, request);
+  return child_->ListProducts(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListSkusResponse>
 CloudChannelServiceAuth::ListSkus(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListSkusRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSkus(context, request);
+  return child_->ListSkus(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListOffersResponse>
 CloudChannelServiceAuth::ListOffers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListOffersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListOffers(context, request);
+  return child_->ListOffers(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListPurchasableSkusResponse>
 CloudChannelServiceAuth::ListPurchasableSkus(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListPurchasableSkusRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListPurchasableSkus(context, request);
+  return child_->ListPurchasableSkus(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListPurchasableOffersResponse>
 CloudChannelServiceAuth::ListPurchasableOffers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListPurchasableOffersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListPurchasableOffers(context, request);
+  return child_->ListPurchasableOffers(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::QueryEligibleBillingAccountsResponse>
 CloudChannelServiceAuth::QueryEligibleBillingAccounts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::QueryEligibleBillingAccountsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->QueryEligibleBillingAccounts(context, request);
+  return child_->QueryEligibleBillingAccounts(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
 CloudChannelServiceAuth::RegisterSubscriber(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::RegisterSubscriberRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RegisterSubscriber(context, request);
+  return child_->RegisterSubscriber(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::UnregisterSubscriberResponse>
 CloudChannelServiceAuth::UnregisterSubscriber(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::UnregisterSubscriberRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UnregisterSubscriber(context, request);
+  return child_->UnregisterSubscriber(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListSubscribersResponse>
 CloudChannelServiceAuth::ListSubscribers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListSubscribersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSubscribers(context, request);
+  return child_->ListSubscribers(context, options, request);
 }
 
 StatusOr<google::cloud::channel::v1::ListEntitlementChangesResponse>
 CloudChannelServiceAuth::ListEntitlementChanges(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::channel::v1::ListEntitlementChangesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEntitlementChanges(context, request);
+  return child_->ListEntitlementChanges(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

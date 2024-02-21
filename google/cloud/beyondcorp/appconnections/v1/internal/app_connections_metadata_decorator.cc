@@ -46,22 +46,22 @@ AppConnectionsServiceMetadata::AppConnectionsServiceMetadata(
 StatusOr<
     google::cloud::beyondcorp::appconnections::v1::ListAppConnectionsResponse>
 AppConnectionsServiceMetadata::ListAppConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::beyondcorp::appconnections::v1::
         ListAppConnectionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListAppConnections(context, request);
+  return child_->ListAppConnections(context, options, request);
 }
 
 StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>
 AppConnectionsServiceMetadata::GetAppConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::beyondcorp::appconnections::v1::
         GetAppConnectionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAppConnection(context, request);
+  return child_->GetAppConnection(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -105,12 +105,12 @@ AppConnectionsServiceMetadata::AsyncDeleteAppConnection(
 StatusOr<google::cloud::beyondcorp::appconnections::v1::
              ResolveAppConnectionsResponse>
 AppConnectionsServiceMetadata::ResolveAppConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::beyondcorp::appconnections::v1::
         ResolveAppConnectionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ResolveAppConnections(context, request);
+  return child_->ResolveAppConnections(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -51,7 +51,7 @@ class BigtableStub {
                 google::bigtable::v2::SampleRowKeysRequest const& request) = 0;
 
   virtual StatusOr<google::bigtable::v2::MutateRowResponse> MutateRow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::v2::MutateRowRequest const& request) = 0;
 
   virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -62,16 +62,16 @@ class BigtableStub {
 
   virtual StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
   CheckAndMutateRow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::v2::CheckAndMutateRowRequest const& request) = 0;
 
   virtual StatusOr<google::bigtable::v2::PingAndWarmResponse> PingAndWarm(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::v2::PingAndWarmRequest const& request) = 0;
 
   virtual StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>
   ReadModifyWriteRow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::v2::ReadModifyWriteRowRequest const& request) = 0;
 
   virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
@@ -129,7 +129,7 @@ class DefaultBigtableStub : public BigtableStub {
       google::bigtable::v2::SampleRowKeysRequest const& request) override;
 
   StatusOr<google::bigtable::v2::MutateRowResponse> MutateRow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::v2::MutateRowRequest const& request) override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -139,15 +139,15 @@ class DefaultBigtableStub : public BigtableStub {
              google::bigtable::v2::MutateRowsRequest const& request) override;
 
   StatusOr<google::bigtable::v2::CheckAndMutateRowResponse> CheckAndMutateRow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::v2::CheckAndMutateRowRequest const& request) override;
 
   StatusOr<google::bigtable::v2::PingAndWarmResponse> PingAndWarm(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::v2::PingAndWarmRequest const& request) override;
 
   StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse> ReadModifyWriteRow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::bigtable::v2::ReadModifyWriteRowRequest const& request) override;
 
   std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<

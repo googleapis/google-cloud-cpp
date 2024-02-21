@@ -52,11 +52,11 @@ class ServiceUsageAuth : public ServiceUsageStub {
       override;
 
   StatusOr<google::api::serviceusage::v1::Service> GetService(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::serviceusage::v1::GetServiceRequest const& request) override;
 
   StatusOr<google::api::serviceusage::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::serviceusage::v1::ListServicesRequest const& request)
       override;
 
@@ -67,7 +67,7 @@ class ServiceUsageAuth : public ServiceUsageStub {
       override;
 
   StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
-  BatchGetServices(grpc::ClientContext& context,
+  BatchGetServices(grpc::ClientContext& context, Options const& options,
                    google::api::serviceusage::v1::BatchGetServicesRequest const&
                        request) override;
 

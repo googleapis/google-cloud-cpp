@@ -32,7 +32,7 @@ BinauthzManagementServiceV1Stub::~BinauthzManagementServiceV1Stub() = default;
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
 DefaultBinauthzManagementServiceV1Stub::GetPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::binaryauthorization::v1::GetPolicyRequest const& request) {
   google::cloud::binaryauthorization::v1::Policy response;
   auto status = grpc_stub_->GetPolicy(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultBinauthzManagementServiceV1Stub::GetPolicy(
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
 DefaultBinauthzManagementServiceV1Stub::UpdatePolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
         request) {
   google::cloud::binaryauthorization::v1::Policy response;
@@ -57,7 +57,7 @@ DefaultBinauthzManagementServiceV1Stub::UpdatePolicy(
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
 DefaultBinauthzManagementServiceV1Stub::CreateAttestor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
         request) {
   google::cloud::binaryauthorization::v1::Attestor response;
@@ -70,7 +70,7 @@ DefaultBinauthzManagementServiceV1Stub::CreateAttestor(
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
 DefaultBinauthzManagementServiceV1Stub::GetAttestor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::binaryauthorization::v1::GetAttestorRequest const& request) {
   google::cloud::binaryauthorization::v1::Attestor response;
   auto status = grpc_stub_->GetAttestor(&context, request, &response);
@@ -82,7 +82,7 @@ DefaultBinauthzManagementServiceV1Stub::GetAttestor(
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
 DefaultBinauthzManagementServiceV1Stub::UpdateAttestor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
         request) {
   google::cloud::binaryauthorization::v1::Attestor response;
@@ -95,7 +95,7 @@ DefaultBinauthzManagementServiceV1Stub::UpdateAttestor(
 
 StatusOr<google::cloud::binaryauthorization::v1::ListAttestorsResponse>
 DefaultBinauthzManagementServiceV1Stub::ListAttestors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::binaryauthorization::v1::ListAttestorsRequest const&
         request) {
   google::cloud::binaryauthorization::v1::ListAttestorsResponse response;
@@ -107,7 +107,7 @@ DefaultBinauthzManagementServiceV1Stub::ListAttestors(
 }
 
 Status DefaultBinauthzManagementServiceV1Stub::DeleteAttestor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
         request) {
   google::protobuf::Empty response;

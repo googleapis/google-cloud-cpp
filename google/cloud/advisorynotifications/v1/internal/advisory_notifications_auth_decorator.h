@@ -41,23 +41,23 @@ class AdvisoryNotificationsServiceAuth
 
   StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
   ListNotifications(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::advisorynotifications::v1::ListNotificationsRequest const&
           request) override;
 
   StatusOr<google::cloud::advisorynotifications::v1::Notification>
   GetNotification(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::advisorynotifications::v1::GetNotificationRequest const&
           request) override;
 
   StatusOr<google::cloud::advisorynotifications::v1::Settings> GetSettings(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::advisorynotifications::v1::GetSettingsRequest const&
           request) override;
 
   StatusOr<google::cloud::advisorynotifications::v1::Settings> UpdateSettings(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
           request) override;
 

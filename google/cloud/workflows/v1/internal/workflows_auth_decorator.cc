@@ -33,19 +33,19 @@ WorkflowsAuth::WorkflowsAuth(
 
 StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse>
 WorkflowsAuth::ListWorkflows(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::v1::ListWorkflowsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListWorkflows(context, request);
+  return child_->ListWorkflows(context, options, request);
 }
 
 StatusOr<google::cloud::workflows::v1::Workflow> WorkflowsAuth::GetWorkflow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::v1::GetWorkflowRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetWorkflow(context, request);
+  return child_->GetWorkflow(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

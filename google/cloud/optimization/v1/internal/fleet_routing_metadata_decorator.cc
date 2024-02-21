@@ -44,11 +44,11 @@ FleetRoutingMetadata::FleetRoutingMetadata(
 
 StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
 FleetRoutingMetadata::OptimizeTours(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::optimization::v1::OptimizeToursRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->OptimizeTours(context, request);
+  return child_->OptimizeTours(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
