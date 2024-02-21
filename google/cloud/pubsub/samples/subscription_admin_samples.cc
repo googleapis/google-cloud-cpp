@@ -140,12 +140,12 @@ void CreateBigQuerySubscription(
 void CreateCloudStorageSubscription(
     google::cloud::pubsub_admin::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
+  // [START pubsub_create_cloud_storage_subscription]
   namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::SubscriptionAdminClient client,
      std::string const& project_id, std::string const& topic_id,
      std::string const& subscription_id, std::string const& bucket) {
-    // [START pubsub_create_cloud_storage_subscription]
     google::pubsub::v1::Subscription request;
     request.set_name(
         pubsub::Subscription(project_id, subscription_id).FullName());
@@ -260,8 +260,9 @@ void CreateFilteredSubscription(
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
-    // [END pubsub_create_subscription_with_filter]
-  }(std::move(client), argv.at(0), argv.at(1), argv.at(2));
+  }
+  // [END pubsub_create_subscription_with_filter]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void CreateOrderingSubscription(
