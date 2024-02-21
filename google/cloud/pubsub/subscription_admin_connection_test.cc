@@ -53,7 +53,7 @@ TEST(SubscriptionAdminConnectionTest, Create) {
 
   EXPECT_CALL(*mock, CreateSubscription)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
-      .WillOnce([&](grpc::ClientContext&,
+      .WillOnce([&](grpc::ClientContext&, Options const&,
                     google::pubsub::v1::Subscription const& request) {
         EXPECT_EQ(subscription.FullName(), request.name());
         return make_status_or(request);
@@ -76,7 +76,7 @@ TEST(SubscriptionAdminConnectionTest, CreateWithMetadata) {
 
   EXPECT_CALL(*mock, CreateSubscription)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
-      .WillOnce([&](grpc::ClientContext& context,
+      .WillOnce([&](grpc::ClientContext& context, Options const&,
                     google::pubsub::v1::Subscription const& request) {
         testing_util::ValidateMetadataFixture fixture;
         fixture.IsContextMDValid(
@@ -102,7 +102,7 @@ TEST(SubscriptionAdminConnectionTest, List) {
   EXPECT_CALL(*mock, ListSubscriptions)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(
-          [&](grpc::ClientContext&,
+          [&](grpc::ClientContext&, Options const&,
               google::pubsub::v1::ListSubscriptionsRequest const& request) {
             EXPECT_EQ("projects/test-project-id", request.project());
             EXPECT_TRUE(request.page_token().empty());
@@ -133,7 +133,7 @@ TEST(SubscriptionAdminConnectionTest, Get) {
 
   EXPECT_CALL(*mock, GetSubscription)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
-      .WillOnce([&](grpc::ClientContext&,
+      .WillOnce([&](grpc::ClientContext&, Options const&,
                     google::pubsub::v1::GetSubscriptionRequest const& request) {
         EXPECT_EQ(subscription.FullName(), request.subscription());
         return make_status_or(expected);
@@ -153,7 +153,7 @@ TEST(SubscriptionAdminConnectionTest, Update) {
   EXPECT_CALL(*mock, UpdateSubscription)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(
-          [&](grpc::ClientContext&,
+          [&](grpc::ClientContext&, Options const&,
               google::pubsub::v1::UpdateSubscriptionRequest const& request) {
             EXPECT_EQ(subscription.FullName(), request.subscription().name());
             EXPECT_THAT(request.update_mask().paths(),
@@ -189,7 +189,7 @@ TEST(SubscriptionAdminConnectionTest, DeleteWithLogging) {
   EXPECT_CALL(*mock, DeleteSubscription)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(
-          [&](grpc::ClientContext&,
+          [&](grpc::ClientContext&, Options const&,
               google::pubsub::v1::DeleteSubscriptionRequest const& request) {
             EXPECT_EQ(subscription.FullName(), request.subscription());
             return Status{};
@@ -212,7 +212,7 @@ TEST(SubscriptionAdminConnectionTest, ModifyPushConfig) {
   EXPECT_CALL(*mock, ModifyPushConfig)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(
-          [&](grpc::ClientContext&,
+          [&](grpc::ClientContext&, Options const&,
               google::pubsub::v1::ModifyPushConfigRequest const& request) {
             EXPECT_EQ(subscription.FullName(), request.subscription());
             return Status{};
@@ -240,7 +240,7 @@ TEST(SubscriptionAdminConnectionTest, CreateSnapshot) {
 
   EXPECT_CALL(*mock, CreateSnapshot)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
-      .WillOnce([&](grpc::ClientContext&,
+      .WillOnce([&](grpc::ClientContext&, Options const&,
                     google::pubsub::v1::CreateSnapshotRequest const& request) {
         EXPECT_EQ(subscription.FullName(), request.subscription());
         EXPECT_FALSE(request.name().empty());
@@ -285,7 +285,7 @@ TEST(SubscriptionAdminConnectionTest, GetSnapshot) {
 
   EXPECT_CALL(*mock, GetSnapshot)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
-      .WillOnce([&](grpc::ClientContext&,
+      .WillOnce([&](grpc::ClientContext&, Options const&,
                     google::pubsub::v1::GetSnapshotRequest const& request) {
         EXPECT_EQ(snapshot.FullName(), request.snapshot());
 
@@ -304,7 +304,7 @@ TEST(SubscriptionAdminConnectionTest, ListSnapshots) {
 
   EXPECT_CALL(*mock, ListSnapshots)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
-      .WillOnce([&](grpc::ClientContext&,
+      .WillOnce([&](grpc::ClientContext&, Options const&,
                     google::pubsub::v1::ListSnapshotsRequest const& request) {
         EXPECT_EQ("projects/test-project-id", request.project());
         EXPECT_TRUE(request.page_token().empty());
@@ -335,7 +335,7 @@ TEST(SubscriptionAdminConnectionTest, UpdateSnapshot) {
 
   EXPECT_CALL(*mock, UpdateSnapshot)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
-      .WillOnce([&](grpc::ClientContext&,
+      .WillOnce([&](grpc::ClientContext&, Options const&,
                     google::pubsub::v1::UpdateSnapshotRequest const& request) {
         EXPECT_EQ(snapshot.FullName(), request.snapshot().name());
         return make_status_or(expected);
@@ -355,7 +355,7 @@ TEST(SubscriptionAdminConnectionTest, DeleteSnapshot) {
 
   EXPECT_CALL(*mock, DeleteSnapshot)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
-      .WillOnce([&](grpc::ClientContext&,
+      .WillOnce([&](grpc::ClientContext&, Options const&,
                     google::pubsub::v1::DeleteSnapshotRequest const& request) {
         EXPECT_EQ(snapshot.FullName(), request.snapshot());
         return Status{};
@@ -375,7 +375,7 @@ TEST(SubscriptionAdminConnectionTest, Seek) {
 
   EXPECT_CALL(*mock, Seek)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
-      .WillOnce([&](grpc::ClientContext&,
+      .WillOnce([&](grpc::ClientContext&, Options const&,
                     google::pubsub::v1::SeekRequest const& request) {
         EXPECT_EQ(subscription.FullName(), request.subscription());
         EXPECT_EQ(snapshot.FullName(), request.snapshot());
