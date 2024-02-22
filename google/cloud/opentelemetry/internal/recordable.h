@@ -20,6 +20,7 @@
 #include <google/devtools/cloudtrace/v2/trace.pb.h>
 #include <google/devtools/cloudtrace/v2/tracing.pb.h>
 #include <opentelemetry/common/attribute_value.h>
+#include <opentelemetry/version.h>
 #include <opentelemetry/sdk/trace/recordable.h>
 
 namespace google {
@@ -125,6 +126,11 @@ class Recordable final : public opentelemetry::sdk::trace::Recordable {
       opentelemetry::nostd::string_view description) noexcept override;
 
   void SetName(opentelemetry::nostd::string_view name) noexcept override;
+
+#if OPENTELEMETRY_VERSION_MAJOR > 1 || \
+    (OPENTELEMETRY_VERSION_MAJOR == 1 && OPENTELEMETRY_VERSION_MINOR >= 14)
+  void SetTraceFlags(opentelemetry::trace::TraceFlags) noexcept override {}
+#endif
 
   void SetSpanKind(opentelemetry::trace::SpanKind span_kind) noexcept override;
 
