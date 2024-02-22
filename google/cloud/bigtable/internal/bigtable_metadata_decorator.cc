@@ -282,6 +282,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 BigtableMetadata::AsyncReadRows(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::ReadRowsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -305,12 +306,12 @@ BigtableMetadata::AsyncReadRows(
   }
 
   if (params.empty()) {
-    SetMetadata(*context, internal::CurrentOptions());
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncReadRows(cq, std::move(context), request);
+  return child_->AsyncReadRows(cq, std::move(context), std::move(options),
+                               request);
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
@@ -318,6 +319,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 BigtableMetadata::AsyncSampleRowKeys(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::SampleRowKeysRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -341,12 +343,12 @@ BigtableMetadata::AsyncSampleRowKeys(
   }
 
   if (params.empty()) {
-    SetMetadata(*context, internal::CurrentOptions());
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncSampleRowKeys(cq, std::move(context), request);
+  return child_->AsyncSampleRowKeys(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::bigtable::v2::MutateRowResponse>>
@@ -389,6 +391,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 BigtableMetadata::AsyncMutateRows(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::MutateRowsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -412,12 +415,12 @@ BigtableMetadata::AsyncMutateRows(
   }
 
   if (params.empty()) {
-    SetMetadata(*context, internal::CurrentOptions());
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncMutateRows(cq, std::move(context), request);
+  return child_->AsyncMutateRows(cq, std::move(context), std::move(options),
+                                 request);
 }
 
 future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>

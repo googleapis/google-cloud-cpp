@@ -259,8 +259,10 @@ std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
 StorageRoundRobin::AsyncReadObject(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::ReadObjectRequest const& request) {
-  return Child()->AsyncReadObject(cq, std::move(context), request);
+  return Child()->AsyncReadObject(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 std::unique_ptr<google::cloud::internal::AsyncStreamingWriteRpc<

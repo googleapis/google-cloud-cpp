@@ -78,6 +78,7 @@ class BigtableStub {
       google::bigtable::v2::ReadRowsResponse>>
   AsyncReadRows(google::cloud::CompletionQueue const& cq,
                 std::shared_ptr<grpc::ClientContext> context,
+                google::cloud::internal::ImmutableOptions options,
                 google::bigtable::v2::ReadRowsRequest const& request) = 0;
 
   virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
@@ -85,6 +86,7 @@ class BigtableStub {
   AsyncSampleRowKeys(
       google::cloud::CompletionQueue const& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::bigtable::v2::SampleRowKeysRequest const& request) = 0;
 
   virtual future<StatusOr<google::bigtable::v2::MutateRowResponse>>
@@ -96,6 +98,7 @@ class BigtableStub {
       google::bigtable::v2::MutateRowsResponse>>
   AsyncMutateRows(google::cloud::CompletionQueue const& cq,
                   std::shared_ptr<grpc::ClientContext> context,
+                  google::cloud::internal::ImmutableOptions options,
                   google::bigtable::v2::MutateRowsRequest const& request) = 0;
 
   virtual future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>
@@ -154,6 +157,7 @@ class DefaultBigtableStub : public BigtableStub {
       google::bigtable::v2::ReadRowsResponse>>
   AsyncReadRows(google::cloud::CompletionQueue const& cq,
                 std::shared_ptr<grpc::ClientContext> context,
+                google::cloud::internal::ImmutableOptions options,
                 google::bigtable::v2::ReadRowsRequest const& request) override;
 
   std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
@@ -161,6 +165,7 @@ class DefaultBigtableStub : public BigtableStub {
   AsyncSampleRowKeys(
       google::cloud::CompletionQueue const& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::bigtable::v2::SampleRowKeysRequest const& request) override;
 
   future<StatusOr<google::bigtable::v2::MutateRowResponse>> AsyncMutateRow(
@@ -173,6 +178,7 @@ class DefaultBigtableStub : public BigtableStub {
   AsyncMutateRows(
       google::cloud::CompletionQueue const& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::bigtable::v2::MutateRowsRequest const& request) override;
 
   future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>

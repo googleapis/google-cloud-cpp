@@ -197,6 +197,7 @@ class StorageStub {
       google::storage::v2::ReadObjectResponse>>
   AsyncReadObject(google::cloud::CompletionQueue const& cq,
                   std::shared_ptr<grpc::ClientContext> context,
+                  google::cloud::internal::ImmutableOptions options,
                   google::storage::v2::ReadObjectRequest const& request) = 0;
 
   virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
@@ -387,6 +388,7 @@ class DefaultStorageStub : public StorageStub {
   AsyncReadObject(
       google::cloud::CompletionQueue const& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::storage::v2::ReadObjectRequest const& request) override;
 
   std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
