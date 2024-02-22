@@ -28,11 +28,14 @@
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/call_context.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
 #include <chrono>
+#include <memory>
 #include <queue>
 #include <string>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -92,7 +95,9 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
         reverse_(std::move(reverse)),
         retry_policy_(std::move(retry_policy)),
         backoff_policy_(std::move(backoff_policy)),
-        enable_server_retries_(enable_server_retries) {}
+        enable_server_retries_(enable_server_retries),
+        options_(internal::SaveCurrentOptions()),
+        call_context_(options_) {}
 
   void MakeRequest();
 
@@ -168,6 +173,7 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
   Status status_;
   /// Tracks the level of recursion of TryGiveRowToUser
   int recursion_level_ = 0;
+  internal::ImmutableOptions options_;
   internal::CallContext call_context_;
   std::shared_ptr<grpc::ClientContext> context_;
   std::shared_ptr<RetryContext> retry_context_ =

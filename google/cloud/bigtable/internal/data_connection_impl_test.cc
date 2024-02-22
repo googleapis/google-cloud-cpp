@@ -850,7 +850,7 @@ TEST_F(DataConnectionTest, AsyncBulkApply) {
     EXPECT_CALL(*mock_limiter, AsyncAcquire)
         .WillOnce(Return(ByMove(make_ready_future())));
     EXPECT_CALL(*mock_stub, AsyncMutateRows)
-        .WillOnce([](CompletionQueue const&, auto,
+        .WillOnce([](CompletionQueue const&, auto, auto,
                      v2::MutateRowsRequest const& request) {
           EXPECT_EQ(kAppProfile, request.app_profile_id());
           EXPECT_EQ(kTableName, request.table_name());
@@ -1667,7 +1667,7 @@ TEST_F(DataConnectionTest, SampleRowsRetryInfoIgnored) {
 TEST_F(DataConnectionTest, AsyncSampleRows) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
-      .WillOnce([](CompletionQueue const&, auto,
+      .WillOnce([](CompletionQueue const&, auto, auto,
                    v2::SampleRowKeysRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1873,17 +1873,17 @@ TEST_F(DataConnectionTest, AsyncReadModifyWriteRowTransientErrorNotRetried) {
 TEST_F(DataConnectionTest, AsyncReadRows) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce(
-          [](CompletionQueue const&, auto, v2::ReadRowsRequest const& request) {
-            EXPECT_EQ(kAppProfile, request.app_profile_id());
-            EXPECT_EQ(kTableName, request.table_name());
-            EXPECT_EQ(42, request.rows_limit());
-            EXPECT_THAT(request, HasTestRowSet());
-            EXPECT_THAT(request.filter(), IsTestFilter());
-            using ErrorStream =
-                internal::AsyncStreamingReadRpcError<v2::ReadRowsResponse>;
-            return std::make_unique<ErrorStream>(PermanentError());
-          });
+      .WillOnce([](CompletionQueue const&, auto, auto,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ(42, request.rows_limit());
+        EXPECT_THAT(request, HasTestRowSet());
+        EXPECT_THAT(request.filter(), IsTestFilter());
+        using ErrorStream =
+            internal::AsyncStreamingReadRpcError<v2::ReadRowsResponse>;
+        return std::make_unique<ErrorStream>(PermanentError());
+      });
 
   MockFunction<future<bool>(bigtable::Row const&)> on_row;
   EXPECT_CALL(on_row, Call).Times(0);
@@ -1903,13 +1903,13 @@ TEST_F(DataConnectionTest, AsyncReadRows) {
 TEST_F(DataConnectionTest, AsyncReadRowsReverseScan) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce(
-          [](CompletionQueue const&, auto, v2::ReadRowsRequest const& request) {
-            EXPECT_TRUE(request.reversed());
-            using ErrorStream =
-                internal::AsyncStreamingReadRpcError<v2::ReadRowsResponse>;
-            return std::make_unique<ErrorStream>(PermanentError());
-          });
+      .WillOnce([](CompletionQueue const&, auto, auto,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_TRUE(request.reversed());
+        using ErrorStream =
+            internal::AsyncStreamingReadRpcError<v2::ReadRowsResponse>;
+        return std::make_unique<ErrorStream>(PermanentError());
+      });
 
   MockFunction<future<bool>(bigtable::Row const&)> on_row;
   EXPECT_CALL(on_row, Call).Times(0);
@@ -1929,7 +1929,7 @@ TEST_F(DataConnectionTest, AsyncReadRowsReverseScan) {
 TEST_F(DataConnectionTest, AsyncReadRowEmpty) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce([](CompletionQueue const&, auto,
+      .WillOnce([](CompletionQueue const&, auto, auto,
                    v2::ReadRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1960,7 +1960,7 @@ TEST_F(DataConnectionTest, AsyncReadRowEmpty) {
 TEST_F(DataConnectionTest, AsyncReadRowSuccess) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce([](CompletionQueue const&, auto,
+      .WillOnce([](CompletionQueue const&, auto, auto,
                    v2::ReadRowsRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -2003,18 +2003,18 @@ TEST_F(DataConnectionTest, AsyncReadRowSuccess) {
 TEST_F(DataConnectionTest, AsyncReadRowFailure) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadRows)
-      .WillOnce(
-          [](CompletionQueue const&, auto, v2::ReadRowsRequest const& request) {
-            EXPECT_EQ(kAppProfile, request.app_profile_id());
-            EXPECT_EQ(kTableName, request.table_name());
-            EXPECT_EQ(1, request.rows_limit());
-            EXPECT_THAT(request.rows().row_keys(), ElementsAre("row"));
-            EXPECT_THAT(request.filter(), IsTestFilter());
+      .WillOnce([](CompletionQueue const&, auto, auto,
+                   v2::ReadRowsRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ(1, request.rows_limit());
+        EXPECT_THAT(request.rows().row_keys(), ElementsAre("row"));
+        EXPECT_THAT(request.filter(), IsTestFilter());
 
-            using ErrorStream =
-                internal::AsyncStreamingReadRpcError<v2::ReadRowsResponse>;
-            return std::make_unique<ErrorStream>(PermanentError());
-          });
+        using ErrorStream =
+            internal::AsyncStreamingReadRpcError<v2::ReadRowsResponse>;
+        return std::make_unique<ErrorStream>(PermanentError());
+      });
 
   auto conn = TestConnection(std::move(mock));
   internal::OptionsSpan span(CallOptions());

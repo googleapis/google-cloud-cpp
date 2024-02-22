@@ -57,7 +57,9 @@ AsyncBulkApplier::AsyncBulkApplier(
       backoff_policy_(std::move(backoff_policy)),
       enable_server_retries_(enable_server_retries),
       state_(app_profile_id, table_name, idempotent_policy, std::move(mut)),
-      promise_([this] { keep_reading_ = false; }) {}
+      promise_([this] { keep_reading_ = false; }),
+      options_(internal::SaveCurrentOptions()),
+      call_context_(options_) {}
 
 void AsyncBulkApplier::StartIteration() {
   auto self = this->shared_from_this();
@@ -75,7 +77,7 @@ void AsyncBulkApplier::MakeRequest() {
 
   auto self = this->shared_from_this();
   PerformAsyncStreamingRead(
-      stub_->AsyncMutateRows(cq_, context_, state_.BeforeStart()),
+      stub_->AsyncMutateRows(cq_, context_, options_, state_.BeforeStart()),
       [self](google::bigtable::v2::MutateRowsResponse r) {
         self->OnRead(std::move(r));
         return make_ready_future(self->keep_reading_.load());

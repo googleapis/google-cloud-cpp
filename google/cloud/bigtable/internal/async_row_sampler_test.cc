@@ -84,7 +84,7 @@ class AsyncSampleRowKeysTest : public ::testing::Test {
 TEST_F(AsyncSampleRowKeysTest, Simple) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
-      .WillOnce([](CompletionQueue const&, auto,
+      .WillOnce([](CompletionQueue const&, auto, auto,
                    v2::SampleRowKeysRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -133,7 +133,7 @@ TEST_F(AsyncSampleRowKeysTest, Simple) {
 TEST_F(AsyncSampleRowKeysTest, RetryResetsSamples) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
-      .WillOnce([this](CompletionQueue const&, auto context,
+      .WillOnce([this](CompletionQueue const&, auto context, auto,
                        v2::SampleRowKeysRequest const& request) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
@@ -155,7 +155,7 @@ TEST_F(AsyncSampleRowKeysTest, RetryResetsSamples) {
         });
         return stream;
       })
-      .WillOnce([](CompletionQueue const&, auto,
+      .WillOnce([](CompletionQueue const&, auto, auto,
                    v2::SampleRowKeysRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -206,7 +206,7 @@ TEST_F(AsyncSampleRowKeysTest, TooManyFailures) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
       .Times(kNumRetries + 1)
-      .WillRepeatedly([this](CompletionQueue const&, auto context,
+      .WillRepeatedly([this](CompletionQueue const&, auto context, auto,
                              v2::SampleRowKeysRequest const& request) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_EQ(kAppProfile, request.app_profile_id());
@@ -251,7 +251,7 @@ TEST_F(AsyncSampleRowKeysTest, TooManyFailures) {
 TEST_F(AsyncSampleRowKeysTest, RetryInfoHeeded) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
-      .WillOnce([this](CompletionQueue const&, auto context,
+      .WillOnce([this](CompletionQueue const&, auto context, auto,
                        v2::SampleRowKeysRequest const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         auto stream = std::make_unique<MockAsyncSampleRowKeysStream>();
@@ -265,7 +265,7 @@ TEST_F(AsyncSampleRowKeysTest, RetryInfoHeeded) {
         });
         return stream;
       })
-      .WillOnce([this](CompletionQueue const&, auto context,
+      .WillOnce([this](CompletionQueue const&, auto context, auto,
                        v2::SampleRowKeysRequest const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         auto stream = std::make_unique<MockAsyncSampleRowKeysStream>();
@@ -305,7 +305,7 @@ TEST_F(AsyncSampleRowKeysTest, RetryInfoHeeded) {
 TEST_F(AsyncSampleRowKeysTest, RetryInfoIgnored) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
-      .WillOnce([this](CompletionQueue const&, auto context,
+      .WillOnce([this](CompletionQueue const&, auto context, auto,
                        v2::SampleRowKeysRequest const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         auto stream = std::make_unique<MockAsyncSampleRowKeysStream>();
@@ -338,7 +338,7 @@ TEST_F(AsyncSampleRowKeysTest, RetryInfoIgnored) {
 TEST_F(AsyncSampleRowKeysTest, TimerError) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
-      .WillOnce([this](CompletionQueue const&, auto context,
+      .WillOnce([this](CompletionQueue const&, auto context, auto,
                        v2::SampleRowKeysRequest const& request) {
         metadata_fixture_.SetServerMetadata(*context);
         EXPECT_EQ(kAppProfile, request.app_profile_id());
@@ -386,7 +386,7 @@ TEST_F(AsyncSampleRowKeysTest, CancelAfterSuccess) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
-      .WillOnce([&p](CompletionQueue const&, auto,
+      .WillOnce([&p](CompletionQueue const&, auto, auto,
                      v2::SampleRowKeysRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -438,7 +438,7 @@ TEST_F(AsyncSampleRowKeysTest, CancelMidStream) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
-      .WillOnce([&p](CompletionQueue const&, auto,
+      .WillOnce([&p](CompletionQueue const&, auto, auto,
                      v2::SampleRowKeysRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -503,7 +503,7 @@ TEST_F(AsyncSampleRowKeysTest, CurrentOptionsContinuedOnRetries) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
       .Times(2)
-      .WillRepeatedly([this](CompletionQueue const&, auto context,
+      .WillRepeatedly([this](CompletionQueue const&, auto context, auto,
                              v2::SampleRowKeysRequest const&) {
         EXPECT_EQ(5, internal::CurrentOptions().get<TestOption>());
         metadata_fixture_.SetServerMetadata(*context);
@@ -549,7 +549,7 @@ TEST_F(AsyncSampleRowKeysTest, CurrentOptionsContinuedOnRetries) {
 TEST_F(AsyncSampleRowKeysTest, BigtableCookie) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
-      .WillOnce([this](CompletionQueue const&, auto context,
+      .WillOnce([this](CompletionQueue const&, auto context, auto,
                        v2::SampleRowKeysRequest const&) {
         // Return a bigtable cookie in the first request.
         metadata_fixture_.SetServerMetadata(
@@ -563,7 +563,7 @@ TEST_F(AsyncSampleRowKeysTest, BigtableCookie) {
         });
         return stream;
       })
-      .WillOnce([this](CompletionQueue const&, auto context,
+      .WillOnce([this](CompletionQueue const&, auto context, auto,
                        v2::SampleRowKeysRequest const&) {
         // Verify that the next request includes the bigtable cookie from above.
         auto headers = metadata_fixture_.GetMetadata(*context);
@@ -613,7 +613,7 @@ TEST_F(AsyncSampleRowKeysTest, TracedBackoff) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
       .Times(kNumRetries + 1)
-      .WillRepeatedly([this](auto&, auto context, auto const&) {
+      .WillRepeatedly([this](auto&, auto context, auto, auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         return std::make_unique<ErrorStream>(
             internal::UnavailableError("try again"));
@@ -642,7 +642,7 @@ TEST_F(AsyncSampleRowKeysTest, CallSpanActiveThroughout) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncSampleRowKeys)
       .Times(kNumRetries + 1)
-      .WillRepeatedly([this, span](auto&, auto context, auto const&) {
+      .WillRepeatedly([this, span](auto&, auto context, auto, auto const&) {
         metadata_fixture_.SetServerMetadata(*context, {});
         EXPECT_THAT(span, IsActive());
         return std::make_unique<ErrorStream>(
