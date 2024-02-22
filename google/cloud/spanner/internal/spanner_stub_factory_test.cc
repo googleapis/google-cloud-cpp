@@ -43,7 +43,7 @@ using ::testing::Return;
 TEST(DecorateSpannerStub, Auth) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   EXPECT_CALL(*mock, CreateSession)
-      .WillOnce([](grpc::ClientContext& context,
+      .WillOnce([](grpc::ClientContext& context, Options const&,
                    google::spanner::v1::CreateSessionRequest const&) {
         EXPECT_THAT(context.credentials(), NotNull());
         return internal::AbortedError("fail");
@@ -61,8 +61,7 @@ TEST(DecorateSpannerStub, Auth) {
   ASSERT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  auto session =
-      stub->CreateSession(context, google::spanner::v1::CreateSessionRequest());
+  auto session = stub->CreateSession(context, Options{}, {});
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 }
 
@@ -70,7 +69,7 @@ TEST(DecorateSpannerStub, Metadata) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto const db = spanner::Database("foo", "bar", "baz");
   EXPECT_CALL(*mock, CreateSession)
-      .WillOnce([&db](grpc::ClientContext& context,
+      .WillOnce([&db](grpc::ClientContext& context, Options const&,
                       google::spanner::v1::CreateSessionRequest const&) {
         testing_util::ValidateMetadataFixture fixture;
         auto metadata = fixture.GetMetadata(context);
@@ -86,8 +85,7 @@ TEST(DecorateSpannerStub, Metadata) {
   ASSERT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  auto session =
-      stub->CreateSession(context, google::spanner::v1::CreateSessionRequest());
+  auto session = stub->CreateSession(context, Options{}, {});
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 }
 
@@ -107,8 +105,7 @@ TEST(DecorateSpannerStub, Logging) {
   ASSERT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  auto session =
-      stub->CreateSession(context, google::spanner::v1::CreateSessionRequest());
+  auto session = stub->CreateSession(context, Options{}, {});
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 
   EXPECT_THAT(log.ExtractLines(),
@@ -126,10 +123,11 @@ TEST(DecorateSpannerStub, TracingEnabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
-  EXPECT_CALL(*mock, CreateSession).WillOnce([](auto& context, auto const&) {
-    testing_util::ValidatePropagator(context);
-    return internal::AbortedError("fail");
-  });
+  EXPECT_CALL(*mock, CreateSession)
+      .WillOnce([](auto& context, auto const&, auto const&) {
+        testing_util::ValidatePropagator(context);
+        return internal::AbortedError("fail");
+      });
   auto opts = EnableTracing(
       Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials()));
   internal::AutomaticallyCreatedBackgroundThreads background;
@@ -139,8 +137,7 @@ TEST(DecorateSpannerStub, TracingEnabled) {
   ASSERT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  auto session =
-      stub->CreateSession(context, google::spanner::v1::CreateSessionRequest());
+  auto session = stub->CreateSession(context, Options{}, {});
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 
   EXPECT_THAT(
@@ -152,10 +149,11 @@ TEST(DecorateSpannerStub, TracingDisabled) {
   auto span_catcher = testing_util::InstallSpanCatcher();
 
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
-  EXPECT_CALL(*mock, CreateSession).WillOnce([](auto& context, auto const&) {
-    testing_util::ValidateNoPropagator(context);
-    return internal::AbortedError("fail");
-  });
+  EXPECT_CALL(*mock, CreateSession)
+      .WillOnce([](auto& context, auto const&, auto const&) {
+        testing_util::ValidateNoPropagator(context);
+        return internal::AbortedError("fail");
+      });
   auto opts = DisableTracing(
       Options{}.set<UnifiedCredentialsOption>(MakeInsecureCredentials()));
   internal::AutomaticallyCreatedBackgroundThreads background;
@@ -165,8 +163,7 @@ TEST(DecorateSpannerStub, TracingDisabled) {
   EXPECT_NE(stub, nullptr);
 
   grpc::ClientContext context;
-  auto session =
-      stub->CreateSession(context, google::spanner::v1::CreateSessionRequest());
+  auto session = stub->CreateSession(context, Options{}, {});
   EXPECT_THAT(session, StatusIs(StatusCode::kAborted));
 
   EXPECT_THAT(span_catcher->GetSpans(), IsEmpty());
