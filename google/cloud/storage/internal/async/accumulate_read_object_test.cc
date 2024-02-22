@@ -361,12 +361,12 @@ TEST(AsyncAccumulateReadObjectTest, FullSimple) {
 
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, AsyncReadObject)
-      .WillOnce([&](Unused, Unused, ReadObjectRequest const& request) {
+      .WillOnce([&](Unused, Unused, Unused, ReadObjectRequest const& request) {
         EXPECT_EQ(request.read_offset(), kReadOffset);
         EXPECT_EQ(request.read_limit(), kReadLimit);
         return MakeMockStreamPartial(0, r0, StatusCode::kUnavailable);
       })
-      .WillOnce([&](Unused, Unused, ReadObjectRequest const& request) {
+      .WillOnce([&](Unused, Unused, Unused, ReadObjectRequest const& request) {
         EXPECT_EQ(request.read_offset(), kReadOffset + r0_size);
         EXPECT_EQ(request.read_limit(), kReadLimit - r0_size);
         EXPECT_EQ(request.generation(), 123456);
@@ -380,7 +380,7 @@ TEST(AsyncAccumulateReadObjectTest, FullSimple) {
 
   CompletionQueue cq;
   auto runner = std::thread{[](CompletionQueue cq) { cq.Run(); }, cq};
-  auto options =
+  auto options = google::cloud::internal::MakeImmutableOptions(
       Options{}
           .set<storage::RetryPolicyOption>(
               storage::LimitedErrorCountRetryPolicy(3).clone())
@@ -389,7 +389,7 @@ TEST(AsyncAccumulateReadObjectTest, FullSimple) {
                                                 std::chrono::microseconds(4),
                                                 2.0)
                   .clone())
-          .set<storage::DownloadStallTimeoutOption>(std::chrono::minutes(1));
+          .set<storage::DownloadStallTimeoutOption>(std::chrono::minutes(1)));
   ReadObjectRequest request;
   request.set_read_offset(kReadOffset);
   request.set_read_limit(kReadLimit);
@@ -409,16 +409,14 @@ TEST(AsyncAccumulateReadObjectTest, FullSimple) {
 
 TEST(AsyncAccumulateReadObjectTest, FullTooManyTransients) {
   auto mock = std::make_shared<MockStorageStub>();
-  EXPECT_CALL(*mock, AsyncReadObject)
-      .Times(4)
-      .WillRepeatedly([](Unused, Unused, Unused) {
-        return MakeMockStreamPartial(0, ReadObjectResponse{},
-                                     StatusCode::kUnavailable);
-      });
+  EXPECT_CALL(*mock, AsyncReadObject).Times(4).WillRepeatedly([] {
+    return MakeMockStreamPartial(0, ReadObjectResponse{},
+                                 StatusCode::kUnavailable);
+  });
 
   CompletionQueue cq;
   auto runner = std::thread{[](CompletionQueue cq) { cq.Run(); }, cq};
-  auto options =
+  auto options = google::cloud::internal::MakeImmutableOptions(
       Options{}
           .set<storage::RetryPolicyOption>(
               storage::LimitedErrorCountRetryPolicy(3).clone())
@@ -427,7 +425,7 @@ TEST(AsyncAccumulateReadObjectTest, FullTooManyTransients) {
                                                 std::chrono::microseconds(4),
                                                 2.0)
                   .clone())
-          .set<storage::DownloadStallTimeoutOption>(std::chrono::minutes(1));
+          .set<storage::DownloadStallTimeoutOption>(std::chrono::minutes(1)));
   auto response =
       AsyncAccumulateReadObjectFull(
           cq, mock, []() { return std::make_shared<grpc::ClientContext>(); },
@@ -446,7 +444,7 @@ TEST(AsyncAccumulateReadObjectTest, PermanentFailure) {
 
   CompletionQueue cq;
   auto runner = std::thread{[](CompletionQueue cq) { cq.Run(); }, cq};
-  auto options =
+  auto options = google::cloud::internal::MakeImmutableOptions(
       Options{}
           .set<storage::RetryPolicyOption>(
               storage::LimitedErrorCountRetryPolicy(3).clone())
@@ -455,7 +453,7 @@ TEST(AsyncAccumulateReadObjectTest, PermanentFailure) {
                                                 std::chrono::microseconds(4),
                                                 2.0)
                   .clone())
-          .set<storage::DownloadStallTimeoutOption>(std::chrono::minutes(1));
+          .set<storage::DownloadStallTimeoutOption>(std::chrono::minutes(1)));
   auto response =
       AsyncAccumulateReadObjectFull(
           cq, mock, []() { return std::make_shared<grpc::ClientContext>(); },

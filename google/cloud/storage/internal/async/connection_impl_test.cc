@@ -313,10 +313,12 @@ TEST_F(AsyncConnectionImplTest, AsyncReadObject) {
       .WillOnce([&](CompletionQueue const&,
                     // NOLINTNEXTLINE(performance-unnecessary-value-param)
                     std::shared_ptr<grpc::ClientContext> context,
+                    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+                    google::cloud::internal::ImmutableOptions options,
                     google::storage::v2::ReadObjectRequest const& request) {
         // Verify at least one option is initialized with the correct
         // values.
-        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
+        EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(*context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),

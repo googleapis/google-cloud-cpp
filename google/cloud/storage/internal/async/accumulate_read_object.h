@@ -108,9 +108,9 @@ future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectPartial(
  *     std::function<std::shared_ptr<grpc::ClientContext>()> context_factory,
  *     google::storage::v2::ReadObjectRequest request,
  *     std::chrono::milliseconds timeout,
- *     Options const& options) {
- *   auto retry = options.get<storage::RetryPolicyOption>()->clone();
- *   auto backoff = options.get<storage::BackoffPolicyOption>()->clone();
+ *     google::cloud::internal::ImmutableOptions options) {
+ *   auto retry = options->get<storage::RetryPolicyOption>()->clone();
+ *   auto backoff = options->get<storage::BackoffPolicyOption>()->clone();
  *   // We will use a variable of the coroutine to accumulate the (partial)
  *   // reads.
  *   AsyncAccumulateReadObjectResult result;
@@ -169,7 +169,8 @@ future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectPartial(
 future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectFull(
     CompletionQueue cq, std::shared_ptr<StorageStub> stub,
     std::function<std::shared_ptr<grpc::ClientContext>()> context_factory,
-    google::storage::v2::ReadObjectRequest request, Options const& options);
+    google::storage::v2::ReadObjectRequest request,
+    google::cloud::internal::ImmutableOptions options);
 
 /// Convert the proto into a representation more familiar to our customers.
 StatusOr<storage_experimental::ReadPayload> ToResponse(

@@ -130,10 +130,7 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
                   google::storage::v2::ReadObjectRequest const& proto)
       -> future<StatusOr<std::unique_ptr<StreamingRpc>>> {
     ApplyQueryParameters(*context, *current, request);
-    // TODO(#12359) - pass the `options` parameter
-    google::cloud::internal::OptionsSpan span(current);
-
-    auto rpc = stub->AsyncReadObject(cq, std::move(context), proto);
+    auto rpc = stub->AsyncReadObject(cq, std::move(context), current, proto);
     auto start = rpc->Start();
     return start.then([rpc = std::move(rpc)](auto f) mutable {
       if (f.get()) return make_ready_future(make_status_or(std::move(rpc)));
@@ -177,8 +174,7 @@ AsyncConnectionImpl::ReadObjectRange(ReadObjectParams p) {
     return context;
   };
   return storage_internal::AsyncAccumulateReadObjectFull(
-             cq_, stub_, std::move(context_factory), *std::move(proto),
-             *current)
+             cq_, stub_, std::move(context_factory), *std::move(proto), current)
       .then([current](
                 future<storage_internal::AsyncAccumulateReadObjectResult> f) {
         return ToResponse(f.get(), *current);

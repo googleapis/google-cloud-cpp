@@ -186,6 +186,7 @@ class MockStorageStub : public storage_internal::StorageStub {
               AsyncReadObject,
               (google::cloud::CompletionQueue const&,
                std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions,
                google::storage::v2::ReadObjectRequest const&),
               (override));
   MOCK_METHOD(future<StatusOr<google::storage::v2::RewriteResponse>>,
