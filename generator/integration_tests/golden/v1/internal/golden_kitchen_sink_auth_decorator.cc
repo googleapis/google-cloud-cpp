@@ -163,13 +163,14 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 GoldenKitchenSinkAuth::AsyncStreamingRead(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::test::admin::database::v1::Request const& request) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadRpcAuth<
     google::test::admin::database::v1::Response>;
 
   auto& child = child_;
-  auto call = [child, cq, request](std::shared_ptr<grpc::ClientContext> ctx) {
-    return child->AsyncStreamingRead(cq, std::move(ctx), request);
+  auto call = [child, cq, opts = std::move(options), request](std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncStreamingRead(cq, std::move(ctx), opts, request);
   };
   return std::make_unique<StreamAuth>(
     std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
