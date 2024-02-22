@@ -26,6 +26,7 @@
 #include "absl/types/optional.h"
 #include <grpcpp/support/async_stream.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -48,25 +49,39 @@ class AsyncStreamingWriteRpcImpl
       std::shared_ptr<grpc::ClientContext> context,
       std::unique_ptr<Response> response,
       std::unique_ptr<grpc::ClientAsyncWriterInterface<Request>> stream)
+      : AsyncStreamingWriteRpcImpl(std::move(cq), std::move(context),
+                                   std::move(response), SaveCurrentOptions(),
+                                   std::move(stream)) {}
+
+  AsyncStreamingWriteRpcImpl(
+      std::shared_ptr<CompletionQueueImpl> cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      std::unique_ptr<Response> response,
+      google::cloud::internal::ImmutableOptions options,
+      std::unique_ptr<grpc::ClientAsyncWriterInterface<Request>> stream)
       : cq_(std::move(cq)),
         context_(std::move(context)),
         response_(std::move(response)),
+        options_(std::move(options)),
         stream_(std::move(stream)) {}
 
   void Cancel() override { context_->TryCancel(); }
 
   future<bool> Start() override {
     struct OnStart : public AsyncGrpcOperation {
-      promise<bool> p;
-      CallContext call_context;
+      explicit OnStart(ImmutableOptions o) : call_context(std::move(o)) {}
+
       bool Notify(bool ok) override {
         ScopedCallContext scope(call_context);
         p.set_value(ok);
         return true;
       }
       void Cancel() override {}
+
+      promise<bool> p;
+      CallContext call_context;
     };
-    auto op = std::make_shared<OnStart>();
+    auto op = std::make_shared<OnStart>(options_);
     cq_->StartOperation(op, [&](void* tag) { stream_->StartCall(tag); });
     return op->p.get_future();
   }
@@ -74,16 +89,19 @@ class AsyncStreamingWriteRpcImpl
   future<bool> Write(Request const& request,
                      grpc::WriteOptions write_options) override {
     struct OnWrite : public AsyncGrpcOperation {
-      promise<bool> p;
-      CallContext call_context;
+      explicit OnWrite(ImmutableOptions o) : call_context(std::move(o)) {}
+
       bool Notify(bool ok) override {
         ScopedCallContext scope(call_context);
         p.set_value(ok);
         return true;
       }
       void Cancel() override {}
+
+      promise<bool> p;
+      CallContext call_context;
     };
-    auto op = std::make_shared<OnWrite>();
+    auto op = std::make_shared<OnWrite>(options_);
     cq_->StartOperation(op, [&](void* tag) {
       stream_->Write(request, std::move(write_options), tag);
     });
@@ -92,26 +110,28 @@ class AsyncStreamingWriteRpcImpl
 
   future<bool> WritesDone() override {
     struct OnWritesDone : public AsyncGrpcOperation {
-      promise<bool> p;
-      CallContext call_context;
+      explicit OnWritesDone(ImmutableOptions o) : call_context(std::move(o)) {}
+
       bool Notify(bool ok) override {
         ScopedCallContext scope(call_context);
         p.set_value(ok);
         return true;
       }
       void Cancel() override {}
+
+      promise<bool> p;
+      CallContext call_context;
     };
-    auto op = std::make_shared<OnWritesDone>();
+    auto op = std::make_shared<OnWritesDone>(options_);
     cq_->StartOperation(op, [&](void* tag) { stream_->WritesDone(tag); });
     return op->p.get_future();
   }
 
   future<StatusOr<Response>> Finish() override {
     struct OnFinish : public AsyncGrpcOperation {
-      std::unique_ptr<Response> response;
-      promise<StatusOr<Response>> p;
-      CallContext call_context;
-      grpc::Status status;
+      OnFinish(std::unique_ptr<Response> r, ImmutableOptions o)
+          : response(std::move(r)), call_context(std::move(o)) {}
+
       bool Notify(bool /*ok*/) override {
         ScopedCallContext scope(call_context);
         if (status.ok()) {
@@ -122,9 +142,13 @@ class AsyncStreamingWriteRpcImpl
         return true;
       }
       void Cancel() override {}
+
+      std::unique_ptr<Response> response;
+      promise<StatusOr<Response>> p;
+      CallContext call_context;
+      grpc::Status status;
     };
-    auto op = std::make_shared<OnFinish>();
-    op->response = std::move(response_);
+    auto op = std::make_shared<OnFinish>(std::move(response_), options_);
     cq_->StartOperation(op,
                         [&](void* tag) { stream_->Finish(&op->status, tag); });
     return op->p.get_future();
@@ -138,6 +162,7 @@ class AsyncStreamingWriteRpcImpl
   std::shared_ptr<CompletionQueueImpl> cq_;
   std::shared_ptr<grpc::ClientContext> context_;
   std::unique_ptr<Response> response_;
+  ImmutableOptions options_;
   std::unique_ptr<grpc::ClientAsyncWriterInterface<Request>> stream_;
 };
 

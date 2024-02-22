@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/async_read_write_stream_impl.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -116,24 +117,39 @@ TEST(AsyncReadWriteStreamingRpcTest, Basic) {
       });
 
   google::cloud::CompletionQueue cq(mock_cq);
+  OptionsSpan create_span(Options{}.set<UserProjectOption>("create"));
   auto stream = MakeStreamingReadWriteRpc<FakeRequest, FakeResponse>(
       cq, std::make_shared<grpc::ClientContext>(),
       [&mock](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return mock.FakeRpc(context, cq);
       });
 
-  auto start = stream->Start();
+  OptionsSpan start_span(Options{}.set<UserProjectOption>("start"));
+  auto start = stream->Start().then([](auto f) {
+    EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "create");
+    return f.get();
+  });
   ASSERT_THAT(operations, SizeIs(1));
   notify_next_op();
   EXPECT_TRUE(start.get());
 
-  auto write = stream->Write(FakeRequest{"key0"},
-                             grpc::WriteOptions().set_last_message());
+  OptionsSpan write_span(Options{}.set<UserProjectOption>("write"));
+  auto write =
+      stream
+          ->Write(FakeRequest{"key0"}, grpc::WriteOptions().set_last_message())
+          .then([](auto f) {
+            EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "create");
+            return f.get();
+          });
   ASSERT_THAT(operations, SizeIs(1));
   notify_next_op();
   EXPECT_TRUE(write.get());
 
-  auto read0 = stream->Read();
+  OptionsSpan read0_span(Options{}.set<UserProjectOption>("read0"));
+  auto read0 = stream->Read().then([](auto f) {
+    EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "create");
+    return f.get();
+  });
   ASSERT_THAT(operations, SizeIs(1));
   notify_next_op();
   auto response0 = read0.get();
@@ -141,7 +157,11 @@ TEST(AsyncReadWriteStreamingRpcTest, Basic) {
   EXPECT_EQ("key0", response0->key);
   EXPECT_EQ("value0_0", response0->value);
 
-  auto read1 = stream->Read();
+  OptionsSpan read1_span(Options{}.set<UserProjectOption>("read1"));
+  auto read1 = stream->Read().then([](auto f) {
+    EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "create");
+    return f.get();
+  });
   ASSERT_THAT(operations, SizeIs(1));
   notify_next_op();
   auto response1 = read1.get();
@@ -149,18 +169,30 @@ TEST(AsyncReadWriteStreamingRpcTest, Basic) {
   EXPECT_EQ("key0", response1->key);
   EXPECT_EQ("value0_1", response1->value);
 
-  auto writes_done = stream->WritesDone();
+  OptionsSpan writes_done_span(Options{}.set<UserProjectOption>("writes_done"));
+  auto writes_done = stream->WritesDone().then([](auto f) {
+    EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "create");
+    return f.get();
+  });
   ASSERT_THAT(operations, SizeIs(1));
   notify_next_op();
   EXPECT_TRUE(writes_done.get());
 
-  auto read2 = stream->Read();
+  OptionsSpan read2_span(Options{}.set<UserProjectOption>("read2"));
+  auto read2 = stream->Read().then([](auto f) {
+    EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "create");
+    return f.get();
+  });
   ASSERT_THAT(operations, SizeIs(1));
   notify_next_op(false);
   auto response2 = read2.get();
   EXPECT_FALSE(response2.has_value());
 
-  auto finish = stream->Finish();
+  OptionsSpan finish_span(Options{}.set<UserProjectOption>("finish"));
+  auto finish = stream->Finish().then([](auto f) {
+    EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "create");
+    return f.get();
+  });
   ASSERT_THAT(operations, SizeIs(1));
   notify_next_op();
   EXPECT_THAT(finish.get(), IsOk());
