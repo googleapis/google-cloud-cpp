@@ -141,6 +141,7 @@ google_cloud_cpp_storage_hdrs = [
     "retry_policy.h",
     "service_account.h",
     "signed_url_options.h",
+    "soft_deleted.h",
     "storage_class.h",
     "upload_options.h",
     "user_ip_option.h",

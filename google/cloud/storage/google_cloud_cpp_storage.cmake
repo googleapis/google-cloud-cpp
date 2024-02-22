@@ -235,6 +235,7 @@ add_library(
     service_account.cc
     service_account.h
     signed_url_options.h
+    soft_deleted.h
     storage_class.h
     upload_options.h
     user_ip_option.h
