@@ -497,7 +497,7 @@ TEST(MakeGoldenKitchenSinkTracingStub, NoOpenTelemetry) {
 
   auto under_test = MakeGoldenKitchenSinkTracingStub(mock);
   grpc::ClientContext context;
-  auto result = under_test->DoNothing(context, {});
+  auto result = under_test->DoNothing(context, Options{}, {});
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 }
 
