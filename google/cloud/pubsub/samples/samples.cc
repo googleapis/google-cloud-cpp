@@ -343,34 +343,6 @@ void CreateUnwrappedPushSubscription(
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void CreateBigQuerySubscription(
-    google::cloud::pubsub::SubscriptionAdminClient client,
-    std::vector<std::string> const& argv) {
-  //! [START pubsub_create_bigquery_subscription] [create-bigquery-subscription]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& topic_id, std::string const& subscription_id,
-     std::string const& table_id) {
-    auto sub = client.CreateSubscription(
-        pubsub::Topic(project_id, topic_id),
-        pubsub::Subscription(project_id, subscription_id),
-        pubsub::SubscriptionBuilder{}.set_bigquery_config(
-            pubsub::BigQueryConfigBuilder{}.set_table(table_id)));
-    if (!sub) {
-      if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
-        std::cout << "The subscription already exists\n";
-        return;
-      }
-      throw std::move(sub).status();
-    }
-
-    std::cout << "The subscription was successfully created: "
-              << sub->DebugString() << "\n";
-  }
-  //! [END pubsub_create_bigquery_subscription] [create-bigquery-subscription]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
-}
-
 void CreateCloudStorageSubscription(
     google::cloud::pubsub::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
@@ -2687,14 +2659,9 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   using ::google::cloud::pubsub::examples::CreatePublisherCommand;
   using ::google::cloud::pubsub::examples::CreateSchemaServiceCommand;
   using ::google::cloud::pubsub::examples::CreateSubscriberCommand;
-  using ::google::cloud::pubsub::examples::CreateSubscriptionAdminCommand;
   using ::google::cloud::testing_util::Example;
 
   Example example({
-      CreateSubscriptionAdminCommand(
-          "create-bigquery-subscription",
-          {"project-id", "topic-id", "subscription-id", "table-id"},
-          CreateBigQuerySubscription),
       CreatePublisherCommand("publish-avro-records", {}, PublishAvroRecords),
       CreateSubscriberCommand("subscribe-avro-records", {},
                               SubscribeAvroRecords),
