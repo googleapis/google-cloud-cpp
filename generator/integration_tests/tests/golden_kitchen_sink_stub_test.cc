@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -616,7 +617,8 @@ TEST_F(GoldenKitchenSinkStubTest, AsyncStreamingRead) {
 
   Request request;
   auto stream = stub.AsyncStreamingRead(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::MakeImmutableOptions({}), request);
   auto start = stream->Start();
   notify_next_op(true);
   EXPECT_TRUE(start.get());

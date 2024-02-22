@@ -288,7 +288,8 @@ TEST_F(LoggingDecoratorTest, AsyncStreamingRead) {
 
   google::cloud::CompletionQueue cq;
   auto stream = stub.AsyncStreamingRead(
-      cq, std::make_shared<grpc::ClientContext>(), Request{});
+      cq, std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::MakeImmutableOptions({}), Request{});
 
   auto start = stream->Start().get();
   EXPECT_FALSE(start);
