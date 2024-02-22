@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/pubsub/admin/topic_admin_client.h"
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
 #include "google/cloud/pubsub/schema.h"
 #include "google/cloud/pubsub/schema_client.h"
@@ -120,29 +121,6 @@ class EventCounter {
  */
 void PleaseIgnoreThisSimplifiesTestingTheSamples() {
   EventCounter::Instance().Increment();
-}
-
-void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
-                 std::vector<std::string> const& argv) {
-  //! [START pubsub_quickstart_create_topic]
-  //! [START pubsub_create_topic]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string project_id,
-     std::string topic_id) {
-    auto topic = client.CreateTopic(pubsub::TopicBuilder(
-        pubsub::Topic(std::move(project_id), std::move(topic_id))));
-    // Note that kAlreadyExists is a possible error when the library retries.
-    if (topic.status().code() == google::cloud::StatusCode::kAlreadyExists) {
-      std::cout << "The topic already exists\n";
-      return;
-    }
-    if (!topic) throw std::move(topic).status();
-
-    std::cout << "The topic was successfully created: " << topic->DebugString()
-              << "\n";
-    //! [END pubsub_create_topic]
-    //! [END pubsub_quickstart_create_topic]
-  }(std::move(client), argv.at(0), argv.at(1));
 }
 
 void DeleteTopic(google::cloud::pubsub::TopicAdminClient client,
@@ -2278,6 +2256,7 @@ void AutoRunProtobuf(
 }
 
 void AutoRun(std::vector<std::string> const& argv) {
+  using google::cloud::pubsub::examples::Cleanup;
   namespace examples = ::google::cloud::testing_util;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
@@ -2293,6 +2272,7 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   auto const topic_id = RandomTopicId(generator);
+  auto const topic = google::cloud::pubsub::Topic(project_id, topic_id);
   auto const subscription_id = RandomSubscriptionId(generator);
   auto const exactly_once_subscription_id = RandomSubscriptionId(generator);
   auto const filtered_subscription_id = RandomSubscriptionId(generator);
@@ -2302,9 +2282,12 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const bigquery_subscription_id = RandomSubscriptionId(generator);
   auto const ordering_subscription_id = RandomSubscriptionId(generator);
   auto const ordering_topic_id = "ordering-" + RandomTopicId(generator);
+  auto const ordering_topic =
+      google::cloud::pubsub::Topic(project_id, ordering_topic_id);
   auto const dead_letter_subscription_id = RandomSubscriptionId(generator);
   auto const dead_letter_topic_id = "dead-letter-" + RandomTopicId(generator);
-
+  auto const dead_letter_topic =
+      google::cloud::pubsub::Topic(project_id, dead_letter_topic_id);
   auto const snapshot_id = RandomSnapshotId(generator);
 
   using ::google::cloud::StatusCode;
@@ -2322,17 +2305,31 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   google::cloud::pubsub::TopicAdminClient topic_admin_client(
       google::cloud::pubsub::MakeTopicAdminConnection());
+  google::cloud::pubsub_admin::TopicAdminClient topic_admin(
+      google::cloud::pubsub_admin::MakeTopicAdminConnection());
   google::cloud::pubsub::SubscriptionAdminClient subscription_admin_client(
       google::cloud::pubsub::MakeSubscriptionAdminConnection());
 
-  std::cout << "\nRunning CreateTopic() sample [1]" << std::endl;
-  CreateTopic(topic_admin_client, {project_id, topic_id});
-
-  std::cout << "\nRunning CreateTopic() sample [2]" << std::endl;
-  CreateTopic(topic_admin_client, {project_id, topic_id});
-
-  std::cout << "\nRunning CreateTopic() sample [3]" << std::endl;
-  CreateTopic(topic_admin_client, {project_id, ordering_topic_id});
+  std::cout << "\nCreate topic (" << topic.topic_id() << ")" << std::endl;
+  topic_admin.CreateTopic(topic.FullName());
+  std::cout << "\nCreate topic (" << ordering_topic.topic_id() << ")"
+            << std::endl;
+  topic_admin.CreateTopic(ordering_topic.FullName());
+  std::cout << "\nCreate topic (" << dead_letter_topic.topic_id() << ")"
+            << std::endl;
+  topic_admin.CreateTopic(dead_letter_topic.FullName());
+  Cleanup cleanup;
+  cleanup.Defer(
+      [topic_admin, topic, ordering_topic, dead_letter_topic]() mutable {
+        std::cout << "\nDelete topic (" << topic.topic_id() << ")" << std::endl;
+        (void)topic_admin.DeleteTopic(topic.FullName());
+        std::cout << "\nDelete topic (" << ordering_topic.topic_id() << ")"
+                  << std::endl;
+        (void)topic_admin.DeleteTopic(ordering_topic.FullName());
+        std::cout << "\nDelete topic (" << dead_letter_topic.topic_id() << ")"
+                  << std::endl;
+        (void)topic_admin.DeleteTopic(dead_letter_topic.FullName());
+      });
 
   std::cout << "\nRunning ListTopics() sample" << std::endl;
   ListTopics(topic_admin_client, {project_id});
@@ -2420,9 +2417,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   DeleteSubscription(subscription_admin_client,
                      {project_id, std::move(push_subscription_id)});
 
-  std::cout << "\nRunning CreateTopic() sample [4]" << std::endl;
-  CreateTopic(topic_admin_client, {project_id, dead_letter_topic_id});
-
   // Hardcode this number as it does not really matter. The other samples
   // pick something between 10 and 15.
   auto constexpr kDeadLetterDeliveryAttempts = 15;
@@ -2485,7 +2479,6 @@ void AutoRun(std::vector<std::string> const& argv) {
                     topic_admin_client, subscription_admin_client);
   });
 
-  auto topic = google::cloud::pubsub::Topic(project_id, topic_id);
   auto publisher = google::cloud::pubsub::Publisher(
       google::cloud::pubsub::MakePublisherConnection(
           topic, google::cloud::Options{}
@@ -2637,18 +2630,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning DeleteSubscription() sample [8] " << std::endl;
   DeleteSubscription(subscription_admin_client,
                      {project_id, unwrapped_push_subscription_id});
-
-  std::cout << "\nRunning DeleteTopic() sample [1]" << std::endl;
-  DeleteTopic(topic_admin_client, {project_id, dead_letter_topic_id});
-
-  std::cout << "\nRunning DeleteTopic() sample [2]" << std::endl;
-  DeleteTopic(topic_admin_client, {project_id, ordering_topic_id});
-
-  std::cout << "\nRunning DeleteTopic() sample [3]" << std::endl;
-  DeleteTopic(topic_admin_client, {project_id, topic_id});
-
-  std::cout << "\nRunning DeleteTopic() sample [4]" << std::endl;
-  DeleteTopic(topic_admin_client, {project_id, topic_id});
 
   std::cout << "\nAutoRun done" << std::endl;
 }
