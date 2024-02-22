@@ -20,8 +20,8 @@
 #include <google/devtools/cloudtrace/v2/trace.pb.h>
 #include <google/devtools/cloudtrace/v2/tracing.pb.h>
 #include <opentelemetry/common/attribute_value.h>
-#include <opentelemetry/version.h>
 #include <opentelemetry/sdk/trace/recordable.h>
+#include <opentelemetry/version.h>
 
 namespace google {
 namespace cloud {
