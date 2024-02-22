@@ -75,20 +75,21 @@ DomainMappingsConnectionImpl::ListDomainMappings(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::appengine::v1::DomainMapping>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<appengine_v1::DomainMappingsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::appengine::v1::ListDomainMappingsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::appengine::v1::ListDomainMappingsRequest const&
                        request) {
-              return stub->ListDomainMappings(context, request);
+              return stub->ListDomainMappings(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::appengine::v1::ListDomainMappingsResponse r) {
         std::vector<google::appengine::v1::DomainMapping> result(
@@ -106,11 +107,11 @@ DomainMappingsConnectionImpl::GetDomainMapping(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDomainMapping(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::GetDomainMappingRequest const& request) {
-        return stub_->GetDomainMapping(context, request);
+        return stub_->GetDomainMapping(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::appengine::v1::DomainMapping>>

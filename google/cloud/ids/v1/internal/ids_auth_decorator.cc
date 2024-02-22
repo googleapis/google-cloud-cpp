@@ -32,19 +32,19 @@ IDSAuth::IDSAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::ids::v1::ListEndpointsResponse> IDSAuth::ListEndpoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::ids::v1::ListEndpointsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEndpoints(context, request);
+  return child_->ListEndpoints(context, options, request);
 }
 
 StatusOr<google::cloud::ids::v1::Endpoint> IDSAuth::GetEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::ids::v1::GetEndpointRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEndpoint(context, request);
+  return child_->GetEndpoint(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> IDSAuth::AsyncCreateEndpoint(

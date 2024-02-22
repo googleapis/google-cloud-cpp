@@ -44,20 +44,20 @@ DataprocMetastoreMetadata::DataprocMetastoreMetadata(
 
 StatusOr<google::cloud::metastore::v1::ListServicesResponse>
 DataprocMetastoreMetadata::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::ListServicesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListServices(context, request);
+  return child_->ListServices(context, options, request);
 }
 
 StatusOr<google::cloud::metastore::v1::Service>
 DataprocMetastoreMetadata::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::GetServiceRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetService(context, request);
+  return child_->GetService(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -93,20 +93,20 @@ DataprocMetastoreMetadata::AsyncDeleteService(
 
 StatusOr<google::cloud::metastore::v1::ListMetadataImportsResponse>
 DataprocMetastoreMetadata::ListMetadataImports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::ListMetadataImportsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListMetadataImports(context, request);
+  return child_->ListMetadataImports(context, options, request);
 }
 
 StatusOr<google::cloud::metastore::v1::MetadataImport>
 DataprocMetastoreMetadata::GetMetadataImport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::GetMetadataImportRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetMetadataImport(context, request);
+  return child_->GetMetadataImport(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -155,20 +155,20 @@ DataprocMetastoreMetadata::AsyncRestoreService(
 
 StatusOr<google::cloud::metastore::v1::ListBackupsResponse>
 DataprocMetastoreMetadata::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::ListBackupsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListBackups(context, request);
+  return child_->ListBackups(context, options, request);
 }
 
 StatusOr<google::cloud::metastore::v1::Backup>
 DataprocMetastoreMetadata::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::GetBackupRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetBackup(context, request);
+  return child_->GetBackup(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

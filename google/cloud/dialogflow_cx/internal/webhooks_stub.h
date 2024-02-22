@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_WEBHOOKS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_WEBHOOKS_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/cx/v3/webhook.grpc.pb.h>
@@ -35,26 +36,26 @@ class WebhooksStub {
   virtual ~WebhooksStub() = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::ListWebhooksResponse>
-  ListWebhooks(grpc::ClientContext& context,
+  ListWebhooks(grpc::ClientContext& context, Options const& options,
                google::cloud::dialogflow::cx::v3::ListWebhooksRequest const&
                    request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Webhook> GetWebhook(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Webhook> CreateWebhook(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::CreateWebhookRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Webhook> UpdateWebhook(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const&
           request) = 0;
 
   virtual Status DeleteWebhook(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const&
           request) = 0;
 };
@@ -68,27 +69,27 @@ class DefaultWebhooksStub : public WebhooksStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListWebhooksResponse>
-  ListWebhooks(grpc::ClientContext& context,
+  ListWebhooks(grpc::ClientContext& context, Options const& options,
                google::cloud::dialogflow::cx::v3::ListWebhooksRequest const&
                    request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Webhook> GetWebhook(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Webhook> CreateWebhook(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Webhook> UpdateWebhook(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request)
       override;
 
   Status DeleteWebhook(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request)
       override;
 

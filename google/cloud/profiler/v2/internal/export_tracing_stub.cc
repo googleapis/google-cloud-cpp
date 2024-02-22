@@ -33,14 +33,14 @@ ExportServiceTracingStub::ExportServiceTracingStub(
 
 StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse>
 ExportServiceTracingStub::ListProfiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudprofiler::v2::ListProfilesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.devtools.cloudprofiler.v2.ExportService", "ListProfiles");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListProfiles(context, request));
+                           child_->ListProfiles(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

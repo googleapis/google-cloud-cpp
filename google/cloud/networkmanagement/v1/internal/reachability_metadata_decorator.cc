@@ -44,22 +44,22 @@ ReachabilityServiceMetadata::ReachabilityServiceMetadata(
 
 StatusOr<google::cloud::networkmanagement::v1::ListConnectivityTestsResponse>
 ReachabilityServiceMetadata::ListConnectivityTests(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkmanagement::v1::ListConnectivityTestsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListConnectivityTests(context, request);
+  return child_->ListConnectivityTests(context, options, request);
 }
 
 StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
 ReachabilityServiceMetadata::GetConnectivityTest(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetConnectivityTest(context, request);
+  return child_->GetConnectivityTest(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -33,39 +33,39 @@ DataFusionTracingStub::DataFusionTracingStub(
 
 StatusOr<google::cloud::datafusion::v1::ListAvailableVersionsResponse>
 DataFusionTracingStub::ListAvailableVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datafusion::v1::ListAvailableVersionsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion",
                                      "ListAvailableVersions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListAvailableVersions(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListAvailableVersions(context, options, request));
 }
 
 StatusOr<google::cloud::datafusion::v1::ListInstancesResponse>
 DataFusionTracingStub::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datafusion::v1::ListInstancesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion",
                                      "ListInstances");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListInstances(context, request));
+                           child_->ListInstances(context, options, request));
 }
 
 StatusOr<google::cloud::datafusion::v1::Instance>
 DataFusionTracingStub::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datafusion::v1::GetInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.datafusion.v1.DataFusion",
                                      "GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetInstance(context, request));
+                           child_->GetInstance(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

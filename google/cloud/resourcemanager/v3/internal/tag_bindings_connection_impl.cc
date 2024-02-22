@@ -76,20 +76,21 @@ TagBindingsConnectionImpl::ListTagBindings(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::TagBinding>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<resourcemanager_v3::TagBindingsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::resourcemanager::v3::ListTagBindingsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::resourcemanager::v3::
                        ListTagBindingsRequest const& request) {
-              return stub->ListTagBindings(context, request);
+              return stub->ListTagBindings(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::resourcemanager::v3::ListTagBindingsResponse r) {
         std::vector<google::cloud::resourcemanager::v3::TagBinding> result(
@@ -187,21 +188,22 @@ TagBindingsConnectionImpl::ListEffectiveTags(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::EffectiveTag>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<resourcemanager_v3::TagBindingsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::resourcemanager::v3::
                        ListEffectiveTagsRequest const& request) {
-              return stub->ListEffectiveTags(context, request);
+              return stub->ListEffectiveTags(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::resourcemanager::v3::ListEffectiveTagsResponse r) {
         std::vector<google::cloud::resourcemanager::v3::EffectiveTag> result(

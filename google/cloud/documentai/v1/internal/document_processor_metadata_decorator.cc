@@ -44,11 +44,11 @@ DocumentProcessorServiceMetadata::DocumentProcessorServiceMetadata(
 
 StatusOr<google::cloud::documentai::v1::ProcessResponse>
 DocumentProcessorServiceMetadata::ProcessDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::ProcessRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->ProcessDocument(context, request);
+  return child_->ProcessDocument(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -64,47 +64,47 @@ DocumentProcessorServiceMetadata::AsyncBatchProcessDocuments(
 
 StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
 DocumentProcessorServiceMetadata::FetchProcessorTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::FetchProcessorTypesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->FetchProcessorTypes(context, request);
+  return child_->FetchProcessorTypes(context, options, request);
 }
 
 StatusOr<google::cloud::documentai::v1::ListProcessorTypesResponse>
 DocumentProcessorServiceMetadata::ListProcessorTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::ListProcessorTypesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListProcessorTypes(context, request);
+  return child_->ListProcessorTypes(context, options, request);
 }
 
 StatusOr<google::cloud::documentai::v1::ProcessorType>
 DocumentProcessorServiceMetadata::GetProcessorType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::GetProcessorTypeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetProcessorType(context, request);
+  return child_->GetProcessorType(context, options, request);
 }
 
 StatusOr<google::cloud::documentai::v1::ListProcessorsResponse>
 DocumentProcessorServiceMetadata::ListProcessors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::ListProcessorsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListProcessors(context, request);
+  return child_->ListProcessors(context, options, request);
 }
 
 StatusOr<google::cloud::documentai::v1::Processor>
 DocumentProcessorServiceMetadata::GetProcessor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::GetProcessorRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetProcessor(context, request);
+  return child_->GetProcessor(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -121,21 +121,21 @@ DocumentProcessorServiceMetadata::AsyncTrainProcessorVersion(
 
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DocumentProcessorServiceMetadata::GetProcessorVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::GetProcessorVersionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetProcessorVersion(context, request);
+  return child_->GetProcessorVersion(context, options, request);
 }
 
 StatusOr<google::cloud::documentai::v1::ListProcessorVersionsResponse>
 DocumentProcessorServiceMetadata::ListProcessorVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::ListProcessorVersionsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListProcessorVersions(context, request);
+  return child_->ListProcessorVersions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -176,11 +176,11 @@ DocumentProcessorServiceMetadata::AsyncUndeployProcessorVersion(
 
 StatusOr<google::cloud::documentai::v1::Processor>
 DocumentProcessorServiceMetadata::CreateProcessor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::CreateProcessorRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateProcessor(context, request);
+  return child_->CreateProcessor(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -253,20 +253,20 @@ DocumentProcessorServiceMetadata::AsyncEvaluateProcessorVersion(
 
 StatusOr<google::cloud::documentai::v1::Evaluation>
 DocumentProcessorServiceMetadata::GetEvaluation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::GetEvaluationRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetEvaluation(context, request);
+  return child_->GetEvaluation(context, options, request);
 }
 
 StatusOr<google::cloud::documentai::v1::ListEvaluationsResponse>
 DocumentProcessorServiceMetadata::ListEvaluations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::ListEvaluationsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListEvaluations(context, request);
+  return child_->ListEvaluations(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

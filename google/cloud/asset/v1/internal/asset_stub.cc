@@ -50,7 +50,7 @@ DefaultAssetServiceStub::AsyncExportAssets(
 
 StatusOr<google::cloud::asset::v1::ListAssetsResponse>
 DefaultAssetServiceStub::ListAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::ListAssetsRequest const& request) {
   google::cloud::asset::v1::ListAssetsResponse response;
   auto status = grpc_stub_->ListAssets(&context, request, &response);
@@ -62,7 +62,7 @@ DefaultAssetServiceStub::ListAssets(
 
 StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse>
 DefaultAssetServiceStub::BatchGetAssetsHistory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request) {
   google::cloud::asset::v1::BatchGetAssetsHistoryResponse response;
   auto status = grpc_stub_->BatchGetAssetsHistory(&context, request, &response);
@@ -73,7 +73,7 @@ DefaultAssetServiceStub::BatchGetAssetsHistory(
 }
 
 StatusOr<google::cloud::asset::v1::Feed> DefaultAssetServiceStub::CreateFeed(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::CreateFeedRequest const& request) {
   google::cloud::asset::v1::Feed response;
   auto status = grpc_stub_->CreateFeed(&context, request, &response);
@@ -84,7 +84,7 @@ StatusOr<google::cloud::asset::v1::Feed> DefaultAssetServiceStub::CreateFeed(
 }
 
 StatusOr<google::cloud::asset::v1::Feed> DefaultAssetServiceStub::GetFeed(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::GetFeedRequest const& request) {
   google::cloud::asset::v1::Feed response;
   auto status = grpc_stub_->GetFeed(&context, request, &response);
@@ -96,7 +96,7 @@ StatusOr<google::cloud::asset::v1::Feed> DefaultAssetServiceStub::GetFeed(
 
 StatusOr<google::cloud::asset::v1::ListFeedsResponse>
 DefaultAssetServiceStub::ListFeeds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::ListFeedsRequest const& request) {
   google::cloud::asset::v1::ListFeedsResponse response;
   auto status = grpc_stub_->ListFeeds(&context, request, &response);
@@ -107,7 +107,7 @@ DefaultAssetServiceStub::ListFeeds(
 }
 
 StatusOr<google::cloud::asset::v1::Feed> DefaultAssetServiceStub::UpdateFeed(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::UpdateFeedRequest const& request) {
   google::cloud::asset::v1::Feed response;
   auto status = grpc_stub_->UpdateFeed(&context, request, &response);
@@ -118,7 +118,7 @@ StatusOr<google::cloud::asset::v1::Feed> DefaultAssetServiceStub::UpdateFeed(
 }
 
 Status DefaultAssetServiceStub::DeleteFeed(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::DeleteFeedRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteFeed(&context, request, &response);
@@ -130,7 +130,7 @@ Status DefaultAssetServiceStub::DeleteFeed(
 
 StatusOr<google::cloud::asset::v1::SearchAllResourcesResponse>
 DefaultAssetServiceStub::SearchAllResources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::SearchAllResourcesRequest const& request) {
   google::cloud::asset::v1::SearchAllResourcesResponse response;
   auto status = grpc_stub_->SearchAllResources(&context, request, &response);
@@ -142,7 +142,7 @@ DefaultAssetServiceStub::SearchAllResources(
 
 StatusOr<google::cloud::asset::v1::SearchAllIamPoliciesResponse>
 DefaultAssetServiceStub::SearchAllIamPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::SearchAllIamPoliciesRequest const& request) {
   google::cloud::asset::v1::SearchAllIamPoliciesResponse response;
   auto status = grpc_stub_->SearchAllIamPolicies(&context, request, &response);
@@ -154,7 +154,7 @@ DefaultAssetServiceStub::SearchAllIamPolicies(
 
 StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse>
 DefaultAssetServiceStub::AnalyzeIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request) {
   google::cloud::asset::v1::AnalyzeIamPolicyResponse response;
   auto status = grpc_stub_->AnalyzeIamPolicy(&context, request, &response);
@@ -186,7 +186,7 @@ DefaultAssetServiceStub::AsyncAnalyzeIamPolicyLongrunning(
 
 StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>
 DefaultAssetServiceStub::AnalyzeMove(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::AnalyzeMoveRequest const& request) {
   google::cloud::asset::v1::AnalyzeMoveResponse response;
   auto status = grpc_stub_->AnalyzeMove(&context, request, &response);
@@ -198,7 +198,7 @@ DefaultAssetServiceStub::AnalyzeMove(
 
 StatusOr<google::cloud::asset::v1::QueryAssetsResponse>
 DefaultAssetServiceStub::QueryAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::QueryAssetsRequest const& request) {
   google::cloud::asset::v1::QueryAssetsResponse response;
   auto status = grpc_stub_->QueryAssets(&context, request, &response);
@@ -210,7 +210,7 @@ DefaultAssetServiceStub::QueryAssets(
 
 StatusOr<google::cloud::asset::v1::SavedQuery>
 DefaultAssetServiceStub::CreateSavedQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::CreateSavedQueryRequest const& request) {
   google::cloud::asset::v1::SavedQuery response;
   auto status = grpc_stub_->CreateSavedQuery(&context, request, &response);
@@ -222,7 +222,7 @@ DefaultAssetServiceStub::CreateSavedQuery(
 
 StatusOr<google::cloud::asset::v1::SavedQuery>
 DefaultAssetServiceStub::GetSavedQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::GetSavedQueryRequest const& request) {
   google::cloud::asset::v1::SavedQuery response;
   auto status = grpc_stub_->GetSavedQuery(&context, request, &response);
@@ -234,7 +234,7 @@ DefaultAssetServiceStub::GetSavedQuery(
 
 StatusOr<google::cloud::asset::v1::ListSavedQueriesResponse>
 DefaultAssetServiceStub::ListSavedQueries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::ListSavedQueriesRequest const& request) {
   google::cloud::asset::v1::ListSavedQueriesResponse response;
   auto status = grpc_stub_->ListSavedQueries(&context, request, &response);
@@ -246,7 +246,7 @@ DefaultAssetServiceStub::ListSavedQueries(
 
 StatusOr<google::cloud::asset::v1::SavedQuery>
 DefaultAssetServiceStub::UpdateSavedQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::UpdateSavedQueryRequest const& request) {
   google::cloud::asset::v1::SavedQuery response;
   auto status = grpc_stub_->UpdateSavedQuery(&context, request, &response);
@@ -257,7 +257,7 @@ DefaultAssetServiceStub::UpdateSavedQuery(
 }
 
 Status DefaultAssetServiceStub::DeleteSavedQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::DeleteSavedQueryRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteSavedQuery(&context, request, &response);
@@ -269,7 +269,7 @@ Status DefaultAssetServiceStub::DeleteSavedQuery(
 
 StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
 DefaultAssetServiceStub::BatchGetEffectiveIamPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
         request) {
   google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse response;
@@ -283,7 +283,7 @@ DefaultAssetServiceStub::BatchGetEffectiveIamPolicies(
 
 StatusOr<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse>
 DefaultAssetServiceStub::AnalyzeOrgPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const& request) {
   google::cloud::asset::v1::AnalyzeOrgPoliciesResponse response;
   auto status = grpc_stub_->AnalyzeOrgPolicies(&context, request, &response);
@@ -295,7 +295,7 @@ DefaultAssetServiceStub::AnalyzeOrgPolicies(
 
 StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse>
 DefaultAssetServiceStub::AnalyzeOrgPolicyGovernedContainers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest const&
         request) {
   google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse response;
@@ -309,7 +309,7 @@ DefaultAssetServiceStub::AnalyzeOrgPolicyGovernedContainers(
 
 StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse>
 DefaultAssetServiceStub::AnalyzeOrgPolicyGovernedAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
         request) {
   google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse response;

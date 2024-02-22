@@ -51,7 +51,7 @@ DefaultEndpointServiceStub::AsyncCreateEndpoint(
 
 StatusOr<google::cloud::aiplatform::v1::Endpoint>
 DefaultEndpointServiceStub::GetEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetEndpointRequest const& request) {
   google::cloud::aiplatform::v1::Endpoint response;
   auto status = grpc_stub_->GetEndpoint(&context, request, &response);
@@ -63,7 +63,7 @@ DefaultEndpointServiceStub::GetEndpoint(
 
 StatusOr<google::cloud::aiplatform::v1::ListEndpointsResponse>
 DefaultEndpointServiceStub::ListEndpoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListEndpointsRequest const& request) {
   google::cloud::aiplatform::v1::ListEndpointsResponse response;
   auto status = grpc_stub_->ListEndpoints(&context, request, &response);
@@ -75,7 +75,7 @@ DefaultEndpointServiceStub::ListEndpoints(
 
 StatusOr<google::cloud::aiplatform::v1::Endpoint>
 DefaultEndpointServiceStub::UpdateEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::UpdateEndpointRequest const& request) {
   google::cloud::aiplatform::v1::Endpoint response;
   auto status = grpc_stub_->UpdateEndpoint(&context, request, &response);

@@ -45,27 +45,27 @@ class ModelServiceLogging : public ModelServiceStub {
       google::cloud::retail::v2::CreateModelRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Model> GetModel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::GetModelRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Model> PauseModel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::PauseModelRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Model> ResumeModel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::ResumeModelRequest const& request) override;
 
   Status DeleteModel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::DeleteModelRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ListModelsResponse> ListModels(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::ListModelsRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Model> UpdateModel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::UpdateModelRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncTuneModel(

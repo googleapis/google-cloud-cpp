@@ -38,12 +38,12 @@ class DocumentsTracingStub : public DocumentsStub {
   explicit DocumentsTracingStub(std::shared_ptr<DocumentsStub> child);
 
   StatusOr<google::cloud::dialogflow::v2::ListDocumentsResponse> ListDocuments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListDocumentsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Document> GetDocument(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetDocumentRequest const& request)
       override;
 

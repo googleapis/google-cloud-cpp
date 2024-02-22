@@ -53,7 +53,7 @@ DefaultConsumerProcurementServiceStub::AsyncPlaceOrder(
 
 StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>
 DefaultConsumerProcurementServiceStub::GetOrder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::commerce::consumer::procurement::v1::GetOrderRequest const&
         request) {
   google::cloud::commerce::consumer::procurement::v1::Order response;
@@ -66,7 +66,7 @@ DefaultConsumerProcurementServiceStub::GetOrder(
 
 StatusOr<google::cloud::commerce::consumer::procurement::v1::ListOrdersResponse>
 DefaultConsumerProcurementServiceStub::ListOrders(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::commerce::consumer::procurement::v1::ListOrdersRequest const&
         request) {
   google::cloud::commerce::consumer::procurement::v1::ListOrdersResponse

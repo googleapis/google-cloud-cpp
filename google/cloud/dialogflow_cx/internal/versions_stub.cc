@@ -33,7 +33,7 @@ VersionsStub::~VersionsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListVersionsResponse>
 DefaultVersionsStub::ListVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ListVersionsRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListVersionsResponse response;
   auto status = grpc_stub_->ListVersions(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultVersionsStub::ListVersions(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Version>
 DefaultVersionsStub::GetVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetVersionRequest const& request) {
   google::cloud::dialogflow::cx::v3::Version response;
   auto status = grpc_stub_->GetVersion(&context, request, &response);
@@ -75,7 +75,7 @@ DefaultVersionsStub::AsyncCreateVersion(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Version>
 DefaultVersionsStub::UpdateVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request) {
   google::cloud::dialogflow::cx::v3::Version response;
   auto status = grpc_stub_->UpdateVersion(&context, request, &response);
@@ -86,7 +86,7 @@ DefaultVersionsStub::UpdateVersion(
 }
 
 Status DefaultVersionsStub::DeleteVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteVersion(&context, request, &response);
@@ -116,7 +116,7 @@ DefaultVersionsStub::AsyncLoadVersion(
 
 StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>
 DefaultVersionsStub::CompareVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::CompareVersionsRequest const& request) {
   google::cloud::dialogflow::cx::v3::CompareVersionsResponse response;
   auto status = grpc_stub_->CompareVersions(&context, request, &response);

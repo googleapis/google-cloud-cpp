@@ -33,19 +33,19 @@ ProfilerServiceTracingStub::ProfilerServiceTracingStub(
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceTracingStub::CreateProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.devtools.cloudprofiler.v2.ProfilerService", "CreateProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateProfile(context, request));
+                           child_->CreateProfile(context, options, request));
 }
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceTracingStub::CreateOfflineProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
         request) {
   auto span =
@@ -53,20 +53,20 @@ ProfilerServiceTracingStub::CreateOfflineProfile(
                              "CreateOfflineProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateOfflineProfile(context, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateOfflineProfile(context, options, request));
 }
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceTracingStub::UpdateProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.devtools.cloudprofiler.v2.ProfilerService", "UpdateProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateProfile(context, request));
+                           child_->UpdateProfile(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

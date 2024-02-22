@@ -43,12 +43,12 @@ class AppConnectionsServiceMetadata : public AppConnectionsServiceStub {
 
   StatusOr<
       google::cloud::beyondcorp::appconnections::v1::ListAppConnectionsResponse>
-  ListAppConnections(grpc::ClientContext& context,
+  ListAppConnections(grpc::ClientContext& context, Options const& options,
                      google::cloud::beyondcorp::appconnections::v1::
                          ListAppConnectionsRequest const& request) override;
 
   StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>
-  GetAppConnection(grpc::ClientContext& context,
+  GetAppConnection(grpc::ClientContext& context, Options const& options,
                    google::cloud::beyondcorp::appconnections::v1::
                        GetAppConnectionRequest const& request) override;
 
@@ -73,7 +73,7 @@ class AppConnectionsServiceMetadata : public AppConnectionsServiceStub {
   StatusOr<google::cloud::beyondcorp::appconnections::v1::
                ResolveAppConnectionsResponse>
   ResolveAppConnections(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::beyondcorp::appconnections::v1::
           ResolveAppConnectionsRequest const& request) override;
 

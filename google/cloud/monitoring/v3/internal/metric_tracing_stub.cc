@@ -33,7 +33,7 @@ MetricServiceTracingStub::MetricServiceTracingStub(
 
 StatusOr<google::monitoring::v3::ListMonitoredResourceDescriptorsResponse>
 MetricServiceTracingStub::ListMonitoredResourceDescriptors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.monitoring.v3.MetricService",
@@ -42,12 +42,12 @@ MetricServiceTracingStub::ListMonitoredResourceDescriptors(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
-      child_->ListMonitoredResourceDescriptors(context, request));
+      child_->ListMonitoredResourceDescriptors(context, options, request));
 }
 
 StatusOr<google::api::MonitoredResourceDescriptor>
 MetricServiceTracingStub::GetMonitoredResourceDescriptor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.monitoring.v3.MetricService",
@@ -55,88 +55,92 @@ MetricServiceTracingStub::GetMonitoredResourceDescriptor(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
-      context, *span, child_->GetMonitoredResourceDescriptor(context, request));
+      context, *span,
+      child_->GetMonitoredResourceDescriptor(context, options, request));
 }
 
 StatusOr<google::monitoring::v3::ListMetricDescriptorsResponse>
 MetricServiceTracingStub::ListMetricDescriptors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListMetricDescriptorsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.monitoring.v3.MetricService",
                                      "ListMetricDescriptors");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListMetricDescriptors(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListMetricDescriptors(context, options, request));
 }
 
 StatusOr<google::api::MetricDescriptor>
 MetricServiceTracingStub::GetMetricDescriptor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetMetricDescriptorRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.monitoring.v3.MetricService",
                                      "GetMetricDescriptor");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetMetricDescriptor(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetMetricDescriptor(context, options, request));
 }
 
 StatusOr<google::api::MetricDescriptor>
 MetricServiceTracingStub::CreateMetricDescriptor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateMetricDescriptorRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.monitoring.v3.MetricService",
                                      "CreateMetricDescriptor");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateMetricDescriptor(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateMetricDescriptor(context, options, request));
 }
 
 Status MetricServiceTracingStub::DeleteMetricDescriptor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::DeleteMetricDescriptorRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.monitoring.v3.MetricService",
                                      "DeleteMetricDescriptor");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteMetricDescriptor(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteMetricDescriptor(context, options, request));
 }
 
 StatusOr<google::monitoring::v3::ListTimeSeriesResponse>
 MetricServiceTracingStub::ListTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListTimeSeriesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.monitoring.v3.MetricService",
                                      "ListTimeSeries");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListTimeSeries(context, request));
+                           child_->ListTimeSeries(context, options, request));
 }
 
 Status MetricServiceTracingStub::CreateTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.monitoring.v3.MetricService",
                                      "CreateTimeSeries");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateTimeSeries(context, request));
+                           child_->CreateTimeSeries(context, options, request));
 }
 
 Status MetricServiceTracingStub::CreateServiceTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.monitoring.v3.MetricService",
                                      "CreateServiceTimeSeries");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateServiceTimeSeries(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateServiceTimeSeries(context, options, request));
 }
 
 future<Status> MetricServiceTracingStub::AsyncCreateTimeSeries(

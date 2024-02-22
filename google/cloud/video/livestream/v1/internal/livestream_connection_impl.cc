@@ -118,20 +118,23 @@ LivestreamServiceConnectionImpl::ListChannels(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::video::livestream::v1::Channel>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<video_livestream_v1::LivestreamServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::video::livestream::v1::ListChannelsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::video::livestream::v1::ListChannelsRequest const&
-                    request) { return stub->ListChannels(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListChannels(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::video::livestream::v1::ListChannelsResponse r) {
         std::vector<google::cloud::video::livestream::v1::Channel> result(
@@ -149,10 +152,12 @@ LivestreamServiceConnectionImpl::GetChannel(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetChannel(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::video::livestream::v1::GetChannelRequest const&
-                 request) { return stub_->GetChannel(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetChannel(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
@@ -352,20 +357,23 @@ LivestreamServiceConnectionImpl::ListInputs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::video::livestream::v1::Input>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<video_livestream_v1::LivestreamServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::video::livestream::v1::ListInputsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::video::livestream::v1::ListInputsRequest const&
-                    request) { return stub->ListInputs(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListInputs(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::video::livestream::v1::ListInputsResponse r) {
         std::vector<google::cloud::video::livestream::v1::Input> result(
@@ -383,10 +391,12 @@ LivestreamServiceConnectionImpl::GetInput(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetInput(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::video::livestream::v1::GetInputRequest const&
-                 request) { return stub_->GetInput(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetInput(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
@@ -470,10 +480,12 @@ LivestreamServiceConnectionImpl::CreateEvent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateEvent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::video::livestream::v1::CreateEventRequest const&
-                 request) { return stub_->CreateEvent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreateEvent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::video::livestream::v1::Event>
@@ -485,20 +497,23 @@ LivestreamServiceConnectionImpl::ListEvents(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::video::livestream::v1::Event>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<video_livestream_v1::LivestreamServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::video::livestream::v1::ListEventsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::video::livestream::v1::ListEventsRequest const&
-                    request) { return stub->ListEvents(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListEvents(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::video::livestream::v1::ListEventsResponse r) {
         std::vector<google::cloud::video::livestream::v1::Event> result(
@@ -516,10 +531,12 @@ LivestreamServiceConnectionImpl::GetEvent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEvent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::video::livestream::v1::GetEventRequest const&
-                 request) { return stub_->GetEvent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetEvent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status LivestreamServiceConnectionImpl::DeleteEvent(
@@ -528,10 +545,12 @@ Status LivestreamServiceConnectionImpl::DeleteEvent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteEvent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::video::livestream::v1::DeleteEventRequest const&
-                 request) { return stub_->DeleteEvent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DeleteEvent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Asset>>
@@ -615,10 +634,12 @@ LivestreamServiceConnectionImpl::GetAsset(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAsset(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::video::livestream::v1::GetAssetRequest const&
-                 request) { return stub_->GetAsset(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetAsset(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::video::livestream::v1::Asset>
@@ -630,20 +651,23 @@ LivestreamServiceConnectionImpl::ListAssets(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::video::livestream::v1::Asset>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<video_livestream_v1::LivestreamServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::video::livestream::v1::ListAssetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::video::livestream::v1::ListAssetsRequest const&
-                    request) { return stub->ListAssets(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListAssets(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::video::livestream::v1::ListAssetsResponse r) {
         std::vector<google::cloud::video::livestream::v1::Asset> result(
@@ -662,11 +686,11 @@ LivestreamServiceConnectionImpl::GetPool(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPool(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::video::livestream::v1::GetPoolRequest const& request) {
-        return stub_->GetPool(context, request);
+        return stub_->GetPool(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::Pool>>

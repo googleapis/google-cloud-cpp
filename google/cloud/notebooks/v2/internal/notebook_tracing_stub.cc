@@ -33,26 +33,26 @@ NotebookServiceTracingStub::NotebookServiceTracingStub(
 
 StatusOr<google::cloud::notebooks::v2::ListInstancesResponse>
 NotebookServiceTracingStub::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v2::ListInstancesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.notebooks.v2.NotebookService", "ListInstances");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListInstances(context, request));
+                           child_->ListInstances(context, options, request));
 }
 
 StatusOr<google::cloud::notebooks::v2::Instance>
 NotebookServiceTracingStub::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v2::GetInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.notebooks.v2.NotebookService", "GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetInstance(context, request));
+                           child_->GetInstance(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -135,7 +135,7 @@ NotebookServiceTracingStub::AsyncResetInstance(
 
 StatusOr<google::cloud::notebooks::v2::CheckInstanceUpgradabilityResponse>
 NotebookServiceTracingStub::CheckInstanceUpgradability(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v2::CheckInstanceUpgradabilityRequest const&
         request) {
   auto span =
@@ -144,7 +144,8 @@ NotebookServiceTracingStub::CheckInstanceUpgradability(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
-      context, *span, child_->CheckInstanceUpgradability(context, request));
+      context, *span,
+      child_->CheckInstanceUpgradability(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

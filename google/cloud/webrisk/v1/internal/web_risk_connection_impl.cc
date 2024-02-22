@@ -70,12 +70,12 @@ WebRiskServiceConnectionImpl::ComputeThreatListDiff(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ComputeThreatListDiff(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::webrisk::v1::ComputeThreatListDiffRequest const&
                  request) {
-        return stub_->ComputeThreatListDiff(context, request);
+        return stub_->ComputeThreatListDiff(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
@@ -85,11 +85,11 @@ WebRiskServiceConnectionImpl::SearchUris(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SearchUris(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::webrisk::v1::SearchUrisRequest const& request) {
-        return stub_->SearchUris(context, request);
+        return stub_->SearchUris(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
@@ -99,11 +99,11 @@ WebRiskServiceConnectionImpl::SearchHashes(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SearchHashes(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::webrisk::v1::SearchHashesRequest const& request) {
-        return stub_->SearchHashes(context, request);
+        return stub_->SearchHashes(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::webrisk::v1::Submission>
@@ -114,11 +114,11 @@ WebRiskServiceConnectionImpl::CreateSubmission(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateSubmission(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::webrisk::v1::CreateSubmissionRequest const& request) {
-        return stub_->CreateSubmission(context, request);
+        return stub_->CreateSubmission(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::webrisk::v1::Submission>>

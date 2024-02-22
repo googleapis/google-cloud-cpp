@@ -39,6 +39,7 @@ class RequestIdServiceTracingStub : public RequestIdServiceStub {
 
   StatusOr<google::test::requestid::v1::Foo> CreateFoo(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::requestid::v1::CreateFooRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRenameFoo(
@@ -49,6 +50,7 @@ class RequestIdServiceTracingStub : public RequestIdServiceStub {
 
   StatusOr<google::test::requestid::v1::ListFoosResponse> ListFoos(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::requestid::v1::ListFoosRequest const& request) override;
 
   future<StatusOr<google::test::requestid::v1::Foo>> AsyncCreateFoo(

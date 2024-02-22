@@ -32,7 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TpuStub::~TpuStub() = default;
 
 StatusOr<google::cloud::tpu::v1::ListNodesResponse> DefaultTpuStub::ListNodes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::tpu::v1::ListNodesRequest const& request) {
   google::cloud::tpu::v1::ListNodesResponse response;
   auto status = grpc_stub_->ListNodes(&context, request, &response);
@@ -43,7 +43,7 @@ StatusOr<google::cloud::tpu::v1::ListNodesResponse> DefaultTpuStub::ListNodes(
 }
 
 StatusOr<google::cloud::tpu::v1::Node> DefaultTpuStub::GetNode(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::tpu::v1::GetNodeRequest const& request) {
   google::cloud::tpu::v1::Node response;
   auto status = grpc_stub_->GetNode(&context, request, &response);
@@ -133,7 +133,7 @@ future<StatusOr<google::longrunning::Operation>> DefaultTpuStub::AsyncStartNode(
 
 StatusOr<google::cloud::tpu::v1::ListTensorFlowVersionsResponse>
 DefaultTpuStub::ListTensorFlowVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::tpu::v1::ListTensorFlowVersionsRequest const& request) {
   google::cloud::tpu::v1::ListTensorFlowVersionsResponse response;
   auto status =
@@ -146,7 +146,7 @@ DefaultTpuStub::ListTensorFlowVersions(
 
 StatusOr<google::cloud::tpu::v1::TensorFlowVersion>
 DefaultTpuStub::GetTensorFlowVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request) {
   google::cloud::tpu::v1::TensorFlowVersion response;
   auto status = grpc_stub_->GetTensorFlowVersion(&context, request, &response);
@@ -158,7 +158,7 @@ DefaultTpuStub::GetTensorFlowVersion(
 
 StatusOr<google::cloud::tpu::v1::ListAcceleratorTypesResponse>
 DefaultTpuStub::ListAcceleratorTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::tpu::v1::ListAcceleratorTypesRequest const& request) {
   google::cloud::tpu::v1::ListAcceleratorTypesResponse response;
   auto status = grpc_stub_->ListAcceleratorTypes(&context, request, &response);
@@ -170,7 +170,7 @@ DefaultTpuStub::ListAcceleratorTypes(
 
 StatusOr<google::cloud::tpu::v1::AcceleratorType>
 DefaultTpuStub::GetAcceleratorType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request) {
   google::cloud::tpu::v1::AcceleratorType response;
   auto status = grpc_stub_->GetAcceleratorType(&context, request, &response);

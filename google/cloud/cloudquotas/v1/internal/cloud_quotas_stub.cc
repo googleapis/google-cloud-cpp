@@ -32,7 +32,7 @@ CloudQuotasStub::~CloudQuotasStub() = default;
 
 StatusOr<google::api::cloudquotas::v1::ListQuotaInfosResponse>
 DefaultCloudQuotasStub::ListQuotaInfos(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::cloudquotas::v1::ListQuotaInfosRequest const& request) {
   google::api::cloudquotas::v1::ListQuotaInfosResponse response;
   auto status = grpc_stub_->ListQuotaInfos(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultCloudQuotasStub::ListQuotaInfos(
 
 StatusOr<google::api::cloudquotas::v1::QuotaInfo>
 DefaultCloudQuotasStub::GetQuotaInfo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::cloudquotas::v1::GetQuotaInfoRequest const& request) {
   google::api::cloudquotas::v1::QuotaInfo response;
   auto status = grpc_stub_->GetQuotaInfo(&context, request, &response);
@@ -56,7 +56,7 @@ DefaultCloudQuotasStub::GetQuotaInfo(
 
 StatusOr<google::api::cloudquotas::v1::ListQuotaPreferencesResponse>
 DefaultCloudQuotasStub::ListQuotaPreferences(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::cloudquotas::v1::ListQuotaPreferencesRequest const& request) {
   google::api::cloudquotas::v1::ListQuotaPreferencesResponse response;
   auto status = grpc_stub_->ListQuotaPreferences(&context, request, &response);
@@ -68,7 +68,7 @@ DefaultCloudQuotasStub::ListQuotaPreferences(
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
 DefaultCloudQuotasStub::GetQuotaPreference(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request) {
   google::api::cloudquotas::v1::QuotaPreference response;
   auto status = grpc_stub_->GetQuotaPreference(&context, request, &response);
@@ -80,7 +80,7 @@ DefaultCloudQuotasStub::GetQuotaPreference(
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
 DefaultCloudQuotasStub::CreateQuotaPreference(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request) {
   google::api::cloudquotas::v1::QuotaPreference response;
   auto status = grpc_stub_->CreateQuotaPreference(&context, request, &response);
@@ -92,7 +92,7 @@ DefaultCloudQuotasStub::CreateQuotaPreference(
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
 DefaultCloudQuotasStub::UpdateQuotaPreference(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request) {
   google::api::cloudquotas::v1::QuotaPreference response;
   auto status = grpc_stub_->UpdateQuotaPreference(&context, request, &response);

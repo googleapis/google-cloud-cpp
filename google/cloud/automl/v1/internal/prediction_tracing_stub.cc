@@ -33,13 +33,14 @@ PredictionServiceTracingStub::PredictionServiceTracingStub(
 
 StatusOr<google::cloud::automl::v1::PredictResponse>
 PredictionServiceTracingStub::Predict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::PredictRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.automl.v1.PredictionService",
                                      "Predict");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->Predict(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->Predict(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

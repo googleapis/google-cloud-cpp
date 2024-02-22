@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEHEALTH_V1_INTERNAL_SERVICE_HEALTH_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEHEALTH_V1_INTERNAL_SERVICE_HEALTH_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/servicehealth/v1/event_service.grpc.pb.h>
@@ -36,36 +37,36 @@ class ServiceHealthStub {
 
   virtual StatusOr<google::cloud::servicehealth::v1::ListEventsResponse>
   ListEvents(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicehealth::v1::ListEventsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::servicehealth::v1::Event> GetEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicehealth::v1::GetEventRequest const& request) = 0;
 
   virtual StatusOr<
       google::cloud::servicehealth::v1::ListOrganizationEventsResponse>
   ListOrganizationEvents(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicehealth::v1::ListOrganizationEventsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>
   GetOrganizationEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::servicehealth::v1::ListOrganizationImpactsResponse>
   ListOrganizationImpacts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicehealth::v1::ListOrganizationImpactsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>
   GetOrganizationImpact(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
           request) = 0;
 };
@@ -79,36 +80,36 @@ class DefaultServiceHealthStub : public ServiceHealthStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::servicehealth::v1::ListEventsResponse> ListEvents(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicehealth::v1::ListEventsRequest const& request)
       override;
 
   StatusOr<google::cloud::servicehealth::v1::Event> GetEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicehealth::v1::GetEventRequest const& request)
       override;
 
   StatusOr<google::cloud::servicehealth::v1::ListOrganizationEventsResponse>
   ListOrganizationEvents(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicehealth::v1::ListOrganizationEventsRequest const&
           request) override;
 
   StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>
   GetOrganizationEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
           request) override;
 
   StatusOr<google::cloud::servicehealth::v1::ListOrganizationImpactsResponse>
   ListOrganizationImpacts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicehealth::v1::ListOrganizationImpactsRequest const&
           request) override;
 
   StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>
   GetOrganizationImpact(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
           request) override;
 

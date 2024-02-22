@@ -40,22 +40,22 @@ class ExecutionsLogging : public ExecutionsStub {
 
   StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse>
   ListExecutions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workflows::executions::v1::ListExecutionsRequest const&
           request) override;
 
   StatusOr<google::cloud::workflows::executions::v1::Execution> CreateExecution(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workflows::executions::v1::CreateExecutionRequest const&
           request) override;
 
   StatusOr<google::cloud::workflows::executions::v1::Execution> GetExecution(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workflows::executions::v1::GetExecutionRequest const&
           request) override;
 
   StatusOr<google::cloud::workflows::executions::v1::Execution> CancelExecution(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::workflows::executions::v1::CancelExecutionRequest const&
           request) override;
 

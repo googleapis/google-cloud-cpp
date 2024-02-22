@@ -53,21 +53,21 @@ ConversationModelsAuth::AsyncCreateConversationModel(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationModel>
 ConversationModelsAuth::GetConversationModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetConversationModelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetConversationModel(context, request);
+  return child_->GetConversationModel(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationModelsResponse>
 ConversationModelsAuth::ListConversationModels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListConversationModelsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListConversationModels(context, request);
+  return child_->ListConversationModels(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -132,23 +132,23 @@ ConversationModelsAuth::AsyncUndeployConversationModel(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
 ConversationModelsAuth::GetConversationModelEvaluation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetConversationModelEvaluation(context, request);
+  return child_->GetConversationModelEvaluation(context, options, request);
 }
 
 StatusOr<
     google::cloud::dialogflow::v2::ListConversationModelEvaluationsResponse>
 ConversationModelsAuth::ListConversationModelEvaluations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::
         ListConversationModelEvaluationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListConversationModelEvaluations(context, request);
+  return child_->ListConversationModelEvaluations(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

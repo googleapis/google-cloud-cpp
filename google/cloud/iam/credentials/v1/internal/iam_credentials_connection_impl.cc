@@ -68,12 +68,12 @@ IAMCredentialsConnectionImpl::GenerateAccessToken(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateAccessToken(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::credentials::v1::GenerateAccessTokenRequest const&
                  request) {
-        return stub_->GenerateAccessToken(context, request);
+        return stub_->GenerateAccessToken(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::credentials::v1::GenerateIdTokenResponse>
@@ -84,11 +84,11 @@ IAMCredentialsConnectionImpl::GenerateIdToken(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateIdToken(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::iam::credentials::v1::GenerateIdTokenRequest const& request) {
-        return stub_->GenerateIdToken(context, request);
+        return stub_->GenerateIdToken(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::credentials::v1::SignBlobResponse>
@@ -98,11 +98,11 @@ IAMCredentialsConnectionImpl::SignBlob(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SignBlob(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::credentials::v1::SignBlobRequest const& request) {
-        return stub_->SignBlob(context, request);
+        return stub_->SignBlob(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::credentials::v1::SignJwtResponse>
@@ -112,11 +112,11 @@ IAMCredentialsConnectionImpl::SignJwt(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SignJwt(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::credentials::v1::SignJwtRequest const& request) {
-        return stub_->SignJwt(context, request);
+        return stub_->SignJwt(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

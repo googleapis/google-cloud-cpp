@@ -39,7 +39,7 @@ class EventServiceLogging : public EventServiceStub {
                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::CreateClientEventRequest const& request)
       override;
 

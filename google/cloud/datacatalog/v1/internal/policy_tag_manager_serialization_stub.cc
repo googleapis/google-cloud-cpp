@@ -33,7 +33,7 @@ PolicyTagManagerSerializationStub::~PolicyTagManagerSerializationStub() =
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 DefaultPolicyTagManagerSerializationStub::ReplaceTaxonomy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) {
   google::cloud::datacatalog::v1::Taxonomy response;
   auto status = grpc_stub_->ReplaceTaxonomy(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultPolicyTagManagerSerializationStub::ReplaceTaxonomy(
 
 StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
 DefaultPolicyTagManagerSerializationStub::ImportTaxonomies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) {
   google::cloud::datacatalog::v1::ImportTaxonomiesResponse response;
   auto status = grpc_stub_->ImportTaxonomies(&context, request, &response);
@@ -57,7 +57,7 @@ DefaultPolicyTagManagerSerializationStub::ImportTaxonomies(
 
 StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
 DefaultPolicyTagManagerSerializationStub::ExportTaxonomies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) {
   google::cloud::datacatalog::v1::ExportTaxonomiesResponse response;
   auto status = grpc_stub_->ExportTaxonomies(&context, request, &response);

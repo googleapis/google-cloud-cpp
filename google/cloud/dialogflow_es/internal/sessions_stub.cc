@@ -33,7 +33,7 @@ SessionsStub::~SessionsStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>
 DefaultSessionsStub::DetectIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::DetectIntentRequest const& request) {
   google::cloud::dialogflow::v2::DetectIntentResponse response;
   auto status = grpc_stub_->DetectIntent(&context, request, &response);

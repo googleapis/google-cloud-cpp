@@ -44,18 +44,18 @@ ImageAnnotatorMetadata::ImageAnnotatorMetadata(
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
 ImageAnnotatorMetadata::BatchAnnotateImages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->BatchAnnotateImages(context, request);
+  SetMetadata(context, options);
+  return child_->BatchAnnotateImages(context, options, request);
 }
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
 ImageAnnotatorMetadata::BatchAnnotateFiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->BatchAnnotateFiles(context, request);
+  SetMetadata(context, options);
+  return child_->BatchAnnotateFiles(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

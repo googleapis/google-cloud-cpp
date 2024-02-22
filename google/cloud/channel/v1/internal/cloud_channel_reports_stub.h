@@ -46,11 +46,11 @@ class CloudChannelReportsServiceStub {
 
   virtual StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
   FetchReportResults(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::FetchReportResultsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::channel::v1::ListReportsResponse> ListReports(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::ListReportsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -82,12 +82,12 @@ class DefaultCloudChannelReportsServiceStub
 
   StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
   FetchReportResults(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::FetchReportResultsRequest const& request)
       override;
 
   StatusOr<google::cloud::channel::v1::ListReportsResponse> ListReports(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::channel::v1::ListReportsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

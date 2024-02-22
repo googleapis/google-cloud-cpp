@@ -33,7 +33,7 @@ ArtifactRegistryStub::~ArtifactRegistryStub() = default;
 
 StatusOr<google::devtools::artifactregistry::v1::ListDockerImagesResponse>
 DefaultArtifactRegistryStub::ListDockerImages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::ListDockerImagesRequest const&
         request) {
   google::devtools::artifactregistry::v1::ListDockerImagesResponse response;
@@ -46,7 +46,7 @@ DefaultArtifactRegistryStub::ListDockerImages(
 
 StatusOr<google::devtools::artifactregistry::v1::DockerImage>
 DefaultArtifactRegistryStub::GetDockerImage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::GetDockerImageRequest const&
         request) {
   google::devtools::artifactregistry::v1::DockerImage response;
@@ -59,7 +59,7 @@ DefaultArtifactRegistryStub::GetDockerImage(
 
 StatusOr<google::devtools::artifactregistry::v1::ListMavenArtifactsResponse>
 DefaultArtifactRegistryStub::ListMavenArtifacts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::ListMavenArtifactsRequest const&
         request) {
   google::devtools::artifactregistry::v1::ListMavenArtifactsResponse response;
@@ -72,7 +72,7 @@ DefaultArtifactRegistryStub::ListMavenArtifacts(
 
 StatusOr<google::devtools::artifactregistry::v1::MavenArtifact>
 DefaultArtifactRegistryStub::GetMavenArtifact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::GetMavenArtifactRequest const&
         request) {
   google::devtools::artifactregistry::v1::MavenArtifact response;
@@ -85,7 +85,7 @@ DefaultArtifactRegistryStub::GetMavenArtifact(
 
 StatusOr<google::devtools::artifactregistry::v1::ListNpmPackagesResponse>
 DefaultArtifactRegistryStub::ListNpmPackages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::ListNpmPackagesRequest const&
         request) {
   google::devtools::artifactregistry::v1::ListNpmPackagesResponse response;
@@ -98,7 +98,7 @@ DefaultArtifactRegistryStub::ListNpmPackages(
 
 StatusOr<google::devtools::artifactregistry::v1::NpmPackage>
 DefaultArtifactRegistryStub::GetNpmPackage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::GetNpmPackageRequest const&
         request) {
   google::devtools::artifactregistry::v1::NpmPackage response;
@@ -111,7 +111,7 @@ DefaultArtifactRegistryStub::GetNpmPackage(
 
 StatusOr<google::devtools::artifactregistry::v1::ListPythonPackagesResponse>
 DefaultArtifactRegistryStub::ListPythonPackages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::ListPythonPackagesRequest const&
         request) {
   google::devtools::artifactregistry::v1::ListPythonPackagesResponse response;
@@ -124,7 +124,7 @@ DefaultArtifactRegistryStub::ListPythonPackages(
 
 StatusOr<google::devtools::artifactregistry::v1::PythonPackage>
 DefaultArtifactRegistryStub::GetPythonPackage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::GetPythonPackageRequest const&
         request) {
   google::devtools::artifactregistry::v1::PythonPackage response;
@@ -175,7 +175,7 @@ DefaultArtifactRegistryStub::AsyncImportYumArtifacts(
 
 StatusOr<google::devtools::artifactregistry::v1::ListRepositoriesResponse>
 DefaultArtifactRegistryStub::ListRepositories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::ListRepositoriesRequest const&
         request) {
   google::devtools::artifactregistry::v1::ListRepositoriesResponse response;
@@ -188,7 +188,7 @@ DefaultArtifactRegistryStub::ListRepositories(
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
 DefaultArtifactRegistryStub::GetRepository(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::GetRepositoryRequest const&
         request) {
   google::devtools::artifactregistry::v1::Repository response;
@@ -221,7 +221,7 @@ DefaultArtifactRegistryStub::AsyncCreateRepository(
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
 DefaultArtifactRegistryStub::UpdateRepository(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
         request) {
   google::devtools::artifactregistry::v1::Repository response;
@@ -254,7 +254,7 @@ DefaultArtifactRegistryStub::AsyncDeleteRepository(
 
 StatusOr<google::devtools::artifactregistry::v1::ListPackagesResponse>
 DefaultArtifactRegistryStub::ListPackages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::ListPackagesRequest const&
         request) {
   google::devtools::artifactregistry::v1::ListPackagesResponse response;
@@ -267,7 +267,7 @@ DefaultArtifactRegistryStub::ListPackages(
 
 StatusOr<google::devtools::artifactregistry::v1::Package>
 DefaultArtifactRegistryStub::GetPackage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::GetPackageRequest const& request) {
   google::devtools::artifactregistry::v1::Package response;
   auto status = grpc_stub_->GetPackage(&context, request, &response);
@@ -298,7 +298,7 @@ DefaultArtifactRegistryStub::AsyncDeletePackage(
 
 StatusOr<google::devtools::artifactregistry::v1::ListVersionsResponse>
 DefaultArtifactRegistryStub::ListVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::ListVersionsRequest const&
         request) {
   google::devtools::artifactregistry::v1::ListVersionsResponse response;
@@ -311,7 +311,7 @@ DefaultArtifactRegistryStub::ListVersions(
 
 StatusOr<google::devtools::artifactregistry::v1::Version>
 DefaultArtifactRegistryStub::GetVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::GetVersionRequest const& request) {
   google::devtools::artifactregistry::v1::Version response;
   auto status = grpc_stub_->GetVersion(&context, request, &response);
@@ -361,7 +361,7 @@ DefaultArtifactRegistryStub::AsyncBatchDeleteVersions(
 
 StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>
 DefaultArtifactRegistryStub::ListFiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::ListFilesRequest const& request) {
   google::devtools::artifactregistry::v1::ListFilesResponse response;
   auto status = grpc_stub_->ListFiles(&context, request, &response);
@@ -373,7 +373,7 @@ DefaultArtifactRegistryStub::ListFiles(
 
 StatusOr<google::devtools::artifactregistry::v1::File>
 DefaultArtifactRegistryStub::GetFile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::GetFileRequest const& request) {
   google::devtools::artifactregistry::v1::File response;
   auto status = grpc_stub_->GetFile(&context, request, &response);
@@ -385,7 +385,7 @@ DefaultArtifactRegistryStub::GetFile(
 
 StatusOr<google::devtools::artifactregistry::v1::ListTagsResponse>
 DefaultArtifactRegistryStub::ListTags(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::ListTagsRequest const& request) {
   google::devtools::artifactregistry::v1::ListTagsResponse response;
   auto status = grpc_stub_->ListTags(&context, request, &response);
@@ -397,7 +397,7 @@ DefaultArtifactRegistryStub::ListTags(
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
 DefaultArtifactRegistryStub::GetTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::GetTagRequest const& request) {
   google::devtools::artifactregistry::v1::Tag response;
   auto status = grpc_stub_->GetTag(&context, request, &response);
@@ -409,7 +409,7 @@ DefaultArtifactRegistryStub::GetTag(
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
 DefaultArtifactRegistryStub::CreateTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::CreateTagRequest const& request) {
   google::devtools::artifactregistry::v1::Tag response;
   auto status = grpc_stub_->CreateTag(&context, request, &response);
@@ -421,7 +421,7 @@ DefaultArtifactRegistryStub::CreateTag(
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
 DefaultArtifactRegistryStub::UpdateTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::UpdateTagRequest const& request) {
   google::devtools::artifactregistry::v1::Tag response;
   auto status = grpc_stub_->UpdateTag(&context, request, &response);
@@ -432,7 +432,7 @@ DefaultArtifactRegistryStub::UpdateTag(
 }
 
 Status DefaultArtifactRegistryStub::DeleteTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::DeleteTagRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteTag(&context, request, &response);
@@ -443,7 +443,7 @@ Status DefaultArtifactRegistryStub::DeleteTag(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultArtifactRegistryStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -454,7 +454,7 @@ StatusOr<google::iam::v1::Policy> DefaultArtifactRegistryStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultArtifactRegistryStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -466,7 +466,7 @@ StatusOr<google::iam::v1::Policy> DefaultArtifactRegistryStub::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultArtifactRegistryStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
@@ -478,7 +478,7 @@ DefaultArtifactRegistryStub::TestIamPermissions(
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
 DefaultArtifactRegistryStub::GetProjectSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&
         request) {
   google::devtools::artifactregistry::v1::ProjectSettings response;
@@ -491,7 +491,7 @@ DefaultArtifactRegistryStub::GetProjectSettings(
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
 DefaultArtifactRegistryStub::UpdateProjectSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const&
         request) {
   google::devtools::artifactregistry::v1::ProjectSettings response;
@@ -504,7 +504,7 @@ DefaultArtifactRegistryStub::UpdateProjectSettings(
 
 StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
 DefaultArtifactRegistryStub::GetVPCSCConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::GetVPCSCConfigRequest const&
         request) {
   google::devtools::artifactregistry::v1::VPCSCConfig response;
@@ -517,7 +517,7 @@ DefaultArtifactRegistryStub::GetVPCSCConfig(
 
 StatusOr<google::devtools::artifactregistry::v1::VPCSCConfig>
 DefaultArtifactRegistryStub::UpdateVPCSCConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::artifactregistry::v1::UpdateVPCSCConfigRequest const&
         request) {
   google::devtools::artifactregistry::v1::VPCSCConfig response;

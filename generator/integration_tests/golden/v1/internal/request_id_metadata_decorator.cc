@@ -47,6 +47,7 @@ RequestIdServiceMetadata::RequestIdServiceMetadata(
 StatusOr<google::test::requestid::v1::Foo>
 RequestIdServiceMetadata::CreateFoo(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::requestid::v1::CreateFooRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -56,11 +57,11 @@ RequestIdServiceMetadata::CreateFoo(
   }
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(), absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->CreateFoo(context, request);
+  return child_->CreateFoo(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -94,6 +95,7 @@ RequestIdServiceMetadata::AsyncRenameFoo(
 StatusOr<google::test::requestid::v1::ListFoosResponse>
 RequestIdServiceMetadata::ListFoos(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::requestid::v1::ListFoosRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -103,11 +105,11 @@ RequestIdServiceMetadata::ListFoos(
   }
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(), absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->ListFoos(context, request);
+  return child_->ListFoos(context, options, request);
 }
 
 future<StatusOr<google::test::requestid::v1::Foo>>

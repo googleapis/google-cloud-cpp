@@ -37,29 +37,29 @@ DatastreamLogging::DatastreamLogging(std::shared_ptr<DatastreamStub> child,
 
 StatusOr<google::cloud::datastream::v1::ListConnectionProfilesResponse>
 DatastreamLogging::ListConnectionProfiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::ListConnectionProfilesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datastream::v1::ListConnectionProfilesRequest const&
                  request) {
-        return child_->ListConnectionProfiles(context, request);
+        return child_->ListConnectionProfiles(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datastream::v1::ConnectionProfile>
 DatastreamLogging::GetConnectionProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::GetConnectionProfileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datastream::v1::GetConnectionProfileRequest const&
                  request) {
-        return child_->GetConnectionProfile(context, request);
+        return child_->GetConnectionProfile(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -118,40 +118,40 @@ DatastreamLogging::AsyncDeleteConnectionProfile(
 
 StatusOr<google::cloud::datastream::v1::DiscoverConnectionProfileResponse>
 DatastreamLogging::DiscoverConnectionProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::DiscoverConnectionProfileRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::datastream::v1::DiscoverConnectionProfileRequest const&
               request) {
-        return child_->DiscoverConnectionProfile(context, request);
+        return child_->DiscoverConnectionProfile(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datastream::v1::ListStreamsResponse>
 DatastreamLogging::ListStreams(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::ListStreamsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datastream::v1::ListStreamsRequest const& request) {
-        return child_->ListStreams(context, request);
+        return child_->ListStreams(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datastream::v1::Stream> DatastreamLogging::GetStream(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::GetStreamRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datastream::v1::GetStreamRequest const& request) {
-        return child_->GetStream(context, request);
+        return child_->GetStream(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -204,76 +204,80 @@ DatastreamLogging::AsyncDeleteStream(
 
 StatusOr<google::cloud::datastream::v1::StreamObject>
 DatastreamLogging::GetStreamObject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::GetStreamObjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datastream::v1::GetStreamObjectRequest const&
-                 request) { return child_->GetStreamObject(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetStreamObject(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datastream::v1::StreamObject>
 DatastreamLogging::LookupStreamObject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::LookupStreamObjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datastream::v1::LookupStreamObjectRequest const&
                  request) {
-        return child_->LookupStreamObject(context, request);
+        return child_->LookupStreamObject(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datastream::v1::ListStreamObjectsResponse>
 DatastreamLogging::ListStreamObjects(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::ListStreamObjectsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datastream::v1::ListStreamObjectsRequest const&
                  request) {
-        return child_->ListStreamObjects(context, request);
+        return child_->ListStreamObjects(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datastream::v1::StartBackfillJobResponse>
 DatastreamLogging::StartBackfillJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::StartBackfillJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datastream::v1::StartBackfillJobRequest const&
                  request) {
-        return child_->StartBackfillJob(context, request);
+        return child_->StartBackfillJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datastream::v1::StopBackfillJobResponse>
 DatastreamLogging::StopBackfillJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::StopBackfillJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datastream::v1::StopBackfillJobRequest const&
-                 request) { return child_->StopBackfillJob(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->StopBackfillJob(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datastream::v1::FetchStaticIpsResponse>
 DatastreamLogging::FetchStaticIps(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::FetchStaticIpsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::datastream::v1::FetchStaticIpsRequest const& request) {
-        return child_->FetchStaticIps(context, request);
+        return child_->FetchStaticIps(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -296,29 +300,29 @@ DatastreamLogging::AsyncCreatePrivateConnection(
 
 StatusOr<google::cloud::datastream::v1::PrivateConnection>
 DatastreamLogging::GetPrivateConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::GetPrivateConnectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datastream::v1::GetPrivateConnectionRequest const&
                  request) {
-        return child_->GetPrivateConnection(context, request);
+        return child_->GetPrivateConnection(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datastream::v1::ListPrivateConnectionsResponse>
 DatastreamLogging::ListPrivateConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::ListPrivateConnectionsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datastream::v1::ListPrivateConnectionsRequest const&
                  request) {
-        return child_->ListPrivateConnections(context, request);
+        return child_->ListPrivateConnections(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -356,26 +360,26 @@ DatastreamLogging::AsyncCreateRoute(
 }
 
 StatusOr<google::cloud::datastream::v1::Route> DatastreamLogging::GetRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::GetRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datastream::v1::GetRouteRequest const& request) {
-        return child_->GetRoute(context, request);
+        return child_->GetRoute(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::datastream::v1::ListRoutesResponse>
 DatastreamLogging::ListRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datastream::v1::ListRoutesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datastream::v1::ListRoutesRequest const& request) {
-        return child_->ListRoutes(context, request);
+        return child_->ListRoutes(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

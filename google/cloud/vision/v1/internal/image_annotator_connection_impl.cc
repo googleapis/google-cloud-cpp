@@ -70,12 +70,12 @@ ImageAnnotatorConnectionImpl::BatchAnnotateImages(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->BatchAnnotateImages(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vision::v1::BatchAnnotateImagesRequest const&
                  request) {
-        return stub_->BatchAnnotateImages(context, request);
+        return stub_->BatchAnnotateImages(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
@@ -86,11 +86,11 @@ ImageAnnotatorConnectionImpl::BatchAnnotateFiles(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->BatchAnnotateFiles(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
-        return stub_->BatchAnnotateFiles(context, request);
+        return stub_->BatchAnnotateFiles(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>

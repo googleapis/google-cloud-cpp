@@ -33,12 +33,13 @@ RequestIdServiceTracingStub::RequestIdServiceTracingStub(
 
 StatusOr<google::test::requestid::v1::Foo> RequestIdServiceTracingStub::CreateFoo(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::requestid::v1::CreateFooRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.test.requestid.v1.RequestIdService", "CreateFoo");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateFoo(context, request));
+                           child_->CreateFoo(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -56,12 +57,13 @@ RequestIdServiceTracingStub::AsyncRenameFoo(
 
 StatusOr<google::test::requestid::v1::ListFoosResponse> RequestIdServiceTracingStub::ListFoos(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::requestid::v1::ListFoosRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.test.requestid.v1.RequestIdService", "ListFoos");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListFoos(context, request));
+                           child_->ListFoos(context, options, request));
 }
 
 future<StatusOr<google::test::requestid::v1::Foo>> RequestIdServiceTracingStub::AsyncCreateFoo(

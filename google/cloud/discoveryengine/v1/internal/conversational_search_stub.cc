@@ -32,7 +32,7 @@ ConversationalSearchServiceStub::~ConversationalSearchServiceStub() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
 DefaultConversationalSearchServiceStub::ConverseConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::discoveryengine::v1::ConverseConversationRequest const&
         request) {
   google::cloud::discoveryengine::v1::ConverseConversationResponse response;
@@ -45,7 +45,7 @@ DefaultConversationalSearchServiceStub::ConverseConversation(
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 DefaultConversationalSearchServiceStub::CreateConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::discoveryengine::v1::CreateConversationRequest const&
         request) {
   google::cloud::discoveryengine::v1::Conversation response;
@@ -57,7 +57,7 @@ DefaultConversationalSearchServiceStub::CreateConversation(
 }
 
 Status DefaultConversationalSearchServiceStub::DeleteConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::discoveryengine::v1::DeleteConversationRequest const&
         request) {
   google::protobuf::Empty response;
@@ -70,7 +70,7 @@ Status DefaultConversationalSearchServiceStub::DeleteConversation(
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 DefaultConversationalSearchServiceStub::UpdateConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::discoveryengine::v1::UpdateConversationRequest const&
         request) {
   google::cloud::discoveryengine::v1::Conversation response;
@@ -83,7 +83,7 @@ DefaultConversationalSearchServiceStub::UpdateConversation(
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 DefaultConversationalSearchServiceStub::GetConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::discoveryengine::v1::GetConversationRequest const& request) {
   google::cloud::discoveryengine::v1::Conversation response;
   auto status = grpc_stub_->GetConversation(&context, request, &response);
@@ -95,7 +95,7 @@ DefaultConversationalSearchServiceStub::GetConversation(
 
 StatusOr<google::cloud::discoveryengine::v1::ListConversationsResponse>
 DefaultConversationalSearchServiceStub::ListConversations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::discoveryengine::v1::ListConversationsRequest const&
         request) {
   google::cloud::discoveryengine::v1::ListConversationsResponse response;

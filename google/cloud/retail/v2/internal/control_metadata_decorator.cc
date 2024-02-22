@@ -44,46 +44,46 @@ ControlServiceMetadata::ControlServiceMetadata(
 
 StatusOr<google::cloud::retail::v2::Control>
 ControlServiceMetadata::CreateControl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::CreateControlRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateControl(context, request);
+  return child_->CreateControl(context, options, request);
 }
 
 Status ControlServiceMetadata::DeleteControl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::DeleteControlRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteControl(context, request);
+  return child_->DeleteControl(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::Control>
 ControlServiceMetadata::UpdateControl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::UpdateControlRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("control.name=",
                            internal::UrlEncode(request.control().name())));
-  return child_->UpdateControl(context, request);
+  return child_->UpdateControl(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::Control> ControlServiceMetadata::GetControl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::GetControlRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetControl(context, request);
+  return child_->GetControl(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ListControlsResponse>
 ControlServiceMetadata::ListControls(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::ListControlsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListControls(context, request);
+  return child_->ListControls(context, options, request);
 }
 
 void ControlServiceMetadata::SetMetadata(grpc::ClientContext& context,

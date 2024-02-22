@@ -52,11 +52,11 @@ TensorboardServiceAuth::AsyncCreateTensorboard(
 
 StatusOr<google::cloud::aiplatform::v1::Tensorboard>
 TensorboardServiceAuth::GetTensorboard(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetTensorboardRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTensorboard(context, request);
+  return child_->GetTensorboard(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -80,11 +80,11 @@ TensorboardServiceAuth::AsyncUpdateTensorboard(
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardsResponse>
 TensorboardServiceAuth::ListTensorboards(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListTensorboardsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTensorboards(context, request);
+  return child_->ListTensorboards(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -108,60 +108,60 @@ TensorboardServiceAuth::AsyncDeleteTensorboard(
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
 TensorboardServiceAuth::ReadTensorboardUsage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ReadTensorboardUsage(context, request);
+  return child_->ReadTensorboardUsage(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
 TensorboardServiceAuth::ReadTensorboardSize(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ReadTensorboardSize(context, request);
+  return child_->ReadTensorboardSize(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 TensorboardServiceAuth::CreateTensorboardExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateTensorboardExperiment(context, request);
+  return child_->CreateTensorboardExperiment(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 TensorboardServiceAuth::GetTensorboardExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTensorboardExperiment(context, request);
+  return child_->GetTensorboardExperiment(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 TensorboardServiceAuth::UpdateTensorboardExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateTensorboardExperiment(context, request);
+  return child_->UpdateTensorboardExperiment(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardExperimentsResponse>
 TensorboardServiceAuth::ListTensorboardExperiments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTensorboardExperiments(context, request);
+  return child_->ListTensorboardExperiments(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -186,48 +186,48 @@ TensorboardServiceAuth::AsyncDeleteTensorboardExperiment(
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 TensorboardServiceAuth::CreateTensorboardRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateTensorboardRunRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateTensorboardRun(context, request);
+  return child_->CreateTensorboardRun(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardRunsResponse>
 TensorboardServiceAuth::BatchCreateTensorboardRuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->BatchCreateTensorboardRuns(context, request);
+  return child_->BatchCreateTensorboardRuns(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 TensorboardServiceAuth::GetTensorboardRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetTensorboardRunRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTensorboardRun(context, request);
+  return child_->GetTensorboardRun(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 TensorboardServiceAuth::UpdateTensorboardRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateTensorboardRun(context, request);
+  return child_->UpdateTensorboardRun(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardRunsResponse>
 TensorboardServiceAuth::ListTensorboardRuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListTensorboardRunsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTensorboardRuns(context, request);
+  return child_->ListTensorboardRuns(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -252,52 +252,52 @@ TensorboardServiceAuth::AsyncDeleteTensorboardRun(
 StatusOr<
     google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
 TensorboardServiceAuth::BatchCreateTensorboardTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         BatchCreateTensorboardTimeSeriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->BatchCreateTensorboardTimeSeries(context, request);
+  return child_->BatchCreateTensorboardTimeSeries(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
 TensorboardServiceAuth::CreateTensorboardTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateTensorboardTimeSeries(context, request);
+  return child_->CreateTensorboardTimeSeries(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
 TensorboardServiceAuth::GetTensorboardTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTensorboardTimeSeries(context, request);
+  return child_->GetTensorboardTimeSeries(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
 TensorboardServiceAuth::UpdateTensorboardTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateTensorboardTimeSeries(context, request);
+  return child_->UpdateTensorboardTimeSeries(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardTimeSeriesResponse>
 TensorboardServiceAuth::ListTensorboardTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTensorboardTimeSeries(context, request);
+  return child_->ListTensorboardTimeSeries(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -323,22 +323,22 @@ TensorboardServiceAuth::AsyncDeleteTensorboardTimeSeries(
 StatusOr<
     google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>
 TensorboardServiceAuth::BatchReadTensorboardTimeSeriesData(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         BatchReadTensorboardTimeSeriesDataRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->BatchReadTensorboardTimeSeriesData(context, request);
+  return child_->BatchReadTensorboardTimeSeriesData(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataResponse>
 TensorboardServiceAuth::ReadTensorboardTimeSeriesData(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ReadTensorboardTimeSeriesData(context, request);
+  return child_->ReadTensorboardTimeSeriesData(context, options, request);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -356,32 +356,32 @@ TensorboardServiceAuth::ReadTensorboardBlobData(
 
 StatusOr<google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse>
 TensorboardServiceAuth::WriteTensorboardExperimentData(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::WriteTensorboardExperimentDataRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->WriteTensorboardExperimentData(context, request);
+  return child_->WriteTensorboardExperimentData(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteTensorboardRunDataResponse>
 TensorboardServiceAuth::WriteTensorboardRunData(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->WriteTensorboardRunData(context, request);
+  return child_->WriteTensorboardRunData(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataResponse>
 TensorboardServiceAuth::ExportTensorboardTimeSeriesData(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ExportTensorboardTimeSeriesData(context, request);
+  return child_->ExportTensorboardTimeSeriesData(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

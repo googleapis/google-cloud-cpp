@@ -53,20 +53,20 @@ IndexServiceMetadata::AsyncCreateIndex(
 }
 
 StatusOr<google::cloud::aiplatform::v1::Index> IndexServiceMetadata::GetIndex(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetIndexRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetIndex(context, request);
+  return child_->GetIndex(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListIndexesResponse>
 IndexServiceMetadata::ListIndexes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListIndexesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListIndexes(context, request);
+  return child_->ListIndexes(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -92,20 +92,20 @@ IndexServiceMetadata::AsyncDeleteIndex(
 
 StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
 IndexServiceMetadata::UpsertDatapoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("index=", internal::UrlEncode(request.index())));
-  return child_->UpsertDatapoints(context, request);
+  return child_->UpsertDatapoints(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>
 IndexServiceMetadata::RemoveDatapoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("index=", internal::UrlEncode(request.index())));
-  return child_->RemoveDatapoints(context, request);
+  return child_->RemoveDatapoints(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

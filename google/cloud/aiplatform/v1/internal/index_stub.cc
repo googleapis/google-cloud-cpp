@@ -50,7 +50,7 @@ DefaultIndexServiceStub::AsyncCreateIndex(
 
 StatusOr<google::cloud::aiplatform::v1::Index>
 DefaultIndexServiceStub::GetIndex(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetIndexRequest const& request) {
   google::cloud::aiplatform::v1::Index response;
   auto status = grpc_stub_->GetIndex(&context, request, &response);
@@ -62,7 +62,7 @@ DefaultIndexServiceStub::GetIndex(
 
 StatusOr<google::cloud::aiplatform::v1::ListIndexesResponse>
 DefaultIndexServiceStub::ListIndexes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListIndexesRequest const& request) {
   google::cloud::aiplatform::v1::ListIndexesResponse response;
   auto status = grpc_stub_->ListIndexes(&context, request, &response);
@@ -108,7 +108,7 @@ DefaultIndexServiceStub::AsyncDeleteIndex(
 
 StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
 DefaultIndexServiceStub::UpsertDatapoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request) {
   google::cloud::aiplatform::v1::UpsertDatapointsResponse response;
   auto status = grpc_stub_->UpsertDatapoints(&context, request, &response);
@@ -120,7 +120,7 @@ DefaultIndexServiceStub::UpsertDatapoints(
 
 StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>
 DefaultIndexServiceStub::RemoveDatapoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request) {
   google::cloud::aiplatform::v1::RemoveDatapointsResponse response;
   auto status = grpc_stub_->RemoveDatapoints(&context, request, &response);

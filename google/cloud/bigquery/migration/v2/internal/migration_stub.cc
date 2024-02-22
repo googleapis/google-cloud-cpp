@@ -32,7 +32,7 @@ MigrationServiceStub::~MigrationServiceStub() = default;
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
 DefaultMigrationServiceStub::CreateMigrationWorkflow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::migration::v2::
         CreateMigrationWorkflowRequest const& request) {
   google::cloud::bigquery::migration::v2::MigrationWorkflow response;
@@ -46,7 +46,7 @@ DefaultMigrationServiceStub::CreateMigrationWorkflow(
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
 DefaultMigrationServiceStub::GetMigrationWorkflow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&
         request) {
   google::cloud::bigquery::migration::v2::MigrationWorkflow response;
@@ -59,7 +59,7 @@ DefaultMigrationServiceStub::GetMigrationWorkflow(
 
 StatusOr<google::cloud::bigquery::migration::v2::ListMigrationWorkflowsResponse>
 DefaultMigrationServiceStub::ListMigrationWorkflows(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::migration::v2::ListMigrationWorkflowsRequest const&
         request) {
   google::cloud::bigquery::migration::v2::ListMigrationWorkflowsResponse
@@ -73,7 +73,7 @@ DefaultMigrationServiceStub::ListMigrationWorkflows(
 }
 
 Status DefaultMigrationServiceStub::DeleteMigrationWorkflow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::migration::v2::
         DeleteMigrationWorkflowRequest const& request) {
   google::protobuf::Empty response;
@@ -86,7 +86,7 @@ Status DefaultMigrationServiceStub::DeleteMigrationWorkflow(
 }
 
 Status DefaultMigrationServiceStub::StartMigrationWorkflow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const&
         request) {
   google::protobuf::Empty response;
@@ -100,7 +100,7 @@ Status DefaultMigrationServiceStub::StartMigrationWorkflow(
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
 DefaultMigrationServiceStub::GetMigrationSubtask(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
         request) {
   google::cloud::bigquery::migration::v2::MigrationSubtask response;
@@ -113,7 +113,7 @@ DefaultMigrationServiceStub::GetMigrationSubtask(
 
 StatusOr<google::cloud::bigquery::migration::v2::ListMigrationSubtasksResponse>
 DefaultMigrationServiceStub::ListMigrationSubtasks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::migration::v2::ListMigrationSubtasksRequest const&
         request) {
   google::cloud::bigquery::migration::v2::ListMigrationSubtasksResponse

@@ -47,14 +47,14 @@ class DeploymentResourcePoolServiceStub {
 
   virtual StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
   GetDeploymentResourcePool(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse>
   ListDeploymentResourcePools(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const&
           request) = 0;
 
@@ -96,13 +96,13 @@ class DefaultDeploymentResourcePoolServiceStub
 
   StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
   GetDeploymentResourcePool(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse>
   ListDeploymentResourcePools(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const&
           request) override;
 

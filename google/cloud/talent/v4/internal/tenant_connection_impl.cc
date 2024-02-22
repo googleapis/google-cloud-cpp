@@ -66,11 +66,11 @@ TenantServiceConnectionImpl::CreateTenant(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateTenant(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::CreateTenantRequest const& request) {
-        return stub_->CreateTenant(context, request);
+        return stub_->CreateTenant(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::talent::v4::Tenant>
@@ -80,11 +80,11 @@ TenantServiceConnectionImpl::GetTenant(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTenant(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::GetTenantRequest const& request) {
-        return stub_->GetTenant(context, request);
+        return stub_->GetTenant(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::talent::v4::Tenant>
@@ -94,11 +94,11 @@ TenantServiceConnectionImpl::UpdateTenant(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateTenant(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::UpdateTenantRequest const& request) {
-        return stub_->UpdateTenant(context, request);
+        return stub_->UpdateTenant(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status TenantServiceConnectionImpl::DeleteTenant(
@@ -107,11 +107,11 @@ Status TenantServiceConnectionImpl::DeleteTenant(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteTenant(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::DeleteTenantRequest const& request) {
-        return stub_->DeleteTenant(context, request);
+        return stub_->DeleteTenant(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::talent::v4::Tenant>
@@ -123,20 +123,21 @@ TenantServiceConnectionImpl::ListTenants(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::talent::v4::Tenant>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<talent_v4::TenantServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::talent::v4::ListTenantsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::talent::v4::ListTenantsRequest const& request) {
-              return stub->ListTenants(context, request);
+              return stub->ListTenants(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::talent::v4::ListTenantsResponse r) {
         std::vector<google::cloud::talent::v4::Tenant> result(

@@ -33,7 +33,7 @@ ImageVersionsStub::~ImageVersionsStub() = default;
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              ListImageVersionsResponse>
 DefaultImageVersionsStub::ListImageVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orchestration::airflow::service::v1::
         ListImageVersionsRequest const& request) {
   google::cloud::orchestration::airflow::service::v1::ListImageVersionsResponse

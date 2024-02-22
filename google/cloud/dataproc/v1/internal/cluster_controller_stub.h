@@ -65,12 +65,12 @@ class ClusterControllerStub {
       google::cloud::dataproc::v1::DeleteClusterRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataproc::v1::Cluster> GetCluster(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::GetClusterRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataproc::v1::ListClustersResponse>
   ListClusters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::ListClustersRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDiagnoseCluster(
@@ -128,11 +128,11 @@ class DefaultClusterControllerStub : public ClusterControllerStub {
       override;
 
   StatusOr<google::cloud::dataproc::v1::Cluster> GetCluster(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::GetClusterRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::ListClustersResponse> ListClusters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::ListClustersRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDiagnoseCluster(

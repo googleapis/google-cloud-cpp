@@ -37,79 +37,93 @@ EssentialContactsServiceLogging::EssentialContactsServiceLogging(
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceLogging::CreateContact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::CreateContactRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::essentialcontacts::v1::CreateContactRequest const&
-                 request) { return child_->CreateContact(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->CreateContact(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceLogging::UpdateContact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::UpdateContactRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::essentialcontacts::v1::UpdateContactRequest const&
-                 request) { return child_->UpdateContact(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->UpdateContact(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::essentialcontacts::v1::ListContactsResponse>
 EssentialContactsServiceLogging::ListContacts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::ListContactsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::essentialcontacts::v1::ListContactsRequest const&
-                 request) { return child_->ListContacts(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListContacts(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceLogging::GetContact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::GetContactRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::essentialcontacts::v1::GetContactRequest const&
-                 request) { return child_->GetContact(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetContact(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status EssentialContactsServiceLogging::DeleteContact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::DeleteContactRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::essentialcontacts::v1::DeleteContactRequest const&
-                 request) { return child_->DeleteContact(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->DeleteContact(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::essentialcontacts::v1::ComputeContactsResponse>
 EssentialContactsServiceLogging::ComputeContacts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::ComputeContactsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::essentialcontacts::v1::ComputeContactsRequest const&
-                 request) { return child_->ComputeContacts(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ComputeContacts(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status EssentialContactsServiceLogging::SendTestMessage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
-                 request) { return child_->SendTestMessage(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->SendTestMessage(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

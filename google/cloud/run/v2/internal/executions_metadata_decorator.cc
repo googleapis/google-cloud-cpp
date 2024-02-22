@@ -43,20 +43,20 @@ ExecutionsMetadata::ExecutionsMetadata(
               : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::run::v2::Execution> ExecutionsMetadata::GetExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetExecutionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetExecution(context, request);
+  return child_->GetExecution(context, options, request);
 }
 
 StatusOr<google::cloud::run::v2::ListExecutionsResponse>
 ExecutionsMetadata::ListExecutions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::ListExecutionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListExecutions(context, request);
+  return child_->ListExecutions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -112,10 +112,12 @@ RepositoryManagerConnectionImpl::GetConnection(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetConnection(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::cloudbuild::v2::GetConnectionRequest const&
-                 request) { return stub_->GetConnection(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetConnection(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::devtools::cloudbuild::v2::Connection>
@@ -127,21 +129,22 @@ RepositoryManagerConnectionImpl::ListConnections(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::devtools::cloudbuild::v2::Connection>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<cloudbuild_v2::RepositoryManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::devtools::cloudbuild::v2::ListConnectionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::devtools::cloudbuild::v2::ListConnectionsRequest const&
                     request) {
-              return stub->ListConnections(context, request);
+              return stub->ListConnections(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::devtools::cloudbuild::v2::ListConnectionsResponse r) {
         std::vector<google::devtools::cloudbuild::v2::Connection> result(
@@ -313,10 +316,12 @@ RepositoryManagerConnectionImpl::GetRepository(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRepository(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::cloudbuild::v2::GetRepositoryRequest const&
-                 request) { return stub_->GetRepository(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetRepository(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::devtools::cloudbuild::v2::Repository>
@@ -328,21 +333,22 @@ RepositoryManagerConnectionImpl::ListRepositories(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::devtools::cloudbuild::v2::Repository>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<cloudbuild_v2::RepositoryManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::devtools::cloudbuild::v2::ListRepositoriesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::devtools::cloudbuild::v2::ListRepositoriesRequest const&
                     request) {
-              return stub->ListRepositories(context, request);
+              return stub->ListRepositories(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::devtools::cloudbuild::v2::ListRepositoriesResponse r) {
         std::vector<google::devtools::cloudbuild::v2::Repository> result(
@@ -399,12 +405,12 @@ RepositoryManagerConnectionImpl::FetchReadWriteToken(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FetchReadWriteToken(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
                  request) {
-        return stub_->FetchReadWriteToken(context, request);
+        return stub_->FetchReadWriteToken(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
@@ -414,10 +420,12 @@ RepositoryManagerConnectionImpl::FetchReadToken(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FetchReadToken(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::cloudbuild::v2::FetchReadTokenRequest const&
-                 request) { return stub_->FetchReadToken(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->FetchReadToken(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::devtools::cloudbuild::v2::Repository>
@@ -431,21 +439,22 @@ RepositoryManagerConnectionImpl::FetchLinkableRepositories(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::devtools::cloudbuild::v2::Repository>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<cloudbuild_v2::RepositoryManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::devtools::cloudbuild::v2::
               FetchLinkableRepositoriesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::devtools::cloudbuild::v2::
                        FetchLinkableRepositoriesRequest const& request) {
-              return stub->FetchLinkableRepositories(context, request);
+              return stub->FetchLinkableRepositories(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse
              r) {
@@ -464,10 +473,12 @@ RepositoryManagerConnectionImpl::FetchGitRefs(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FetchGitRefs(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::cloudbuild::v2::FetchGitRefsRequest const&
-                 request) { return stub_->FetchGitRefs(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->FetchGitRefs(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

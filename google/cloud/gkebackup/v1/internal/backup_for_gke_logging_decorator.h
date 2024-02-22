@@ -46,12 +46,12 @@ class BackupForGKELogging : public BackupForGKEStub {
       override;
 
   StatusOr<google::cloud::gkebackup::v1::ListBackupPlansResponse>
-  ListBackupPlans(grpc::ClientContext& context,
+  ListBackupPlans(grpc::ClientContext& context, Options const& options,
                   google::cloud::gkebackup::v1::ListBackupPlansRequest const&
                       request) override;
 
   StatusOr<google::cloud::gkebackup::v1::BackupPlan> GetBackupPlan(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::GetBackupPlanRequest const& request)
       override;
 
@@ -74,11 +74,11 @@ class BackupForGKELogging : public BackupForGKEStub {
       override;
 
   StatusOr<google::cloud::gkebackup::v1::ListBackupsResponse> ListBackups(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::ListBackupsRequest const& request) override;
 
   StatusOr<google::cloud::gkebackup::v1::Backup> GetBackup(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::GetBackupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateBackup(
@@ -95,12 +95,12 @@ class BackupForGKELogging : public BackupForGKEStub {
 
   StatusOr<google::cloud::gkebackup::v1::ListVolumeBackupsResponse>
   ListVolumeBackups(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::ListVolumeBackupsRequest const& request)
       override;
 
   StatusOr<google::cloud::gkebackup::v1::VolumeBackup> GetVolumeBackup(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::GetVolumeBackupRequest const& request)
       override;
 
@@ -111,12 +111,12 @@ class BackupForGKELogging : public BackupForGKEStub {
       override;
 
   StatusOr<google::cloud::gkebackup::v1::ListRestorePlansResponse>
-  ListRestorePlans(grpc::ClientContext& context,
+  ListRestorePlans(grpc::ClientContext& context, Options const& options,
                    google::cloud::gkebackup::v1::ListRestorePlansRequest const&
                        request) override;
 
   StatusOr<google::cloud::gkebackup::v1::RestorePlan> GetRestorePlan(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::GetRestorePlanRequest const& request)
       override;
 
@@ -139,12 +139,12 @@ class BackupForGKELogging : public BackupForGKEStub {
       override;
 
   StatusOr<google::cloud::gkebackup::v1::ListRestoresResponse> ListRestores(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::ListRestoresRequest const& request)
       override;
 
   StatusOr<google::cloud::gkebackup::v1::Restore> GetRestore(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::GetRestoreRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateRestore(
@@ -161,12 +161,12 @@ class BackupForGKELogging : public BackupForGKEStub {
 
   StatusOr<google::cloud::gkebackup::v1::ListVolumeRestoresResponse>
   ListVolumeRestores(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::ListVolumeRestoresRequest const& request)
       override;
 
   StatusOr<google::cloud::gkebackup::v1::VolumeRestore> GetVolumeRestore(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request)
       override;
 

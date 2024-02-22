@@ -73,43 +73,44 @@ OsConfigZonalServiceLogging::AsyncUpdateOSPolicyAssignment(
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
 OsConfigZonalServiceLogging::GetOSPolicyAssignment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const&
                  request) {
-        return child_->GetOSPolicyAssignment(context, request);
+        return child_->GetOSPolicyAssignment(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListOSPolicyAssignmentsResponse>
 OsConfigZonalServiceLogging::ListOSPolicyAssignments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest const&
                  request) {
-        return child_->ListOSPolicyAssignments(context, request);
+        return child_->ListOSPolicyAssignments(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsResponse>
 OsConfigZonalServiceLogging::ListOSPolicyAssignmentRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::
                  ListOSPolicyAssignmentRevisionsRequest const& request) {
-        return child_->ListOSPolicyAssignmentRevisions(context, request);
+        return child_->ListOSPolicyAssignmentRevisions(context, options,
+                                                       request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -132,83 +133,83 @@ OsConfigZonalServiceLogging::AsyncDeleteOSPolicyAssignment(
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>
 OsConfigZonalServiceLogging::GetOSPolicyAssignmentReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const&
               request) {
-        return child_->GetOSPolicyAssignmentReport(context, request);
+        return child_->GetOSPolicyAssignmentReport(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsResponse>
 OsConfigZonalServiceLogging::ListOSPolicyAssignmentReports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::
                  ListOSPolicyAssignmentReportsRequest const& request) {
-        return child_->ListOSPolicyAssignmentReports(context, request);
+        return child_->ListOSPolicyAssignmentReports(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::v1::Inventory>
 OsConfigZonalServiceLogging::GetInventory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetInventoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::GetInventoryRequest const& request) {
-        return child_->GetInventory(context, request);
+        return child_->GetInventory(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListInventoriesResponse>
 OsConfigZonalServiceLogging::ListInventories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListInventoriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::osconfig::v1::ListInventoriesRequest const& request) {
-        return child_->ListInventories(context, request);
+        return child_->ListInventories(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::v1::VulnerabilityReport>
 OsConfigZonalServiceLogging::GetVulnerabilityReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetVulnerabilityReportRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::GetVulnerabilityReportRequest const&
                  request) {
-        return child_->GetVulnerabilityReport(context, request);
+        return child_->GetVulnerabilityReport(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListVulnerabilityReportsResponse>
 OsConfigZonalServiceLogging::ListVulnerabilityReports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListVulnerabilityReportsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::v1::ListVulnerabilityReportsRequest const&
                  request) {
-        return child_->ListVulnerabilityReports(context, request);
+        return child_->ListVulnerabilityReports(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

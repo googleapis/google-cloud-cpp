@@ -31,21 +31,23 @@ TpuTracingStub::TpuTracingStub(std::shared_ptr<TpuStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::tpu::v2::ListNodesResponse> TpuTracingStub::ListNodes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::ListNodesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu", "ListNodes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->ListNodes(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListNodes(context, options, request));
 }
 
 StatusOr<google::cloud::tpu::v2::Node> TpuTracingStub::GetNode(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::GetNodeRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu", "GetNode");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetNode(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetNode(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -108,74 +110,75 @@ TpuTracingStub::AsyncUpdateNode(
 
 StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
 TpuTracingStub::GenerateServiceIdentity(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::GenerateServiceIdentityRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu",
                                      "GenerateServiceIdentity");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GenerateServiceIdentity(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GenerateServiceIdentity(context, options, request));
 }
 
 StatusOr<google::cloud::tpu::v2::ListAcceleratorTypesResponse>
 TpuTracingStub::ListAcceleratorTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::ListAcceleratorTypesRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu", "ListAcceleratorTypes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListAcceleratorTypes(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListAcceleratorTypes(context, options, request));
 }
 
 StatusOr<google::cloud::tpu::v2::AcceleratorType>
 TpuTracingStub::GetAcceleratorType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::GetAcceleratorTypeRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu", "GetAcceleratorType");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetAcceleratorType(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetAcceleratorType(context, options, request));
 }
 
 StatusOr<google::cloud::tpu::v2::ListRuntimeVersionsResponse>
 TpuTracingStub::ListRuntimeVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::ListRuntimeVersionsRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu", "ListRuntimeVersions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListRuntimeVersions(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListRuntimeVersions(context, options, request));
 }
 
 StatusOr<google::cloud::tpu::v2::RuntimeVersion>
 TpuTracingStub::GetRuntimeVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::GetRuntimeVersionRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu", "GetRuntimeVersion");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetRuntimeVersion(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetRuntimeVersion(context, options, request));
 }
 
 StatusOr<google::cloud::tpu::v2::GetGuestAttributesResponse>
 TpuTracingStub::GetGuestAttributes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::tpu::v2::GetGuestAttributesRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.tpu.v2.Tpu", "GetGuestAttributes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetGuestAttributes(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetGuestAttributes(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

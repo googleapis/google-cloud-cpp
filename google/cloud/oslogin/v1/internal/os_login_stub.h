@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSLOGIN_V1_INTERNAL_OS_LOGIN_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OSLOGIN_V1_INTERNAL_OS_LOGIN_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/oslogin/v1/oslogin.grpc.pb.h>
@@ -36,34 +37,34 @@ class OsLoginServiceStub {
 
   virtual StatusOr<google::cloud::oslogin::common::SshPublicKey>
   CreateSshPublicKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) = 0;
 
   virtual Status DeletePosixAccount(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) = 0;
 
   virtual Status DeleteSshPublicKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::oslogin::v1::LoginProfile> GetLoginProfile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::oslogin::v1::GetLoginProfileRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::oslogin::common::SshPublicKey>
   GetSshPublicKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
   ImportSshPublicKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::oslogin::common::SshPublicKey>
   UpdateSshPublicKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request) = 0;
 };
 
@@ -75,38 +76,38 @@ class DefaultOsLoginServiceStub : public OsLoginServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::oslogin::common::SshPublicKey> CreateSshPublicKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request)
       override;
 
   Status DeletePosixAccount(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::oslogin::v1::DeletePosixAccountRequest const& request)
       override;
 
   Status DeleteSshPublicKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::oslogin::v1::DeleteSshPublicKeyRequest const& request)
       override;
 
   StatusOr<google::cloud::oslogin::v1::LoginProfile> GetLoginProfile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::oslogin::v1::GetLoginProfileRequest const& request)
       override;
 
   StatusOr<google::cloud::oslogin::common::SshPublicKey> GetSshPublicKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::oslogin::v1::GetSshPublicKeyRequest const& request)
       override;
 
   StatusOr<google::cloud::oslogin::v1::ImportSshPublicKeyResponse>
   ImportSshPublicKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::oslogin::v1::ImportSshPublicKeyRequest const& request)
       override;
 
   StatusOr<google::cloud::oslogin::common::SshPublicKey> UpdateSshPublicKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request)
       override;
 

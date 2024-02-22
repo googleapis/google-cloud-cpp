@@ -68,18 +68,19 @@ StreamRange<google::cloud::tpu::v1::Node> TpuConnectionImpl::ListNodes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::tpu::v1::Node>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<tpu_v1::TpuRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::tpu::v1::ListNodesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::tpu::v1::ListNodesRequest const& request) {
-              return stub->ListNodes(context, request);
+              return stub->ListNodes(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::tpu::v1::ListNodesResponse r) {
         std::vector<google::cloud::tpu::v1::Node> result(r.nodes().size());
@@ -95,11 +96,11 @@ StatusOr<google::cloud::tpu::v1::Node> TpuConnectionImpl::GetNode(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNode(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::tpu::v1::GetNodeRequest const& request) {
-        return stub_->GetNode(context, request);
+        return stub_->GetNode(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnectionImpl::CreateNode(
@@ -285,19 +286,20 @@ TpuConnectionImpl::ListTensorFlowVersions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::tpu::v1::TensorFlowVersion>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<tpu_v1::TpuRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::tpu::v1::ListTensorFlowVersionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::tpu::v1::ListTensorFlowVersionsRequest const&
                        request) {
-              return stub->ListTensorFlowVersions(context, request);
+              return stub->ListTensorFlowVersions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::tpu::v1::ListTensorFlowVersionsResponse r) {
         std::vector<google::cloud::tpu::v1::TensorFlowVersion> result(
@@ -316,11 +318,11 @@ TpuConnectionImpl::GetTensorFlowVersion(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTensorFlowVersion(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request) {
-        return stub_->GetTensorFlowVersion(context, request);
+        return stub_->GetTensorFlowVersion(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::tpu::v1::AcceleratorType>
@@ -333,19 +335,20 @@ TpuConnectionImpl::ListAcceleratorTypes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::tpu::v1::AcceleratorType>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<tpu_v1::TpuRetryPolicy>(retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::tpu::v1::ListAcceleratorTypesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::tpu::v1::ListAcceleratorTypesRequest const&
                        request) {
-              return stub->ListAcceleratorTypes(context, request);
+              return stub->ListAcceleratorTypes(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::tpu::v1::ListAcceleratorTypesResponse r) {
         std::vector<google::cloud::tpu::v1::AcceleratorType> result(
@@ -363,11 +366,11 @@ TpuConnectionImpl::GetAcceleratorType(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAcceleratorType(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request) {
-        return stub_->GetAcceleratorType(context, request);
+        return stub_->GetAcceleratorType(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

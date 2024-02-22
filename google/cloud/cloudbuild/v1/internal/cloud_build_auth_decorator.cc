@@ -51,28 +51,28 @@ CloudBuildAuth::AsyncCreateBuild(
 }
 
 StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildAuth::GetBuild(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::GetBuildRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetBuild(context, request);
+  return child_->GetBuild(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::ListBuildsResponse>
 CloudBuildAuth::ListBuilds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::ListBuildsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBuilds(context, request);
+  return child_->ListBuilds(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::Build> CloudBuildAuth::CancelBuild(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::CancelBuildRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CancelBuild(context, request);
+  return child_->CancelBuild(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -115,49 +115,49 @@ CloudBuildAuth::AsyncApproveBuild(
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildAuth::CreateBuildTrigger(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateBuildTrigger(context, request);
+  return child_->CreateBuildTrigger(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildAuth::GetBuildTrigger(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetBuildTrigger(context, request);
+  return child_->GetBuildTrigger(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::ListBuildTriggersResponse>
 CloudBuildAuth::ListBuildTriggers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::ListBuildTriggersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBuildTriggers(context, request);
+  return child_->ListBuildTriggers(context, options, request);
 }
 
 Status CloudBuildAuth::DeleteBuildTrigger(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteBuildTrigger(context, request);
+  return child_->DeleteBuildTrigger(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildAuth::UpdateBuildTrigger(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateBuildTrigger(context, request);
+  return child_->UpdateBuildTrigger(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -181,12 +181,12 @@ CloudBuildAuth::AsyncRunBuildTrigger(
 
 StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
 CloudBuildAuth::ReceiveTriggerWebhook(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ReceiveTriggerWebhook(context, request);
+  return child_->ReceiveTriggerWebhook(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -210,11 +210,11 @@ CloudBuildAuth::AsyncCreateWorkerPool(
 
 StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
 CloudBuildAuth::GetWorkerPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetWorkerPool(context, request);
+  return child_->GetWorkerPool(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -257,11 +257,11 @@ CloudBuildAuth::AsyncUpdateWorkerPool(
 
 StatusOr<google::devtools::cloudbuild::v1::ListWorkerPoolsResponse>
 CloudBuildAuth::ListWorkerPools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListWorkerPools(context, request);
+  return child_->ListWorkerPools(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

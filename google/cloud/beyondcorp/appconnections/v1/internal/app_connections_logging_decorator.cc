@@ -39,30 +39,30 @@ AppConnectionsServiceLogging::AppConnectionsServiceLogging(
 StatusOr<
     google::cloud::beyondcorp::appconnections::v1::ListAppConnectionsResponse>
 AppConnectionsServiceLogging::ListAppConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::beyondcorp::appconnections::v1::
         ListAppConnectionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::beyondcorp::appconnections::v1::
                  ListAppConnectionsRequest const& request) {
-        return child_->ListAppConnections(context, request);
+        return child_->ListAppConnections(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>
 AppConnectionsServiceLogging::GetAppConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::beyondcorp::appconnections::v1::
         GetAppConnectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::beyondcorp::appconnections::v1::
                  GetAppConnectionRequest const& request) {
-        return child_->GetAppConnection(context, request);
+        return child_->GetAppConnection(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -122,16 +122,16 @@ AppConnectionsServiceLogging::AsyncDeleteAppConnection(
 StatusOr<google::cloud::beyondcorp::appconnections::v1::
              ResolveAppConnectionsResponse>
 AppConnectionsServiceLogging::ResolveAppConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::beyondcorp::appconnections::v1::
         ResolveAppConnectionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::beyondcorp::appconnections::v1::
                  ResolveAppConnectionsRequest const& request) {
-        return child_->ResolveAppConnections(context, request);
+        return child_->ResolveAppConnections(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

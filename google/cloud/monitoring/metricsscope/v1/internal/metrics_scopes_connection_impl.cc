@@ -80,10 +80,12 @@ MetricsScopesConnectionImpl::GetMetricsScope(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetMetricsScope(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
-                 request) { return stub_->GetMetricsScope(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetMetricsScope(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::monitoring::metricsscope::v1::
@@ -96,12 +98,13 @@ MetricsScopesConnectionImpl::ListMetricsScopesByMonitoredProject(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ListMetricsScopesByMonitoredProject(
           request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::metricsscope::v1::
                  ListMetricsScopesByMonitoredProjectRequest const& request) {
-        return stub_->ListMetricsScopesByMonitoredProject(context, request);
+        return stub_->ListMetricsScopesByMonitoredProject(context, options,
+                                                          request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>

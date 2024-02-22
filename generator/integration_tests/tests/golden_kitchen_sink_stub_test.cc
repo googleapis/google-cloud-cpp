@@ -373,9 +373,9 @@ TEST_F(GoldenKitchenSinkStubTest, GenerateAccessToken) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
-  auto success = stub.GenerateAccessToken(context, request);
+  auto success = stub.GenerateAccessToken(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
-  auto failure = stub.GenerateAccessToken(context, request);
+  auto failure = stub.GenerateAccessToken(context, Options{}, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
 
@@ -387,9 +387,9 @@ TEST_F(GoldenKitchenSinkStubTest, GenerateIdToken) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
-  auto success = stub.GenerateIdToken(context, request);
+  auto success = stub.GenerateIdToken(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
-  auto failure = stub.GenerateIdToken(context, request);
+  auto failure = stub.GenerateIdToken(context, Options{}, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
 
@@ -401,9 +401,9 @@ TEST_F(GoldenKitchenSinkStubTest, WriteLogEntries) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
-  auto success = stub.WriteLogEntries(context, request);
+  auto success = stub.WriteLogEntries(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
-  auto failure = stub.WriteLogEntries(context, request);
+  auto failure = stub.WriteLogEntries(context, Options{}, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
 
@@ -415,9 +415,9 @@ TEST_F(GoldenKitchenSinkStubTest, ListLogs) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
-  auto success = stub.ListLogs(context, request);
+  auto success = stub.ListLogs(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
-  auto failure = stub.ListLogs(context, request);
+  auto failure = stub.ListLogs(context, Options{}, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
 
@@ -429,9 +429,9 @@ TEST_F(GoldenKitchenSinkStubTest, ListServiceAccountKeys) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
-  auto success = stub.ListServiceAccountKeys(context, request);
+  auto success = stub.ListServiceAccountKeys(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
-  auto failure = stub.ListServiceAccountKeys(context, request);
+  auto failure = stub.ListServiceAccountKeys(context, Options{}, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
 

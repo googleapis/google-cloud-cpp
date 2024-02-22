@@ -49,7 +49,7 @@ class MockRequestIdServiceStub
   ~MockRequestIdServiceStub() override = default;
 
   MOCK_METHOD(StatusOr<google::test::requestid::v1::Foo>, CreateFoo,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::test::requestid::v1::CreateFooRequest const&),
               (override));
 
@@ -60,7 +60,7 @@ class MockRequestIdServiceStub
               (override));
 
   MOCK_METHOD(StatusOr<google::test::requestid::v1::ListFoosResponse>, ListFoos,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::test::requestid::v1::ListFoosRequest const&),
               (override));
 
@@ -124,7 +124,7 @@ Status TransientError() {
 
 TEST(RequestIdTest, UnaryRpc) {
   auto mock = std::make_shared<MockRequestIdServiceStub>();
-  EXPECT_CALL(*mock, CreateFoo(_, RequestIdIsUuidV4<CreateFooRequest>()))
+  EXPECT_CALL(*mock, CreateFoo(_, _, RequestIdIsUuidV4<CreateFooRequest>()))
       .WillOnce(Return(TransientError()))
       .WillOnce(Return(Foo{}));
 
@@ -137,8 +137,9 @@ TEST(RequestIdTest, UnaryRpc) {
 
 TEST(RequestIdTest, UnaryRpcExplicit) {
   auto mock = std::make_shared<MockRequestIdServiceStub>();
-  EXPECT_CALL(*mock,
-              CreateFoo(_, WithRequestId<CreateFooRequest>("test-request-id")))
+  EXPECT_CALL(
+      *mock,
+      CreateFoo(_, _, WithRequestId<CreateFooRequest>("test-request-id")))
       .WillOnce(Return(TransientError()))
       .WillOnce(Return(Foo{}));
 
@@ -231,15 +232,15 @@ TEST(RequestIdTest, LroExplicit) {
 TEST(RequestIdTest, Pagination) {
   auto mock = std::make_shared<MockRequestIdServiceStub>();
   std::vector<std::string> sequence_ids;
-  EXPECT_CALL(*mock, ListFoos(_, WithoutRequestId<ListFoosRequest>()))
-      .WillOnce([&](auto&, auto const& request) {
+  EXPECT_CALL(*mock, ListFoos(_, _, WithoutRequestId<ListFoosRequest>()))
+      .WillOnce([&](auto&, auto const&, auto const& request) {
         sequence_ids.push_back(request.request_id());
         ListFoosResponse response;
         response.add_foos()->set_name("name-0");
         response.set_next_page_token("test-token-0");
         return response;
       })
-      .WillOnce([&](auto&, auto const& request) {
+      .WillOnce([&](auto&, auto const&, auto const& request) {
         sequence_ids.push_back(request.request_id());
         ListFoosResponse response;
         response.add_foos()->set_name("name-1");
@@ -265,15 +266,15 @@ TEST(RequestIdTest, PaginationExplicit) {
   auto mock = std::make_shared<MockRequestIdServiceStub>();
   std::vector<std::string> sequence_ids;
   EXPECT_CALL(*mock,
-              ListFoos(_, WithRequestId<ListFoosRequest>("test-request-id")))
-      .WillOnce([&](auto&, auto const& request) {
+              ListFoos(_, _, WithRequestId<ListFoosRequest>("test-request-id")))
+      .WillOnce([&](auto&, auto const&, auto const& request) {
         sequence_ids.push_back(request.request_id());
         ListFoosResponse response;
         response.add_foos()->set_name("name-0");
         response.set_next_page_token("test-token-0");
         return response;
       })
-      .WillOnce([&](auto&, auto const& request) {
+      .WillOnce([&](auto&, auto const&, auto const& request) {
         sequence_ids.push_back(request.request_id());
         ListFoosResponse response;
         response.add_foos()->set_name("name-1");

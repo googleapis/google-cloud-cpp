@@ -33,26 +33,26 @@ CommentServiceTracingStub::CommentServiceTracingStub(
 
 StatusOr<google::cloud::support::v2::ListCommentsResponse>
 CommentServiceTracingStub::ListComments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::ListCommentsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CommentService",
                                      "ListComments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListComments(context, request));
+                           child_->ListComments(context, options, request));
 }
 
 StatusOr<google::cloud::support::v2::Comment>
 CommentServiceTracingStub::CreateComment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::CreateCommentRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.support.v2.CommentService",
                                      "CreateComment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateComment(context, request));
+                           child_->CreateComment(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

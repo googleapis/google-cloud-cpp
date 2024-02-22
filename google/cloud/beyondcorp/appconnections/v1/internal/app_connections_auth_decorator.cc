@@ -35,22 +35,22 @@ AppConnectionsServiceAuth::AppConnectionsServiceAuth(
 StatusOr<
     google::cloud::beyondcorp::appconnections::v1::ListAppConnectionsResponse>
 AppConnectionsServiceAuth::ListAppConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::beyondcorp::appconnections::v1::
         ListAppConnectionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAppConnections(context, request);
+  return child_->ListAppConnections(context, options, request);
 }
 
 StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>
 AppConnectionsServiceAuth::GetAppConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::beyondcorp::appconnections::v1::
         GetAppConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAppConnection(context, request);
+  return child_->GetAppConnection(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -116,12 +116,12 @@ AppConnectionsServiceAuth::AsyncDeleteAppConnection(
 StatusOr<google::cloud::beyondcorp::appconnections::v1::
              ResolveAppConnectionsResponse>
 AppConnectionsServiceAuth::ResolveAppConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::beyondcorp::appconnections::v1::
         ResolveAppConnectionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ResolveAppConnections(context, request);
+  return child_->ResolveAppConnections(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

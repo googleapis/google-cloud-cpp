@@ -33,20 +33,20 @@ ServiceControllerAuth::ServiceControllerAuth(
 
 StatusOr<google::api::servicecontrol::v1::CheckResponse>
 ServiceControllerAuth::Check(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicecontrol::v1::CheckRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->Check(context, request);
+  return child_->Check(context, options, request);
 }
 
 StatusOr<google::api::servicecontrol::v1::ReportResponse>
 ServiceControllerAuth::Report(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicecontrol::v1::ReportRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->Report(context, request);
+  return child_->Report(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

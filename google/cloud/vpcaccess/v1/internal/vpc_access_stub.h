@@ -44,12 +44,12 @@ class VpcAccessServiceStub {
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vpcaccess::v1::GetConnectorRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse>
   ListConnectors(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vpcaccess::v1::ListConnectorsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteConnector(
@@ -85,12 +85,12 @@ class DefaultVpcAccessServiceStub : public VpcAccessServiceStub {
       override;
 
   StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vpcaccess::v1::GetConnectorRequest const& request)
       override;
 
   StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse> ListConnectors(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vpcaccess::v1::ListConnectorsRequest const& request)
       override;
 

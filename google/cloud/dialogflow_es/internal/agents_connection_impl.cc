@@ -68,11 +68,11 @@ StatusOr<google::cloud::dialogflow::v2::Agent> AgentsConnectionImpl::GetAgent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAgent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::GetAgentRequest const& request) {
-        return stub_->GetAgent(context, request);
+        return stub_->GetAgent(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Agent> AgentsConnectionImpl::SetAgent(
@@ -81,11 +81,11 @@ StatusOr<google::cloud::dialogflow::v2::Agent> AgentsConnectionImpl::SetAgent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetAgent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::SetAgentRequest const& request) {
-        return stub_->SetAgent(context, request);
+        return stub_->SetAgent(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status AgentsConnectionImpl::DeleteAgent(
@@ -94,11 +94,11 @@ Status AgentsConnectionImpl::DeleteAgent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteAgent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::DeleteAgentRequest const& request) {
-        return stub_->DeleteAgent(context, request);
+        return stub_->DeleteAgent(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::dialogflow::v2::Agent>
@@ -110,20 +110,21 @@ AgentsConnectionImpl::SearchAgents(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::v2::Agent>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dialogflow_es::AgentsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dialogflow::v2::SearchAgentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::dialogflow::v2::SearchAgentsRequest const&
                        request) {
-              return stub->SearchAgents(context, request);
+              return stub->SearchAgents(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dialogflow::v2::SearchAgentsResponse r) {
         std::vector<google::cloud::dialogflow::v2::Agent> result(
@@ -283,12 +284,12 @@ AgentsConnectionImpl::GetValidationResult(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetValidationResult(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::GetValidationResultRequest const&
                  request) {
-        return stub_->GetValidationResult(context, request);
+        return stub_->GetValidationResult(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

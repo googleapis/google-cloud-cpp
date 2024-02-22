@@ -39,13 +39,13 @@ class MatchServiceLogging : public MatchServiceStub {
                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::aiplatform::v1::FindNeighborsResponse> FindNeighbors(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::FindNeighborsRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
   ReadIndexDatapoints(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const& request)
       override;
 

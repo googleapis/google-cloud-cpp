@@ -33,20 +33,20 @@ DataMigrationServiceAuth::DataMigrationServiceAuth(
 
 StatusOr<google::cloud::clouddms::v1::ListMigrationJobsResponse>
 DataMigrationServiceAuth::ListMigrationJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::ListMigrationJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListMigrationJobs(context, request);
+  return child_->ListMigrationJobs(context, options, request);
 }
 
 StatusOr<google::cloud::clouddms::v1::MigrationJob>
 DataMigrationServiceAuth::GetMigrationJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::GetMigrationJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetMigrationJob(context, request);
+  return child_->GetMigrationJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -222,38 +222,38 @@ DataMigrationServiceAuth::AsyncRestartMigrationJob(
 
 StatusOr<google::cloud::clouddms::v1::SshScript>
 DataMigrationServiceAuth::GenerateSshScript(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::GenerateSshScriptRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateSshScript(context, request);
+  return child_->GenerateSshScript(context, options, request);
 }
 
 StatusOr<google::cloud::clouddms::v1::TcpProxyScript>
 DataMigrationServiceAuth::GenerateTcpProxyScript(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateTcpProxyScript(context, request);
+  return child_->GenerateTcpProxyScript(context, options, request);
 }
 
 StatusOr<google::cloud::clouddms::v1::ListConnectionProfilesResponse>
 DataMigrationServiceAuth::ListConnectionProfiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::ListConnectionProfilesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListConnectionProfiles(context, request);
+  return child_->ListConnectionProfiles(context, options, request);
 }
 
 StatusOr<google::cloud::clouddms::v1::ConnectionProfile>
 DataMigrationServiceAuth::GetConnectionProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::GetConnectionProfileRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetConnectionProfile(context, request);
+  return child_->GetConnectionProfile(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -338,20 +338,20 @@ DataMigrationServiceAuth::AsyncCreatePrivateConnection(
 
 StatusOr<google::cloud::clouddms::v1::PrivateConnection>
 DataMigrationServiceAuth::GetPrivateConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::GetPrivateConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetPrivateConnection(context, request);
+  return child_->GetPrivateConnection(context, options, request);
 }
 
 StatusOr<google::cloud::clouddms::v1::ListPrivateConnectionsResponse>
 DataMigrationServiceAuth::ListPrivateConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::ListPrivateConnectionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListPrivateConnections(context, request);
+  return child_->ListPrivateConnections(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -376,21 +376,21 @@ DataMigrationServiceAuth::AsyncDeletePrivateConnection(
 
 StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>
 DataMigrationServiceAuth::GetConversionWorkspace(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::GetConversionWorkspaceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetConversionWorkspace(context, request);
+  return child_->GetConversionWorkspace(context, options, request);
 }
 
 StatusOr<google::cloud::clouddms::v1::ListConversionWorkspacesResponse>
 DataMigrationServiceAuth::ListConversionWorkspaces(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::ListConversionWorkspacesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListConversionWorkspaces(context, request);
+  return child_->ListConversionWorkspaces(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -455,37 +455,37 @@ DataMigrationServiceAuth::AsyncDeleteConversionWorkspace(
 
 StatusOr<google::cloud::clouddms::v1::MappingRule>
 DataMigrationServiceAuth::CreateMappingRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::CreateMappingRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateMappingRule(context, request);
+  return child_->CreateMappingRule(context, options, request);
 }
 
 Status DataMigrationServiceAuth::DeleteMappingRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::DeleteMappingRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteMappingRule(context, request);
+  return child_->DeleteMappingRule(context, options, request);
 }
 
 StatusOr<google::cloud::clouddms::v1::ListMappingRulesResponse>
 DataMigrationServiceAuth::ListMappingRules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::ListMappingRulesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListMappingRules(context, request);
+  return child_->ListMappingRules(context, options, request);
 }
 
 StatusOr<google::cloud::clouddms::v1::MappingRule>
 DataMigrationServiceAuth::GetMappingRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::GetMappingRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetMappingRule(context, request);
+  return child_->GetMappingRule(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -609,41 +609,42 @@ DataMigrationServiceAuth::AsyncApplyConversionWorkspace(
 
 StatusOr<google::cloud::clouddms::v1::DescribeDatabaseEntitiesResponse>
 DataMigrationServiceAuth::DescribeDatabaseEntities(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DescribeDatabaseEntities(context, request);
+  return child_->DescribeDatabaseEntities(context, options, request);
 }
 
 StatusOr<google::cloud::clouddms::v1::SearchBackgroundJobsResponse>
 DataMigrationServiceAuth::SearchBackgroundJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::SearchBackgroundJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SearchBackgroundJobs(context, request);
+  return child_->SearchBackgroundJobs(context, options, request);
 }
 
 StatusOr<
     google::cloud::clouddms::v1::DescribeConversionWorkspaceRevisionsResponse>
 DataMigrationServiceAuth::DescribeConversionWorkspaceRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::
         DescribeConversionWorkspaceRevisionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DescribeConversionWorkspaceRevisions(context, request);
+  return child_->DescribeConversionWorkspaceRevisions(context, options,
+                                                      request);
 }
 
 StatusOr<google::cloud::clouddms::v1::FetchStaticIpsResponse>
 DataMigrationServiceAuth::FetchStaticIps(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::clouddms::v1::FetchStaticIpsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->FetchStaticIps(context, request);
+  return child_->FetchStaticIps(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

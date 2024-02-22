@@ -51,7 +51,7 @@ DefaultRepositoryManagerStub::AsyncCreateConnection(
 
 StatusOr<google::devtools::cloudbuild::v2::Connection>
 DefaultRepositoryManagerStub::GetConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v2::GetConnectionRequest const& request) {
   google::devtools::cloudbuild::v2::Connection response;
   auto status = grpc_stub_->GetConnection(&context, request, &response);
@@ -63,7 +63,7 @@ DefaultRepositoryManagerStub::GetConnection(
 
 StatusOr<google::devtools::cloudbuild::v2::ListConnectionsResponse>
 DefaultRepositoryManagerStub::ListConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v2::ListConnectionsRequest const& request) {
   google::devtools::cloudbuild::v2::ListConnectionsResponse response;
   auto status = grpc_stub_->ListConnections(&context, request, &response);
@@ -148,7 +148,7 @@ DefaultRepositoryManagerStub::AsyncBatchCreateRepositories(
 
 StatusOr<google::devtools::cloudbuild::v2::Repository>
 DefaultRepositoryManagerStub::GetRepository(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v2::GetRepositoryRequest const& request) {
   google::devtools::cloudbuild::v2::Repository response;
   auto status = grpc_stub_->GetRepository(&context, request, &response);
@@ -160,7 +160,7 @@ DefaultRepositoryManagerStub::GetRepository(
 
 StatusOr<google::devtools::cloudbuild::v2::ListRepositoriesResponse>
 DefaultRepositoryManagerStub::ListRepositories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v2::ListRepositoriesRequest const& request) {
   google::devtools::cloudbuild::v2::ListRepositoriesResponse response;
   auto status = grpc_stub_->ListRepositories(&context, request, &response);
@@ -190,7 +190,7 @@ DefaultRepositoryManagerStub::AsyncDeleteRepository(
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
 DefaultRepositoryManagerStub::FetchReadWriteToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
         request) {
   google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse response;
@@ -203,7 +203,7 @@ DefaultRepositoryManagerStub::FetchReadWriteToken(
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
 DefaultRepositoryManagerStub::FetchReadToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request) {
   google::devtools::cloudbuild::v2::FetchReadTokenResponse response;
   auto status = grpc_stub_->FetchReadToken(&context, request, &response);
@@ -215,7 +215,7 @@ DefaultRepositoryManagerStub::FetchReadToken(
 
 StatusOr<google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse>
 DefaultRepositoryManagerStub::FetchLinkableRepositories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
         request) {
   google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse response;
@@ -229,7 +229,7 @@ DefaultRepositoryManagerStub::FetchLinkableRepositories(
 
 StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
 DefaultRepositoryManagerStub::FetchGitRefs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
   google::devtools::cloudbuild::v2::FetchGitRefsResponse response;
   auto status = grpc_stub_->FetchGitRefs(&context, request, &response);

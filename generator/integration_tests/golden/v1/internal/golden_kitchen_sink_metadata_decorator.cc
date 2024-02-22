@@ -47,57 +47,64 @@ GoldenKitchenSinkMetadata::GoldenKitchenSinkMetadata(
 StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
 GoldenKitchenSinkMetadata::GenerateAccessToken(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(), absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GenerateAccessToken(context, request);
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GenerateAccessToken(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
 GoldenKitchenSinkMetadata::GenerateIdToken(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->GenerateIdToken(context, request);
+  SetMetadata(context, options);
+  return child_->GenerateIdToken(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
 GoldenKitchenSinkMetadata::WriteLogEntries(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->WriteLogEntries(context, request);
+  SetMetadata(context, options);
+  return child_->WriteLogEntries(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::ListLogsResponse>
 GoldenKitchenSinkMetadata::ListLogs(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ListLogsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(), absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListLogs(context, request);
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListLogs(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 GoldenKitchenSinkMetadata::ListServiceAccountKeys(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(), absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->ListServiceAccountKeys(context, request);
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->ListServiceAccountKeys(context, options, request);
 }
 
 Status
 GoldenKitchenSinkMetadata::DoNothing(
     grpc::ClientContext& context,
+    Options const& options,
     google::protobuf::Empty const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->DoNothing(context, request);
+  SetMetadata(context, options);
+  return child_->DoNothing(context, options, request);
 }
 
 Status
 GoldenKitchenSinkMetadata::Deprecated2(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->Deprecated2(context, request);
+  SetMetadata(context, options);
+  return child_->Deprecated2(context, options, request);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
@@ -132,6 +139,7 @@ GoldenKitchenSinkMetadata::AsyncStreamingReadWrite(
 Status
 GoldenKitchenSinkMetadata::ExplicitRouting1(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -171,16 +179,17 @@ GoldenKitchenSinkMetadata::ExplicitRouting1(
   routing_id_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(), absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->ExplicitRouting1(context, request);
+  return child_->ExplicitRouting1(context, options, request);
 }
 
 Status
 GoldenKitchenSinkMetadata::ExplicitRouting2(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -198,11 +207,11 @@ GoldenKitchenSinkMetadata::ExplicitRouting2(
   }
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(), absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->ExplicitRouting2(context, request);
+  return child_->ExplicitRouting2(context, options, request);
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<

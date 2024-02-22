@@ -39,7 +39,7 @@ class SessionsLogging : public SessionsStub {
                   std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
-  DetectIntent(grpc::ClientContext& context,
+  DetectIntent(grpc::ClientContext& context, Options const& options,
                google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
                    request) override;
 
@@ -58,18 +58,18 @@ class SessionsLogging : public SessionsStub {
       std::shared_ptr<grpc::ClientContext> context) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse> MatchIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
-  FulfillIntent(grpc::ClientContext& context,
+  FulfillIntent(grpc::ClientContext& context, Options const& options,
                 google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&
                     request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
   SubmitAnswerFeedback(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
           request) override;
 

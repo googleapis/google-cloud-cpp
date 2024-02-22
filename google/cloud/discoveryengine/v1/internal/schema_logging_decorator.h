@@ -40,12 +40,12 @@ class SchemaServiceLogging : public SchemaServiceStub {
                        std::set<std::string> const& components);
 
   StatusOr<google::cloud::discoveryengine::v1::Schema> GetSchema(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::GetSchemaRequest const& request)
       override;
 
   StatusOr<google::cloud::discoveryengine::v1::ListSchemasResponse> ListSchemas(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::ListSchemasRequest const& request)
       override;
 

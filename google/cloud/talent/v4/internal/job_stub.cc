@@ -32,7 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 JobServiceStub::~JobServiceStub() = default;
 
 StatusOr<google::cloud::talent::v4::Job> DefaultJobServiceStub::CreateJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::CreateJobRequest const& request) {
   google::cloud::talent::v4::Job response;
   auto status = grpc_stub_->CreateJob(&context, request, &response);
@@ -60,7 +60,7 @@ DefaultJobServiceStub::AsyncBatchCreateJobs(
 }
 
 StatusOr<google::cloud::talent::v4::Job> DefaultJobServiceStub::GetJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::GetJobRequest const& request) {
   google::cloud::talent::v4::Job response;
   auto status = grpc_stub_->GetJob(&context, request, &response);
@@ -71,7 +71,7 @@ StatusOr<google::cloud::talent::v4::Job> DefaultJobServiceStub::GetJob(
 }
 
 StatusOr<google::cloud::talent::v4::Job> DefaultJobServiceStub::UpdateJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::UpdateJobRequest const& request) {
   google::cloud::talent::v4::Job response;
   auto status = grpc_stub_->UpdateJob(&context, request, &response);
@@ -99,7 +99,7 @@ DefaultJobServiceStub::AsyncBatchUpdateJobs(
 }
 
 Status DefaultJobServiceStub::DeleteJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::DeleteJobRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteJob(&context, request, &response);
@@ -128,7 +128,7 @@ DefaultJobServiceStub::AsyncBatchDeleteJobs(
 
 StatusOr<google::cloud::talent::v4::ListJobsResponse>
 DefaultJobServiceStub::ListJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::ListJobsRequest const& request) {
   google::cloud::talent::v4::ListJobsResponse response;
   auto status = grpc_stub_->ListJobs(&context, request, &response);
@@ -140,7 +140,7 @@ DefaultJobServiceStub::ListJobs(
 
 StatusOr<google::cloud::talent::v4::SearchJobsResponse>
 DefaultJobServiceStub::SearchJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::SearchJobsRequest const& request) {
   google::cloud::talent::v4::SearchJobsResponse response;
   auto status = grpc_stub_->SearchJobs(&context, request, &response);
@@ -152,7 +152,7 @@ DefaultJobServiceStub::SearchJobs(
 
 StatusOr<google::cloud::talent::v4::SearchJobsResponse>
 DefaultJobServiceStub::SearchJobsForAlert(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::SearchJobsRequest const& request) {
   google::cloud::talent::v4::SearchJobsResponse response;
   auto status = grpc_stub_->SearchJobsForAlert(&context, request, &response);

@@ -83,22 +83,22 @@ AnalyticsHubServiceConnectionImpl::ListDataExchanges(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::bigquery::analyticshub::v1::
-              ListDataExchangesRequest const& r) {
+          Options const& options, google::cloud::bigquery::analyticshub::v1::
+                                      ListDataExchangesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::bigquery::analyticshub::v1::
                        ListDataExchangesRequest const& request) {
-              return stub->ListDataExchanges(context, request);
+              return stub->ListDataExchanges(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::bigquery::analyticshub::v1::ListDataExchangesResponse
              r) {
@@ -121,22 +121,22 @@ AnalyticsHubServiceConnectionImpl::ListOrgDataExchanges(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::analyticshub::v1::DataExchange>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::bigquery::analyticshub::v1::
-              ListOrgDataExchangesRequest const& r) {
+          Options const& options, google::cloud::bigquery::analyticshub::v1::
+                                      ListOrgDataExchangesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::bigquery::analyticshub::v1::
                        ListOrgDataExchangesRequest const& request) {
-              return stub->ListOrgDataExchanges(context, request);
+              return stub->ListOrgDataExchanges(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesResponse
              r) {
@@ -156,12 +156,12 @@ AnalyticsHubServiceConnectionImpl::GetDataExchange(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDataExchange(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::analyticshub::v1::
                  GetDataExchangeRequest const& request) {
-        return stub_->GetDataExchange(context, request);
+        return stub_->GetDataExchange(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -172,12 +172,12 @@ AnalyticsHubServiceConnectionImpl::CreateDataExchange(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateDataExchange(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::analyticshub::v1::
                  CreateDataExchangeRequest const& request) {
-        return stub_->CreateDataExchange(context, request);
+        return stub_->CreateDataExchange(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
@@ -188,12 +188,12 @@ AnalyticsHubServiceConnectionImpl::UpdateDataExchange(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateDataExchange(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::analyticshub::v1::
                  UpdateDataExchangeRequest const& request) {
-        return stub_->UpdateDataExchange(context, request);
+        return stub_->UpdateDataExchange(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status AnalyticsHubServiceConnectionImpl::DeleteDataExchange(
@@ -203,12 +203,12 @@ Status AnalyticsHubServiceConnectionImpl::DeleteDataExchange(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteDataExchange(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::analyticshub::v1::
                  DeleteDataExchangeRequest const& request) {
-        return stub_->DeleteDataExchange(context, request);
+        return stub_->DeleteDataExchange(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>
@@ -220,22 +220,23 @@ AnalyticsHubServiceConnectionImpl::ListListings(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::bigquery::analyticshub::v1::ListListingsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::bigquery::analyticshub::v1::
                        ListListingsRequest const& request) {
-              return stub->ListListings(context, request);
+              return stub->ListListings(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::bigquery::analyticshub::v1::ListListingsResponse r) {
         std::vector<google::cloud::bigquery::analyticshub::v1::Listing> result(
@@ -254,10 +255,12 @@ AnalyticsHubServiceConnectionImpl::GetListing(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetListing(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::analyticshub::v1::GetListingRequest const&
-                 request) { return stub_->GetListing(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetListing(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
@@ -269,10 +272,12 @@ AnalyticsHubServiceConnectionImpl::CreateListing(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateListing(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&
-              request) { return stub_->CreateListing(context, request); },
-      request, __func__);
+              request) {
+        return stub_->CreateListing(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
@@ -284,10 +289,12 @@ AnalyticsHubServiceConnectionImpl::UpdateListing(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateListing(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
-              request) { return stub_->UpdateListing(context, request); },
-      request, __func__);
+              request) {
+        return stub_->UpdateListing(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status AnalyticsHubServiceConnectionImpl::DeleteListing(
@@ -298,10 +305,12 @@ Status AnalyticsHubServiceConnectionImpl::DeleteListing(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteListing(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&
-              request) { return stub_->DeleteListing(context, request); },
-      request, __func__);
+              request) {
+        return stub_->DeleteListing(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>
@@ -312,12 +321,12 @@ AnalyticsHubServiceConnectionImpl::SubscribeListing(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SubscribeListing(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::analyticshub::v1::
                  SubscribeListingRequest const& request) {
-        return stub_->SubscribeListing(context, request);
+        return stub_->SubscribeListing(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<
@@ -410,12 +419,12 @@ AnalyticsHubServiceConnectionImpl::GetSubscription(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSubscription(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::analyticshub::v1::
                  GetSubscriptionRequest const& request) {
-        return stub_->GetSubscription(context, request);
+        return stub_->GetSubscription(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>
@@ -428,22 +437,22 @@ AnalyticsHubServiceConnectionImpl::ListSubscriptions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::bigquery::analyticshub::v1::
-              ListSubscriptionsRequest const& r) {
+          Options const& options, google::cloud::bigquery::analyticshub::v1::
+                                      ListSubscriptionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::bigquery::analyticshub::v1::
                        ListSubscriptionsRequest const& request) {
-              return stub->ListSubscriptions(context, request);
+              return stub->ListSubscriptions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::bigquery::analyticshub::v1::ListSubscriptionsResponse
              r) {
@@ -466,22 +475,24 @@ AnalyticsHubServiceConnectionImpl::ListSharedResourceSubscriptions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::analyticshub::v1::Subscription>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            bigquery_analyticshub_v1::AnalyticsHubServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::bigquery::analyticshub::v1::
               ListSharedResourceSubscriptionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::bigquery::analyticshub::v1::
                        ListSharedResourceSubscriptionsRequest const& request) {
-              return stub->ListSharedResourceSubscriptions(context, request);
+              return stub->ListSharedResourceSubscriptions(context, options,
+                                                           request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::bigquery::analyticshub::v1::
              ListSharedResourceSubscriptionsResponse r) {
@@ -501,12 +512,12 @@ AnalyticsHubServiceConnectionImpl::RevokeSubscription(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RevokeSubscription(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::analyticshub::v1::
                  RevokeSubscriptionRequest const& request) {
-        return stub_->RevokeSubscription(context, request);
+        return stub_->RevokeSubscription(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::bigquery::analyticshub::v1::OperationMetadata>>
@@ -555,11 +566,11 @@ AnalyticsHubServiceConnectionImpl::GetIamPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
-        return stub_->GetIamPolicy(context, request);
+        return stub_->GetIamPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::Policy>
@@ -569,11 +580,11 @@ AnalyticsHubServiceConnectionImpl::SetIamPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
-        return stub_->SetIamPolicy(context, request);
+        return stub_->SetIamPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
@@ -583,11 +594,11 @@ AnalyticsHubServiceConnectionImpl::TestIamPermissions(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TestIamPermissions(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
-        return stub_->TestIamPermissions(context, request);
+        return stub_->TestIamPermissions(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -40,11 +40,11 @@ class VersionsStub {
   virtual ~VersionsStub() = 0;
 
   virtual StatusOr<google::appengine::v1::ListVersionsResponse> ListVersions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListVersionsRequest const& request) = 0;
 
   virtual StatusOr<google::appengine::v1::Version> GetVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetVersionRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateVersion(
@@ -82,11 +82,11 @@ class DefaultVersionsStub : public VersionsStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::appengine::v1::ListVersionsResponse> ListVersions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListVersionsRequest const& request) override;
 
   StatusOr<google::appengine::v1::Version> GetVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetVersionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateVersion(

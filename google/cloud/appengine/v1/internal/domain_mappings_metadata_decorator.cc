@@ -44,20 +44,20 @@ DomainMappingsMetadata::DomainMappingsMetadata(
 
 StatusOr<google::appengine::v1::ListDomainMappingsResponse>
 DomainMappingsMetadata::ListDomainMappings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListDomainMappingsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDomainMappings(context, request);
+  return child_->ListDomainMappings(context, options, request);
 }
 
 StatusOr<google::appengine::v1::DomainMapping>
 DomainMappingsMetadata::GetDomainMapping(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetDomainMappingRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDomainMapping(context, request);
+  return child_->GetDomainMapping(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

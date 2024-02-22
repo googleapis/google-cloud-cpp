@@ -32,7 +32,7 @@ EventServiceStub::~EventServiceStub() = default;
 
 StatusOr<google::cloud::talent::v4::ClientEvent>
 DefaultEventServiceStub::CreateClientEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::CreateClientEventRequest const& request) {
   google::cloud::talent::v4::ClientEvent response;
   auto status = grpc_stub_->CreateClientEvent(&context, request, &response);

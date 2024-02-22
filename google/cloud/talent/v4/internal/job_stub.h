@@ -39,7 +39,7 @@ class JobServiceStub {
   virtual ~JobServiceStub() = 0;
 
   virtual StatusOr<google::cloud::talent::v4::Job> CreateJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::CreateJobRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncBatchCreateJobs(
@@ -48,11 +48,11 @@ class JobServiceStub {
       google::cloud::talent::v4::BatchCreateJobsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::talent::v4::Job> GetJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::GetJobRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::talent::v4::Job> UpdateJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::UpdateJobRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncBatchUpdateJobs(
@@ -61,7 +61,7 @@ class JobServiceStub {
       google::cloud::talent::v4::BatchUpdateJobsRequest const& request) = 0;
 
   virtual Status DeleteJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::DeleteJobRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncBatchDeleteJobs(
@@ -70,16 +70,16 @@ class JobServiceStub {
       google::cloud::talent::v4::BatchDeleteJobsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::talent::v4::ListJobsResponse> ListJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::ListJobsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::SearchJobsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::talent::v4::SearchJobsResponse>
   SearchJobsForAlert(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::SearchJobsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -103,7 +103,7 @@ class DefaultJobServiceStub : public JobServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::talent::v4::Job> CreateJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::CreateJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchCreateJobs(
@@ -113,11 +113,11 @@ class DefaultJobServiceStub : public JobServiceStub {
       override;
 
   StatusOr<google::cloud::talent::v4::Job> GetJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::GetJobRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::Job> UpdateJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::UpdateJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchUpdateJobs(
@@ -127,7 +127,7 @@ class DefaultJobServiceStub : public JobServiceStub {
       override;
 
   Status DeleteJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::DeleteJobRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchDeleteJobs(
@@ -137,15 +137,15 @@ class DefaultJobServiceStub : public JobServiceStub {
       override;
 
   StatusOr<google::cloud::talent::v4::ListJobsResponse> ListJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::ListJobsRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::SearchJobsRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::SearchJobsResponse> SearchJobsForAlert(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::SearchJobsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

@@ -33,11 +33,11 @@ CompletionServiceAuth::CompletionServiceAuth(
 
 StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
 CompletionServiceAuth::CompleteQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::CompleteQueryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CompleteQuery(context, request);
+  return child_->CompleteQuery(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -35,7 +35,7 @@ AppConnectionsServiceStub::~AppConnectionsServiceStub() = default;
 StatusOr<
     google::cloud::beyondcorp::appconnections::v1::ListAppConnectionsResponse>
 DefaultAppConnectionsServiceStub::ListAppConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::beyondcorp::appconnections::v1::
         ListAppConnectionsRequest const& request) {
   google::cloud::beyondcorp::appconnections::v1::ListAppConnectionsResponse
@@ -49,7 +49,7 @@ DefaultAppConnectionsServiceStub::ListAppConnections(
 
 StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>
 DefaultAppConnectionsServiceStub::GetAppConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::beyondcorp::appconnections::v1::
         GetAppConnectionRequest const& request) {
   google::cloud::beyondcorp::appconnections::v1::AppConnection response;
@@ -120,7 +120,7 @@ DefaultAppConnectionsServiceStub::AsyncDeleteAppConnection(
 StatusOr<google::cloud::beyondcorp::appconnections::v1::
              ResolveAppConnectionsResponse>
 DefaultAppConnectionsServiceStub::ResolveAppConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::beyondcorp::appconnections::v1::
         ResolveAppConnectionsRequest const& request) {
   google::cloud::beyondcorp::appconnections::v1::ResolveAppConnectionsResponse

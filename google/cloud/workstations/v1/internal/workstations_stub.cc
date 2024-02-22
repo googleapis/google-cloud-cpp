@@ -33,7 +33,7 @@ WorkstationsStub::~WorkstationsStub() = default;
 
 StatusOr<google::cloud::workstations::v1::WorkstationCluster>
 DefaultWorkstationsStub::GetWorkstationCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::workstations::v1::GetWorkstationClusterRequest const&
         request) {
   google::cloud::workstations::v1::WorkstationCluster response;
@@ -46,7 +46,7 @@ DefaultWorkstationsStub::GetWorkstationCluster(
 
 StatusOr<google::cloud::workstations::v1::ListWorkstationClustersResponse>
 DefaultWorkstationsStub::ListWorkstationClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::workstations::v1::ListWorkstationClustersRequest const&
         request) {
   google::cloud::workstations::v1::ListWorkstationClustersResponse response;
@@ -117,7 +117,7 @@ DefaultWorkstationsStub::AsyncDeleteWorkstationCluster(
 
 StatusOr<google::cloud::workstations::v1::WorkstationConfig>
 DefaultWorkstationsStub::GetWorkstationConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::workstations::v1::GetWorkstationConfigRequest const&
         request) {
   google::cloud::workstations::v1::WorkstationConfig response;
@@ -130,7 +130,7 @@ DefaultWorkstationsStub::GetWorkstationConfig(
 
 StatusOr<google::cloud::workstations::v1::ListWorkstationConfigsResponse>
 DefaultWorkstationsStub::ListWorkstationConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::workstations::v1::ListWorkstationConfigsRequest const&
         request) {
   google::cloud::workstations::v1::ListWorkstationConfigsResponse response;
@@ -144,7 +144,7 @@ DefaultWorkstationsStub::ListWorkstationConfigs(
 
 StatusOr<google::cloud::workstations::v1::ListUsableWorkstationConfigsResponse>
 DefaultWorkstationsStub::ListUsableWorkstationConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest const&
         request) {
   google::cloud::workstations::v1::ListUsableWorkstationConfigsResponse
@@ -219,7 +219,7 @@ DefaultWorkstationsStub::AsyncDeleteWorkstationConfig(
 
 StatusOr<google::cloud::workstations::v1::Workstation>
 DefaultWorkstationsStub::GetWorkstation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::workstations::v1::GetWorkstationRequest const& request) {
   google::cloud::workstations::v1::Workstation response;
   auto status = grpc_stub_->GetWorkstation(&context, request, &response);
@@ -231,7 +231,7 @@ DefaultWorkstationsStub::GetWorkstation(
 
 StatusOr<google::cloud::workstations::v1::ListWorkstationsResponse>
 DefaultWorkstationsStub::ListWorkstations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::workstations::v1::ListWorkstationsRequest const& request) {
   google::cloud::workstations::v1::ListWorkstationsResponse response;
   auto status = grpc_stub_->ListWorkstations(&context, request, &response);
@@ -243,7 +243,7 @@ DefaultWorkstationsStub::ListWorkstations(
 
 StatusOr<google::cloud::workstations::v1::ListUsableWorkstationsResponse>
 DefaultWorkstationsStub::ListUsableWorkstations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::workstations::v1::ListUsableWorkstationsRequest const&
         request) {
   google::cloud::workstations::v1::ListUsableWorkstationsResponse response;
@@ -347,7 +347,7 @@ DefaultWorkstationsStub::AsyncStopWorkstation(
 
 StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>
 DefaultWorkstationsStub::GenerateAccessToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::workstations::v1::GenerateAccessTokenRequest const&
         request) {
   google::cloud::workstations::v1::GenerateAccessTokenResponse response;

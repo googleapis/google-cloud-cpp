@@ -40,23 +40,23 @@ class MetricsServiceV2Metadata : public MetricsServiceV2Stub {
       std::string api_client_header = "");
 
   StatusOr<google::logging::v2::ListLogMetricsResponse> ListLogMetrics(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::ListLogMetricsRequest const& request) override;
 
   StatusOr<google::logging::v2::LogMetric> GetLogMetric(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::GetLogMetricRequest const& request) override;
 
   StatusOr<google::logging::v2::LogMetric> CreateLogMetric(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::CreateLogMetricRequest const& request) override;
 
   StatusOr<google::logging::v2::LogMetric> UpdateLogMetric(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::UpdateLogMetricRequest const& request) override;
 
   Status DeleteLogMetric(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::logging::v2::DeleteLogMetricRequest const& request) override;
 
  private:

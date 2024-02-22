@@ -50,7 +50,7 @@ DefaultCloudChannelReportsServiceStub::AsyncRunReportJob(
 
 StatusOr<google::cloud::channel::v1::FetchReportResultsResponse>
 DefaultCloudChannelReportsServiceStub::FetchReportResults(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::channel::v1::FetchReportResultsRequest const& request) {
   google::cloud::channel::v1::FetchReportResultsResponse response;
   auto status = grpc_stub_->FetchReportResults(&context, request, &response);
@@ -62,7 +62,7 @@ DefaultCloudChannelReportsServiceStub::FetchReportResults(
 
 StatusOr<google::cloud::channel::v1::ListReportsResponse>
 DefaultCloudChannelReportsServiceStub::ListReports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::channel::v1::ListReportsRequest const& request) {
   google::cloud::channel::v1::ListReportsResponse response;
   auto status = grpc_stub_->ListReports(&context, request, &response);

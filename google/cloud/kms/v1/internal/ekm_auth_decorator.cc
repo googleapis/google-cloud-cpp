@@ -33,63 +33,63 @@ EkmServiceAuth::EkmServiceAuth(
 
 StatusOr<google::cloud::kms::v1::ListEkmConnectionsResponse>
 EkmServiceAuth::ListEkmConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::ListEkmConnectionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEkmConnections(context, request);
+  return child_->ListEkmConnections(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceAuth::GetEkmConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetEkmConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEkmConnection(context, request);
+  return child_->GetEkmConnection(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceAuth::CreateEkmConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::CreateEkmConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateEkmConnection(context, request);
+  return child_->CreateEkmConnection(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceAuth::UpdateEkmConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateEkmConnection(context, request);
+  return child_->UpdateEkmConnection(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceAuth::GetEkmConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetEkmConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEkmConfig(context, request);
+  return child_->GetEkmConfig(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::EkmConfig> EkmServiceAuth::UpdateEkmConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::UpdateEkmConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateEkmConfig(context, request);
+  return child_->UpdateEkmConfig(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::VerifyConnectivityResponse>
 EkmServiceAuth::VerifyConnectivity(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::VerifyConnectivityRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->VerifyConnectivity(context, request);
+  return child_->VerifyConnectivity(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

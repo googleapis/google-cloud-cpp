@@ -44,20 +44,20 @@ NotebookServiceMetadata::NotebookServiceMetadata(
 
 StatusOr<google::cloud::notebooks::v1::ListInstancesResponse>
 NotebookServiceMetadata::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::ListInstancesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListInstances(context, request);
+  return child_->ListInstances(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v1::Instance>
 NotebookServiceMetadata::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::GetInstanceRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetInstance(context, request);
+  return child_->GetInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -141,12 +141,12 @@ NotebookServiceMetadata::AsyncSetInstanceLabels(
 
 StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
 NotebookServiceMetadata::UpdateInstanceMetadataItems(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->UpdateInstanceMetadataItems(context, request);
+  return child_->UpdateInstanceMetadataItems(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -202,21 +202,21 @@ NotebookServiceMetadata::AsyncReportInstanceInfo(
 
 StatusOr<google::cloud::notebooks::v1::IsInstanceUpgradeableResponse>
 NotebookServiceMetadata::IsInstanceUpgradeable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::IsInstanceUpgradeableRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("notebook_instance=",
                            internal::UrlEncode(request.notebook_instance())));
-  return child_->IsInstanceUpgradeable(context, request);
+  return child_->IsInstanceUpgradeable(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v1::GetInstanceHealthResponse>
 NotebookServiceMetadata::GetInstanceHealth(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::GetInstanceHealthRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetInstanceHealth(context, request);
+  return child_->GetInstanceHealth(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -265,20 +265,20 @@ NotebookServiceMetadata::AsyncUpgradeInstanceInternal(
 
 StatusOr<google::cloud::notebooks::v1::ListEnvironmentsResponse>
 NotebookServiceMetadata::ListEnvironments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::ListEnvironmentsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListEnvironments(context, request);
+  return child_->ListEnvironments(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v1::Environment>
 NotebookServiceMetadata::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::GetEnvironmentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetEnvironment(context, request);
+  return child_->GetEnvironment(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -305,20 +305,20 @@ NotebookServiceMetadata::AsyncDeleteEnvironment(
 
 StatusOr<google::cloud::notebooks::v1::ListSchedulesResponse>
 NotebookServiceMetadata::ListSchedules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::ListSchedulesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListSchedules(context, request);
+  return child_->ListSchedules(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v1::Schedule>
 NotebookServiceMetadata::GetSchedule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::GetScheduleRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetSchedule(context, request);
+  return child_->GetSchedule(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -353,20 +353,20 @@ NotebookServiceMetadata::AsyncTriggerSchedule(
 
 StatusOr<google::cloud::notebooks::v1::ListExecutionsResponse>
 NotebookServiceMetadata::ListExecutions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::ListExecutionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListExecutions(context, request);
+  return child_->ListExecutions(context, options, request);
 }
 
 StatusOr<google::cloud::notebooks::v1::Execution>
 NotebookServiceMetadata::GetExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::notebooks::v1::GetExecutionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetExecution(context, request);
+  return child_->GetExecution(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

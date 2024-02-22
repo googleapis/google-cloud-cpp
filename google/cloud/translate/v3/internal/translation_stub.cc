@@ -33,7 +33,7 @@ TranslationServiceStub::~TranslationServiceStub() = default;
 
 StatusOr<google::cloud::translation::v3::TranslateTextResponse>
 DefaultTranslationServiceStub::TranslateText(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::translation::v3::TranslateTextRequest const& request) {
   google::cloud::translation::v3::TranslateTextResponse response;
   auto status = grpc_stub_->TranslateText(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultTranslationServiceStub::TranslateText(
 
 StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
 DefaultTranslationServiceStub::DetectLanguage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::translation::v3::DetectLanguageRequest const& request) {
   google::cloud::translation::v3::DetectLanguageResponse response;
   auto status = grpc_stub_->DetectLanguage(&context, request, &response);
@@ -57,7 +57,7 @@ DefaultTranslationServiceStub::DetectLanguage(
 
 StatusOr<google::cloud::translation::v3::SupportedLanguages>
 DefaultTranslationServiceStub::GetSupportedLanguages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::translation::v3::GetSupportedLanguagesRequest const&
         request) {
   google::cloud::translation::v3::SupportedLanguages response;
@@ -70,7 +70,7 @@ DefaultTranslationServiceStub::GetSupportedLanguages(
 
 StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>
 DefaultTranslationServiceStub::TranslateDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::translation::v3::TranslateDocumentRequest const& request) {
   google::cloud::translation::v3::TranslateDocumentResponse response;
   auto status = grpc_stub_->TranslateDocument(&context, request, &response);
@@ -138,7 +138,7 @@ DefaultTranslationServiceStub::AsyncCreateGlossary(
 
 StatusOr<google::cloud::translation::v3::ListGlossariesResponse>
 DefaultTranslationServiceStub::ListGlossaries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::translation::v3::ListGlossariesRequest const& request) {
   google::cloud::translation::v3::ListGlossariesResponse response;
   auto status = grpc_stub_->ListGlossaries(&context, request, &response);
@@ -150,7 +150,7 @@ DefaultTranslationServiceStub::ListGlossaries(
 
 StatusOr<google::cloud::translation::v3::Glossary>
 DefaultTranslationServiceStub::GetGlossary(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::translation::v3::GetGlossaryRequest const& request) {
   google::cloud::translation::v3::Glossary response;
   auto status = grpc_stub_->GetGlossary(&context, request, &response);
@@ -180,7 +180,7 @@ DefaultTranslationServiceStub::AsyncDeleteGlossary(
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
 DefaultTranslationServiceStub::CreateAdaptiveMtDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::translation::v3::CreateAdaptiveMtDatasetRequest const&
         request) {
   google::cloud::translation::v3::AdaptiveMtDataset response;
@@ -193,7 +193,7 @@ DefaultTranslationServiceStub::CreateAdaptiveMtDataset(
 }
 
 Status DefaultTranslationServiceStub::DeleteAdaptiveMtDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::translation::v3::DeleteAdaptiveMtDatasetRequest const&
         request) {
   google::protobuf::Empty response;
@@ -207,7 +207,7 @@ Status DefaultTranslationServiceStub::DeleteAdaptiveMtDataset(
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtDataset>
 DefaultTranslationServiceStub::GetAdaptiveMtDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::translation::v3::GetAdaptiveMtDatasetRequest const&
         request) {
   google::cloud::translation::v3::AdaptiveMtDataset response;
@@ -220,7 +220,7 @@ DefaultTranslationServiceStub::GetAdaptiveMtDataset(
 
 StatusOr<google::cloud::translation::v3::ListAdaptiveMtDatasetsResponse>
 DefaultTranslationServiceStub::ListAdaptiveMtDatasets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::translation::v3::ListAdaptiveMtDatasetsRequest const&
         request) {
   google::cloud::translation::v3::ListAdaptiveMtDatasetsResponse response;
@@ -234,7 +234,7 @@ DefaultTranslationServiceStub::ListAdaptiveMtDatasets(
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtTranslateResponse>
 DefaultTranslationServiceStub::AdaptiveMtTranslate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::translation::v3::AdaptiveMtTranslateRequest const& request) {
   google::cloud::translation::v3::AdaptiveMtTranslateResponse response;
   auto status = grpc_stub_->AdaptiveMtTranslate(&context, request, &response);
@@ -246,7 +246,7 @@ DefaultTranslationServiceStub::AdaptiveMtTranslate(
 
 StatusOr<google::cloud::translation::v3::AdaptiveMtFile>
 DefaultTranslationServiceStub::GetAdaptiveMtFile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::translation::v3::GetAdaptiveMtFileRequest const& request) {
   google::cloud::translation::v3::AdaptiveMtFile response;
   auto status = grpc_stub_->GetAdaptiveMtFile(&context, request, &response);
@@ -257,7 +257,7 @@ DefaultTranslationServiceStub::GetAdaptiveMtFile(
 }
 
 Status DefaultTranslationServiceStub::DeleteAdaptiveMtFile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::translation::v3::DeleteAdaptiveMtFileRequest const&
         request) {
   google::protobuf::Empty response;
@@ -270,7 +270,7 @@ Status DefaultTranslationServiceStub::DeleteAdaptiveMtFile(
 
 StatusOr<google::cloud::translation::v3::ImportAdaptiveMtFileResponse>
 DefaultTranslationServiceStub::ImportAdaptiveMtFile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::translation::v3::ImportAdaptiveMtFileRequest const&
         request) {
   google::cloud::translation::v3::ImportAdaptiveMtFileResponse response;
@@ -283,7 +283,7 @@ DefaultTranslationServiceStub::ImportAdaptiveMtFile(
 
 StatusOr<google::cloud::translation::v3::ListAdaptiveMtFilesResponse>
 DefaultTranslationServiceStub::ListAdaptiveMtFiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::translation::v3::ListAdaptiveMtFilesRequest const& request) {
   google::cloud::translation::v3::ListAdaptiveMtFilesResponse response;
   auto status = grpc_stub_->ListAdaptiveMtFiles(&context, request, &response);
@@ -295,7 +295,7 @@ DefaultTranslationServiceStub::ListAdaptiveMtFiles(
 
 StatusOr<google::cloud::translation::v3::ListAdaptiveMtSentencesResponse>
 DefaultTranslationServiceStub::ListAdaptiveMtSentences(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::translation::v3::ListAdaptiveMtSentencesRequest const&
         request) {
   google::cloud::translation::v3::ListAdaptiveMtSentencesResponse response;

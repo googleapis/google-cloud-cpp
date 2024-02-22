@@ -54,24 +54,28 @@ LivestreamServiceLogging::AsyncCreateChannel(
 
 StatusOr<google::cloud::video::livestream::v1::ListChannelsResponse>
 LivestreamServiceLogging::ListChannels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::ListChannelsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::video::livestream::v1::ListChannelsRequest const&
-                 request) { return child_->ListChannels(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListChannels(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Channel>
 LivestreamServiceLogging::GetChannel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::GetChannelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::video::livestream::v1::GetChannelRequest const&
-                 request) { return child_->GetChannel(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetChannel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -161,24 +165,28 @@ LivestreamServiceLogging::AsyncCreateInput(
 
 StatusOr<google::cloud::video::livestream::v1::ListInputsResponse>
 LivestreamServiceLogging::ListInputs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::ListInputsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::video::livestream::v1::ListInputsRequest const&
-                 request) { return child_->ListInputs(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListInputs(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Input>
 LivestreamServiceLogging::GetInput(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::GetInputRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::video::livestream::v1::GetInputRequest const&
-                 request) { return child_->GetInput(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetInput(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -217,45 +225,53 @@ LivestreamServiceLogging::AsyncUpdateInput(
 
 StatusOr<google::cloud::video::livestream::v1::Event>
 LivestreamServiceLogging::CreateEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::CreateEventRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::video::livestream::v1::CreateEventRequest const&
-                 request) { return child_->CreateEvent(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->CreateEvent(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::video::livestream::v1::ListEventsResponse>
 LivestreamServiceLogging::ListEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::ListEventsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::video::livestream::v1::ListEventsRequest const&
-                 request) { return child_->ListEvents(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListEvents(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Event>
 LivestreamServiceLogging::GetEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::GetEventRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::video::livestream::v1::GetEventRequest const&
-                 request) { return child_->GetEvent(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetEvent(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status LivestreamServiceLogging::DeleteEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::DeleteEventRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::video::livestream::v1::DeleteEventRequest const&
-                 request) { return child_->DeleteEvent(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->DeleteEvent(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -294,37 +310,41 @@ LivestreamServiceLogging::AsyncDeleteAsset(
 
 StatusOr<google::cloud::video::livestream::v1::Asset>
 LivestreamServiceLogging::GetAsset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::GetAssetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::video::livestream::v1::GetAssetRequest const&
-                 request) { return child_->GetAsset(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetAsset(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::video::livestream::v1::ListAssetsResponse>
 LivestreamServiceLogging::ListAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::ListAssetsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::video::livestream::v1::ListAssetsRequest const&
-                 request) { return child_->ListAssets(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListAssets(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Pool>
 LivestreamServiceLogging::GetPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::GetPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::video::livestream::v1::GetPoolRequest const& request) {
-        return child_->GetPool(context, request);
+        return child_->GetPool(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

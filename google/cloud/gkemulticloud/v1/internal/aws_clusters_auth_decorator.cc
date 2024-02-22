@@ -71,20 +71,20 @@ AwsClustersAuth::AsyncUpdateAwsCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>
 AwsClustersAuth::GetAwsCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAwsCluster(context, request);
+  return child_->GetAwsCluster(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAwsClustersResponse>
 AwsClustersAuth::ListAwsClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::ListAwsClustersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAwsClusters(context, request);
+  return child_->ListAwsClusters(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -108,22 +108,22 @@ AwsClustersAuth::AsyncDeleteAwsCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
 AwsClustersAuth::GenerateAwsClusterAgentToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateAwsClusterAgentToken(context, request);
+  return child_->GenerateAwsClusterAgentToken(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
 AwsClustersAuth::GenerateAwsAccessToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateAwsAccessToken(context, request);
+  return child_->GenerateAwsAccessToken(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -186,20 +186,20 @@ AwsClustersAuth::AsyncRollbackAwsNodePoolUpdate(
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
 AwsClustersAuth::GetAwsNodePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAwsNodePool(context, request);
+  return child_->GetAwsNodePool(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAwsNodePoolsResponse>
 AwsClustersAuth::ListAwsNodePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAwsNodePools(context, request);
+  return child_->ListAwsNodePools(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -223,31 +223,31 @@ AwsClustersAuth::AsyncDeleteAwsNodePool(
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
 AwsClustersAuth::GetAwsOpenIdConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAwsOpenIdConfig(context, request);
+  return child_->GetAwsOpenIdConfig(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys>
 AwsClustersAuth::GetAwsJsonWebKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAwsJsonWebKeys(context, request);
+  return child_->GetAwsJsonWebKeys(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>
 AwsClustersAuth::GetAwsServerConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAwsServerConfig(context, request);
+  return child_->GetAwsServerConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

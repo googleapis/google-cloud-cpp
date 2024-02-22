@@ -55,20 +55,20 @@ BackupForGKEMetadata::AsyncCreateBackupPlan(
 
 StatusOr<google::cloud::gkebackup::v1::ListBackupPlansResponse>
 BackupForGKEMetadata::ListBackupPlans(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::ListBackupPlansRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListBackupPlans(context, request);
+  return child_->ListBackupPlans(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::BackupPlan>
 BackupForGKEMetadata::GetBackupPlan(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::GetBackupPlanRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetBackupPlan(context, request);
+  return child_->GetBackupPlan(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -106,19 +106,19 @@ BackupForGKEMetadata::AsyncCreateBackup(
 
 StatusOr<google::cloud::gkebackup::v1::ListBackupsResponse>
 BackupForGKEMetadata::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::ListBackupsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListBackups(context, request);
+  return child_->ListBackups(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::Backup> BackupForGKEMetadata::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::GetBackupRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetBackup(context, request);
+  return child_->GetBackup(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -144,20 +144,20 @@ BackupForGKEMetadata::AsyncDeleteBackup(
 
 StatusOr<google::cloud::gkebackup::v1::ListVolumeBackupsResponse>
 BackupForGKEMetadata::ListVolumeBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::ListVolumeBackupsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListVolumeBackups(context, request);
+  return child_->ListVolumeBackups(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::VolumeBackup>
 BackupForGKEMetadata::GetVolumeBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::GetVolumeBackupRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetVolumeBackup(context, request);
+  return child_->GetVolumeBackup(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -173,20 +173,20 @@ BackupForGKEMetadata::AsyncCreateRestorePlan(
 
 StatusOr<google::cloud::gkebackup::v1::ListRestorePlansResponse>
 BackupForGKEMetadata::ListRestorePlans(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::ListRestorePlansRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListRestorePlans(context, request);
+  return child_->ListRestorePlans(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::RestorePlan>
 BackupForGKEMetadata::GetRestorePlan(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::GetRestorePlanRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetRestorePlan(context, request);
+  return child_->GetRestorePlan(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -224,20 +224,20 @@ BackupForGKEMetadata::AsyncCreateRestore(
 
 StatusOr<google::cloud::gkebackup::v1::ListRestoresResponse>
 BackupForGKEMetadata::ListRestores(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::ListRestoresRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListRestores(context, request);
+  return child_->ListRestores(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::Restore>
 BackupForGKEMetadata::GetRestore(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::GetRestoreRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetRestore(context, request);
+  return child_->GetRestore(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -263,20 +263,20 @@ BackupForGKEMetadata::AsyncDeleteRestore(
 
 StatusOr<google::cloud::gkebackup::v1::ListVolumeRestoresResponse>
 BackupForGKEMetadata::ListVolumeRestores(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::ListVolumeRestoresRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListVolumeRestores(context, request);
+  return child_->ListVolumeRestores(context, options, request);
 }
 
 StatusOr<google::cloud::gkebackup::v1::VolumeRestore>
 BackupForGKEMetadata::GetVolumeRestore(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetVolumeRestore(context, request);
+  return child_->GetVolumeRestore(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

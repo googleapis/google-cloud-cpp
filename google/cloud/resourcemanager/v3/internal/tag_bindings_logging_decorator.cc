@@ -37,13 +37,15 @@ TagBindingsLogging::TagBindingsLogging(std::shared_ptr<TagBindingsStub> child,
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagBindingsResponse>
 TagBindingsLogging::ListTagBindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListTagBindingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::resourcemanager::v3::ListTagBindingsRequest const&
-                 request) { return child_->ListTagBindings(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListTagBindings(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -84,16 +86,16 @@ TagBindingsLogging::AsyncDeleteTagBinding(
 
 StatusOr<google::cloud::resourcemanager::v3::ListEffectiveTagsResponse>
 TagBindingsLogging::ListEffectiveTags(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const&
                  request) {
-        return child_->ListEffectiveTags(context, request);
+        return child_->ListEffectiveTags(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -53,29 +53,29 @@ AutoMlMetadata::AsyncCreateDataset(
 }
 
 StatusOr<google::cloud::automl::v1::Dataset> AutoMlMetadata::GetDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::GetDatasetRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDataset(context, request);
+  return child_->GetDataset(context, options, request);
 }
 
 StatusOr<google::cloud::automl::v1::ListDatasetsResponse>
 AutoMlMetadata::ListDatasets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::ListDatasetsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDatasets(context, request);
+  return child_->ListDatasets(context, options, request);
 }
 
 StatusOr<google::cloud::automl::v1::Dataset> AutoMlMetadata::UpdateDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::UpdateDatasetRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("dataset.name=",
                            internal::UrlEncode(request.dataset().name())));
-  return child_->UpdateDataset(context, request);
+  return child_->UpdateDataset(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -110,11 +110,11 @@ AutoMlMetadata::AsyncExportData(
 
 StatusOr<google::cloud::automl::v1::AnnotationSpec>
 AutoMlMetadata::GetAnnotationSpec(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::GetAnnotationSpecRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAnnotationSpec(context, request);
+  return child_->GetAnnotationSpec(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -128,20 +128,20 @@ AutoMlMetadata::AsyncCreateModel(
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlMetadata::GetModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::GetModelRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetModel(context, request);
+  return child_->GetModel(context, options, request);
 }
 
 StatusOr<google::cloud::automl::v1::ListModelsResponse>
 AutoMlMetadata::ListModels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::ListModelsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListModels(context, request);
+  return child_->ListModels(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -155,12 +155,12 @@ AutoMlMetadata::AsyncDeleteModel(
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlMetadata::UpdateModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::UpdateModelRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("model.name=", internal::UrlEncode(request.model().name())));
-  return child_->UpdateModel(context, request);
+  return child_->UpdateModel(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -195,20 +195,20 @@ AutoMlMetadata::AsyncExportModel(
 
 StatusOr<google::cloud::automl::v1::ModelEvaluation>
 AutoMlMetadata::GetModelEvaluation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::GetModelEvaluationRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetModelEvaluation(context, request);
+  return child_->GetModelEvaluation(context, options, request);
 }
 
 StatusOr<google::cloud::automl::v1::ListModelEvaluationsResponse>
 AutoMlMetadata::ListModelEvaluations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::ListModelEvaluationsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListModelEvaluations(context, request);
+  return child_->ListModelEvaluations(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -55,31 +55,31 @@ FeatureOnlineStoreAdminServiceLogging::AsyncCreateFeatureOnlineStore(
 
 StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
 FeatureOnlineStoreAdminServiceLogging::GetFeatureOnlineStore(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const&
                  request) {
-        return child_->GetFeatureOnlineStore(context, request);
+        return child_->GetFeatureOnlineStore(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListFeatureOnlineStoresResponse>
 FeatureOnlineStoreAdminServiceLogging::ListFeatureOnlineStores(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest const&
               request) {
-        return child_->ListFeatureOnlineStores(context, request);
+        return child_->ListFeatureOnlineStores(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -137,28 +137,28 @@ FeatureOnlineStoreAdminServiceLogging::AsyncCreateFeatureView(
 
 StatusOr<google::cloud::aiplatform::v1::FeatureView>
 FeatureOnlineStoreAdminServiceLogging::GetFeatureView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetFeatureViewRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::GetFeatureViewRequest const& request) {
-        return child_->GetFeatureView(context, request);
+        return child_->GetFeatureView(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListFeatureViewsResponse>
 FeatureOnlineStoreAdminServiceLogging::ListFeatureViews(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListFeatureViewsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ListFeatureViewsRequest const&
                  request) {
-        return child_->ListFeatureViews(context, request);
+        return child_->ListFeatureViews(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -197,39 +197,41 @@ FeatureOnlineStoreAdminServiceLogging::AsyncDeleteFeatureView(
 
 StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>
 FeatureOnlineStoreAdminServiceLogging::SyncFeatureView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::SyncFeatureViewRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::SyncFeatureViewRequest const&
-                 request) { return child_->SyncFeatureView(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->SyncFeatureView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureViewSync>
 FeatureOnlineStoreAdminServiceLogging::GetFeatureViewSync(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const&
                  request) {
-        return child_->GetFeatureViewSync(context, request);
+        return child_->GetFeatureViewSync(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListFeatureViewSyncsResponse>
 FeatureOnlineStoreAdminServiceLogging::ListFeatureViewSyncs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest const&
                  request) {
-        return child_->ListFeatureViewSyncs(context, request);
+        return child_->ListFeatureViewSyncs(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

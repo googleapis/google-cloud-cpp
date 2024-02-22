@@ -44,11 +44,11 @@ ApplicationsMetadata::ApplicationsMetadata(
 
 StatusOr<google::appengine::v1::Application>
 ApplicationsMetadata::GetApplication(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetApplicationRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetApplication(context, request);
+  return child_->GetApplication(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

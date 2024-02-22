@@ -38,13 +38,15 @@ RequestIdServiceLogging::RequestIdServiceLogging(
 StatusOr<google::test::requestid::v1::Foo>
 RequestIdServiceLogging::CreateFoo(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::requestid::v1::CreateFooRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
+             Options const& options,
              google::test::requestid::v1::CreateFooRequest const& request) {
-        return child_->CreateFoo(context, request);
+        return child_->CreateFoo(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -66,13 +68,15 @@ RequestIdServiceLogging::AsyncRenameFoo(
 StatusOr<google::test::requestid::v1::ListFoosResponse>
 RequestIdServiceLogging::ListFoos(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::requestid::v1::ListFoosRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
+             Options const& options,
              google::test::requestid::v1::ListFoosRequest const& request) {
-        return child_->ListFoos(context, request);
+        return child_->ListFoos(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::test::requestid::v1::Foo>>

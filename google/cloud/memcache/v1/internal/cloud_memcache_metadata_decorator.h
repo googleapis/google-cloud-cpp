@@ -40,12 +40,12 @@ class CloudMemcacheMetadata : public CloudMemcacheStub {
                         std::string api_client_header = "");
 
   StatusOr<google::cloud::memcache::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::memcache::v1::ListInstancesRequest const& request)
       override;
 
   StatusOr<google::cloud::memcache::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::memcache::v1::GetInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(

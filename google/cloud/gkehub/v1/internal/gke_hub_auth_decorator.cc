@@ -33,36 +33,36 @@ GkeHubAuth::GkeHubAuth(
 
 StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse>
 GkeHubAuth::ListMemberships(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkehub::v1::ListMembershipsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListMemberships(context, request);
+  return child_->ListMemberships(context, options, request);
 }
 
 StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse>
 GkeHubAuth::ListFeatures(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkehub::v1::ListFeaturesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListFeatures(context, request);
+  return child_->ListFeatures(context, options, request);
 }
 
 StatusOr<google::cloud::gkehub::v1::Membership> GkeHubAuth::GetMembership(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkehub::v1::GetMembershipRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetMembership(context, request);
+  return child_->GetMembership(context, options, request);
 }
 
 StatusOr<google::cloud::gkehub::v1::Feature> GkeHubAuth::GetFeature(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkehub::v1::GetFeatureRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetFeature(context, request);
+  return child_->GetFeature(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -178,11 +178,11 @@ future<StatusOr<google::longrunning::Operation>> GkeHubAuth::AsyncUpdateFeature(
 
 StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
 GkeHubAuth::GenerateConnectManifest(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateConnectManifest(context, request);
+  return child_->GenerateConnectManifest(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> GkeHubAuth::AsyncGetOperation(

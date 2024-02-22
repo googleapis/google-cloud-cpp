@@ -40,11 +40,11 @@ class IDSAuth : public IDSStub {
       std::shared_ptr<IDSStub> child);
 
   StatusOr<google::cloud::ids::v1::ListEndpointsResponse> ListEndpoints(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::ids::v1::ListEndpointsRequest const& request) override;
 
   StatusOr<google::cloud::ids::v1::Endpoint> GetEndpoint(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::ids::v1::GetEndpointRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEndpoint(

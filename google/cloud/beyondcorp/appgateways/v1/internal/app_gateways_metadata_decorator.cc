@@ -44,22 +44,22 @@ AppGatewaysServiceMetadata::AppGatewaysServiceMetadata(
 
 StatusOr<google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse>
 AppGatewaysServiceMetadata::ListAppGateways(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListAppGateways(context, request);
+  return child_->ListAppGateways(context, options, request);
 }
 
 StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
 AppGatewaysServiceMetadata::GetAppGateway(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAppGateway(context, request);
+  return child_->GetAppGateway(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

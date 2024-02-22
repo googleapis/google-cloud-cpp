@@ -33,7 +33,7 @@ DomainsStub::~DomainsStub() = default;
 
 StatusOr<google::cloud::domains::v1::SearchDomainsResponse>
 DefaultDomainsStub::SearchDomains(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::domains::v1::SearchDomainsRequest const& request) {
   google::cloud::domains::v1::SearchDomainsResponse response;
   auto status = grpc_stub_->SearchDomains(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultDomainsStub::SearchDomains(
 
 StatusOr<google::cloud::domains::v1::RetrieveRegisterParametersResponse>
 DefaultDomainsStub::RetrieveRegisterParameters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::domains::v1::RetrieveRegisterParametersRequest const&
         request) {
   google::cloud::domains::v1::RetrieveRegisterParametersResponse response;
@@ -76,7 +76,7 @@ DefaultDomainsStub::AsyncRegisterDomain(
 
 StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>
 DefaultDomainsStub::RetrieveTransferParameters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::domains::v1::RetrieveTransferParametersRequest const&
         request) {
   google::cloud::domains::v1::RetrieveTransferParametersResponse response;
@@ -107,7 +107,7 @@ DefaultDomainsStub::AsyncTransferDomain(
 
 StatusOr<google::cloud::domains::v1::ListRegistrationsResponse>
 DefaultDomainsStub::ListRegistrations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::domains::v1::ListRegistrationsRequest const& request) {
   google::cloud::domains::v1::ListRegistrationsResponse response;
   auto status = grpc_stub_->ListRegistrations(&context, request, &response);
@@ -119,7 +119,7 @@ DefaultDomainsStub::ListRegistrations(
 
 StatusOr<google::cloud::domains::v1::Registration>
 DefaultDomainsStub::GetRegistration(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::domains::v1::GetRegistrationRequest const& request) {
   google::cloud::domains::v1::Registration response;
   auto status = grpc_stub_->GetRegistration(&context, request, &response);
@@ -243,7 +243,7 @@ DefaultDomainsStub::AsyncDeleteRegistration(
 
 StatusOr<google::cloud::domains::v1::AuthorizationCode>
 DefaultDomainsStub::RetrieveAuthorizationCode(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&
         request) {
   google::cloud::domains::v1::AuthorizationCode response;
@@ -257,7 +257,7 @@ DefaultDomainsStub::RetrieveAuthorizationCode(
 
 StatusOr<google::cloud::domains::v1::AuthorizationCode>
 DefaultDomainsStub::ResetAuthorizationCode(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::domains::v1::ResetAuthorizationCodeRequest const& request) {
   google::cloud::domains::v1::AuthorizationCode response;
   auto status =

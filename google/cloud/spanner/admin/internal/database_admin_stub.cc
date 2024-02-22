@@ -33,7 +33,7 @@ DatabaseAdminStub::~DatabaseAdminStub() = default;
 
 StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
 DefaultDatabaseAdminStub::ListDatabases(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::database::v1::ListDatabasesRequest const& request) {
   google::spanner::admin::database::v1::ListDatabasesResponse response;
   auto status = grpc_stub_->ListDatabases(&context, request, &response);
@@ -64,7 +64,7 @@ DefaultDatabaseAdminStub::AsyncCreateDatabase(
 
 StatusOr<google::spanner::admin::database::v1::Database>
 DefaultDatabaseAdminStub::GetDatabase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::database::v1::GetDatabaseRequest const& request) {
   google::spanner::admin::database::v1::Database response;
   auto status = grpc_stub_->GetDatabase(&context, request, &response);
@@ -114,7 +114,7 @@ DefaultDatabaseAdminStub::AsyncUpdateDatabaseDdl(
 }
 
 Status DefaultDatabaseAdminStub::DropDatabase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DropDatabase(&context, request, &response);
@@ -126,7 +126,7 @@ Status DefaultDatabaseAdminStub::DropDatabase(
 
 StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
 DefaultDatabaseAdminStub::GetDatabaseDdl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
         request) {
   google::spanner::admin::database::v1::GetDatabaseDdlResponse response;
@@ -138,7 +138,7 @@ DefaultDatabaseAdminStub::GetDatabaseDdl(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultDatabaseAdminStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -149,7 +149,7 @@ StatusOr<google::iam::v1::Policy> DefaultDatabaseAdminStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultDatabaseAdminStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -161,7 +161,7 @@ StatusOr<google::iam::v1::Policy> DefaultDatabaseAdminStub::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultDatabaseAdminStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
@@ -209,7 +209,7 @@ DefaultDatabaseAdminStub::AsyncCopyBackup(
 
 StatusOr<google::spanner::admin::database::v1::Backup>
 DefaultDatabaseAdminStub::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::database::v1::GetBackupRequest const& request) {
   google::spanner::admin::database::v1::Backup response;
   auto status = grpc_stub_->GetBackup(&context, request, &response);
@@ -221,7 +221,7 @@ DefaultDatabaseAdminStub::GetBackup(
 
 StatusOr<google::spanner::admin::database::v1::Backup>
 DefaultDatabaseAdminStub::UpdateBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::database::v1::UpdateBackupRequest const& request) {
   google::spanner::admin::database::v1::Backup response;
   auto status = grpc_stub_->UpdateBackup(&context, request, &response);
@@ -232,7 +232,7 @@ DefaultDatabaseAdminStub::UpdateBackup(
 }
 
 Status DefaultDatabaseAdminStub::DeleteBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteBackup(&context, request, &response);
@@ -244,7 +244,7 @@ Status DefaultDatabaseAdminStub::DeleteBackup(
 
 StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>
 DefaultDatabaseAdminStub::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::database::v1::ListBackupsRequest const& request) {
   google::spanner::admin::database::v1::ListBackupsResponse response;
   auto status = grpc_stub_->ListBackups(&context, request, &response);
@@ -275,7 +275,7 @@ DefaultDatabaseAdminStub::AsyncRestoreDatabase(
 
 StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>
 DefaultDatabaseAdminStub::ListDatabaseOperations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::database::v1::ListDatabaseOperationsRequest const&
         request) {
   google::spanner::admin::database::v1::ListDatabaseOperationsResponse response;
@@ -289,7 +289,7 @@ DefaultDatabaseAdminStub::ListDatabaseOperations(
 
 StatusOr<google::spanner::admin::database::v1::ListBackupOperationsResponse>
 DefaultDatabaseAdminStub::ListBackupOperations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::database::v1::ListBackupOperationsRequest const&
         request) {
   google::spanner::admin::database::v1::ListBackupOperationsResponse response;
@@ -302,7 +302,7 @@ DefaultDatabaseAdminStub::ListBackupOperations(
 
 StatusOr<google::spanner::admin::database::v1::ListDatabaseRolesResponse>
 DefaultDatabaseAdminStub::ListDatabaseRoles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
         request) {
   google::spanner::admin::database::v1::ListDatabaseRolesResponse response;

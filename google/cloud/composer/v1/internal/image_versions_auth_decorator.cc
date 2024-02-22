@@ -34,12 +34,12 @@ ImageVersionsAuth::ImageVersionsAuth(
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              ListImageVersionsResponse>
 ImageVersionsAuth::ListImageVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orchestration::airflow::service::v1::
         ListImageVersionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListImageVersions(context, request);
+  return child_->ListImageVersions(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

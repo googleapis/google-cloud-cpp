@@ -41,11 +41,11 @@ class DomainMappingsStub {
 
   virtual StatusOr<google::appengine::v1::ListDomainMappingsResponse>
   ListDomainMappings(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListDomainMappingsRequest const& request) = 0;
 
   virtual StatusOr<google::appengine::v1::DomainMapping> GetDomainMapping(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetDomainMappingRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
@@ -88,11 +88,11 @@ class DefaultDomainMappingsStub : public DomainMappingsStub {
 
   StatusOr<google::appengine::v1::ListDomainMappingsResponse>
   ListDomainMappings(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListDomainMappingsRequest const& request) override;
 
   StatusOr<google::appengine::v1::DomainMapping> GetDomainMapping(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetDomainMappingRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDomainMapping(

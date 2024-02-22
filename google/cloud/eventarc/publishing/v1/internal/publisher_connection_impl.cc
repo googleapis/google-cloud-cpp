@@ -69,12 +69,12 @@ PublisherConnectionImpl::PublishChannelConnectionEvents(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->PublishChannelConnectionEvents(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::publishing::v1::
                  PublishChannelConnectionEventsRequest const& request) {
-        return stub_->PublishChannelConnectionEvents(context, request);
+        return stub_->PublishChannelConnectionEvents(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
@@ -86,10 +86,12 @@ PublisherConnectionImpl::PublishEvents(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->PublishEvents(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
-              request) { return stub_->PublishEvents(context, request); },
-      request, __func__);
+              request) {
+        return stub_->PublishEvents(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

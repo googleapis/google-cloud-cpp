@@ -33,28 +33,29 @@ WorkstationsTracingStub::WorkstationsTracingStub(
 
 StatusOr<google::cloud::workstations::v1::WorkstationCluster>
 WorkstationsTracingStub::GetWorkstationCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workstations::v1::GetWorkstationClusterRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workstations.v1.Workstations", "GetWorkstationCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetWorkstationCluster(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetWorkstationCluster(context, options, request));
 }
 
 StatusOr<google::cloud::workstations::v1::ListWorkstationClustersResponse>
 WorkstationsTracingStub::ListWorkstationClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workstations::v1::ListWorkstationClustersRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workstations.v1.Workstations", "ListWorkstationClusters");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListWorkstationClusters(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListWorkstationClusters(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -101,33 +102,34 @@ WorkstationsTracingStub::AsyncDeleteWorkstationCluster(
 
 StatusOr<google::cloud::workstations::v1::WorkstationConfig>
 WorkstationsTracingStub::GetWorkstationConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workstations::v1::GetWorkstationConfigRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workstations.v1.Workstations", "GetWorkstationConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetWorkstationConfig(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetWorkstationConfig(context, options, request));
 }
 
 StatusOr<google::cloud::workstations::v1::ListWorkstationConfigsResponse>
 WorkstationsTracingStub::ListWorkstationConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workstations::v1::ListWorkstationConfigsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workstations.v1.Workstations", "ListWorkstationConfigs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListWorkstationConfigs(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListWorkstationConfigs(context, options, request));
 }
 
 StatusOr<google::cloud::workstations::v1::ListUsableWorkstationConfigsResponse>
 WorkstationsTracingStub::ListUsableWorkstationConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workstations::v1::ListUsableWorkstationConfigsRequest const&
         request) {
   auto span =
@@ -136,7 +138,8 @@ WorkstationsTracingStub::ListUsableWorkstationConfigs(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
-      context, *span, child_->ListUsableWorkstationConfigs(context, request));
+      context, *span,
+      child_->ListUsableWorkstationConfigs(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -183,39 +186,40 @@ WorkstationsTracingStub::AsyncDeleteWorkstationConfig(
 
 StatusOr<google::cloud::workstations::v1::Workstation>
 WorkstationsTracingStub::GetWorkstation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workstations::v1::GetWorkstationRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workstations.v1.Workstations", "GetWorkstation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetWorkstation(context, request));
+                           child_->GetWorkstation(context, options, request));
 }
 
 StatusOr<google::cloud::workstations::v1::ListWorkstationsResponse>
 WorkstationsTracingStub::ListWorkstations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workstations::v1::ListWorkstationsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workstations.v1.Workstations", "ListWorkstations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListWorkstations(context, request));
+                           child_->ListWorkstations(context, options, request));
 }
 
 StatusOr<google::cloud::workstations::v1::ListUsableWorkstationsResponse>
 WorkstationsTracingStub::ListUsableWorkstations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workstations::v1::ListUsableWorkstationsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workstations.v1.Workstations", "ListUsableWorkstations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListUsableWorkstations(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListUsableWorkstations(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -285,15 +289,15 @@ WorkstationsTracingStub::AsyncStopWorkstation(
 
 StatusOr<google::cloud::workstations::v1::GenerateAccessTokenResponse>
 WorkstationsTracingStub::GenerateAccessToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workstations::v1::GenerateAccessTokenRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workstations.v1.Workstations", "GenerateAccessToken");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GenerateAccessToken(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GenerateAccessToken(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

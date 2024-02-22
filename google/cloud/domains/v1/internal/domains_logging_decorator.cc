@@ -37,29 +37,29 @@ DomainsLogging::DomainsLogging(std::shared_ptr<DomainsStub> child,
 
 StatusOr<google::cloud::domains::v1::SearchDomainsResponse>
 DomainsLogging::SearchDomains(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::SearchDomainsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::domains::v1::SearchDomainsRequest const& request) {
-        return child_->SearchDomains(context, request);
+        return child_->SearchDomains(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::domains::v1::RetrieveRegisterParametersResponse>
 DomainsLogging::RetrieveRegisterParameters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::RetrieveRegisterParametersRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::domains::v1::RetrieveRegisterParametersRequest const&
               request) {
-        return child_->RetrieveRegisterParameters(context, request);
+        return child_->RetrieveRegisterParameters(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -80,17 +80,17 @@ DomainsLogging::AsyncRegisterDomain(
 
 StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>
 DomainsLogging::RetrieveTransferParameters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::RetrieveTransferParametersRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::domains::v1::RetrieveTransferParametersRequest const&
               request) {
-        return child_->RetrieveTransferParameters(context, request);
+        return child_->RetrieveTransferParameters(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -111,28 +111,28 @@ DomainsLogging::AsyncTransferDomain(
 
 StatusOr<google::cloud::domains::v1::ListRegistrationsResponse>
 DomainsLogging::ListRegistrations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::ListRegistrationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::domains::v1::ListRegistrationsRequest const& request) {
-        return child_->ListRegistrations(context, request);
+        return child_->ListRegistrations(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::domains::v1::Registration>
 DomainsLogging::GetRegistration(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::GetRegistrationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::domains::v1::GetRegistrationRequest const& request) {
-        return child_->GetRegistration(context, request);
+        return child_->GetRegistration(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -241,29 +241,29 @@ DomainsLogging::AsyncDeleteRegistration(
 
 StatusOr<google::cloud::domains::v1::AuthorizationCode>
 DomainsLogging::RetrieveAuthorizationCode(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&
                  request) {
-        return child_->RetrieveAuthorizationCode(context, request);
+        return child_->RetrieveAuthorizationCode(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::domains::v1::AuthorizationCode>
 DomainsLogging::ResetAuthorizationCode(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::ResetAuthorizationCodeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::domains::v1::ResetAuthorizationCodeRequest const&
                  request) {
-        return child_->ResetAuthorizationCode(context, request);
+        return child_->ResetAuthorizationCode(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

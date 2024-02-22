@@ -33,144 +33,146 @@ AdminServiceTracingStub::AdminServiceTracingStub(
 
 StatusOr<google::cloud::pubsublite::v1::Topic>
 AdminServiceTracingStub::CreateTopic(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::CreateTopicRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
                                      "CreateTopic");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateTopic(context, request));
+                           child_->CreateTopic(context, options, request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Topic>
 AdminServiceTracingStub::GetTopic(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::GetTopicRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
                                      "GetTopic");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetTopic(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetTopic(context, options, request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::TopicPartitions>
 AdminServiceTracingStub::GetTopicPartitions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
                                      "GetTopicPartitions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetTopicPartitions(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetTopicPartitions(context, options, request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::ListTopicsResponse>
 AdminServiceTracingStub::ListTopics(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ListTopicsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
                                      "ListTopics");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListTopics(context, request));
+                           child_->ListTopics(context, options, request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Topic>
 AdminServiceTracingStub::UpdateTopic(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::UpdateTopicRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
                                      "UpdateTopic");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateTopic(context, request));
+                           child_->UpdateTopic(context, options, request));
 }
 
 Status AdminServiceTracingStub::DeleteTopic(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::DeleteTopicRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
                                      "DeleteTopic");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteTopic(context, request));
+                           child_->DeleteTopic(context, options, request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::ListTopicSubscriptionsResponse>
 AdminServiceTracingStub::ListTopicSubscriptions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
                                      "ListTopicSubscriptions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListTopicSubscriptions(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListTopicSubscriptions(context, options, request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Subscription>
 AdminServiceTracingStub::CreateSubscription(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
                                      "CreateSubscription");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateSubscription(context, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateSubscription(context, options, request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Subscription>
 AdminServiceTracingStub::GetSubscription(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::GetSubscriptionRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
                                      "GetSubscription");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetSubscription(context, request));
+                           child_->GetSubscription(context, options, request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::ListSubscriptionsResponse>
 AdminServiceTracingStub::ListSubscriptions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ListSubscriptionsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
                                      "ListSubscriptions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListSubscriptions(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListSubscriptions(context, options, request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Subscription>
 AdminServiceTracingStub::UpdateSubscription(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
                                      "UpdateSubscription");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateSubscription(context, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateSubscription(context, options, request));
 }
 
 Status AdminServiceTracingStub::DeleteSubscription(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
                                      "DeleteSubscription");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteSubscription(context, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteSubscription(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -188,74 +190,74 @@ AdminServiceTracingStub::AsyncSeekSubscription(
 
 StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceTracingStub::CreateReservation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::CreateReservationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
                                      "CreateReservation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateReservation(context, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateReservation(context, options, request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceTracingStub::GetReservation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::GetReservationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
                                      "GetReservation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetReservation(context, request));
+                           child_->GetReservation(context, options, request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::ListReservationsResponse>
 AdminServiceTracingStub::ListReservations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ListReservationsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
                                      "ListReservations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListReservations(context, request));
+                           child_->ListReservations(context, options, request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceTracingStub::UpdateReservation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::UpdateReservationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
                                      "UpdateReservation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateReservation(context, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateReservation(context, options, request));
 }
 
 Status AdminServiceTracingStub::DeleteReservation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::DeleteReservationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
                                      "DeleteReservation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteReservation(context, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteReservation(context, options, request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::ListReservationTopicsResponse>
 AdminServiceTracingStub::ListReservationTopics(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::pubsublite::v1::ListReservationTopicsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
                                      "ListReservationTopics");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListReservationTopics(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListReservationTopics(context, options, request));
 }
 
 future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>

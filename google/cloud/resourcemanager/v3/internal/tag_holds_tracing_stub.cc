@@ -58,14 +58,14 @@ TagHoldsTracingStub::AsyncDeleteTagHold(
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse>
 TagHoldsTracingStub::ListTagHolds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListTagHoldsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.resourcemanager.v3.TagHolds",
                                      "ListTagHolds");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListTagHolds(context, request));
+                           child_->ListTagHolds(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

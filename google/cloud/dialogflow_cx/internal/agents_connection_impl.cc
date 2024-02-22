@@ -71,18 +71,21 @@ AgentsConnectionImpl::ListAgents(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::Agent>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dialogflow_cx::AgentsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dialogflow::cx::v3::ListAgentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::dialogflow::cx::v3::ListAgentsRequest const&
-                       request) { return stub->ListAgents(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListAgents(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::dialogflow::cx::v3::ListAgentsResponse r) {
         std::vector<google::cloud::dialogflow::cx::v3::Agent> result(
@@ -101,11 +104,11 @@ AgentsConnectionImpl::GetAgent(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAgent(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::cx::v3::GetAgentRequest const& request) {
-        return stub_->GetAgent(context, request);
+        return stub_->GetAgent(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent>
@@ -115,10 +118,12 @@ AgentsConnectionImpl::CreateAgent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateAgent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::CreateAgentRequest const&
-                 request) { return stub_->CreateAgent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreateAgent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent>
@@ -128,10 +133,12 @@ AgentsConnectionImpl::UpdateAgent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateAgent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::UpdateAgentRequest const&
-                 request) { return stub_->UpdateAgent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->UpdateAgent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status AgentsConnectionImpl::DeleteAgent(
@@ -140,10 +147,12 @@ Status AgentsConnectionImpl::DeleteAgent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteAgent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::DeleteAgentRequest const&
-                 request) { return stub_->DeleteAgent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DeleteAgent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
@@ -227,10 +236,12 @@ AgentsConnectionImpl::ValidateAgent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ValidateAgent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::ValidateAgentRequest const&
-                 request) { return stub_->ValidateAgent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->ValidateAgent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
@@ -241,12 +252,12 @@ AgentsConnectionImpl::GetAgentValidationResult(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAgentValidationResult(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::
                  GetAgentValidationResultRequest const& request) {
-        return stub_->GetAgentValidationResult(context, request);
+        return stub_->GetAgentValidationResult(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
@@ -258,12 +269,12 @@ AgentsConnectionImpl::GetGenerativeSettings(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetGenerativeSettings(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
               request) {
-        return stub_->GetGenerativeSettings(context, request);
+        return stub_->GetGenerativeSettings(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
@@ -274,12 +285,12 @@ AgentsConnectionImpl::UpdateGenerativeSettings(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateGenerativeSettings(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::
                  UpdateGenerativeSettingsRequest const& request) {
-        return stub_->UpdateGenerativeSettings(context, request);
+        return stub_->UpdateGenerativeSettings(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

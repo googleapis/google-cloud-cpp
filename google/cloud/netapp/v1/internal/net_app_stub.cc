@@ -33,7 +33,7 @@ NetAppStub::~NetAppStub() = default;
 
 StatusOr<google::cloud::netapp::v1::ListStoragePoolsResponse>
 DefaultNetAppStub::ListStoragePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::ListStoragePoolsRequest const& request) {
   google::cloud::netapp::v1::ListStoragePoolsResponse response;
   auto status = grpc_stub_->ListStoragePools(&context, request, &response);
@@ -62,7 +62,7 @@ DefaultNetAppStub::AsyncCreateStoragePool(
 
 StatusOr<google::cloud::netapp::v1::StoragePool>
 DefaultNetAppStub::GetStoragePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::GetStoragePoolRequest const& request) {
   google::cloud::netapp::v1::StoragePool response;
   auto status = grpc_stub_->GetStoragePool(&context, request, &response);
@@ -108,7 +108,7 @@ DefaultNetAppStub::AsyncDeleteStoragePool(
 
 StatusOr<google::cloud::netapp::v1::ListVolumesResponse>
 DefaultNetAppStub::ListVolumes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::ListVolumesRequest const& request) {
   google::cloud::netapp::v1::ListVolumesResponse response;
   auto status = grpc_stub_->ListVolumes(&context, request, &response);
@@ -119,7 +119,7 @@ DefaultNetAppStub::ListVolumes(
 }
 
 StatusOr<google::cloud::netapp::v1::Volume> DefaultNetAppStub::GetVolume(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::GetVolumeRequest const& request) {
   google::cloud::netapp::v1::Volume response;
   auto status = grpc_stub_->GetVolume(&context, request, &response);
@@ -199,7 +199,7 @@ DefaultNetAppStub::AsyncRevertVolume(
 
 StatusOr<google::cloud::netapp::v1::ListSnapshotsResponse>
 DefaultNetAppStub::ListSnapshots(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::ListSnapshotsRequest const& request) {
   google::cloud::netapp::v1::ListSnapshotsResponse response;
   auto status = grpc_stub_->ListSnapshots(&context, request, &response);
@@ -210,7 +210,7 @@ DefaultNetAppStub::ListSnapshots(
 }
 
 StatusOr<google::cloud::netapp::v1::Snapshot> DefaultNetAppStub::GetSnapshot(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::GetSnapshotRequest const& request) {
   google::cloud::netapp::v1::Snapshot response;
   auto status = grpc_stub_->GetSnapshot(&context, request, &response);
@@ -273,7 +273,7 @@ DefaultNetAppStub::AsyncUpdateSnapshot(
 
 StatusOr<google::cloud::netapp::v1::ListActiveDirectoriesResponse>
 DefaultNetAppStub::ListActiveDirectories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::ListActiveDirectoriesRequest const& request) {
   google::cloud::netapp::v1::ListActiveDirectoriesResponse response;
   auto status = grpc_stub_->ListActiveDirectories(&context, request, &response);
@@ -285,7 +285,7 @@ DefaultNetAppStub::ListActiveDirectories(
 
 StatusOr<google::cloud::netapp::v1::ActiveDirectory>
 DefaultNetAppStub::GetActiveDirectory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::GetActiveDirectoryRequest const& request) {
   google::cloud::netapp::v1::ActiveDirectory response;
   auto status = grpc_stub_->GetActiveDirectory(&context, request, &response);
@@ -351,7 +351,7 @@ DefaultNetAppStub::AsyncDeleteActiveDirectory(
 
 StatusOr<google::cloud::netapp::v1::ListKmsConfigsResponse>
 DefaultNetAppStub::ListKmsConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::ListKmsConfigsRequest const& request) {
   google::cloud::netapp::v1::ListKmsConfigsResponse response;
   auto status = grpc_stub_->ListKmsConfigs(&context, request, &response);
@@ -379,7 +379,7 @@ DefaultNetAppStub::AsyncCreateKmsConfig(
 }
 
 StatusOr<google::cloud::netapp::v1::KmsConfig> DefaultNetAppStub::GetKmsConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::GetKmsConfigRequest const& request) {
   google::cloud::netapp::v1::KmsConfig response;
   auto status = grpc_stub_->GetKmsConfig(&context, request, &response);
@@ -425,7 +425,7 @@ DefaultNetAppStub::AsyncEncryptVolumes(
 
 StatusOr<google::cloud::netapp::v1::VerifyKmsConfigResponse>
 DefaultNetAppStub::VerifyKmsConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::VerifyKmsConfigRequest const& request) {
   google::cloud::netapp::v1::VerifyKmsConfigResponse response;
   auto status = grpc_stub_->VerifyKmsConfig(&context, request, &response);
@@ -454,7 +454,7 @@ DefaultNetAppStub::AsyncDeleteKmsConfig(
 
 StatusOr<google::cloud::netapp::v1::ListReplicationsResponse>
 DefaultNetAppStub::ListReplications(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::ListReplicationsRequest const& request) {
   google::cloud::netapp::v1::ListReplicationsResponse response;
   auto status = grpc_stub_->ListReplications(&context, request, &response);
@@ -466,7 +466,7 @@ DefaultNetAppStub::ListReplications(
 
 StatusOr<google::cloud::netapp::v1::Replication>
 DefaultNetAppStub::GetReplication(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::GetReplicationRequest const& request) {
   google::cloud::netapp::v1::Replication response;
   auto status = grpc_stub_->GetReplication(&context, request, &response);
@@ -601,7 +601,7 @@ DefaultNetAppStub::AsyncCreateBackupVault(
 
 StatusOr<google::cloud::netapp::v1::BackupVault>
 DefaultNetAppStub::GetBackupVault(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::GetBackupVaultRequest const& request) {
   google::cloud::netapp::v1::BackupVault response;
   auto status = grpc_stub_->GetBackupVault(&context, request, &response);
@@ -613,7 +613,7 @@ DefaultNetAppStub::GetBackupVault(
 
 StatusOr<google::cloud::netapp::v1::ListBackupVaultsResponse>
 DefaultNetAppStub::ListBackupVaults(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::ListBackupVaultsRequest const& request) {
   google::cloud::netapp::v1::ListBackupVaultsResponse response;
   auto status = grpc_stub_->ListBackupVaults(&context, request, &response);
@@ -675,7 +675,7 @@ DefaultNetAppStub::AsyncCreateBackup(
 }
 
 StatusOr<google::cloud::netapp::v1::Backup> DefaultNetAppStub::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::GetBackupRequest const& request) {
   google::cloud::netapp::v1::Backup response;
   auto status = grpc_stub_->GetBackup(&context, request, &response);
@@ -687,7 +687,7 @@ StatusOr<google::cloud::netapp::v1::Backup> DefaultNetAppStub::GetBackup(
 
 StatusOr<google::cloud::netapp::v1::ListBackupsResponse>
 DefaultNetAppStub::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::ListBackupsRequest const& request) {
   google::cloud::netapp::v1::ListBackupsResponse response;
   auto status = grpc_stub_->ListBackups(&context, request, &response);
@@ -751,7 +751,7 @@ DefaultNetAppStub::AsyncCreateBackupPolicy(
 
 StatusOr<google::cloud::netapp::v1::BackupPolicy>
 DefaultNetAppStub::GetBackupPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::GetBackupPolicyRequest const& request) {
   google::cloud::netapp::v1::BackupPolicy response;
   auto status = grpc_stub_->GetBackupPolicy(&context, request, &response);
@@ -763,7 +763,7 @@ DefaultNetAppStub::GetBackupPolicy(
 
 StatusOr<google::cloud::netapp::v1::ListBackupPoliciesResponse>
 DefaultNetAppStub::ListBackupPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::ListBackupPoliciesRequest const& request) {
   google::cloud::netapp::v1::ListBackupPoliciesResponse response;
   auto status = grpc_stub_->ListBackupPolicies(&context, request, &response);

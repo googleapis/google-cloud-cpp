@@ -39,23 +39,23 @@ class AlertPolicyServiceAuth : public AlertPolicyServiceStub {
       std::shared_ptr<AlertPolicyServiceStub> child);
 
   StatusOr<google::monitoring::v3::ListAlertPoliciesResponse> ListAlertPolicies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListAlertPoliciesRequest const& request) override;
 
   StatusOr<google::monitoring::v3::AlertPolicy> GetAlertPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::GetAlertPolicyRequest const& request) override;
 
   StatusOr<google::monitoring::v3::AlertPolicy> CreateAlertPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::CreateAlertPolicyRequest const& request) override;
 
   Status DeleteAlertPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::DeleteAlertPolicyRequest const& request) override;
 
   StatusOr<google::monitoring::v3::AlertPolicy> UpdateAlertPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::UpdateAlertPolicyRequest const& request) override;
 
  private:

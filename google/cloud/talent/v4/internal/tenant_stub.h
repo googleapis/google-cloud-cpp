@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_TENANT_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_TENANT_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/talent/v4/tenant_service.grpc.pb.h>
@@ -35,23 +36,23 @@ class TenantServiceStub {
   virtual ~TenantServiceStub() = 0;
 
   virtual StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::CreateTenantRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::talent::v4::Tenant> GetTenant(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::GetTenantRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::UpdateTenantRequest const& request) = 0;
 
   virtual Status DeleteTenant(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::DeleteTenantRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::talent::v4::ListTenantsResponse> ListTenants(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::ListTenantsRequest const& request) = 0;
 };
 
@@ -63,23 +64,23 @@ class DefaultTenantServiceStub : public TenantServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::talent::v4::Tenant> CreateTenant(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::CreateTenantRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::Tenant> GetTenant(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::GetTenantRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::Tenant> UpdateTenant(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::UpdateTenantRequest const& request) override;
 
   Status DeleteTenant(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::DeleteTenantRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::ListTenantsResponse> ListTenants(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::ListTenantsRequest const& request) override;
 
  private:

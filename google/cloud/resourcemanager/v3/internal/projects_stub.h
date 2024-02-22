@@ -39,17 +39,17 @@ class ProjectsStub {
   virtual ~ProjectsStub() = 0;
 
   virtual StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcemanager::v3::GetProjectRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::resourcemanager::v3::ListProjectsResponse>
-  ListProjects(grpc::ClientContext& context,
+  ListProjects(grpc::ClientContext& context, Options const& options,
                google::cloud::resourcemanager::v3::ListProjectsRequest const&
                    request) = 0;
 
   virtual StatusOr<google::cloud::resourcemanager::v3::SearchProjectsResponse>
   SearchProjects(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcemanager::v3::SearchProjectsRequest const&
           request) = 0;
 
@@ -84,16 +84,16 @@ class ProjectsStub {
           request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -118,18 +118,18 @@ class DefaultProjectsStub : public ProjectsStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::resourcemanager::v3::Project> GetProject(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcemanager::v3::GetProjectRequest const& request)
       override;
 
   StatusOr<google::cloud::resourcemanager::v3::ListProjectsResponse>
-  ListProjects(grpc::ClientContext& context,
+  ListProjects(grpc::ClientContext& context, Options const& options,
                google::cloud::resourcemanager::v3::ListProjectsRequest const&
                    request) override;
 
   StatusOr<google::cloud::resourcemanager::v3::SearchProjectsResponse>
   SearchProjects(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcemanager::v3::SearchProjectsRequest const& request)
       override;
 
@@ -164,15 +164,15 @@ class DefaultProjectsStub : public ProjectsStub {
       override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

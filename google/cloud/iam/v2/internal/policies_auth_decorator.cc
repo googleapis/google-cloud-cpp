@@ -32,19 +32,19 @@ PoliciesAuth::PoliciesAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::iam::v2::ListPoliciesResponse> PoliciesAuth::ListPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v2::ListPoliciesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListPolicies(context, request);
+  return child_->ListPolicies(context, options, request);
 }
 
 StatusOr<google::iam::v2::Policy> PoliciesAuth::GetPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v2::GetPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetPolicy(context, request);
+  return child_->GetPolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

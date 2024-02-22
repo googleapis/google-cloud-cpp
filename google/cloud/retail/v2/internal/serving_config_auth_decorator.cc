@@ -33,64 +33,64 @@ ServingConfigServiceAuth::ServingConfigServiceAuth(
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceAuth::CreateServingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::CreateServingConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateServingConfig(context, request);
+  return child_->CreateServingConfig(context, options, request);
 }
 
 Status ServingConfigServiceAuth::DeleteServingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::DeleteServingConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteServingConfig(context, request);
+  return child_->DeleteServingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceAuth::UpdateServingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::UpdateServingConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateServingConfig(context, request);
+  return child_->UpdateServingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceAuth::GetServingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::GetServingConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetServingConfig(context, request);
+  return child_->GetServingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ListServingConfigsResponse>
 ServingConfigServiceAuth::ListServingConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::ListServingConfigsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListServingConfigs(context, request);
+  return child_->ListServingConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceAuth::AddControl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::AddControlRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->AddControl(context, request);
+  return child_->AddControl(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceAuth::RemoveControl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::RemoveControlRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RemoveControl(context, request);
+  return child_->RemoveControl(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

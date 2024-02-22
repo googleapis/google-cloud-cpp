@@ -33,22 +33,22 @@ AppGatewaysServiceAuth::AppGatewaysServiceAuth(
 
 StatusOr<google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse>
 AppGatewaysServiceAuth::ListAppGateways(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAppGateways(context, request);
+  return child_->ListAppGateways(context, options, request);
 }
 
 StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
 AppGatewaysServiceAuth::GetAppGateway(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAppGateway(context, request);
+  return child_->GetAppGateway(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

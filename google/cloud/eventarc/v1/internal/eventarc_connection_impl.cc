@@ -69,11 +69,11 @@ EventarcConnectionImpl::GetTrigger(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTrigger(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::GetTriggerRequest const& request) {
-        return stub_->GetTrigger(context, request);
+        return stub_->GetTrigger(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::eventarc::v1::Trigger>
@@ -85,20 +85,21 @@ EventarcConnectionImpl::ListTriggers(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::eventarc::v1::Trigger>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<eventarc_v1::EventarcRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::eventarc::v1::ListTriggersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::eventarc::v1::ListTriggersRequest const&
                        request) {
-              return stub->ListTriggers(context, request);
+              return stub->ListTriggers(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::eventarc::v1::ListTriggersResponse r) {
         std::vector<google::cloud::eventarc::v1::Trigger> result(
@@ -227,11 +228,11 @@ EventarcConnectionImpl::GetChannel(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetChannel(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::GetChannelRequest const& request) {
-        return stub_->GetChannel(context, request);
+        return stub_->GetChannel(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::eventarc::v1::Channel>
@@ -243,20 +244,21 @@ EventarcConnectionImpl::ListChannels(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::eventarc::v1::Channel>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<eventarc_v1::EventarcRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::eventarc::v1::ListChannelsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::eventarc::v1::ListChannelsRequest const&
                        request) {
-              return stub->ListChannels(context, request);
+              return stub->ListChannels(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::eventarc::v1::ListChannelsResponse r) {
         std::vector<google::cloud::eventarc::v1::Channel> result(
@@ -385,11 +387,11 @@ EventarcConnectionImpl::GetProvider(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetProvider(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::GetProviderRequest const& request) {
-        return stub_->GetProvider(context, request);
+        return stub_->GetProvider(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::eventarc::v1::Provider>
@@ -401,20 +403,21 @@ EventarcConnectionImpl::ListProviders(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::eventarc::v1::Provider>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<eventarc_v1::EventarcRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::eventarc::v1::ListProvidersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::eventarc::v1::ListProvidersRequest const&
                        request) {
-              return stub->ListProviders(context, request);
+              return stub->ListProviders(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::eventarc::v1::ListProvidersResponse r) {
         std::vector<google::cloud::eventarc::v1::Provider> result(
@@ -432,12 +435,12 @@ EventarcConnectionImpl::GetChannelConnection(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetChannelConnection(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::GetChannelConnectionRequest const&
                  request) {
-        return stub_->GetChannelConnection(context, request);
+        return stub_->GetChannelConnection(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::eventarc::v1::ChannelConnection>
@@ -450,20 +453,21 @@ EventarcConnectionImpl::ListChannelConnections(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::eventarc::v1::ChannelConnection>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<eventarc_v1::EventarcRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::eventarc::v1::ListChannelConnectionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::eventarc::v1::
                        ListChannelConnectionsRequest const& request) {
-              return stub->ListChannelConnections(context, request);
+              return stub->ListChannelConnections(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::eventarc::v1::ListChannelConnectionsResponse r) {
         std::vector<google::cloud::eventarc::v1::ChannelConnection> result(
@@ -559,12 +563,12 @@ EventarcConnectionImpl::GetGoogleChannelConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetGoogleChannelConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const&
                  request) {
-        return stub_->GetGoogleChannelConfig(context, request);
+        return stub_->GetGoogleChannelConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
@@ -576,12 +580,12 @@ EventarcConnectionImpl::UpdateGoogleChannelConfig(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateGoogleChannelConfig(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
               request) {
-        return stub_->UpdateGoogleChannelConfig(context, request);
+        return stub_->UpdateGoogleChannelConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

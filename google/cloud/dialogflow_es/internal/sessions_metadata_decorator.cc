@@ -44,11 +44,11 @@ SessionsMetadata::SessionsMetadata(
 
 StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>
 SessionsMetadata::DetectIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DetectIntentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("session=", internal::UrlEncode(request.session())));
-  return child_->DetectIntent(context, request);
+  return child_->DetectIntent(context, options, request);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

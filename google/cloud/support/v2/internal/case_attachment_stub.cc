@@ -32,7 +32,7 @@ CaseAttachmentServiceStub::~CaseAttachmentServiceStub() = default;
 
 StatusOr<google::cloud::support::v2::ListAttachmentsResponse>
 DefaultCaseAttachmentServiceStub::ListAttachments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::support::v2::ListAttachmentsRequest const& request) {
   google::cloud::support::v2::ListAttachmentsResponse response;
   auto status = grpc_stub_->ListAttachments(&context, request, &response);

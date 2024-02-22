@@ -32,7 +32,7 @@ PolicyTagManagerStub::~PolicyTagManagerStub() = default;
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 DefaultPolicyTagManagerStub::CreateTaxonomy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request) {
   google::cloud::datacatalog::v1::Taxonomy response;
   auto status = grpc_stub_->CreateTaxonomy(&context, request, &response);
@@ -43,7 +43,7 @@ DefaultPolicyTagManagerStub::CreateTaxonomy(
 }
 
 Status DefaultPolicyTagManagerStub::DeleteTaxonomy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteTaxonomy(&context, request, &response);
@@ -55,7 +55,7 @@ Status DefaultPolicyTagManagerStub::DeleteTaxonomy(
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 DefaultPolicyTagManagerStub::UpdateTaxonomy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request) {
   google::cloud::datacatalog::v1::Taxonomy response;
   auto status = grpc_stub_->UpdateTaxonomy(&context, request, &response);
@@ -67,7 +67,7 @@ DefaultPolicyTagManagerStub::UpdateTaxonomy(
 
 StatusOr<google::cloud::datacatalog::v1::ListTaxonomiesResponse>
 DefaultPolicyTagManagerStub::ListTaxonomies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::ListTaxonomiesRequest const& request) {
   google::cloud::datacatalog::v1::ListTaxonomiesResponse response;
   auto status = grpc_stub_->ListTaxonomies(&context, request, &response);
@@ -79,7 +79,7 @@ DefaultPolicyTagManagerStub::ListTaxonomies(
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 DefaultPolicyTagManagerStub::GetTaxonomy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) {
   google::cloud::datacatalog::v1::Taxonomy response;
   auto status = grpc_stub_->GetTaxonomy(&context, request, &response);
@@ -91,7 +91,7 @@ DefaultPolicyTagManagerStub::GetTaxonomy(
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 DefaultPolicyTagManagerStub::CreatePolicyTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request) {
   google::cloud::datacatalog::v1::PolicyTag response;
   auto status = grpc_stub_->CreatePolicyTag(&context, request, &response);
@@ -102,7 +102,7 @@ DefaultPolicyTagManagerStub::CreatePolicyTag(
 }
 
 Status DefaultPolicyTagManagerStub::DeletePolicyTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeletePolicyTag(&context, request, &response);
@@ -114,7 +114,7 @@ Status DefaultPolicyTagManagerStub::DeletePolicyTag(
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 DefaultPolicyTagManagerStub::UpdatePolicyTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request) {
   google::cloud::datacatalog::v1::PolicyTag response;
   auto status = grpc_stub_->UpdatePolicyTag(&context, request, &response);
@@ -126,7 +126,7 @@ DefaultPolicyTagManagerStub::UpdatePolicyTag(
 
 StatusOr<google::cloud::datacatalog::v1::ListPolicyTagsResponse>
 DefaultPolicyTagManagerStub::ListPolicyTags(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::ListPolicyTagsRequest const& request) {
   google::cloud::datacatalog::v1::ListPolicyTagsResponse response;
   auto status = grpc_stub_->ListPolicyTags(&context, request, &response);
@@ -138,7 +138,7 @@ DefaultPolicyTagManagerStub::ListPolicyTags(
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 DefaultPolicyTagManagerStub::GetPolicyTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) {
   google::cloud::datacatalog::v1::PolicyTag response;
   auto status = grpc_stub_->GetPolicyTag(&context, request, &response);
@@ -149,7 +149,7 @@ DefaultPolicyTagManagerStub::GetPolicyTag(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultPolicyTagManagerStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -160,7 +160,7 @@ StatusOr<google::iam::v1::Policy> DefaultPolicyTagManagerStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultPolicyTagManagerStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -172,7 +172,7 @@ StatusOr<google::iam::v1::Policy> DefaultPolicyTagManagerStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultPolicyTagManagerStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);

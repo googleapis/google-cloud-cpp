@@ -32,26 +32,26 @@ DocumentsTracingStub::DocumentsTracingStub(std::shared_ptr<DocumentsStub> child)
 
 StatusOr<google::cloud::dialogflow::v2::ListDocumentsResponse>
 DocumentsTracingStub::ListDocuments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListDocumentsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
                                      "ListDocuments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListDocuments(context, request));
+                           child_->ListDocuments(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Document>
 DocumentsTracingStub::GetDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetDocumentRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Documents",
                                      "GetDocument");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetDocument(context, request));
+                           child_->GetDocument(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

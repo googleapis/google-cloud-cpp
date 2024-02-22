@@ -37,26 +37,28 @@ EdgeContainerLogging::EdgeContainerLogging(
 
 StatusOr<google::cloud::edgecontainer::v1::ListClustersResponse>
 EdgeContainerLogging::ListClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgecontainer::v1::ListClustersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgecontainer::v1::ListClustersRequest const&
-                 request) { return child_->ListClusters(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListClusters(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::Cluster>
 EdgeContainerLogging::GetCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgecontainer::v1::GetClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::edgecontainer::v1::GetClusterRequest const& request) {
-        return child_->GetCluster(context, request);
+        return child_->GetCluster(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -112,40 +114,42 @@ EdgeContainerLogging::AsyncDeleteCluster(
 
 StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
 EdgeContainerLogging::GenerateAccessToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
                  request) {
-        return child_->GenerateAccessToken(context, request);
+        return child_->GenerateAccessToken(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ListNodePoolsResponse>
 EdgeContainerLogging::ListNodePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgecontainer::v1::ListNodePoolsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgecontainer::v1::ListNodePoolsRequest const&
-                 request) { return child_->ListNodePools(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListNodePools(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::NodePool>
 EdgeContainerLogging::GetNodePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgecontainer::v1::GetNodePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::edgecontainer::v1::GetNodePoolRequest const& request) {
-        return child_->GetNodePool(context, request);
+        return child_->GetNodePool(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -201,53 +205,55 @@ EdgeContainerLogging::AsyncDeleteNodePool(
 
 StatusOr<google::cloud::edgecontainer::v1::ListMachinesResponse>
 EdgeContainerLogging::ListMachines(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgecontainer::v1::ListMachinesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgecontainer::v1::ListMachinesRequest const&
-                 request) { return child_->ListMachines(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListMachines(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::Machine>
 EdgeContainerLogging::GetMachine(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgecontainer::v1::GetMachineRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::edgecontainer::v1::GetMachineRequest const& request) {
-        return child_->GetMachine(context, request);
+        return child_->GetMachine(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::ListVpnConnectionsResponse>
 EdgeContainerLogging::ListVpnConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgecontainer::v1::ListVpnConnectionsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgecontainer::v1::ListVpnConnectionsRequest const&
                  request) {
-        return child_->ListVpnConnections(context, request);
+        return child_->ListVpnConnections(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::edgecontainer::v1::VpnConnection>
 EdgeContainerLogging::GetVpnConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::edgecontainer::v1::GetVpnConnectionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgecontainer::v1::GetVpnConnectionRequest const&
                  request) {
-        return child_->GetVpnConnection(context, request);
+        return child_->GetVpnConnection(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

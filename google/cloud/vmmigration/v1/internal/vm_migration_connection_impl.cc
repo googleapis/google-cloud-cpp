@@ -73,18 +73,21 @@ VmMigrationConnectionImpl::ListSources(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmmigration::v1::Source>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmmigration::v1::ListSourcesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::vmmigration::v1::ListSourcesRequest const&
-                       request) { return stub->ListSources(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListSources(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::vmmigration::v1::ListSourcesResponse r) {
         std::vector<google::cloud::vmmigration::v1::Source> result(
@@ -102,11 +105,11 @@ VmMigrationConnectionImpl::GetSource(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSource(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vmmigration::v1::GetSourceRequest const& request) {
-        return stub_->GetSource(context, request);
+        return stub_->GetSource(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::Source>>
@@ -227,10 +230,12 @@ VmMigrationConnectionImpl::FetchInventory(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FetchInventory(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vmmigration::v1::FetchInventoryRequest const&
-                 request) { return stub_->FetchInventory(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->FetchInventory(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::vmmigration::v1::UtilizationReport>
@@ -243,21 +248,22 @@ VmMigrationConnectionImpl::ListUtilizationReports(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmmigration::v1::UtilizationReport>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmmigration::v1::ListUtilizationReportsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::vmmigration::v1::
                        ListUtilizationReportsRequest const& request) {
-              return stub->ListUtilizationReports(context, request);
+              return stub->ListUtilizationReports(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmmigration::v1::ListUtilizationReportsResponse r) {
         std::vector<google::cloud::vmmigration::v1::UtilizationReport> result(
@@ -276,12 +282,12 @@ VmMigrationConnectionImpl::GetUtilizationReport(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetUtilizationReport(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vmmigration::v1::GetUtilizationReportRequest const&
                  request) {
-        return stub_->GetUtilizationReport(context, request);
+        return stub_->GetUtilizationReport(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
@@ -372,21 +378,22 @@ VmMigrationConnectionImpl::ListDatacenterConnectors(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::vmmigration::v1::
                        ListDatacenterConnectorsRequest const& request) {
-              return stub->ListDatacenterConnectors(context, request);
+              return stub->ListDatacenterConnectors(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmmigration::v1::ListDatacenterConnectorsResponse r) {
         std::vector<google::cloud::vmmigration::v1::DatacenterConnector> result(
@@ -406,12 +413,12 @@ VmMigrationConnectionImpl::GetDatacenterConnector(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDatacenterConnector(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&
               request) {
-        return stub_->GetDatacenterConnector(context, request);
+        return stub_->GetDatacenterConnector(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
@@ -577,21 +584,22 @@ VmMigrationConnectionImpl::ListMigratingVms(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmmigration::v1::MigratingVm>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmmigration::v1::ListMigratingVmsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::vmmigration::v1::ListMigratingVmsRequest const&
                     request) {
-              return stub->ListMigratingVms(context, request);
+              return stub->ListMigratingVms(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmmigration::v1::ListMigratingVmsResponse r) {
         std::vector<google::cloud::vmmigration::v1::MigratingVm> result(
@@ -609,10 +617,12 @@ VmMigrationConnectionImpl::GetMigratingVm(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetMigratingVm(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vmmigration::v1::GetMigratingVmRequest const&
-                 request) { return stub_->GetMigratingVm(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetMigratingVm(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
@@ -928,20 +938,21 @@ VmMigrationConnectionImpl::ListCloneJobs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmmigration::v1::CloneJob>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmmigration::v1::ListCloneJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::vmmigration::v1::ListCloneJobsRequest const&
                        request) {
-              return stub->ListCloneJobs(context, request);
+              return stub->ListCloneJobs(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmmigration::v1::ListCloneJobsResponse r) {
         std::vector<google::cloud::vmmigration::v1::CloneJob> result(
@@ -960,11 +971,11 @@ VmMigrationConnectionImpl::GetCloneJob(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCloneJob(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::vmmigration::v1::GetCloneJobRequest const& request) {
-        return stub_->GetCloneJob(context, request);
+        return stub_->GetCloneJob(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>
@@ -1052,20 +1063,21 @@ VmMigrationConnectionImpl::ListCutoverJobs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmmigration::v1::CutoverJob>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmmigration::v1::ListCutoverJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::vmmigration::v1::ListCutoverJobsRequest const&
                        request) {
-              return stub->ListCutoverJobs(context, request);
+              return stub->ListCutoverJobs(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmmigration::v1::ListCutoverJobsResponse r) {
         std::vector<google::cloud::vmmigration::v1::CutoverJob> result(
@@ -1084,11 +1096,11 @@ VmMigrationConnectionImpl::GetCutoverJob(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCutoverJob(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::vmmigration::v1::GetCutoverJobRequest const& request) {
-        return stub_->GetCutoverJob(context, request);
+        return stub_->GetCutoverJob(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::vmmigration::v1::Group>
@@ -1100,18 +1112,21 @@ VmMigrationConnectionImpl::ListGroups(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmmigration::v1::Group>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmmigration::v1::ListGroupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::vmmigration::v1::ListGroupsRequest const&
-                       request) { return stub->ListGroups(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListGroups(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::vmmigration::v1::ListGroupsResponse r) {
         std::vector<google::cloud::vmmigration::v1::Group> result(
@@ -1129,11 +1144,11 @@ VmMigrationConnectionImpl::GetGroup(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetGroup(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vmmigration::v1::GetGroupRequest const& request) {
-        return stub_->GetGroup(context, request);
+        return stub_->GetGroup(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::Group>>
@@ -1330,21 +1345,22 @@ VmMigrationConnectionImpl::ListTargetProjects(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmmigration::v1::TargetProject>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmmigration::v1::ListTargetProjectsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::vmmigration::v1::ListTargetProjectsRequest const&
                     request) {
-              return stub->ListTargetProjects(context, request);
+              return stub->ListTargetProjects(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmmigration::v1::ListTargetProjectsResponse r) {
         std::vector<google::cloud::vmmigration::v1::TargetProject> result(
@@ -1362,10 +1378,12 @@ VmMigrationConnectionImpl::GetTargetProject(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTargetProject(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vmmigration::v1::GetTargetProjectRequest const&
-                 request) { return stub_->GetTargetProject(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetTargetProject(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
@@ -1492,21 +1510,22 @@ VmMigrationConnectionImpl::ListReplicationCycles(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmmigration_v1::VmMigrationRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmmigration::v1::ListReplicationCyclesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::vmmigration::v1::
                        ListReplicationCyclesRequest const& request) {
-              return stub->ListReplicationCycles(context, request);
+              return stub->ListReplicationCycles(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmmigration::v1::ListReplicationCyclesResponse r) {
         std::vector<google::cloud::vmmigration::v1::ReplicationCycle> result(
@@ -1524,12 +1543,12 @@ VmMigrationConnectionImpl::GetReplicationCycle(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetReplicationCycle(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vmmigration::v1::GetReplicationCycleRequest const&
                  request) {
-        return stub_->GetReplicationCycle(context, request);
+        return stub_->GetReplicationCycle(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

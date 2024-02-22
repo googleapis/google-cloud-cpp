@@ -39,20 +39,20 @@ class SpannerStub {
   virtual ~SpannerStub() = 0;
 
   virtual StatusOr<google::spanner::v1::Session> CreateSession(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::CreateSessionRequest const& request) = 0;
 
   virtual StatusOr<google::spanner::v1::BatchCreateSessionsResponse>
   BatchCreateSessions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::BatchCreateSessionsRequest const& request) = 0;
 
   virtual Status DeleteSession(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::DeleteSessionRequest const& request) = 0;
 
   virtual StatusOr<google::spanner::v1::ResultSet> ExecuteSql(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::ExecuteSqlRequest const& request) = 0;
 
   virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -63,7 +63,7 @@ class SpannerStub {
 
   virtual StatusOr<google::spanner::v1::ExecuteBatchDmlResponse>
   ExecuteBatchDml(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::ExecuteBatchDmlRequest const& request) = 0;
 
   virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -73,23 +73,23 @@ class SpannerStub {
                 google::spanner::v1::ReadRequest const& request) = 0;
 
   virtual StatusOr<google::spanner::v1::Transaction> BeginTransaction(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::BeginTransactionRequest const& request) = 0;
 
   virtual StatusOr<google::spanner::v1::CommitResponse> Commit(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::CommitRequest const& request) = 0;
 
   virtual Status Rollback(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::RollbackRequest const& request) = 0;
 
   virtual StatusOr<google::spanner::v1::PartitionResponse> PartitionQuery(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::PartitionQueryRequest const& request) = 0;
 
   virtual StatusOr<google::spanner::v1::PartitionResponse> PartitionRead(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::PartitionReadRequest const& request) = 0;
 
   virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -122,20 +122,20 @@ class DefaultSpannerStub : public SpannerStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::spanner::v1::Session> CreateSession(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::CreateSessionRequest const& request) override;
 
   StatusOr<google::spanner::v1::BatchCreateSessionsResponse>
   BatchCreateSessions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::BatchCreateSessionsRequest const& request) override;
 
   Status DeleteSession(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::DeleteSessionRequest const& request) override;
 
   StatusOr<google::spanner::v1::ResultSet> ExecuteSql(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::ExecuteSqlRequest const& request) override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -145,7 +145,7 @@ class DefaultSpannerStub : public SpannerStub {
       google::spanner::v1::ExecuteSqlRequest const& request) override;
 
   StatusOr<google::spanner::v1::ExecuteBatchDmlResponse> ExecuteBatchDml(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::ExecuteBatchDmlRequest const& request) override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -155,22 +155,22 @@ class DefaultSpannerStub : public SpannerStub {
                 google::spanner::v1::ReadRequest const& request) override;
 
   StatusOr<google::spanner::v1::Transaction> BeginTransaction(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::BeginTransactionRequest const& request) override;
 
   StatusOr<google::spanner::v1::CommitResponse> Commit(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::CommitRequest const& request) override;
 
-  Status Rollback(grpc::ClientContext& context,
+  Status Rollback(grpc::ClientContext& context, Options const& options,
                   google::spanner::v1::RollbackRequest const& request) override;
 
   StatusOr<google::spanner::v1::PartitionResponse> PartitionQuery(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::PartitionQueryRequest const& request) override;
 
   StatusOr<google::spanner::v1::PartitionResponse> PartitionRead(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::spanner::v1::PartitionReadRequest const& request) override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<

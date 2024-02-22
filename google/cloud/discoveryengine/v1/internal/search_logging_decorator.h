@@ -39,7 +39,7 @@ class SearchServiceLogging : public SearchServiceStub {
                        std::set<std::string> const& components);
 
   StatusOr<google::cloud::discoveryengine::v1::SearchResponse> Search(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::SearchRequest const& request)
       override;
 

@@ -33,7 +33,7 @@ NetworkSecurityStub::~NetworkSecurityStub() = default;
 
 StatusOr<google::cloud::networksecurity::v1::ListAuthorizationPoliciesResponse>
 DefaultNetworkSecurityStub::ListAuthorizationPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networksecurity::v1::ListAuthorizationPoliciesRequest const&
         request) {
   google::cloud::networksecurity::v1::ListAuthorizationPoliciesResponse
@@ -48,7 +48,7 @@ DefaultNetworkSecurityStub::ListAuthorizationPolicies(
 
 StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>
 DefaultNetworkSecurityStub::GetAuthorizationPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networksecurity::v1::GetAuthorizationPolicyRequest const&
         request) {
   google::cloud::networksecurity::v1::AuthorizationPolicy response;
@@ -119,7 +119,7 @@ DefaultNetworkSecurityStub::AsyncDeleteAuthorizationPolicy(
 
 StatusOr<google::cloud::networksecurity::v1::ListServerTlsPoliciesResponse>
 DefaultNetworkSecurityStub::ListServerTlsPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest const&
         request) {
   google::cloud::networksecurity::v1::ListServerTlsPoliciesResponse response;
@@ -132,7 +132,7 @@ DefaultNetworkSecurityStub::ListServerTlsPolicies(
 
 StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>
 DefaultNetworkSecurityStub::GetServerTlsPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networksecurity::v1::GetServerTlsPolicyRequest const&
         request) {
   google::cloud::networksecurity::v1::ServerTlsPolicy response;
@@ -202,7 +202,7 @@ DefaultNetworkSecurityStub::AsyncDeleteServerTlsPolicy(
 
 StatusOr<google::cloud::networksecurity::v1::ListClientTlsPoliciesResponse>
 DefaultNetworkSecurityStub::ListClientTlsPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networksecurity::v1::ListClientTlsPoliciesRequest const&
         request) {
   google::cloud::networksecurity::v1::ListClientTlsPoliciesResponse response;
@@ -215,7 +215,7 @@ DefaultNetworkSecurityStub::ListClientTlsPolicies(
 
 StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>
 DefaultNetworkSecurityStub::GetClientTlsPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networksecurity::v1::GetClientTlsPolicyRequest const&
         request) {
   google::cloud::networksecurity::v1::ClientTlsPolicy response;

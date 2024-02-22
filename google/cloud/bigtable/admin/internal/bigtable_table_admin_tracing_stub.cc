@@ -33,37 +33,38 @@ BigtableTableAdminTracingStub::BigtableTableAdminTracingStub(
 
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminTracingStub::CreateTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::CreateTableRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "CreateTable");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateTable(context, request));
+                           child_->CreateTable(context, options, request));
 }
 
 StatusOr<google::bigtable::admin::v2::ListTablesResponse>
 BigtableTableAdminTracingStub::ListTables(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::ListTablesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "ListTables");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListTables(context, request));
+                           child_->ListTables(context, options, request));
 }
 
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminTracingStub::GetTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::GetTableRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "GetTable");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetTable(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetTable(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -80,14 +81,14 @@ BigtableTableAdminTracingStub::AsyncUpdateTable(
 }
 
 Status BigtableTableAdminTracingStub::DeleteTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::DeleteTableRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "DeleteTable");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteTable(context, request));
+                           child_->DeleteTable(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -105,30 +106,30 @@ BigtableTableAdminTracingStub::AsyncUndeleteTable(
 
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminTracingStub::ModifyColumnFamilies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "ModifyColumnFamilies");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ModifyColumnFamilies(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ModifyColumnFamilies(context, options, request));
 }
 
 Status BigtableTableAdminTracingStub::DropRowRange(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::DropRowRangeRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "DropRowRange");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DropRowRange(context, request));
+                           child_->DropRowRange(context, options, request));
 }
 
 StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
 BigtableTableAdminTracingStub::GenerateConsistencyToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
         request) {
   auto span =
@@ -136,20 +137,21 @@ BigtableTableAdminTracingStub::GenerateConsistencyToken(
                              "GenerateConsistencyToken");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GenerateConsistencyToken(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GenerateConsistencyToken(context, options, request));
 }
 
 StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
 BigtableTableAdminTracingStub::CheckConsistency(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "CheckConsistency");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CheckConsistency(context, request));
+                           child_->CheckConsistency(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -167,48 +169,49 @@ BigtableTableAdminTracingStub::AsyncCreateBackup(
 
 StatusOr<google::bigtable::admin::v2::Backup>
 BigtableTableAdminTracingStub::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::GetBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "GetBackup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetBackup(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetBackup(context, options, request));
 }
 
 StatusOr<google::bigtable::admin::v2::Backup>
 BigtableTableAdminTracingStub::UpdateBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::UpdateBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "UpdateBackup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateBackup(context, request));
+                           child_->UpdateBackup(context, options, request));
 }
 
 Status BigtableTableAdminTracingStub::DeleteBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::DeleteBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "DeleteBackup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteBackup(context, request));
+                           child_->DeleteBackup(context, options, request));
 }
 
 StatusOr<google::bigtable::admin::v2::ListBackupsResponse>
 BigtableTableAdminTracingStub::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::ListBackupsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "ListBackups");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListBackups(context, request));
+                           child_->ListBackups(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -238,37 +241,37 @@ BigtableTableAdminTracingStub::AsyncCopyBackup(
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetIamPolicy(context, request));
+                           child_->GetIamPolicy(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->SetIamPolicy(context, request));
+                           child_->SetIamPolicy(context, options, request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 BigtableTableAdminTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>

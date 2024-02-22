@@ -40,26 +40,26 @@ class FlowsAuth : public FlowsStub {
       std::shared_ptr<FlowsStub> child);
 
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> CreateFlow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request)
       override;
 
-  Status DeleteFlow(grpc::ClientContext& context,
+  Status DeleteFlow(grpc::ClientContext& context, Options const& options,
                     google::cloud::dialogflow::cx::v3::DeleteFlowRequest const&
                         request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListFlowsResponse> ListFlows(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::ListFlowsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> GetFlow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetFlowRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> UpdateFlow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request)
       override;
 
@@ -70,13 +70,13 @@ class FlowsAuth : public FlowsStub {
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
-  ValidateFlow(grpc::ClientContext& context,
+  ValidateFlow(grpc::ClientContext& context, Options const& options,
                google::cloud::dialogflow::cx::v3::ValidateFlowRequest const&
                    request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
   GetFlowValidationResult(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const&
           request) override;
 

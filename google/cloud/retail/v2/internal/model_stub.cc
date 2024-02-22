@@ -49,7 +49,7 @@ DefaultModelServiceStub::AsyncCreateModel(
 }
 
 StatusOr<google::cloud::retail::v2::Model> DefaultModelServiceStub::GetModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::GetModelRequest const& request) {
   google::cloud::retail::v2::Model response;
   auto status = grpc_stub_->GetModel(&context, request, &response);
@@ -60,7 +60,7 @@ StatusOr<google::cloud::retail::v2::Model> DefaultModelServiceStub::GetModel(
 }
 
 StatusOr<google::cloud::retail::v2::Model> DefaultModelServiceStub::PauseModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::PauseModelRequest const& request) {
   google::cloud::retail::v2::Model response;
   auto status = grpc_stub_->PauseModel(&context, request, &response);
@@ -71,7 +71,7 @@ StatusOr<google::cloud::retail::v2::Model> DefaultModelServiceStub::PauseModel(
 }
 
 StatusOr<google::cloud::retail::v2::Model> DefaultModelServiceStub::ResumeModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::ResumeModelRequest const& request) {
   google::cloud::retail::v2::Model response;
   auto status = grpc_stub_->ResumeModel(&context, request, &response);
@@ -82,7 +82,7 @@ StatusOr<google::cloud::retail::v2::Model> DefaultModelServiceStub::ResumeModel(
 }
 
 Status DefaultModelServiceStub::DeleteModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::DeleteModelRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteModel(&context, request, &response);
@@ -94,7 +94,7 @@ Status DefaultModelServiceStub::DeleteModel(
 
 StatusOr<google::cloud::retail::v2::ListModelsResponse>
 DefaultModelServiceStub::ListModels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::ListModelsRequest const& request) {
   google::cloud::retail::v2::ListModelsResponse response;
   auto status = grpc_stub_->ListModels(&context, request, &response);
@@ -105,7 +105,7 @@ DefaultModelServiceStub::ListModels(
 }
 
 StatusOr<google::cloud::retail::v2::Model> DefaultModelServiceStub::UpdateModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::UpdateModelRequest const& request) {
   google::cloud::retail::v2::Model response;
   auto status = grpc_stub_->UpdateModel(&context, request, &response);

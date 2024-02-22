@@ -32,7 +32,7 @@ LookupServiceStub::~LookupServiceStub() = default;
 
 StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
 DefaultLookupServiceStub::ResolveService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicedirectory::v1::ResolveServiceRequest const& request) {
   google::cloud::servicedirectory::v1::ResolveServiceResponse response;
   auto status = grpc_stub_->ResolveService(&context, request, &response);

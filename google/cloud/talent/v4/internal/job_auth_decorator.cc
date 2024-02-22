@@ -32,11 +32,11 @@ JobServiceAuth::JobServiceAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::talent::v4::Job> JobServiceAuth::CreateJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::CreateJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateJob(context, request);
+  return child_->CreateJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -59,19 +59,19 @@ JobServiceAuth::AsyncBatchCreateJobs(
 }
 
 StatusOr<google::cloud::talent::v4::Job> JobServiceAuth::GetJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::GetJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetJob(context, request);
+  return child_->GetJob(context, options, request);
 }
 
 StatusOr<google::cloud::talent::v4::Job> JobServiceAuth::UpdateJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::UpdateJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateJob(context, request);
+  return child_->UpdateJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -94,11 +94,11 @@ JobServiceAuth::AsyncBatchUpdateJobs(
 }
 
 Status JobServiceAuth::DeleteJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::DeleteJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteJob(context, request);
+  return child_->DeleteJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -121,29 +121,29 @@ JobServiceAuth::AsyncBatchDeleteJobs(
 }
 
 StatusOr<google::cloud::talent::v4::ListJobsResponse> JobServiceAuth::ListJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::ListJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListJobs(context, request);
+  return child_->ListJobs(context, options, request);
 }
 
 StatusOr<google::cloud::talent::v4::SearchJobsResponse>
 JobServiceAuth::SearchJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::SearchJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SearchJobs(context, request);
+  return child_->SearchJobs(context, options, request);
 }
 
 StatusOr<google::cloud::talent::v4::SearchJobsResponse>
 JobServiceAuth::SearchJobsForAlert(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::SearchJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SearchJobsForAlert(context, request);
+  return child_->SearchJobsForAlert(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

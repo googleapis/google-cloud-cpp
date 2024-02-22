@@ -83,12 +83,12 @@ CertificateAuthorityServiceConnectionImpl::CreateCertificate(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateCertificate(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::security::privateca::v1::
                  CreateCertificateRequest const& request) {
-        return stub_->CreateCertificate(context, request);
+        return stub_->CreateCertificate(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
@@ -100,10 +100,12 @@ CertificateAuthorityServiceConnectionImpl::GetCertificate(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCertificate(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::security::privateca::v1::GetCertificateRequest const&
-              request) { return stub_->GetCertificate(context, request); },
-      request, __func__);
+              request) {
+        return stub_->GetCertificate(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::security::privateca::v1::Certificate>
@@ -115,22 +117,23 @@ CertificateAuthorityServiceConnectionImpl::ListCertificates(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::security::privateca::v1::Certificate>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            privateca_v1::CertificateAuthorityServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::security::privateca::v1::ListCertificatesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::security::privateca::v1::
                        ListCertificatesRequest const& request) {
-              return stub->ListCertificates(context, request);
+              return stub->ListCertificates(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::security::privateca::v1::ListCertificatesResponse r) {
         std::vector<google::cloud::security::privateca::v1::Certificate> result(
@@ -149,12 +152,12 @@ CertificateAuthorityServiceConnectionImpl::RevokeCertificate(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RevokeCertificate(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::security::privateca::v1::
                  RevokeCertificateRequest const& request) {
-        return stub_->RevokeCertificate(context, request);
+        return stub_->RevokeCertificate(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
@@ -165,12 +168,12 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificate(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateCertificate(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::security::privateca::v1::
                  UpdateCertificateRequest const& request) {
-        return stub_->UpdateCertificate(context, request);
+        return stub_->UpdateCertificate(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -338,12 +341,12 @@ CertificateAuthorityServiceConnectionImpl::FetchCertificateAuthorityCsr(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FetchCertificateAuthorityCsr(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::security::privateca::v1::
                  FetchCertificateAuthorityCsrRequest const& request) {
-        return stub_->FetchCertificateAuthorityCsr(context, request);
+        return stub_->FetchCertificateAuthorityCsr(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>
@@ -354,12 +357,12 @@ CertificateAuthorityServiceConnectionImpl::GetCertificateAuthority(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCertificateAuthority(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::security::privateca::v1::
                  GetCertificateAuthorityRequest const& request) {
-        return stub_->GetCertificateAuthority(context, request);
+        return stub_->GetCertificateAuthority(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateAuthority>
@@ -373,22 +376,24 @@ CertificateAuthorityServiceConnectionImpl::ListCertificateAuthorities(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<
       google::cloud::security::privateca::v1::CertificateAuthority>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            privateca_v1::CertificateAuthorityServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::security::privateca::v1::
               ListCertificateAuthoritiesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::security::privateca::v1::
                        ListCertificateAuthoritiesRequest const& request) {
-              return stub->ListCertificateAuthorities(context, request);
+              return stub->ListCertificateAuthorities(context, options,
+                                                      request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::security::privateca::v1::
              ListCertificateAuthoritiesResponse r) {
@@ -603,10 +608,12 @@ CertificateAuthorityServiceConnectionImpl::GetCaPool(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCaPool(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::security::privateca::v1::GetCaPoolRequest const&
-                 request) { return stub_->GetCaPool(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetCaPool(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::security::privateca::v1::CaPool>
@@ -618,21 +625,22 @@ CertificateAuthorityServiceConnectionImpl::ListCaPools(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::security::privateca::v1::CaPool>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            privateca_v1::CertificateAuthorityServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::security::privateca::v1::ListCaPoolsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::security::privateca::v1::
                        ListCaPoolsRequest const& request) {
-              return stub->ListCaPools(context, request);
+              return stub->ListCaPools(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::security::privateca::v1::ListCaPoolsResponse r) {
         std::vector<google::cloud::security::privateca::v1::CaPool> result(
@@ -690,10 +698,12 @@ CertificateAuthorityServiceConnectionImpl::FetchCaCerts(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FetchCaCerts(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::security::privateca::v1::FetchCaCertsRequest const&
-                 request) { return stub_->FetchCaCerts(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->FetchCaCerts(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>
@@ -704,12 +714,12 @@ CertificateAuthorityServiceConnectionImpl::GetCertificateRevocationList(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCertificateRevocationList(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::security::privateca::v1::
                  GetCertificateRevocationListRequest const& request) {
-        return stub_->GetCertificateRevocationList(context, request);
+        return stub_->GetCertificateRevocationList(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateRevocationList>
@@ -723,22 +733,24 @@ CertificateAuthorityServiceConnectionImpl::ListCertificateRevocationLists(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<
       google::cloud::security::privateca::v1::CertificateRevocationList>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            privateca_v1::CertificateAuthorityServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::security::privateca::v1::
               ListCertificateRevocationListsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::security::privateca::v1::
                        ListCertificateRevocationListsRequest const& request) {
-              return stub->ListCertificateRevocationLists(context, request);
+              return stub->ListCertificateRevocationLists(context, options,
+                                                          request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::security::privateca::v1::
              ListCertificateRevocationListsResponse r) {
@@ -878,12 +890,12 @@ CertificateAuthorityServiceConnectionImpl::GetCertificateTemplate(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCertificateTemplate(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::security::privateca::v1::
                  GetCertificateTemplateRequest const& request) {
-        return stub_->GetCertificateTemplate(context, request);
+        return stub_->GetCertificateTemplate(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateTemplate>
@@ -897,22 +909,23 @@ CertificateAuthorityServiceConnectionImpl::ListCertificateTemplates(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::security::privateca::v1::CertificateTemplate>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            privateca_v1::CertificateAuthorityServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::security::privateca::v1::
               ListCertificateTemplatesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::security::privateca::v1::
                        ListCertificateTemplatesRequest const& request) {
-              return stub->ListCertificateTemplates(context, request);
+              return stub->ListCertificateTemplates(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::security::privateca::v1::
              ListCertificateTemplatesResponse r) {

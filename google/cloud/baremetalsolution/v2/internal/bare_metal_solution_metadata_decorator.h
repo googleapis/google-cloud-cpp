@@ -42,12 +42,12 @@ class BareMetalSolutionMetadata : public BareMetalSolutionStub {
 
   StatusOr<google::cloud::baremetalsolution::v2::ListInstancesResponse>
   ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::ListInstancesRequest const& request)
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetInstanceRequest const& request)
       override;
 
@@ -58,7 +58,7 @@ class BareMetalSolutionMetadata : public BareMetalSolutionStub {
           request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::Instance> RenameInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
           request) override;
 
@@ -101,27 +101,27 @@ class BareMetalSolutionMetadata : public BareMetalSolutionStub {
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ListSSHKeysResponse>
-  ListSSHKeys(grpc::ClientContext& context,
+  ListSSHKeys(grpc::ClientContext& context, Options const& options,
               google::cloud::baremetalsolution::v2::ListSSHKeysRequest const&
                   request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::SSHKey> CreateSSHKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const& request)
       override;
 
   Status DeleteSSHKey(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const& request)
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ListVolumesResponse>
-  ListVolumes(grpc::ClientContext& context,
+  ListVolumes(grpc::ClientContext& context, Options const& options,
               google::cloud::baremetalsolution::v2::ListVolumesRequest const&
                   request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::Volume> GetVolume(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetVolumeRequest const& request)
       override;
 
@@ -132,7 +132,7 @@ class BareMetalSolutionMetadata : public BareMetalSolutionStub {
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::Volume> RenameVolume(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request)
       override;
 
@@ -149,18 +149,18 @@ class BareMetalSolutionMetadata : public BareMetalSolutionStub {
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ListNetworksResponse>
-  ListNetworks(grpc::ClientContext& context,
+  ListNetworks(grpc::ClientContext& context, Options const& options,
                google::cloud::baremetalsolution::v2::ListNetworksRequest const&
                    request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>
   ListNetworkUsage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&
           request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::Network> GetNetwork(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetNetworkRequest const& request)
       override;
 
@@ -172,7 +172,7 @@ class BareMetalSolutionMetadata : public BareMetalSolutionStub {
 
   StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
   CreateVolumeSnapshot(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
           request) override;
 
@@ -183,29 +183,29 @@ class BareMetalSolutionMetadata : public BareMetalSolutionStub {
           request) override;
 
   Status DeleteVolumeSnapshot(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
           request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
   GetVolumeSnapshot(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
           request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ListVolumeSnapshotsResponse>
   ListVolumeSnapshots(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest const&
           request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::Lun> GetLun(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetLunRequest const& request)
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ListLunsResponse> ListLuns(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::ListLunsRequest const& request)
       override;
 
@@ -216,13 +216,13 @@ class BareMetalSolutionMetadata : public BareMetalSolutionStub {
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::NfsShare> GetNfsShare(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request)
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ListNfsSharesResponse>
   ListNfsShares(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::ListNfsSharesRequest const& request)
       override;
 
@@ -239,7 +239,7 @@ class BareMetalSolutionMetadata : public BareMetalSolutionStub {
           request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::NfsShare> RenameNfsShare(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::RenameNfsShareRequest const&
           request) override;
 
@@ -251,42 +251,42 @@ class BareMetalSolutionMetadata : public BareMetalSolutionStub {
 
   StatusOr<google::cloud::baremetalsolution::v2::ListProvisioningQuotasResponse>
   ListProvisioningQuotas(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest const&
           request) override;
 
   StatusOr<
       google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
   SubmitProvisioningConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::
           SubmitProvisioningConfigRequest const& request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
   GetProvisioningConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const&
           request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
   CreateProvisioningConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::
           CreateProvisioningConfigRequest const& request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
   UpdateProvisioningConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::
           UpdateProvisioningConfigRequest const& request) override;
 
   StatusOr<google::cloud::baremetalsolution::v2::Network> RenameNetwork(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::baremetalsolution::v2::RenameNetworkRequest const& request)
       override;
 
   StatusOr<google::cloud::baremetalsolution::v2::ListOSImagesResponse>
-  ListOSImages(grpc::ClientContext& context,
+  ListOSImages(grpc::ClientContext& context, Options const& options,
                google::cloud::baremetalsolution::v2::ListOSImagesRequest const&
                    request) override;
 

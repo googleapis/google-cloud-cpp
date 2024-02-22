@@ -32,79 +32,79 @@ MetadataServiceAuth::MetadataServiceAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::dataplex::v1::Entity> MetadataServiceAuth::CreateEntity(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::CreateEntityRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateEntity(context, request);
+  return child_->CreateEntity(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::Entity> MetadataServiceAuth::UpdateEntity(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::UpdateEntityRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateEntity(context, request);
+  return child_->UpdateEntity(context, options, request);
 }
 
 Status MetadataServiceAuth::DeleteEntity(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::DeleteEntityRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteEntity(context, request);
+  return child_->DeleteEntity(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::Entity> MetadataServiceAuth::GetEntity(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::GetEntityRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEntity(context, request);
+  return child_->GetEntity(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListEntitiesResponse>
 MetadataServiceAuth::ListEntities(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListEntitiesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEntities(context, request);
+  return child_->ListEntities(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::Partition>
 MetadataServiceAuth::CreatePartition(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::CreatePartitionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreatePartition(context, request);
+  return child_->CreatePartition(context, options, request);
 }
 
 Status MetadataServiceAuth::DeletePartition(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::DeletePartitionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeletePartition(context, request);
+  return child_->DeletePartition(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::Partition>
 MetadataServiceAuth::GetPartition(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::GetPartitionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetPartition(context, request);
+  return child_->GetPartition(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListPartitionsResponse>
 MetadataServiceAuth::ListPartitions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListPartitionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListPartitions(context, request);
+  return child_->ListPartitions(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

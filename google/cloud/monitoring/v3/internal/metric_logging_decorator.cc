@@ -37,117 +37,119 @@ MetricServiceLogging::MetricServiceLogging(
 
 StatusOr<google::monitoring::v3::ListMonitoredResourceDescriptorsResponse>
 MetricServiceLogging::ListMonitoredResourceDescriptors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const&
               request) {
-        return child_->ListMonitoredResourceDescriptors(context, request);
+        return child_->ListMonitoredResourceDescriptors(context, options,
+                                                        request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::MonitoredResourceDescriptor>
 MetricServiceLogging::GetMonitoredResourceDescriptor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
               request) {
-        return child_->GetMonitoredResourceDescriptor(context, request);
+        return child_->GetMonitoredResourceDescriptor(context, options,
+                                                      request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::v3::ListMetricDescriptorsResponse>
 MetricServiceLogging::ListMetricDescriptors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListMetricDescriptorsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::monitoring::v3::ListMetricDescriptorsRequest const& request) {
-        return child_->ListMetricDescriptors(context, request);
+        return child_->ListMetricDescriptors(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::MetricDescriptor>
 MetricServiceLogging::GetMetricDescriptor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetMetricDescriptorRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::monitoring::v3::GetMetricDescriptorRequest const& request) {
-        return child_->GetMetricDescriptor(context, request);
+        return child_->GetMetricDescriptor(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::MetricDescriptor>
 MetricServiceLogging::CreateMetricDescriptor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateMetricDescriptorRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::CreateMetricDescriptorRequest const&
                  request) {
-        return child_->CreateMetricDescriptor(context, request);
+        return child_->CreateMetricDescriptor(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status MetricServiceLogging::DeleteMetricDescriptor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::DeleteMetricDescriptorRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::DeleteMetricDescriptorRequest const&
                  request) {
-        return child_->DeleteMetricDescriptor(context, request);
+        return child_->DeleteMetricDescriptor(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::v3::ListTimeSeriesResponse>
 MetricServiceLogging::ListTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListTimeSeriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::ListTimeSeriesRequest const& request) {
-        return child_->ListTimeSeries(context, request);
+        return child_->ListTimeSeries(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status MetricServiceLogging::CreateTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-        return child_->CreateTimeSeries(context, request);
+        return child_->CreateTimeSeries(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status MetricServiceLogging::CreateServiceTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-        return child_->CreateServiceTimeSeries(context, request);
+        return child_->CreateServiceTimeSeries(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<Status> MetricServiceLogging::AsyncCreateTimeSeries(

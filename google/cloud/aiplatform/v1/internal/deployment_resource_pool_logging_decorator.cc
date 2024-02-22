@@ -55,31 +55,31 @@ DeploymentResourcePoolServiceLogging::AsyncCreateDeploymentResourcePool(
 
 StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
 DeploymentResourcePoolServiceLogging::GetDeploymentResourcePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
               request) {
-        return child_->GetDeploymentResourcePool(context, request);
+        return child_->GetDeploymentResourcePool(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse>
 DeploymentResourcePoolServiceLogging::ListDeploymentResourcePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::
                  ListDeploymentResourcePoolsRequest const& request) {
-        return child_->ListDeploymentResourcePools(context, request);
+        return child_->ListDeploymentResourcePools(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

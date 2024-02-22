@@ -69,11 +69,11 @@ DomainsConnectionImpl::SearchDomains(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SearchDomains(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::domains::v1::SearchDomainsRequest const& request) {
-        return stub_->SearchDomains(context, request);
+        return stub_->SearchDomains(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::domains::v1::RetrieveRegisterParametersResponse>
@@ -85,12 +85,12 @@ DomainsConnectionImpl::RetrieveRegisterParameters(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RetrieveRegisterParameters(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::domains::v1::RetrieveRegisterParametersRequest const&
               request) {
-        return stub_->RetrieveRegisterParameters(context, request);
+        return stub_->RetrieveRegisterParameters(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
@@ -139,12 +139,12 @@ DomainsConnectionImpl::RetrieveTransferParameters(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RetrieveTransferParameters(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::domains::v1::RetrieveTransferParametersRequest const&
               request) {
-        return stub_->RetrieveTransferParameters(context, request);
+        return stub_->RetrieveTransferParameters(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
@@ -193,20 +193,21 @@ DomainsConnectionImpl::ListRegistrations(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::domains::v1::Registration>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<domains_v1::DomainsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::domains::v1::ListRegistrationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::domains::v1::ListRegistrationsRequest const&
                        request) {
-              return stub->ListRegistrations(context, request);
+              return stub->ListRegistrations(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::domains::v1::ListRegistrationsResponse r) {
         std::vector<google::cloud::domains::v1::Registration> result(
@@ -225,11 +226,11 @@ DomainsConnectionImpl::GetRegistration(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRegistration(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::domains::v1::GetRegistrationRequest const& request) {
-        return stub_->GetRegistration(context, request);
+        return stub_->GetRegistration(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::domains::v1::Registration>>
@@ -470,12 +471,12 @@ DomainsConnectionImpl::RetrieveAuthorizationCode(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RetrieveAuthorizationCode(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&
                  request) {
-        return stub_->RetrieveAuthorizationCode(context, request);
+        return stub_->RetrieveAuthorizationCode(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::domains::v1::AuthorizationCode>
@@ -485,12 +486,12 @@ DomainsConnectionImpl::ResetAuthorizationCode(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ResetAuthorizationCode(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::domains::v1::ResetAuthorizationCodeRequest const&
                  request) {
-        return stub_->ResetAuthorizationCode(context, request);
+        return stub_->ResetAuthorizationCode(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

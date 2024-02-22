@@ -37,15 +37,15 @@ SimulatorLogging::SimulatorLogging(std::shared_ptr<SimulatorStub> child,
 
 StatusOr<google::cloud::policysimulator::v1::Replay>
 SimulatorLogging::GetReplay(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::policysimulator::v1::GetReplayRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::policysimulator::v1::GetReplayRequest const& request) {
-        return child_->GetReplay(context, request);
+        return child_->GetReplay(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -67,16 +67,16 @@ SimulatorLogging::AsyncCreateReplay(
 
 StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse>
 SimulatorLogging::ListReplayResults(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::policysimulator::v1::ListReplayResultsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::policysimulator::v1::ListReplayResultsRequest const&
                  request) {
-        return child_->ListReplayResults(context, request);
+        return child_->ListReplayResults(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

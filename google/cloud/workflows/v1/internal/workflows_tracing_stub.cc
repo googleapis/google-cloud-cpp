@@ -32,26 +32,26 @@ WorkflowsTracingStub::WorkflowsTracingStub(std::shared_ptr<WorkflowsStub> child)
 
 StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse>
 WorkflowsTracingStub::ListWorkflows(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::v1::ListWorkflowsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
                                      "ListWorkflows");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListWorkflows(context, request));
+                           child_->ListWorkflows(context, options, request));
 }
 
 StatusOr<google::cloud::workflows::v1::Workflow>
 WorkflowsTracingStub::GetWorkflow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::v1::GetWorkflowRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.workflows.v1.Workflows",
                                      "GetWorkflow");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetWorkflow(context, request));
+                           child_->GetWorkflow(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -33,21 +33,21 @@ DomainsAuth::DomainsAuth(
 
 StatusOr<google::cloud::domains::v1::SearchDomainsResponse>
 DomainsAuth::SearchDomains(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::SearchDomainsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SearchDomains(context, request);
+  return child_->SearchDomains(context, options, request);
 }
 
 StatusOr<google::cloud::domains::v1::RetrieveRegisterParametersResponse>
 DomainsAuth::RetrieveRegisterParameters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::RetrieveRegisterParametersRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RetrieveRegisterParameters(context, request);
+  return child_->RetrieveRegisterParameters(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -71,12 +71,12 @@ DomainsAuth::AsyncRegisterDomain(
 
 StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>
 DomainsAuth::RetrieveTransferParameters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::RetrieveTransferParametersRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RetrieveTransferParameters(context, request);
+  return child_->RetrieveTransferParameters(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -100,19 +100,19 @@ DomainsAuth::AsyncTransferDomain(
 
 StatusOr<google::cloud::domains::v1::ListRegistrationsResponse>
 DomainsAuth::ListRegistrations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::ListRegistrationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListRegistrations(context, request);
+  return child_->ListRegistrations(context, options, request);
 }
 
 StatusOr<google::cloud::domains::v1::Registration> DomainsAuth::GetRegistration(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::GetRegistrationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetRegistration(context, request);
+  return child_->GetRegistration(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -233,21 +233,21 @@ DomainsAuth::AsyncDeleteRegistration(
 
 StatusOr<google::cloud::domains::v1::AuthorizationCode>
 DomainsAuth::RetrieveAuthorizationCode(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::RetrieveAuthorizationCodeRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RetrieveAuthorizationCode(context, request);
+  return child_->RetrieveAuthorizationCode(context, options, request);
 }
 
 StatusOr<google::cloud::domains::v1::AuthorizationCode>
 DomainsAuth::ResetAuthorizationCode(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::domains::v1::ResetAuthorizationCodeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ResetAuthorizationCode(context, request);
+  return child_->ResetAuthorizationCode(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> DomainsAuth::AsyncGetOperation(

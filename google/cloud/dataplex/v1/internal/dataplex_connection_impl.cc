@@ -183,20 +183,21 @@ DataplexServiceConnectionImpl::ListLakes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dataplex::v1::Lake>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dataplex::v1::ListLakesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::dataplex::v1::ListLakesRequest const& request) {
-              return stub->ListLakes(context, request);
+              return stub->ListLakes(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dataplex::v1::ListLakesResponse r) {
         std::vector<google::cloud::dataplex::v1::Lake> result(r.lakes().size());
@@ -213,11 +214,11 @@ DataplexServiceConnectionImpl::GetLake(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetLake(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataplex::v1::GetLakeRequest const& request) {
-        return stub_->GetLake(context, request);
+        return stub_->GetLake(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::dataplex::v1::Action>
@@ -229,20 +230,21 @@ DataplexServiceConnectionImpl::ListLakeActions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dataplex::v1::Action>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dataplex::v1::ListLakeActionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::dataplex::v1::ListLakeActionsRequest const&
                        request) {
-              return stub->ListLakeActions(context, request);
+              return stub->ListLakeActions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dataplex::v1::ListActionsResponse r) {
         std::vector<google::cloud::dataplex::v1::Action> result(
@@ -370,20 +372,21 @@ DataplexServiceConnectionImpl::ListZones(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dataplex::v1::Zone>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dataplex::v1::ListZonesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::dataplex::v1::ListZonesRequest const& request) {
-              return stub->ListZones(context, request);
+              return stub->ListZones(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dataplex::v1::ListZonesResponse r) {
         std::vector<google::cloud::dataplex::v1::Zone> result(r.zones().size());
@@ -400,11 +403,11 @@ DataplexServiceConnectionImpl::GetZone(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetZone(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataplex::v1::GetZoneRequest const& request) {
-        return stub_->GetZone(context, request);
+        return stub_->GetZone(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::dataplex::v1::Action>
@@ -416,20 +419,21 @@ DataplexServiceConnectionImpl::ListZoneActions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dataplex::v1::Action>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dataplex::v1::ListZoneActionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::dataplex::v1::ListZoneActionsRequest const&
                        request) {
-              return stub->ListZoneActions(context, request);
+              return stub->ListZoneActions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dataplex::v1::ListActionsResponse r) {
         std::vector<google::cloud::dataplex::v1::Action> result(
@@ -557,20 +561,21 @@ DataplexServiceConnectionImpl::ListAssets(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dataplex::v1::Asset>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dataplex::v1::ListAssetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::dataplex::v1::ListAssetsRequest const& request) {
-              return stub->ListAssets(context, request);
+              return stub->ListAssets(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dataplex::v1::ListAssetsResponse r) {
         std::vector<google::cloud::dataplex::v1::Asset> result(
@@ -588,11 +593,11 @@ DataplexServiceConnectionImpl::GetAsset(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAsset(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataplex::v1::GetAssetRequest const& request) {
-        return stub_->GetAsset(context, request);
+        return stub_->GetAsset(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::dataplex::v1::Action>
@@ -604,20 +609,21 @@ DataplexServiceConnectionImpl::ListAssetActions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dataplex::v1::Action>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dataplex::v1::ListAssetActionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::dataplex::v1::ListAssetActionsRequest const&
                        request) {
-              return stub->ListAssetActions(context, request);
+              return stub->ListAssetActions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dataplex::v1::ListActionsResponse r) {
         std::vector<google::cloud::dataplex::v1::Action> result(
@@ -745,20 +751,21 @@ DataplexServiceConnectionImpl::ListTasks(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dataplex::v1::Task>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dataplex::v1::ListTasksRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::dataplex::v1::ListTasksRequest const& request) {
-              return stub->ListTasks(context, request);
+              return stub->ListTasks(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dataplex::v1::ListTasksResponse r) {
         std::vector<google::cloud::dataplex::v1::Task> result(r.tasks().size());
@@ -775,11 +782,11 @@ DataplexServiceConnectionImpl::GetTask(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTask(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataplex::v1::GetTaskRequest const& request) {
-        return stub_->GetTask(context, request);
+        return stub_->GetTask(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::dataplex::v1::Job>
@@ -791,20 +798,21 @@ DataplexServiceConnectionImpl::ListJobs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dataplex::v1::Job>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dataplex::v1::ListJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::dataplex::v1::ListJobsRequest const& request) {
-              return stub->ListJobs(context, request);
+              return stub->ListJobs(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dataplex::v1::ListJobsResponse r) {
         std::vector<google::cloud::dataplex::v1::Job> result(r.jobs().size());
@@ -821,11 +829,11 @@ DataplexServiceConnectionImpl::RunTask(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RunTask(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataplex::v1::RunTaskRequest const& request) {
-        return stub_->RunTask(context, request);
+        return stub_->RunTask(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataplex::v1::Job>
@@ -835,11 +843,11 @@ DataplexServiceConnectionImpl::GetJob(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetJob(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataplex::v1::GetJobRequest const& request) {
-        return stub_->GetJob(context, request);
+        return stub_->GetJob(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status DataplexServiceConnectionImpl::CancelJob(
@@ -848,11 +856,11 @@ Status DataplexServiceConnectionImpl::CancelJob(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CancelJob(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataplex::v1::CancelJobRequest const& request) {
-        return stub_->CancelJob(context, request);
+        return stub_->CancelJob(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Environment>>
@@ -978,20 +986,21 @@ DataplexServiceConnectionImpl::ListEnvironments(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dataplex::v1::Environment>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dataplex::v1::ListEnvironmentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::dataplex::v1::ListEnvironmentsRequest const&
                        request) {
-              return stub->ListEnvironments(context, request);
+              return stub->ListEnvironments(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dataplex::v1::ListEnvironmentsResponse r) {
         std::vector<google::cloud::dataplex::v1::Environment> result(
@@ -1010,11 +1019,11 @@ DataplexServiceConnectionImpl::GetEnvironment(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEnvironment(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dataplex::v1::GetEnvironmentRequest const& request) {
-        return stub_->GetEnvironment(context, request);
+        return stub_->GetEnvironment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::dataplex::v1::Session>
@@ -1026,20 +1035,21 @@ DataplexServiceConnectionImpl::ListSessions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dataplex::v1::Session>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dataplex_v1::DataplexServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dataplex::v1::ListSessionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::dataplex::v1::ListSessionsRequest const&
                        request) {
-              return stub->ListSessions(context, request);
+              return stub->ListSessions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dataplex::v1::ListSessionsResponse r) {
         std::vector<google::cloud::dataplex::v1::Session> result(

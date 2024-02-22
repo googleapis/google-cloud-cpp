@@ -33,7 +33,7 @@ LineageTracingStub::LineageTracingStub(std::shared_ptr<LineageStub> child)
 StatusOr<
     google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
 LineageTracingStub::ProcessOpenLineageRunEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::
         ProcessOpenLineageRunEventRequest const& request) {
   auto span =
@@ -42,12 +42,13 @@ LineageTracingStub::ProcessOpenLineageRunEvent(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
-      context, *span, child_->ProcessOpenLineageRunEvent(context, request));
+      context, *span,
+      child_->ProcessOpenLineageRunEvent(context, options, request));
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 LineageTracingStub::CreateProcess(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -55,12 +56,12 @@ LineageTracingStub::CreateProcess(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateProcess(context, request));
+                           child_->CreateProcess(context, options, request));
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 LineageTracingStub::UpdateProcess(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -68,24 +69,24 @@ LineageTracingStub::UpdateProcess(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateProcess(context, request));
+                           child_->UpdateProcess(context, options, request));
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 LineageTracingStub::GetProcess(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.datacatalog.lineage.v1.Lineage", "GetProcess");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetProcess(context, request));
+                           child_->GetProcess(context, options, request));
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::ListProcessesResponse>
 LineageTracingStub::ListProcesses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::ListProcessesRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -93,7 +94,7 @@ LineageTracingStub::ListProcesses(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListProcesses(context, request));
+                           child_->ListProcesses(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -112,46 +113,50 @@ LineageTracingStub::AsyncDeleteProcess(
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 LineageTracingStub::CreateRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.datacatalog.lineage.v1.Lineage", "CreateRun");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->CreateRun(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateRun(context, options, request));
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 LineageTracingStub::UpdateRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.datacatalog.lineage.v1.Lineage", "UpdateRun");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->UpdateRun(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateRun(context, options, request));
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 LineageTracingStub::GetRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::GetRunRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.datacatalog.lineage.v1.Lineage", "GetRun");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetRun(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetRun(context, options, request));
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::ListRunsResponse>
 LineageTracingStub::ListRuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::ListRunsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.datacatalog.lineage.v1.Lineage", "ListRuns");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->ListRuns(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListRuns(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -169,20 +174,20 @@ LineageTracingStub::AsyncDeleteRun(
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
 LineageTracingStub::CreateLineageEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.datacatalog.lineage.v1.Lineage", "CreateLineageEvent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateLineageEvent(context, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateLineageEvent(context, options, request));
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
 LineageTracingStub::GetLineageEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -190,37 +195,37 @@ LineageTracingStub::GetLineageEvent(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetLineageEvent(context, request));
+                           child_->GetLineageEvent(context, options, request));
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::ListLineageEventsResponse>
 LineageTracingStub::ListLineageEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.datacatalog.lineage.v1.Lineage", "ListLineageEvents");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListLineageEvents(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListLineageEvents(context, options, request));
 }
 
 Status LineageTracingStub::DeleteLineageEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.datacatalog.lineage.v1.Lineage", "DeleteLineageEvent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteLineageEvent(context, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteLineageEvent(context, options, request));
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::SearchLinksResponse>
 LineageTracingStub::SearchLinks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::SearchLinksRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -228,13 +233,13 @@ LineageTracingStub::SearchLinks(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->SearchLinks(context, request));
+                           child_->SearchLinks(context, options, request));
 }
 
 StatusOr<
     google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesResponse>
 LineageTracingStub::BatchSearchLinkProcesses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::
         BatchSearchLinkProcessesRequest const& request) {
   auto span =
@@ -242,8 +247,9 @@ LineageTracingStub::BatchSearchLinkProcesses(
                              "BatchSearchLinkProcesses");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->BatchSearchLinkProcesses(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->BatchSearchLinkProcesses(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

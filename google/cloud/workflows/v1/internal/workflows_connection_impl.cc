@@ -72,20 +72,21 @@ WorkflowsConnectionImpl::ListWorkflows(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::workflows::v1::Workflow>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<workflows_v1::WorkflowsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::workflows::v1::ListWorkflowsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::workflows::v1::ListWorkflowsRequest const&
                        request) {
-              return stub->ListWorkflows(context, request);
+              return stub->ListWorkflows(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::workflows::v1::ListWorkflowsResponse r) {
         std::vector<google::cloud::workflows::v1::Workflow> result(
@@ -103,11 +104,11 @@ WorkflowsConnectionImpl::GetWorkflow(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetWorkflow(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::workflows::v1::GetWorkflowRequest const& request) {
-        return stub_->GetWorkflow(context, request);
+        return stub_->GetWorkflow(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>

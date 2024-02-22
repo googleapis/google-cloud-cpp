@@ -75,22 +75,21 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
 )""");
       continue;
     }
-    HeaderPrintMethod(
-        method,
-        {MethodPattern({{IsResponseTypeEmpty,
-                         R"""(
+    if (IsResponseTypeEmpty(method)) {
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   Status $method_name$(
       grpc::ClientContext& context,
+      Options const& options,
       $request_type$ const& request) override;
-)""",
-                         R"""(
+)""");
+      continue;
+    }
+    HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   StatusOr<$response_type$> $method_name$(
       grpc::ClientContext& context,
+      Options const& options,
       $request_type$ const& request) override;
-)"""},
-                        {""}},
-                       And(IsNonStreaming, Not(IsLongrunningOperation)))},
-        __FILE__, __LINE__);
+)""");
   }
 
   for (auto const& method : async_methods()) {

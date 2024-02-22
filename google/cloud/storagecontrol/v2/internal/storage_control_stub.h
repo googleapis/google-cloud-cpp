@@ -39,20 +39,20 @@ class StorageControlStub {
   virtual ~StorageControlStub() = 0;
 
   virtual StatusOr<google::storage::control::v2::Folder> CreateFolder(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storage::control::v2::CreateFolderRequest const& request) = 0;
 
   virtual Status DeleteFolder(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storage::control::v2::DeleteFolderRequest const& request) = 0;
 
   virtual StatusOr<google::storage::control::v2::Folder> GetFolder(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storage::control::v2::GetFolderRequest const& request) = 0;
 
   virtual StatusOr<google::storage::control::v2::ListFoldersResponse>
   ListFolders(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storage::control::v2::ListFoldersRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncRenameFolder(
@@ -62,7 +62,7 @@ class StorageControlStub {
 
   virtual StatusOr<google::storage::control::v2::StorageLayout>
   GetStorageLayout(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storage::control::v2::GetStorageLayoutRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -87,20 +87,20 @@ class DefaultStorageControlStub : public StorageControlStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::storage::control::v2::Folder> CreateFolder(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storage::control::v2::CreateFolderRequest const& request)
       override;
 
-  Status DeleteFolder(grpc::ClientContext& context,
+  Status DeleteFolder(grpc::ClientContext& context, Options const& options,
                       google::storage::control::v2::DeleteFolderRequest const&
                           request) override;
 
   StatusOr<google::storage::control::v2::Folder> GetFolder(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storage::control::v2::GetFolderRequest const& request) override;
 
   StatusOr<google::storage::control::v2::ListFoldersResponse> ListFolders(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storage::control::v2::ListFoldersRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRenameFolder(
@@ -110,7 +110,7 @@ class DefaultStorageControlStub : public StorageControlStub {
       override;
 
   StatusOr<google::storage::control::v2::StorageLayout> GetStorageLayout(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storage::control::v2::GetStorageLayoutRequest const& request)
       override;
 

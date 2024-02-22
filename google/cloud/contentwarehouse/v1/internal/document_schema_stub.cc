@@ -32,7 +32,7 @@ DocumentSchemaServiceStub::~DocumentSchemaServiceStub() = default;
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DefaultDocumentSchemaServiceStub::CreateDocumentSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
         request) {
   google::cloud::contentwarehouse::v1::DocumentSchema response;
@@ -45,7 +45,7 @@ DefaultDocumentSchemaServiceStub::CreateDocumentSchema(
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DefaultDocumentSchemaServiceStub::UpdateDocumentSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
         request) {
   google::cloud::contentwarehouse::v1::DocumentSchema response;
@@ -58,7 +58,7 @@ DefaultDocumentSchemaServiceStub::UpdateDocumentSchema(
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DefaultDocumentSchemaServiceStub::GetDocumentSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
         request) {
   google::cloud::contentwarehouse::v1::DocumentSchema response;
@@ -70,7 +70,7 @@ DefaultDocumentSchemaServiceStub::GetDocumentSchema(
 }
 
 Status DefaultDocumentSchemaServiceStub::DeleteDocumentSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
         request) {
   google::protobuf::Empty response;
@@ -83,7 +83,7 @@ Status DefaultDocumentSchemaServiceStub::DeleteDocumentSchema(
 
 StatusOr<google::cloud::contentwarehouse::v1::ListDocumentSchemasResponse>
 DefaultDocumentSchemaServiceStub::ListDocumentSchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const&
         request) {
   google::cloud::contentwarehouse::v1::ListDocumentSchemasResponse response;

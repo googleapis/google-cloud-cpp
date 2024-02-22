@@ -33,90 +33,90 @@ ServiceMonitoringServiceAuth::ServiceMonitoringServiceAuth(
 
 StatusOr<google::monitoring::v3::Service>
 ServiceMonitoringServiceAuth::CreateService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateServiceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateService(context, request);
+  return child_->CreateService(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::Service>
 ServiceMonitoringServiceAuth::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetServiceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetService(context, request);
+  return child_->GetService(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::ListServicesResponse>
 ServiceMonitoringServiceAuth::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListServicesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListServices(context, request);
+  return child_->ListServices(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::Service>
 ServiceMonitoringServiceAuth::UpdateService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::UpdateServiceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateService(context, request);
+  return child_->UpdateService(context, options, request);
 }
 
 Status ServiceMonitoringServiceAuth::DeleteService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::DeleteServiceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteService(context, request);
+  return child_->DeleteService(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
 ServiceMonitoringServiceAuth::CreateServiceLevelObjective(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateServiceLevelObjective(context, request);
+  return child_->CreateServiceLevelObjective(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
 ServiceMonitoringServiceAuth::GetServiceLevelObjective(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetServiceLevelObjectiveRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetServiceLevelObjective(context, request);
+  return child_->GetServiceLevelObjective(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::ListServiceLevelObjectivesResponse>
 ServiceMonitoringServiceAuth::ListServiceLevelObjectives(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListServiceLevelObjectivesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListServiceLevelObjectives(context, request);
+  return child_->ListServiceLevelObjectives(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
 ServiceMonitoringServiceAuth::UpdateServiceLevelObjective(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateServiceLevelObjective(context, request);
+  return child_->UpdateServiceLevelObjective(context, options, request);
 }
 
 Status ServiceMonitoringServiceAuth::DeleteServiceLevelObjective(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteServiceLevelObjective(context, request);
+  return child_->DeleteServiceLevelObjective(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

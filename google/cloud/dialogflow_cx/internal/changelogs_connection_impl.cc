@@ -68,19 +68,22 @@ ChangelogsConnectionImpl::ListChangelogs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::Changelog>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dialogflow_cx::ChangelogsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dialogflow::cx::v3::ListChangelogsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::dialogflow::cx::v3::ListChangelogsRequest const&
-                    request) { return stub->ListChangelogs(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListChangelogs(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::dialogflow::cx::v3::ListChangelogsResponse r) {
         std::vector<google::cloud::dialogflow::cx::v3::Changelog> result(
@@ -98,10 +101,12 @@ ChangelogsConnectionImpl::GetChangelog(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetChangelog(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::GetChangelogRequest const&
-                 request) { return stub_->GetChangelog(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetChangelog(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

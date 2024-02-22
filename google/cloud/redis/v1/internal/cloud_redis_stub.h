@@ -40,16 +40,16 @@ class CloudRedisStub {
 
   virtual StatusOr<google::cloud::redis::v1::ListInstancesResponse>
   ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::redis::v1::ListInstancesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::redis::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::redis::v1::GetInstanceRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::redis::v1::InstanceAuthString>
   GetInstanceAuthString(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::redis::v1::GetInstanceAuthStringRequest const&
           request) = 0;
 
@@ -117,15 +117,15 @@ class DefaultCloudRedisStub : public CloudRedisStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::redis::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::redis::v1::ListInstancesRequest const& request) override;
 
   StatusOr<google::cloud::redis::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::redis::v1::GetInstanceRequest const& request) override;
 
   StatusOr<google::cloud::redis::v1::InstanceAuthString> GetInstanceAuthString(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::redis::v1::GetInstanceAuthStringRequest const& request)
       override;
 

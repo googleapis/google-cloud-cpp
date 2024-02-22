@@ -39,12 +39,12 @@ class CloudRedisClusterStub {
   virtual ~CloudRedisClusterStub() = 0;
 
   virtual StatusOr<google::cloud::redis::cluster::v1::ListClustersResponse>
-  ListClusters(grpc::ClientContext& context,
+  ListClusters(grpc::ClientContext& context, Options const& options,
                google::cloud::redis::cluster::v1::ListClustersRequest const&
                    request) = 0;
 
   virtual StatusOr<google::cloud::redis::cluster::v1::Cluster> GetCluster(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::redis::cluster::v1::GetClusterRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateCluster(
@@ -87,12 +87,12 @@ class DefaultCloudRedisClusterStub : public CloudRedisClusterStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::redis::cluster::v1::ListClustersResponse>
-  ListClusters(grpc::ClientContext& context,
+  ListClusters(grpc::ClientContext& context, Options const& options,
                google::cloud::redis::cluster::v1::ListClustersRequest const&
                    request) override;
 
   StatusOr<google::cloud::redis::cluster::v1::Cluster> GetCluster(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::redis::cluster::v1::GetClusterRequest const& request)
       override;
 

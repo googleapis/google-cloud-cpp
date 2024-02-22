@@ -44,19 +44,19 @@ CloudCatalogMetadata::CloudCatalogMetadata(
 
 StatusOr<google::cloud::billing::v1::ListServicesResponse>
 CloudCatalogMetadata::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::v1::ListServicesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->ListServices(context, request);
+  SetMetadata(context, options);
+  return child_->ListServices(context, options, request);
 }
 
 StatusOr<google::cloud::billing::v1::ListSkusResponse>
 CloudCatalogMetadata::ListSkus(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::v1::ListSkusRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListSkus(context, request);
+  return child_->ListSkus(context, options, request);
 }
 
 void CloudCatalogMetadata::SetMetadata(grpc::ClientContext& context,

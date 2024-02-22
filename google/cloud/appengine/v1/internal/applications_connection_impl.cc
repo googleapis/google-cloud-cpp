@@ -70,11 +70,11 @@ ApplicationsConnectionImpl::GetApplication(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetApplication(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::GetApplicationRequest const& request) {
-        return stub_->GetApplication(context, request);
+        return stub_->GetApplication(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::appengine::v1::Application>>

@@ -38,29 +38,32 @@ PublisherLogging::PublisherLogging(std::shared_ptr<PublisherStub> child,
 StatusOr<google::cloud::eventarc::publishing::v1::
              PublishChannelConnectionEventsResponse>
 PublisherLogging::PublishChannelConnectionEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::publishing::v1::
         PublishChannelConnectionEventsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::eventarc::publishing::v1::
                  PublishChannelConnectionEventsRequest const& request) {
-        return child_->PublishChannelConnectionEvents(context, request);
+        return child_->PublishChannelConnectionEvents(context, options,
+                                                      request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
 PublisherLogging::PublishEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
-              request) { return child_->PublishEvents(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->PublishEvents(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -33,20 +33,20 @@ ApiGatewayServiceAuth::ApiGatewayServiceAuth(
 
 StatusOr<google::cloud::apigateway::v1::ListGatewaysResponse>
 ApiGatewayServiceAuth::ListGateways(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::ListGatewaysRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListGateways(context, request);
+  return child_->ListGateways(context, options, request);
 }
 
 StatusOr<google::cloud::apigateway::v1::Gateway>
 ApiGatewayServiceAuth::GetGateway(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::GetGatewayRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetGateway(context, request);
+  return child_->GetGateway(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -108,19 +108,19 @@ ApiGatewayServiceAuth::AsyncDeleteGateway(
 
 StatusOr<google::cloud::apigateway::v1::ListApisResponse>
 ApiGatewayServiceAuth::ListApis(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::ListApisRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListApis(context, request);
+  return child_->ListApis(context, options, request);
 }
 
 StatusOr<google::cloud::apigateway::v1::Api> ApiGatewayServiceAuth::GetApi(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::GetApiRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetApi(context, request);
+  return child_->GetApi(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -179,20 +179,20 @@ ApiGatewayServiceAuth::AsyncDeleteApi(
 
 StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>
 ApiGatewayServiceAuth::ListApiConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::ListApiConfigsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListApiConfigs(context, request);
+  return child_->ListApiConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::apigateway::v1::ApiConfig>
 ApiGatewayServiceAuth::GetApiConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigateway::v1::GetApiConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetApiConfig(context, request);
+  return child_->GetApiConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -74,44 +74,44 @@ RapidMigrationAssessmentLogging::AsyncCreateAnnotation(
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>
 RapidMigrationAssessmentLogging::GetAnnotation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::rapidmigrationassessment::v1::GetAnnotationRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::rapidmigrationassessment::v1::
                  GetAnnotationRequest const& request) {
-        return child_->GetAnnotation(context, request);
+        return child_->GetAnnotation(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::ListCollectorsResponse>
 RapidMigrationAssessmentLogging::ListCollectors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::rapidmigrationassessment::v1::ListCollectorsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::rapidmigrationassessment::v1::
                  ListCollectorsRequest const& request) {
-        return child_->ListCollectors(context, request);
+        return child_->ListCollectors(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>
 RapidMigrationAssessmentLogging::GetCollector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::rapidmigrationassessment::v1::GetCollectorRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::rapidmigrationassessment::v1::
                  GetCollectorRequest const& request) {
-        return child_->GetCollector(context, request);
+        return child_->GetCollector(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

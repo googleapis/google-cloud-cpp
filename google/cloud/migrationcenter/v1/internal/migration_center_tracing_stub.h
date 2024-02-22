@@ -39,45 +39,45 @@ class MigrationCenterTracingStub : public MigrationCenterStub {
       std::shared_ptr<MigrationCenterStub> child);
 
   StatusOr<google::cloud::migrationcenter::v1::ListAssetsResponse> ListAssets(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::ListAssetsRequest const& request)
       override;
 
   StatusOr<google::cloud::migrationcenter::v1::Asset> GetAsset(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::GetAssetRequest const& request)
       override;
 
   StatusOr<google::cloud::migrationcenter::v1::Asset> UpdateAsset(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::UpdateAssetRequest const& request)
       override;
 
   StatusOr<google::cloud::migrationcenter::v1::BatchUpdateAssetsResponse>
   BatchUpdateAssets(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::BatchUpdateAssetsRequest const&
           request) override;
 
   Status DeleteAsset(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::DeleteAssetRequest const& request)
       override;
 
   Status BatchDeleteAssets(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::BatchDeleteAssetsRequest const&
           request) override;
 
   StatusOr<google::cloud::migrationcenter::v1::ReportAssetFramesResponse>
   ReportAssetFrames(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::ReportAssetFramesRequest const&
           request) override;
 
   StatusOr<google::cloud::migrationcenter::v1::AggregateAssetsValuesResponse>
   AggregateAssetsValues(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::AggregateAssetsValuesRequest const&
           request) override;
 
@@ -89,12 +89,12 @@ class MigrationCenterTracingStub : public MigrationCenterStub {
 
   StatusOr<google::cloud::migrationcenter::v1::ListImportJobsResponse>
   ListImportJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::ListImportJobsRequest const& request)
       override;
 
   StatusOr<google::cloud::migrationcenter::v1::ImportJob> GetImportJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::GetImportJobRequest const& request)
       override;
 
@@ -124,13 +124,13 @@ class MigrationCenterTracingStub : public MigrationCenterStub {
 
   StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>
   GetImportDataFile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::GetImportDataFileRequest const&
           request) override;
 
   StatusOr<google::cloud::migrationcenter::v1::ListImportDataFilesResponse>
   ListImportDataFiles(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::ListImportDataFilesRequest const&
           request) override;
 
@@ -147,12 +147,12 @@ class MigrationCenterTracingStub : public MigrationCenterStub {
           request) override;
 
   StatusOr<google::cloud::migrationcenter::v1::ListGroupsResponse> ListGroups(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::ListGroupsRequest const& request)
       override;
 
   StatusOr<google::cloud::migrationcenter::v1::Group> GetGroup(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::GetGroupRequest const& request)
       override;
 
@@ -188,22 +188,22 @@ class MigrationCenterTracingStub : public MigrationCenterStub {
 
   StatusOr<google::cloud::migrationcenter::v1::ListErrorFramesResponse>
   ListErrorFrames(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::ListErrorFramesRequest const& request)
       override;
 
   StatusOr<google::cloud::migrationcenter::v1::ErrorFrame> GetErrorFrame(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::GetErrorFrameRequest const& request)
       override;
 
   StatusOr<google::cloud::migrationcenter::v1::ListSourcesResponse> ListSources(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::ListSourcesRequest const& request)
       override;
 
   StatusOr<google::cloud::migrationcenter::v1::Source> GetSource(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::GetSourceRequest const& request)
       override;
 
@@ -227,12 +227,12 @@ class MigrationCenterTracingStub : public MigrationCenterStub {
 
   StatusOr<google::cloud::migrationcenter::v1::ListPreferenceSetsResponse>
   ListPreferenceSets(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::ListPreferenceSetsRequest const&
           request) override;
 
   StatusOr<google::cloud::migrationcenter::v1::PreferenceSet> GetPreferenceSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::GetPreferenceSetRequest const&
           request) override;
 
@@ -255,7 +255,7 @@ class MigrationCenterTracingStub : public MigrationCenterStub {
           request) override;
 
   StatusOr<google::cloud::migrationcenter::v1::Settings> GetSettings(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::GetSettingsRequest const& request)
       override;
 
@@ -272,13 +272,13 @@ class MigrationCenterTracingStub : public MigrationCenterStub {
           request) override;
 
   StatusOr<google::cloud::migrationcenter::v1::ReportConfig> GetReportConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::GetReportConfigRequest const& request)
       override;
 
   StatusOr<google::cloud::migrationcenter::v1::ListReportConfigsResponse>
   ListReportConfigs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::ListReportConfigsRequest const&
           request) override;
 
@@ -295,12 +295,12 @@ class MigrationCenterTracingStub : public MigrationCenterStub {
       override;
 
   StatusOr<google::cloud::migrationcenter::v1::Report> GetReport(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::GetReportRequest const& request)
       override;
 
   StatusOr<google::cloud::migrationcenter::v1::ListReportsResponse> ListReports(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::migrationcenter::v1::ListReportsRequest const& request)
       override;
 

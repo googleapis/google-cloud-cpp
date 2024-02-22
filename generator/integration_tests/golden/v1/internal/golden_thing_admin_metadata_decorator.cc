@@ -47,9 +47,10 @@ GoldenThingAdminMetadata::GoldenThingAdminMetadata(
 StatusOr<google::test::admin::database::v1::ListDatabasesResponse>
 GoldenThingAdminMetadata::ListDatabases(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ListDatabasesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(), absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDatabases(context, request);
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListDatabases(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -65,9 +66,10 @@ GoldenThingAdminMetadata::AsyncCreateDatabase(
 StatusOr<google::test::admin::database::v1::Database>
 GoldenThingAdminMetadata::GetDatabase(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GetDatabaseRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(), absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDatabase(context, request);
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetDatabase(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -83,6 +85,7 @@ GoldenThingAdminMetadata::AsyncUpdateDatabaseDdl(
 Status
 GoldenThingAdminMetadata::DropDatabase(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::DropDatabaseRequest const& request) {
   std::vector<std::string> params;
   params.reserve(3);
@@ -121,43 +124,47 @@ GoldenThingAdminMetadata::DropDatabase(
   database_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(), absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->DropDatabase(context, request);
+  return child_->DropDatabase(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
 GoldenThingAdminMetadata::GetDatabaseDdl(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(), absl::StrCat("database=", internal::UrlEncode(request.database())));
-  return child_->GetDatabaseDdl(context, request);
+  SetMetadata(context, options, absl::StrCat("database=", internal::UrlEncode(request.database())));
+  return child_->GetDatabaseDdl(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy>
 GoldenThingAdminMetadata::SetIamPolicy(
     grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(), absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->SetIamPolicy(context, request);
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy>
 GoldenThingAdminMetadata::GetIamPolicy(
     grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(), absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->GetIamPolicy(context, request);
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 GoldenThingAdminMetadata::TestIamPermissions(
     grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(), absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->TestIamPermissions(context, request);
+  SetMetadata(context, options, absl::StrCat("resource=", internal::UrlEncode(request.resource())));
+  return child_->TestIamPermissions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -173,33 +180,37 @@ GoldenThingAdminMetadata::AsyncCreateBackup(
 StatusOr<google::test::admin::database::v1::Backup>
 GoldenThingAdminMetadata::GetBackup(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GetBackupRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(), absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetBackup(context, request);
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetBackup(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::Backup>
 GoldenThingAdminMetadata::UpdateBackup(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::UpdateBackupRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(), absl::StrCat("backup.name=", internal::UrlEncode(request.backup().name())));
-  return child_->UpdateBackup(context, request);
+  SetMetadata(context, options, absl::StrCat("backup.name=", internal::UrlEncode(request.backup().name())));
+  return child_->UpdateBackup(context, options, request);
 }
 
 Status
 GoldenThingAdminMetadata::DeleteBackup(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::DeleteBackupRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(), absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteBackup(context, request);
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteBackup(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::ListBackupsResponse>
 GoldenThingAdminMetadata::ListBackups(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ListBackupsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(), absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListBackups(context, request);
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListBackups(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -215,17 +226,19 @@ GoldenThingAdminMetadata::AsyncRestoreDatabase(
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>
 GoldenThingAdminMetadata::ListDatabaseOperations(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(), absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDatabaseOperations(context, request);
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListDatabaseOperations(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse>
 GoldenThingAdminMetadata::ListBackupOperations(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(), absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListBackupOperations(context, request);
+  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListBackupOperations(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

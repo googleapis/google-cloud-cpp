@@ -40,30 +40,37 @@ class GoldenKitchenSinkLogging : public GoldenKitchenSinkStub {
 
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse> GenerateAccessToken(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse> GenerateIdToken(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::GenerateIdTokenRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse> WriteLogEntries(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::WriteLogEntriesRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::ListLogsResponse> ListLogs(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::ListLogsRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> ListServiceAccountKeys(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
 
   Status DoNothing(
       grpc::ClientContext& context,
+      Options const& options,
       google::protobuf::Empty const& request) override;
 
   Status Deprecated2(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
@@ -88,10 +95,12 @@ class GoldenKitchenSinkLogging : public GoldenKitchenSinkStub {
 
   Status ExplicitRouting1(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
   Status ExplicitRouting2(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
   std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<

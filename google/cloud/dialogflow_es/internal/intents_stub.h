@@ -41,23 +41,23 @@ class IntentsStub {
 
   virtual StatusOr<google::cloud::dialogflow::v2::ListIntentsResponse>
   ListIntents(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListIntentsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::Intent> GetIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetIntentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::Intent> CreateIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::CreateIntentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::Intent> UpdateIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::UpdateIntentRequest const& request) = 0;
 
   virtual Status DeleteIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::DeleteIntentRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
@@ -95,25 +95,25 @@ class DefaultIntentsStub : public IntentsStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::dialogflow::v2::ListIntentsResponse> ListIntents(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListIntentsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Intent> GetIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetIntentRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::Intent> CreateIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::CreateIntentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Intent> UpdateIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::UpdateIntentRequest const& request)
       override;
 
-  Status DeleteIntent(grpc::ClientContext& context,
+  Status DeleteIntent(grpc::ClientContext& context, Options const& options,
                       google::cloud::dialogflow::v2::DeleteIntentRequest const&
                           request) override;
 

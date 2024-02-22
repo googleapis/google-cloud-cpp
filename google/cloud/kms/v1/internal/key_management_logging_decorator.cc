@@ -37,348 +37,348 @@ KeyManagementServiceLogging::KeyManagementServiceLogging(
 
 StatusOr<google::cloud::kms::v1::ListKeyRingsResponse>
 KeyManagementServiceLogging::ListKeyRings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::ListKeyRingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::ListKeyRingsRequest const& request) {
-        return child_->ListKeyRings(context, request);
+        return child_->ListKeyRings(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::ListCryptoKeysResponse>
 KeyManagementServiceLogging::ListCryptoKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::ListCryptoKeysRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::ListCryptoKeysRequest const& request) {
-        return child_->ListCryptoKeys(context, request);
+        return child_->ListCryptoKeys(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::ListCryptoKeyVersionsResponse>
 KeyManagementServiceLogging::ListCryptoKeyVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::ListCryptoKeyVersionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::kms::v1::ListCryptoKeyVersionsRequest const& request) {
-        return child_->ListCryptoKeyVersions(context, request);
+        return child_->ListCryptoKeyVersions(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::ListImportJobsResponse>
 KeyManagementServiceLogging::ListImportJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::ListImportJobsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::ListImportJobsRequest const& request) {
-        return child_->ListImportJobs(context, request);
+        return child_->ListImportJobs(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceLogging::GetKeyRing(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetKeyRingRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::GetKeyRingRequest const& request) {
-        return child_->GetKeyRing(context, request);
+        return child_->GetKeyRing(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
 KeyManagementServiceLogging::GetCryptoKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetCryptoKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::GetCryptoKeyRequest const& request) {
-        return child_->GetCryptoKey(context, request);
+        return child_->GetCryptoKey(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceLogging::GetCryptoKeyVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request) {
-        return child_->GetCryptoKeyVersion(context, request);
+        return child_->GetCryptoKeyVersion(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::PublicKey>
 KeyManagementServiceLogging::GetPublicKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetPublicKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::GetPublicKeyRequest const& request) {
-        return child_->GetPublicKey(context, request);
+        return child_->GetPublicKey(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::ImportJob>
 KeyManagementServiceLogging::GetImportJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetImportJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::GetImportJobRequest const& request) {
-        return child_->GetImportJob(context, request);
+        return child_->GetImportJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceLogging::CreateKeyRing(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::CreateKeyRingRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::CreateKeyRingRequest const& request) {
-        return child_->CreateKeyRing(context, request);
+        return child_->CreateKeyRing(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
 KeyManagementServiceLogging::CreateCryptoKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::CreateCryptoKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::CreateCryptoKeyRequest const& request) {
-        return child_->CreateCryptoKey(context, request);
+        return child_->CreateCryptoKey(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceLogging::CreateCryptoKeyVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::CreateCryptoKeyVersionRequest const&
                  request) {
-        return child_->CreateCryptoKeyVersion(context, request);
+        return child_->CreateCryptoKeyVersion(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceLogging::ImportCryptoKeyVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::ImportCryptoKeyVersionRequest const&
                  request) {
-        return child_->ImportCryptoKeyVersion(context, request);
+        return child_->ImportCryptoKeyVersion(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::ImportJob>
 KeyManagementServiceLogging::CreateImportJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::CreateImportJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::CreateImportJobRequest const& request) {
-        return child_->CreateImportJob(context, request);
+        return child_->CreateImportJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
 KeyManagementServiceLogging::UpdateCryptoKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::UpdateCryptoKeyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::UpdateCryptoKeyRequest const& request) {
-        return child_->UpdateCryptoKey(context, request);
+        return child_->UpdateCryptoKey(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceLogging::UpdateCryptoKeyVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const&
                  request) {
-        return child_->UpdateCryptoKeyVersion(context, request);
+        return child_->UpdateCryptoKeyVersion(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
 KeyManagementServiceLogging::UpdateCryptoKeyPrimaryVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const&
                  request) {
-        return child_->UpdateCryptoKeyPrimaryVersion(context, request);
+        return child_->UpdateCryptoKeyPrimaryVersion(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceLogging::DestroyCryptoKeyVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const&
                  request) {
-        return child_->DestroyCryptoKeyVersion(context, request);
+        return child_->DestroyCryptoKeyVersion(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceLogging::RestoreCryptoKeyVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const&
                  request) {
-        return child_->RestoreCryptoKeyVersion(context, request);
+        return child_->RestoreCryptoKeyVersion(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::EncryptResponse>
 KeyManagementServiceLogging::Encrypt(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::EncryptRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::EncryptRequest const& request) {
-        return child_->Encrypt(context, request);
+        return child_->Encrypt(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::DecryptResponse>
 KeyManagementServiceLogging::Decrypt(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::DecryptRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::DecryptRequest const& request) {
-        return child_->Decrypt(context, request);
+        return child_->Decrypt(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::RawEncryptResponse>
 KeyManagementServiceLogging::RawEncrypt(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::RawEncryptRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::RawEncryptRequest const& request) {
-        return child_->RawEncrypt(context, request);
+        return child_->RawEncrypt(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::RawDecryptResponse>
 KeyManagementServiceLogging::RawDecrypt(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::RawDecryptRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::RawDecryptRequest const& request) {
-        return child_->RawDecrypt(context, request);
+        return child_->RawDecrypt(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
 KeyManagementServiceLogging::AsymmetricSign(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::AsymmetricSignRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::AsymmetricSignRequest const& request) {
-        return child_->AsymmetricSign(context, request);
+        return child_->AsymmetricSign(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse>
 KeyManagementServiceLogging::AsymmetricDecrypt(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::AsymmetricDecryptRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::AsymmetricDecryptRequest const& request) {
-        return child_->AsymmetricDecrypt(context, request);
+        return child_->AsymmetricDecrypt(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::MacSignResponse>
 KeyManagementServiceLogging::MacSign(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::MacSignRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::MacSignRequest const& request) {
-        return child_->MacSign(context, request);
+        return child_->MacSign(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::MacVerifyResponse>
 KeyManagementServiceLogging::MacVerify(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::MacVerifyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::v1::MacVerifyRequest const& request) {
-        return child_->MacVerify(context, request);
+        return child_->MacVerify(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
 KeyManagementServiceLogging::GenerateRandomBytes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GenerateRandomBytesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::kms::v1::GenerateRandomBytesRequest const& request) {
-        return child_->GenerateRandomBytes(context, request);
+        return child_->GenerateRandomBytes(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

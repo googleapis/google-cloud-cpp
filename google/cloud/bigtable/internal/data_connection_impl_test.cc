@@ -267,7 +267,8 @@ class DataConnectionTest : public ::testing::Test {
 TEST_F(DataConnectionTest, ApplySuccess) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRow)
-      .WillOnce([](grpc::ClientContext&, v2::MutateRowRequest const& request) {
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   v2::MutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_EQ("row", request.row_key());
@@ -283,7 +284,8 @@ TEST_F(DataConnectionTest, ApplySuccess) {
 TEST_F(DataConnectionTest, ApplyPermanentFailure) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRow)
-      .WillOnce([](grpc::ClientContext&, v2::MutateRowRequest const& request) {
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   v2::MutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_EQ("row", request.row_key());
@@ -299,13 +301,15 @@ TEST_F(DataConnectionTest, ApplyPermanentFailure) {
 TEST_F(DataConnectionTest, ApplyRetryThenSuccess) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRow)
-      .WillOnce([](grpc::ClientContext&, v2::MutateRowRequest const& request) {
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   v2::MutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_EQ("row", request.row_key());
         return TransientError();
       })
-      .WillOnce([](grpc::ClientContext&, v2::MutateRowRequest const& request) {
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   v2::MutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_EQ("row", request.row_key());
@@ -322,13 +326,13 @@ TEST_F(DataConnectionTest, ApplyRetryExhausted) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRow)
       .Times(kNumRetries + 1)
-      .WillRepeatedly(
-          [](grpc::ClientContext&, v2::MutateRowRequest const& request) {
-            EXPECT_EQ(kAppProfile, request.app_profile_id());
-            EXPECT_EQ(kTableName, request.table_name());
-            EXPECT_EQ("row", request.row_key());
-            return TransientError();
-          });
+      .WillRepeatedly([](grpc::ClientContext&, Options const&,
+                         v2::MutateRowRequest const& request) {
+        EXPECT_EQ(kAppProfile, request.app_profile_id());
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_EQ("row", request.row_key());
+        return TransientError();
+      });
 
   auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, clone).WillOnce([]() {
@@ -347,7 +351,8 @@ TEST_F(DataConnectionTest, ApplyRetryExhausted) {
 TEST_F(DataConnectionTest, ApplyRetryIdempotency) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRow)
-      .WillOnce([](grpc::ClientContext&, v2::MutateRowRequest const& request) {
+      .WillOnce([](grpc::ClientContext&, Options const&,
+                   v2::MutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
         EXPECT_EQ("row", request.row_key());
@@ -372,22 +377,22 @@ TEST_F(DataConnectionTest, ApplyRetryIdempotency) {
 TEST_F(DataConnectionTest, ApplyBigtableCookie) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, MutateRow)
-      .WillOnce(
-          [this](grpc::ClientContext& context, v2::MutateRowRequest const&) {
-            // Return a bigtable cookie in the first request.
-            metadata_fixture_.SetServerMetadata(
-                context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
-            return TransientError();
-          })
-      .WillOnce(
-          [this](grpc::ClientContext& context, v2::MutateRowRequest const&) {
-            // Verify that the next request includes the bigtable cookie from
-            // above.
-            auto headers = metadata_fixture_.GetMetadata(context);
-            EXPECT_THAT(headers,
-                        Contains(Pair("x-goog-cbt-cookie-routing", "routing")));
-            return PermanentError();
-          });
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
+                       v2::MutateRowRequest const&) {
+        // Return a bigtable cookie in the first request.
+        metadata_fixture_.SetServerMetadata(
+            context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
+        return TransientError();
+      })
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
+                       v2::MutateRowRequest const&) {
+        // Verify that the next request includes the bigtable cookie from
+        // above.
+        auto headers = metadata_fixture_.GetMetadata(context);
+        EXPECT_THAT(headers,
+                    Contains(Pair("x-goog-cbt-cookie-routing", "routing")));
+        return PermanentError();
+      });
 
   auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, clone).WillOnce([]() {
@@ -1065,7 +1070,7 @@ TEST_F(DataConnectionTest, CheckAndMutateRowSuccess) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, CheckAndMutateRow)
-      .WillOnce([&](grpc::ClientContext&,
+      .WillOnce([&](grpc::ClientContext&, Options const&,
                     v2::CheckAndMutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1080,7 +1085,7 @@ TEST_F(DataConnectionTest, CheckAndMutateRowSuccess) {
         resp.set_predicate_matched(true);
         return resp;
       })
-      .WillOnce([&](grpc::ClientContext&,
+      .WillOnce([&](grpc::ClientContext&, Options const&,
                     v2::CheckAndMutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1117,7 +1122,7 @@ TEST_F(DataConnectionTest, CheckAndMutateRowIdempotency) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, CheckAndMutateRow)
-      .WillOnce([&](grpc::ClientContext&,
+      .WillOnce([&](grpc::ClientContext&, Options const&,
                     v2::CheckAndMutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1155,7 +1160,7 @@ TEST_F(DataConnectionTest, CheckAndMutateRowPermanentError) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, CheckAndMutateRow)
-      .WillOnce([&](grpc::ClientContext&,
+      .WillOnce([&](grpc::ClientContext&, Options const&,
                     v2::CheckAndMutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1184,7 +1189,7 @@ TEST_F(DataConnectionTest, CheckAndMutateRowRetryExhausted) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, CheckAndMutateRow)
       .Times(kNumRetries + 1)
-      .WillRepeatedly([&](grpc::ClientContext&,
+      .WillRepeatedly([&](grpc::ClientContext&, Options const&,
                           v2::CheckAndMutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1223,14 +1228,14 @@ TEST_F(DataConnectionTest, CheckAndMutateRowBigtableCookie) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, CheckAndMutateRow)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::CheckAndMutateRowRequest const&) {
         // Return a bigtable cookie in the first request.
         metadata_fixture_.SetServerMetadata(
             context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
         return TransientError();
       })
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::CheckAndMutateRowRequest const&) {
         // Verify that the next request includes the bigtable cookie from above.
         auto headers = metadata_fixture_.GetMetadata(context);
@@ -1694,7 +1699,7 @@ TEST_F(DataConnectionTest, ReadModifyWriteRowSuccess) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadModifyWriteRow)
-      .WillOnce([&response](grpc::ClientContext&,
+      .WillOnce([&response](grpc::ClientContext&, Options const&,
                             v2::ReadModifyWriteRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1720,7 +1725,7 @@ TEST_F(DataConnectionTest, ReadModifyWriteRowSuccess) {
 TEST_F(DataConnectionTest, ReadModifyWriteRowPermanentError) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadModifyWriteRow)
-      .WillOnce([](grpc::ClientContext&,
+      .WillOnce([](grpc::ClientContext&, Options const&,
                    v2::ReadModifyWriteRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1742,7 +1747,7 @@ TEST_F(DataConnectionTest, ReadModifyWriteRowPermanentError) {
 TEST_F(DataConnectionTest, ReadModifyWriteRowTransientErrorNotRetried) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, ReadModifyWriteRow)
-      .WillOnce([](grpc::ClientContext&,
+      .WillOnce([](grpc::ClientContext&, Options const&,
                    v2::ReadModifyWriteRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());

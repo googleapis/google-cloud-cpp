@@ -29,44 +29,51 @@ GoldenKitchenSinkRoundRobin::GoldenKitchenSinkRoundRobin(
 
 StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse> GoldenKitchenSinkRoundRobin::GenerateAccessToken(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
-  return Child()->GenerateAccessToken(context, request);
+  return Child()->GenerateAccessToken(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse> GoldenKitchenSinkRoundRobin::GenerateIdToken(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
-  return Child()->GenerateIdToken(context, request);
+  return Child()->GenerateIdToken(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse> GoldenKitchenSinkRoundRobin::WriteLogEntries(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
-  return Child()->WriteLogEntries(context, request);
+  return Child()->WriteLogEntries(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::ListLogsResponse> GoldenKitchenSinkRoundRobin::ListLogs(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ListLogsRequest const& request) {
-  return Child()->ListLogs(context, request);
+  return Child()->ListLogs(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> GoldenKitchenSinkRoundRobin::ListServiceAccountKeys(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
-  return Child()->ListServiceAccountKeys(context, request);
+  return Child()->ListServiceAccountKeys(context, options, request);
 }
 
 Status GoldenKitchenSinkRoundRobin::DoNothing(
     grpc::ClientContext& context,
+    Options const& options,
     google::protobuf::Empty const& request) {
-  return Child()->DoNothing(context, request);
+  return Child()->DoNothing(context, options, request);
 }
 
 Status GoldenKitchenSinkRoundRobin::Deprecated2(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
-  return Child()->Deprecated2(context, request);
+  return Child()->Deprecated2(context, options, request);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
@@ -96,14 +103,16 @@ GoldenKitchenSinkRoundRobin::AsyncStreamingReadWrite(
 
 Status GoldenKitchenSinkRoundRobin::ExplicitRouting1(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
-  return Child()->ExplicitRouting1(context, request);
+  return Child()->ExplicitRouting1(context, options, request);
 }
 
 Status GoldenKitchenSinkRoundRobin::ExplicitRouting2(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
-  return Child()->ExplicitRouting2(context, request);
+  return Child()->ExplicitRouting2(context, options, request);
 }
 
 std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<

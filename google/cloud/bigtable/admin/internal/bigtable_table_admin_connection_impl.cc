@@ -76,11 +76,11 @@ BigtableTableAdminConnectionImpl::CreateTable(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateTable(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::admin::v2::CreateTableRequest const& request) {
-        return stub_->CreateTable(context, request);
+        return stub_->CreateTable(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::bigtable::admin::v2::Table>
@@ -92,20 +92,21 @@ BigtableTableAdminConnectionImpl::ListTables(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::bigtable::admin::v2::Table>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<bigtable_admin::BigtableTableAdminRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::bigtable::admin::v2::ListTablesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::bigtable::admin::v2::ListTablesRequest const& request) {
-              return stub->ListTables(context, request);
+              return stub->ListTables(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::bigtable::admin::v2::ListTablesResponse r) {
         std::vector<google::bigtable::admin::v2::Table> result(
@@ -123,11 +124,11 @@ BigtableTableAdminConnectionImpl::GetTable(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTable(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::admin::v2::GetTableRequest const& request) {
-        return stub_->GetTable(context, request);
+        return stub_->GetTable(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::bigtable::admin::v2::Table>>
@@ -172,11 +173,11 @@ Status BigtableTableAdminConnectionImpl::DeleteTable(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteTable(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::admin::v2::DeleteTableRequest const& request) {
-        return stub_->DeleteTable(context, request);
+        return stub_->DeleteTable(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::bigtable::admin::v2::Table>>
@@ -223,12 +224,12 @@ BigtableTableAdminConnectionImpl::ModifyColumnFamilies(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ModifyColumnFamilies(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::admin::v2::ModifyColumnFamiliesRequest const&
                  request) {
-        return stub_->ModifyColumnFamilies(context, request);
+        return stub_->ModifyColumnFamilies(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status BigtableTableAdminConnectionImpl::DropRowRange(
@@ -237,11 +238,11 @@ Status BigtableTableAdminConnectionImpl::DropRowRange(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DropRowRange(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::admin::v2::DropRowRangeRequest const& request) {
-        return stub_->DropRowRange(context, request);
+        return stub_->DropRowRange(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
@@ -252,12 +253,12 @@ BigtableTableAdminConnectionImpl::GenerateConsistencyToken(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateConsistencyToken(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
                  request) {
-        return stub_->GenerateConsistencyToken(context, request);
+        return stub_->GenerateConsistencyToken(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
@@ -268,11 +269,11 @@ BigtableTableAdminConnectionImpl::CheckConsistency(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CheckConsistency(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
-        return stub_->CheckConsistency(context, request);
+        return stub_->CheckConsistency(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::bigtable::admin::v2::Backup>>
@@ -319,11 +320,11 @@ BigtableTableAdminConnectionImpl::GetBackup(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetBackup(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::admin::v2::GetBackupRequest const& request) {
-        return stub_->GetBackup(context, request);
+        return stub_->GetBackup(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::bigtable::admin::v2::Backup>
@@ -333,11 +334,11 @@ BigtableTableAdminConnectionImpl::UpdateBackup(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateBackup(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::admin::v2::UpdateBackupRequest const& request) {
-        return stub_->UpdateBackup(context, request);
+        return stub_->UpdateBackup(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status BigtableTableAdminConnectionImpl::DeleteBackup(
@@ -346,11 +347,11 @@ Status BigtableTableAdminConnectionImpl::DeleteBackup(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteBackup(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::admin::v2::DeleteBackupRequest const& request) {
-        return stub_->DeleteBackup(context, request);
+        return stub_->DeleteBackup(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::bigtable::admin::v2::Backup>
@@ -362,18 +363,21 @@ BigtableTableAdminConnectionImpl::ListBackups(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::bigtable::admin::v2::Backup>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<bigtable_admin::BigtableTableAdminRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::bigtable::admin::v2::ListBackupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::bigtable::admin::v2::ListBackupsRequest const&
-                       request) { return stub->ListBackups(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListBackups(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::bigtable::admin::v2::ListBackupsResponse r) {
         std::vector<google::bigtable::admin::v2::Backup> result(
@@ -464,11 +468,11 @@ BigtableTableAdminConnectionImpl::GetIamPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
-        return stub_->GetIamPolicy(context, request);
+        return stub_->GetIamPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::Policy>
@@ -478,11 +482,11 @@ BigtableTableAdminConnectionImpl::SetIamPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
-        return stub_->SetIamPolicy(context, request);
+        return stub_->SetIamPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
@@ -492,11 +496,11 @@ BigtableTableAdminConnectionImpl::TestIamPermissions(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TestIamPermissions(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
-        return stub_->TestIamPermissions(context, request);
+        return stub_->TestIamPermissions(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>

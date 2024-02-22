@@ -32,7 +32,7 @@ TenantServiceStub::~TenantServiceStub() = default;
 
 StatusOr<google::cloud::talent::v4::Tenant>
 DefaultTenantServiceStub::CreateTenant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::CreateTenantRequest const& request) {
   google::cloud::talent::v4::Tenant response;
   auto status = grpc_stub_->CreateTenant(&context, request, &response);
@@ -43,7 +43,7 @@ DefaultTenantServiceStub::CreateTenant(
 }
 
 StatusOr<google::cloud::talent::v4::Tenant> DefaultTenantServiceStub::GetTenant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::GetTenantRequest const& request) {
   google::cloud::talent::v4::Tenant response;
   auto status = grpc_stub_->GetTenant(&context, request, &response);
@@ -55,7 +55,7 @@ StatusOr<google::cloud::talent::v4::Tenant> DefaultTenantServiceStub::GetTenant(
 
 StatusOr<google::cloud::talent::v4::Tenant>
 DefaultTenantServiceStub::UpdateTenant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::UpdateTenantRequest const& request) {
   google::cloud::talent::v4::Tenant response;
   auto status = grpc_stub_->UpdateTenant(&context, request, &response);
@@ -66,7 +66,7 @@ DefaultTenantServiceStub::UpdateTenant(
 }
 
 Status DefaultTenantServiceStub::DeleteTenant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::DeleteTenantRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteTenant(&context, request, &response);
@@ -78,7 +78,7 @@ Status DefaultTenantServiceStub::DeleteTenant(
 
 StatusOr<google::cloud::talent::v4::ListTenantsResponse>
 DefaultTenantServiceStub::ListTenants(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::ListTenantsRequest const& request) {
   google::cloud::talent::v4::ListTenantsResponse response;
   auto status = grpc_stub_->ListTenants(&context, request, &response);

@@ -38,15 +38,15 @@ SessionsLogging::SessionsLogging(std::shared_ptr<SessionsStub> child,
 
 StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>
 SessionsLogging::DetectIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DetectIntentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::v2::DetectIntentRequest const& request) {
-        return child_->DetectIntent(context, request);
+        return child_->DetectIntent(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

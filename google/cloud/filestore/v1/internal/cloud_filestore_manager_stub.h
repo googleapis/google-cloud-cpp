@@ -40,11 +40,11 @@ class CloudFilestoreManagerStub {
 
   virtual StatusOr<google::cloud::filestore::v1::ListInstancesResponse>
   ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::filestore::v1::ListInstancesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::filestore::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::filestore::v1::GetInstanceRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
@@ -74,11 +74,11 @@ class CloudFilestoreManagerStub {
 
   virtual StatusOr<google::cloud::filestore::v1::ListSnapshotsResponse>
   ListSnapshots(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::filestore::v1::ListSnapshotsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::filestore::v1::Snapshot> GetSnapshot(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::filestore::v1::GetSnapshotRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateSnapshot(
@@ -98,11 +98,11 @@ class CloudFilestoreManagerStub {
 
   virtual StatusOr<google::cloud::filestore::v1::ListBackupsResponse>
   ListBackups(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::filestore::v1::ListBackupsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::filestore::v1::Backup> GetBackup(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::filestore::v1::GetBackupRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
@@ -142,12 +142,12 @@ class DefaultCloudFilestoreManagerStub : public CloudFilestoreManagerStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::filestore::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::filestore::v1::ListInstancesRequest const& request)
       override;
 
   StatusOr<google::cloud::filestore::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::filestore::v1::GetInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
@@ -181,12 +181,12 @@ class DefaultCloudFilestoreManagerStub : public CloudFilestoreManagerStub {
       override;
 
   StatusOr<google::cloud::filestore::v1::ListSnapshotsResponse> ListSnapshots(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::filestore::v1::ListSnapshotsRequest const& request)
       override;
 
   StatusOr<google::cloud::filestore::v1::Snapshot> GetSnapshot(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::filestore::v1::GetSnapshotRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateSnapshot(
@@ -208,11 +208,11 @@ class DefaultCloudFilestoreManagerStub : public CloudFilestoreManagerStub {
       override;
 
   StatusOr<google::cloud::filestore::v1::ListBackupsResponse> ListBackups(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::filestore::v1::ListBackupsRequest const& request) override;
 
   StatusOr<google::cloud::filestore::v1::Backup> GetBackup(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::filestore::v1::GetBackupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(

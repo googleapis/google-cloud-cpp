@@ -36,25 +36,27 @@ TraceServiceLogging::TraceServiceLogging(
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 Status TraceServiceLogging::BatchWriteSpans(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::cloudtrace::v2::BatchWriteSpansRequest const&
-                 request) { return child_->BatchWriteSpans(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->BatchWriteSpans(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::devtools::cloudtrace::v2::Span>
 TraceServiceLogging::CreateSpan(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v2::Span const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::cloudtrace::v2::Span const& request) {
-        return child_->CreateSpan(context, request);
+        return child_->CreateSpan(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

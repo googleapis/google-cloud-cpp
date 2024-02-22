@@ -40,7 +40,7 @@ class NetAppLogging : public NetAppStub {
                 std::set<std::string> const& components);
 
   StatusOr<google::cloud::netapp::v1::ListStoragePoolsResponse>
-  ListStoragePools(grpc::ClientContext& context,
+  ListStoragePools(grpc::ClientContext& context, Options const& options,
                    google::cloud::netapp::v1::ListStoragePoolsRequest const&
                        request) override;
 
@@ -51,7 +51,7 @@ class NetAppLogging : public NetAppStub {
       override;
 
   StatusOr<google::cloud::netapp::v1::StoragePool> GetStoragePool(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::netapp::v1::GetStoragePoolRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateStoragePool(
@@ -67,11 +67,11 @@ class NetAppLogging : public NetAppStub {
       override;
 
   StatusOr<google::cloud::netapp::v1::ListVolumesResponse> ListVolumes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::netapp::v1::ListVolumesRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::Volume> GetVolume(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::netapp::v1::GetVolumeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateVolume(
@@ -95,11 +95,11 @@ class NetAppLogging : public NetAppStub {
       google::cloud::netapp::v1::RevertVolumeRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::ListSnapshotsResponse> ListSnapshots(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::netapp::v1::ListSnapshotsRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::Snapshot> GetSnapshot(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::netapp::v1::GetSnapshotRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateSnapshot(
@@ -119,12 +119,12 @@ class NetAppLogging : public NetAppStub {
 
   StatusOr<google::cloud::netapp::v1::ListActiveDirectoriesResponse>
   ListActiveDirectories(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::netapp::v1::ListActiveDirectoriesRequest const& request)
       override;
 
   StatusOr<google::cloud::netapp::v1::ActiveDirectory> GetActiveDirectory(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::netapp::v1::GetActiveDirectoryRequest const& request)
       override;
 
@@ -147,7 +147,7 @@ class NetAppLogging : public NetAppStub {
       override;
 
   StatusOr<google::cloud::netapp::v1::ListKmsConfigsResponse> ListKmsConfigs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::netapp::v1::ListKmsConfigsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateKmsConfig(
@@ -157,7 +157,7 @@ class NetAppLogging : public NetAppStub {
       override;
 
   StatusOr<google::cloud::netapp::v1::KmsConfig> GetKmsConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::netapp::v1::GetKmsConfigRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateKmsConfig(
@@ -172,7 +172,7 @@ class NetAppLogging : public NetAppStub {
       google::cloud::netapp::v1::EncryptVolumesRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::VerifyKmsConfigResponse> VerifyKmsConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::netapp::v1::VerifyKmsConfigRequest const& request)
       override;
 
@@ -183,12 +183,12 @@ class NetAppLogging : public NetAppStub {
       override;
 
   StatusOr<google::cloud::netapp::v1::ListReplicationsResponse>
-  ListReplications(grpc::ClientContext& context,
+  ListReplications(grpc::ClientContext& context, Options const& options,
                    google::cloud::netapp::v1::ListReplicationsRequest const&
                        request) override;
 
   StatusOr<google::cloud::netapp::v1::Replication> GetReplication(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::netapp::v1::GetReplicationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateReplication(
@@ -235,11 +235,11 @@ class NetAppLogging : public NetAppStub {
       override;
 
   StatusOr<google::cloud::netapp::v1::BackupVault> GetBackupVault(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::netapp::v1::GetBackupVaultRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::ListBackupVaultsResponse>
-  ListBackupVaults(grpc::ClientContext& context,
+  ListBackupVaults(grpc::ClientContext& context, Options const& options,
                    google::cloud::netapp::v1::ListBackupVaultsRequest const&
                        request) override;
 
@@ -261,11 +261,11 @@ class NetAppLogging : public NetAppStub {
       google::cloud::netapp::v1::CreateBackupRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::Backup> GetBackup(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::netapp::v1::GetBackupRequest const& request) override;
 
   StatusOr<google::cloud::netapp::v1::ListBackupsResponse> ListBackups(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::netapp::v1::ListBackupsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteBackup(
@@ -285,12 +285,12 @@ class NetAppLogging : public NetAppStub {
       override;
 
   StatusOr<google::cloud::netapp::v1::BackupPolicy> GetBackupPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::netapp::v1::GetBackupPolicyRequest const& request)
       override;
 
   StatusOr<google::cloud::netapp::v1::ListBackupPoliciesResponse>
-  ListBackupPolicies(grpc::ClientContext& context,
+  ListBackupPolicies(grpc::ClientContext& context, Options const& options,
                      google::cloud::netapp::v1::ListBackupPoliciesRequest const&
                          request) override;
 

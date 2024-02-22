@@ -32,7 +32,7 @@ FirewallStub::~FirewallStub() = default;
 
 StatusOr<google::appengine::v1::ListIngressRulesResponse>
 DefaultFirewallStub::ListIngressRules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::ListIngressRulesRequest const& request) {
   google::appengine::v1::ListIngressRulesResponse response;
   auto status = grpc_stub_->ListIngressRules(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultFirewallStub::ListIngressRules(
 
 StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
 DefaultFirewallStub::BatchUpdateIngressRules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::BatchUpdateIngressRulesRequest const& request) {
   google::appengine::v1::BatchUpdateIngressRulesResponse response;
   auto status =
@@ -57,7 +57,7 @@ DefaultFirewallStub::BatchUpdateIngressRules(
 
 StatusOr<google::appengine::v1::FirewallRule>
 DefaultFirewallStub::CreateIngressRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::CreateIngressRuleRequest const& request) {
   google::appengine::v1::FirewallRule response;
   auto status = grpc_stub_->CreateIngressRule(&context, request, &response);
@@ -69,7 +69,7 @@ DefaultFirewallStub::CreateIngressRule(
 
 StatusOr<google::appengine::v1::FirewallRule>
 DefaultFirewallStub::GetIngressRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::GetIngressRuleRequest const& request) {
   google::appengine::v1::FirewallRule response;
   auto status = grpc_stub_->GetIngressRule(&context, request, &response);
@@ -81,7 +81,7 @@ DefaultFirewallStub::GetIngressRule(
 
 StatusOr<google::appengine::v1::FirewallRule>
 DefaultFirewallStub::UpdateIngressRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::UpdateIngressRuleRequest const& request) {
   google::appengine::v1::FirewallRule response;
   auto status = grpc_stub_->UpdateIngressRule(&context, request, &response);
@@ -92,7 +92,7 @@ DefaultFirewallStub::UpdateIngressRule(
 }
 
 Status DefaultFirewallStub::DeleteIngressRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::DeleteIngressRuleRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteIngressRule(&context, request, &response);

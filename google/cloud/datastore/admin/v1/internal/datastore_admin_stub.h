@@ -59,12 +59,12 @@ class DatastoreAdminStub {
       google::datastore::admin::v1::DeleteIndexRequest const& request) = 0;
 
   virtual StatusOr<google::datastore::admin::v1::Index> GetIndex(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::admin::v1::GetIndexRequest const& request) = 0;
 
   virtual StatusOr<google::datastore::admin::v1::ListIndexesResponse>
   ListIndexes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::admin::v1::ListIndexesRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -111,11 +111,11 @@ class DefaultDatastoreAdminStub : public DatastoreAdminStub {
       google::datastore::admin::v1::DeleteIndexRequest const& request) override;
 
   StatusOr<google::datastore::admin::v1::Index> GetIndex(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::admin::v1::GetIndexRequest const& request) override;
 
   StatusOr<google::datastore::admin::v1::ListIndexesResponse> ListIndexes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::admin::v1::ListIndexesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

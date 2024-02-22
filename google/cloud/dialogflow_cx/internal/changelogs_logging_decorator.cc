@@ -37,24 +37,28 @@ ChangelogsLogging::ChangelogsLogging(std::shared_ptr<ChangelogsStub> child,
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListChangelogsResponse>
 ChangelogsLogging::ListChangelogs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListChangelogsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::ListChangelogsRequest const&
-                 request) { return child_->ListChangelogs(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListChangelogs(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Changelog>
 ChangelogsLogging::GetChangelog(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::GetChangelogRequest const&
-                 request) { return child_->GetChangelog(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetChangelog(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -33,7 +33,7 @@ DocumentProcessorServiceStub::~DocumentProcessorServiceStub() = default;
 
 StatusOr<google::cloud::documentai::v1::ProcessResponse>
 DefaultDocumentProcessorServiceStub::ProcessDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::ProcessRequest const& request) {
   google::cloud::documentai::v1::ProcessResponse response;
   auto status = grpc_stub_->ProcessDocument(&context, request, &response);
@@ -62,7 +62,7 @@ DefaultDocumentProcessorServiceStub::AsyncBatchProcessDocuments(
 
 StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
 DefaultDocumentProcessorServiceStub::FetchProcessorTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::FetchProcessorTypesRequest const& request) {
   google::cloud::documentai::v1::FetchProcessorTypesResponse response;
   auto status = grpc_stub_->FetchProcessorTypes(&context, request, &response);
@@ -74,7 +74,7 @@ DefaultDocumentProcessorServiceStub::FetchProcessorTypes(
 
 StatusOr<google::cloud::documentai::v1::ListProcessorTypesResponse>
 DefaultDocumentProcessorServiceStub::ListProcessorTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::ListProcessorTypesRequest const& request) {
   google::cloud::documentai::v1::ListProcessorTypesResponse response;
   auto status = grpc_stub_->ListProcessorTypes(&context, request, &response);
@@ -86,7 +86,7 @@ DefaultDocumentProcessorServiceStub::ListProcessorTypes(
 
 StatusOr<google::cloud::documentai::v1::ProcessorType>
 DefaultDocumentProcessorServiceStub::GetProcessorType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::GetProcessorTypeRequest const& request) {
   google::cloud::documentai::v1::ProcessorType response;
   auto status = grpc_stub_->GetProcessorType(&context, request, &response);
@@ -98,7 +98,7 @@ DefaultDocumentProcessorServiceStub::GetProcessorType(
 
 StatusOr<google::cloud::documentai::v1::ListProcessorsResponse>
 DefaultDocumentProcessorServiceStub::ListProcessors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::ListProcessorsRequest const& request) {
   google::cloud::documentai::v1::ListProcessorsResponse response;
   auto status = grpc_stub_->ListProcessors(&context, request, &response);
@@ -110,7 +110,7 @@ DefaultDocumentProcessorServiceStub::ListProcessors(
 
 StatusOr<google::cloud::documentai::v1::Processor>
 DefaultDocumentProcessorServiceStub::GetProcessor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::GetProcessorRequest const& request) {
   google::cloud::documentai::v1::Processor response;
   auto status = grpc_stub_->GetProcessor(&context, request, &response);
@@ -141,7 +141,7 @@ DefaultDocumentProcessorServiceStub::AsyncTrainProcessorVersion(
 
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DefaultDocumentProcessorServiceStub::GetProcessorVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::GetProcessorVersionRequest const& request) {
   google::cloud::documentai::v1::ProcessorVersion response;
   auto status = grpc_stub_->GetProcessorVersion(&context, request, &response);
@@ -153,7 +153,7 @@ DefaultDocumentProcessorServiceStub::GetProcessorVersion(
 
 StatusOr<google::cloud::documentai::v1::ListProcessorVersionsResponse>
 DefaultDocumentProcessorServiceStub::ListProcessorVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::ListProcessorVersionsRequest const&
         request) {
   google::cloud::documentai::v1::ListProcessorVersionsResponse response;
@@ -224,7 +224,7 @@ DefaultDocumentProcessorServiceStub::AsyncUndeployProcessorVersion(
 
 StatusOr<google::cloud::documentai::v1::Processor>
 DefaultDocumentProcessorServiceStub::CreateProcessor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::CreateProcessorRequest const& request) {
   google::cloud::documentai::v1::Processor response;
   auto status = grpc_stub_->CreateProcessor(&context, request, &response);
@@ -348,7 +348,7 @@ DefaultDocumentProcessorServiceStub::AsyncEvaluateProcessorVersion(
 
 StatusOr<google::cloud::documentai::v1::Evaluation>
 DefaultDocumentProcessorServiceStub::GetEvaluation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::GetEvaluationRequest const& request) {
   google::cloud::documentai::v1::Evaluation response;
   auto status = grpc_stub_->GetEvaluation(&context, request, &response);
@@ -360,7 +360,7 @@ DefaultDocumentProcessorServiceStub::GetEvaluation(
 
 StatusOr<google::cloud::documentai::v1::ListEvaluationsResponse>
 DefaultDocumentProcessorServiceStub::ListEvaluations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::ListEvaluationsRequest const& request) {
   google::cloud::documentai::v1::ListEvaluationsResponse response;
   auto status = grpc_stub_->ListEvaluations(&context, request, &response);

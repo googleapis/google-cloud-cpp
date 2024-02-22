@@ -74,10 +74,12 @@ UserEventServiceConnectionImpl::WriteUserEvent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->WriteUserEvent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::discoveryengine::v1::WriteUserEventRequest const&
-                 request) { return stub_->WriteUserEvent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->WriteUserEvent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::api::HttpBody>
@@ -88,10 +90,12 @@ UserEventServiceConnectionImpl::CollectUserEvent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CollectUserEvent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::discoveryengine::v1::CollectUserEventRequest const&
-                 request) { return stub_->CollectUserEvent(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CollectUserEvent(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::ImportUserEventsResponse>>

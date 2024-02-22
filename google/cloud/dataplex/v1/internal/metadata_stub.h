@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_INTERNAL_METADATA_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_INTERNAL_METADATA_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dataplex/v1/metadata.grpc.pb.h>
@@ -35,41 +36,41 @@ class MetadataServiceStub {
   virtual ~MetadataServiceStub() = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::Entity> CreateEntity(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::CreateEntityRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::Entity> UpdateEntity(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::UpdateEntityRequest const& request) = 0;
 
   virtual Status DeleteEntity(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::DeleteEntityRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::Entity> GetEntity(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::GetEntityRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::ListEntitiesResponse>
   ListEntities(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::ListEntitiesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::Partition> CreatePartition(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::CreatePartitionRequest const& request) = 0;
 
   virtual Status DeletePartition(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::DeletePartitionRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::Partition> GetPartition(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::GetPartitionRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataplex::v1::ListPartitionsResponse>
   ListPartitions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::ListPartitionsRequest const& request) = 0;
 };
 
@@ -82,41 +83,41 @@ class DefaultMetadataServiceStub : public MetadataServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dataplex::v1::Entity> CreateEntity(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::CreateEntityRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::Entity> UpdateEntity(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::UpdateEntityRequest const& request) override;
 
   Status DeleteEntity(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::DeleteEntityRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::Entity> GetEntity(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::GetEntityRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::ListEntitiesResponse> ListEntities(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::ListEntitiesRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::Partition> CreatePartition(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::CreatePartitionRequest const& request)
       override;
 
   Status DeletePartition(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::DeletePartitionRequest const& request)
       override;
 
   StatusOr<google::cloud::dataplex::v1::Partition> GetPartition(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::GetPartitionRequest const& request) override;
 
   StatusOr<google::cloud::dataplex::v1::ListPartitionsResponse> ListPartitions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataplex::v1::ListPartitionsRequest const& request)
       override;
 

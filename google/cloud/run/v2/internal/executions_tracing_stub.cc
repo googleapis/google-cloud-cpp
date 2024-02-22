@@ -32,26 +32,26 @@ ExecutionsTracingStub::ExecutionsTracingStub(
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::run::v2::Execution> ExecutionsTracingStub::GetExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::GetExecutionRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.run.v2.Executions", "GetExecution");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetExecution(context, request));
+                           child_->GetExecution(context, options, request));
 }
 
 StatusOr<google::cloud::run::v2::ListExecutionsResponse>
 ExecutionsTracingStub::ListExecutions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::run::v2::ListExecutionsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.run.v2.Executions",
                                      "ListExecutions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListExecutions(context, request));
+                           child_->ListExecutions(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

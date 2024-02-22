@@ -40,7 +40,7 @@ class ScheduleServiceLogging : public ScheduleServiceStub {
                          std::set<std::string> const& components);
 
   StatusOr<google::cloud::aiplatform::v1::Schedule> CreateSchedule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::CreateScheduleRequest const& request)
       override;
 
@@ -51,27 +51,27 @@ class ScheduleServiceLogging : public ScheduleServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Schedule> GetSchedule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetScheduleRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListSchedulesResponse> ListSchedules(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListSchedulesRequest const& request)
       override;
 
   Status PauseSchedule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::PauseScheduleRequest const& request)
       override;
 
   Status ResumeSchedule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ResumeScheduleRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Schedule> UpdateSchedule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::UpdateScheduleRequest const& request)
       override;
 

@@ -33,7 +33,7 @@ BareMetalSolutionStub::~BareMetalSolutionStub() = default;
 
 StatusOr<google::cloud::baremetalsolution::v2::ListInstancesResponse>
 DefaultBareMetalSolutionStub::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::ListInstancesRequest const& request) {
   google::cloud::baremetalsolution::v2::ListInstancesResponse response;
   auto status = grpc_stub_->ListInstances(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultBareMetalSolutionStub::ListInstances(
 
 StatusOr<google::cloud::baremetalsolution::v2::Instance>
 DefaultBareMetalSolutionStub::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::GetInstanceRequest const& request) {
   google::cloud::baremetalsolution::v2::Instance response;
   auto status = grpc_stub_->GetInstance(&context, request, &response);
@@ -76,7 +76,7 @@ DefaultBareMetalSolutionStub::AsyncUpdateInstance(
 
 StatusOr<google::cloud::baremetalsolution::v2::Instance>
 DefaultBareMetalSolutionStub::RenameInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
         request) {
   google::cloud::baremetalsolution::v2::Instance response;
@@ -201,7 +201,7 @@ DefaultBareMetalSolutionStub::AsyncDetachLun(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListSSHKeysResponse>
 DefaultBareMetalSolutionStub::ListSSHKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::ListSSHKeysRequest const& request) {
   google::cloud::baremetalsolution::v2::ListSSHKeysResponse response;
   auto status = grpc_stub_->ListSSHKeys(&context, request, &response);
@@ -213,7 +213,7 @@ DefaultBareMetalSolutionStub::ListSSHKeys(
 
 StatusOr<google::cloud::baremetalsolution::v2::SSHKey>
 DefaultBareMetalSolutionStub::CreateSSHKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const& request) {
   google::cloud::baremetalsolution::v2::SSHKey response;
   auto status = grpc_stub_->CreateSSHKey(&context, request, &response);
@@ -224,7 +224,7 @@ DefaultBareMetalSolutionStub::CreateSSHKey(
 }
 
 Status DefaultBareMetalSolutionStub::DeleteSSHKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteSSHKey(&context, request, &response);
@@ -236,7 +236,7 @@ Status DefaultBareMetalSolutionStub::DeleteSSHKey(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListVolumesResponse>
 DefaultBareMetalSolutionStub::ListVolumes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::ListVolumesRequest const& request) {
   google::cloud::baremetalsolution::v2::ListVolumesResponse response;
   auto status = grpc_stub_->ListVolumes(&context, request, &response);
@@ -248,7 +248,7 @@ DefaultBareMetalSolutionStub::ListVolumes(
 
 StatusOr<google::cloud::baremetalsolution::v2::Volume>
 DefaultBareMetalSolutionStub::GetVolume(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::GetVolumeRequest const& request) {
   google::cloud::baremetalsolution::v2::Volume response;
   auto status = grpc_stub_->GetVolume(&context, request, &response);
@@ -278,7 +278,7 @@ DefaultBareMetalSolutionStub::AsyncUpdateVolume(
 
 StatusOr<google::cloud::baremetalsolution::v2::Volume>
 DefaultBareMetalSolutionStub::RenameVolume(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request) {
   google::cloud::baremetalsolution::v2::Volume response;
   auto status = grpc_stub_->RenameVolume(&context, request, &response);
@@ -326,7 +326,7 @@ DefaultBareMetalSolutionStub::AsyncResizeVolume(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListNetworksResponse>
 DefaultBareMetalSolutionStub::ListNetworks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::ListNetworksRequest const& request) {
   google::cloud::baremetalsolution::v2::ListNetworksResponse response;
   auto status = grpc_stub_->ListNetworks(&context, request, &response);
@@ -338,7 +338,7 @@ DefaultBareMetalSolutionStub::ListNetworks(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>
 DefaultBareMetalSolutionStub::ListNetworkUsage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&
         request) {
   google::cloud::baremetalsolution::v2::ListNetworkUsageResponse response;
@@ -351,7 +351,7 @@ DefaultBareMetalSolutionStub::ListNetworkUsage(
 
 StatusOr<google::cloud::baremetalsolution::v2::Network>
 DefaultBareMetalSolutionStub::GetNetwork(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::GetNetworkRequest const& request) {
   google::cloud::baremetalsolution::v2::Network response;
   auto status = grpc_stub_->GetNetwork(&context, request, &response);
@@ -381,7 +381,7 @@ DefaultBareMetalSolutionStub::AsyncUpdateNetwork(
 
 StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
 DefaultBareMetalSolutionStub::CreateVolumeSnapshot(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
         request) {
   google::cloud::baremetalsolution::v2::VolumeSnapshot response;
@@ -412,7 +412,7 @@ DefaultBareMetalSolutionStub::AsyncRestoreVolumeSnapshot(
 }
 
 Status DefaultBareMetalSolutionStub::DeleteVolumeSnapshot(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
         request) {
   google::protobuf::Empty response;
@@ -425,7 +425,7 @@ Status DefaultBareMetalSolutionStub::DeleteVolumeSnapshot(
 
 StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
 DefaultBareMetalSolutionStub::GetVolumeSnapshot(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
         request) {
   google::cloud::baremetalsolution::v2::VolumeSnapshot response;
@@ -438,7 +438,7 @@ DefaultBareMetalSolutionStub::GetVolumeSnapshot(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListVolumeSnapshotsResponse>
 DefaultBareMetalSolutionStub::ListVolumeSnapshots(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest const&
         request) {
   google::cloud::baremetalsolution::v2::ListVolumeSnapshotsResponse response;
@@ -451,7 +451,7 @@ DefaultBareMetalSolutionStub::ListVolumeSnapshots(
 
 StatusOr<google::cloud::baremetalsolution::v2::Lun>
 DefaultBareMetalSolutionStub::GetLun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::GetLunRequest const& request) {
   google::cloud::baremetalsolution::v2::Lun response;
   auto status = grpc_stub_->GetLun(&context, request, &response);
@@ -463,7 +463,7 @@ DefaultBareMetalSolutionStub::GetLun(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListLunsResponse>
 DefaultBareMetalSolutionStub::ListLuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::ListLunsRequest const& request) {
   google::cloud::baremetalsolution::v2::ListLunsResponse response;
   auto status = grpc_stub_->ListLuns(&context, request, &response);
@@ -493,7 +493,7 @@ DefaultBareMetalSolutionStub::AsyncEvictLun(
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
 DefaultBareMetalSolutionStub::GetNfsShare(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request) {
   google::cloud::baremetalsolution::v2::NfsShare response;
   auto status = grpc_stub_->GetNfsShare(&context, request, &response);
@@ -505,7 +505,7 @@ DefaultBareMetalSolutionStub::GetNfsShare(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListNfsSharesResponse>
 DefaultBareMetalSolutionStub::ListNfsShares(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::ListNfsSharesRequest const& request) {
   google::cloud::baremetalsolution::v2::ListNfsSharesResponse response;
   auto status = grpc_stub_->ListNfsShares(&context, request, &response);
@@ -555,7 +555,7 @@ DefaultBareMetalSolutionStub::AsyncCreateNfsShare(
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
 DefaultBareMetalSolutionStub::RenameNfsShare(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::RenameNfsShareRequest const&
         request) {
   google::cloud::baremetalsolution::v2::NfsShare response;
@@ -587,7 +587,7 @@ DefaultBareMetalSolutionStub::AsyncDeleteNfsShare(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListProvisioningQuotasResponse>
 DefaultBareMetalSolutionStub::ListProvisioningQuotas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest const&
         request) {
   google::cloud::baremetalsolution::v2::ListProvisioningQuotasResponse response;
@@ -601,7 +601,7 @@ DefaultBareMetalSolutionStub::ListProvisioningQuotas(
 
 StatusOr<google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
 DefaultBareMetalSolutionStub::SubmitProvisioningConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::SubmitProvisioningConfigRequest const&
         request) {
   google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse
@@ -616,7 +616,7 @@ DefaultBareMetalSolutionStub::SubmitProvisioningConfig(
 
 StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 DefaultBareMetalSolutionStub::GetProvisioningConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const&
         request) {
   google::cloud::baremetalsolution::v2::ProvisioningConfig response;
@@ -629,7 +629,7 @@ DefaultBareMetalSolutionStub::GetProvisioningConfig(
 
 StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 DefaultBareMetalSolutionStub::CreateProvisioningConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::CreateProvisioningConfigRequest const&
         request) {
   google::cloud::baremetalsolution::v2::ProvisioningConfig response;
@@ -643,7 +643,7 @@ DefaultBareMetalSolutionStub::CreateProvisioningConfig(
 
 StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 DefaultBareMetalSolutionStub::UpdateProvisioningConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::UpdateProvisioningConfigRequest const&
         request) {
   google::cloud::baremetalsolution::v2::ProvisioningConfig response;
@@ -657,7 +657,7 @@ DefaultBareMetalSolutionStub::UpdateProvisioningConfig(
 
 StatusOr<google::cloud::baremetalsolution::v2::Network>
 DefaultBareMetalSolutionStub::RenameNetwork(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::RenameNetworkRequest const& request) {
   google::cloud::baremetalsolution::v2::Network response;
   auto status = grpc_stub_->RenameNetwork(&context, request, &response);
@@ -669,7 +669,7 @@ DefaultBareMetalSolutionStub::RenameNetwork(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListOSImagesResponse>
 DefaultBareMetalSolutionStub::ListOSImages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::baremetalsolution::v2::ListOSImagesRequest const& request) {
   google::cloud::baremetalsolution::v2::ListOSImagesResponse response;
   auto status = grpc_stub_->ListOSImages(&context, request, &response);

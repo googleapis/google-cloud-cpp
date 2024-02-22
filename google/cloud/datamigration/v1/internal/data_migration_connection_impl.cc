@@ -80,21 +80,22 @@ DataMigrationServiceConnectionImpl::ListMigrationJobs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::clouddms::v1::MigrationJob>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::clouddms::v1::ListMigrationJobsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::clouddms::v1::ListMigrationJobsRequest const&
                        request) {
-              return stub->ListMigrationJobs(context, request);
+              return stub->ListMigrationJobs(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::clouddms::v1::ListMigrationJobsResponse r) {
         std::vector<google::cloud::clouddms::v1::MigrationJob> result(
@@ -113,11 +114,11 @@ DataMigrationServiceConnectionImpl::GetMigrationJob(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetMigrationJob(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::clouddms::v1::GetMigrationJobRequest const& request) {
-        return stub_->GetMigrationJob(context, request);
+        return stub_->GetMigrationJob(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -468,12 +469,12 @@ DataMigrationServiceConnectionImpl::GenerateSshScript(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateSshScript(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::clouddms::v1::GenerateSshScriptRequest const&
                  request) {
-        return stub_->GenerateSshScript(context, request);
+        return stub_->GenerateSshScript(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::clouddms::v1::TcpProxyScript>
@@ -483,12 +484,12 @@ DataMigrationServiceConnectionImpl::GenerateTcpProxyScript(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateTcpProxyScript(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::clouddms::v1::GenerateTcpProxyScriptRequest const&
                  request) {
-        return stub_->GenerateTcpProxyScript(context, request);
+        return stub_->GenerateTcpProxyScript(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
@@ -501,21 +502,22 @@ DataMigrationServiceConnectionImpl::ListConnectionProfiles(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::clouddms::v1::ConnectionProfile>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::clouddms::v1::ListConnectionProfilesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::clouddms::v1::
                        ListConnectionProfilesRequest const& request) {
-              return stub->ListConnectionProfiles(context, request);
+              return stub->ListConnectionProfiles(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::clouddms::v1::ListConnectionProfilesResponse r) {
         std::vector<google::cloud::clouddms::v1::ConnectionProfile> result(
@@ -533,12 +535,12 @@ DataMigrationServiceConnectionImpl::GetConnectionProfile(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetConnectionProfile(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::clouddms::v1::GetConnectionProfileRequest const&
                  request) {
-        return stub_->GetConnectionProfile(context, request);
+        return stub_->GetConnectionProfile(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
@@ -704,12 +706,12 @@ DataMigrationServiceConnectionImpl::GetPrivateConnection(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPrivateConnection(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::clouddms::v1::GetPrivateConnectionRequest const&
                  request) {
-        return stub_->GetPrivateConnection(context, request);
+        return stub_->GetPrivateConnection(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::clouddms::v1::PrivateConnection>
@@ -722,21 +724,22 @@ DataMigrationServiceConnectionImpl::ListPrivateConnections(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::clouddms::v1::PrivateConnection>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::clouddms::v1::ListPrivateConnectionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::clouddms::v1::
                        ListPrivateConnectionsRequest const& request) {
-              return stub->ListPrivateConnections(context, request);
+              return stub->ListPrivateConnections(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::clouddms::v1::ListPrivateConnectionsResponse r) {
         std::vector<google::cloud::clouddms::v1::PrivateConnection> result(
@@ -793,12 +796,12 @@ DataMigrationServiceConnectionImpl::GetConversionWorkspace(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetConversionWorkspace(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::clouddms::v1::GetConversionWorkspaceRequest const&
                  request) {
-        return stub_->GetConversionWorkspace(context, request);
+        return stub_->GetConversionWorkspace(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>
@@ -811,22 +814,23 @@ DataMigrationServiceConnectionImpl::ListConversionWorkspaces(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::clouddms::v1::ConversionWorkspace>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::clouddms::v1::ListConversionWorkspacesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::clouddms::v1::
                        ListConversionWorkspacesRequest const& request) {
-              return stub->ListConversionWorkspaces(context, request);
+              return stub->ListConversionWorkspaces(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::clouddms::v1::ListConversionWorkspacesResponse r) {
         std::vector<google::cloud::clouddms::v1::ConversionWorkspace> result(
@@ -961,12 +965,12 @@ DataMigrationServiceConnectionImpl::CreateMappingRule(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateMappingRule(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::clouddms::v1::CreateMappingRuleRequest const&
                  request) {
-        return stub_->CreateMappingRule(context, request);
+        return stub_->CreateMappingRule(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status DataMigrationServiceConnectionImpl::DeleteMappingRule(
@@ -975,12 +979,12 @@ Status DataMigrationServiceConnectionImpl::DeleteMappingRule(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteMappingRule(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::clouddms::v1::DeleteMappingRuleRequest const&
                  request) {
-        return stub_->DeleteMappingRule(context, request);
+        return stub_->DeleteMappingRule(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::clouddms::v1::MappingRule>
@@ -992,21 +996,22 @@ DataMigrationServiceConnectionImpl::ListMappingRules(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::clouddms::v1::MappingRule>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::clouddms::v1::ListMappingRulesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::clouddms::v1::ListMappingRulesRequest const&
                        request) {
-              return stub->ListMappingRules(context, request);
+              return stub->ListMappingRules(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::clouddms::v1::ListMappingRulesResponse r) {
         std::vector<google::cloud::clouddms::v1::MappingRule> result(
@@ -1025,11 +1030,11 @@ DataMigrationServiceConnectionImpl::GetMappingRule(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetMappingRule(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::clouddms::v1::GetMappingRuleRequest const& request) {
-        return stub_->GetMappingRule(context, request);
+        return stub_->GetMappingRule(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>
@@ -1275,22 +1280,23 @@ DataMigrationServiceConnectionImpl::DescribeDatabaseEntities(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::clouddms::v1::DatabaseEntity>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::clouddms::v1::DescribeDatabaseEntitiesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::clouddms::v1::
                        DescribeDatabaseEntitiesRequest const& request) {
-              return stub->DescribeDatabaseEntities(context, request);
+              return stub->DescribeDatabaseEntities(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::clouddms::v1::DescribeDatabaseEntitiesResponse r) {
         std::vector<google::cloud::clouddms::v1::DatabaseEntity> result(
@@ -1308,12 +1314,12 @@ DataMigrationServiceConnectionImpl::SearchBackgroundJobs(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SearchBackgroundJobs(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::clouddms::v1::SearchBackgroundJobsRequest const&
                  request) {
-        return stub_->SearchBackgroundJobs(context, request);
+        return stub_->SearchBackgroundJobs(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<
@@ -1326,12 +1332,13 @@ DataMigrationServiceConnectionImpl::DescribeConversionWorkspaceRevisions(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DescribeConversionWorkspaceRevisions(
           request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::clouddms::v1::
                  DescribeConversionWorkspaceRevisionsRequest const& request) {
-        return stub_->DescribeConversionWorkspaceRevisions(context, request);
+        return stub_->DescribeConversionWorkspaceRevisions(context, options,
+                                                           request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<std::string> DataMigrationServiceConnectionImpl::FetchStaticIps(
@@ -1341,21 +1348,22 @@ StreamRange<std::string> DataMigrationServiceConnectionImpl::FetchStaticIps(
   auto idempotency = idempotency_policy(*current)->FetchStaticIps(request);
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<std::string>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<datamigration_v1::DataMigrationServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::clouddms::v1::FetchStaticIpsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::clouddms::v1::FetchStaticIpsRequest const&
                        request) {
-              return stub->FetchStaticIps(context, request);
+              return stub->FetchStaticIps(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::clouddms::v1::FetchStaticIpsResponse r) {
         std::vector<std::string> result(r.static_ips().size());

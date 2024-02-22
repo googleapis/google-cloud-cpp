@@ -52,7 +52,7 @@ DefaultManagedIdentitiesServiceStub::AsyncCreateMicrosoftAdDomain(
 
 StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
 DefaultManagedIdentitiesServiceStub::ResetAdminPassword(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
         request) {
   google::cloud::managedidentities::v1::ResetAdminPasswordResponse response;
@@ -65,7 +65,7 @@ DefaultManagedIdentitiesServiceStub::ResetAdminPassword(
 
 StatusOr<google::cloud::managedidentities::v1::ListDomainsResponse>
 DefaultManagedIdentitiesServiceStub::ListDomains(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::managedidentities::v1::ListDomainsRequest const& request) {
   google::cloud::managedidentities::v1::ListDomainsResponse response;
   auto status = grpc_stub_->ListDomains(&context, request, &response);
@@ -77,7 +77,7 @@ DefaultManagedIdentitiesServiceStub::ListDomains(
 
 StatusOr<google::cloud::managedidentities::v1::Domain>
 DefaultManagedIdentitiesServiceStub::GetDomain(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::managedidentities::v1::GetDomainRequest const& request) {
   google::cloud::managedidentities::v1::Domain response;
   auto status = grpc_stub_->GetDomain(&context, request, &response);

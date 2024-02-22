@@ -67,7 +67,7 @@ TEST(GoldenKitchenSinkStubFactoryTest, DefaultStubWithAuth) {
   auto default_stub = CreateDefaultGoldenKitchenSinkStub(auth, options);
   grpc::ClientContext context;
   auto response =
-      default_stub->GenerateIdToken(context, GenerateIdTokenRequest{});
+      default_stub->GenerateIdToken(context, options, GenerateIdTokenRequest{});
   EXPECT_THAT(response, StatusIs(StatusCode::kAborted, "fail"));
 }
 
@@ -84,7 +84,7 @@ TEST(GoldenKitchenSinkStubFactoryTest, DefaultStubWithTracingEnabled) {
   auto auth = MakeStubFactoryMockAuth();
   auto stub = CreateDefaultGoldenKitchenSinkStub(auth, options);
   grpc::ClientContext context;
-  (void)stub->DoNothing(context, {});
+  (void)stub->DoNothing(context, options, {});
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
@@ -99,7 +99,7 @@ TEST(GoldenKitchenSinkStubFactoryTest, DefaultStubWithTracingDisabled) {
   auto auth = MakeStubFactoryMockAuth();
   auto stub = CreateDefaultGoldenKitchenSinkStub(auth, options);
   grpc::ClientContext context;
-  (void)stub->DoNothing(context, {});
+  (void)stub->DoNothing(context, options, {});
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(

@@ -33,13 +33,14 @@ SpeechTracingStub::SpeechTracingStub(std::shared_ptr<SpeechStub> child)
 
 StatusOr<google::cloud::speech::v1::RecognizeResponse>
 SpeechTracingStub::Recognize(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::RecognizeRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.speech.v1.Speech", "Recognize");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->Recognize(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->Recognize(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

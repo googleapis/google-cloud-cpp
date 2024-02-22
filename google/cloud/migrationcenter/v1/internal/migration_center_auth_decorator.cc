@@ -33,76 +33,76 @@ MigrationCenterAuth::MigrationCenterAuth(
 
 StatusOr<google::cloud::migrationcenter::v1::ListAssetsResponse>
 MigrationCenterAuth::ListAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::ListAssetsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAssets(context, request);
+  return child_->ListAssets(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Asset>
 MigrationCenterAuth::GetAsset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::GetAssetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAsset(context, request);
+  return child_->GetAsset(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Asset>
 MigrationCenterAuth::UpdateAsset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::UpdateAssetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateAsset(context, request);
+  return child_->UpdateAsset(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::BatchUpdateAssetsResponse>
 MigrationCenterAuth::BatchUpdateAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::BatchUpdateAssetsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->BatchUpdateAssets(context, request);
+  return child_->BatchUpdateAssets(context, options, request);
 }
 
 Status MigrationCenterAuth::DeleteAsset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::DeleteAssetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteAsset(context, request);
+  return child_->DeleteAsset(context, options, request);
 }
 
 Status MigrationCenterAuth::BatchDeleteAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::BatchDeleteAssetsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->BatchDeleteAssets(context, request);
+  return child_->BatchDeleteAssets(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ReportAssetFramesResponse>
 MigrationCenterAuth::ReportAssetFrames(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::ReportAssetFramesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ReportAssetFrames(context, request);
+  return child_->ReportAssetFrames(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::AggregateAssetsValuesResponse>
 MigrationCenterAuth::AggregateAssetsValues(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::AggregateAssetsValuesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->AggregateAssetsValues(context, request);
+  return child_->AggregateAssetsValues(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -126,20 +126,20 @@ MigrationCenterAuth::AsyncCreateImportJob(
 
 StatusOr<google::cloud::migrationcenter::v1::ListImportJobsResponse>
 MigrationCenterAuth::ListImportJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::ListImportJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListImportJobs(context, request);
+  return child_->ListImportJobs(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ImportJob>
 MigrationCenterAuth::GetImportJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::GetImportJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetImportJob(context, request);
+  return child_->GetImportJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -221,22 +221,22 @@ MigrationCenterAuth::AsyncRunImportJob(
 
 StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>
 MigrationCenterAuth::GetImportDataFile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::GetImportDataFileRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetImportDataFile(context, request);
+  return child_->GetImportDataFile(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListImportDataFilesResponse>
 MigrationCenterAuth::ListImportDataFiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::ListImportDataFilesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListImportDataFiles(context, request);
+  return child_->ListImportDataFiles(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -281,20 +281,20 @@ MigrationCenterAuth::AsyncDeleteImportDataFile(
 
 StatusOr<google::cloud::migrationcenter::v1::ListGroupsResponse>
 MigrationCenterAuth::ListGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::ListGroupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListGroups(context, request);
+  return child_->ListGroups(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Group>
 MigrationCenterAuth::GetGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::GetGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetGroup(context, request);
+  return child_->GetGroup(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -396,38 +396,38 @@ MigrationCenterAuth::AsyncRemoveAssetsFromGroup(
 
 StatusOr<google::cloud::migrationcenter::v1::ListErrorFramesResponse>
 MigrationCenterAuth::ListErrorFrames(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::ListErrorFramesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListErrorFrames(context, request);
+  return child_->ListErrorFrames(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ErrorFrame>
 MigrationCenterAuth::GetErrorFrame(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::GetErrorFrameRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetErrorFrame(context, request);
+  return child_->GetErrorFrame(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListSourcesResponse>
 MigrationCenterAuth::ListSources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::ListSourcesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSources(context, request);
+  return child_->ListSources(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Source>
 MigrationCenterAuth::GetSource(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::GetSourceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetSource(context, request);
+  return child_->GetSource(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -489,22 +489,22 @@ MigrationCenterAuth::AsyncDeleteSource(
 
 StatusOr<google::cloud::migrationcenter::v1::ListPreferenceSetsResponse>
 MigrationCenterAuth::ListPreferenceSets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::ListPreferenceSetsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListPreferenceSets(context, request);
+  return child_->ListPreferenceSets(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::PreferenceSet>
 MigrationCenterAuth::GetPreferenceSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::GetPreferenceSetRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetPreferenceSet(context, request);
+  return child_->GetPreferenceSet(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -569,11 +569,11 @@ MigrationCenterAuth::AsyncDeletePreferenceSet(
 
 StatusOr<google::cloud::migrationcenter::v1::Settings>
 MigrationCenterAuth::GetSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::GetSettingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetSettings(context, request);
+  return child_->GetSettings(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -617,21 +617,21 @@ MigrationCenterAuth::AsyncCreateReportConfig(
 
 StatusOr<google::cloud::migrationcenter::v1::ReportConfig>
 MigrationCenterAuth::GetReportConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::GetReportConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetReportConfig(context, request);
+  return child_->GetReportConfig(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListReportConfigsResponse>
 MigrationCenterAuth::ListReportConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::ListReportConfigsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListReportConfigs(context, request);
+  return child_->ListReportConfigs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -675,20 +675,20 @@ MigrationCenterAuth::AsyncCreateReport(
 
 StatusOr<google::cloud::migrationcenter::v1::Report>
 MigrationCenterAuth::GetReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::GetReportRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetReport(context, request);
+  return child_->GetReport(context, options, request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListReportsResponse>
 MigrationCenterAuth::ListReports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::migrationcenter::v1::ListReportsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListReports(context, request);
+  return child_->ListReports(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

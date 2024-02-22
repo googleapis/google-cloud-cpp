@@ -37,24 +37,28 @@ ServiceManagerLogging::ServiceManagerLogging(
 
 StatusOr<google::api::servicemanagement::v1::ListServicesResponse>
 ServiceManagerLogging::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::ListServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::servicemanagement::v1::ListServicesRequest const&
-                 request) { return child_->ListServices(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListServices(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::servicemanagement::v1::ManagedService>
 ServiceManagerLogging::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::GetServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::servicemanagement::v1::GetServiceRequest const&
-                 request) { return child_->GetService(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -110,42 +114,44 @@ ServiceManagerLogging::AsyncUndeleteService(
 
 StatusOr<google::api::servicemanagement::v1::ListServiceConfigsResponse>
 ServiceManagerLogging::ListServiceConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::ListServiceConfigsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::api::servicemanagement::v1::ListServiceConfigsRequest const&
-              request) { return child_->ListServiceConfigs(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->ListServiceConfigs(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::Service> ServiceManagerLogging::GetServiceConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::GetServiceConfigRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::servicemanagement::v1::GetServiceConfigRequest const&
                  request) {
-        return child_->GetServiceConfig(context, request);
+        return child_->GetServiceConfig(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::Service> ServiceManagerLogging::CreateServiceConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::CreateServiceConfigRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::api::servicemanagement::v1::CreateServiceConfigRequest const&
               request) {
-        return child_->CreateServiceConfig(context, request);
+        return child_->CreateServiceConfig(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -168,31 +174,31 @@ ServiceManagerLogging::AsyncSubmitConfigSource(
 
 StatusOr<google::api::servicemanagement::v1::ListServiceRolloutsResponse>
 ServiceManagerLogging::ListServiceRollouts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::ListServiceRolloutsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::api::servicemanagement::v1::ListServiceRolloutsRequest const&
               request) {
-        return child_->ListServiceRollouts(context, request);
+        return child_->ListServiceRollouts(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::servicemanagement::v1::Rollout>
 ServiceManagerLogging::GetServiceRollout(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::GetServiceRolloutRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::servicemanagement::v1::GetServiceRolloutRequest const&
                  request) {
-        return child_->GetServiceRollout(context, request);
+        return child_->GetServiceRollout(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -215,17 +221,17 @@ ServiceManagerLogging::AsyncCreateServiceRollout(
 
 StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>
 ServiceManagerLogging::GenerateConfigReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::GenerateConfigReportRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::api::servicemanagement::v1::GenerateConfigReportRequest const&
               request) {
-        return child_->GenerateConfigReport(context, request);
+        return child_->GenerateConfigReport(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

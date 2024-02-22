@@ -44,53 +44,53 @@ GroupServiceMetadata::GroupServiceMetadata(
 
 StatusOr<google::monitoring::v3::ListGroupsResponse>
 GroupServiceMetadata::ListGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListGroupsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->ListGroups(context, request);
+  return child_->ListGroups(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceMetadata::GetGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetGroupRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetGroup(context, request);
+  return child_->GetGroup(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceMetadata::CreateGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateGroupRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->CreateGroup(context, request);
+  return child_->CreateGroup(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::Group> GroupServiceMetadata::UpdateGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::UpdateGroupRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("group.name=", internal::UrlEncode(request.group().name())));
-  return child_->UpdateGroup(context, request);
+  return child_->UpdateGroup(context, options, request);
 }
 
 Status GroupServiceMetadata::DeleteGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::DeleteGroupRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteGroup(context, request);
+  return child_->DeleteGroup(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::ListGroupMembersResponse>
 GroupServiceMetadata::ListGroupMembers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListGroupMembersRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->ListGroupMembers(context, request);
+  return child_->ListGroupMembers(context, options, request);
 }
 
 void GroupServiceMetadata::SetMetadata(grpc::ClientContext& context,

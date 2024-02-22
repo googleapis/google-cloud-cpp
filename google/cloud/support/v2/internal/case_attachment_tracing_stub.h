@@ -39,7 +39,7 @@ class CaseAttachmentServiceTracingStub : public CaseAttachmentServiceStub {
       std::shared_ptr<CaseAttachmentServiceStub> child);
 
   StatusOr<google::cloud::support::v2::ListAttachmentsResponse> ListAttachments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::ListAttachmentsRequest const& request)
       override;
 

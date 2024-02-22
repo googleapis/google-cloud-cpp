@@ -111,20 +111,21 @@ BackupForGKEConnectionImpl::ListBackupPlans(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::gkebackup::v1::BackupPlan>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::gkebackup::v1::ListBackupPlansRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::gkebackup::v1::ListBackupPlansRequest const&
                        request) {
-              return stub->ListBackupPlans(context, request);
+              return stub->ListBackupPlans(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::gkebackup::v1::ListBackupPlansResponse r) {
         std::vector<google::cloud::gkebackup::v1::BackupPlan> result(
@@ -143,11 +144,11 @@ BackupForGKEConnectionImpl::GetBackupPlan(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetBackupPlan(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::gkebackup::v1::GetBackupPlanRequest const& request) {
-        return stub_->GetBackupPlan(context, request);
+        return stub_->GetBackupPlan(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
@@ -272,18 +273,21 @@ BackupForGKEConnectionImpl::ListBackups(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::gkebackup::v1::Backup>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::gkebackup::v1::ListBackupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::gkebackup::v1::ListBackupsRequest const&
-                       request) { return stub->ListBackups(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListBackups(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::gkebackup::v1::ListBackupsResponse r) {
         std::vector<google::cloud::gkebackup::v1::Backup> result(
@@ -301,11 +305,11 @@ BackupForGKEConnectionImpl::GetBackup(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetBackup(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkebackup::v1::GetBackupRequest const& request) {
-        return stub_->GetBackup(context, request);
+        return stub_->GetBackup(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Backup>>
@@ -391,20 +395,21 @@ BackupForGKEConnectionImpl::ListVolumeBackups(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::gkebackup::v1::VolumeBackup>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::gkebackup::v1::ListVolumeBackupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::gkebackup::v1::ListVolumeBackupsRequest const&
                        request) {
-              return stub->ListVolumeBackups(context, request);
+              return stub->ListVolumeBackups(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::gkebackup::v1::ListVolumeBackupsResponse r) {
         std::vector<google::cloud::gkebackup::v1::VolumeBackup> result(
@@ -423,11 +428,11 @@ BackupForGKEConnectionImpl::GetVolumeBackup(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetVolumeBackup(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::gkebackup::v1::GetVolumeBackupRequest const& request) {
-        return stub_->GetVolumeBackup(context, request);
+        return stub_->GetVolumeBackup(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
@@ -477,20 +482,21 @@ BackupForGKEConnectionImpl::ListRestorePlans(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::gkebackup::v1::RestorePlan>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::gkebackup::v1::ListRestorePlansRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::gkebackup::v1::ListRestorePlansRequest const&
                        request) {
-              return stub->ListRestorePlans(context, request);
+              return stub->ListRestorePlans(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::gkebackup::v1::ListRestorePlansResponse r) {
         std::vector<google::cloud::gkebackup::v1::RestorePlan> result(
@@ -509,11 +515,11 @@ BackupForGKEConnectionImpl::GetRestorePlan(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRestorePlan(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::gkebackup::v1::GetRestorePlanRequest const& request) {
-        return stub_->GetRestorePlan(context, request);
+        return stub_->GetRestorePlan(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
@@ -638,20 +644,21 @@ BackupForGKEConnectionImpl::ListRestores(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::gkebackup::v1::Restore>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::gkebackup::v1::ListRestoresRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::gkebackup::v1::ListRestoresRequest const&
                        request) {
-              return stub->ListRestores(context, request);
+              return stub->ListRestores(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::gkebackup::v1::ListRestoresResponse r) {
         std::vector<google::cloud::gkebackup::v1::Restore> result(
@@ -669,11 +676,11 @@ BackupForGKEConnectionImpl::GetRestore(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRestore(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkebackup::v1::GetRestoreRequest const& request) {
-        return stub_->GetRestore(context, request);
+        return stub_->GetRestore(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::gkebackup::v1::Restore>>
@@ -759,21 +766,22 @@ BackupForGKEConnectionImpl::ListVolumeRestores(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::gkebackup::v1::VolumeRestore>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<gkebackup_v1::BackupForGKERetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::gkebackup::v1::ListVolumeRestoresRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::gkebackup::v1::ListVolumeRestoresRequest const&
                     request) {
-              return stub->ListVolumeRestores(context, request);
+              return stub->ListVolumeRestores(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::gkebackup::v1::ListVolumeRestoresResponse r) {
         std::vector<google::cloud::gkebackup::v1::VolumeRestore> result(
@@ -791,10 +799,12 @@ BackupForGKEConnectionImpl::GetVolumeRestore(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetVolumeRestore(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkebackup::v1::GetVolumeRestoreRequest const&
-                 request) { return stub_->GetVolumeRestore(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetVolumeRestore(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

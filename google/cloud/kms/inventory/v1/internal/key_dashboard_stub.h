@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_INTERNAL_KEY_DASHBOARD_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_INVENTORY_V1_INTERNAL_KEY_DASHBOARD_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/kms/inventory/v1/key_dashboard_service.grpc.pb.h>
@@ -35,7 +36,7 @@ class KeyDashboardServiceStub {
   virtual ~KeyDashboardServiceStub() = 0;
 
   virtual StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
-  ListCryptoKeys(grpc::ClientContext& context,
+  ListCryptoKeys(grpc::ClientContext& context, Options const& options,
                  google::cloud::kms::inventory::v1::ListCryptoKeysRequest const&
                      request) = 0;
 };
@@ -49,7 +50,7 @@ class DefaultKeyDashboardServiceStub : public KeyDashboardServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
-  ListCryptoKeys(grpc::ClientContext& context,
+  ListCryptoKeys(grpc::ClientContext& context, Options const& options,
                  google::cloud::kms::inventory::v1::ListCryptoKeysRequest const&
                      request) override;
 

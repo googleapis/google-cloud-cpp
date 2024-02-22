@@ -88,22 +88,22 @@ AppConnectionsServiceConnectionImpl::ListAppConnections(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<
       google::cloud::beyondcorp::appconnections::v1::AppConnection>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            beyondcorp_appconnections_v1::AppConnectionsServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::beyondcorp::appconnections::v1::
-              ListAppConnectionsRequest const& r) {
+          Options const& options, google::cloud::beyondcorp::appconnections::
+                                      v1::ListAppConnectionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::beyondcorp::appconnections::v1::
                        ListAppConnectionsRequest const& request) {
-              return stub->ListAppConnections(context, request);
+              return stub->ListAppConnections(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::beyondcorp::appconnections::v1::
              ListAppConnectionsResponse r) {
@@ -124,12 +124,12 @@ AppConnectionsServiceConnectionImpl::GetAppConnection(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAppConnection(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::beyondcorp::appconnections::v1::
                  GetAppConnectionRequest const& request) {
-        return stub_->GetAppConnection(context, request);
+        return stub_->GetAppConnection(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>
@@ -265,22 +265,23 @@ AppConnectionsServiceConnectionImpl::ResolveAppConnections(
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::beyondcorp::appconnections::v1::
                       ResolveAppConnectionsResponse::AppConnectionDetails>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            beyondcorp_appconnections_v1::AppConnectionsServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::beyondcorp::appconnections::v1::
               ResolveAppConnectionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::beyondcorp::appconnections::v1::
                        ResolveAppConnectionsRequest const& request) {
-              return stub->ResolveAppConnections(context, request);
+              return stub->ResolveAppConnections(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::beyondcorp::appconnections::v1::
              ResolveAppConnectionsResponse r) {

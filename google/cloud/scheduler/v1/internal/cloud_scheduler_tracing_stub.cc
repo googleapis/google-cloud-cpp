@@ -33,86 +33,94 @@ CloudSchedulerTracingStub::CloudSchedulerTracingStub(
 
 StatusOr<google::cloud::scheduler::v1::ListJobsResponse>
 CloudSchedulerTracingStub::ListJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::scheduler::v1::ListJobsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.scheduler.v1.CloudScheduler",
                                      "ListJobs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->ListJobs(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListJobs(context, options, request));
 }
 
 StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerTracingStub::GetJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::scheduler::v1::GetJobRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.scheduler.v1.CloudScheduler",
                                      "GetJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetJob(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetJob(context, options, request));
 }
 
 StatusOr<google::cloud::scheduler::v1::Job>
 CloudSchedulerTracingStub::CreateJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::scheduler::v1::CreateJobRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.scheduler.v1.CloudScheduler",
                                      "CreateJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->CreateJob(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateJob(context, options, request));
 }
 
 StatusOr<google::cloud::scheduler::v1::Job>
 CloudSchedulerTracingStub::UpdateJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::scheduler::v1::UpdateJobRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.scheduler.v1.CloudScheduler",
                                      "UpdateJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->UpdateJob(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateJob(context, options, request));
 }
 
 Status CloudSchedulerTracingStub::DeleteJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::scheduler::v1::DeleteJobRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.scheduler.v1.CloudScheduler",
                                      "DeleteJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->DeleteJob(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteJob(context, options, request));
 }
 
 StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerTracingStub::PauseJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::scheduler::v1::PauseJobRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.scheduler.v1.CloudScheduler",
                                      "PauseJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->PauseJob(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->PauseJob(context, options, request));
 }
 
 StatusOr<google::cloud::scheduler::v1::Job>
 CloudSchedulerTracingStub::ResumeJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::scheduler::v1::ResumeJobRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.scheduler.v1.CloudScheduler",
                                      "ResumeJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->ResumeJob(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->ResumeJob(context, options, request));
 }
 
 StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerTracingStub::RunJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::scheduler::v1::RunJobRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.scheduler.v1.CloudScheduler",
                                      "RunJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->RunJob(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->RunJob(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

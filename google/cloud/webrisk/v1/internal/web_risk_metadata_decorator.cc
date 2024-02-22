@@ -44,35 +44,35 @@ WebRiskServiceMetadata::WebRiskServiceMetadata(
 
 StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
 WebRiskServiceMetadata::ComputeThreatListDiff(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->ComputeThreatListDiff(context, request);
+  SetMetadata(context, options);
+  return child_->ComputeThreatListDiff(context, options, request);
 }
 
 StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
 WebRiskServiceMetadata::SearchUris(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::webrisk::v1::SearchUrisRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->SearchUris(context, request);
+  SetMetadata(context, options);
+  return child_->SearchUris(context, options, request);
 }
 
 StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
 WebRiskServiceMetadata::SearchHashes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::webrisk::v1::SearchHashesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->SearchHashes(context, request);
+  SetMetadata(context, options);
+  return child_->SearchHashes(context, options, request);
 }
 
 StatusOr<google::cloud::webrisk::v1::Submission>
 WebRiskServiceMetadata::CreateSubmission(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::webrisk::v1::CreateSubmissionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateSubmission(context, request);
+  return child_->CreateSubmission(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

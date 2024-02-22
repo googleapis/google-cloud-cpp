@@ -33,55 +33,55 @@ UptimeCheckServiceAuth::UptimeCheckServiceAuth(
 
 StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse>
 UptimeCheckServiceAuth::ListUptimeCheckConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListUptimeCheckConfigsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListUptimeCheckConfigs(context, request);
+  return child_->ListUptimeCheckConfigs(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceAuth::GetUptimeCheckConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetUptimeCheckConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetUptimeCheckConfig(context, request);
+  return child_->GetUptimeCheckConfig(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceAuth::CreateUptimeCheckConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateUptimeCheckConfig(context, request);
+  return child_->CreateUptimeCheckConfig(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceAuth::UpdateUptimeCheckConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateUptimeCheckConfig(context, request);
+  return child_->UpdateUptimeCheckConfig(context, options, request);
 }
 
 Status UptimeCheckServiceAuth::DeleteUptimeCheckConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteUptimeCheckConfig(context, request);
+  return child_->DeleteUptimeCheckConfig(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse>
 UptimeCheckServiceAuth::ListUptimeCheckIps(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListUptimeCheckIpsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListUptimeCheckIps(context, request);
+  return child_->ListUptimeCheckIps(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

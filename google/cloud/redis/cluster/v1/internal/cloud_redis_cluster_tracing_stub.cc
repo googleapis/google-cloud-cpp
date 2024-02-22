@@ -33,26 +33,26 @@ CloudRedisClusterTracingStub::CloudRedisClusterTracingStub(
 
 StatusOr<google::cloud::redis::cluster::v1::ListClustersResponse>
 CloudRedisClusterTracingStub::ListClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::redis::cluster::v1::ListClustersRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.redis.cluster.v1.CloudRedisCluster", "ListClusters");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListClusters(context, request));
+                           child_->ListClusters(context, options, request));
 }
 
 StatusOr<google::cloud::redis::cluster::v1::Cluster>
 CloudRedisClusterTracingStub::GetCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::redis::cluster::v1::GetClusterRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.redis.cluster.v1.CloudRedisCluster", "GetCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetCluster(context, request));
+                           child_->GetCluster(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

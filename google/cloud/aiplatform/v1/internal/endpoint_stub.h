@@ -44,16 +44,16 @@ class EndpointServiceStub {
       google::cloud::aiplatform::v1::CreateEndpointRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Endpoint> GetEndpoint(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetEndpointRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ListEndpointsResponse>
   ListEndpoints(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListEndpointsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::Endpoint> UpdateEndpoint(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::UpdateEndpointRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteEndpoint(
@@ -106,17 +106,17 @@ class DefaultEndpointServiceStub : public EndpointServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Endpoint> GetEndpoint(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetEndpointRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListEndpointsResponse> ListEndpoints(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListEndpointsRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Endpoint> UpdateEndpoint(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::UpdateEndpointRequest const& request)
       override;
 

@@ -38,15 +38,17 @@ BigQueryReadLogging::BigQueryReadLogging(
 
 StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
 BigQueryReadLogging::CreateReadSession(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
-              request) { return child_->CreateReadSession(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->CreateReadSession(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -75,14 +77,16 @@ BigQueryReadLogging::ReadRows(
 
 StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
 BigQueryReadLogging::SplitReadStream(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
-                 request) { return child_->SplitReadStream(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->SplitReadStream(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

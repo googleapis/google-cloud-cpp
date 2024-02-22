@@ -44,11 +44,11 @@ LookupServiceMetadata::LookupServiceMetadata(
 
 StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
 LookupServiceMetadata::ResolveService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::ResolveServiceRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->ResolveService(context, request);
+  return child_->ResolveService(context, options, request);
 }
 
 void LookupServiceMetadata::SetMetadata(grpc::ClientContext& context,

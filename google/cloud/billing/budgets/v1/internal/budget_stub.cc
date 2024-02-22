@@ -32,7 +32,7 @@ BudgetServiceStub::~BudgetServiceStub() = default;
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 DefaultBudgetServiceStub::CreateBudget(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) {
   google::cloud::billing::budgets::v1::Budget response;
   auto status = grpc_stub_->CreateBudget(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultBudgetServiceStub::CreateBudget(
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 DefaultBudgetServiceStub::UpdateBudget(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) {
   google::cloud::billing::budgets::v1::Budget response;
   auto status = grpc_stub_->UpdateBudget(&context, request, &response);
@@ -56,7 +56,7 @@ DefaultBudgetServiceStub::UpdateBudget(
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 DefaultBudgetServiceStub::GetBudget(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::billing::budgets::v1::GetBudgetRequest const& request) {
   google::cloud::billing::budgets::v1::Budget response;
   auto status = grpc_stub_->GetBudget(&context, request, &response);
@@ -68,7 +68,7 @@ DefaultBudgetServiceStub::GetBudget(
 
 StatusOr<google::cloud::billing::budgets::v1::ListBudgetsResponse>
 DefaultBudgetServiceStub::ListBudgets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::billing::budgets::v1::ListBudgetsRequest const& request) {
   google::cloud::billing::budgets::v1::ListBudgetsResponse response;
   auto status = grpc_stub_->ListBudgets(&context, request, &response);
@@ -79,7 +79,7 @@ DefaultBudgetServiceStub::ListBudgets(
 }
 
 Status DefaultBudgetServiceStub::DeleteBudget(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteBudget(&context, request, &response);

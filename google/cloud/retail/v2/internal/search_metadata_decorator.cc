@@ -44,12 +44,12 @@ SearchServiceMetadata::SearchServiceMetadata(
 
 StatusOr<google::cloud::retail::v2::SearchResponse>
 SearchServiceMetadata::Search(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::SearchRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("placement=", internal::UrlEncode(request.placement())));
-  return child_->Search(context, request);
+  return child_->Search(context, options, request);
 }
 
 void SearchServiceMetadata::SetMetadata(grpc::ClientContext& context,

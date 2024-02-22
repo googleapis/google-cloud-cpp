@@ -33,22 +33,22 @@ NetworkServicesAuth::NetworkServicesAuth(
 
 StatusOr<google::cloud::networkservices::v1::ListEndpointPoliciesResponse>
 NetworkServicesAuth::ListEndpointPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListEndpointPoliciesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEndpointPolicies(context, request);
+  return child_->ListEndpointPolicies(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::EndpointPolicy>
 NetworkServicesAuth::GetEndpointPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetEndpointPolicyRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEndpointPolicy(context, request);
+  return child_->GetEndpointPolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -113,20 +113,20 @@ NetworkServicesAuth::AsyncDeleteEndpointPolicy(
 
 StatusOr<google::cloud::networkservices::v1::ListGatewaysResponse>
 NetworkServicesAuth::ListGateways(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListGatewaysRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListGateways(context, request);
+  return child_->ListGateways(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::Gateway>
 NetworkServicesAuth::GetGateway(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetGatewayRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetGateway(context, request);
+  return child_->GetGateway(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -188,20 +188,20 @@ NetworkServicesAuth::AsyncDeleteGateway(
 
 StatusOr<google::cloud::networkservices::v1::ListGrpcRoutesResponse>
 NetworkServicesAuth::ListGrpcRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListGrpcRoutesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListGrpcRoutes(context, request);
+  return child_->ListGrpcRoutes(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::GrpcRoute>
 NetworkServicesAuth::GetGrpcRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetGrpcRouteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetGrpcRoute(context, request);
+  return child_->GetGrpcRoute(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -263,20 +263,20 @@ NetworkServicesAuth::AsyncDeleteGrpcRoute(
 
 StatusOr<google::cloud::networkservices::v1::ListHttpRoutesResponse>
 NetworkServicesAuth::ListHttpRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListHttpRoutesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListHttpRoutes(context, request);
+  return child_->ListHttpRoutes(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::HttpRoute>
 NetworkServicesAuth::GetHttpRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetHttpRouteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetHttpRoute(context, request);
+  return child_->GetHttpRoute(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -338,20 +338,20 @@ NetworkServicesAuth::AsyncDeleteHttpRoute(
 
 StatusOr<google::cloud::networkservices::v1::ListTcpRoutesResponse>
 NetworkServicesAuth::ListTcpRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListTcpRoutesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTcpRoutes(context, request);
+  return child_->ListTcpRoutes(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::TcpRoute>
 NetworkServicesAuth::GetTcpRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetTcpRouteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTcpRoute(context, request);
+  return child_->GetTcpRoute(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -413,20 +413,20 @@ NetworkServicesAuth::AsyncDeleteTcpRoute(
 
 StatusOr<google::cloud::networkservices::v1::ListTlsRoutesResponse>
 NetworkServicesAuth::ListTlsRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListTlsRoutesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTlsRoutes(context, request);
+  return child_->ListTlsRoutes(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::TlsRoute>
 NetworkServicesAuth::GetTlsRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetTlsRouteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTlsRoute(context, request);
+  return child_->GetTlsRoute(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -488,22 +488,22 @@ NetworkServicesAuth::AsyncDeleteTlsRoute(
 
 StatusOr<google::cloud::networkservices::v1::ListServiceBindingsResponse>
 NetworkServicesAuth::ListServiceBindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListServiceBindingsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListServiceBindings(context, request);
+  return child_->ListServiceBindings(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::ServiceBinding>
 NetworkServicesAuth::GetServiceBinding(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetServiceBindingRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetServiceBinding(context, request);
+  return child_->GetServiceBinding(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -548,19 +548,19 @@ NetworkServicesAuth::AsyncDeleteServiceBinding(
 
 StatusOr<google::cloud::networkservices::v1::ListMeshesResponse>
 NetworkServicesAuth::ListMeshes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListMeshesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListMeshes(context, request);
+  return child_->ListMeshes(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::Mesh> NetworkServicesAuth::GetMesh(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetMeshRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetMesh(context, request);
+  return child_->GetMesh(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

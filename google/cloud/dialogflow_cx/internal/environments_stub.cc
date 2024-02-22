@@ -33,7 +33,7 @@ EnvironmentsStub::~EnvironmentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListEnvironmentsResponse>
 DefaultEnvironmentsStub::ListEnvironments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ListEnvironmentsRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListEnvironmentsResponse response;
   auto status = grpc_stub_->ListEnvironments(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultEnvironmentsStub::ListEnvironments(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Environment>
 DefaultEnvironmentsStub::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Environment response;
   auto status = grpc_stub_->GetEnvironment(&context, request, &response);
@@ -94,7 +94,7 @@ DefaultEnvironmentsStub::AsyncUpdateEnvironment(
 }
 
 Status DefaultEnvironmentsStub::DeleteEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
         request) {
   google::protobuf::Empty response;
@@ -107,7 +107,7 @@ Status DefaultEnvironmentsStub::DeleteEnvironment(
 
 StatusOr<google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryResponse>
 DefaultEnvironmentsStub::LookupEnvironmentHistory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::LookupEnvironmentHistoryResponse response;
@@ -140,7 +140,7 @@ DefaultEnvironmentsStub::AsyncRunContinuousTest(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListContinuousTestResultsResponse>
 DefaultEnvironmentsStub::ListContinuousTestResults(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::ListContinuousTestResultsResponse response;

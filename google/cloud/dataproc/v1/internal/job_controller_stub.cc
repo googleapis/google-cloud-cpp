@@ -32,7 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 JobControllerStub::~JobControllerStub() = default;
 
 StatusOr<google::cloud::dataproc::v1::Job> DefaultJobControllerStub::SubmitJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::SubmitJobRequest const& request) {
   google::cloud::dataproc::v1::Job response;
   auto status = grpc_stub_->SubmitJob(&context, request, &response);
@@ -60,7 +60,7 @@ DefaultJobControllerStub::AsyncSubmitJobAsOperation(
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> DefaultJobControllerStub::GetJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::GetJobRequest const& request) {
   google::cloud::dataproc::v1::Job response;
   auto status = grpc_stub_->GetJob(&context, request, &response);
@@ -72,7 +72,7 @@ StatusOr<google::cloud::dataproc::v1::Job> DefaultJobControllerStub::GetJob(
 
 StatusOr<google::cloud::dataproc::v1::ListJobsResponse>
 DefaultJobControllerStub::ListJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::ListJobsRequest const& request) {
   google::cloud::dataproc::v1::ListJobsResponse response;
   auto status = grpc_stub_->ListJobs(&context, request, &response);
@@ -83,7 +83,7 @@ DefaultJobControllerStub::ListJobs(
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> DefaultJobControllerStub::UpdateJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::UpdateJobRequest const& request) {
   google::cloud::dataproc::v1::Job response;
   auto status = grpc_stub_->UpdateJob(&context, request, &response);
@@ -94,7 +94,7 @@ StatusOr<google::cloud::dataproc::v1::Job> DefaultJobControllerStub::UpdateJob(
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> DefaultJobControllerStub::CancelJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::CancelJobRequest const& request) {
   google::cloud::dataproc::v1::Job response;
   auto status = grpc_stub_->CancelJob(&context, request, &response);
@@ -105,7 +105,7 @@ StatusOr<google::cloud::dataproc::v1::Job> DefaultJobControllerStub::CancelJob(
 }
 
 Status DefaultJobControllerStub::DeleteJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::DeleteJobRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteJob(&context, request, &response);

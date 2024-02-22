@@ -51,7 +51,7 @@ DefaultSpecialistPoolServiceStub::AsyncCreateSpecialistPool(
 
 StatusOr<google::cloud::aiplatform::v1::SpecialistPool>
 DefaultSpecialistPoolServiceStub::GetSpecialistPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request) {
   google::cloud::aiplatform::v1::SpecialistPool response;
   auto status = grpc_stub_->GetSpecialistPool(&context, request, &response);
@@ -63,7 +63,7 @@ DefaultSpecialistPoolServiceStub::GetSpecialistPool(
 
 StatusOr<google::cloud::aiplatform::v1::ListSpecialistPoolsResponse>
 DefaultSpecialistPoolServiceStub::ListSpecialistPools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const& request) {
   google::cloud::aiplatform::v1::ListSpecialistPoolsResponse response;
   auto status = grpc_stub_->ListSpecialistPools(&context, request, &response);

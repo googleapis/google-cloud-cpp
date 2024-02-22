@@ -43,37 +43,37 @@ AgentsMetadata::AgentsMetadata(
               : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::dialogflow::v2::Agent> AgentsMetadata::GetAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetAgentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->GetAgent(context, request);
+  return child_->GetAgent(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Agent> AgentsMetadata::SetAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::SetAgentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("agent.parent=",
                            internal::UrlEncode(request.agent().parent())));
-  return child_->SetAgent(context, request);
+  return child_->SetAgent(context, options, request);
 }
 
 Status AgentsMetadata::DeleteAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteAgentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->DeleteAgent(context, request);
+  return child_->DeleteAgent(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SearchAgentsResponse>
 AgentsMetadata::SearchAgents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::SearchAgentsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->SearchAgents(context, request);
+  return child_->SearchAgents(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -118,11 +118,11 @@ AgentsMetadata::AsyncRestoreAgent(
 
 StatusOr<google::cloud::dialogflow::v2::ValidationResult>
 AgentsMetadata::GetValidationResult(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetValidationResultRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->GetValidationResult(context, request);
+  return child_->GetValidationResult(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

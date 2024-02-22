@@ -43,7 +43,7 @@ class SecurityCenterManagementTracingStub
   StatusOr<google::cloud::securitycentermanagement::v1::
                ListEffectiveSecurityHealthAnalyticsCustomModulesResponse>
   ListEffectiveSecurityHealthAnalyticsCustomModules(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycentermanagement::v1::
           ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
               request) override;
@@ -51,7 +51,7 @@ class SecurityCenterManagementTracingStub
   StatusOr<google::cloud::securitycentermanagement::v1::
                EffectiveSecurityHealthAnalyticsCustomModule>
   GetEffectiveSecurityHealthAnalyticsCustomModule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycentermanagement::v1::
           GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request)
       override;
@@ -59,7 +59,7 @@ class SecurityCenterManagementTracingStub
   StatusOr<google::cloud::securitycentermanagement::v1::
                ListSecurityHealthAnalyticsCustomModulesResponse>
   ListSecurityHealthAnalyticsCustomModules(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycentermanagement::v1::
           ListSecurityHealthAnalyticsCustomModulesRequest const& request)
       override;
@@ -67,7 +67,7 @@ class SecurityCenterManagementTracingStub
   StatusOr<google::cloud::securitycentermanagement::v1::
                ListDescendantSecurityHealthAnalyticsCustomModulesResponse>
   ListDescendantSecurityHealthAnalyticsCustomModules(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycentermanagement::v1::
           ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
               request) override;
@@ -75,7 +75,7 @@ class SecurityCenterManagementTracingStub
   StatusOr<google::cloud::securitycentermanagement::v1::
                SecurityHealthAnalyticsCustomModule>
   GetSecurityHealthAnalyticsCustomModule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycentermanagement::v1::
           GetSecurityHealthAnalyticsCustomModuleRequest const& request)
       override;
@@ -83,7 +83,7 @@ class SecurityCenterManagementTracingStub
   StatusOr<google::cloud::securitycentermanagement::v1::
                SecurityHealthAnalyticsCustomModule>
   CreateSecurityHealthAnalyticsCustomModule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycentermanagement::v1::
           CreateSecurityHealthAnalyticsCustomModuleRequest const& request)
       override;
@@ -91,13 +91,13 @@ class SecurityCenterManagementTracingStub
   StatusOr<google::cloud::securitycentermanagement::v1::
                SecurityHealthAnalyticsCustomModule>
   UpdateSecurityHealthAnalyticsCustomModule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycentermanagement::v1::
           UpdateSecurityHealthAnalyticsCustomModuleRequest const& request)
       override;
 
   Status DeleteSecurityHealthAnalyticsCustomModule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycentermanagement::v1::
           DeleteSecurityHealthAnalyticsCustomModuleRequest const& request)
       override;
@@ -105,7 +105,7 @@ class SecurityCenterManagementTracingStub
   StatusOr<google::cloud::securitycentermanagement::v1::
                SimulateSecurityHealthAnalyticsCustomModuleResponse>
   SimulateSecurityHealthAnalyticsCustomModule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycentermanagement::v1::
           SimulateSecurityHealthAnalyticsCustomModuleRequest const& request)
       override;
@@ -113,7 +113,7 @@ class SecurityCenterManagementTracingStub
   StatusOr<google::cloud::securitycentermanagement::v1::
                ListEffectiveEventThreatDetectionCustomModulesResponse>
   ListEffectiveEventThreatDetectionCustomModules(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycentermanagement::v1::
           ListEffectiveEventThreatDetectionCustomModulesRequest const& request)
       override;
@@ -121,7 +121,7 @@ class SecurityCenterManagementTracingStub
   StatusOr<google::cloud::securitycentermanagement::v1::
                EffectiveEventThreatDetectionCustomModule>
   GetEffectiveEventThreatDetectionCustomModule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycentermanagement::v1::
           GetEffectiveEventThreatDetectionCustomModuleRequest const& request)
       override;
@@ -129,14 +129,14 @@ class SecurityCenterManagementTracingStub
   StatusOr<google::cloud::securitycentermanagement::v1::
                ListEventThreatDetectionCustomModulesResponse>
   ListEventThreatDetectionCustomModules(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycentermanagement::v1::
           ListEventThreatDetectionCustomModulesRequest const& request) override;
 
   StatusOr<google::cloud::securitycentermanagement::v1::
                ListDescendantEventThreatDetectionCustomModulesResponse>
   ListDescendantEventThreatDetectionCustomModules(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycentermanagement::v1::
           ListDescendantEventThreatDetectionCustomModulesRequest const& request)
       override;
@@ -144,14 +144,14 @@ class SecurityCenterManagementTracingStub
   StatusOr<google::cloud::securitycentermanagement::v1::
                EventThreatDetectionCustomModule>
   GetEventThreatDetectionCustomModule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycentermanagement::v1::
           GetEventThreatDetectionCustomModuleRequest const& request) override;
 
   StatusOr<google::cloud::securitycentermanagement::v1::
                EventThreatDetectionCustomModule>
   CreateEventThreatDetectionCustomModule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycentermanagement::v1::
           CreateEventThreatDetectionCustomModuleRequest const& request)
       override;
@@ -159,13 +159,13 @@ class SecurityCenterManagementTracingStub
   StatusOr<google::cloud::securitycentermanagement::v1::
                EventThreatDetectionCustomModule>
   UpdateEventThreatDetectionCustomModule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycentermanagement::v1::
           UpdateEventThreatDetectionCustomModuleRequest const& request)
       override;
 
   Status DeleteEventThreatDetectionCustomModule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycentermanagement::v1::
           DeleteEventThreatDetectionCustomModuleRequest const& request)
       override;
@@ -173,7 +173,7 @@ class SecurityCenterManagementTracingStub
   StatusOr<google::cloud::securitycentermanagement::v1::
                ValidateEventThreatDetectionCustomModuleResponse>
   ValidateEventThreatDetectionCustomModule(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securitycentermanagement::v1::
           ValidateEventThreatDetectionCustomModuleRequest const& request)
       override;

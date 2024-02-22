@@ -32,7 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 EventarcStub::~EventarcStub() = default;
 
 StatusOr<google::cloud::eventarc::v1::Trigger> DefaultEventarcStub::GetTrigger(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::eventarc::v1::GetTriggerRequest const& request) {
   google::cloud::eventarc::v1::Trigger response;
   auto status = grpc_stub_->GetTrigger(&context, request, &response);
@@ -44,7 +44,7 @@ StatusOr<google::cloud::eventarc::v1::Trigger> DefaultEventarcStub::GetTrigger(
 
 StatusOr<google::cloud::eventarc::v1::ListTriggersResponse>
 DefaultEventarcStub::ListTriggers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::eventarc::v1::ListTriggersRequest const& request) {
   google::cloud::eventarc::v1::ListTriggersResponse response;
   auto status = grpc_stub_->ListTriggers(&context, request, &response);
@@ -106,7 +106,7 @@ DefaultEventarcStub::AsyncDeleteTrigger(
 }
 
 StatusOr<google::cloud::eventarc::v1::Channel> DefaultEventarcStub::GetChannel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::eventarc::v1::GetChannelRequest const& request) {
   google::cloud::eventarc::v1::Channel response;
   auto status = grpc_stub_->GetChannel(&context, request, &response);
@@ -118,7 +118,7 @@ StatusOr<google::cloud::eventarc::v1::Channel> DefaultEventarcStub::GetChannel(
 
 StatusOr<google::cloud::eventarc::v1::ListChannelsResponse>
 DefaultEventarcStub::ListChannels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::eventarc::v1::ListChannelsRequest const& request) {
   google::cloud::eventarc::v1::ListChannelsResponse response;
   auto status = grpc_stub_->ListChannels(&context, request, &response);
@@ -181,7 +181,7 @@ DefaultEventarcStub::AsyncDeleteChannel(
 
 StatusOr<google::cloud::eventarc::v1::Provider>
 DefaultEventarcStub::GetProvider(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::eventarc::v1::GetProviderRequest const& request) {
   google::cloud::eventarc::v1::Provider response;
   auto status = grpc_stub_->GetProvider(&context, request, &response);
@@ -193,7 +193,7 @@ DefaultEventarcStub::GetProvider(
 
 StatusOr<google::cloud::eventarc::v1::ListProvidersResponse>
 DefaultEventarcStub::ListProviders(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::eventarc::v1::ListProvidersRequest const& request) {
   google::cloud::eventarc::v1::ListProvidersResponse response;
   auto status = grpc_stub_->ListProviders(&context, request, &response);
@@ -205,7 +205,7 @@ DefaultEventarcStub::ListProviders(
 
 StatusOr<google::cloud::eventarc::v1::ChannelConnection>
 DefaultEventarcStub::GetChannelConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::eventarc::v1::GetChannelConnectionRequest const& request) {
   google::cloud::eventarc::v1::ChannelConnection response;
   auto status = grpc_stub_->GetChannelConnection(&context, request, &response);
@@ -217,7 +217,7 @@ DefaultEventarcStub::GetChannelConnection(
 
 StatusOr<google::cloud::eventarc::v1::ListChannelConnectionsResponse>
 DefaultEventarcStub::ListChannelConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::eventarc::v1::ListChannelConnectionsRequest const& request) {
   google::cloud::eventarc::v1::ListChannelConnectionsResponse response;
   auto status =
@@ -268,7 +268,7 @@ DefaultEventarcStub::AsyncDeleteChannelConnection(
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
 DefaultEventarcStub::GetGoogleChannelConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request) {
   google::cloud::eventarc::v1::GoogleChannelConfig response;
   auto status =
@@ -281,7 +281,7 @@ DefaultEventarcStub::GetGoogleChannelConfig(
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
 DefaultEventarcStub::UpdateGoogleChannelConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
         request) {
   google::cloud::eventarc::v1::GoogleChannelConfig response;

@@ -159,7 +159,7 @@ TEST(DefaultOptionsGrpc, DefaultOptionsUploadBuffer) {
 TEST_F(GrpcClientTest, QueryResumableUpload) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, QueryWriteStatus)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::QueryWriteStatusRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
@@ -183,7 +183,7 @@ TEST_F(GrpcClientTest, DeleteResumableUpload) {
   EXPECT_CALL(*mock, CancelResumableWrite)
       .WillOnce(
           [this](
-              grpc::ClientContext& context,
+              grpc::ClientContext& context, Options const&,
               google::storage::v2::CancelResumableWriteRequest const& request) {
             auto metadata = GetMetadata(context);
             EXPECT_THAT(metadata,
@@ -237,7 +237,7 @@ TEST_F(GrpcClientTest, CreateBucket) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, CreateBucket)
       .WillOnce(
-          [this](grpc::ClientContext& context,
+          [this](grpc::ClientContext& context, Options const&,
                  google::storage::v2::CreateBucketRequest const& request) {
             auto metadata = GetMetadata(context);
             EXPECT_THAT(metadata,
@@ -287,7 +287,7 @@ TEST_F(GrpcClientTest, CreateBucketAlreadyExists) {
 TEST_F(GrpcClientTest, GetBucket) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetBucket)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        google::storage::v2::GetBucketRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -312,7 +312,7 @@ TEST_F(GrpcClientTest, DeleteBucket) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, DeleteBucket)
       .WillOnce(
-          [this](grpc::ClientContext& context,
+          [this](grpc::ClientContext& context, Options const&,
                  google::storage::v2::DeleteBucketRequest const& request) {
             auto metadata = GetMetadata(context);
             EXPECT_THAT(metadata,
@@ -336,7 +336,7 @@ TEST_F(GrpcClientTest, DeleteBucket) {
 TEST_F(GrpcClientTest, ListBuckets) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, ListBuckets)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        google::storage::v2::ListBucketsRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -361,7 +361,7 @@ TEST_F(GrpcClientTest, LockBucketRetentionPolicy) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, LockBucketRetentionPolicy)
       .WillOnce(
-          [this](grpc::ClientContext& context,
+          [this](grpc::ClientContext& context, Options const&,
                  google::storage::v2::LockBucketRetentionPolicyRequest const&) {
             auto metadata = GetMetadata(context);
             EXPECT_THAT(metadata,
@@ -386,7 +386,7 @@ TEST_F(GrpcClientTest, UpdateBucket) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, UpdateBucket)
       .WillOnce([this](
-                    grpc::ClientContext& context,
+                    grpc::ClientContext& context, Options const&,
                     google::storage::v2::UpdateBucketRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -412,7 +412,7 @@ TEST_F(GrpcClientTest, PatchBucket) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, UpdateBucket)
       .WillOnce([this](
-                    grpc::ClientContext& context,
+                    grpc::ClientContext& context, Options const&,
                     google::storage::v2::UpdateBucketRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -438,7 +438,7 @@ TEST_F(GrpcClientTest, PatchBucket) {
 TEST_F(GrpcClientTest, GetNativeBucketIamPolicy) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetIamPolicy)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        google::iam::v1::GetIamPolicyRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -462,7 +462,7 @@ TEST_F(GrpcClientTest, GetNativeBucketIamPolicy) {
 TEST_F(GrpcClientTest, SetNativeBucketIamPolicy) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, SetIamPolicy)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        google::iam::v1::SetIamPolicyRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -488,7 +488,7 @@ TEST_F(GrpcClientTest, TestBucketIamPermissions) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, TestIamPermissions)
       .WillOnce(
-          [this](grpc::ClientContext& context,
+          [this](grpc::ClientContext& context, Options const&,
                  google::iam::v1::TestIamPermissionsRequest const& request) {
             auto metadata = GetMetadata(context);
             EXPECT_THAT(metadata,
@@ -542,7 +542,7 @@ TEST_F(GrpcClientTest, InsertObjectMedia) {
 TEST_F(GrpcClientTest, CopyObject) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, RewriteObject)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::RewriteObjectRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -573,7 +573,7 @@ TEST_F(GrpcClientTest, CopyObject) {
 TEST_F(GrpcClientTest, CopyObjectTooLarge) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, RewriteObject)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::RewriteObjectRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -607,7 +607,7 @@ TEST_F(GrpcClientTest, CopyObjectTooLarge) {
 TEST_F(GrpcClientTest, GetObjectMetadata) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetObject)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetObjectRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -658,7 +658,7 @@ TEST_F(GrpcClientTest, ReadObject) {
 TEST_F(GrpcClientTest, ListObjects) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, ListObjects)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::ListObjectsRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -683,7 +683,7 @@ TEST_F(GrpcClientTest, DeleteObject) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, DeleteObject)
       .WillOnce(
-          [this](grpc::ClientContext& context,
+          [this](grpc::ClientContext& context, Options const&,
                  google::storage::v2::DeleteObjectRequest const& request) {
             auto metadata = GetMetadata(context);
             EXPECT_THAT(metadata,
@@ -709,7 +709,7 @@ TEST_F(GrpcClientTest, UpdateObject) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, UpdateObject)
       .WillOnce(
-          [this](grpc::ClientContext& context,
+          [this](grpc::ClientContext& context, Options const&,
                  google::storage::v2::UpdateObjectRequest const& request) {
             auto metadata = GetMetadata(context);
             EXPECT_THAT(metadata,
@@ -740,7 +740,7 @@ TEST_F(GrpcClientTest, UpdateObject) {
 TEST_F(GrpcClientTest, PatchObject) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, UpdateObject)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::UpdateObjectRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -768,7 +768,7 @@ TEST_F(GrpcClientTest, PatchObject) {
 TEST_F(GrpcClientTest, ComposeObject) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, ComposeObject)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::ComposeObjectRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -795,7 +795,7 @@ TEST_F(GrpcClientTest, ComposeObject) {
 TEST_F(GrpcClientTest, RewriteObject) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, RewriteObject)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::RewriteObjectRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -826,7 +826,7 @@ TEST_F(GrpcClientTest, RewriteObject) {
 TEST_F(GrpcClientTest, CreateResumableUpload) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, StartResumableWrite)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::StartResumableWriteRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -853,7 +853,7 @@ TEST_F(GrpcClientTest, CreateResumableUpload) {
 TEST_F(GrpcClientTest, GetServiceAccount) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetServiceAccount)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetServiceAccountRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -877,7 +877,7 @@ TEST_F(GrpcClientTest, GetServiceAccount) {
 TEST_F(GrpcClientTest, CreateHmacKey) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, CreateHmacKey)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::CreateHmacKeyRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -902,7 +902,7 @@ TEST_F(GrpcClientTest, CreateHmacKey) {
 TEST_F(GrpcClientTest, DeleteHmacKey) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, DeleteHmacKey)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::DeleteHmacKeyRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -927,7 +927,7 @@ TEST_F(GrpcClientTest, DeleteHmacKey) {
 TEST_F(GrpcClientTest, GetHmacKey) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetHmacKey)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetHmacKeyRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -951,7 +951,7 @@ TEST_F(GrpcClientTest, GetHmacKey) {
 TEST_F(GrpcClientTest, ListHmacKeys) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, ListHmacKeys)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::ListHmacKeysRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -975,7 +975,7 @@ TEST_F(GrpcClientTest, ListHmacKeys) {
 TEST_F(GrpcClientTest, UpdateHmacKey) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, UpdateHmacKey)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::UpdateHmacKeyRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -1002,7 +1002,7 @@ TEST_F(GrpcClientTest, UpdateHmacKey) {
 TEST_F(GrpcClientTest, ListNotificationConfigs) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, ListNotificationConfigs)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::ListNotificationConfigsRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -1026,7 +1026,7 @@ TEST_F(GrpcClientTest, ListNotificationConfigs) {
 TEST_F(GrpcClientTest, CreateNotificationConfig) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, CreateNotificationConfig)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::CreateNotificationConfigRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -1051,7 +1051,7 @@ TEST_F(GrpcClientTest, CreateNotificationConfig) {
 TEST_F(GrpcClientTest, GetNotificationConfig) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, GetNotificationConfig)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::GetNotificationConfigRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,
@@ -1078,7 +1078,7 @@ TEST_F(GrpcClientTest, GetNotificationConfig) {
 TEST_F(GrpcClientTest, DeleteNotificationConfig) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, DeleteNotificationConfig)
-      .WillOnce([this](grpc::ClientContext& context,
+      .WillOnce([this](grpc::ClientContext& context, Options const&,
                        v2::DeleteNotificationConfigRequest const& request) {
         auto metadata = GetMetadata(context);
         EXPECT_THAT(metadata,

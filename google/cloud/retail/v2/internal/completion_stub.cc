@@ -33,7 +33,7 @@ CompletionServiceStub::~CompletionServiceStub() = default;
 
 StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
 DefaultCompletionServiceStub::CompleteQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::CompleteQueryRequest const& request) {
   google::cloud::retail::v2::CompleteQueryResponse response;
   auto status = grpc_stub_->CompleteQuery(&context, request, &response);

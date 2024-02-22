@@ -124,12 +124,12 @@ FeatureOnlineStoreAdminServiceConnectionImpl::GetFeatureOnlineStore(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetFeatureOnlineStore(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const&
                  request) {
-        return stub_->GetFeatureOnlineStore(context, request);
+        return stub_->GetFeatureOnlineStore(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::FeatureOnlineStore>
@@ -142,22 +142,23 @@ FeatureOnlineStoreAdminServiceConnectionImpl::ListFeatureOnlineStores(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::FeatureOnlineStore>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            aiplatform_v1::FeatureOnlineStoreAdminServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::
                        ListFeatureOnlineStoresRequest const& request) {
-              return stub->ListFeatureOnlineStores(context, request);
+              return stub->ListFeatureOnlineStores(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListFeatureOnlineStoresResponse r) {
         std::vector<google::cloud::aiplatform::v1::FeatureOnlineStore> result(
@@ -292,11 +293,11 @@ FeatureOnlineStoreAdminServiceConnectionImpl::GetFeatureView(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetFeatureView(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::GetFeatureViewRequest const& request) {
-        return stub_->GetFeatureView(context, request);
+        return stub_->GetFeatureView(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::FeatureView>
@@ -308,21 +309,22 @@ FeatureOnlineStoreAdminServiceConnectionImpl::ListFeatureViews(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::FeatureView>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            aiplatform_v1::FeatureOnlineStoreAdminServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListFeatureViewsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::ListFeatureViewsRequest const&
                        request) {
-              return stub->ListFeatureViews(context, request);
+              return stub->ListFeatureViews(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListFeatureViewsResponse r) {
         std::vector<google::cloud::aiplatform::v1::FeatureView> result(
@@ -416,10 +418,12 @@ FeatureOnlineStoreAdminServiceConnectionImpl::SyncFeatureView(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SyncFeatureView(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::SyncFeatureViewRequest const&
-                 request) { return stub_->SyncFeatureView(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->SyncFeatureView(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::FeatureViewSync>
@@ -429,12 +433,12 @@ FeatureOnlineStoreAdminServiceConnectionImpl::GetFeatureViewSync(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetFeatureViewSync(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const&
                  request) {
-        return stub_->GetFeatureViewSync(context, request);
+        return stub_->GetFeatureViewSync(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::FeatureViewSync>
@@ -447,21 +451,22 @@ FeatureOnlineStoreAdminServiceConnectionImpl::ListFeatureViewSyncs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::FeatureViewSync>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            aiplatform_v1::FeatureOnlineStoreAdminServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::
                        ListFeatureViewSyncsRequest const& request) {
-              return stub->ListFeatureViewSyncs(context, request);
+              return stub->ListFeatureViewSyncs(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListFeatureViewSyncsResponse r) {
         std::vector<google::cloud::aiplatform::v1::FeatureViewSync> result(

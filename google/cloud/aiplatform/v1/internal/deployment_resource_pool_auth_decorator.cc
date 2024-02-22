@@ -53,22 +53,22 @@ DeploymentResourcePoolServiceAuth::AsyncCreateDeploymentResourcePool(
 
 StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
 DeploymentResourcePoolServiceAuth::GetDeploymentResourcePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDeploymentResourcePool(context, request);
+  return child_->GetDeploymentResourcePool(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse>
 DeploymentResourcePoolServiceAuth::ListDeploymentResourcePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDeploymentResourcePools(context, request);
+  return child_->ListDeploymentResourcePools(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -33,85 +33,85 @@ ExperimentsTracingStub::ExperimentsTracingStub(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListExperimentsResponse>
 ExperimentsTracingStub::ListExperiments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListExperimentsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Experiments", "ListExperiments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListExperiments(context, request));
+                           child_->ListExperiments(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsTracingStub::GetExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Experiments", "GetExperiment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetExperiment(context, request));
+                           child_->GetExperiment(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsTracingStub::CreateExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Experiments", "CreateExperiment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateExperiment(context, request));
+                           child_->CreateExperiment(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsTracingStub::UpdateExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Experiments", "UpdateExperiment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateExperiment(context, request));
+                           child_->UpdateExperiment(context, options, request));
 }
 
 Status ExperimentsTracingStub::DeleteExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Experiments", "DeleteExperiment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteExperiment(context, request));
+                           child_->DeleteExperiment(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsTracingStub::StartExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Experiments", "StartExperiment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->StartExperiment(context, request));
+                           child_->StartExperiment(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsTracingStub::StopExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Experiments", "StopExperiment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->StopExperiment(context, request));
+                           child_->StopExperiment(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

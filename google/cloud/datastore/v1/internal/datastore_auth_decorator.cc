@@ -32,69 +32,69 @@ DatastoreAuth::DatastoreAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::datastore::v1::LookupResponse> DatastoreAuth::Lookup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::LookupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->Lookup(context, request);
+  return child_->Lookup(context, options, request);
 }
 
 StatusOr<google::datastore::v1::RunQueryResponse> DatastoreAuth::RunQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::RunQueryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RunQuery(context, request);
+  return child_->RunQuery(context, options, request);
 }
 
 StatusOr<google::datastore::v1::RunAggregationQueryResponse>
 DatastoreAuth::RunAggregationQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::RunAggregationQueryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RunAggregationQuery(context, request);
+  return child_->RunAggregationQuery(context, options, request);
 }
 
 StatusOr<google::datastore::v1::BeginTransactionResponse>
 DatastoreAuth::BeginTransaction(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::BeginTransactionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->BeginTransaction(context, request);
+  return child_->BeginTransaction(context, options, request);
 }
 
 StatusOr<google::datastore::v1::CommitResponse> DatastoreAuth::Commit(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::CommitRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->Commit(context, request);
+  return child_->Commit(context, options, request);
 }
 
 StatusOr<google::datastore::v1::RollbackResponse> DatastoreAuth::Rollback(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::RollbackRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->Rollback(context, request);
+  return child_->Rollback(context, options, request);
 }
 
 StatusOr<google::datastore::v1::AllocateIdsResponse> DatastoreAuth::AllocateIds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::AllocateIdsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->AllocateIds(context, request);
+  return child_->AllocateIds(context, options, request);
 }
 
 StatusOr<google::datastore::v1::ReserveIdsResponse> DatastoreAuth::ReserveIds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::ReserveIdsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ReserveIds(context, request);
+  return child_->ReserveIds(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

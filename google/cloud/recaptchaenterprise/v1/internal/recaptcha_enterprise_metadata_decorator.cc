@@ -44,191 +44,192 @@ RecaptchaEnterpriseServiceMetadata::RecaptchaEnterpriseServiceMetadata(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Assessment>
 RecaptchaEnterpriseServiceMetadata::CreateAssessment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateAssessment(context, request);
+  return child_->CreateAssessment(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::AnnotateAssessmentResponse>
 RecaptchaEnterpriseServiceMetadata::AnnotateAssessment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AnnotateAssessment(context, request);
+  return child_->AnnotateAssessment(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceMetadata::CreateKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateKey(context, request);
+  return child_->CreateKey(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::ListKeysResponse>
 RecaptchaEnterpriseServiceMetadata::ListKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::ListKeysRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListKeys(context, request);
+  return child_->ListKeys(context, options, request);
 }
 
 StatusOr<
     google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse>
 RecaptchaEnterpriseServiceMetadata::RetrieveLegacySecretKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::
         RetrieveLegacySecretKeyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("key=", internal::UrlEncode(request.key())));
-  return child_->RetrieveLegacySecretKey(context, request);
+  return child_->RetrieveLegacySecretKey(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceMetadata::GetKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetKey(context, request);
+  return child_->GetKey(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceMetadata::UpdateKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("key.name=", internal::UrlEncode(request.key().name())));
-  return child_->UpdateKey(context, request);
+  return child_->UpdateKey(context, options, request);
 }
 
 Status RecaptchaEnterpriseServiceMetadata::DeleteKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteKey(context, request);
+  return child_->DeleteKey(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceMetadata::MigrateKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->MigrateKey(context, request);
+  return child_->MigrateKey(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
 RecaptchaEnterpriseServiceMetadata::GetMetrics(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetMetrics(context, request);
+  return child_->GetMetrics(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
 RecaptchaEnterpriseServiceMetadata::CreateFirewallPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateFirewallPolicy(context, request);
+  return child_->CreateFirewallPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesResponse>
 RecaptchaEnterpriseServiceMetadata::ListFirewallPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListFirewallPolicies(context, request);
+  return child_->ListFirewallPolicies(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
 RecaptchaEnterpriseServiceMetadata::GetFirewallPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetFirewallPolicy(context, request);
+  return child_->GetFirewallPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
 RecaptchaEnterpriseServiceMetadata::UpdateFirewallPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("firewall_policy.name=",
                    internal::UrlEncode(request.firewall_policy().name())));
-  return child_->UpdateFirewallPolicy(context, request);
+  return child_->UpdateFirewallPolicy(context, options, request);
 }
 
 Status RecaptchaEnterpriseServiceMetadata::DeleteFirewallPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteFirewallPolicy(context, request);
+  return child_->DeleteFirewallPolicy(context, options, request);
 }
 
 StatusOr<
     google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
 RecaptchaEnterpriseServiceMetadata::ReorderFirewallPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::
         ReorderFirewallPoliciesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ReorderFirewallPolicies(context, request);
+  return child_->ReorderFirewallPolicies(context, options, request);
 }
 
 StatusOr<
     google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>
 RecaptchaEnterpriseServiceMetadata::ListRelatedAccountGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::
         ListRelatedAccountGroupsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListRelatedAccountGroups(context, request);
+  return child_->ListRelatedAccountGroups(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::
              ListRelatedAccountGroupMembershipsResponse>
 RecaptchaEnterpriseServiceMetadata::ListRelatedAccountGroupMemberships(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::
         ListRelatedAccountGroupMembershipsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListRelatedAccountGroupMemberships(context, request);
+  return child_->ListRelatedAccountGroupMemberships(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::
              SearchRelatedAccountGroupMembershipsResponse>
 RecaptchaEnterpriseServiceMetadata::SearchRelatedAccountGroupMemberships(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::
         SearchRelatedAccountGroupMembershipsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("project=", internal::UrlEncode(request.project())));
-  return child_->SearchRelatedAccountGroupMemberships(context, request);
+  return child_->SearchRelatedAccountGroupMemberships(context, options,
+                                                      request);
 }
 
 void RecaptchaEnterpriseServiceMetadata::SetMetadata(

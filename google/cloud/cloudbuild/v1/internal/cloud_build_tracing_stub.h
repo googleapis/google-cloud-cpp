@@ -44,17 +44,17 @@ class CloudBuildTracingStub : public CloudBuildStub {
       override;
 
   StatusOr<google::devtools::cloudbuild::v1::Build> GetBuild(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v1::GetBuildRequest const& request)
       override;
 
   StatusOr<google::devtools::cloudbuild::v1::ListBuildsResponse> ListBuilds(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v1::ListBuildsRequest const& request)
       override;
 
   StatusOr<google::devtools::cloudbuild::v1::Build> CancelBuild(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v1::CancelBuildRequest const& request)
       override;
 
@@ -71,28 +71,28 @@ class CloudBuildTracingStub : public CloudBuildStub {
       override;
 
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> CreateBuildTrigger(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
           request) override;
 
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> GetBuildTrigger(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request)
       override;
 
   StatusOr<google::devtools::cloudbuild::v1::ListBuildTriggersResponse>
   ListBuildTriggers(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v1::ListBuildTriggersRequest const& request)
       override;
 
   Status DeleteBuildTrigger(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
           request) override;
 
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> UpdateBuildTrigger(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
           request) override;
 
@@ -104,7 +104,7 @@ class CloudBuildTracingStub : public CloudBuildStub {
 
   StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
   ReceiveTriggerWebhook(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
           request) override;
 
@@ -115,7 +115,7 @@ class CloudBuildTracingStub : public CloudBuildStub {
       override;
 
   StatusOr<google::devtools::cloudbuild::v1::WorkerPool> GetWorkerPool(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request)
       override;
 
@@ -133,7 +133,7 @@ class CloudBuildTracingStub : public CloudBuildStub {
 
   StatusOr<google::devtools::cloudbuild::v1::ListWorkerPoolsResponse>
   ListWorkerPools(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v1::ListWorkerPoolsRequest const& request)
       override;
 

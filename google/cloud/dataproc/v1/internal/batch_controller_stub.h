@@ -45,16 +45,16 @@ class BatchControllerStub {
       google::cloud::dataproc::v1::CreateBatchRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataproc::v1::Batch> GetBatch(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::GetBatchRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataproc::v1::ListBatchesResponse>
   ListBatches(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::ListBatchesRequest const& request) = 0;
 
   virtual Status DeleteBatch(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::DeleteBatchRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -84,15 +84,15 @@ class DefaultBatchControllerStub : public BatchControllerStub {
       google::cloud::dataproc::v1::CreateBatchRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::Batch> GetBatch(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::GetBatchRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::ListBatchesResponse> ListBatches(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::ListBatchesRequest const& request) override;
 
   Status DeleteBatch(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::DeleteBatchRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

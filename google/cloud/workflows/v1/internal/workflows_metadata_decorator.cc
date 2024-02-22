@@ -44,19 +44,19 @@ WorkflowsMetadata::WorkflowsMetadata(
 
 StatusOr<google::cloud::workflows::v1::ListWorkflowsResponse>
 WorkflowsMetadata::ListWorkflows(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::v1::ListWorkflowsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListWorkflows(context, request);
+  return child_->ListWorkflows(context, options, request);
 }
 
 StatusOr<google::cloud::workflows::v1::Workflow> WorkflowsMetadata::GetWorkflow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::v1::GetWorkflowRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetWorkflow(context, request);
+  return child_->GetWorkflow(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

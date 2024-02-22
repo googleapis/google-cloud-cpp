@@ -32,11 +32,11 @@ SimulatorAuth::SimulatorAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::policysimulator::v1::Replay> SimulatorAuth::GetReplay(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::policysimulator::v1::GetReplayRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetReplay(context, request);
+  return child_->GetReplay(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -60,12 +60,12 @@ SimulatorAuth::AsyncCreateReplay(
 
 StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse>
 SimulatorAuth::ListReplayResults(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::policysimulator::v1::ListReplayResultsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListReplayResults(context, request);
+  return child_->ListReplayResults(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

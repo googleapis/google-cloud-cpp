@@ -45,34 +45,36 @@ ApiKeysTracingStub::AsyncCreateKey(
 
 StatusOr<google::api::apikeys::v2::ListKeysResponse>
 ApiKeysTracingStub::ListKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::ListKeysRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "ListKeys");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->ListKeys(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListKeys(context, options, request));
 }
 
 StatusOr<google::api::apikeys::v2::Key> ApiKeysTracingStub::GetKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::GetKeyRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "GetKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetKey(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetKey(context, options, request));
 }
 
 StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
 ApiKeysTracingStub::GetKeyString(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::GetKeyStringRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "GetKeyString");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetKeyString(context, request));
+                           child_->GetKeyString(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -116,13 +118,14 @@ ApiKeysTracingStub::AsyncUndeleteKey(
 
 StatusOr<google::api::apikeys::v2::LookupKeyResponse>
 ApiKeysTracingStub::LookupKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::LookupKeyRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "LookupKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->LookupKey(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->LookupKey(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

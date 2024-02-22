@@ -37,56 +37,66 @@ DashboardsServiceLogging::DashboardsServiceLogging(
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceLogging::CreateDashboard(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::dashboard::v1::CreateDashboardRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::dashboard::v1::CreateDashboardRequest const&
-                 request) { return child_->CreateDashboard(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->CreateDashboard(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::dashboard::v1::ListDashboardsResponse>
 DashboardsServiceLogging::ListDashboards(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::dashboard::v1::ListDashboardsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::dashboard::v1::ListDashboardsRequest const&
-                 request) { return child_->ListDashboards(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListDashboards(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceLogging::GetDashboard(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::dashboard::v1::GetDashboardRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::dashboard::v1::GetDashboardRequest const&
-                 request) { return child_->GetDashboard(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetDashboard(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status DashboardsServiceLogging::DeleteDashboard(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::dashboard::v1::DeleteDashboardRequest const&
-                 request) { return child_->DeleteDashboard(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->DeleteDashboard(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceLogging::UpdateDashboard(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::dashboard::v1::UpdateDashboardRequest const&
-                 request) { return child_->UpdateDashboard(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->UpdateDashboard(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

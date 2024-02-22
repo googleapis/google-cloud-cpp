@@ -53,19 +53,19 @@ SpeechAuth::AsyncCreateRecognizer(
 
 StatusOr<google::cloud::speech::v2::ListRecognizersResponse>
 SpeechAuth::ListRecognizers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::ListRecognizersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListRecognizers(context, request);
+  return child_->ListRecognizers(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v2::Recognizer> SpeechAuth::GetRecognizer(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::GetRecognizerRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetRecognizer(context, request);
+  return child_->GetRecognizer(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -126,11 +126,11 @@ SpeechAuth::AsyncUndeleteRecognizer(
 }
 
 StatusOr<google::cloud::speech::v2::RecognizeResponse> SpeechAuth::Recognize(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::RecognizeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->Recognize(context, request);
+  return child_->Recognize(context, options, request);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -171,19 +171,19 @@ SpeechAuth::AsyncBatchRecognize(
 }
 
 StatusOr<google::cloud::speech::v2::Config> SpeechAuth::GetConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::GetConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetConfig(context, request);
+  return child_->GetConfig(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v2::Config> SpeechAuth::UpdateConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::UpdateConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateConfig(context, request);
+  return child_->UpdateConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -207,19 +207,19 @@ SpeechAuth::AsyncCreateCustomClass(
 
 StatusOr<google::cloud::speech::v2::ListCustomClassesResponse>
 SpeechAuth::ListCustomClasses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::ListCustomClassesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCustomClasses(context, request);
+  return child_->ListCustomClasses(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v2::CustomClass> SpeechAuth::GetCustomClass(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::GetCustomClassRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCustomClass(context, request);
+  return child_->GetCustomClass(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -300,19 +300,19 @@ SpeechAuth::AsyncCreatePhraseSet(
 
 StatusOr<google::cloud::speech::v2::ListPhraseSetsResponse>
 SpeechAuth::ListPhraseSets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::ListPhraseSetsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListPhraseSets(context, request);
+  return child_->ListPhraseSets(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v2::PhraseSet> SpeechAuth::GetPhraseSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::GetPhraseSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetPhraseSet(context, request);
+  return child_->GetPhraseSet(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -51,7 +51,7 @@ class TagHoldsStub {
           request) = 0;
 
   virtual StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse>
-  ListTagHolds(grpc::ClientContext& context,
+  ListTagHolds(grpc::ClientContext& context, Options const& options,
                google::cloud::resourcemanager::v3::ListTagHoldsRequest const&
                    request) = 0;
 
@@ -89,7 +89,7 @@ class DefaultTagHoldsStub : public TagHoldsStub {
       override;
 
   StatusOr<google::cloud::resourcemanager::v3::ListTagHoldsResponse>
-  ListTagHolds(grpc::ClientContext& context,
+  ListTagHolds(grpc::ClientContext& context, Options const& options,
                google::cloud::resourcemanager::v3::ListTagHoldsRequest const&
                    request) override;
 

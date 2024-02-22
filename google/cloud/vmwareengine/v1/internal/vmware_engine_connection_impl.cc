@@ -75,21 +75,22 @@ VmwareEngineConnectionImpl::ListPrivateClouds(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmwareengine::v1::PrivateCloud>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmwareengine::v1::ListPrivateCloudsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::vmwareengine::v1::ListPrivateCloudsRequest const&
                     request) {
-              return stub->ListPrivateClouds(context, request);
+              return stub->ListPrivateClouds(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmwareengine::v1::ListPrivateCloudsResponse r) {
         std::vector<google::cloud::vmwareengine::v1::PrivateCloud> result(
@@ -107,10 +108,12 @@ VmwareEngineConnectionImpl::GetPrivateCloud(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPrivateCloud(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vmwareengine::v1::GetPrivateCloudRequest const&
-                 request) { return stub_->GetPrivateCloud(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetPrivateCloud(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -275,20 +278,21 @@ VmwareEngineConnectionImpl::ListClusters(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmwareengine::v1::Cluster>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmwareengine::v1::ListClustersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::vmwareengine::v1::ListClustersRequest const&
                        request) {
-              return stub->ListClusters(context, request);
+              return stub->ListClusters(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmwareengine::v1::ListClustersResponse r) {
         std::vector<google::cloud::vmwareengine::v1::Cluster> result(
@@ -307,11 +311,11 @@ VmwareEngineConnectionImpl::GetCluster(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCluster(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::vmwareengine::v1::GetClusterRequest const& request) {
-        return stub_->GetCluster(context, request);
+        return stub_->GetCluster(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
@@ -437,18 +441,21 @@ VmwareEngineConnectionImpl::ListNodes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmwareengine::v1::Node>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmwareengine::v1::ListNodesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::vmwareengine::v1::ListNodesRequest const&
-                       request) { return stub->ListNodes(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListNodes(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::vmwareengine::v1::ListNodesResponse r) {
         std::vector<google::cloud::vmwareengine::v1::Node> result(
@@ -466,11 +473,11 @@ VmwareEngineConnectionImpl::GetNode(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNode(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vmwareengine::v1::GetNodeRequest const& request) {
-        return stub_->GetNode(context, request);
+        return stub_->GetNode(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>
@@ -483,21 +490,22 @@ VmwareEngineConnectionImpl::ListExternalAddresses(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmwareengine::v1::ListExternalAddressesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::vmwareengine::v1::
                        ListExternalAddressesRequest const& request) {
-              return stub->ListExternalAddresses(context, request);
+              return stub->ListExternalAddresses(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmwareengine::v1::ListExternalAddressesResponse r) {
         std::vector<google::cloud::vmwareengine::v1::ExternalAddress> result(
@@ -520,23 +528,24 @@ VmwareEngineConnectionImpl::FetchNetworkPolicyExternalAddresses(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmwareengine::v1::ExternalAddress>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmwareengine::v1::
               FetchNetworkPolicyExternalAddressesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::vmwareengine::v1::
                     FetchNetworkPolicyExternalAddressesRequest const& request) {
-              return stub->FetchNetworkPolicyExternalAddresses(context,
+              return stub->FetchNetworkPolicyExternalAddresses(context, options,
                                                                request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmwareengine::v1::
              FetchNetworkPolicyExternalAddressesResponse r) {
@@ -555,12 +564,12 @@ VmwareEngineConnectionImpl::GetExternalAddress(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetExternalAddress(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vmwareengine::v1::GetExternalAddressRequest const&
                  request) {
-        return stub_->GetExternalAddress(context, request);
+        return stub_->GetExternalAddress(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>
@@ -689,18 +698,21 @@ VmwareEngineConnectionImpl::ListSubnets(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmwareengine::v1::Subnet>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmwareengine::v1::ListSubnetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::vmwareengine::v1::ListSubnetsRequest const&
-                       request) { return stub->ListSubnets(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListSubnets(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::vmwareengine::v1::ListSubnetsResponse r) {
         std::vector<google::cloud::vmwareengine::v1::Subnet> result(
@@ -718,11 +730,11 @@ VmwareEngineConnectionImpl::GetSubnet(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSubnet(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vmwareengine::v1::GetSubnetRequest const& request) {
-        return stub_->GetSubnet(context, request);
+        return stub_->GetSubnet(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>
@@ -772,21 +784,22 @@ VmwareEngineConnectionImpl::ListExternalAccessRules(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmwareengine::v1::ExternalAccessRule>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmwareengine::v1::ListExternalAccessRulesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::vmwareengine::v1::
                        ListExternalAccessRulesRequest const& request) {
-              return stub->ListExternalAccessRules(context, request);
+              return stub->ListExternalAccessRules(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmwareengine::v1::ListExternalAccessRulesResponse r) {
         std::vector<google::cloud::vmwareengine::v1::ExternalAccessRule> result(
@@ -806,12 +819,12 @@ VmwareEngineConnectionImpl::GetExternalAccessRule(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetExternalAccessRule(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::vmwareengine::v1::GetExternalAccessRuleRequest const&
               request) {
-        return stub_->GetExternalAccessRule(context, request);
+        return stub_->GetExternalAccessRule(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>
@@ -940,20 +953,21 @@ VmwareEngineConnectionImpl::ListLoggingServers(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmwareengine::v1::LoggingServer>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmwareengine::v1::ListLoggingServersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::vmwareengine::v1::
                        ListLoggingServersRequest const& request) {
-              return stub->ListLoggingServers(context, request);
+              return stub->ListLoggingServers(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmwareengine::v1::ListLoggingServersResponse r) {
         std::vector<google::cloud::vmwareengine::v1::LoggingServer> result(
@@ -971,10 +985,12 @@ VmwareEngineConnectionImpl::GetLoggingServer(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetLoggingServer(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vmwareengine::v1::GetLoggingServerRequest const&
-                 request) { return stub_->GetLoggingServer(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetLoggingServer(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>
@@ -1103,20 +1119,21 @@ VmwareEngineConnectionImpl::ListNodeTypes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmwareengine::v1::NodeType>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmwareengine::v1::ListNodeTypesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::vmwareengine::v1::ListNodeTypesRequest const&
                        request) {
-              return stub->ListNodeTypes(context, request);
+              return stub->ListNodeTypes(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmwareengine::v1::ListNodeTypesResponse r) {
         std::vector<google::cloud::vmwareengine::v1::NodeType> result(
@@ -1135,11 +1152,11 @@ VmwareEngineConnectionImpl::GetNodeType(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNodeType(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::vmwareengine::v1::GetNodeTypeRequest const& request) {
-        return stub_->GetNodeType(context, request);
+        return stub_->GetNodeType(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::Credentials>
@@ -1149,12 +1166,12 @@ VmwareEngineConnectionImpl::ShowNsxCredentials(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ShowNsxCredentials(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vmwareengine::v1::ShowNsxCredentialsRequest const&
                  request) {
-        return stub_->ShowNsxCredentials(context, request);
+        return stub_->ShowNsxCredentials(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::Credentials>
@@ -1166,12 +1183,12 @@ VmwareEngineConnectionImpl::ShowVcenterCredentials(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ShowVcenterCredentials(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::vmwareengine::v1::ShowVcenterCredentialsRequest const&
               request) {
-        return stub_->ShowVcenterCredentials(context, request);
+        return stub_->ShowVcenterCredentials(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -1259,10 +1276,12 @@ VmwareEngineConnectionImpl::GetDnsForwarding(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDnsForwarding(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vmwareengine::v1::GetDnsForwardingRequest const&
-                 request) { return stub_->GetDnsForwarding(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetDnsForwarding(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>
@@ -1311,12 +1330,12 @@ VmwareEngineConnectionImpl::GetNetworkPeering(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNetworkPeering(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vmwareengine::v1::GetNetworkPeeringRequest const&
                  request) {
-        return stub_->GetNetworkPeering(context, request);
+        return stub_->GetNetworkPeering(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::vmwareengine::v1::NetworkPeering>
@@ -1328,21 +1347,22 @@ VmwareEngineConnectionImpl::ListNetworkPeerings(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmwareengine::v1::NetworkPeering>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmwareengine::v1::ListNetworkPeeringsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::vmwareengine::v1::
                        ListNetworkPeeringsRequest const& request) {
-              return stub->ListNetworkPeerings(context, request);
+              return stub->ListNetworkPeerings(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmwareengine::v1::ListNetworkPeeringsResponse r) {
         std::vector<google::cloud::vmwareengine::v1::NetworkPeering> result(
@@ -1479,21 +1499,22 @@ VmwareEngineConnectionImpl::ListPeeringRoutes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmwareengine::v1::ListPeeringRoutesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::vmwareengine::v1::ListPeeringRoutesRequest const&
                     request) {
-              return stub->ListPeeringRoutes(context, request);
+              return stub->ListPeeringRoutes(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmwareengine::v1::ListPeeringRoutesResponse r) {
         std::vector<google::cloud::vmwareengine::v1::PeeringRoute> result(
@@ -1553,21 +1574,22 @@ VmwareEngineConnectionImpl::ListHcxActivationKeys(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmwareengine::v1::HcxActivationKey>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmwareengine::v1::ListHcxActivationKeysRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::vmwareengine::v1::
                        ListHcxActivationKeysRequest const& request) {
-              return stub->ListHcxActivationKeys(context, request);
+              return stub->ListHcxActivationKeys(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmwareengine::v1::ListHcxActivationKeysResponse r) {
         std::vector<google::cloud::vmwareengine::v1::HcxActivationKey> result(
@@ -1586,12 +1608,12 @@ VmwareEngineConnectionImpl::GetHcxActivationKey(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetHcxActivationKey(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vmwareengine::v1::GetHcxActivationKeyRequest const&
                  request) {
-        return stub_->GetHcxActivationKey(context, request);
+        return stub_->GetHcxActivationKey(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>
@@ -1601,10 +1623,12 @@ VmwareEngineConnectionImpl::GetNetworkPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNetworkPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vmwareengine::v1::GetNetworkPolicyRequest const&
-                 request) { return stub_->GetNetworkPolicy(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetNetworkPolicy(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::vmwareengine::v1::NetworkPolicy>
@@ -1616,21 +1640,22 @@ VmwareEngineConnectionImpl::ListNetworkPolicies(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmwareengine::v1::NetworkPolicy>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::vmwareengine::v1::
                        ListNetworkPoliciesRequest const& request) {
-              return stub->ListNetworkPolicies(context, request);
+              return stub->ListNetworkPolicies(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmwareengine::v1::ListNetworkPoliciesResponse r) {
         std::vector<google::cloud::vmwareengine::v1::NetworkPolicy> result(
@@ -1769,21 +1794,23 @@ VmwareEngineConnectionImpl::ListManagementDnsZoneBindings(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmwareengine::v1::
               ListManagementDnsZoneBindingsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::vmwareengine::v1::
                        ListManagementDnsZoneBindingsRequest const& request) {
-              return stub->ListManagementDnsZoneBindings(context, request);
+              return stub->ListManagementDnsZoneBindings(context, options,
+                                                         request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsResponse
              r) {
@@ -1803,12 +1830,12 @@ VmwareEngineConnectionImpl::GetManagementDnsZoneBinding(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetManagementDnsZoneBinding(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vmwareengine::v1::
                  GetManagementDnsZoneBindingRequest const& request) {
-        return stub_->GetManagementDnsZoneBinding(context, request);
+        return stub_->GetManagementDnsZoneBinding(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>
@@ -2097,12 +2124,12 @@ VmwareEngineConnectionImpl::GetVmwareEngineNetwork(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetVmwareEngineNetwork(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::vmwareengine::v1::GetVmwareEngineNetworkRequest const&
               request) {
-        return stub_->GetVmwareEngineNetwork(context, request);
+        return stub_->GetVmwareEngineNetwork(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
@@ -2115,21 +2142,22 @@ VmwareEngineConnectionImpl::ListVmwareEngineNetworks(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmwareengine::v1::
               ListVmwareEngineNetworksRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::vmwareengine::v1::
                        ListVmwareEngineNetworksRequest const& request) {
-              return stub->ListVmwareEngineNetworks(context, request);
+              return stub->ListVmwareEngineNetworks(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmwareengine::v1::ListVmwareEngineNetworksResponse r) {
         std::vector<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
@@ -2187,12 +2215,12 @@ VmwareEngineConnectionImpl::GetPrivateConnection(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPrivateConnection(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
                  request) {
-        return stub_->GetPrivateConnection(context, request);
+        return stub_->GetPrivateConnection(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>
@@ -2205,21 +2233,22 @@ VmwareEngineConnectionImpl::ListPrivateConnections(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmwareengine::v1::PrivateConnection>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmwareengine::v1::ListPrivateConnectionsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::vmwareengine::v1::
                        ListPrivateConnectionsRequest const& request) {
-              return stub->ListPrivateConnections(context, request);
+              return stub->ListPrivateConnections(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmwareengine::v1::ListPrivateConnectionsResponse r) {
         std::vector<google::cloud::vmwareengine::v1::PrivateConnection> result(
@@ -2319,22 +2348,24 @@ VmwareEngineConnectionImpl::ListPrivateConnectionPeeringRoutes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<vmwareengine_v1::VmwareEngineRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::vmwareengine::v1::
               ListPrivateConnectionPeeringRoutesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::vmwareengine::v1::
                     ListPrivateConnectionPeeringRoutesRequest const& request) {
-              return stub->ListPrivateConnectionPeeringRoutes(context, request);
+              return stub->ListPrivateConnectionPeeringRoutes(context, options,
+                                                              request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::vmwareengine::v1::
              ListPrivateConnectionPeeringRoutesResponse r) {
@@ -2393,12 +2424,12 @@ VmwareEngineConnectionImpl::GetDnsBindPermission(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDnsBindPermission(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const&
                  request) {
-        return stub_->GetDnsBindPermission(context, request);
+        return stub_->GetDnsBindPermission(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>

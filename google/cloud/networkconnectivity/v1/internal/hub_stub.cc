@@ -33,7 +33,7 @@ HubServiceStub::~HubServiceStub() = default;
 
 StatusOr<google::cloud::networkconnectivity::v1::ListHubsResponse>
 DefaultHubServiceStub::ListHubs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networkconnectivity::v1::ListHubsRequest const& request) {
   google::cloud::networkconnectivity::v1::ListHubsResponse response;
   auto status = grpc_stub_->ListHubs(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultHubServiceStub::ListHubs(
 
 StatusOr<google::cloud::networkconnectivity::v1::Hub>
 DefaultHubServiceStub::GetHub(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networkconnectivity::v1::GetHubRequest const& request) {
   google::cloud::networkconnectivity::v1::Hub response;
   auto status = grpc_stub_->GetHub(&context, request, &response);
@@ -111,7 +111,7 @@ DefaultHubServiceStub::AsyncDeleteHub(
 
 StatusOr<google::cloud::networkconnectivity::v1::ListHubSpokesResponse>
 DefaultHubServiceStub::ListHubSpokes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networkconnectivity::v1::ListHubSpokesRequest const&
         request) {
   google::cloud::networkconnectivity::v1::ListHubSpokesResponse response;
@@ -124,7 +124,7 @@ DefaultHubServiceStub::ListHubSpokes(
 
 StatusOr<google::cloud::networkconnectivity::v1::ListSpokesResponse>
 DefaultHubServiceStub::ListSpokes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networkconnectivity::v1::ListSpokesRequest const& request) {
   google::cloud::networkconnectivity::v1::ListSpokesResponse response;
   auto status = grpc_stub_->ListSpokes(&context, request, &response);
@@ -136,7 +136,7 @@ DefaultHubServiceStub::ListSpokes(
 
 StatusOr<google::cloud::networkconnectivity::v1::Spoke>
 DefaultHubServiceStub::GetSpoke(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networkconnectivity::v1::GetSpokeRequest const& request) {
   google::cloud::networkconnectivity::v1::Spoke response;
   auto status = grpc_stub_->GetSpoke(&context, request, &response);
@@ -242,7 +242,7 @@ DefaultHubServiceStub::AsyncDeleteSpoke(
 
 StatusOr<google::cloud::networkconnectivity::v1::RouteTable>
 DefaultHubServiceStub::GetRouteTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
         request) {
   google::cloud::networkconnectivity::v1::RouteTable response;
@@ -255,7 +255,7 @@ DefaultHubServiceStub::GetRouteTable(
 
 StatusOr<google::cloud::networkconnectivity::v1::Route>
 DefaultHubServiceStub::GetRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networkconnectivity::v1::GetRouteRequest const& request) {
   google::cloud::networkconnectivity::v1::Route response;
   auto status = grpc_stub_->GetRoute(&context, request, &response);
@@ -267,7 +267,7 @@ DefaultHubServiceStub::GetRoute(
 
 StatusOr<google::cloud::networkconnectivity::v1::ListRoutesResponse>
 DefaultHubServiceStub::ListRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networkconnectivity::v1::ListRoutesRequest const& request) {
   google::cloud::networkconnectivity::v1::ListRoutesResponse response;
   auto status = grpc_stub_->ListRoutes(&context, request, &response);
@@ -279,7 +279,7 @@ DefaultHubServiceStub::ListRoutes(
 
 StatusOr<google::cloud::networkconnectivity::v1::ListRouteTablesResponse>
 DefaultHubServiceStub::ListRouteTables(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networkconnectivity::v1::ListRouteTablesRequest const&
         request) {
   google::cloud::networkconnectivity::v1::ListRouteTablesResponse response;
@@ -292,7 +292,7 @@ DefaultHubServiceStub::ListRouteTables(
 
 StatusOr<google::cloud::networkconnectivity::v1::Group>
 DefaultHubServiceStub::GetGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networkconnectivity::v1::GetGroupRequest const& request) {
   google::cloud::networkconnectivity::v1::Group response;
   auto status = grpc_stub_->GetGroup(&context, request, &response);
@@ -304,7 +304,7 @@ DefaultHubServiceStub::GetGroup(
 
 StatusOr<google::cloud::networkconnectivity::v1::ListGroupsResponse>
 DefaultHubServiceStub::ListGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networkconnectivity::v1::ListGroupsRequest const& request) {
   google::cloud::networkconnectivity::v1::ListGroupsResponse response;
   auto status = grpc_stub_->ListGroups(&context, request, &response);

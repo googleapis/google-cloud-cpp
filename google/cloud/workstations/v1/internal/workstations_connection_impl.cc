@@ -75,12 +75,12 @@ WorkstationsConnectionImpl::GetWorkstationCluster(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetWorkstationCluster(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::workstations::v1::GetWorkstationClusterRequest const&
               request) {
-        return stub_->GetWorkstationCluster(context, request);
+        return stub_->GetWorkstationCluster(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::workstations::v1::WorkstationCluster>
@@ -93,21 +93,22 @@ WorkstationsConnectionImpl::ListWorkstationClusters(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::workstations::v1::WorkstationCluster>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<workstations_v1::WorkstationsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::workstations::v1::ListWorkstationClustersRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::workstations::v1::
                        ListWorkstationClustersRequest const& request) {
-              return stub->ListWorkstationClusters(context, request);
+              return stub->ListWorkstationClusters(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::workstations::v1::ListWorkstationClustersResponse r) {
         std::vector<google::cloud::workstations::v1::WorkstationCluster> result(
@@ -243,12 +244,12 @@ WorkstationsConnectionImpl::GetWorkstationConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetWorkstationConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::workstations::v1::GetWorkstationConfigRequest const&
                  request) {
-        return stub_->GetWorkstationConfig(context, request);
+        return stub_->GetWorkstationConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::workstations::v1::WorkstationConfig>
@@ -261,21 +262,22 @@ WorkstationsConnectionImpl::ListWorkstationConfigs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::workstations::v1::WorkstationConfig>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<workstations_v1::WorkstationsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::workstations::v1::ListWorkstationConfigsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::workstations::v1::
                        ListWorkstationConfigsRequest const& request) {
-              return stub->ListWorkstationConfigs(context, request);
+              return stub->ListWorkstationConfigs(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::workstations::v1::ListWorkstationConfigsResponse r) {
         std::vector<google::cloud::workstations::v1::WorkstationConfig> result(
@@ -297,21 +299,23 @@ WorkstationsConnectionImpl::ListUsableWorkstationConfigs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::workstations::v1::WorkstationConfig>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<workstations_v1::WorkstationsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::workstations::v1::
               ListUsableWorkstationConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::workstations::v1::
                        ListUsableWorkstationConfigsRequest const& request) {
-              return stub->ListUsableWorkstationConfigs(context, request);
+              return stub->ListUsableWorkstationConfigs(context, options,
+                                                        request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::workstations::v1::ListUsableWorkstationConfigsResponse
              r) {
@@ -447,10 +451,12 @@ WorkstationsConnectionImpl::GetWorkstation(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetWorkstation(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::workstations::v1::GetWorkstationRequest const&
-                 request) { return stub_->GetWorkstation(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetWorkstation(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::workstations::v1::Workstation>
@@ -462,21 +468,22 @@ WorkstationsConnectionImpl::ListWorkstations(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::workstations::v1::Workstation>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<workstations_v1::WorkstationsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::workstations::v1::ListWorkstationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::workstations::v1::ListWorkstationsRequest const&
                     request) {
-              return stub->ListWorkstations(context, request);
+              return stub->ListWorkstations(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::workstations::v1::ListWorkstationsResponse r) {
         std::vector<google::cloud::workstations::v1::Workstation> result(
@@ -497,21 +504,22 @@ WorkstationsConnectionImpl::ListUsableWorkstations(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::workstations::v1::Workstation>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<workstations_v1::WorkstationsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::workstations::v1::ListUsableWorkstationsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::workstations::v1::
                        ListUsableWorkstationsRequest const& request) {
-              return stub->ListUsableWorkstations(context, request);
+              return stub->ListUsableWorkstations(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::workstations::v1::ListUsableWorkstationsResponse r) {
         std::vector<google::cloud::workstations::v1::Workstation> result(
@@ -720,12 +728,12 @@ WorkstationsConnectionImpl::GenerateAccessToken(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateAccessToken(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::workstations::v1::GenerateAccessTokenRequest const&
                  request) {
-        return stub_->GenerateAccessToken(context, request);
+        return stub_->GenerateAccessToken(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

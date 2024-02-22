@@ -39,12 +39,12 @@ class UserEventServiceTracingStub : public UserEventServiceStub {
       std::shared_ptr<UserEventServiceStub> child);
 
   StatusOr<google::cloud::discoveryengine::v1::UserEvent> WriteUserEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::WriteUserEventRequest const& request)
       override;
 
   StatusOr<google::api::HttpBody> CollectUserEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::CollectUserEventRequest const&
           request) override;
 

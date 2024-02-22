@@ -40,14 +40,14 @@ class MetricsScopesMetadata : public MetricsScopesStub {
                         std::string api_client_header = "");
 
   StatusOr<google::monitoring::metricsscope::v1::MetricsScope> GetMetricsScope(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
           request) override;
 
   StatusOr<google::monitoring::metricsscope::v1::
                ListMetricsScopesByMonitoredProjectResponse>
   ListMetricsScopesByMonitoredProject(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::metricsscope::v1::
           ListMetricsScopesByMonitoredProjectRequest const& request) override;
 

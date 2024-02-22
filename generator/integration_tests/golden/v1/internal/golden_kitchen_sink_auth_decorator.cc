@@ -37,58 +37,65 @@ GoldenKitchenSinkAuth::GoldenKitchenSinkAuth(
 
 StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse> GoldenKitchenSinkAuth::GenerateAccessToken(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateAccessToken(context, request);
+  return child_->GenerateAccessToken(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse> GoldenKitchenSinkAuth::GenerateIdToken(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateIdToken(context, request);
+  return child_->GenerateIdToken(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse> GoldenKitchenSinkAuth::WriteLogEntries(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->WriteLogEntries(context, request);
+  return child_->WriteLogEntries(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::ListLogsResponse> GoldenKitchenSinkAuth::ListLogs(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ListLogsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListLogs(context, request);
+  return child_->ListLogs(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> GoldenKitchenSinkAuth::ListServiceAccountKeys(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListServiceAccountKeys(context, request);
+  return child_->ListServiceAccountKeys(context, options, request);
 }
 
 Status GoldenKitchenSinkAuth::DoNothing(
     grpc::ClientContext& context,
+    Options const& options,
     google::protobuf::Empty const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DoNothing(context, request);
+  return child_->DoNothing(context, options, request);
 }
 
 Status GoldenKitchenSinkAuth::Deprecated2(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->Deprecated2(context, request);
+  return child_->Deprecated2(context, options, request);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
@@ -135,18 +142,20 @@ GoldenKitchenSinkAuth::AsyncStreamingReadWrite(
 
 Status GoldenKitchenSinkAuth::ExplicitRouting1(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ExplicitRouting1(context, request);
+  return child_->ExplicitRouting1(context, options, request);
 }
 
 Status GoldenKitchenSinkAuth::ExplicitRouting2(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ExplicitRouting2(context, request);
+  return child_->ExplicitRouting2(context, options, request);
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<

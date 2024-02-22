@@ -55,11 +55,11 @@ TensorboardServiceMetadata::AsyncCreateTensorboard(
 
 StatusOr<google::cloud::aiplatform::v1::Tensorboard>
 TensorboardServiceMetadata::GetTensorboard(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetTensorboardRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetTensorboard(context, request);
+  return child_->GetTensorboard(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -76,11 +76,11 @@ TensorboardServiceMetadata::AsyncUpdateTensorboard(
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardsResponse>
 TensorboardServiceMetadata::ListTensorboards(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListTensorboardsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListTensorboards(context, request);
+  return child_->ListTensorboards(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -96,64 +96,64 @@ TensorboardServiceMetadata::AsyncDeleteTensorboard(
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardUsageResponse>
 TensorboardServiceMetadata::ReadTensorboardUsage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ReadTensorboardUsageRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("tensorboard=", internal::UrlEncode(request.tensorboard())));
-  return child_->ReadTensorboardUsage(context, request);
+  return child_->ReadTensorboardUsage(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardSizeResponse>
 TensorboardServiceMetadata::ReadTensorboardSize(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ReadTensorboardSizeRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("tensorboard=", internal::UrlEncode(request.tensorboard())));
-  return child_->ReadTensorboardSize(context, request);
+  return child_->ReadTensorboardSize(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 TensorboardServiceMetadata::CreateTensorboardExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateTensorboardExperimentRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateTensorboardExperiment(context, request);
+  return child_->CreateTensorboardExperiment(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 TensorboardServiceMetadata::GetTensorboardExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetTensorboardExperimentRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetTensorboardExperiment(context, request);
+  return child_->GetTensorboardExperiment(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardExperiment>
 TensorboardServiceMetadata::UpdateTensorboardExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateTensorboardExperimentRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("tensorboard_experiment.name=",
                            internal::UrlEncode(
                                request.tensorboard_experiment().name())));
-  return child_->UpdateTensorboardExperiment(context, request);
+  return child_->UpdateTensorboardExperiment(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardExperimentsResponse>
 TensorboardServiceMetadata::ListTensorboardExperiments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListTensorboardExperimentsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListTensorboardExperiments(context, request);
+  return child_->ListTensorboardExperiments(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -170,50 +170,50 @@ TensorboardServiceMetadata::AsyncDeleteTensorboardExperiment(
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 TensorboardServiceMetadata::CreateTensorboardRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateTensorboardRunRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateTensorboardRun(context, request);
+  return child_->CreateTensorboardRun(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchCreateTensorboardRunsResponse>
 TensorboardServiceMetadata::BatchCreateTensorboardRuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::BatchCreateTensorboardRunsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->BatchCreateTensorboardRuns(context, request);
+  return child_->BatchCreateTensorboardRuns(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 TensorboardServiceMetadata::GetTensorboardRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetTensorboardRunRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetTensorboardRun(context, request);
+  return child_->GetTensorboardRun(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardRun>
 TensorboardServiceMetadata::UpdateTensorboardRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateTensorboardRunRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("tensorboard_run.name=",
                    internal::UrlEncode(request.tensorboard_run().name())));
-  return child_->UpdateTensorboardRun(context, request);
+  return child_->UpdateTensorboardRun(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardRunsResponse>
 TensorboardServiceMetadata::ListTensorboardRuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListTensorboardRunsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListTensorboardRuns(context, request);
+  return child_->ListTensorboardRuns(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -230,54 +230,54 @@ TensorboardServiceMetadata::AsyncDeleteTensorboardRun(
 StatusOr<
     google::cloud::aiplatform::v1::BatchCreateTensorboardTimeSeriesResponse>
 TensorboardServiceMetadata::BatchCreateTensorboardTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         BatchCreateTensorboardTimeSeriesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->BatchCreateTensorboardTimeSeries(context, request);
+  return child_->BatchCreateTensorboardTimeSeries(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
 TensorboardServiceMetadata::CreateTensorboardTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateTensorboardTimeSeriesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateTensorboardTimeSeries(context, request);
+  return child_->CreateTensorboardTimeSeries(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
 TensorboardServiceMetadata::GetTensorboardTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetTensorboardTimeSeriesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetTensorboardTimeSeries(context, request);
+  return child_->GetTensorboardTimeSeries(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::TensorboardTimeSeries>
 TensorboardServiceMetadata::UpdateTensorboardTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateTensorboardTimeSeriesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("tensorboard_time_series.name=",
                            internal::UrlEncode(
                                request.tensorboard_time_series().name())));
-  return child_->UpdateTensorboardTimeSeries(context, request);
+  return child_->UpdateTensorboardTimeSeries(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListTensorboardTimeSeriesResponse>
 TensorboardServiceMetadata::ListTensorboardTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListTensorboardTimeSeriesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListTensorboardTimeSeries(context, request);
+  return child_->ListTensorboardTimeSeries(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -295,25 +295,25 @@ TensorboardServiceMetadata::AsyncDeleteTensorboardTimeSeries(
 StatusOr<
     google::cloud::aiplatform::v1::BatchReadTensorboardTimeSeriesDataResponse>
 TensorboardServiceMetadata::BatchReadTensorboardTimeSeriesData(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::
         BatchReadTensorboardTimeSeriesDataRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("tensorboard=", internal::UrlEncode(request.tensorboard())));
-  return child_->BatchReadTensorboardTimeSeriesData(context, request);
+  return child_->BatchReadTensorboardTimeSeriesData(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataResponse>
 TensorboardServiceMetadata::ReadTensorboardTimeSeriesData(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ReadTensorboardTimeSeriesDataRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("tensorboard_time_series=",
                    internal::UrlEncode(request.tensorboard_time_series())));
-  return child_->ReadTensorboardTimeSeriesData(context, request);
+  return child_->ReadTensorboardTimeSeriesData(context, options, request);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -330,37 +330,37 @@ TensorboardServiceMetadata::ReadTensorboardBlobData(
 
 StatusOr<google::cloud::aiplatform::v1::WriteTensorboardExperimentDataResponse>
 TensorboardServiceMetadata::WriteTensorboardExperimentData(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::WriteTensorboardExperimentDataRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("tensorboard_experiment=",
                    internal::UrlEncode(request.tensorboard_experiment())));
-  return child_->WriteTensorboardExperimentData(context, request);
+  return child_->WriteTensorboardExperimentData(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::WriteTensorboardRunDataResponse>
 TensorboardServiceMetadata::WriteTensorboardRunData(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::WriteTensorboardRunDataRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("tensorboard_run=",
                            internal::UrlEncode(request.tensorboard_run())));
-  return child_->WriteTensorboardRunData(context, request);
+  return child_->WriteTensorboardRunData(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataResponse>
 TensorboardServiceMetadata::ExportTensorboardTimeSeriesData(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ExportTensorboardTimeSeriesDataRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("tensorboard_time_series=",
                    internal::UrlEncode(request.tensorboard_time_series())));
-  return child_->ExportTensorboardTimeSeriesData(context, request);
+  return child_->ExportTensorboardTimeSeriesData(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -32,7 +32,7 @@ SearchServiceStub::~SearchServiceStub() = default;
 
 StatusOr<google::cloud::retail::v2::SearchResponse>
 DefaultSearchServiceStub::Search(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::SearchRequest const& request) {
   google::cloud::retail::v2::SearchResponse response;
   auto status = grpc_stub_->Search(&context, request, &response);

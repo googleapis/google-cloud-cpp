@@ -52,20 +52,20 @@ FeaturestoreServiceAuth::AsyncCreateFeaturestore(
 
 StatusOr<google::cloud::aiplatform::v1::Featurestore>
 FeaturestoreServiceAuth::GetFeaturestore(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetFeaturestoreRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetFeaturestore(context, request);
+  return child_->GetFeaturestore(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListFeaturestoresResponse>
 FeaturestoreServiceAuth::ListFeaturestores(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListFeaturestoresRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListFeaturestores(context, request);
+  return child_->ListFeaturestores(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -127,29 +127,29 @@ FeaturestoreServiceAuth::AsyncCreateEntityType(
 
 StatusOr<google::cloud::aiplatform::v1::EntityType>
 FeaturestoreServiceAuth::GetEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetEntityTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEntityType(context, request);
+  return child_->GetEntityType(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListEntityTypesResponse>
 FeaturestoreServiceAuth::ListEntityTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListEntityTypesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEntityTypes(context, request);
+  return child_->ListEntityTypes(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::EntityType>
 FeaturestoreServiceAuth::UpdateEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateEntityTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateEntityType(context, request);
+  return child_->UpdateEntityType(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -211,29 +211,29 @@ FeaturestoreServiceAuth::AsyncBatchCreateFeatures(
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
 FeaturestoreServiceAuth::GetFeature(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetFeatureRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetFeature(context, request);
+  return child_->GetFeature(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListFeaturesResponse>
 FeaturestoreServiceAuth::ListFeatures(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListFeaturesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListFeatures(context, request);
+  return child_->ListFeatures(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Feature>
 FeaturestoreServiceAuth::UpdateFeature(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateFeatureRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateFeature(context, request);
+  return child_->UpdateFeature(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -334,11 +334,11 @@ FeaturestoreServiceAuth::AsyncDeleteFeatureValues(
 
 StatusOr<google::cloud::aiplatform::v1::SearchFeaturesResponse>
 FeaturestoreServiceAuth::SearchFeatures(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::SearchFeaturesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SearchFeatures(context, request);
+  return child_->SearchFeatures(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -44,22 +44,22 @@ LlmUtilityServiceMetadata::LlmUtilityServiceMetadata(
 
 StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
 LlmUtilityServiceMetadata::CountTokens(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CountTokensRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("endpoint=", internal::UrlEncode(request.endpoint())));
-  return child_->CountTokens(context, request);
+  return child_->CountTokens(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
 LlmUtilityServiceMetadata::ComputeTokens(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ComputeTokensRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("endpoint=", internal::UrlEncode(request.endpoint())));
-  return child_->ComputeTokens(context, request);
+  return child_->ComputeTokens(context, options, request);
 }
 
 void LlmUtilityServiceMetadata::SetMetadata(grpc::ClientContext& context,

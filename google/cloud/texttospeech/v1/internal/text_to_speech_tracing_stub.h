@@ -38,13 +38,13 @@ class TextToSpeechTracingStub : public TextToSpeechStub {
   explicit TextToSpeechTracingStub(std::shared_ptr<TextToSpeechStub> child);
 
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::texttospeech::v1::ListVoicesRequest const& request)
       override;
 
   StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
   SynthesizeSpeech(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request)
       override;
 

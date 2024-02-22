@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_CASE_ATTACHMENT_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_CASE_ATTACHMENT_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/support/v2/attachment_service.grpc.pb.h>
@@ -36,7 +37,7 @@ class CaseAttachmentServiceStub {
 
   virtual StatusOr<google::cloud::support::v2::ListAttachmentsResponse>
   ListAttachments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::ListAttachmentsRequest const& request) = 0;
 };
 
@@ -49,7 +50,7 @@ class DefaultCaseAttachmentServiceStub : public CaseAttachmentServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::support::v2::ListAttachmentsResponse> ListAttachments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::ListAttachmentsRequest const& request)
       override;
 

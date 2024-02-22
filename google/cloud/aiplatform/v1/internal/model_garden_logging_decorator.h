@@ -39,7 +39,7 @@ class ModelGardenServiceLogging : public ModelGardenServiceStub {
                             std::set<std::string> const& components);
 
   StatusOr<google::cloud::aiplatform::v1::PublisherModel> GetPublisherModel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetPublisherModelRequest const& request)
       override;
 

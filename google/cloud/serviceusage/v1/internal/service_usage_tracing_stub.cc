@@ -59,26 +59,26 @@ ServiceUsageTracingStub::AsyncDisableService(
 
 StatusOr<google::api::serviceusage::v1::Service>
 ServiceUsageTracingStub::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::serviceusage::v1::GetServiceRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.api.serviceusage.v1.ServiceUsage",
                                      "GetService");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetService(context, request));
+                           child_->GetService(context, options, request));
 }
 
 StatusOr<google::api::serviceusage::v1::ListServicesResponse>
 ServiceUsageTracingStub::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::serviceusage::v1::ListServicesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.api.serviceusage.v1.ServiceUsage",
                                      "ListServices");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListServices(context, request));
+                           child_->ListServices(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -96,14 +96,14 @@ ServiceUsageTracingStub::AsyncBatchEnableServices(
 
 StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
 ServiceUsageTracingStub::BatchGetServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::serviceusage::v1::BatchGetServicesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.api.serviceusage.v1.ServiceUsage",
                                      "BatchGetServices");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->BatchGetServices(context, request));
+                           child_->BatchGetServices(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

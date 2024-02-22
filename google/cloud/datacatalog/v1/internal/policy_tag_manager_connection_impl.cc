@@ -68,10 +68,12 @@ PolicyTagManagerConnectionImpl::CreateTaxonomy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateTaxonomy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::CreateTaxonomyRequest const&
-                 request) { return stub_->CreateTaxonomy(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreateTaxonomy(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status PolicyTagManagerConnectionImpl::DeleteTaxonomy(
@@ -80,10 +82,12 @@ Status PolicyTagManagerConnectionImpl::DeleteTaxonomy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteTaxonomy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::DeleteTaxonomyRequest const&
-                 request) { return stub_->DeleteTaxonomy(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DeleteTaxonomy(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
@@ -93,10 +97,12 @@ PolicyTagManagerConnectionImpl::UpdateTaxonomy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateTaxonomy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::UpdateTaxonomyRequest const&
-                 request) { return stub_->UpdateTaxonomy(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->UpdateTaxonomy(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::datacatalog::v1::Taxonomy>
@@ -108,20 +114,21 @@ PolicyTagManagerConnectionImpl::ListTaxonomies(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::datacatalog::v1::Taxonomy>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<datacatalog_v1::PolicyTagManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::datacatalog::v1::ListTaxonomiesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::datacatalog::v1::ListTaxonomiesRequest const&
                        request) {
-              return stub->ListTaxonomies(context, request);
+              return stub->ListTaxonomies(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::datacatalog::v1::ListTaxonomiesResponse r) {
         std::vector<google::cloud::datacatalog::v1::Taxonomy> result(
@@ -140,11 +147,11 @@ PolicyTagManagerConnectionImpl::GetTaxonomy(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTaxonomy(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) {
-        return stub_->GetTaxonomy(context, request);
+        return stub_->GetTaxonomy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
@@ -154,10 +161,12 @@ PolicyTagManagerConnectionImpl::CreatePolicyTag(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreatePolicyTag(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::CreatePolicyTagRequest const&
-                 request) { return stub_->CreatePolicyTag(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreatePolicyTag(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status PolicyTagManagerConnectionImpl::DeletePolicyTag(
@@ -166,10 +175,12 @@ Status PolicyTagManagerConnectionImpl::DeletePolicyTag(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeletePolicyTag(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::DeletePolicyTagRequest const&
-                 request) { return stub_->DeletePolicyTag(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DeletePolicyTag(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
@@ -179,10 +190,12 @@ PolicyTagManagerConnectionImpl::UpdatePolicyTag(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdatePolicyTag(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::UpdatePolicyTagRequest const&
-                 request) { return stub_->UpdatePolicyTag(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->UpdatePolicyTag(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::datacatalog::v1::PolicyTag>
@@ -194,20 +207,21 @@ PolicyTagManagerConnectionImpl::ListPolicyTags(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::datacatalog::v1::PolicyTag>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<datacatalog_v1::PolicyTagManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::datacatalog::v1::ListPolicyTagsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::datacatalog::v1::ListPolicyTagsRequest const&
                        request) {
-              return stub->ListPolicyTags(context, request);
+              return stub->ListPolicyTags(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::datacatalog::v1::ListPolicyTagsResponse r) {
         std::vector<google::cloud::datacatalog::v1::PolicyTag> result(
@@ -226,11 +240,11 @@ PolicyTagManagerConnectionImpl::GetPolicyTag(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPolicyTag(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) {
-        return stub_->GetPolicyTag(context, request);
+        return stub_->GetPolicyTag(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::Policy> PolicyTagManagerConnectionImpl::GetIamPolicy(
@@ -239,11 +253,11 @@ StatusOr<google::iam::v1::Policy> PolicyTagManagerConnectionImpl::GetIamPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
-        return stub_->GetIamPolicy(context, request);
+        return stub_->GetIamPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::Policy> PolicyTagManagerConnectionImpl::SetIamPolicy(
@@ -252,11 +266,11 @@ StatusOr<google::iam::v1::Policy> PolicyTagManagerConnectionImpl::SetIamPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
-        return stub_->SetIamPolicy(context, request);
+        return stub_->SetIamPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
@@ -266,11 +280,11 @@ PolicyTagManagerConnectionImpl::TestIamPermissions(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TestIamPermissions(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
-        return stub_->TestIamPermissions(context, request);
+        return stub_->TestIamPermissions(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

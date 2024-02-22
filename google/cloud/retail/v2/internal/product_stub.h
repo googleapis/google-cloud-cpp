@@ -39,24 +39,24 @@ class ProductServiceStub {
   virtual ~ProductServiceStub() = 0;
 
   virtual StatusOr<google::cloud::retail::v2::Product> CreateProduct(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::CreateProductRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::retail::v2::Product> GetProduct(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::GetProductRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::retail::v2::ListProductsResponse>
   ListProducts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::ListProductsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::retail::v2::Product> UpdateProduct(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::UpdateProductRequest const& request) = 0;
 
   virtual Status DeleteProduct(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::DeleteProductRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncImportProducts(
@@ -117,23 +117,23 @@ class DefaultProductServiceStub : public ProductServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::retail::v2::Product> CreateProduct(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::CreateProductRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Product> GetProduct(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::GetProductRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::ListProductsResponse> ListProducts(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::ListProductsRequest const& request) override;
 
   StatusOr<google::cloud::retail::v2::Product> UpdateProduct(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::UpdateProductRequest const& request) override;
 
   Status DeleteProduct(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::DeleteProductRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportProducts(

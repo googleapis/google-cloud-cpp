@@ -72,7 +72,7 @@ DefaultRapidMigrationAssessmentStub::AsyncCreateAnnotation(
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>
 DefaultRapidMigrationAssessmentStub::GetAnnotation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::rapidmigrationassessment::v1::GetAnnotationRequest const&
         request) {
   google::cloud::rapidmigrationassessment::v1::Annotation response;
@@ -85,7 +85,7 @@ DefaultRapidMigrationAssessmentStub::GetAnnotation(
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::ListCollectorsResponse>
 DefaultRapidMigrationAssessmentStub::ListCollectors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::rapidmigrationassessment::v1::ListCollectorsRequest const&
         request) {
   google::cloud::rapidmigrationassessment::v1::ListCollectorsResponse response;
@@ -98,7 +98,7 @@ DefaultRapidMigrationAssessmentStub::ListCollectors(
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>
 DefaultRapidMigrationAssessmentStub::GetCollector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::rapidmigrationassessment::v1::GetCollectorRequest const&
         request) {
   google::cloud::rapidmigrationassessment::v1::Collector response;

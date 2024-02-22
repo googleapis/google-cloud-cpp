@@ -37,30 +37,30 @@ ReachabilityServiceLogging::ReachabilityServiceLogging(
 
 StatusOr<google::cloud::networkmanagement::v1::ListConnectivityTestsResponse>
 ReachabilityServiceLogging::ListConnectivityTests(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkmanagement::v1::ListConnectivityTestsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkmanagement::v1::
                  ListConnectivityTestsRequest const& request) {
-        return child_->ListConnectivityTests(context, request);
+        return child_->ListConnectivityTests(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
 ReachabilityServiceLogging::GetConnectivityTest(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkmanagement::v1::
                  GetConnectivityTestRequest const& request) {
-        return child_->GetConnectivityTest(context, request);
+        return child_->GetConnectivityTest(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

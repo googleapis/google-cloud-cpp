@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_V1_INTERNAL_IDENTITY_AWARE_PROXY_O_AUTH_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAP_V1_INTERNAL_IDENTITY_AWARE_PROXY_O_AUTH_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/iap/v1/service.grpc.pb.h>
@@ -35,44 +36,44 @@ class IdentityAwareProxyOAuthServiceStub {
   virtual ~IdentityAwareProxyOAuthServiceStub() = 0;
 
   virtual StatusOr<google::cloud::iap::v1::ListBrandsResponse> ListBrands(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::ListBrandsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::iap::v1::Brand> CreateBrand(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::CreateBrandRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::iap::v1::Brand> GetBrand(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::GetBrandRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
   CreateIdentityAwareProxyClient(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::iap::v1::ListIdentityAwareProxyClientsResponse>
   ListIdentityAwareProxyClients(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
   GetIdentityAwareProxyClient(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
   ResetIdentityAwareProxyClientSecret(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const&
           request) = 0;
 
   virtual Status DeleteIdentityAwareProxyClient(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&
           request) = 0;
 };
@@ -87,43 +88,43 @@ class DefaultIdentityAwareProxyOAuthServiceStub
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::iap::v1::ListBrandsResponse> ListBrands(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::ListBrandsRequest const& request) override;
 
   StatusOr<google::cloud::iap::v1::Brand> CreateBrand(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::CreateBrandRequest const& request) override;
 
   StatusOr<google::cloud::iap::v1::Brand> GetBrand(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::GetBrandRequest const& request) override;
 
   StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
   CreateIdentityAwareProxyClient(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&
           request) override;
 
   StatusOr<google::cloud::iap::v1::ListIdentityAwareProxyClientsResponse>
   ListIdentityAwareProxyClients(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest const&
           request) override;
 
   StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
   GetIdentityAwareProxyClient(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request)
       override;
 
   StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
   ResetIdentityAwareProxyClientSecret(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::ResetIdentityAwareProxyClientSecretRequest const&
           request) override;
 
   Status DeleteIdentityAwareProxyClient(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&
           request) override;
 

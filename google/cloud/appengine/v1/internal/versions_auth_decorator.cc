@@ -33,19 +33,19 @@ VersionsAuth::VersionsAuth(
 
 StatusOr<google::appengine::v1::ListVersionsResponse>
 VersionsAuth::ListVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListVersionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListVersions(context, request);
+  return child_->ListVersions(context, options, request);
 }
 
 StatusOr<google::appengine::v1::Version> VersionsAuth::GetVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetVersion(context, request);
+  return child_->GetVersion(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

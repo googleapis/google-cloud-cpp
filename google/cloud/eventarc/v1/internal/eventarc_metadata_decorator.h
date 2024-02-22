@@ -40,11 +40,11 @@ class EventarcMetadata : public EventarcStub {
                    std::string api_client_header = "");
 
   StatusOr<google::cloud::eventarc::v1::Trigger> GetTrigger(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::eventarc::v1::GetTriggerRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::v1::ListTriggersResponse> ListTriggers(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::eventarc::v1::ListTriggersRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateTrigger(
@@ -66,11 +66,11 @@ class EventarcMetadata : public EventarcStub {
       override;
 
   StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::eventarc::v1::GetChannelRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::v1::ListChannelsResponse> ListChannels(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::eventarc::v1::ListChannelsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateChannel(
@@ -92,22 +92,22 @@ class EventarcMetadata : public EventarcStub {
       override;
 
   StatusOr<google::cloud::eventarc::v1::Provider> GetProvider(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::eventarc::v1::GetProviderRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::v1::ListProvidersResponse> ListProviders(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::eventarc::v1::ListProvidersRequest const& request)
       override;
 
   StatusOr<google::cloud::eventarc::v1::ChannelConnection> GetChannelConnection(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::eventarc::v1::GetChannelConnectionRequest const& request)
       override;
 
   StatusOr<google::cloud::eventarc::v1::ListChannelConnectionsResponse>
   ListChannelConnections(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::eventarc::v1::ListChannelConnectionsRequest const& request)
       override;
 
@@ -125,13 +125,13 @@ class EventarcMetadata : public EventarcStub {
 
   StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
   GetGoogleChannelConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request)
       override;
 
   StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
   UpdateGoogleChannelConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
           request) override;
 

@@ -32,7 +32,7 @@ DashboardsServiceStub::~DashboardsServiceStub() = default;
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DefaultDashboardsServiceStub::CreateDashboard(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::dashboard::v1::CreateDashboardRequest const& request) {
   google::monitoring::dashboard::v1::Dashboard response;
   auto status = grpc_stub_->CreateDashboard(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultDashboardsServiceStub::CreateDashboard(
 
 StatusOr<google::monitoring::dashboard::v1::ListDashboardsResponse>
 DefaultDashboardsServiceStub::ListDashboards(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::dashboard::v1::ListDashboardsRequest const& request) {
   google::monitoring::dashboard::v1::ListDashboardsResponse response;
   auto status = grpc_stub_->ListDashboards(&context, request, &response);
@@ -56,7 +56,7 @@ DefaultDashboardsServiceStub::ListDashboards(
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DefaultDashboardsServiceStub::GetDashboard(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::dashboard::v1::GetDashboardRequest const& request) {
   google::monitoring::dashboard::v1::Dashboard response;
   auto status = grpc_stub_->GetDashboard(&context, request, &response);
@@ -67,7 +67,7 @@ DefaultDashboardsServiceStub::GetDashboard(
 }
 
 Status DefaultDashboardsServiceStub::DeleteDashboard(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteDashboard(&context, request, &response);
@@ -79,7 +79,7 @@ Status DefaultDashboardsServiceStub::DeleteDashboard(
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DefaultDashboardsServiceStub::UpdateDashboard(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) {
   google::monitoring::dashboard::v1::Dashboard response;
   auto status = grpc_stub_->UpdateDashboard(&context, request, &response);

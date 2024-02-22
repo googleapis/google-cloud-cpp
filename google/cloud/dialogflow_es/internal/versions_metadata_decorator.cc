@@ -44,46 +44,46 @@ VersionsMetadata::VersionsMetadata(
 
 StatusOr<google::cloud::dialogflow::v2::ListVersionsResponse>
 VersionsMetadata::ListVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListVersionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListVersions(context, request);
+  return child_->ListVersions(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Version> VersionsMetadata::GetVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetVersionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetVersion(context, request);
+  return child_->GetVersion(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Version>
 VersionsMetadata::CreateVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateVersionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateVersion(context, request);
+  return child_->CreateVersion(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Version>
 VersionsMetadata::UpdateVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateVersionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("version.name=",
                            internal::UrlEncode(request.version().name())));
-  return child_->UpdateVersion(context, request);
+  return child_->UpdateVersion(context, options, request);
 }
 
 Status VersionsMetadata::DeleteVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteVersionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteVersion(context, request);
+  return child_->DeleteVersion(context, options, request);
 }
 
 void VersionsMetadata::SetMetadata(grpc::ClientContext& context,

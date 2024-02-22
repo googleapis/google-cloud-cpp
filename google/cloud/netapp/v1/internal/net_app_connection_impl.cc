@@ -71,20 +71,21 @@ NetAppConnectionImpl::ListStoragePools(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::netapp::v1::StoragePool>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::netapp::v1::ListStoragePoolsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::netapp::v1::ListStoragePoolsRequest const&
                        request) {
-              return stub->ListStoragePools(context, request);
+              return stub->ListStoragePools(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::netapp::v1::ListStoragePoolsResponse r) {
         std::vector<google::cloud::netapp::v1::StoragePool> result(
@@ -139,11 +140,11 @@ NetAppConnectionImpl::GetStoragePool(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetStoragePool(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::GetStoragePoolRequest const& request) {
-        return stub_->GetStoragePool(context, request);
+        return stub_->GetStoragePool(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::netapp::v1::StoragePool>>
@@ -229,20 +230,21 @@ NetAppConnectionImpl::ListVolumes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::netapp::v1::Volume>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::netapp::v1::ListVolumesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::netapp::v1::ListVolumesRequest const& request) {
-              return stub->ListVolumes(context, request);
+              return stub->ListVolumes(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::netapp::v1::ListVolumesResponse r) {
         std::vector<google::cloud::netapp::v1::Volume> result(
@@ -259,11 +261,11 @@ StatusOr<google::cloud::netapp::v1::Volume> NetAppConnectionImpl::GetVolume(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetVolume(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::GetVolumeRequest const& request) {
-        return stub_->GetVolume(context, request);
+        return stub_->GetVolume(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Volume>>
@@ -423,20 +425,21 @@ NetAppConnectionImpl::ListSnapshots(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::netapp::v1::Snapshot>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::netapp::v1::ListSnapshotsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::netapp::v1::ListSnapshotsRequest const&
                        request) {
-              return stub->ListSnapshots(context, request);
+              return stub->ListSnapshots(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::netapp::v1::ListSnapshotsResponse r) {
         std::vector<google::cloud::netapp::v1::Snapshot> result(
@@ -453,11 +456,11 @@ StatusOr<google::cloud::netapp::v1::Snapshot> NetAppConnectionImpl::GetSnapshot(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSnapshot(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::GetSnapshotRequest const& request) {
-        return stub_->GetSnapshot(context, request);
+        return stub_->GetSnapshot(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Snapshot>>
@@ -581,21 +584,22 @@ NetAppConnectionImpl::ListActiveDirectories(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::netapp::v1::ActiveDirectory>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::netapp::v1::ListActiveDirectoriesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::netapp::v1::ListActiveDirectoriesRequest const&
                     request) {
-              return stub->ListActiveDirectories(context, request);
+              return stub->ListActiveDirectories(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::netapp::v1::ListActiveDirectoriesResponse r) {
         std::vector<google::cloud::netapp::v1::ActiveDirectory> result(
@@ -614,11 +618,11 @@ NetAppConnectionImpl::GetActiveDirectory(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetActiveDirectory(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::netapp::v1::GetActiveDirectoryRequest const& request) {
-        return stub_->GetActiveDirectory(context, request);
+        return stub_->GetActiveDirectory(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::netapp::v1::ActiveDirectory>>
@@ -744,20 +748,21 @@ NetAppConnectionImpl::ListKmsConfigs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::netapp::v1::KmsConfig>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::netapp::v1::ListKmsConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::netapp::v1::ListKmsConfigsRequest const&
                        request) {
-              return stub->ListKmsConfigs(context, request);
+              return stub->ListKmsConfigs(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::netapp::v1::ListKmsConfigsResponse r) {
         std::vector<google::cloud::netapp::v1::KmsConfig> result(
@@ -812,11 +817,11 @@ NetAppConnectionImpl::GetKmsConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetKmsConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::GetKmsConfigRequest const& request) {
-        return stub_->GetKmsConfig(context, request);
+        return stub_->GetKmsConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::netapp::v1::KmsConfig>>
@@ -900,11 +905,11 @@ NetAppConnectionImpl::VerifyKmsConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->VerifyKmsConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::VerifyKmsConfigRequest const& request) {
-        return stub_->VerifyKmsConfig(context, request);
+        return stub_->VerifyKmsConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::netapp::v1::OperationMetadata>>
@@ -953,20 +958,21 @@ NetAppConnectionImpl::ListReplications(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::netapp::v1::Replication>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::netapp::v1::ListReplicationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::netapp::v1::ListReplicationsRequest const&
                        request) {
-              return stub->ListReplications(context, request);
+              return stub->ListReplications(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::netapp::v1::ListReplicationsResponse r) {
         std::vector<google::cloud::netapp::v1::Replication> result(
@@ -984,11 +990,11 @@ NetAppConnectionImpl::GetReplication(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetReplication(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::GetReplicationRequest const& request) {
-        return stub_->GetReplication(context, request);
+        return stub_->GetReplication(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::netapp::v1::Replication>>
@@ -1259,11 +1265,11 @@ NetAppConnectionImpl::GetBackupVault(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetBackupVault(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::GetBackupVaultRequest const& request) {
-        return stub_->GetBackupVault(context, request);
+        return stub_->GetBackupVault(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::netapp::v1::BackupVault>
@@ -1275,20 +1281,21 @@ NetAppConnectionImpl::ListBackupVaults(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::netapp::v1::BackupVault>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::netapp::v1::ListBackupVaultsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::netapp::v1::ListBackupVaultsRequest const&
                        request) {
-              return stub->ListBackupVaults(context, request);
+              return stub->ListBackupVaults(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::netapp::v1::ListBackupVaultsResponse r) {
         std::vector<google::cloud::netapp::v1::BackupVault> result(
@@ -1416,11 +1423,11 @@ StatusOr<google::cloud::netapp::v1::Backup> NetAppConnectionImpl::GetBackup(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetBackup(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::GetBackupRequest const& request) {
-        return stub_->GetBackup(context, request);
+        return stub_->GetBackup(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::netapp::v1::Backup>
@@ -1432,20 +1439,21 @@ NetAppConnectionImpl::ListBackups(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::netapp::v1::Backup>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::netapp::v1::ListBackupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::netapp::v1::ListBackupsRequest const& request) {
-              return stub->ListBackups(context, request);
+              return stub->ListBackups(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::netapp::v1::ListBackupsResponse r) {
         std::vector<google::cloud::netapp::v1::Backup> result(
@@ -1574,11 +1582,11 @@ NetAppConnectionImpl::GetBackupPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetBackupPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::netapp::v1::GetBackupPolicyRequest const& request) {
-        return stub_->GetBackupPolicy(context, request);
+        return stub_->GetBackupPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::netapp::v1::BackupPolicy>
@@ -1590,20 +1598,21 @@ NetAppConnectionImpl::ListBackupPolicies(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::netapp::v1::BackupPolicy>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<netapp_v1::NetAppRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::netapp::v1::ListBackupPoliciesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::netapp::v1::ListBackupPoliciesRequest const&
                        request) {
-              return stub->ListBackupPolicies(context, request);
+              return stub->ListBackupPolicies(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::netapp::v1::ListBackupPoliciesResponse r) {
         std::vector<google::cloud::netapp::v1::BackupPolicy> result(

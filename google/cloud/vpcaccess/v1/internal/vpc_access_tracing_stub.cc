@@ -46,26 +46,26 @@ VpcAccessServiceTracingStub::AsyncCreateConnector(
 
 StatusOr<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceTracingStub::GetConnector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vpcaccess.v1.VpcAccessService", "GetConnector");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetConnector(context, request));
+                           child_->GetConnector(context, options, request));
 }
 
 StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse>
 VpcAccessServiceTracingStub::ListConnectors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vpcaccess::v1::ListConnectorsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.vpcaccess.v1.VpcAccessService", "ListConnectors");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListConnectors(context, request));
+                           child_->ListConnectors(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

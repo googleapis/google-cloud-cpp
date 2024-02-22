@@ -67,7 +67,7 @@ TEST(GoldenStubFactoryTest, DefaultStubWithAuth) {
       .WillOnce(Return(internal::AbortedError("fail")));
   auto default_stub = CreateDefaultGoldenThingAdminStub(auth, options);
   grpc::ClientContext context;
-  auto response = default_stub->GetBackup(context, GetBackupRequest{});
+  auto response = default_stub->GetBackup(context, options, GetBackupRequest{});
   EXPECT_THAT(response, StatusIs(StatusCode::kAborted, "fail"));
 }
 
@@ -84,7 +84,7 @@ TEST(GoldenStubFactoryTest, DefaultStubWithTracingEnabled) {
   auto auth = MakeStubFactoryMockAuth();
   auto stub = CreateDefaultGoldenThingAdminStub(auth, options);
   grpc::ClientContext context;
-  (void)stub->DeleteBackup(context, {});
+  (void)stub->DeleteBackup(context, options, {});
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
@@ -100,7 +100,7 @@ TEST(GoldenStubFactoryTest, DefaultStubWithTracingDisabled) {
   auto auth = MakeStubFactoryMockAuth();
   auto stub = CreateDefaultGoldenThingAdminStub(auth, options);
   grpc::ClientContext context;
-  (void)stub->DeleteBackup(context, {});
+  (void)stub->DeleteBackup(context, options, {});
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(

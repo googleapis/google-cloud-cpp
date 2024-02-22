@@ -32,7 +32,7 @@ ProfilerServiceStub::~ProfilerServiceStub() = default;
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 DefaultProfilerServiceStub::CreateProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) {
   google::devtools::cloudprofiler::v2::Profile response;
   auto status = grpc_stub_->CreateProfile(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultProfilerServiceStub::CreateProfile(
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 DefaultProfilerServiceStub::CreateOfflineProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
         request) {
   google::devtools::cloudprofiler::v2::Profile response;
@@ -57,7 +57,7 @@ DefaultProfilerServiceStub::CreateOfflineProfile(
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 DefaultProfilerServiceStub::UpdateProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) {
   google::devtools::cloudprofiler::v2::Profile response;
   auto status = grpc_stub_->UpdateProfile(&context, request, &response);

@@ -118,7 +118,7 @@ DefaultClusterControllerStub::AsyncDeleteCluster(
 
 StatusOr<google::cloud::dataproc::v1::Cluster>
 DefaultClusterControllerStub::GetCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::GetClusterRequest const& request) {
   google::cloud::dataproc::v1::Cluster response;
   auto status = grpc_stub_->GetCluster(&context, request, &response);
@@ -130,7 +130,7 @@ DefaultClusterControllerStub::GetCluster(
 
 StatusOr<google::cloud::dataproc::v1::ListClustersResponse>
 DefaultClusterControllerStub::ListClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::ListClustersRequest const& request) {
   google::cloud::dataproc::v1::ListClustersResponse response;
   auto status = grpc_stub_->ListClusters(&context, request, &response);

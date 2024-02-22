@@ -56,21 +56,21 @@ ConversationModelsMetadata::AsyncCreateConversationModel(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationModel>
 ConversationModelsMetadata::GetConversationModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetConversationModelRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetConversationModel(context, request);
+  return child_->GetConversationModel(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationModelsResponse>
 ConversationModelsMetadata::ListConversationModels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListConversationModelsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListConversationModels(context, request);
+  return child_->ListConversationModels(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -111,23 +111,23 @@ ConversationModelsMetadata::AsyncUndeployConversationModel(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
 ConversationModelsMetadata::GetConversationModelEvaluation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetConversationModelEvaluation(context, request);
+  return child_->GetConversationModelEvaluation(context, options, request);
 }
 
 StatusOr<
     google::cloud::dialogflow::v2::ListConversationModelEvaluationsResponse>
 ConversationModelsMetadata::ListConversationModelEvaluations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::
         ListConversationModelEvaluationsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListConversationModelEvaluations(context, request);
+  return child_->ListConversationModelEvaluations(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

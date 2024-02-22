@@ -46,12 +46,12 @@ class LivestreamServiceLogging : public LivestreamServiceStub {
       override;
 
   StatusOr<google::cloud::video::livestream::v1::ListChannelsResponse>
-  ListChannels(grpc::ClientContext& context,
+  ListChannels(grpc::ClientContext& context, Options const& options,
                google::cloud::video::livestream::v1::ListChannelsRequest const&
                    request) override;
 
   StatusOr<google::cloud::video::livestream::v1::Channel> GetChannel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::video::livestream::v1::GetChannelRequest const& request)
       override;
 
@@ -86,12 +86,12 @@ class LivestreamServiceLogging : public LivestreamServiceStub {
       override;
 
   StatusOr<google::cloud::video::livestream::v1::ListInputsResponse> ListInputs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::video::livestream::v1::ListInputsRequest const& request)
       override;
 
   StatusOr<google::cloud::video::livestream::v1::Input> GetInput(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::video::livestream::v1::GetInputRequest const& request)
       override;
 
@@ -108,22 +108,22 @@ class LivestreamServiceLogging : public LivestreamServiceStub {
       override;
 
   StatusOr<google::cloud::video::livestream::v1::Event> CreateEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::video::livestream::v1::CreateEventRequest const& request)
       override;
 
   StatusOr<google::cloud::video::livestream::v1::ListEventsResponse> ListEvents(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::video::livestream::v1::ListEventsRequest const& request)
       override;
 
   StatusOr<google::cloud::video::livestream::v1::Event> GetEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::video::livestream::v1::GetEventRequest const& request)
       override;
 
   Status DeleteEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::video::livestream::v1::DeleteEventRequest const& request)
       override;
 
@@ -140,17 +140,17 @@ class LivestreamServiceLogging : public LivestreamServiceStub {
       override;
 
   StatusOr<google::cloud::video::livestream::v1::Asset> GetAsset(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::video::livestream::v1::GetAssetRequest const& request)
       override;
 
   StatusOr<google::cloud::video::livestream::v1::ListAssetsResponse> ListAssets(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::video::livestream::v1::ListAssetsRequest const& request)
       override;
 
   StatusOr<google::cloud::video::livestream::v1::Pool> GetPool(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::video::livestream::v1::GetPoolRequest const& request)
       override;
 

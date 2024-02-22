@@ -39,12 +39,12 @@ class ManagedNotebookServiceTracingStub : public ManagedNotebookServiceStub {
       std::shared_ptr<ManagedNotebookServiceStub> child);
 
   StatusOr<google::cloud::notebooks::v1::ListRuntimesResponse> ListRuntimes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::notebooks::v1::ListRuntimesRequest const& request)
       override;
 
   StatusOr<google::cloud::notebooks::v1::Runtime> GetRuntime(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::notebooks::v1::GetRuntimeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRuntime(
@@ -102,7 +102,7 @@ class ManagedNotebookServiceTracingStub : public ManagedNotebookServiceStub {
 
   StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
   RefreshRuntimeTokenInternal(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
           request) override;
 

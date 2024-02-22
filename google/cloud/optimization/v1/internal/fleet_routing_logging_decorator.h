@@ -40,7 +40,7 @@ class FleetRoutingLogging : public FleetRoutingStub {
                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
-  OptimizeTours(grpc::ClientContext& context,
+  OptimizeTours(grpc::ClientContext& context, Options const& options,
                 google::cloud::optimization::v1::OptimizeToursRequest const&
                     request) override;
 

@@ -39,27 +39,27 @@ class DocumentServiceStub {
   virtual ~DocumentServiceStub() = 0;
 
   virtual StatusOr<google::cloud::discoveryengine::v1::Document> GetDocument(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::GetDocumentRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::discoveryengine::v1::ListDocumentsResponse>
-  ListDocuments(grpc::ClientContext& context,
+  ListDocuments(grpc::ClientContext& context, Options const& options,
                 google::cloud::discoveryengine::v1::ListDocumentsRequest const&
                     request) = 0;
 
   virtual StatusOr<google::cloud::discoveryengine::v1::Document> CreateDocument(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::CreateDocumentRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::discoveryengine::v1::Document> UpdateDocument(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::UpdateDocumentRequest const&
           request) = 0;
 
   virtual Status DeleteDocument(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::DeleteDocumentRequest const&
           request) = 0;
 
@@ -97,27 +97,27 @@ class DefaultDocumentServiceStub : public DocumentServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::discoveryengine::v1::Document> GetDocument(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::GetDocumentRequest const& request)
       override;
 
   StatusOr<google::cloud::discoveryengine::v1::ListDocumentsResponse>
-  ListDocuments(grpc::ClientContext& context,
+  ListDocuments(grpc::ClientContext& context, Options const& options,
                 google::cloud::discoveryengine::v1::ListDocumentsRequest const&
                     request) override;
 
   StatusOr<google::cloud::discoveryengine::v1::Document> CreateDocument(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::CreateDocumentRequest const& request)
       override;
 
   StatusOr<google::cloud::discoveryengine::v1::Document> UpdateDocument(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request)
       override;
 
   Status DeleteDocument(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request)
       override;
 

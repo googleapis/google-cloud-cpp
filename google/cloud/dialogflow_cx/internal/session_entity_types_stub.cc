@@ -32,7 +32,7 @@ SessionEntityTypesStub::~SessionEntityTypesStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListSessionEntityTypesResponse>
 DefaultSessionEntityTypesStub::ListSessionEntityTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::ListSessionEntityTypesResponse response;
@@ -46,7 +46,7 @@ DefaultSessionEntityTypesStub::ListSessionEntityTypes(
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
 DefaultSessionEntityTypesStub::GetSessionEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::SessionEntityType response;
@@ -59,7 +59,7 @@ DefaultSessionEntityTypesStub::GetSessionEntityType(
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
 DefaultSessionEntityTypesStub::CreateSessionEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::SessionEntityType response;
@@ -73,7 +73,7 @@ DefaultSessionEntityTypesStub::CreateSessionEntityType(
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
 DefaultSessionEntityTypesStub::UpdateSessionEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::SessionEntityType response;
@@ -86,7 +86,7 @@ DefaultSessionEntityTypesStub::UpdateSessionEntityType(
 }
 
 Status DefaultSessionEntityTypesStub::DeleteSessionEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const&
         request) {
   google::protobuf::Empty response;

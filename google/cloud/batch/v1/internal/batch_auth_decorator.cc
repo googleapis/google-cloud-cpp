@@ -32,19 +32,19 @@ BatchServiceAuth::BatchServiceAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::batch::v1::Job> BatchServiceAuth::CreateJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::batch::v1::CreateJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateJob(context, request);
+  return child_->CreateJob(context, options, request);
 }
 
 StatusOr<google::cloud::batch::v1::Job> BatchServiceAuth::GetJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::batch::v1::GetJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetJob(context, request);
+  return child_->GetJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -66,28 +66,28 @@ BatchServiceAuth::AsyncDeleteJob(
 }
 
 StatusOr<google::cloud::batch::v1::ListJobsResponse> BatchServiceAuth::ListJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::batch::v1::ListJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListJobs(context, request);
+  return child_->ListJobs(context, options, request);
 }
 
 StatusOr<google::cloud::batch::v1::Task> BatchServiceAuth::GetTask(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::batch::v1::GetTaskRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTask(context, request);
+  return child_->GetTask(context, options, request);
 }
 
 StatusOr<google::cloud::batch::v1::ListTasksResponse>
 BatchServiceAuth::ListTasks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::batch::v1::ListTasksRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTasks(context, request);
+  return child_->ListTasks(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

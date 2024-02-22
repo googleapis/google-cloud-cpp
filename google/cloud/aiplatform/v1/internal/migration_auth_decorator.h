@@ -41,7 +41,7 @@ class MigrationServiceAuth : public MigrationServiceStub {
 
   StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse>
   SearchMigratableResources(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
           request) override;
 

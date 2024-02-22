@@ -47,17 +47,17 @@ class ManagedIdentitiesServiceTracingStub
 
   StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
   ResetAdminPassword(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
           request) override;
 
   StatusOr<google::cloud::managedidentities::v1::ListDomainsResponse>
-  ListDomains(grpc::ClientContext& context,
+  ListDomains(grpc::ClientContext& context, Options const& options,
               google::cloud::managedidentities::v1::ListDomainsRequest const&
                   request) override;
 
   StatusOr<google::cloud::managedidentities::v1::Domain> GetDomain(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::managedidentities::v1::GetDomainRequest const& request)
       override;
 

@@ -33,62 +33,62 @@ LanguageServiceTracingStub::LanguageServiceTracingStub(
 
 StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
 LanguageServiceTracingStub::AnalyzeSentiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v2::AnalyzeSentimentRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.language.v2.LanguageService",
                                      "AnalyzeSentiment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->AnalyzeSentiment(context, request));
+                           child_->AnalyzeSentiment(context, options, request));
 }
 
 StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
 LanguageServiceTracingStub::AnalyzeEntities(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v2::AnalyzeEntitiesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.language.v2.LanguageService",
                                      "AnalyzeEntities");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->AnalyzeEntities(context, request));
+                           child_->AnalyzeEntities(context, options, request));
 }
 
 StatusOr<google::cloud::language::v2::ClassifyTextResponse>
 LanguageServiceTracingStub::ClassifyText(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v2::ClassifyTextRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.language.v2.LanguageService",
                                      "ClassifyText");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ClassifyText(context, request));
+                           child_->ClassifyText(context, options, request));
 }
 
 StatusOr<google::cloud::language::v2::ModerateTextResponse>
 LanguageServiceTracingStub::ModerateText(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v2::ModerateTextRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.language.v2.LanguageService",
                                      "ModerateText");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ModerateText(context, request));
+                           child_->ModerateText(context, options, request));
 }
 
 StatusOr<google::cloud::language::v2::AnnotateTextResponse>
 LanguageServiceTracingStub::AnnotateText(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v2::AnnotateTextRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.language.v2.LanguageService",
                                      "AnnotateText");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->AnnotateText(context, request));
+                           child_->AnnotateText(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

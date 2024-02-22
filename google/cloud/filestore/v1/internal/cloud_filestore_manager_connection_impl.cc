@@ -77,20 +77,21 @@ CloudFilestoreManagerConnectionImpl::ListInstances(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::filestore::v1::Instance>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<filestore_v1::CloudFilestoreManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::filestore::v1::ListInstancesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::filestore::v1::ListInstancesRequest const&
                        request) {
-              return stub->ListInstances(context, request);
+              return stub->ListInstances(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::filestore::v1::ListInstancesResponse r) {
         std::vector<google::cloud::filestore::v1::Instance> result(
@@ -108,11 +109,11 @@ CloudFilestoreManagerConnectionImpl::GetInstance(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetInstance(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::filestore::v1::GetInstanceRequest const& request) {
-        return stub_->GetInstance(context, request);
+        return stub_->GetInstance(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
@@ -309,20 +310,21 @@ CloudFilestoreManagerConnectionImpl::ListSnapshots(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::filestore::v1::Snapshot>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<filestore_v1::CloudFilestoreManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::filestore::v1::ListSnapshotsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::filestore::v1::ListSnapshotsRequest const&
                        request) {
-              return stub->ListSnapshots(context, request);
+              return stub->ListSnapshots(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::filestore::v1::ListSnapshotsResponse r) {
         std::vector<google::cloud::filestore::v1::Snapshot> result(
@@ -340,11 +342,11 @@ CloudFilestoreManagerConnectionImpl::GetSnapshot(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSnapshot(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::filestore::v1::GetSnapshotRequest const& request) {
-        return stub_->GetSnapshot(context, request);
+        return stub_->GetSnapshot(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::filestore::v1::Snapshot>>
@@ -467,18 +469,21 @@ CloudFilestoreManagerConnectionImpl::ListBackups(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::filestore::v1::Backup>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<filestore_v1::CloudFilestoreManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::filestore::v1::ListBackupsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::filestore::v1::ListBackupsRequest const&
-                       request) { return stub->ListBackups(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListBackups(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::filestore::v1::ListBackupsResponse r) {
         std::vector<google::cloud::filestore::v1::Backup> result(
@@ -496,11 +501,11 @@ CloudFilestoreManagerConnectionImpl::GetBackup(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetBackup(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::filestore::v1::GetBackupRequest const& request) {
-        return stub_->GetBackup(context, request);
+        return stub_->GetBackup(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::filestore::v1::Backup>>

@@ -201,23 +201,19 @@ $auth_class_name$::$method_name$(
 )""");
       continue;
     }
-    CcPrintMethod(
-        method,
-        {MethodPattern({{IsResponseTypeEmpty,
-                         R"""(
-Status $auth_class_name$::$method_name$()""",
-                         R"""(
-StatusOr<$response_type$> $auth_class_name$::$method_name$()"""},
-                        {R"""(
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  IsResponseTypeEmpty(method) ? "\nStatus"
+                                              : "\nStatusOr<$response_type$>");
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  R"""( $auth_class_name$::$method_name$(
     grpc::ClientContext& context,
+    Options const& options,
     $request_type$ const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->$method_name$(context, request);
+  return child_->$method_name$(context, options, request);
 }
-)"""}},
-                       And(IsNonStreaming, Not(IsLongrunningOperation)))},
-        __FILE__, __LINE__);
+)""");
   }
 
   for (auto const& method : async_methods()) {

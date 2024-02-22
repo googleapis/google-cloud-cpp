@@ -40,12 +40,12 @@ class SecureSourceManagerTracingStub : public SecureSourceManagerStub {
 
   StatusOr<google::cloud::securesourcemanager::v1::ListInstancesResponse>
   ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securesourcemanager::v1::ListInstancesRequest const&
           request) override;
 
   StatusOr<google::cloud::securesourcemanager::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securesourcemanager::v1::GetInstanceRequest const& request)
       override;
 
@@ -63,12 +63,12 @@ class SecureSourceManagerTracingStub : public SecureSourceManagerStub {
 
   StatusOr<google::cloud::securesourcemanager::v1::ListRepositoriesResponse>
   ListRepositories(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securesourcemanager::v1::ListRepositoriesRequest const&
           request) override;
 
   StatusOr<google::cloud::securesourcemanager::v1::Repository> GetRepository(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::securesourcemanager::v1::GetRepositoryRequest const&
           request) override;
 
@@ -85,15 +85,15 @@ class SecureSourceManagerTracingStub : public SecureSourceManagerStub {
           request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicyRepo(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicyRepo(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissionsRepo(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

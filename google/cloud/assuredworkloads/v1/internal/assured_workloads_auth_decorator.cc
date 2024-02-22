@@ -52,75 +52,75 @@ AssuredWorkloadsServiceAuth::AsyncCreateWorkload(
 
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceAuth::UpdateWorkload(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateWorkload(context, request);
+  return child_->UpdateWorkload(context, options, request);
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
 AssuredWorkloadsServiceAuth::RestrictAllowedResources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RestrictAllowedResources(context, request);
+  return child_->RestrictAllowedResources(context, options, request);
 }
 
 Status AssuredWorkloadsServiceAuth::DeleteWorkload(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteWorkload(context, request);
+  return child_->DeleteWorkload(context, options, request);
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceAuth::GetWorkload(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetWorkload(context, request);
+  return child_->GetWorkload(context, options, request);
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::ListWorkloadsResponse>
 AssuredWorkloadsServiceAuth::ListWorkloads(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::assuredworkloads::v1::ListWorkloadsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListWorkloads(context, request);
+  return child_->ListWorkloads(context, options, request);
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::ListViolationsResponse>
 AssuredWorkloadsServiceAuth::ListViolations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::assuredworkloads::v1::ListViolationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListViolations(context, request);
+  return child_->ListViolations(context, options, request);
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::Violation>
 AssuredWorkloadsServiceAuth::GetViolation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::assuredworkloads::v1::GetViolationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetViolation(context, request);
+  return child_->GetViolation(context, options, request);
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
 AssuredWorkloadsServiceAuth::AcknowledgeViolation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->AcknowledgeViolation(context, request);
+  return child_->AcknowledgeViolation(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

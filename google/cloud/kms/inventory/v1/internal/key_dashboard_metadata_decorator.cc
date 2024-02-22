@@ -44,11 +44,11 @@ KeyDashboardServiceMetadata::KeyDashboardServiceMetadata(
 
 StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
 KeyDashboardServiceMetadata::ListCryptoKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListCryptoKeys(context, request);
+  return child_->ListCryptoKeys(context, options, request);
 }
 
 void KeyDashboardServiceMetadata::SetMetadata(

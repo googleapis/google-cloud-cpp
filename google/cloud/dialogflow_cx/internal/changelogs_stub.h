@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_CHANGELOGS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_CHANGELOGS_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/cx/v3/changelog.grpc.pb.h>
@@ -35,12 +36,12 @@ class ChangelogsStub {
   virtual ~ChangelogsStub() = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::ListChangelogsResponse>
-  ListChangelogs(grpc::ClientContext& context,
+  ListChangelogs(grpc::ClientContext& context, Options const& options,
                  google::cloud::dialogflow::cx::v3::ListChangelogsRequest const&
                      request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Changelog> GetChangelog(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetChangelogRequest const&
           request) = 0;
 };
@@ -54,12 +55,12 @@ class DefaultChangelogsStub : public ChangelogsStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListChangelogsResponse>
-  ListChangelogs(grpc::ClientContext& context,
+  ListChangelogs(grpc::ClientContext& context, Options const& options,
                  google::cloud::dialogflow::cx::v3::ListChangelogsRequest const&
                      request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Changelog> GetChangelog(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request)
       override;
 

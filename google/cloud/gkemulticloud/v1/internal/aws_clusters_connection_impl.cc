@@ -149,10 +149,12 @@ AwsClustersConnectionImpl::GetAwsCluster(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAwsCluster(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::GetAwsClusterRequest const&
-                 request) { return stub_->GetAwsCluster(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetAwsCluster(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::gkemulticloud::v1::AwsCluster>
@@ -164,21 +166,22 @@ AwsClustersConnectionImpl::ListAwsClusters(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::gkemulticloud::v1::AwsCluster>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<gkemulticloud_v1::AwsClustersRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::gkemulticloud::v1::ListAwsClustersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::gkemulticloud::v1::ListAwsClustersRequest const&
                     request) {
-              return stub->ListAwsClusters(context, request);
+              return stub->ListAwsClusters(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::gkemulticloud::v1::ListAwsClustersResponse r) {
         std::vector<google::cloud::gkemulticloud::v1::AwsCluster> result(
@@ -235,12 +238,12 @@ AwsClustersConnectionImpl::GenerateAwsClusterAgentToken(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateAwsClusterAgentToken(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::
                  GenerateAwsClusterAgentTokenRequest const& request) {
-        return stub_->GenerateAwsClusterAgentToken(context, request);
+        return stub_->GenerateAwsClusterAgentToken(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
@@ -252,12 +255,12 @@ AwsClustersConnectionImpl::GenerateAwsAccessToken(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateAwsAccessToken(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
               request) {
-        return stub_->GenerateAwsAccessToken(context, request);
+        return stub_->GenerateAwsAccessToken(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
@@ -382,10 +385,12 @@ AwsClustersConnectionImpl::GetAwsNodePool(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAwsNodePool(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const&
-                 request) { return stub_->GetAwsNodePool(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetAwsNodePool(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool>
@@ -397,21 +402,22 @@ AwsClustersConnectionImpl::ListAwsNodePools(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<gkemulticloud_v1::AwsClustersRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest const&
                     request) {
-              return stub->ListAwsNodePools(context, request);
+              return stub->ListAwsNodePools(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::gkemulticloud::v1::ListAwsNodePoolsResponse r) {
         std::vector<google::cloud::gkemulticloud::v1::AwsNodePool> result(
@@ -468,12 +474,12 @@ AwsClustersConnectionImpl::GetAwsOpenIdConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAwsOpenIdConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
                  request) {
-        return stub_->GetAwsOpenIdConfig(context, request);
+        return stub_->GetAwsOpenIdConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys>
@@ -483,12 +489,12 @@ AwsClustersConnectionImpl::GetAwsJsonWebKeys(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAwsJsonWebKeys(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const&
                  request) {
-        return stub_->GetAwsJsonWebKeys(context, request);
+        return stub_->GetAwsJsonWebKeys(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>
@@ -499,12 +505,12 @@ AwsClustersConnectionImpl::GetAwsServerConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAwsServerConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&
                  request) {
-        return stub_->GetAwsServerConfig(context, request);
+        return stub_->GetAwsServerConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -78,21 +78,22 @@ NetworkServicesConnectionImpl::ListEndpointPolicies(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkservices::v1::EndpointPolicy>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<networkservices_v1::NetworkServicesRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::networkservices::v1::ListEndpointPoliciesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::networkservices::v1::
                        ListEndpointPoliciesRequest const& request) {
-              return stub->ListEndpointPolicies(context, request);
+              return stub->ListEndpointPolicies(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::networkservices::v1::ListEndpointPoliciesResponse r) {
         std::vector<google::cloud::networkservices::v1::EndpointPolicy> result(
@@ -111,12 +112,12 @@ NetworkServicesConnectionImpl::GetEndpointPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEndpointPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkservices::v1::GetEndpointPolicyRequest const&
                  request) {
-        return stub_->GetEndpointPolicy(context, request);
+        return stub_->GetEndpointPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>
@@ -245,19 +246,22 @@ NetworkServicesConnectionImpl::ListGateways(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkservices::v1::Gateway>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<networkservices_v1::NetworkServicesRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::networkservices::v1::ListGatewaysRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::networkservices::v1::ListGatewaysRequest const&
-                    request) { return stub->ListGateways(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListGateways(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::networkservices::v1::ListGatewaysResponse r) {
         std::vector<google::cloud::networkservices::v1::Gateway> result(
@@ -275,10 +279,12 @@ NetworkServicesConnectionImpl::GetGateway(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetGateway(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkservices::v1::GetGatewayRequest const&
-                 request) { return stub_->GetGateway(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetGateway(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::Gateway>>
@@ -404,19 +410,22 @@ NetworkServicesConnectionImpl::ListGrpcRoutes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkservices::v1::GrpcRoute>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<networkservices_v1::NetworkServicesRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::networkservices::v1::ListGrpcRoutesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::networkservices::v1::ListGrpcRoutesRequest const&
-                    request) { return stub->ListGrpcRoutes(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListGrpcRoutes(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::networkservices::v1::ListGrpcRoutesResponse r) {
         std::vector<google::cloud::networkservices::v1::GrpcRoute> result(
@@ -434,10 +443,12 @@ NetworkServicesConnectionImpl::GetGrpcRoute(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetGrpcRoute(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkservices::v1::GetGrpcRouteRequest const&
-                 request) { return stub_->GetGrpcRoute(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetGrpcRoute(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>
@@ -563,19 +574,22 @@ NetworkServicesConnectionImpl::ListHttpRoutes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkservices::v1::HttpRoute>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<networkservices_v1::NetworkServicesRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::networkservices::v1::ListHttpRoutesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::networkservices::v1::ListHttpRoutesRequest const&
-                    request) { return stub->ListHttpRoutes(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListHttpRoutes(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::networkservices::v1::ListHttpRoutesResponse r) {
         std::vector<google::cloud::networkservices::v1::HttpRoute> result(
@@ -593,10 +607,12 @@ NetworkServicesConnectionImpl::GetHttpRoute(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetHttpRoute(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkservices::v1::GetHttpRouteRequest const&
-                 request) { return stub_->GetHttpRoute(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetHttpRoute(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>
@@ -722,19 +738,22 @@ NetworkServicesConnectionImpl::ListTcpRoutes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkservices::v1::TcpRoute>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<networkservices_v1::NetworkServicesRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::networkservices::v1::ListTcpRoutesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::networkservices::v1::ListTcpRoutesRequest const&
-                    request) { return stub->ListTcpRoutes(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListTcpRoutes(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::networkservices::v1::ListTcpRoutesResponse r) {
         std::vector<google::cloud::networkservices::v1::TcpRoute> result(
@@ -752,10 +771,12 @@ NetworkServicesConnectionImpl::GetTcpRoute(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTcpRoute(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkservices::v1::GetTcpRouteRequest const&
-                 request) { return stub_->GetTcpRoute(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetTcpRoute(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>
@@ -881,19 +902,22 @@ NetworkServicesConnectionImpl::ListTlsRoutes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkservices::v1::TlsRoute>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<networkservices_v1::NetworkServicesRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::networkservices::v1::ListTlsRoutesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::networkservices::v1::ListTlsRoutesRequest const&
-                    request) { return stub->ListTlsRoutes(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListTlsRoutes(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::networkservices::v1::ListTlsRoutesResponse r) {
         std::vector<google::cloud::networkservices::v1::TlsRoute> result(
@@ -911,10 +935,12 @@ NetworkServicesConnectionImpl::GetTlsRoute(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTlsRoute(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkservices::v1::GetTlsRouteRequest const&
-                 request) { return stub_->GetTlsRoute(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetTlsRoute(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>
@@ -1040,21 +1066,22 @@ NetworkServicesConnectionImpl::ListServiceBindings(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkservices::v1::ServiceBinding>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<networkservices_v1::NetworkServicesRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::networkservices::v1::ListServiceBindingsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::networkservices::v1::
                        ListServiceBindingsRequest const& request) {
-              return stub->ListServiceBindings(context, request);
+              return stub->ListServiceBindings(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::networkservices::v1::ListServiceBindingsResponse r) {
         std::vector<google::cloud::networkservices::v1::ServiceBinding> result(
@@ -1073,12 +1100,12 @@ NetworkServicesConnectionImpl::GetServiceBinding(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetServiceBinding(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkservices::v1::GetServiceBindingRequest const&
                  request) {
-        return stub_->GetServiceBinding(context, request);
+        return stub_->GetServiceBinding(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>
@@ -1168,18 +1195,21 @@ NetworkServicesConnectionImpl::ListMeshes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::networkservices::v1::Mesh>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<networkservices_v1::NetworkServicesRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::networkservices::v1::ListMeshesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::networkservices::v1::ListMeshesRequest const&
-                       request) { return stub->ListMeshes(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListMeshes(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::networkservices::v1::ListMeshesResponse r) {
         std::vector<google::cloud::networkservices::v1::Mesh> result(
@@ -1198,11 +1228,11 @@ NetworkServicesConnectionImpl::GetMesh(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetMesh(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::networkservices::v1::GetMeshRequest const& request) {
-        return stub_->GetMesh(context, request);
+        return stub_->GetMesh(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::networkservices::v1::Mesh>>

@@ -44,11 +44,11 @@ AuthorizedDomainsMetadata::AuthorizedDomainsMetadata(
 
 StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
 AuthorizedDomainsMetadata::ListAuthorizedDomains(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListAuthorizedDomainsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListAuthorizedDomains(context, request);
+  return child_->ListAuthorizedDomains(context, options, request);
 }
 
 void AuthorizedDomainsMetadata::SetMetadata(grpc::ClientContext& context,

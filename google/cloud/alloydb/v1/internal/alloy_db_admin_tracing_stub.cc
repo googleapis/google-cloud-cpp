@@ -33,26 +33,26 @@ AlloyDBAdminTracingStub::AlloyDBAdminTracingStub(
 
 StatusOr<google::cloud::alloydb::v1::ListClustersResponse>
 AlloyDBAdminTracingStub::ListClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListClustersRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "ListClusters");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListClusters(context, request));
+                           child_->ListClusters(context, options, request));
 }
 
 StatusOr<google::cloud::alloydb::v1::Cluster>
 AlloyDBAdminTracingStub::GetCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetClusterRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "GetCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetCluster(context, request));
+                           child_->GetCluster(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -135,26 +135,26 @@ AlloyDBAdminTracingStub::AsyncCreateSecondaryCluster(
 
 StatusOr<google::cloud::alloydb::v1::ListInstancesResponse>
 AlloyDBAdminTracingStub::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListInstancesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "ListInstances");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListInstances(context, request));
+                           child_->ListInstances(context, options, request));
 }
 
 StatusOr<google::cloud::alloydb::v1::Instance>
 AlloyDBAdminTracingStub::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetInstanceRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "GetInstance");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetInstance(context, request));
+                           child_->GetInstance(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -263,24 +263,25 @@ AlloyDBAdminTracingStub::AsyncRestartInstance(
 
 StatusOr<google::cloud::alloydb::v1::ListBackupsResponse>
 AlloyDBAdminTracingStub::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListBackupsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "ListBackups");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListBackups(context, request));
+                           child_->ListBackups(context, options, request));
 }
 
 StatusOr<google::cloud::alloydb::v1::Backup> AlloyDBAdminTracingStub::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetBackupRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "GetBackup");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetBackup(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetBackup(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -324,7 +325,7 @@ AlloyDBAdminTracingStub::AsyncDeleteBackup(
 
 StatusOr<google::cloud::alloydb::v1::ListSupportedDatabaseFlagsResponse>
 AlloyDBAdminTracingStub::ListSupportedDatabaseFlags(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
@@ -332,86 +333,90 @@ AlloyDBAdminTracingStub::ListSupportedDatabaseFlags(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
-      context, *span, child_->ListSupportedDatabaseFlags(context, request));
+      context, *span,
+      child_->ListSupportedDatabaseFlags(context, options, request));
 }
 
 StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
 AlloyDBAdminTracingStub::GenerateClientCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "GenerateClientCertificate");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GenerateClientCertificate(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GenerateClientCertificate(context, options, request));
 }
 
 StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
 AlloyDBAdminTracingStub::GetConnectionInfo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetConnectionInfoRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "GetConnectionInfo");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetConnectionInfo(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetConnectionInfo(context, options, request));
 }
 
 StatusOr<google::cloud::alloydb::v1::ListUsersResponse>
 AlloyDBAdminTracingStub::ListUsers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListUsersRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "ListUsers");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->ListUsers(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListUsers(context, options, request));
 }
 
 StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminTracingStub::GetUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetUserRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin", "GetUser");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetUser(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetUser(context, options, request));
 }
 
 StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminTracingStub::CreateUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::CreateUserRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "CreateUser");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateUser(context, request));
+                           child_->CreateUser(context, options, request));
 }
 
 StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminTracingStub::UpdateUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::UpdateUserRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "UpdateUser");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateUser(context, request));
+                           child_->UpdateUser(context, options, request));
 }
 
 Status AlloyDBAdminTracingStub::DeleteUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::DeleteUserRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.alloydb.v1.AlloyDBAdmin",
                                      "DeleteUser");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteUser(context, request));
+                           child_->DeleteUser(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -53,121 +53,121 @@ AssetServiceLogging::AsyncExportAssets(
 
 StatusOr<google::cloud::asset::v1::ListAssetsResponse>
 AssetServiceLogging::ListAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::ListAssetsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::asset::v1::ListAssetsRequest const& request) {
-        return child_->ListAssets(context, request);
+        return child_->ListAssets(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::asset::v1::BatchGetAssetsHistoryResponse>
 AssetServiceLogging::BatchGetAssetsHistory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::BatchGetAssetsHistoryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::asset::v1::BatchGetAssetsHistoryRequest const&
                  request) {
-        return child_->BatchGetAssetsHistory(context, request);
+        return child_->BatchGetAssetsHistory(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::asset::v1::Feed> AssetServiceLogging::CreateFeed(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::CreateFeedRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::asset::v1::CreateFeedRequest const& request) {
-        return child_->CreateFeed(context, request);
+        return child_->CreateFeed(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::asset::v1::Feed> AssetServiceLogging::GetFeed(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::GetFeedRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::asset::v1::GetFeedRequest const& request) {
-        return child_->GetFeed(context, request);
+        return child_->GetFeed(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::asset::v1::ListFeedsResponse>
 AssetServiceLogging::ListFeeds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::ListFeedsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::asset::v1::ListFeedsRequest const& request) {
-        return child_->ListFeeds(context, request);
+        return child_->ListFeeds(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::asset::v1::Feed> AssetServiceLogging::UpdateFeed(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::UpdateFeedRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::asset::v1::UpdateFeedRequest const& request) {
-        return child_->UpdateFeed(context, request);
+        return child_->UpdateFeed(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status AssetServiceLogging::DeleteFeed(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::DeleteFeedRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::asset::v1::DeleteFeedRequest const& request) {
-        return child_->DeleteFeed(context, request);
+        return child_->DeleteFeed(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::asset::v1::SearchAllResourcesResponse>
 AssetServiceLogging::SearchAllResources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::SearchAllResourcesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::asset::v1::SearchAllResourcesRequest const& request) {
-        return child_->SearchAllResources(context, request);
+        return child_->SearchAllResources(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::asset::v1::SearchAllIamPoliciesResponse>
 AssetServiceLogging::SearchAllIamPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::SearchAllIamPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::asset::v1::SearchAllIamPoliciesRequest const&
                  request) {
-        return child_->SearchAllIamPolicies(context, request);
+        return child_->SearchAllIamPolicies(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeIamPolicyResponse>
 AssetServiceLogging::AnalyzeIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::asset::v1::AnalyzeIamPolicyRequest const& request) {
-        return child_->AnalyzeIamPolicy(context, request);
+        return child_->AnalyzeIamPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -190,142 +190,144 @@ AssetServiceLogging::AsyncAnalyzeIamPolicyLongrunning(
 
 StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>
 AssetServiceLogging::AnalyzeMove(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::AnalyzeMoveRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::asset::v1::AnalyzeMoveRequest const& request) {
-        return child_->AnalyzeMove(context, request);
+        return child_->AnalyzeMove(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::asset::v1::QueryAssetsResponse>
 AssetServiceLogging::QueryAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::QueryAssetsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::asset::v1::QueryAssetsRequest const& request) {
-        return child_->QueryAssets(context, request);
+        return child_->QueryAssets(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::asset::v1::SavedQuery>
 AssetServiceLogging::CreateSavedQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::CreateSavedQueryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::asset::v1::CreateSavedQueryRequest const& request) {
-        return child_->CreateSavedQuery(context, request);
+        return child_->CreateSavedQuery(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::asset::v1::SavedQuery>
 AssetServiceLogging::GetSavedQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::GetSavedQueryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::asset::v1::GetSavedQueryRequest const& request) {
-        return child_->GetSavedQuery(context, request);
+        return child_->GetSavedQuery(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::asset::v1::ListSavedQueriesResponse>
 AssetServiceLogging::ListSavedQueries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::ListSavedQueriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::asset::v1::ListSavedQueriesRequest const& request) {
-        return child_->ListSavedQueries(context, request);
+        return child_->ListSavedQueries(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::asset::v1::SavedQuery>
 AssetServiceLogging::UpdateSavedQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::UpdateSavedQueryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::asset::v1::UpdateSavedQueryRequest const& request) {
-        return child_->UpdateSavedQuery(context, request);
+        return child_->UpdateSavedQuery(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status AssetServiceLogging::DeleteSavedQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::DeleteSavedQueryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::asset::v1::DeleteSavedQueryRequest const& request) {
-        return child_->DeleteSavedQuery(context, request);
+        return child_->DeleteSavedQuery(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
 AssetServiceLogging::BatchGetEffectiveIamPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
               request) {
-        return child_->BatchGetEffectiveIamPolicies(context, request);
+        return child_->BatchGetEffectiveIamPolicies(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse>
 AssetServiceLogging::AnalyzeOrgPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const& request) {
-        return child_->AnalyzeOrgPolicies(context, request);
+        return child_->AnalyzeOrgPolicies(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse>
 AssetServiceLogging::AnalyzeOrgPolicyGovernedContainers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::asset::v1::
                  AnalyzeOrgPolicyGovernedContainersRequest const& request) {
-        return child_->AnalyzeOrgPolicyGovernedContainers(context, request);
+        return child_->AnalyzeOrgPolicyGovernedContainers(context, options,
+                                                          request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse>
 AssetServiceLogging::AnalyzeOrgPolicyGovernedAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
               request) {
-        return child_->AnalyzeOrgPolicyGovernedAssets(context, request);
+        return child_->AnalyzeOrgPolicyGovernedAssets(context, options,
+                                                      request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

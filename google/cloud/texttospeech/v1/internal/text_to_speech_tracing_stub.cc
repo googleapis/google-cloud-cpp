@@ -33,26 +33,26 @@ TextToSpeechTracingStub::TextToSpeechTracingStub(
 
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
 TextToSpeechTracingStub::ListVoices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.texttospeech.v1.TextToSpeech", "ListVoices");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListVoices(context, request));
+                           child_->ListVoices(context, options, request));
 }
 
 StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
 TextToSpeechTracingStub::SynthesizeSpeech(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.texttospeech.v1.TextToSpeech", "SynthesizeSpeech");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->SynthesizeSpeech(context, request));
+                           child_->SynthesizeSpeech(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

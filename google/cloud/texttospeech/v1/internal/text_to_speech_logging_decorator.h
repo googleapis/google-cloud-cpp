@@ -39,13 +39,13 @@ class TextToSpeechLogging : public TextToSpeechStub {
                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::texttospeech::v1::ListVoicesRequest const& request)
       override;
 
   StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
   SynthesizeSpeech(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request)
       override;
 

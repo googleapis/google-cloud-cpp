@@ -37,60 +37,68 @@ TestCasesLogging::TestCasesLogging(std::shared_ptr<TestCasesStub> child,
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTestCasesResponse>
 TestCasesLogging::ListTestCases(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListTestCasesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::ListTestCasesRequest const&
-                 request) { return child_->ListTestCases(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListTestCases(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status TestCasesLogging::BatchDeleteTestCases(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
               request) {
-        return child_->BatchDeleteTestCases(context, request);
+        return child_->BatchDeleteTestCases(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesLogging::GetTestCase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::GetTestCaseRequest const&
-                 request) { return child_->GetTestCase(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetTestCase(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesLogging::CreateTestCase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const&
-                 request) { return child_->CreateTestCase(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->CreateTestCase(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesLogging::UpdateTestCase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const&
-                 request) { return child_->UpdateTestCase(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->UpdateTestCase(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -130,16 +138,16 @@ TestCasesLogging::AsyncBatchRunTestCases(
 
 StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
 TestCasesLogging::CalculateCoverage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
                  request) {
-        return child_->CalculateCoverage(context, request);
+        return child_->CalculateCoverage(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -178,31 +186,31 @@ TestCasesLogging::AsyncExportTestCases(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTestCaseResultsResponse>
 TestCasesLogging::ListTestCaseResults(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest const&
               request) {
-        return child_->ListTestCaseResults(context, request);
+        return child_->ListTestCaseResults(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult>
 TestCasesLogging::GetTestCaseResult(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
                  request) {
-        return child_->GetTestCaseResult(context, request);
+        return child_->GetTestCaseResult(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -44,42 +44,42 @@ LanguageServiceMetadata::LanguageServiceMetadata(
 
 StatusOr<google::cloud::language::v2::AnalyzeSentimentResponse>
 LanguageServiceMetadata::AnalyzeSentiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v2::AnalyzeSentimentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->AnalyzeSentiment(context, request);
+  SetMetadata(context, options);
+  return child_->AnalyzeSentiment(context, options, request);
 }
 
 StatusOr<google::cloud::language::v2::AnalyzeEntitiesResponse>
 LanguageServiceMetadata::AnalyzeEntities(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v2::AnalyzeEntitiesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->AnalyzeEntities(context, request);
+  SetMetadata(context, options);
+  return child_->AnalyzeEntities(context, options, request);
 }
 
 StatusOr<google::cloud::language::v2::ClassifyTextResponse>
 LanguageServiceMetadata::ClassifyText(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v2::ClassifyTextRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->ClassifyText(context, request);
+  SetMetadata(context, options);
+  return child_->ClassifyText(context, options, request);
 }
 
 StatusOr<google::cloud::language::v2::ModerateTextResponse>
 LanguageServiceMetadata::ModerateText(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v2::ModerateTextRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->ModerateText(context, request);
+  SetMetadata(context, options);
+  return child_->ModerateText(context, options, request);
 }
 
 StatusOr<google::cloud::language::v2::AnnotateTextResponse>
 LanguageServiceMetadata::AnnotateText(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v2::AnnotateTextRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->AnnotateText(context, request);
+  SetMetadata(context, options);
+  return child_->AnnotateText(context, options, request);
 }
 
 void LanguageServiceMetadata::SetMetadata(grpc::ClientContext& context,

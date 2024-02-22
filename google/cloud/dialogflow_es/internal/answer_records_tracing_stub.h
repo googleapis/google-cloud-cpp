@@ -39,12 +39,12 @@ class AnswerRecordsTracingStub : public AnswerRecordsStub {
 
   StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse>
   ListAnswerRecords(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListAnswerRecordsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::AnswerRecord> UpdateAnswerRecord(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request)
       override;
 

@@ -33,7 +33,7 @@ CertificateAuthorityServiceStub::~CertificateAuthorityServiceStub() = default;
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 DefaultCertificateAuthorityServiceStub::CreateCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::security::privateca::v1::CreateCertificateRequest const&
         request) {
   google::cloud::security::privateca::v1::Certificate response;
@@ -46,7 +46,7 @@ DefaultCertificateAuthorityServiceStub::CreateCertificate(
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 DefaultCertificateAuthorityServiceStub::GetCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::security::privateca::v1::GetCertificateRequest const&
         request) {
   google::cloud::security::privateca::v1::Certificate response;
@@ -59,7 +59,7 @@ DefaultCertificateAuthorityServiceStub::GetCertificate(
 
 StatusOr<google::cloud::security::privateca::v1::ListCertificatesResponse>
 DefaultCertificateAuthorityServiceStub::ListCertificates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::security::privateca::v1::ListCertificatesRequest const&
         request) {
   google::cloud::security::privateca::v1::ListCertificatesResponse response;
@@ -72,7 +72,7 @@ DefaultCertificateAuthorityServiceStub::ListCertificates(
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 DefaultCertificateAuthorityServiceStub::RevokeCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::security::privateca::v1::RevokeCertificateRequest const&
         request) {
   google::cloud::security::privateca::v1::Certificate response;
@@ -85,7 +85,7 @@ DefaultCertificateAuthorityServiceStub::RevokeCertificate(
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 DefaultCertificateAuthorityServiceStub::UpdateCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::security::privateca::v1::UpdateCertificateRequest const&
         request) {
   google::cloud::security::privateca::v1::Certificate response;
@@ -179,7 +179,7 @@ DefaultCertificateAuthorityServiceStub::AsyncEnableCertificateAuthority(
 StatusOr<google::cloud::security::privateca::v1::
              FetchCertificateAuthorityCsrResponse>
 DefaultCertificateAuthorityServiceStub::FetchCertificateAuthorityCsr(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::security::privateca::v1::
         FetchCertificateAuthorityCsrRequest const& request) {
   google::cloud::security::privateca::v1::FetchCertificateAuthorityCsrResponse
@@ -194,7 +194,7 @@ DefaultCertificateAuthorityServiceStub::FetchCertificateAuthorityCsr(
 
 StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>
 DefaultCertificateAuthorityServiceStub::GetCertificateAuthority(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::security::privateca::v1::
         GetCertificateAuthorityRequest const& request) {
   google::cloud::security::privateca::v1::CertificateAuthority response;
@@ -209,7 +209,7 @@ DefaultCertificateAuthorityServiceStub::GetCertificateAuthority(
 StatusOr<
     google::cloud::security::privateca::v1::ListCertificateAuthoritiesResponse>
 DefaultCertificateAuthorityServiceStub::ListCertificateAuthorities(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::security::privateca::v1::
         ListCertificateAuthoritiesRequest const& request) {
   google::cloud::security::privateca::v1::ListCertificateAuthoritiesResponse
@@ -322,7 +322,7 @@ DefaultCertificateAuthorityServiceStub::AsyncUpdateCaPool(
 
 StatusOr<google::cloud::security::privateca::v1::CaPool>
 DefaultCertificateAuthorityServiceStub::GetCaPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::security::privateca::v1::GetCaPoolRequest const& request) {
   google::cloud::security::privateca::v1::CaPool response;
   auto status = grpc_stub_->GetCaPool(&context, request, &response);
@@ -334,7 +334,7 @@ DefaultCertificateAuthorityServiceStub::GetCaPool(
 
 StatusOr<google::cloud::security::privateca::v1::ListCaPoolsResponse>
 DefaultCertificateAuthorityServiceStub::ListCaPools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::security::privateca::v1::ListCaPoolsRequest const& request) {
   google::cloud::security::privateca::v1::ListCaPoolsResponse response;
   auto status = grpc_stub_->ListCaPools(&context, request, &response);
@@ -365,7 +365,7 @@ DefaultCertificateAuthorityServiceStub::AsyncDeleteCaPool(
 
 StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
 DefaultCertificateAuthorityServiceStub::FetchCaCerts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::security::privateca::v1::FetchCaCertsRequest const&
         request) {
   google::cloud::security::privateca::v1::FetchCaCertsResponse response;
@@ -378,7 +378,7 @@ DefaultCertificateAuthorityServiceStub::FetchCaCerts(
 
 StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>
 DefaultCertificateAuthorityServiceStub::GetCertificateRevocationList(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::security::privateca::v1::
         GetCertificateRevocationListRequest const& request) {
   google::cloud::security::privateca::v1::CertificateRevocationList response;
@@ -393,7 +393,7 @@ DefaultCertificateAuthorityServiceStub::GetCertificateRevocationList(
 StatusOr<google::cloud::security::privateca::v1::
              ListCertificateRevocationListsResponse>
 DefaultCertificateAuthorityServiceStub::ListCertificateRevocationLists(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::security::privateca::v1::
         ListCertificateRevocationListsRequest const& request) {
   google::cloud::security::privateca::v1::ListCertificateRevocationListsResponse
@@ -466,7 +466,7 @@ DefaultCertificateAuthorityServiceStub::AsyncDeleteCertificateTemplate(
 
 StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
 DefaultCertificateAuthorityServiceStub::GetCertificateTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::security::privateca::v1::GetCertificateTemplateRequest const&
         request) {
   google::cloud::security::privateca::v1::CertificateTemplate response;
@@ -481,7 +481,7 @@ DefaultCertificateAuthorityServiceStub::GetCertificateTemplate(
 StatusOr<
     google::cloud::security::privateca::v1::ListCertificateTemplatesResponse>
 DefaultCertificateAuthorityServiceStub::ListCertificateTemplates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::security::privateca::v1::
         ListCertificateTemplatesRequest const& request) {
   google::cloud::security::privateca::v1::ListCertificateTemplatesResponse

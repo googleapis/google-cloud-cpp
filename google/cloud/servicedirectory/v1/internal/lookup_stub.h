@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_INTERNAL_LOOKUP_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_INTERNAL_LOOKUP_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/servicedirectory/v1/lookup_service.grpc.pb.h>
@@ -36,7 +37,7 @@ class LookupServiceStub {
 
   virtual StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
   ResolveService(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicedirectory::v1::ResolveServiceRequest const&
           request) = 0;
 };
@@ -51,7 +52,7 @@ class DefaultLookupServiceStub : public LookupServiceStub {
 
   StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
   ResolveService(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::servicedirectory::v1::ResolveServiceRequest const& request)
       override;
 

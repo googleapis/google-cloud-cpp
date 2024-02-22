@@ -54,20 +54,20 @@ LivestreamServiceMetadata::AsyncCreateChannel(
 
 StatusOr<google::cloud::video::livestream::v1::ListChannelsResponse>
 LivestreamServiceMetadata::ListChannels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::ListChannelsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListChannels(context, request);
+  return child_->ListChannels(context, options, request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Channel>
 LivestreamServiceMetadata::GetChannel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::GetChannelRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetChannel(context, request);
+  return child_->GetChannel(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -123,20 +123,20 @@ LivestreamServiceMetadata::AsyncCreateInput(
 
 StatusOr<google::cloud::video::livestream::v1::ListInputsResponse>
 LivestreamServiceMetadata::ListInputs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::ListInputsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListInputs(context, request);
+  return child_->ListInputs(context, options, request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Input>
 LivestreamServiceMetadata::GetInput(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::GetInputRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetInput(context, request);
+  return child_->GetInput(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -162,37 +162,37 @@ LivestreamServiceMetadata::AsyncUpdateInput(
 
 StatusOr<google::cloud::video::livestream::v1::Event>
 LivestreamServiceMetadata::CreateEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::CreateEventRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateEvent(context, request);
+  return child_->CreateEvent(context, options, request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::ListEventsResponse>
 LivestreamServiceMetadata::ListEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::ListEventsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListEvents(context, request);
+  return child_->ListEvents(context, options, request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Event>
 LivestreamServiceMetadata::GetEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::GetEventRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetEvent(context, request);
+  return child_->GetEvent(context, options, request);
 }
 
 Status LivestreamServiceMetadata::DeleteEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::DeleteEventRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteEvent(context, request);
+  return child_->DeleteEvent(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -217,29 +217,29 @@ LivestreamServiceMetadata::AsyncDeleteAsset(
 
 StatusOr<google::cloud::video::livestream::v1::Asset>
 LivestreamServiceMetadata::GetAsset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::GetAssetRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAsset(context, request);
+  return child_->GetAsset(context, options, request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::ListAssetsResponse>
 LivestreamServiceMetadata::ListAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::ListAssetsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListAssets(context, request);
+  return child_->ListAssets(context, options, request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Pool>
 LivestreamServiceMetadata::GetPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::GetPoolRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetPool(context, request);
+  return child_->GetPool(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

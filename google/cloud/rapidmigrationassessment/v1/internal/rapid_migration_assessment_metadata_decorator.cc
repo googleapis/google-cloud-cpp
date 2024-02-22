@@ -68,32 +68,32 @@ RapidMigrationAssessmentMetadata::AsyncCreateAnnotation(
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>
 RapidMigrationAssessmentMetadata::GetAnnotation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::rapidmigrationassessment::v1::GetAnnotationRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAnnotation(context, request);
+  return child_->GetAnnotation(context, options, request);
 }
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::ListCollectorsResponse>
 RapidMigrationAssessmentMetadata::ListCollectors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::rapidmigrationassessment::v1::ListCollectorsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListCollectors(context, request);
+  return child_->ListCollectors(context, options, request);
 }
 
 StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>
 RapidMigrationAssessmentMetadata::GetCollector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::rapidmigrationassessment::v1::GetCollectorRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetCollector(context, request);
+  return child_->GetCollector(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

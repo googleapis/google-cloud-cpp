@@ -44,22 +44,22 @@ KeyTrackingServiceMetadata::KeyTrackingServiceMetadata(
 
 StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
 KeyTrackingServiceMetadata::GetProtectedResourcesSummary(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::inventory::v1::
         GetProtectedResourcesSummaryRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetProtectedResourcesSummary(context, request);
+  return child_->GetProtectedResourcesSummary(context, options, request);
 }
 
 StatusOr<google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse>
 KeyTrackingServiceMetadata::SearchProtectedResources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("scope=", internal::UrlEncode(request.scope())));
-  return child_->SearchProtectedResources(context, request);
+  return child_->SearchProtectedResources(context, options, request);
 }
 
 void KeyTrackingServiceMetadata::SetMetadata(

@@ -33,7 +33,7 @@ DomainMappingsStub::~DomainMappingsStub() = default;
 
 StatusOr<google::appengine::v1::ListDomainMappingsResponse>
 DefaultDomainMappingsStub::ListDomainMappings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::ListDomainMappingsRequest const& request) {
   google::appengine::v1::ListDomainMappingsResponse response;
   auto status = grpc_stub_->ListDomainMappings(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultDomainMappingsStub::ListDomainMappings(
 
 StatusOr<google::appengine::v1::DomainMapping>
 DefaultDomainMappingsStub::GetDomainMapping(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::GetDomainMappingRequest const& request) {
   google::appengine::v1::DomainMapping response;
   auto status = grpc_stub_->GetDomainMapping(&context, request, &response);

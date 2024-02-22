@@ -33,7 +33,7 @@ AppGatewaysServiceStub::~AppGatewaysServiceStub() = default;
 
 StatusOr<google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse>
 DefaultAppGatewaysServiceStub::ListAppGateways(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysRequest const&
         request) {
   google::cloud::beyondcorp::appgateways::v1::ListAppGatewaysResponse response;
@@ -46,7 +46,7 @@ DefaultAppGatewaysServiceStub::ListAppGateways(
 
 StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
 DefaultAppGatewaysServiceStub::GetAppGateway(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
         request) {
   google::cloud::beyondcorp::appgateways::v1::AppGateway response;

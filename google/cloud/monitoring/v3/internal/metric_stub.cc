@@ -32,7 +32,7 @@ MetricServiceStub::~MetricServiceStub() = default;
 
 StatusOr<google::monitoring::v3::ListMonitoredResourceDescriptorsResponse>
 DefaultMetricServiceStub::ListMonitoredResourceDescriptors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::ListMonitoredResourceDescriptorsRequest const&
         request) {
   google::monitoring::v3::ListMonitoredResourceDescriptorsResponse response;
@@ -46,7 +46,7 @@ DefaultMetricServiceStub::ListMonitoredResourceDescriptors(
 
 StatusOr<google::api::MonitoredResourceDescriptor>
 DefaultMetricServiceStub::GetMonitoredResourceDescriptor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
         request) {
   google::api::MonitoredResourceDescriptor response;
@@ -60,7 +60,7 @@ DefaultMetricServiceStub::GetMonitoredResourceDescriptor(
 
 StatusOr<google::monitoring::v3::ListMetricDescriptorsResponse>
 DefaultMetricServiceStub::ListMetricDescriptors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::ListMetricDescriptorsRequest const& request) {
   google::monitoring::v3::ListMetricDescriptorsResponse response;
   auto status = grpc_stub_->ListMetricDescriptors(&context, request, &response);
@@ -72,7 +72,7 @@ DefaultMetricServiceStub::ListMetricDescriptors(
 
 StatusOr<google::api::MetricDescriptor>
 DefaultMetricServiceStub::GetMetricDescriptor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::GetMetricDescriptorRequest const& request) {
   google::api::MetricDescriptor response;
   auto status = grpc_stub_->GetMetricDescriptor(&context, request, &response);
@@ -84,7 +84,7 @@ DefaultMetricServiceStub::GetMetricDescriptor(
 
 StatusOr<google::api::MetricDescriptor>
 DefaultMetricServiceStub::CreateMetricDescriptor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::CreateMetricDescriptorRequest const& request) {
   google::api::MetricDescriptor response;
   auto status =
@@ -96,7 +96,7 @@ DefaultMetricServiceStub::CreateMetricDescriptor(
 }
 
 Status DefaultMetricServiceStub::DeleteMetricDescriptor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::DeleteMetricDescriptorRequest const& request) {
   google::protobuf::Empty response;
   auto status =
@@ -109,7 +109,7 @@ Status DefaultMetricServiceStub::DeleteMetricDescriptor(
 
 StatusOr<google::monitoring::v3::ListTimeSeriesResponse>
 DefaultMetricServiceStub::ListTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::ListTimeSeriesRequest const& request) {
   google::monitoring::v3::ListTimeSeriesResponse response;
   auto status = grpc_stub_->ListTimeSeries(&context, request, &response);
@@ -120,7 +120,7 @@ DefaultMetricServiceStub::ListTimeSeries(
 }
 
 Status DefaultMetricServiceStub::CreateTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->CreateTimeSeries(&context, request, &response);
@@ -131,7 +131,7 @@ Status DefaultMetricServiceStub::CreateTimeSeries(
 }
 
 Status DefaultMetricServiceStub::CreateServiceTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
   google::protobuf::Empty response;
   auto status =

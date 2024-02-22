@@ -40,20 +40,20 @@ class GkeHubStub {
 
   virtual StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse>
   ListMemberships(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::ListMembershipsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse>
   ListFeatures(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::ListFeaturesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::gkehub::v1::Membership> GetMembership(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::GetMembershipRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::GetFeatureRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
@@ -91,7 +91,7 @@ class GkeHubStub {
 
   virtual StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
   GenerateConnectManifest(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::GenerateConnectManifestRequest const&
           request) = 0;
 
@@ -116,20 +116,20 @@ class DefaultGkeHubStub : public GkeHubStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse> ListMemberships(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::ListMembershipsRequest const& request)
       override;
 
   StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse> ListFeatures(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::ListFeaturesRequest const& request) override;
 
   StatusOr<google::cloud::gkehub::v1::Membership> GetMembership(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::GetMembershipRequest const& request) override;
 
   StatusOr<google::cloud::gkehub::v1::Feature> GetFeature(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::GetFeatureRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMembership(
@@ -167,7 +167,7 @@ class DefaultGkeHubStub : public GkeHubStub {
 
   StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
   GenerateConnectManifest(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request)
       override;
 

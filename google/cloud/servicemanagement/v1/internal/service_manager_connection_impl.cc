@@ -77,19 +77,22 @@ ServiceManagerConnectionImpl::ListServices(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::api::servicemanagement::v1::ManagedService>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<servicemanagement_v1::ServiceManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::api::servicemanagement::v1::ListServicesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::api::servicemanagement::v1::ListServicesRequest const&
-                    request) { return stub->ListServices(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListServices(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::api::servicemanagement::v1::ListServicesResponse r) {
         std::vector<google::api::servicemanagement::v1::ManagedService> result(
@@ -107,10 +110,12 @@ ServiceManagerConnectionImpl::GetService(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetService(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::servicemanagement::v1::GetServiceRequest const&
-                 request) { return stub_->GetService(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetService(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
@@ -236,21 +241,22 @@ ServiceManagerConnectionImpl::ListServiceConfigs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::api::Service>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<servicemanagement_v1::ServiceManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::api::servicemanagement::v1::ListServiceConfigsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::api::servicemanagement::v1::
                        ListServiceConfigsRequest const& request) {
-              return stub->ListServiceConfigs(context, request);
+              return stub->ListServiceConfigs(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::api::servicemanagement::v1::ListServiceConfigsResponse r) {
         std::vector<google::api::Service> result(r.service_configs().size());
@@ -267,10 +273,12 @@ StatusOr<google::api::Service> ServiceManagerConnectionImpl::GetServiceConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetServiceConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::servicemanagement::v1::GetServiceConfigRequest const&
-                 request) { return stub_->GetServiceConfig(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetServiceConfig(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::api::Service>
@@ -282,10 +290,12 @@ ServiceManagerConnectionImpl::CreateServiceConfig(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateServiceConfig(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::api::servicemanagement::v1::CreateServiceConfigRequest const&
-              request) { return stub_->CreateServiceConfig(context, request); },
-      request, __func__);
+              request) {
+        return stub_->CreateServiceConfig(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
@@ -336,21 +346,22 @@ ServiceManagerConnectionImpl::ListServiceRollouts(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::api::servicemanagement::v1::Rollout>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<servicemanagement_v1::ServiceManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::api::servicemanagement::v1::ListServiceRolloutsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::api::servicemanagement::v1::
                        ListServiceRolloutsRequest const& request) {
-              return stub->ListServiceRollouts(context, request);
+              return stub->ListServiceRollouts(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::api::servicemanagement::v1::ListServiceRolloutsResponse r) {
         std::vector<google::api::servicemanagement::v1::Rollout> result(
@@ -369,12 +380,12 @@ ServiceManagerConnectionImpl::GetServiceRollout(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetServiceRollout(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::servicemanagement::v1::GetServiceRolloutRequest const&
                  request) {
-        return stub_->GetServiceRollout(context, request);
+        return stub_->GetServiceRollout(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::api::servicemanagement::v1::Rollout>>
@@ -425,12 +436,12 @@ ServiceManagerConnectionImpl::GenerateConfigReport(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateConfigReport(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::api::servicemanagement::v1::GenerateConfigReportRequest const&
               request) {
-        return stub_->GenerateConfigReport(context, request);
+        return stub_->GenerateConfigReport(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

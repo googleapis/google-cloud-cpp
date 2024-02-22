@@ -33,7 +33,7 @@ DataprocMetastoreFederationTracingStub::DataprocMetastoreFederationTracingStub(
 
 StatusOr<google::cloud::metastore::v1::ListFederationsResponse>
 DataprocMetastoreFederationTracingStub::ListFederations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::ListFederationsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.metastore.v1.DataprocMetastoreFederation",
@@ -41,19 +41,19 @@ DataprocMetastoreFederationTracingStub::ListFederations(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListFederations(context, request));
+                           child_->ListFederations(context, options, request));
 }
 
 StatusOr<google::cloud::metastore::v1::Federation>
 DataprocMetastoreFederationTracingStub::GetFederation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::GetFederationRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.metastore.v1.DataprocMetastoreFederation", "GetFederation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetFederation(context, request));
+                           child_->GetFederation(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

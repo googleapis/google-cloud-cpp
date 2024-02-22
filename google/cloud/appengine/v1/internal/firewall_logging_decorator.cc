@@ -37,73 +37,73 @@ FirewallLogging::FirewallLogging(std::shared_ptr<FirewallStub> child,
 
 StatusOr<google::appengine::v1::ListIngressRulesResponse>
 FirewallLogging::ListIngressRules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListIngressRulesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::ListIngressRulesRequest const& request) {
-        return child_->ListIngressRules(context, request);
+        return child_->ListIngressRules(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
 FirewallLogging::BatchUpdateIngressRules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::BatchUpdateIngressRulesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::BatchUpdateIngressRulesRequest const&
                  request) {
-        return child_->BatchUpdateIngressRules(context, request);
+        return child_->BatchUpdateIngressRules(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::appengine::v1::FirewallRule>
 FirewallLogging::CreateIngressRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::CreateIngressRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::CreateIngressRuleRequest const& request) {
-        return child_->CreateIngressRule(context, request);
+        return child_->CreateIngressRule(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::appengine::v1::FirewallRule> FirewallLogging::GetIngressRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetIngressRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::GetIngressRuleRequest const& request) {
-        return child_->GetIngressRule(context, request);
+        return child_->GetIngressRule(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::appengine::v1::FirewallRule>
 FirewallLogging::UpdateIngressRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::UpdateIngressRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::UpdateIngressRuleRequest const& request) {
-        return child_->UpdateIngressRule(context, request);
+        return child_->UpdateIngressRule(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status FirewallLogging::DeleteIngressRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::DeleteIngressRuleRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::DeleteIngressRuleRequest const& request) {
-        return child_->DeleteIngressRule(context, request);
+        return child_->DeleteIngressRule(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

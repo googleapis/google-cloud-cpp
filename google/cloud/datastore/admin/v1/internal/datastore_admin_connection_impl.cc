@@ -221,11 +221,11 @@ DatastoreAdminConnectionImpl::GetIndex(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetIndex(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::datastore::admin::v1::GetIndexRequest const& request) {
-        return stub_->GetIndex(context, request);
+        return stub_->GetIndex(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::datastore::admin::v1::Index>
@@ -237,18 +237,21 @@ DatastoreAdminConnectionImpl::ListIndexes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::datastore::admin::v1::Index>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<datastore_admin_v1::DatastoreAdminRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::datastore::admin::v1::ListIndexesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::datastore::admin::v1::ListIndexesRequest const&
-                       request) { return stub->ListIndexes(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListIndexes(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::datastore::admin::v1::ListIndexesResponse r) {
         std::vector<google::datastore::admin::v1::Index> result(

@@ -33,7 +33,7 @@ ConfigStub::~ConfigStub() = default;
 
 StatusOr<google::cloud::config::v1::ListDeploymentsResponse>
 DefaultConfigStub::ListDeployments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::ListDeploymentsRequest const& request) {
   google::cloud::config::v1::ListDeploymentsResponse response;
   auto status = grpc_stub_->ListDeployments(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultConfigStub::ListDeployments(
 
 StatusOr<google::cloud::config::v1::Deployment>
 DefaultConfigStub::GetDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::GetDeploymentRequest const& request) {
   google::cloud::config::v1::Deployment response;
   auto status = grpc_stub_->GetDeployment(&context, request, &response);
@@ -108,7 +108,7 @@ DefaultConfigStub::AsyncDeleteDeployment(
 
 StatusOr<google::cloud::config::v1::ListRevisionsResponse>
 DefaultConfigStub::ListRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::ListRevisionsRequest const& request) {
   google::cloud::config::v1::ListRevisionsResponse response;
   auto status = grpc_stub_->ListRevisions(&context, request, &response);
@@ -119,7 +119,7 @@ DefaultConfigStub::ListRevisions(
 }
 
 StatusOr<google::cloud::config::v1::Revision> DefaultConfigStub::GetRevision(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::GetRevisionRequest const& request) {
   google::cloud::config::v1::Revision response;
   auto status = grpc_stub_->GetRevision(&context, request, &response);
@@ -130,7 +130,7 @@ StatusOr<google::cloud::config::v1::Revision> DefaultConfigStub::GetRevision(
 }
 
 StatusOr<google::cloud::config::v1::Resource> DefaultConfigStub::GetResource(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::GetResourceRequest const& request) {
   google::cloud::config::v1::Resource response;
   auto status = grpc_stub_->GetResource(&context, request, &response);
@@ -142,7 +142,7 @@ StatusOr<google::cloud::config::v1::Resource> DefaultConfigStub::GetResource(
 
 StatusOr<google::cloud::config::v1::ListResourcesResponse>
 DefaultConfigStub::ListResources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::ListResourcesRequest const& request) {
   google::cloud::config::v1::ListResourcesResponse response;
   auto status = grpc_stub_->ListResources(&context, request, &response);
@@ -154,7 +154,7 @@ DefaultConfigStub::ListResources(
 
 StatusOr<google::cloud::config::v1::Statefile>
 DefaultConfigStub::ExportDeploymentStatefile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::ExportDeploymentStatefileRequest const&
         request) {
   google::cloud::config::v1::Statefile response;
@@ -168,7 +168,7 @@ DefaultConfigStub::ExportDeploymentStatefile(
 
 StatusOr<google::cloud::config::v1::Statefile>
 DefaultConfigStub::ExportRevisionStatefile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::ExportRevisionStatefileRequest const& request) {
   google::cloud::config::v1::Statefile response;
   auto status =
@@ -181,7 +181,7 @@ DefaultConfigStub::ExportRevisionStatefile(
 
 StatusOr<google::cloud::config::v1::Statefile>
 DefaultConfigStub::ImportStatefile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::ImportStatefileRequest const& request) {
   google::cloud::config::v1::Statefile response;
   auto status = grpc_stub_->ImportStatefile(&context, request, &response);
@@ -192,7 +192,7 @@ DefaultConfigStub::ImportStatefile(
 }
 
 Status DefaultConfigStub::DeleteStatefile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::DeleteStatefileRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteStatefile(&context, request, &response);
@@ -237,7 +237,7 @@ DefaultConfigStub::AsyncUnlockDeployment(
 }
 
 StatusOr<google::cloud::config::v1::LockInfo> DefaultConfigStub::ExportLockInfo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::ExportLockInfoRequest const& request) {
   google::cloud::config::v1::LockInfo response;
   auto status = grpc_stub_->ExportLockInfo(&context, request, &response);
@@ -265,7 +265,7 @@ DefaultConfigStub::AsyncCreatePreview(
 }
 
 StatusOr<google::cloud::config::v1::Preview> DefaultConfigStub::GetPreview(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::GetPreviewRequest const& request) {
   google::cloud::config::v1::Preview response;
   auto status = grpc_stub_->GetPreview(&context, request, &response);
@@ -277,7 +277,7 @@ StatusOr<google::cloud::config::v1::Preview> DefaultConfigStub::GetPreview(
 
 StatusOr<google::cloud::config::v1::ListPreviewsResponse>
 DefaultConfigStub::ListPreviews(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::ListPreviewsRequest const& request) {
   google::cloud::config::v1::ListPreviewsResponse response;
   auto status = grpc_stub_->ListPreviews(&context, request, &response);
@@ -306,7 +306,7 @@ DefaultConfigStub::AsyncDeletePreview(
 
 StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
 DefaultConfigStub::ExportPreviewResult(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::config::v1::ExportPreviewResultRequest const& request) {
   google::cloud::config::v1::ExportPreviewResultResponse response;
   auto status = grpc_stub_->ExportPreviewResult(&context, request, &response);

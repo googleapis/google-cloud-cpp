@@ -32,7 +32,7 @@ AutoscalingPolicyServiceStub::~AutoscalingPolicyServiceStub() = default;
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 DefaultAutoscalingPolicyServiceStub::CreateAutoscalingPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
         request) {
   google::cloud::dataproc::v1::AutoscalingPolicy response;
@@ -46,7 +46,7 @@ DefaultAutoscalingPolicyServiceStub::CreateAutoscalingPolicy(
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 DefaultAutoscalingPolicyServiceStub::UpdateAutoscalingPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
         request) {
   google::cloud::dataproc::v1::AutoscalingPolicy response;
@@ -60,7 +60,7 @@ DefaultAutoscalingPolicyServiceStub::UpdateAutoscalingPolicy(
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 DefaultAutoscalingPolicyServiceStub::GetAutoscalingPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) {
   google::cloud::dataproc::v1::AutoscalingPolicy response;
   auto status = grpc_stub_->GetAutoscalingPolicy(&context, request, &response);
@@ -72,7 +72,7 @@ DefaultAutoscalingPolicyServiceStub::GetAutoscalingPolicy(
 
 StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse>
 DefaultAutoscalingPolicyServiceStub::ListAutoscalingPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
         request) {
   google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse response;
@@ -85,7 +85,7 @@ DefaultAutoscalingPolicyServiceStub::ListAutoscalingPolicies(
 }
 
 Status DefaultAutoscalingPolicyServiceStub::DeleteAutoscalingPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
         request) {
   google::protobuf::Empty response;

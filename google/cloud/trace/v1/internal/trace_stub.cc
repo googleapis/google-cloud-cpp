@@ -32,7 +32,7 @@ TraceServiceStub::~TraceServiceStub() = default;
 
 StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse>
 DefaultTraceServiceStub::ListTraces(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudtrace::v1::ListTracesRequest const& request) {
   google::devtools::cloudtrace::v1::ListTracesResponse response;
   auto status = grpc_stub_->ListTraces(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultTraceServiceStub::ListTraces(
 
 StatusOr<google::devtools::cloudtrace::v1::Trace>
 DefaultTraceServiceStub::GetTrace(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
   google::devtools::cloudtrace::v1::Trace response;
   auto status = grpc_stub_->GetTrace(&context, request, &response);
@@ -55,7 +55,7 @@ DefaultTraceServiceStub::GetTrace(
 }
 
 Status DefaultTraceServiceStub::PatchTraces(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->PatchTraces(&context, request, &response);

@@ -78,28 +78,28 @@ AttachedClustersTracingStub::AsyncImportAttachedCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
 AttachedClustersTracingStub::GetAttachedCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gkemulticloud.v1.AttachedClusters", "GetAttachedCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetAttachedCluster(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetAttachedCluster(context, options, request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAttachedClustersResponse>
 AttachedClustersTracingStub::ListAttachedClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::ListAttachedClustersRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gkemulticloud.v1.AttachedClusters", "ListAttachedClusters");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListAttachedClusters(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListAttachedClusters(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -119,7 +119,7 @@ AttachedClustersTracingStub::AsyncDeleteAttachedCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
 AttachedClustersTracingStub::GetAttachedServerConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&
         request) {
   auto span =
@@ -127,14 +127,15 @@ AttachedClustersTracingStub::GetAttachedServerConfig(
                              "GetAttachedServerConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetAttachedServerConfig(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GetAttachedServerConfig(context, options, request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::
              GenerateAttachedClusterInstallManifestResponse>
 AttachedClustersTracingStub::GenerateAttachedClusterInstallManifest(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::
         GenerateAttachedClusterInstallManifestRequest const& request) {
   auto span =
@@ -142,15 +143,15 @@ AttachedClustersTracingStub::GenerateAttachedClusterInstallManifest(
                              "GenerateAttachedClusterInstallManifest");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span,
-      child_->GenerateAttachedClusterInstallManifest(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GenerateAttachedClusterInstallManifest(
+                               context, options, request));
 }
 
 StatusOr<
     google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
 AttachedClustersTracingStub::GenerateAttachedClusterAgentToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::
         GenerateAttachedClusterAgentTokenRequest const& request) {
   auto span =
@@ -160,7 +161,7 @@ AttachedClustersTracingStub::GenerateAttachedClusterAgentToken(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
-      child_->GenerateAttachedClusterAgentToken(context, request));
+      child_->GenerateAttachedClusterAgentToken(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

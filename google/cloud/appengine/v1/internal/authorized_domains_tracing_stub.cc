@@ -33,14 +33,14 @@ AuthorizedDomainsTracingStub::AuthorizedDomainsTracingStub(
 
 StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
 AuthorizedDomainsTracingStub::ListAuthorizedDomains(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListAuthorizedDomainsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.appengine.v1.AuthorizedDomains",
                                      "ListAuthorizedDomains");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListAuthorizedDomains(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListAuthorizedDomains(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

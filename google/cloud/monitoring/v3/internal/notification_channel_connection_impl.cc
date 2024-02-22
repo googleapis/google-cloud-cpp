@@ -78,23 +78,25 @@ NotificationChannelServiceConnectionImpl::ListNotificationChannelDescriptors(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::monitoring::v3::NotificationChannelDescriptor>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            monitoring_v3::NotificationChannelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::monitoring::v3::
               ListNotificationChannelDescriptorsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::monitoring::v3::
                     ListNotificationChannelDescriptorsRequest const& request) {
-              return stub->ListNotificationChannelDescriptors(context, request);
+              return stub->ListNotificationChannelDescriptors(context, options,
+                                                              request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::monitoring::v3::ListNotificationChannelDescriptorsResponse r) {
         std::vector<google::monitoring::v3::NotificationChannelDescriptor>
@@ -114,12 +116,13 @@ NotificationChannelServiceConnectionImpl::GetNotificationChannelDescriptor(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNotificationChannelDescriptor(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::monitoring::v3::GetNotificationChannelDescriptorRequest const&
               request) {
-        return stub_->GetNotificationChannelDescriptor(context, request);
+        return stub_->GetNotificationChannelDescriptor(context, options,
+                                                       request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::monitoring::v3::NotificationChannel>
@@ -132,22 +135,23 @@ NotificationChannelServiceConnectionImpl::ListNotificationChannels(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::monitoring::v3::NotificationChannel>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            monitoring_v3::NotificationChannelServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::monitoring::v3::ListNotificationChannelsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::monitoring::v3::ListNotificationChannelsRequest const&
                     request) {
-              return stub->ListNotificationChannels(context, request);
+              return stub->ListNotificationChannels(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::monitoring::v3::ListNotificationChannelsResponse r) {
         std::vector<google::monitoring::v3::NotificationChannel> result(
@@ -165,12 +169,12 @@ NotificationChannelServiceConnectionImpl::GetNotificationChannel(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNotificationChannel(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::GetNotificationChannelRequest const&
                  request) {
-        return stub_->GetNotificationChannel(context, request);
+        return stub_->GetNotificationChannel(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::monitoring::v3::NotificationChannel>
@@ -180,12 +184,12 @@ NotificationChannelServiceConnectionImpl::CreateNotificationChannel(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateNotificationChannel(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::CreateNotificationChannelRequest const&
                  request) {
-        return stub_->CreateNotificationChannel(context, request);
+        return stub_->CreateNotificationChannel(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::monitoring::v3::NotificationChannel>
@@ -195,12 +199,12 @@ NotificationChannelServiceConnectionImpl::UpdateNotificationChannel(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateNotificationChannel(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::UpdateNotificationChannelRequest const&
                  request) {
-        return stub_->UpdateNotificationChannel(context, request);
+        return stub_->UpdateNotificationChannel(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status NotificationChannelServiceConnectionImpl::DeleteNotificationChannel(
@@ -209,12 +213,12 @@ Status NotificationChannelServiceConnectionImpl::DeleteNotificationChannel(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteNotificationChannel(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::DeleteNotificationChannelRequest const&
                  request) {
-        return stub_->DeleteNotificationChannel(context, request);
+        return stub_->DeleteNotificationChannel(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status NotificationChannelServiceConnectionImpl::
@@ -227,12 +231,13 @@ Status NotificationChannelServiceConnectionImpl::
       idempotency_policy(*current)->SendNotificationChannelVerificationCode(
           request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::monitoring::v3::
               SendNotificationChannelVerificationCodeRequest const& request) {
-        return stub_->SendNotificationChannelVerificationCode(context, request);
+        return stub_->SendNotificationChannelVerificationCode(context, options,
+                                                              request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
@@ -245,12 +250,13 @@ NotificationChannelServiceConnectionImpl::
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNotificationChannelVerificationCode(
           request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::
                  GetNotificationChannelVerificationCodeRequest const& request) {
-        return stub_->GetNotificationChannelVerificationCode(context, request);
+        return stub_->GetNotificationChannelVerificationCode(context, options,
+                                                             request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::monitoring::v3::NotificationChannel>
@@ -260,12 +266,12 @@ NotificationChannelServiceConnectionImpl::VerifyNotificationChannel(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->VerifyNotificationChannel(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::VerifyNotificationChannelRequest const&
                  request) {
-        return stub_->VerifyNotificationChannel(context, request);
+        return stub_->VerifyNotificationChannel(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

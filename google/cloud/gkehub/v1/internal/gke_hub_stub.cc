@@ -33,7 +33,7 @@ GkeHubStub::~GkeHubStub() = default;
 
 StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse>
 DefaultGkeHubStub::ListMemberships(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkehub::v1::ListMembershipsRequest const& request) {
   google::cloud::gkehub::v1::ListMembershipsResponse response;
   auto status = grpc_stub_->ListMemberships(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultGkeHubStub::ListMemberships(
 
 StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse>
 DefaultGkeHubStub::ListFeatures(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkehub::v1::ListFeaturesRequest const& request) {
   google::cloud::gkehub::v1::ListFeaturesResponse response;
   auto status = grpc_stub_->ListFeatures(&context, request, &response);
@@ -57,7 +57,7 @@ DefaultGkeHubStub::ListFeatures(
 
 StatusOr<google::cloud::gkehub::v1::Membership>
 DefaultGkeHubStub::GetMembership(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkehub::v1::GetMembershipRequest const& request) {
   google::cloud::gkehub::v1::Membership response;
   auto status = grpc_stub_->GetMembership(&context, request, &response);
@@ -68,7 +68,7 @@ DefaultGkeHubStub::GetMembership(
 }
 
 StatusOr<google::cloud::gkehub::v1::Feature> DefaultGkeHubStub::GetFeature(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkehub::v1::GetFeatureRequest const& request) {
   google::cloud::gkehub::v1::Feature response;
   auto status = grpc_stub_->GetFeature(&context, request, &response);
@@ -182,7 +182,7 @@ DefaultGkeHubStub::AsyncUpdateFeature(
 
 StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
 DefaultGkeHubStub::GenerateConnectManifest(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request) {
   google::cloud::gkehub::v1::GenerateConnectManifestResponse response;
   auto status =

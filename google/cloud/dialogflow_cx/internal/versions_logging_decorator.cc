@@ -37,26 +37,28 @@ VersionsLogging::VersionsLogging(std::shared_ptr<VersionsStub> child,
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListVersionsResponse>
 VersionsLogging::ListVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListVersionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::ListVersionsRequest const&
-                 request) { return child_->ListVersions(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListVersions(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Version>
 VersionsLogging::GetVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::cx::v3::GetVersionRequest const& request) {
-        return child_->GetVersion(context, request);
+        return child_->GetVersion(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -78,23 +80,27 @@ VersionsLogging::AsyncCreateVersion(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Version>
 VersionsLogging::UpdateVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::UpdateVersionRequest const&
-                 request) { return child_->UpdateVersion(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->UpdateVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status VersionsLogging::DeleteVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::DeleteVersionRequest const&
-                 request) { return child_->DeleteVersion(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->DeleteVersion(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -116,13 +122,15 @@ VersionsLogging::AsyncLoadVersion(
 
 StatusOr<google::cloud::dialogflow::cx::v3::CompareVersionsResponse>
 VersionsLogging::CompareVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CompareVersionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::CompareVersionsRequest const&
-                 request) { return child_->CompareVersions(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->CompareVersions(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -32,7 +32,7 @@ CommentServiceStub::~CommentServiceStub() = default;
 
 StatusOr<google::cloud::support::v2::ListCommentsResponse>
 DefaultCommentServiceStub::ListComments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::support::v2::ListCommentsRequest const& request) {
   google::cloud::support::v2::ListCommentsResponse response;
   auto status = grpc_stub_->ListComments(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultCommentServiceStub::ListComments(
 
 StatusOr<google::cloud::support::v2::Comment>
 DefaultCommentServiceStub::CreateComment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::support::v2::CreateCommentRequest const& request) {
   google::cloud::support::v2::Comment response;
   auto status = grpc_stub_->CreateComment(&context, request, &response);

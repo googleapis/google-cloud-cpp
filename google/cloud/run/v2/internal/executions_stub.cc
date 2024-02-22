@@ -32,7 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ExecutionsStub::~ExecutionsStub() = default;
 
 StatusOr<google::cloud::run::v2::Execution> DefaultExecutionsStub::GetExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::run::v2::GetExecutionRequest const& request) {
   google::cloud::run::v2::Execution response;
   auto status = grpc_stub_->GetExecution(&context, request, &response);
@@ -44,7 +44,7 @@ StatusOr<google::cloud::run::v2::Execution> DefaultExecutionsStub::GetExecution(
 
 StatusOr<google::cloud::run::v2::ListExecutionsResponse>
 DefaultExecutionsStub::ListExecutions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::run::v2::ListExecutionsRequest const& request) {
   google::cloud::run::v2::ListExecutionsResponse response;
   auto status = grpc_stub_->ListExecutions(&context, request, &response);

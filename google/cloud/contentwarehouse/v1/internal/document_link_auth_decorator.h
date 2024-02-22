@@ -40,24 +40,24 @@ class DocumentLinkServiceAuth : public DocumentLinkServiceStub {
 
   StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
   ListLinkedTargets(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
           request) override;
 
   StatusOr<google::cloud::contentwarehouse::v1::ListLinkedSourcesResponse>
   ListLinkedSources(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const&
           request) override;
 
   StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>
   CreateDocumentLink(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
           request) override;
 
   Status DeleteDocumentLink(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
           request) override;
 

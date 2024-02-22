@@ -52,20 +52,20 @@ LivestreamServiceAuth::AsyncCreateChannel(
 
 StatusOr<google::cloud::video::livestream::v1::ListChannelsResponse>
 LivestreamServiceAuth::ListChannels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::ListChannelsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListChannels(context, request);
+  return child_->ListChannels(context, options, request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Channel>
 LivestreamServiceAuth::GetChannel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::GetChannelRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetChannel(context, request);
+  return child_->GetChannel(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -165,20 +165,20 @@ LivestreamServiceAuth::AsyncCreateInput(
 
 StatusOr<google::cloud::video::livestream::v1::ListInputsResponse>
 LivestreamServiceAuth::ListInputs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::ListInputsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListInputs(context, request);
+  return child_->ListInputs(context, options, request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Input>
 LivestreamServiceAuth::GetInput(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::GetInputRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetInput(context, request);
+  return child_->GetInput(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -221,37 +221,37 @@ LivestreamServiceAuth::AsyncUpdateInput(
 
 StatusOr<google::cloud::video::livestream::v1::Event>
 LivestreamServiceAuth::CreateEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::CreateEventRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateEvent(context, request);
+  return child_->CreateEvent(context, options, request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::ListEventsResponse>
 LivestreamServiceAuth::ListEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::ListEventsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEvents(context, request);
+  return child_->ListEvents(context, options, request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Event>
 LivestreamServiceAuth::GetEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::GetEventRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEvent(context, request);
+  return child_->GetEvent(context, options, request);
 }
 
 Status LivestreamServiceAuth::DeleteEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::DeleteEventRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteEvent(context, request);
+  return child_->DeleteEvent(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -294,29 +294,29 @@ LivestreamServiceAuth::AsyncDeleteAsset(
 
 StatusOr<google::cloud::video::livestream::v1::Asset>
 LivestreamServiceAuth::GetAsset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::GetAssetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAsset(context, request);
+  return child_->GetAsset(context, options, request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::ListAssetsResponse>
 LivestreamServiceAuth::ListAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::ListAssetsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAssets(context, request);
+  return child_->ListAssets(context, options, request);
 }
 
 StatusOr<google::cloud::video::livestream::v1::Pool>
 LivestreamServiceAuth::GetPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::video::livestream::v1::GetPoolRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetPool(context, request);
+  return child_->GetPool(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

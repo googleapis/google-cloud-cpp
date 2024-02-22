@@ -39,7 +39,7 @@ class CompletionServiceTracingStub : public CompletionServiceStub {
       std::shared_ptr<CompletionServiceStub> child);
 
   StatusOr<google::cloud::retail::v2::CompleteQueryResponse> CompleteQuery(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::CompleteQueryRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportCompletionData(

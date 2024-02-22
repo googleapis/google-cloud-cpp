@@ -53,7 +53,7 @@ DefaultConversationDatasetsStub::AsyncCreateConversationDataset(
 
 StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
 DefaultConversationDatasetsStub::GetConversationDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
         request) {
   google::cloud::dialogflow::v2::ConversationDataset response;
@@ -67,7 +67,7 @@ DefaultConversationDatasetsStub::GetConversationDataset(
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationDatasetsResponse>
 DefaultConversationDatasetsStub::ListConversationDatasets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::ListConversationDatasetsRequest const&
         request) {
   google::cloud::dialogflow::v2::ListConversationDatasetsResponse response;

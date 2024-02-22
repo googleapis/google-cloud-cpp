@@ -33,20 +33,20 @@ DataprocMetastoreFederationAuth::DataprocMetastoreFederationAuth(
 
 StatusOr<google::cloud::metastore::v1::ListFederationsResponse>
 DataprocMetastoreFederationAuth::ListFederations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::ListFederationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListFederations(context, request);
+  return child_->ListFederations(context, options, request);
 }
 
 StatusOr<google::cloud::metastore::v1::Federation>
 DataprocMetastoreFederationAuth::GetFederation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::GetFederationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetFederation(context, request);
+  return child_->GetFederation(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

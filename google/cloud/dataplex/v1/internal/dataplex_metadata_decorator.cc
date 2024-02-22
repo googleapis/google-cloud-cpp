@@ -75,28 +75,28 @@ DataplexServiceMetadata::AsyncDeleteLake(
 
 StatusOr<google::cloud::dataplex::v1::ListLakesResponse>
 DataplexServiceMetadata::ListLakes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListLakesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListLakes(context, request);
+  return child_->ListLakes(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::Lake> DataplexServiceMetadata::GetLake(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::GetLakeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetLake(context, request);
+  return child_->GetLake(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListActionsResponse>
 DataplexServiceMetadata::ListLakeActions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListLakeActionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListLakeActions(context, request);
+  return child_->ListLakeActions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -132,28 +132,28 @@ DataplexServiceMetadata::AsyncDeleteZone(
 
 StatusOr<google::cloud::dataplex::v1::ListZonesResponse>
 DataplexServiceMetadata::ListZones(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListZonesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListZones(context, request);
+  return child_->ListZones(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::Zone> DataplexServiceMetadata::GetZone(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::GetZoneRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetZone(context, request);
+  return child_->GetZone(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListActionsResponse>
 DataplexServiceMetadata::ListZoneActions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListZoneActionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListZoneActions(context, request);
+  return child_->ListZoneActions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -189,28 +189,28 @@ DataplexServiceMetadata::AsyncDeleteAsset(
 
 StatusOr<google::cloud::dataplex::v1::ListAssetsResponse>
 DataplexServiceMetadata::ListAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListAssetsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListAssets(context, request);
+  return child_->ListAssets(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::Asset> DataplexServiceMetadata::GetAsset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::GetAssetRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAsset(context, request);
+  return child_->GetAsset(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListActionsResponse>
 DataplexServiceMetadata::ListAssetActions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListAssetActionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListAssetActions(context, request);
+  return child_->ListAssetActions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -246,53 +246,53 @@ DataplexServiceMetadata::AsyncDeleteTask(
 
 StatusOr<google::cloud::dataplex::v1::ListTasksResponse>
 DataplexServiceMetadata::ListTasks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListTasksRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListTasks(context, request);
+  return child_->ListTasks(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::Task> DataplexServiceMetadata::GetTask(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::GetTaskRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetTask(context, request);
+  return child_->GetTask(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListJobsResponse>
 DataplexServiceMetadata::ListJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListJobsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListJobs(context, request);
+  return child_->ListJobs(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::RunTaskResponse>
 DataplexServiceMetadata::RunTask(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::RunTaskRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->RunTask(context, request);
+  return child_->RunTask(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::Job> DataplexServiceMetadata::GetJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::GetJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetJob(context, request);
+  return child_->GetJob(context, options, request);
 }
 
 Status DataplexServiceMetadata::CancelJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::CancelJobRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->CancelJob(context, request);
+  return child_->CancelJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -331,29 +331,29 @@ DataplexServiceMetadata::AsyncDeleteEnvironment(
 
 StatusOr<google::cloud::dataplex::v1::ListEnvironmentsResponse>
 DataplexServiceMetadata::ListEnvironments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListEnvironmentsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListEnvironments(context, request);
+  return child_->ListEnvironments(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::Environment>
 DataplexServiceMetadata::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::GetEnvironmentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetEnvironment(context, request);
+  return child_->GetEnvironment(context, options, request);
 }
 
 StatusOr<google::cloud::dataplex::v1::ListSessionsResponse>
 DataplexServiceMetadata::ListSessions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataplex::v1::ListSessionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListSessions(context, request);
+  return child_->ListSessions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

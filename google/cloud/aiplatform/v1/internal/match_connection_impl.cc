@@ -66,11 +66,11 @@ MatchServiceConnectionImpl::FindNeighbors(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FindNeighbors(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::FindNeighborsRequest const& request) {
-        return stub_->FindNeighbors(context, request);
+        return stub_->FindNeighbors(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ReadIndexDatapointsResponse>
@@ -80,12 +80,12 @@ MatchServiceConnectionImpl::ReadIndexDatapoints(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ReadIndexDatapoints(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ReadIndexDatapointsRequest const&
                  request) {
-        return stub_->ReadIndexDatapoints(context, request);
+        return stub_->ReadIndexDatapoints(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

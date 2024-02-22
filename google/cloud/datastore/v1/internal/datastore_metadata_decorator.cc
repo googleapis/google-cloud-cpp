@@ -45,7 +45,7 @@ DatastoreMetadata::DatastoreMetadata(
               : std::move(api_client_header)) {}
 
 StatusOr<google::datastore::v1::LookupResponse> DatastoreMetadata::Lookup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::LookupRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -61,16 +61,15 @@ StatusOr<google::datastore::v1::LookupResponse> DatastoreMetadata::Lookup(
   }
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->Lookup(context, request);
+  return child_->Lookup(context, options, request);
 }
 
 StatusOr<google::datastore::v1::RunQueryResponse> DatastoreMetadata::RunQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::RunQueryRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -86,17 +85,16 @@ StatusOr<google::datastore::v1::RunQueryResponse> DatastoreMetadata::RunQuery(
   }
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->RunQuery(context, request);
+  return child_->RunQuery(context, options, request);
 }
 
 StatusOr<google::datastore::v1::RunAggregationQueryResponse>
 DatastoreMetadata::RunAggregationQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::RunAggregationQueryRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -112,17 +110,16 @@ DatastoreMetadata::RunAggregationQuery(
   }
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->RunAggregationQuery(context, request);
+  return child_->RunAggregationQuery(context, options, request);
 }
 
 StatusOr<google::datastore::v1::BeginTransactionResponse>
 DatastoreMetadata::BeginTransaction(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::BeginTransactionRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -138,16 +135,15 @@ DatastoreMetadata::BeginTransaction(
   }
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->BeginTransaction(context, request);
+  return child_->BeginTransaction(context, options, request);
 }
 
 StatusOr<google::datastore::v1::CommitResponse> DatastoreMetadata::Commit(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::CommitRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -163,16 +159,15 @@ StatusOr<google::datastore::v1::CommitResponse> DatastoreMetadata::Commit(
   }
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->Commit(context, request);
+  return child_->Commit(context, options, request);
 }
 
 StatusOr<google::datastore::v1::RollbackResponse> DatastoreMetadata::Rollback(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::RollbackRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -188,17 +183,16 @@ StatusOr<google::datastore::v1::RollbackResponse> DatastoreMetadata::Rollback(
   }
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->Rollback(context, request);
+  return child_->Rollback(context, options, request);
 }
 
 StatusOr<google::datastore::v1::AllocateIdsResponse>
 DatastoreMetadata::AllocateIds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::AllocateIdsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -214,17 +208,16 @@ DatastoreMetadata::AllocateIds(
   }
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->AllocateIds(context, request);
+  return child_->AllocateIds(context, options, request);
 }
 
 StatusOr<google::datastore::v1::ReserveIdsResponse>
 DatastoreMetadata::ReserveIds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::v1::ReserveIdsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -240,12 +233,11 @@ DatastoreMetadata::ReserveIds(
   }
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->ReserveIds(context, request);
+  return child_->ReserveIds(context, options, request);
 }
 
 void DatastoreMetadata::SetMetadata(grpc::ClientContext& context,

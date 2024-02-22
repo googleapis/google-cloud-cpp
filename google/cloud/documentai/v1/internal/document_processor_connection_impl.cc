@@ -79,11 +79,11 @@ DocumentProcessorServiceConnectionImpl::ProcessDocument(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ProcessDocument(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::documentai::v1::ProcessRequest const& request) {
-        return stub_->ProcessDocument(context, request);
+        return stub_->ProcessDocument(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
@@ -130,12 +130,12 @@ DocumentProcessorServiceConnectionImpl::FetchProcessorTypes(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FetchProcessorTypes(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::documentai::v1::FetchProcessorTypesRequest const&
                  request) {
-        return stub_->FetchProcessorTypes(context, request);
+        return stub_->FetchProcessorTypes(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::documentai::v1::ProcessorType>
@@ -147,22 +147,23 @@ DocumentProcessorServiceConnectionImpl::ListProcessorTypes(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::documentai::v1::ProcessorType>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<documentai_v1::DocumentProcessorServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::documentai::v1::ListProcessorTypesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::documentai::v1::ListProcessorTypesRequest const&
                     request) {
-              return stub->ListProcessorTypes(context, request);
+              return stub->ListProcessorTypes(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::documentai::v1::ListProcessorTypesResponse r) {
         std::vector<google::cloud::documentai::v1::ProcessorType> result(
@@ -180,10 +181,12 @@ DocumentProcessorServiceConnectionImpl::GetProcessorType(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetProcessorType(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::documentai::v1::GetProcessorTypeRequest const&
-                 request) { return stub_->GetProcessorType(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetProcessorType(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::documentai::v1::Processor>
@@ -195,21 +198,22 @@ DocumentProcessorServiceConnectionImpl::ListProcessors(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::documentai::v1::Processor>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<documentai_v1::DocumentProcessorServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::documentai::v1::ListProcessorsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::documentai::v1::ListProcessorsRequest const&
                        request) {
-              return stub->ListProcessors(context, request);
+              return stub->ListProcessors(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::documentai::v1::ListProcessorsResponse r) {
         std::vector<google::cloud::documentai::v1::Processor> result(
@@ -228,11 +232,11 @@ DocumentProcessorServiceConnectionImpl::GetProcessor(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetProcessor(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::documentai::v1::GetProcessorRequest const& request) {
-        return stub_->GetProcessor(context, request);
+        return stub_->GetProcessor(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::documentai::v1::TrainProcessorVersionResponse>>
@@ -281,12 +285,12 @@ DocumentProcessorServiceConnectionImpl::GetProcessorVersion(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetProcessorVersion(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::documentai::v1::GetProcessorVersionRequest const&
                  request) {
-        return stub_->GetProcessorVersion(context, request);
+        return stub_->GetProcessorVersion(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::documentai::v1::ProcessorVersion>
@@ -299,22 +303,23 @@ DocumentProcessorServiceConnectionImpl::ListProcessorVersions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::documentai::v1::ProcessorVersion>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<documentai_v1::DocumentProcessorServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::documentai::v1::ListProcessorVersionsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::documentai::v1::
                        ListProcessorVersionsRequest const& request) {
-              return stub->ListProcessorVersions(context, request);
+              return stub->ListProcessorVersions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::documentai::v1::ListProcessorVersionsResponse r) {
         std::vector<google::cloud::documentai::v1::ProcessorVersion> result(
@@ -450,10 +455,12 @@ DocumentProcessorServiceConnectionImpl::CreateProcessor(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateProcessor(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::documentai::v1::CreateProcessorRequest const&
-                 request) { return stub_->CreateProcessor(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreateProcessor(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
@@ -695,11 +702,11 @@ DocumentProcessorServiceConnectionImpl::GetEvaluation(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEvaluation(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::documentai::v1::GetEvaluationRequest const& request) {
-        return stub_->GetEvaluation(context, request);
+        return stub_->GetEvaluation(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::documentai::v1::Evaluation>
@@ -711,21 +718,22 @@ DocumentProcessorServiceConnectionImpl::ListEvaluations(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::documentai::v1::Evaluation>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<documentai_v1::DocumentProcessorServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::documentai::v1::ListEvaluationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::documentai::v1::ListEvaluationsRequest const&
                        request) {
-              return stub->ListEvaluations(context, request);
+              return stub->ListEvaluations(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::documentai::v1::ListEvaluationsResponse r) {
         std::vector<google::cloud::documentai::v1::Evaluation> result(

@@ -76,20 +76,21 @@ ApiGatewayServiceConnectionImpl::ListGateways(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::apigateway::v1::Gateway>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<apigateway_v1::ApiGatewayServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::apigateway::v1::ListGatewaysRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::apigateway::v1::ListGatewaysRequest const&
                        request) {
-              return stub->ListGateways(context, request);
+              return stub->ListGateways(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::apigateway::v1::ListGatewaysResponse r) {
         std::vector<google::cloud::apigateway::v1::Gateway> result(
@@ -107,11 +108,11 @@ ApiGatewayServiceConnectionImpl::GetGateway(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetGateway(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::apigateway::v1::GetGatewayRequest const& request) {
-        return stub_->GetGateway(context, request);
+        return stub_->GetGateway(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
@@ -234,20 +235,21 @@ ApiGatewayServiceConnectionImpl::ListApis(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::apigateway::v1::Api>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<apigateway_v1::ApiGatewayServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::apigateway::v1::ListApisRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::apigateway::v1::ListApisRequest const& request) {
-              return stub->ListApis(context, request);
+              return stub->ListApis(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::apigateway::v1::ListApisResponse r) {
         std::vector<google::cloud::apigateway::v1::Api> result(r.apis().size());
@@ -264,11 +266,11 @@ ApiGatewayServiceConnectionImpl::GetApi(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetApi(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::apigateway::v1::GetApiRequest const& request) {
-        return stub_->GetApi(context, request);
+        return stub_->GetApi(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Api>>
@@ -385,20 +387,21 @@ ApiGatewayServiceConnectionImpl::ListApiConfigs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::apigateway::v1::ApiConfig>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<apigateway_v1::ApiGatewayServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::apigateway::v1::ListApiConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::apigateway::v1::ListApiConfigsRequest const&
                        request) {
-              return stub->ListApiConfigs(context, request);
+              return stub->ListApiConfigs(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::apigateway::v1::ListApiConfigsResponse r) {
         std::vector<google::cloud::apigateway::v1::ApiConfig> result(
@@ -417,11 +420,11 @@ ApiGatewayServiceConnectionImpl::GetApiConfig(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetApiConfig(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::apigateway::v1::GetApiConfigRequest const& request) {
-        return stub_->GetApiConfig(context, request);
+        return stub_->GetApiConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>

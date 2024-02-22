@@ -40,7 +40,7 @@ class FleetRoutingAuth : public FleetRoutingStub {
       std::shared_ptr<FleetRoutingStub> child);
 
   StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
-  OptimizeTours(grpc::ClientContext& context,
+  OptimizeTours(grpc::ClientContext& context, Options const& options,
                 google::cloud::optimization::v1::OptimizeToursRequest const&
                     request) override;
 

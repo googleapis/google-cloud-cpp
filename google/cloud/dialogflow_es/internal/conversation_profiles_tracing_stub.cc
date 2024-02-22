@@ -33,7 +33,7 @@ ConversationProfilesTracingStub::ConversationProfilesTracingStub(
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationProfilesResponse>
 ConversationProfilesTracingStub::ListConversationProfiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListConversationProfilesRequest const&
         request) {
   auto span =
@@ -41,13 +41,14 @@ ConversationProfilesTracingStub::ListConversationProfiles(
                              "ListConversationProfiles");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListConversationProfiles(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListConversationProfiles(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 ConversationProfilesTracingStub::GetConversationProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetConversationProfileRequest const&
         request) {
   auto span =
@@ -55,13 +56,14 @@ ConversationProfilesTracingStub::GetConversationProfile(
                              "GetConversationProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetConversationProfile(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GetConversationProfile(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 ConversationProfilesTracingStub::CreateConversationProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
         request) {
   auto span =
@@ -69,13 +71,14 @@ ConversationProfilesTracingStub::CreateConversationProfile(
                              "CreateConversationProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateConversationProfile(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateConversationProfile(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 ConversationProfilesTracingStub::UpdateConversationProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
         request) {
   auto span =
@@ -83,12 +86,13 @@ ConversationProfilesTracingStub::UpdateConversationProfile(
                              "UpdateConversationProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateConversationProfile(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateConversationProfile(context, options, request));
 }
 
 Status ConversationProfilesTracingStub::DeleteConversationProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
         request) {
   auto span =
@@ -96,8 +100,9 @@ Status ConversationProfilesTracingStub::DeleteConversationProfile(
                              "DeleteConversationProfile");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteConversationProfile(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteConversationProfile(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

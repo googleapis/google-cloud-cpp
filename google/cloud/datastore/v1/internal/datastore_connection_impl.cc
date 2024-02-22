@@ -63,11 +63,11 @@ StatusOr<google::datastore::v1::LookupResponse> DatastoreConnectionImpl::Lookup(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Lookup(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::datastore::v1::LookupRequest const& request) {
-        return stub_->Lookup(context, request);
+        return stub_->Lookup(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::datastore::v1::RunQueryResponse>
@@ -77,11 +77,11 @@ DatastoreConnectionImpl::RunQuery(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RunQuery(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::datastore::v1::RunQueryRequest const& request) {
-        return stub_->RunQuery(context, request);
+        return stub_->RunQuery(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::datastore::v1::RunAggregationQueryResponse>
@@ -91,11 +91,11 @@ DatastoreConnectionImpl::RunAggregationQuery(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RunAggregationQuery(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::datastore::v1::RunAggregationQueryRequest const& request) {
-        return stub_->RunAggregationQuery(context, request);
+        return stub_->RunAggregationQuery(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::datastore::v1::BeginTransactionResponse>
@@ -105,11 +105,11 @@ DatastoreConnectionImpl::BeginTransaction(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->BeginTransaction(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::datastore::v1::BeginTransactionRequest const& request) {
-        return stub_->BeginTransaction(context, request);
+        return stub_->BeginTransaction(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::datastore::v1::CommitResponse> DatastoreConnectionImpl::Commit(
@@ -118,11 +118,11 @@ StatusOr<google::datastore::v1::CommitResponse> DatastoreConnectionImpl::Commit(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Commit(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::datastore::v1::CommitRequest const& request) {
-        return stub_->Commit(context, request);
+        return stub_->Commit(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::datastore::v1::RollbackResponse>
@@ -132,11 +132,11 @@ DatastoreConnectionImpl::Rollback(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Rollback(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::datastore::v1::RollbackRequest const& request) {
-        return stub_->Rollback(context, request);
+        return stub_->Rollback(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::datastore::v1::AllocateIdsResponse>
@@ -146,11 +146,11 @@ DatastoreConnectionImpl::AllocateIds(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AllocateIds(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::datastore::v1::AllocateIdsRequest const& request) {
-        return stub_->AllocateIds(context, request);
+        return stub_->AllocateIds(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::datastore::v1::ReserveIdsResponse>
@@ -160,11 +160,11 @@ DatastoreConnectionImpl::ReserveIds(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ReserveIds(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::datastore::v1::ReserveIdsRequest const& request) {
-        return stub_->ReserveIds(context, request);
+        return stub_->ReserveIds(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

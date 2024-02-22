@@ -37,13 +37,15 @@ CompletionServiceLogging::CompletionServiceLogging(
 
 StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
 CompletionServiceLogging::CompleteQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::CompleteQueryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::discoveryengine::v1::CompleteQueryRequest const&
-                 request) { return child_->CompleteQuery(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->CompleteQuery(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

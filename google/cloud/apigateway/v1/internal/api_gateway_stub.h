@@ -40,11 +40,11 @@ class ApiGatewayServiceStub {
 
   virtual StatusOr<google::cloud::apigateway::v1::ListGatewaysResponse>
   ListGateways(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apigateway::v1::ListGatewaysRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::apigateway::v1::Gateway> GetGateway(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apigateway::v1::GetGatewayRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateGateway(
@@ -63,11 +63,11 @@ class ApiGatewayServiceStub {
       google::cloud::apigateway::v1::DeleteGatewayRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::apigateway::v1::ListApisResponse> ListApis(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apigateway::v1::ListApisRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::apigateway::v1::Api> GetApi(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apigateway::v1::GetApiRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateApi(
@@ -87,11 +87,11 @@ class ApiGatewayServiceStub {
 
   virtual StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>
   ListApiConfigs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apigateway::v1::ListApiConfigsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::apigateway::v1::ApiConfig> GetApiConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apigateway::v1::GetApiConfigRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateApiConfig(
@@ -131,12 +131,12 @@ class DefaultApiGatewayServiceStub : public ApiGatewayServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::apigateway::v1::ListGatewaysResponse> ListGateways(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apigateway::v1::ListGatewaysRequest const& request)
       override;
 
   StatusOr<google::cloud::apigateway::v1::Gateway> GetGateway(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apigateway::v1::GetGatewayRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateGateway(
@@ -158,11 +158,11 @@ class DefaultApiGatewayServiceStub : public ApiGatewayServiceStub {
       override;
 
   StatusOr<google::cloud::apigateway::v1::ListApisResponse> ListApis(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apigateway::v1::ListApisRequest const& request) override;
 
   StatusOr<google::cloud::apigateway::v1::Api> GetApi(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apigateway::v1::GetApiRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateApi(
@@ -181,12 +181,12 @@ class DefaultApiGatewayServiceStub : public ApiGatewayServiceStub {
       google::cloud::apigateway::v1::DeleteApiRequest const& request) override;
 
   StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>
-  ListApiConfigs(grpc::ClientContext& context,
+  ListApiConfigs(grpc::ClientContext& context, Options const& options,
                  google::cloud::apigateway::v1::ListApiConfigsRequest const&
                      request) override;
 
   StatusOr<google::cloud::apigateway::v1::ApiConfig> GetApiConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apigateway::v1::GetApiConfigRequest const& request)
       override;
 

@@ -33,7 +33,7 @@ TagValuesStub::~TagValuesStub() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagValuesResponse>
 DefaultTagValuesStub::ListTagValues(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::ListTagValuesRequest const& request) {
   google::cloud::resourcemanager::v3::ListTagValuesResponse response;
   auto status = grpc_stub_->ListTagValues(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultTagValuesStub::ListTagValues(
 
 StatusOr<google::cloud::resourcemanager::v3::TagValue>
 DefaultTagValuesStub::GetTagValue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::GetTagValueRequest const& request) {
   google::cloud::resourcemanager::v3::TagValue response;
   auto status = grpc_stub_->GetTagValue(&context, request, &response);
@@ -57,7 +57,7 @@ DefaultTagValuesStub::GetTagValue(
 
 StatusOr<google::cloud::resourcemanager::v3::TagValue>
 DefaultTagValuesStub::GetNamespacedTagValue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::GetNamespacedTagValueRequest const&
         request) {
   google::cloud::resourcemanager::v3::TagValue response;
@@ -123,7 +123,7 @@ DefaultTagValuesStub::AsyncDeleteTagValue(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultTagValuesStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -134,7 +134,7 @@ StatusOr<google::iam::v1::Policy> DefaultTagValuesStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultTagValuesStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -146,7 +146,7 @@ StatusOr<google::iam::v1::Policy> DefaultTagValuesStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultTagValuesStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);

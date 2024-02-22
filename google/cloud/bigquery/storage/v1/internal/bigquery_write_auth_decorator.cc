@@ -34,12 +34,12 @@ BigQueryWriteAuth::BigQueryWriteAuth(
 
 StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
 BigQueryWriteAuth::CreateWriteStream(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateWriteStream(context, request);
+  return child_->CreateWriteStream(context, options, request);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -62,41 +62,41 @@ BigQueryWriteAuth::AsyncAppendRows(
 
 StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
 BigQueryWriteAuth::GetWriteStream(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetWriteStream(context, request);
+  return child_->GetWriteStream(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
 BigQueryWriteAuth::FinalizeWriteStream(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->FinalizeWriteStream(context, request);
+  return child_->FinalizeWriteStream(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
 BigQueryWriteAuth::BatchCommitWriteStreams(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->BatchCommitWriteStreams(context, request);
+  return child_->BatchCommitWriteStreams(context, options, request);
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>
 BigQueryWriteAuth::FlushRows(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::storage::v1::FlushRowsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->FlushRows(context, request);
+  return child_->FlushRows(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -33,20 +33,20 @@ BareMetalSolutionAuth::BareMetalSolutionAuth(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListInstancesResponse>
 BareMetalSolutionAuth::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListInstancesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListInstances(context, request);
+  return child_->ListInstances(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Instance>
 BareMetalSolutionAuth::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::GetInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetInstance(context, request);
+  return child_->GetInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -71,12 +71,12 @@ BareMetalSolutionAuth::AsyncUpdateInstance(
 
 StatusOr<google::cloud::baremetalsolution::v2::Instance>
 BareMetalSolutionAuth::RenameInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::RenameInstanceRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RenameInstance(context, request);
+  return child_->RenameInstance(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -196,46 +196,46 @@ BareMetalSolutionAuth::AsyncDetachLun(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListSSHKeysResponse>
 BareMetalSolutionAuth::ListSSHKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListSSHKeysRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSSHKeys(context, request);
+  return child_->ListSSHKeys(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::SSHKey>
 BareMetalSolutionAuth::CreateSSHKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::CreateSSHKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateSSHKey(context, request);
+  return child_->CreateSSHKey(context, options, request);
 }
 
 Status BareMetalSolutionAuth::DeleteSSHKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::DeleteSSHKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteSSHKey(context, request);
+  return child_->DeleteSSHKey(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListVolumesResponse>
 BareMetalSolutionAuth::ListVolumes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListVolumesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListVolumes(context, request);
+  return child_->ListVolumes(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Volume>
 BareMetalSolutionAuth::GetVolume(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::GetVolumeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetVolume(context, request);
+  return child_->GetVolume(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -259,11 +259,11 @@ BareMetalSolutionAuth::AsyncUpdateVolume(
 
 StatusOr<google::cloud::baremetalsolution::v2::Volume>
 BareMetalSolutionAuth::RenameVolume(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::RenameVolumeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RenameVolume(context, request);
+  return child_->RenameVolume(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -306,30 +306,30 @@ BareMetalSolutionAuth::AsyncResizeVolume(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListNetworksResponse>
 BareMetalSolutionAuth::ListNetworks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListNetworksRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListNetworks(context, request);
+  return child_->ListNetworks(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListNetworkUsageResponse>
 BareMetalSolutionAuth::ListNetworkUsage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListNetworkUsageRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListNetworkUsage(context, request);
+  return child_->ListNetworkUsage(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Network>
 BareMetalSolutionAuth::GetNetwork(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::GetNetworkRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetNetwork(context, request);
+  return child_->GetNetwork(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -353,12 +353,12 @@ BareMetalSolutionAuth::AsyncUpdateNetwork(
 
 StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
 BareMetalSolutionAuth::CreateVolumeSnapshot(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::CreateVolumeSnapshotRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateVolumeSnapshot(context, request);
+  return child_->CreateVolumeSnapshot(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -382,50 +382,50 @@ BareMetalSolutionAuth::AsyncRestoreVolumeSnapshot(
 }
 
 Status BareMetalSolutionAuth::DeleteVolumeSnapshot(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::DeleteVolumeSnapshotRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteVolumeSnapshot(context, request);
+  return child_->DeleteVolumeSnapshot(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::VolumeSnapshot>
 BareMetalSolutionAuth::GetVolumeSnapshot(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::GetVolumeSnapshotRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetVolumeSnapshot(context, request);
+  return child_->GetVolumeSnapshot(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListVolumeSnapshotsResponse>
 BareMetalSolutionAuth::ListVolumeSnapshots(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListVolumeSnapshotsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListVolumeSnapshots(context, request);
+  return child_->ListVolumeSnapshots(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Lun>
 BareMetalSolutionAuth::GetLun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::GetLunRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetLun(context, request);
+  return child_->GetLun(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListLunsResponse>
 BareMetalSolutionAuth::ListLuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListLunsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListLuns(context, request);
+  return child_->ListLuns(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -448,20 +448,20 @@ BareMetalSolutionAuth::AsyncEvictLun(
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
 BareMetalSolutionAuth::GetNfsShare(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::GetNfsShareRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetNfsShare(context, request);
+  return child_->GetNfsShare(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListNfsSharesResponse>
 BareMetalSolutionAuth::ListNfsShares(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListNfsSharesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListNfsShares(context, request);
+  return child_->ListNfsShares(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -506,12 +506,12 @@ BareMetalSolutionAuth::AsyncCreateNfsShare(
 
 StatusOr<google::cloud::baremetalsolution::v2::NfsShare>
 BareMetalSolutionAuth::RenameNfsShare(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::RenameNfsShareRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RenameNfsShare(context, request);
+  return child_->RenameNfsShare(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -536,70 +536,70 @@ BareMetalSolutionAuth::AsyncDeleteNfsShare(
 
 StatusOr<google::cloud::baremetalsolution::v2::ListProvisioningQuotasResponse>
 BareMetalSolutionAuth::ListProvisioningQuotas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListProvisioningQuotasRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListProvisioningQuotas(context, request);
+  return child_->ListProvisioningQuotas(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::SubmitProvisioningConfigResponse>
 BareMetalSolutionAuth::SubmitProvisioningConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::SubmitProvisioningConfigRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SubmitProvisioningConfig(context, request);
+  return child_->SubmitProvisioningConfig(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 BareMetalSolutionAuth::GetProvisioningConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::GetProvisioningConfigRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetProvisioningConfig(context, request);
+  return child_->GetProvisioningConfig(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 BareMetalSolutionAuth::CreateProvisioningConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::CreateProvisioningConfigRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateProvisioningConfig(context, request);
+  return child_->CreateProvisioningConfig(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ProvisioningConfig>
 BareMetalSolutionAuth::UpdateProvisioningConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::UpdateProvisioningConfigRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateProvisioningConfig(context, request);
+  return child_->UpdateProvisioningConfig(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::Network>
 BareMetalSolutionAuth::RenameNetwork(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::RenameNetworkRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RenameNetwork(context, request);
+  return child_->RenameNetwork(context, options, request);
 }
 
 StatusOr<google::cloud::baremetalsolution::v2::ListOSImagesResponse>
 BareMetalSolutionAuth::ListOSImages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::baremetalsolution::v2::ListOSImagesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListOSImages(context, request);
+  return child_->ListOSImages(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

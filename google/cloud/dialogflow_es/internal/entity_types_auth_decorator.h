@@ -40,27 +40,27 @@ class EntityTypesAuth : public EntityTypesStub {
       std::shared_ptr<EntityTypesStub> child);
 
   StatusOr<google::cloud::dialogflow::v2::ListEntityTypesResponse>
-  ListEntityTypes(grpc::ClientContext& context,
+  ListEntityTypes(grpc::ClientContext& context, Options const& options,
                   google::cloud::dialogflow::v2::ListEntityTypesRequest const&
                       request) override;
 
   StatusOr<google::cloud::dialogflow::v2::EntityType> GetEntityType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetEntityTypeRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::EntityType> CreateEntityType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::CreateEntityTypeRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::EntityType> UpdateEntityType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::UpdateEntityTypeRequest const& request)
       override;
 
   Status DeleteEntityType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::DeleteEntityTypeRequest const& request)
       override;
 

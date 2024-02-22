@@ -33,50 +33,50 @@ AutoscalingPolicyServiceAuth::AutoscalingPolicyServiceAuth(
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceAuth::CreateAutoscalingPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateAutoscalingPolicy(context, request);
+  return child_->CreateAutoscalingPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceAuth::UpdateAutoscalingPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateAutoscalingPolicy(context, request);
+  return child_->UpdateAutoscalingPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceAuth::GetAutoscalingPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAutoscalingPolicy(context, request);
+  return child_->GetAutoscalingPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse>
 AutoscalingPolicyServiceAuth::ListAutoscalingPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAutoscalingPolicies(context, request);
+  return child_->ListAutoscalingPolicies(context, options, request);
 }
 
 Status AutoscalingPolicyServiceAuth::DeleteAutoscalingPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteAutoscalingPolicy(context, request);
+  return child_->DeleteAutoscalingPolicy(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

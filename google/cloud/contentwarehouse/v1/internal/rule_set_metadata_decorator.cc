@@ -44,46 +44,46 @@ RuleSetServiceMetadata::RuleSetServiceMetadata(
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceMetadata::CreateRuleSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateRuleSet(context, request);
+  return child_->CreateRuleSet(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceMetadata::GetRuleSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetRuleSet(context, request);
+  return child_->GetRuleSet(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceMetadata::UpdateRuleSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->UpdateRuleSet(context, request);
+  return child_->UpdateRuleSet(context, options, request);
 }
 
 Status RuleSetServiceMetadata::DeleteRuleSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteRuleSet(context, request);
+  return child_->DeleteRuleSet(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse>
 RuleSetServiceMetadata::ListRuleSets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::ListRuleSetsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListRuleSets(context, request);
+  return child_->ListRuleSets(context, options, request);
 }
 
 void RuleSetServiceMetadata::SetMetadata(grpc::ClientContext& context,

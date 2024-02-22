@@ -39,12 +39,12 @@ class CloudFilestoreManagerTracingStub : public CloudFilestoreManagerStub {
       std::shared_ptr<CloudFilestoreManagerStub> child);
 
   StatusOr<google::cloud::filestore::v1::ListInstancesResponse> ListInstances(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::filestore::v1::ListInstancesRequest const& request)
       override;
 
   StatusOr<google::cloud::filestore::v1::Instance> GetInstance(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::filestore::v1::GetInstanceRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
@@ -78,12 +78,12 @@ class CloudFilestoreManagerTracingStub : public CloudFilestoreManagerStub {
       override;
 
   StatusOr<google::cloud::filestore::v1::ListSnapshotsResponse> ListSnapshots(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::filestore::v1::ListSnapshotsRequest const& request)
       override;
 
   StatusOr<google::cloud::filestore::v1::Snapshot> GetSnapshot(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::filestore::v1::GetSnapshotRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateSnapshot(
@@ -105,11 +105,11 @@ class CloudFilestoreManagerTracingStub : public CloudFilestoreManagerStub {
       override;
 
   StatusOr<google::cloud::filestore::v1::ListBackupsResponse> ListBackups(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::filestore::v1::ListBackupsRequest const& request) override;
 
   StatusOr<google::cloud::filestore::v1::Backup> GetBackup(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::filestore::v1::GetBackupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(

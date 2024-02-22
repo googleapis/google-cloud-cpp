@@ -33,7 +33,7 @@ ConversationalSearchServiceTracingStub::ConversationalSearchServiceTracingStub(
 
 StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
 ConversationalSearchServiceTracingStub::ConverseConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ConverseConversationRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -41,13 +41,13 @@ ConversationalSearchServiceTracingStub::ConverseConversation(
       "ConverseConversation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ConverseConversation(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ConverseConversation(context, options, request));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 ConversationalSearchServiceTracingStub::CreateConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::CreateConversationRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -55,12 +55,12 @@ ConversationalSearchServiceTracingStub::CreateConversation(
       "CreateConversation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateConversation(context, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateConversation(context, options, request));
 }
 
 Status ConversationalSearchServiceTracingStub::DeleteConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::DeleteConversationRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -68,13 +68,13 @@ Status ConversationalSearchServiceTracingStub::DeleteConversation(
       "DeleteConversation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteConversation(context, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteConversation(context, options, request));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 ConversationalSearchServiceTracingStub::UpdateConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::UpdateConversationRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -82,13 +82,13 @@ ConversationalSearchServiceTracingStub::UpdateConversation(
       "UpdateConversation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateConversation(context, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateConversation(context, options, request));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 ConversationalSearchServiceTracingStub::GetConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetConversationRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.discoveryengine.v1.ConversationalSearchService",
@@ -96,12 +96,12 @@ ConversationalSearchServiceTracingStub::GetConversation(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetConversation(context, request));
+                           child_->GetConversation(context, options, request));
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListConversationsResponse>
 ConversationalSearchServiceTracingStub::ListConversations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ListConversationsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -109,8 +109,8 @@ ConversationalSearchServiceTracingStub::ListConversations(
       "ListConversations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListConversations(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListConversations(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

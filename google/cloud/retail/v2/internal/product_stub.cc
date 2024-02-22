@@ -33,7 +33,7 @@ ProductServiceStub::~ProductServiceStub() = default;
 
 StatusOr<google::cloud::retail::v2::Product>
 DefaultProductServiceStub::CreateProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::CreateProductRequest const& request) {
   google::cloud::retail::v2::Product response;
   auto status = grpc_stub_->CreateProduct(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultProductServiceStub::CreateProduct(
 
 StatusOr<google::cloud::retail::v2::Product>
 DefaultProductServiceStub::GetProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::GetProductRequest const& request) {
   google::cloud::retail::v2::Product response;
   auto status = grpc_stub_->GetProduct(&context, request, &response);
@@ -57,7 +57,7 @@ DefaultProductServiceStub::GetProduct(
 
 StatusOr<google::cloud::retail::v2::ListProductsResponse>
 DefaultProductServiceStub::ListProducts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::ListProductsRequest const& request) {
   google::cloud::retail::v2::ListProductsResponse response;
   auto status = grpc_stub_->ListProducts(&context, request, &response);
@@ -69,7 +69,7 @@ DefaultProductServiceStub::ListProducts(
 
 StatusOr<google::cloud::retail::v2::Product>
 DefaultProductServiceStub::UpdateProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::UpdateProductRequest const& request) {
   google::cloud::retail::v2::Product response;
   auto status = grpc_stub_->UpdateProduct(&context, request, &response);
@@ -80,7 +80,7 @@ DefaultProductServiceStub::UpdateProduct(
 }
 
 Status DefaultProductServiceStub::DeleteProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::DeleteProductRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteProduct(&context, request, &response);

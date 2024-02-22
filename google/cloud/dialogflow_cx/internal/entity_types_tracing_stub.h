@@ -38,28 +38,28 @@ class EntityTypesTracingStub : public EntityTypesStub {
   explicit EntityTypesTracingStub(std::shared_ptr<EntityTypesStub> child);
 
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> GetEntityType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> CreateEntityType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> UpdateEntityType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request)
       override;
 
   Status DeleteEntityType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListEntityTypesResponse>
   ListEntityTypes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::ListEntityTypesRequest const& request)
       override;
 

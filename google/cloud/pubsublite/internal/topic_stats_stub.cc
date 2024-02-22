@@ -32,7 +32,7 @@ TopicStatsServiceStub::~TopicStatsServiceStub() = default;
 
 StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
 DefaultTopicStatsServiceStub::ComputeMessageStats(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request) {
   google::cloud::pubsublite::v1::ComputeMessageStatsResponse response;
   auto status = grpc_stub_->ComputeMessageStats(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultTopicStatsServiceStub::ComputeMessageStats(
 
 StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
 DefaultTopicStatsServiceStub::ComputeHeadCursor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request) {
   google::cloud::pubsublite::v1::ComputeHeadCursorResponse response;
   auto status = grpc_stub_->ComputeHeadCursor(&context, request, &response);
@@ -56,7 +56,7 @@ DefaultTopicStatsServiceStub::ComputeHeadCursor(
 
 StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
 DefaultTopicStatsServiceStub::ComputeTimeCursor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request) {
   google::cloud::pubsublite::v1::ComputeTimeCursorResponse response;
   auto status = grpc_stub_->ComputeTimeCursor(&context, request, &response);

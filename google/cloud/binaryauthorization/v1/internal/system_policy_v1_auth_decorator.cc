@@ -33,12 +33,12 @@ SystemPolicyV1Auth::SystemPolicyV1Auth(
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
 SystemPolicyV1Auth::GetSystemPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetSystemPolicy(context, request);
+  return child_->GetSystemPolicy(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

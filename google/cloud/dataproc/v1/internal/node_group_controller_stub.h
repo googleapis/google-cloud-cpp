@@ -49,7 +49,7 @@ class NodeGroupControllerStub {
       google::cloud::dataproc::v1::ResizeNodeGroupRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dataproc::v1::NodeGroup> GetNodeGroup(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::GetNodeGroupRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -86,7 +86,7 @@ class DefaultNodeGroupControllerStub : public NodeGroupControllerStub {
       override;
 
   StatusOr<google::cloud::dataproc::v1::NodeGroup> GetNodeGroup(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::GetNodeGroupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

@@ -33,7 +33,7 @@ ScheduleServiceStub::~ScheduleServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 DefaultScheduleServiceStub::CreateSchedule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CreateScheduleRequest const& request) {
   google::cloud::aiplatform::v1::Schedule response;
   auto status = grpc_stub_->CreateSchedule(&context, request, &response);
@@ -63,7 +63,7 @@ DefaultScheduleServiceStub::AsyncDeleteSchedule(
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 DefaultScheduleServiceStub::GetSchedule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetScheduleRequest const& request) {
   google::cloud::aiplatform::v1::Schedule response;
   auto status = grpc_stub_->GetSchedule(&context, request, &response);
@@ -75,7 +75,7 @@ DefaultScheduleServiceStub::GetSchedule(
 
 StatusOr<google::cloud::aiplatform::v1::ListSchedulesResponse>
 DefaultScheduleServiceStub::ListSchedules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListSchedulesRequest const& request) {
   google::cloud::aiplatform::v1::ListSchedulesResponse response;
   auto status = grpc_stub_->ListSchedules(&context, request, &response);
@@ -86,7 +86,7 @@ DefaultScheduleServiceStub::ListSchedules(
 }
 
 Status DefaultScheduleServiceStub::PauseSchedule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::PauseScheduleRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->PauseSchedule(&context, request, &response);
@@ -97,7 +97,7 @@ Status DefaultScheduleServiceStub::PauseSchedule(
 }
 
 Status DefaultScheduleServiceStub::ResumeSchedule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ResumeScheduleRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->ResumeSchedule(&context, request, &response);
@@ -109,7 +109,7 @@ Status DefaultScheduleServiceStub::ResumeSchedule(
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 DefaultScheduleServiceStub::UpdateSchedule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::UpdateScheduleRequest const& request) {
   google::cloud::aiplatform::v1::Schedule response;
   auto status = grpc_stub_->UpdateSchedule(&context, request, &response);

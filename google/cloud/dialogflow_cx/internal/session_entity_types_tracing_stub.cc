@@ -33,7 +33,7 @@ SessionEntityTypesTracingStub::SessionEntityTypesTracingStub(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListSessionEntityTypesResponse>
 SessionEntityTypesTracingStub::ListSessionEntityTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest const&
         request) {
   auto span =
@@ -41,13 +41,14 @@ SessionEntityTypesTracingStub::ListSessionEntityTypes(
                              "ListSessionEntityTypes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListSessionEntityTypes(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListSessionEntityTypes(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
 SessionEntityTypesTracingStub::GetSessionEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const&
         request) {
   auto span =
@@ -55,13 +56,13 @@ SessionEntityTypesTracingStub::GetSessionEntityType(
                              "GetSessionEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetSessionEntityType(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetSessionEntityType(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
 SessionEntityTypesTracingStub::CreateSessionEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const&
         request) {
   auto span =
@@ -69,13 +70,14 @@ SessionEntityTypesTracingStub::CreateSessionEntityType(
                              "CreateSessionEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateSessionEntityType(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->CreateSessionEntityType(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
 SessionEntityTypesTracingStub::UpdateSessionEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const&
         request) {
   auto span =
@@ -83,12 +85,13 @@ SessionEntityTypesTracingStub::UpdateSessionEntityType(
                              "UpdateSessionEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateSessionEntityType(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateSessionEntityType(context, options, request));
 }
 
 Status SessionEntityTypesTracingStub::DeleteSessionEntityType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const&
         request) {
   auto span =
@@ -96,8 +99,9 @@ Status SessionEntityTypesTracingStub::DeleteSessionEntityType(
                              "DeleteSessionEntityType");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteSessionEntityType(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteSessionEntityType(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

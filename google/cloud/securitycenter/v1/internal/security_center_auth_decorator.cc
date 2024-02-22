@@ -52,254 +52,258 @@ SecurityCenterAuth::AsyncBulkMuteFindings(
 
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 SecurityCenterAuth::CreateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::
         CreateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateSecurityHealthAnalyticsCustomModule(context, request);
+  return child_->CreateSecurityHealthAnalyticsCustomModule(context, options,
+                                                           request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterAuth::CreateSource(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::CreateSourceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateSource(context, request);
+  return child_->CreateSource(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
 SecurityCenterAuth::CreateFinding(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::CreateFindingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateFinding(context, request);
+  return child_->CreateFinding(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::MuteConfig>
 SecurityCenterAuth::CreateMuteConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::CreateMuteConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateMuteConfig(context, request);
+  return child_->CreateMuteConfig(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
 SecurityCenterAuth::CreateNotificationConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::CreateNotificationConfigRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateNotificationConfig(context, request);
+  return child_->CreateNotificationConfig(context, options, request);
 }
 
 Status SecurityCenterAuth::DeleteMuteConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::DeleteMuteConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteMuteConfig(context, request);
+  return child_->DeleteMuteConfig(context, options, request);
 }
 
 Status SecurityCenterAuth::DeleteNotificationConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteNotificationConfig(context, request);
+  return child_->DeleteNotificationConfig(context, options, request);
 }
 
 Status SecurityCenterAuth::DeleteSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::
         DeleteSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteSecurityHealthAnalyticsCustomModule(context, request);
+  return child_->DeleteSecurityHealthAnalyticsCustomModule(context, options,
+                                                           request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterAuth::GetBigQueryExport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetBigQueryExport(context, request);
+  return child_->GetBigQueryExport(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> SecurityCenterAuth::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::MuteConfig>
 SecurityCenterAuth::GetMuteConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::GetMuteConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetMuteConfig(context, request);
+  return child_->GetMuteConfig(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
 SecurityCenterAuth::GetNotificationConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::GetNotificationConfigRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetNotificationConfig(context, request);
+  return child_->GetNotificationConfig(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
 SecurityCenterAuth::GetOrganizationSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetOrganizationSettings(context, request);
+  return child_->GetOrganizationSettings(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::
              EffectiveSecurityHealthAnalyticsCustomModule>
 SecurityCenterAuth::GetEffectiveSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::
         GetEffectiveSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEffectiveSecurityHealthAnalyticsCustomModule(context,
-                                                                 request);
+  return child_->GetEffectiveSecurityHealthAnalyticsCustomModule(
+      context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 SecurityCenterAuth::GetSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::
         GetSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetSecurityHealthAnalyticsCustomModule(context, request);
+  return child_->GetSecurityHealthAnalyticsCustomModule(context, options,
+                                                        request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterAuth::GetSource(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::GetSourceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetSource(context, request);
+  return child_->GetSource(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::GroupAssetsResponse>
 SecurityCenterAuth::GroupAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::GroupAssetsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GroupAssets(context, request);
+  return child_->GroupAssets(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::GroupFindingsResponse>
 SecurityCenterAuth::GroupFindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::GroupFindingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GroupFindings(context, request);
+  return child_->GroupFindings(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListAssetsResponse>
 SecurityCenterAuth::ListAssets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::ListAssetsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAssets(context, request);
+  return child_->ListAssets(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::
              ListDescendantSecurityHealthAnalyticsCustomModulesResponse>
 SecurityCenterAuth::ListDescendantSecurityHealthAnalyticsCustomModules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::
         ListDescendantSecurityHealthAnalyticsCustomModulesRequest const&
             request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDescendantSecurityHealthAnalyticsCustomModules(context,
-                                                                    request);
+  return child_->ListDescendantSecurityHealthAnalyticsCustomModules(
+      context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListFindingsResponse>
 SecurityCenterAuth::ListFindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::ListFindingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListFindings(context, request);
+  return child_->ListFindings(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListMuteConfigsResponse>
 SecurityCenterAuth::ListMuteConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::ListMuteConfigsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListMuteConfigs(context, request);
+  return child_->ListMuteConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListNotificationConfigsResponse>
 SecurityCenterAuth::ListNotificationConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::ListNotificationConfigsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListNotificationConfigs(context, request);
+  return child_->ListNotificationConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::
              ListEffectiveSecurityHealthAnalyticsCustomModulesResponse>
 SecurityCenterAuth::ListEffectiveSecurityHealthAnalyticsCustomModules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::
         ListEffectiveSecurityHealthAnalyticsCustomModulesRequest const&
             request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEffectiveSecurityHealthAnalyticsCustomModules(context,
-                                                                   request);
+  return child_->ListEffectiveSecurityHealthAnalyticsCustomModules(
+      context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::
              ListSecurityHealthAnalyticsCustomModulesResponse>
 SecurityCenterAuth::ListSecurityHealthAnalyticsCustomModules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::
         ListSecurityHealthAnalyticsCustomModulesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSecurityHealthAnalyticsCustomModules(context, request);
+  return child_->ListSecurityHealthAnalyticsCustomModules(context, options,
+                                                          request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListSourcesResponse>
 SecurityCenterAuth::ListSources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::ListSourcesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSources(context, request);
+  return child_->ListSources(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -324,164 +328,166 @@ SecurityCenterAuth::AsyncRunAssetDiscovery(
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
 SecurityCenterAuth::SetFindingState(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::SetFindingStateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetFindingState(context, request);
+  return child_->SetFindingState(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
 SecurityCenterAuth::SetMute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::SetMuteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetMute(context, request);
+  return child_->SetMute(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> SecurityCenterAuth::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 SecurityCenterAuth::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::
              SimulateSecurityHealthAnalyticsCustomModuleResponse>
 SecurityCenterAuth::SimulateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::
         SimulateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SimulateSecurityHealthAnalyticsCustomModule(context, request);
+  return child_->SimulateSecurityHealthAnalyticsCustomModule(context, options,
+                                                             request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
 SecurityCenterAuth::UpdateExternalSystem(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateExternalSystem(context, request);
+  return child_->UpdateExternalSystem(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
 SecurityCenterAuth::UpdateFinding(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::UpdateFindingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateFinding(context, request);
+  return child_->UpdateFinding(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::MuteConfig>
 SecurityCenterAuth::UpdateMuteConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::UpdateMuteConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateMuteConfig(context, request);
+  return child_->UpdateMuteConfig(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
 SecurityCenterAuth::UpdateNotificationConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::UpdateNotificationConfigRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateNotificationConfig(context, request);
+  return child_->UpdateNotificationConfig(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
 SecurityCenterAuth::UpdateOrganizationSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::UpdateOrganizationSettingsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateOrganizationSettings(context, request);
+  return child_->UpdateOrganizationSettings(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::SecurityHealthAnalyticsCustomModule>
 SecurityCenterAuth::UpdateSecurityHealthAnalyticsCustomModule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::
         UpdateSecurityHealthAnalyticsCustomModuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateSecurityHealthAnalyticsCustomModule(context, request);
+  return child_->UpdateSecurityHealthAnalyticsCustomModule(context, options,
+                                                           request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterAuth::UpdateSource(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::UpdateSourceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateSource(context, request);
+  return child_->UpdateSource(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::SecurityMarks>
 SecurityCenterAuth::UpdateSecurityMarks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateSecurityMarks(context, request);
+  return child_->UpdateSecurityMarks(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterAuth::CreateBigQueryExport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateBigQueryExport(context, request);
+  return child_->CreateBigQueryExport(context, options, request);
 }
 
 Status SecurityCenterAuth::DeleteBigQueryExport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteBigQueryExport(context, request);
+  return child_->DeleteBigQueryExport(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterAuth::UpdateBigQueryExport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateBigQueryExport(context, request);
+  return child_->UpdateBigQueryExport(context, options, request);
 }
 
 StatusOr<google::cloud::securitycenter::v1::ListBigQueryExportsResponse>
 SecurityCenterAuth::ListBigQueryExports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::securitycenter::v1::ListBigQueryExportsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBigQueryExports(context, request);
+  return child_->ListBigQueryExports(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

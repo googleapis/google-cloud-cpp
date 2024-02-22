@@ -68,11 +68,11 @@ ServiceControllerConnectionImpl::Check(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Check(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::servicecontrol::v2::CheckRequest const& request) {
-        return stub_->Check(context, request);
+        return stub_->Check(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::api::servicecontrol::v2::ReportResponse>
@@ -82,11 +82,11 @@ ServiceControllerConnectionImpl::Report(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Report(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::servicecontrol::v2::ReportRequest const& request) {
-        return stub_->Report(context, request);
+        return stub_->Report(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

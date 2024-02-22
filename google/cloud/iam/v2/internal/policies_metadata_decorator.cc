@@ -43,19 +43,19 @@ PoliciesMetadata::PoliciesMetadata(
               : std::move(api_client_header)) {}
 
 StatusOr<google::iam::v2::ListPoliciesResponse> PoliciesMetadata::ListPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v2::ListPoliciesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListPolicies(context, request);
+  return child_->ListPolicies(context, options, request);
 }
 
 StatusOr<google::iam::v2::Policy> PoliciesMetadata::GetPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v2::GetPolicyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetPolicy(context, request);
+  return child_->GetPolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

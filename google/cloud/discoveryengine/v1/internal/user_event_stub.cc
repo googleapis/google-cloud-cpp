@@ -33,7 +33,7 @@ UserEventServiceStub::~UserEventServiceStub() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::UserEvent>
 DefaultUserEventServiceStub::WriteUserEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::discoveryengine::v1::WriteUserEventRequest const& request) {
   google::cloud::discoveryengine::v1::UserEvent response;
   auto status = grpc_stub_->WriteUserEvent(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultUserEventServiceStub::WriteUserEvent(
 }
 
 StatusOr<google::api::HttpBody> DefaultUserEventServiceStub::CollectUserEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::discoveryengine::v1::CollectUserEventRequest const&
         request) {
   google::api::HttpBody response;

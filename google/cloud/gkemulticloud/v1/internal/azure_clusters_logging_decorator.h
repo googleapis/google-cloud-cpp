@@ -46,13 +46,13 @@ class AzureClustersLogging : public AzureClustersStub {
       override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AzureClient> GetAzureClient(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request)
       override;
 
   StatusOr<google::cloud::gkemulticloud::v1::ListAzureClientsResponse>
   ListAzureClients(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::ListAzureClientsRequest const& request)
       override;
 
@@ -75,13 +75,13 @@ class AzureClustersLogging : public AzureClustersStub {
           request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AzureCluster> GetAzureCluster(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request)
       override;
 
   StatusOr<google::cloud::gkemulticloud::v1::ListAzureClustersResponse>
   ListAzureClusters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::ListAzureClustersRequest const& request)
       override;
 
@@ -94,13 +94,13 @@ class AzureClustersLogging : public AzureClustersStub {
   StatusOr<
       google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
   GenerateAzureClusterAgentToken(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::
           GenerateAzureClusterAgentTokenRequest const& request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
   GenerateAzureAccessToken(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
           request) override;
 
@@ -117,13 +117,13 @@ class AzureClustersLogging : public AzureClustersStub {
           request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool> GetAzureNodePool(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request)
       override;
 
   StatusOr<google::cloud::gkemulticloud::v1::ListAzureNodePoolsResponse>
   ListAzureNodePools(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest const&
           request) override;
 
@@ -135,19 +135,19 @@ class AzureClustersLogging : public AzureClustersStub {
 
   StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
   GetAzureOpenIdConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
           request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
   GetAzureJsonWebKeys(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
           request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
   GetAzureServerConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&
           request) override;
 

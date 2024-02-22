@@ -44,22 +44,22 @@ NetworkSecurityMetadata::NetworkSecurityMetadata(
 
 StatusOr<google::cloud::networksecurity::v1::ListAuthorizationPoliciesResponse>
 NetworkSecurityMetadata::ListAuthorizationPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networksecurity::v1::ListAuthorizationPoliciesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListAuthorizationPolicies(context, request);
+  return child_->ListAuthorizationPolicies(context, options, request);
 }
 
 StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>
 NetworkSecurityMetadata::GetAuthorizationPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networksecurity::v1::GetAuthorizationPolicyRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAuthorizationPolicy(context, request);
+  return child_->GetAuthorizationPolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -102,22 +102,22 @@ NetworkSecurityMetadata::AsyncDeleteAuthorizationPolicy(
 
 StatusOr<google::cloud::networksecurity::v1::ListServerTlsPoliciesResponse>
 NetworkSecurityMetadata::ListServerTlsPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListServerTlsPolicies(context, request);
+  return child_->ListServerTlsPolicies(context, options, request);
 }
 
 StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>
 NetworkSecurityMetadata::GetServerTlsPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networksecurity::v1::GetServerTlsPolicyRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetServerTlsPolicy(context, request);
+  return child_->GetServerTlsPolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -160,22 +160,22 @@ NetworkSecurityMetadata::AsyncDeleteServerTlsPolicy(
 
 StatusOr<google::cloud::networksecurity::v1::ListClientTlsPoliciesResponse>
 NetworkSecurityMetadata::ListClientTlsPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networksecurity::v1::ListClientTlsPoliciesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListClientTlsPolicies(context, request);
+  return child_->ListClientTlsPolicies(context, options, request);
 }
 
 StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>
 NetworkSecurityMetadata::GetClientTlsPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networksecurity::v1::GetClientTlsPolicyRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetClientTlsPolicy(context, request);
+  return child_->GetClientTlsPolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

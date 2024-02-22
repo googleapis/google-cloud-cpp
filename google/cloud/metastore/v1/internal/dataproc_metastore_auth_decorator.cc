@@ -33,20 +33,20 @@ DataprocMetastoreAuth::DataprocMetastoreAuth(
 
 StatusOr<google::cloud::metastore::v1::ListServicesResponse>
 DataprocMetastoreAuth::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::ListServicesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListServices(context, request);
+  return child_->ListServices(context, options, request);
 }
 
 StatusOr<google::cloud::metastore::v1::Service>
 DataprocMetastoreAuth::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::GetServiceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetService(context, request);
+  return child_->GetService(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -108,20 +108,20 @@ DataprocMetastoreAuth::AsyncDeleteService(
 
 StatusOr<google::cloud::metastore::v1::ListMetadataImportsResponse>
 DataprocMetastoreAuth::ListMetadataImports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::ListMetadataImportsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListMetadataImports(context, request);
+  return child_->ListMetadataImports(context, options, request);
 }
 
 StatusOr<google::cloud::metastore::v1::MetadataImport>
 DataprocMetastoreAuth::GetMetadataImport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::GetMetadataImportRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetMetadataImport(context, request);
+  return child_->GetMetadataImport(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -202,19 +202,19 @@ DataprocMetastoreAuth::AsyncRestoreService(
 
 StatusOr<google::cloud::metastore::v1::ListBackupsResponse>
 DataprocMetastoreAuth::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::ListBackupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBackups(context, request);
+  return child_->ListBackups(context, options, request);
 }
 
 StatusOr<google::cloud::metastore::v1::Backup> DataprocMetastoreAuth::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::metastore::v1::GetBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetBackup(context, request);
+  return child_->GetBackup(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

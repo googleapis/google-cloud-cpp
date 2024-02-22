@@ -33,7 +33,7 @@ IntentsStub::~IntentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListIntentsResponse>
 DefaultIntentsStub::ListIntents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ListIntentsRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListIntentsResponse response;
   auto status = grpc_stub_->ListIntents(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultIntentsStub::ListIntents(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Intent>
 DefaultIntentsStub::GetIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetIntentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Intent response;
   auto status = grpc_stub_->GetIntent(&context, request, &response);
@@ -57,7 +57,7 @@ DefaultIntentsStub::GetIntent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Intent>
 DefaultIntentsStub::CreateIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::CreateIntentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Intent response;
   auto status = grpc_stub_->CreateIntent(&context, request, &response);
@@ -69,7 +69,7 @@ DefaultIntentsStub::CreateIntent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Intent>
 DefaultIntentsStub::UpdateIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::UpdateIntentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Intent response;
   auto status = grpc_stub_->UpdateIntent(&context, request, &response);
@@ -80,7 +80,7 @@ DefaultIntentsStub::UpdateIntent(
 }
 
 Status DefaultIntentsStub::DeleteIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteIntent(&context, request, &response);

@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_V1_INTERNAL_AUTHORIZED_DOMAINS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_V1_INTERNAL_AUTHORIZED_DOMAINS_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
@@ -37,7 +38,7 @@ class AuthorizedDomainsStub {
 
   virtual StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
   ListAuthorizedDomains(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListAuthorizedDomainsRequest const& request) = 0;
 };
 
@@ -50,7 +51,7 @@ class DefaultAuthorizedDomainsStub : public AuthorizedDomainsStub {
 
   StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
   ListAuthorizedDomains(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListAuthorizedDomainsRequest const& request)
       override;
 

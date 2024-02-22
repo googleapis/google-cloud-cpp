@@ -398,15 +398,16 @@ Status SessionPool::CreateSessionsSync(
   }
   request.set_session_count(std::int32_t{num_sessions});
   auto const& stub = channel->stub;
+  auto const& current = internal::CurrentOptions();
   auto response = RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       google::cloud::Idempotency::kIdempotent,
-      [&stub](grpc::ClientContext& context,
+      [&stub](grpc::ClientContext& context, Options const& options,
               google::spanner::v1::BatchCreateSessionsRequest const& request) {
         RouteToLeader(context);  // always for BatchCreateSessions()
-        return stub->BatchCreateSessions(context, request);
+        return stub->BatchCreateSessions(context, options, request);
       },
-      request, __func__);
+      current, request, __func__);
   return HandleBatchCreateSessionsDone(channel, std::move(response));
 }
 

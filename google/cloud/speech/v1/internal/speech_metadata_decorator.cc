@@ -44,10 +44,10 @@ SpeechMetadata::SpeechMetadata(
 
 StatusOr<google::cloud::speech::v1::RecognizeResponse>
 SpeechMetadata::Recognize(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::RecognizeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->Recognize(context, request);
+  SetMetadata(context, options);
+  return child_->Recognize(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

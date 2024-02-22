@@ -33,7 +33,7 @@ ApplicationsStub::~ApplicationsStub() = default;
 
 StatusOr<google::appengine::v1::Application>
 DefaultApplicationsStub::GetApplication(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::GetApplicationRequest const& request) {
   google::appengine::v1::Application response;
   auto status = grpc_stub_->GetApplication(&context, request, &response);

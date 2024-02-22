@@ -44,19 +44,19 @@ ConfigMetadata::ConfigMetadata(
 
 StatusOr<google::cloud::config::v1::ListDeploymentsResponse>
 ConfigMetadata::ListDeployments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::ListDeploymentsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDeployments(context, request);
+  return child_->ListDeployments(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::Deployment> ConfigMetadata::GetDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::GetDeploymentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDeployment(context, request);
+  return child_->GetDeployment(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -95,71 +95,71 @@ ConfigMetadata::AsyncDeleteDeployment(
 
 StatusOr<google::cloud::config::v1::ListRevisionsResponse>
 ConfigMetadata::ListRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::ListRevisionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListRevisions(context, request);
+  return child_->ListRevisions(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::Revision> ConfigMetadata::GetRevision(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::GetRevisionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetRevision(context, request);
+  return child_->GetRevision(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::Resource> ConfigMetadata::GetResource(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::GetResourceRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetResource(context, request);
+  return child_->GetResource(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::ListResourcesResponse>
 ConfigMetadata::ListResources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::ListResourcesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListResources(context, request);
+  return child_->ListResources(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::Statefile>
 ConfigMetadata::ExportDeploymentStatefile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::ExportDeploymentStatefileRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ExportDeploymentStatefile(context, request);
+  return child_->ExportDeploymentStatefile(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::Statefile>
 ConfigMetadata::ExportRevisionStatefile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::ExportRevisionStatefileRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ExportRevisionStatefile(context, request);
+  return child_->ExportRevisionStatefile(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::Statefile> ConfigMetadata::ImportStatefile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::ImportStatefileRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ImportStatefile(context, request);
+  return child_->ImportStatefile(context, options, request);
 }
 
 Status ConfigMetadata::DeleteStatefile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::DeleteStatefileRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteStatefile(context, request);
+  return child_->DeleteStatefile(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -184,11 +184,11 @@ ConfigMetadata::AsyncUnlockDeployment(
 }
 
 StatusOr<google::cloud::config::v1::LockInfo> ConfigMetadata::ExportLockInfo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::ExportLockInfoRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->ExportLockInfo(context, request);
+  return child_->ExportLockInfo(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -202,20 +202,20 @@ ConfigMetadata::AsyncCreatePreview(
 }
 
 StatusOr<google::cloud::config::v1::Preview> ConfigMetadata::GetPreview(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::GetPreviewRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetPreview(context, request);
+  return child_->GetPreview(context, options, request);
 }
 
 StatusOr<google::cloud::config::v1::ListPreviewsResponse>
 ConfigMetadata::ListPreviews(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::ListPreviewsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListPreviews(context, request);
+  return child_->ListPreviews(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -230,11 +230,11 @@ ConfigMetadata::AsyncDeletePreview(
 
 StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
 ConfigMetadata::ExportPreviewResult(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::config::v1::ExportPreviewResultRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ExportPreviewResult(context, request);
+  return child_->ExportPreviewResult(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

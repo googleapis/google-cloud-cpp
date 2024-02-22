@@ -32,44 +32,44 @@ TenantServiceAuth::TenantServiceAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceAuth::CreateTenant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::CreateTenantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateTenant(context, request);
+  return child_->CreateTenant(context, options, request);
 }
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceAuth::GetTenant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::GetTenantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTenant(context, request);
+  return child_->GetTenant(context, options, request);
 }
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceAuth::UpdateTenant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::UpdateTenantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateTenant(context, request);
+  return child_->UpdateTenant(context, options, request);
 }
 
 Status TenantServiceAuth::DeleteTenant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::DeleteTenantRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteTenant(context, request);
+  return child_->DeleteTenant(context, options, request);
 }
 
 StatusOr<google::cloud::talent::v4::ListTenantsResponse>
 TenantServiceAuth::ListTenants(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::ListTenantsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTenants(context, request);
+  return child_->ListTenants(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

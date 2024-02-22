@@ -41,7 +41,7 @@ class CompletionServiceMetadata : public CompletionServiceStub {
       std::string api_client_header = "");
 
   StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
-  CompleteQuery(grpc::ClientContext& context,
+  CompleteQuery(grpc::ClientContext& context, Options const& options,
                 google::cloud::discoveryengine::v1::CompleteQueryRequest const&
                     request) override;
 

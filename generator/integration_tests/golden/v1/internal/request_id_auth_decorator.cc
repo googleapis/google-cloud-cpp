@@ -33,10 +33,11 @@ RequestIdServiceAuth::RequestIdServiceAuth(
 
 StatusOr<google::test::requestid::v1::Foo> RequestIdServiceAuth::CreateFoo(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::requestid::v1::CreateFooRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateFoo(context, request);
+  return child_->CreateFoo(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -59,10 +60,11 @@ RequestIdServiceAuth::AsyncRenameFoo(
 
 StatusOr<google::test::requestid::v1::ListFoosResponse> RequestIdServiceAuth::ListFoos(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::requestid::v1::ListFoosRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListFoos(context, request);
+  return child_->ListFoos(context, options, request);
 }
 
 future<StatusOr<google::test::requestid::v1::Foo>> RequestIdServiceAuth::AsyncCreateFoo(

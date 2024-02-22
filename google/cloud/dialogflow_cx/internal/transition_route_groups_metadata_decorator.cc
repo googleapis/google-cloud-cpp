@@ -44,53 +44,53 @@ TransitionRouteGroupsMetadata::TransitionRouteGroupsMetadata(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsResponse>
 TransitionRouteGroupsMetadata::ListTransitionRouteGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListTransitionRouteGroupsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListTransitionRouteGroups(context, request);
+  return child_->ListTransitionRouteGroups(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
 TransitionRouteGroupsMetadata::GetTransitionRouteGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetTransitionRouteGroup(context, request);
+  return child_->GetTransitionRouteGroup(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
 TransitionRouteGroupsMetadata::CreateTransitionRouteGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateTransitionRouteGroup(context, request);
+  return child_->CreateTransitionRouteGroup(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
 TransitionRouteGroupsMetadata::UpdateTransitionRouteGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("transition_route_group.name=",
                            internal::UrlEncode(
                                request.transition_route_group().name())));
-  return child_->UpdateTransitionRouteGroup(context, request);
+  return child_->UpdateTransitionRouteGroup(context, options, request);
 }
 
 Status TransitionRouteGroupsMetadata::DeleteTransitionRouteGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteTransitionRouteGroup(context, request);
+  return child_->DeleteTransitionRouteGroup(context, options, request);
 }
 
 void TransitionRouteGroupsMetadata::SetMetadata(

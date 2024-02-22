@@ -33,7 +33,7 @@ TagKeysStub::~TagKeysStub() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagKeysResponse>
 DefaultTagKeysStub::ListTagKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::ListTagKeysRequest const& request) {
   google::cloud::resourcemanager::v3::ListTagKeysResponse response;
   auto status = grpc_stub_->ListTagKeys(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultTagKeysStub::ListTagKeys(
 
 StatusOr<google::cloud::resourcemanager::v3::TagKey>
 DefaultTagKeysStub::GetTagKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::GetTagKeyRequest const& request) {
   google::cloud::resourcemanager::v3::TagKey response;
   auto status = grpc_stub_->GetTagKey(&context, request, &response);
@@ -57,7 +57,7 @@ DefaultTagKeysStub::GetTagKey(
 
 StatusOr<google::cloud::resourcemanager::v3::TagKey>
 DefaultTagKeysStub::GetNamespacedTagKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const&
         request) {
   google::cloud::resourcemanager::v3::TagKey response;
@@ -123,7 +123,7 @@ DefaultTagKeysStub::AsyncDeleteTagKey(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultTagKeysStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -134,7 +134,7 @@ StatusOr<google::iam::v1::Policy> DefaultTagKeysStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultTagKeysStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -146,7 +146,7 @@ StatusOr<google::iam::v1::Policy> DefaultTagKeysStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultTagKeysStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);

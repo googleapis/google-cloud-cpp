@@ -32,25 +32,25 @@ ServicesTracingStub::ServicesTracingStub(std::shared_ptr<ServicesStub> child)
 
 StatusOr<google::appengine::v1::ListServicesResponse>
 ServicesTracingStub::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListServicesRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.appengine.v1.Services", "ListServices");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListServices(context, request));
+                           child_->ListServices(context, options, request));
 }
 
 StatusOr<google::appengine::v1::Service> ServicesTracingStub::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetServiceRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.appengine.v1.Services", "GetService");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetService(context, request));
+                           child_->GetService(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

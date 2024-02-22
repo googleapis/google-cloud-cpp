@@ -39,16 +39,16 @@ class TraceServiceMetadata : public TraceServiceStub {
                        std::string api_client_header = "");
 
   StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse> ListTraces(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudtrace::v1::ListTracesRequest const& request)
       override;
 
   StatusOr<google::devtools::cloudtrace::v1::Trace> GetTrace(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudtrace::v1::GetTraceRequest const& request)
       override;
 
-  Status PatchTraces(grpc::ClientContext& context,
+  Status PatchTraces(grpc::ClientContext& context, Options const& options,
                      google::devtools::cloudtrace::v1::PatchTracesRequest const&
                          request) override;
 

@@ -47,13 +47,13 @@ class ConsumerProcurementServiceStub {
 
   virtual StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>
   GetOrder(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::commerce::consumer::procurement::v1::GetOrderRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::commerce::consumer::procurement::v1::ListOrdersResponse>
-  ListOrders(grpc::ClientContext& context,
+  ListOrders(grpc::ClientContext& context, Options const& options,
              google::cloud::commerce::consumer::procurement::v1::
                  ListOrdersRequest const& request) = 0;
 
@@ -86,13 +86,13 @@ class DefaultConsumerProcurementServiceStub
           PlaceOrderRequest const& request) override;
 
   StatusOr<google::cloud::commerce::consumer::procurement::v1::Order> GetOrder(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::commerce::consumer::procurement::v1::GetOrderRequest const&
           request) override;
 
   StatusOr<
       google::cloud::commerce::consumer::procurement::v1::ListOrdersResponse>
-  ListOrders(grpc::ClientContext& context,
+  ListOrders(grpc::ClientContext& context, Options const& options,
              google::cloud::commerce::consumer::procurement::v1::
                  ListOrdersRequest const& request) override;
 

@@ -32,7 +32,7 @@ KeyTrackingServiceStub::~KeyTrackingServiceStub() = default;
 
 StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
 DefaultKeyTrackingServiceStub::GetProtectedResourcesSummary(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::inventory::v1::
         GetProtectedResourcesSummaryRequest const& request) {
   google::cloud::kms::inventory::v1::ProtectedResourcesSummary response;
@@ -46,7 +46,7 @@ DefaultKeyTrackingServiceStub::GetProtectedResourcesSummary(
 
 StatusOr<google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse>
 DefaultKeyTrackingServiceStub::SearchProtectedResources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const&
         request) {
   google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse response;

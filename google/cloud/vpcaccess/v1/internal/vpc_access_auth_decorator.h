@@ -46,12 +46,12 @@ class VpcAccessServiceAuth : public VpcAccessServiceStub {
       override;
 
   StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vpcaccess::v1::GetConnectorRequest const& request)
       override;
 
   StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse> ListConnectors(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vpcaccess::v1::ListConnectorsRequest const& request)
       override;
 

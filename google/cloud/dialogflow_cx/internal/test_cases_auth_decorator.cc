@@ -33,47 +33,47 @@ TestCasesAuth::TestCasesAuth(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTestCasesResponse>
 TestCasesAuth::ListTestCases(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListTestCasesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTestCases(context, request);
+  return child_->ListTestCases(context, options, request);
 }
 
 Status TestCasesAuth::BatchDeleteTestCases(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->BatchDeleteTestCases(context, request);
+  return child_->BatchDeleteTestCases(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesAuth::GetTestCase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTestCase(context, request);
+  return child_->GetTestCase(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesAuth::CreateTestCase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateTestCase(context, request);
+  return child_->CreateTestCase(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesAuth::UpdateTestCase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateTestCase(context, request);
+  return child_->UpdateTestCase(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -117,12 +117,12 @@ TestCasesAuth::AsyncBatchRunTestCases(
 
 StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
 TestCasesAuth::CalculateCoverage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CalculateCoverage(context, request);
+  return child_->CalculateCoverage(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -165,22 +165,22 @@ TestCasesAuth::AsyncExportTestCases(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTestCaseResultsResponse>
 TestCasesAuth::ListTestCaseResults(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTestCaseResults(context, request);
+  return child_->ListTestCaseResults(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult>
 TestCasesAuth::GetTestCaseResult(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTestCaseResult(context, request);
+  return child_->GetTestCaseResult(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

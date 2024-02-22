@@ -33,59 +33,60 @@ TenantServiceTracingStub::TenantServiceTracingStub(
 
 StatusOr<google::cloud::talent::v4::Tenant>
 TenantServiceTracingStub::CreateTenant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::CreateTenantRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.TenantService",
                                      "CreateTenant");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateTenant(context, request));
+                           child_->CreateTenant(context, options, request));
 }
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceTracingStub::GetTenant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::GetTenantRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.TenantService",
                                      "GetTenant");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetTenant(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetTenant(context, options, request));
 }
 
 StatusOr<google::cloud::talent::v4::Tenant>
 TenantServiceTracingStub::UpdateTenant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::UpdateTenantRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.TenantService",
                                      "UpdateTenant");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateTenant(context, request));
+                           child_->UpdateTenant(context, options, request));
 }
 
 Status TenantServiceTracingStub::DeleteTenant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::DeleteTenantRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.TenantService",
                                      "DeleteTenant");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteTenant(context, request));
+                           child_->DeleteTenant(context, options, request));
 }
 
 StatusOr<google::cloud::talent::v4::ListTenantsResponse>
 TenantServiceTracingStub::ListTenants(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::ListTenantsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.TenantService",
                                      "ListTenants");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListTenants(context, request));
+                           child_->ListTenants(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

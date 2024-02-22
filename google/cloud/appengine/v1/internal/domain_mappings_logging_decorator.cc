@@ -37,26 +37,26 @@ DomainMappingsLogging::DomainMappingsLogging(
 
 StatusOr<google::appengine::v1::ListDomainMappingsResponse>
 DomainMappingsLogging::ListDomainMappings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListDomainMappingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::ListDomainMappingsRequest const& request) {
-        return child_->ListDomainMappings(context, request);
+        return child_->ListDomainMappings(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::appengine::v1::DomainMapping>
 DomainMappingsLogging::GetDomainMapping(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetDomainMappingRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::GetDomainMappingRequest const& request) {
-        return child_->GetDomainMapping(context, request);
+        return child_->GetDomainMapping(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

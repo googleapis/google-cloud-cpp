@@ -33,14 +33,14 @@ KeyDashboardServiceTracingStub::KeyDashboardServiceTracingStub(
 
 StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
 KeyDashboardServiceTracingStub::ListCryptoKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.kms.inventory.v1.KeyDashboardService", "ListCryptoKeys");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListCryptoKeys(context, request));
+                           child_->ListCryptoKeys(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -40,11 +40,11 @@ class DocumentsStub {
 
   virtual StatusOr<google::cloud::dialogflow::v2::ListDocumentsResponse>
   ListDocuments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListDocumentsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::Document> GetDocument(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetDocumentRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateDocument(
@@ -98,12 +98,12 @@ class DefaultDocumentsStub : public DocumentsStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::dialogflow::v2::ListDocumentsResponse> ListDocuments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListDocumentsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Document> GetDocument(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetDocumentRequest const& request)
       override;
 

@@ -33,14 +33,14 @@ ApplicationsTracingStub::ApplicationsTracingStub(
 
 StatusOr<google::appengine::v1::Application>
 ApplicationsTracingStub::GetApplication(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetApplicationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.appengine.v1.Applications",
                                      "GetApplication");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetApplication(context, request));
+                           child_->GetApplication(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

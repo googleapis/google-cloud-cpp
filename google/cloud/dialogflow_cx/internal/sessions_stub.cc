@@ -33,7 +33,7 @@ SessionsStub::~SessionsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
 DefaultSessionsStub::DetectIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
   google::cloud::dialogflow::cx::v3::DetectIntentResponse response;
   auto status = grpc_stub_->DetectIntent(&context, request, &response);
@@ -71,7 +71,7 @@ DefaultSessionsStub::AsyncStreamingDetectIntent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>
 DefaultSessionsStub::MatchIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request) {
   google::cloud::dialogflow::cx::v3::MatchIntentResponse response;
   auto status = grpc_stub_->MatchIntent(&context, request, &response);
@@ -83,7 +83,7 @@ DefaultSessionsStub::MatchIntent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
 DefaultSessionsStub::FulfillIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request) {
   google::cloud::dialogflow::cx::v3::FulfillIntentResponse response;
   auto status = grpc_stub_->FulfillIntent(&context, request, &response);
@@ -95,7 +95,7 @@ DefaultSessionsStub::FulfillIntent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
 DefaultSessionsStub::SubmitAnswerFeedback(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::AnswerFeedback response;

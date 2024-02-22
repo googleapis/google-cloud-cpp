@@ -44,20 +44,20 @@ CommentServiceMetadata::CommentServiceMetadata(
 
 StatusOr<google::cloud::support::v2::ListCommentsResponse>
 CommentServiceMetadata::ListComments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::ListCommentsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListComments(context, request);
+  return child_->ListComments(context, options, request);
 }
 
 StatusOr<google::cloud::support::v2::Comment>
 CommentServiceMetadata::CreateComment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::CreateCommentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateComment(context, request);
+  return child_->CreateComment(context, options, request);
 }
 
 void CommentServiceMetadata::SetMetadata(grpc::ClientContext& context,

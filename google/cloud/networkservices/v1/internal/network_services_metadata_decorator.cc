@@ -44,22 +44,22 @@ NetworkServicesMetadata::NetworkServicesMetadata(
 
 StatusOr<google::cloud::networkservices::v1::ListEndpointPoliciesResponse>
 NetworkServicesMetadata::ListEndpointPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListEndpointPoliciesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListEndpointPolicies(context, request);
+  return child_->ListEndpointPolicies(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::EndpointPolicy>
 NetworkServicesMetadata::GetEndpointPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetEndpointPolicyRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetEndpointPolicy(context, request);
+  return child_->GetEndpointPolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -102,20 +102,20 @@ NetworkServicesMetadata::AsyncDeleteEndpointPolicy(
 
 StatusOr<google::cloud::networkservices::v1::ListGatewaysResponse>
 NetworkServicesMetadata::ListGateways(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListGatewaysRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListGateways(context, request);
+  return child_->ListGateways(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::Gateway>
 NetworkServicesMetadata::GetGateway(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetGatewayRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetGateway(context, request);
+  return child_->GetGateway(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -151,20 +151,20 @@ NetworkServicesMetadata::AsyncDeleteGateway(
 
 StatusOr<google::cloud::networkservices::v1::ListGrpcRoutesResponse>
 NetworkServicesMetadata::ListGrpcRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListGrpcRoutesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListGrpcRoutes(context, request);
+  return child_->ListGrpcRoutes(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::GrpcRoute>
 NetworkServicesMetadata::GetGrpcRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetGrpcRouteRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetGrpcRoute(context, request);
+  return child_->GetGrpcRoute(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -200,20 +200,20 @@ NetworkServicesMetadata::AsyncDeleteGrpcRoute(
 
 StatusOr<google::cloud::networkservices::v1::ListHttpRoutesResponse>
 NetworkServicesMetadata::ListHttpRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListHttpRoutesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListHttpRoutes(context, request);
+  return child_->ListHttpRoutes(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::HttpRoute>
 NetworkServicesMetadata::GetHttpRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetHttpRouteRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetHttpRoute(context, request);
+  return child_->GetHttpRoute(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -249,20 +249,20 @@ NetworkServicesMetadata::AsyncDeleteHttpRoute(
 
 StatusOr<google::cloud::networkservices::v1::ListTcpRoutesResponse>
 NetworkServicesMetadata::ListTcpRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListTcpRoutesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListTcpRoutes(context, request);
+  return child_->ListTcpRoutes(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::TcpRoute>
 NetworkServicesMetadata::GetTcpRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetTcpRouteRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetTcpRoute(context, request);
+  return child_->GetTcpRoute(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -298,20 +298,20 @@ NetworkServicesMetadata::AsyncDeleteTcpRoute(
 
 StatusOr<google::cloud::networkservices::v1::ListTlsRoutesResponse>
 NetworkServicesMetadata::ListTlsRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListTlsRoutesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListTlsRoutes(context, request);
+  return child_->ListTlsRoutes(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::TlsRoute>
 NetworkServicesMetadata::GetTlsRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetTlsRouteRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetTlsRoute(context, request);
+  return child_->GetTlsRoute(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -347,22 +347,22 @@ NetworkServicesMetadata::AsyncDeleteTlsRoute(
 
 StatusOr<google::cloud::networkservices::v1::ListServiceBindingsResponse>
 NetworkServicesMetadata::ListServiceBindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListServiceBindingsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListServiceBindings(context, request);
+  return child_->ListServiceBindings(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::ServiceBinding>
 NetworkServicesMetadata::GetServiceBinding(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetServiceBindingRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetServiceBinding(context, request);
+  return child_->GetServiceBinding(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -391,20 +391,20 @@ NetworkServicesMetadata::AsyncDeleteServiceBinding(
 
 StatusOr<google::cloud::networkservices::v1::ListMeshesResponse>
 NetworkServicesMetadata::ListMeshes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::ListMeshesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListMeshes(context, request);
+  return child_->ListMeshes(context, options, request);
 }
 
 StatusOr<google::cloud::networkservices::v1::Mesh>
 NetworkServicesMetadata::GetMesh(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkservices::v1::GetMeshRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetMesh(context, request);
+  return child_->GetMesh(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

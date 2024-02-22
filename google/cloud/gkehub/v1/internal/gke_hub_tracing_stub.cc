@@ -32,49 +32,49 @@ GkeHubTracingStub::GkeHubTracingStub(std::shared_ptr<GkeHubStub> child)
 
 StatusOr<google::cloud::gkehub::v1::ListMembershipsResponse>
 GkeHubTracingStub::ListMemberships(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkehub::v1::ListMembershipsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
                                      "ListMemberships");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListMemberships(context, request));
+                           child_->ListMemberships(context, options, request));
 }
 
 StatusOr<google::cloud::gkehub::v1::ListFeaturesResponse>
 GkeHubTracingStub::ListFeatures(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkehub::v1::ListFeaturesRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "ListFeatures");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListFeatures(context, request));
+                           child_->ListFeatures(context, options, request));
 }
 
 StatusOr<google::cloud::gkehub::v1::Membership>
 GkeHubTracingStub::GetMembership(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkehub::v1::GetMembershipRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "GetMembership");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetMembership(context, request));
+                           child_->GetMembership(context, options, request));
 }
 
 StatusOr<google::cloud::gkehub::v1::Feature> GkeHubTracingStub::GetFeature(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkehub::v1::GetFeatureRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub", "GetFeature");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetFeature(context, request));
+                           child_->GetFeature(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -157,14 +157,15 @@ GkeHubTracingStub::AsyncUpdateFeature(
 
 StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
 GkeHubTracingStub::GenerateConnectManifest(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.gkehub.v1.GkeHub",
                                      "GenerateConnectManifest");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GenerateConnectManifest(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GenerateConnectManifest(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

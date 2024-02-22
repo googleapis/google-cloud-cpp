@@ -33,7 +33,7 @@ FleetRoutingStub::~FleetRoutingStub() = default;
 
 StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
 DefaultFleetRoutingStub::OptimizeTours(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::optimization::v1::OptimizeToursRequest const& request) {
   google::cloud::optimization::v1::OptimizeToursResponse response;
   auto status = grpc_stub_->OptimizeTours(&context, request, &response);

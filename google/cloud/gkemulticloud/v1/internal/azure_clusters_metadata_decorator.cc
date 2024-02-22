@@ -55,20 +55,20 @@ AzureClustersMetadata::AsyncCreateAzureClient(
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureClient>
 AzureClustersMetadata::GetAzureClient(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAzureClient(context, request);
+  return child_->GetAzureClient(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureClientsResponse>
 AzureClustersMetadata::ListAzureClients(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::ListAzureClientsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListAzureClients(context, request);
+  return child_->ListAzureClients(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -110,20 +110,20 @@ AzureClustersMetadata::AsyncUpdateAzureCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>
 AzureClustersMetadata::GetAzureCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAzureCluster(context, request);
+  return child_->GetAzureCluster(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureClustersResponse>
 AzureClustersMetadata::ListAzureClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::ListAzureClustersRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListAzureClusters(context, request);
+  return child_->ListAzureClusters(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -141,24 +141,24 @@ AzureClustersMetadata::AsyncDeleteAzureCluster(
 StatusOr<
     google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
 AzureClustersMetadata::GenerateAzureClusterAgentToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::
         GenerateAzureClusterAgentTokenRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("azure_cluster=",
                            internal::UrlEncode(request.azure_cluster())));
-  return child_->GenerateAzureClusterAgentToken(context, request);
+  return child_->GenerateAzureClusterAgentToken(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
 AzureClustersMetadata::GenerateAzureAccessToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("azure_cluster=",
                            internal::UrlEncode(request.azure_cluster())));
-  return child_->GenerateAzureAccessToken(context, request);
+  return child_->GenerateAzureAccessToken(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -189,21 +189,21 @@ AzureClustersMetadata::AsyncUpdateAzureNodePool(
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>
 AzureClustersMetadata::GetAzureNodePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAzureNodePool(context, request);
+  return child_->GetAzureNodePool(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureNodePoolsResponse>
 AzureClustersMetadata::ListAzureNodePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListAzureNodePools(context, request);
+  return child_->ListAzureNodePools(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -220,34 +220,34 @@ AzureClustersMetadata::AsyncDeleteAzureNodePool(
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
 AzureClustersMetadata::GetAzureOpenIdConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("azure_cluster=",
                            internal::UrlEncode(request.azure_cluster())));
-  return child_->GetAzureOpenIdConfig(context, request);
+  return child_->GetAzureOpenIdConfig(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
 AzureClustersMetadata::GetAzureJsonWebKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("azure_cluster=",
                            internal::UrlEncode(request.azure_cluster())));
-  return child_->GetAzureJsonWebKeys(context, request);
+  return child_->GetAzureJsonWebKeys(context, options, request);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
 AzureClustersMetadata::GetAzureServerConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAzureServerConfig(context, request);
+  return child_->GetAzureServerConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

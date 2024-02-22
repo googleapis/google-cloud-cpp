@@ -37,14 +37,14 @@ ApplicationsLogging::ApplicationsLogging(
 
 StatusOr<google::appengine::v1::Application>
 ApplicationsLogging::GetApplication(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetApplicationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::appengine::v1::GetApplicationRequest const& request) {
-        return child_->GetApplication(context, request);
+        return child_->GetApplication(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

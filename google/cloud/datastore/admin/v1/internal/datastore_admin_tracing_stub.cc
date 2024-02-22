@@ -85,25 +85,26 @@ DatastoreAdminTracingStub::AsyncDeleteIndex(
 
 StatusOr<google::datastore::admin::v1::Index>
 DatastoreAdminTracingStub::GetIndex(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::admin::v1::GetIndexRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.datastore.admin.v1.DatastoreAdmin",
                                      "GetIndex");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetIndex(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetIndex(context, options, request));
 }
 
 StatusOr<google::datastore::admin::v1::ListIndexesResponse>
 DatastoreAdminTracingStub::ListIndexes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::datastore::admin::v1::ListIndexesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.datastore.admin.v1.DatastoreAdmin",
                                      "ListIndexes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListIndexes(context, request));
+                           child_->ListIndexes(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

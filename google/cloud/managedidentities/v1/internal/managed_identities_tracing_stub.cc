@@ -48,7 +48,7 @@ ManagedIdentitiesServiceTracingStub::AsyncCreateMicrosoftAdDomain(
 
 StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
 ManagedIdentitiesServiceTracingStub::ResetAdminPassword(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -56,13 +56,13 @@ ManagedIdentitiesServiceTracingStub::ResetAdminPassword(
       "ResetAdminPassword");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ResetAdminPassword(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ResetAdminPassword(context, options, request));
 }
 
 StatusOr<google::cloud::managedidentities::v1::ListDomainsResponse>
 ManagedIdentitiesServiceTracingStub::ListDomains(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::managedidentities::v1::ListDomainsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.managedidentities.v1.ManagedIdentitiesService",
@@ -70,19 +70,20 @@ ManagedIdentitiesServiceTracingStub::ListDomains(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListDomains(context, request));
+                           child_->ListDomains(context, options, request));
 }
 
 StatusOr<google::cloud::managedidentities::v1::Domain>
 ManagedIdentitiesServiceTracingStub::GetDomain(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::managedidentities::v1::GetDomainRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.managedidentities.v1.ManagedIdentitiesService",
       "GetDomain");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetDomain(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetDomain(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

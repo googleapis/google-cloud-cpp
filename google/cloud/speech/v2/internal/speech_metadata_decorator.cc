@@ -55,19 +55,19 @@ SpeechMetadata::AsyncCreateRecognizer(
 
 StatusOr<google::cloud::speech::v2::ListRecognizersResponse>
 SpeechMetadata::ListRecognizers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::ListRecognizersRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListRecognizers(context, request);
+  return child_->ListRecognizers(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v2::Recognizer> SpeechMetadata::GetRecognizer(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::GetRecognizerRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetRecognizer(context, request);
+  return child_->GetRecognizer(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -106,12 +106,12 @@ SpeechMetadata::AsyncUndeleteRecognizer(
 
 StatusOr<google::cloud::speech::v2::RecognizeResponse>
 SpeechMetadata::Recognize(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::RecognizeRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("recognizer=", internal::UrlEncode(request.recognizer())));
-  return child_->Recognize(context, request);
+  return child_->Recognize(context, options, request);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -136,20 +136,20 @@ SpeechMetadata::AsyncBatchRecognize(
 }
 
 StatusOr<google::cloud::speech::v2::Config> SpeechMetadata::GetConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::GetConfigRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetConfig(context, request);
+  return child_->GetConfig(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v2::Config> SpeechMetadata::UpdateConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::UpdateConfigRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("config.name=",
                            internal::UrlEncode(request.config().name())));
-  return child_->UpdateConfig(context, request);
+  return child_->UpdateConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -165,19 +165,19 @@ SpeechMetadata::AsyncCreateCustomClass(
 
 StatusOr<google::cloud::speech::v2::ListCustomClassesResponse>
 SpeechMetadata::ListCustomClasses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::ListCustomClassesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListCustomClasses(context, request);
+  return child_->ListCustomClasses(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v2::CustomClass> SpeechMetadata::GetCustomClass(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::GetCustomClassRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetCustomClass(context, request);
+  return child_->GetCustomClass(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -226,19 +226,19 @@ SpeechMetadata::AsyncCreatePhraseSet(
 
 StatusOr<google::cloud::speech::v2::ListPhraseSetsResponse>
 SpeechMetadata::ListPhraseSets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::ListPhraseSetsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListPhraseSets(context, request);
+  return child_->ListPhraseSets(context, options, request);
 }
 
 StatusOr<google::cloud::speech::v2::PhraseSet> SpeechMetadata::GetPhraseSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v2::GetPhraseSetRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetPhraseSet(context, request);
+  return child_->GetPhraseSet(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

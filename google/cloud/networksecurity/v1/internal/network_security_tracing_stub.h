@@ -41,13 +41,13 @@ class NetworkSecurityTracingStub : public NetworkSecurityStub {
   StatusOr<
       google::cloud::networksecurity::v1::ListAuthorizationPoliciesResponse>
   ListAuthorizationPolicies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networksecurity::v1::
           ListAuthorizationPoliciesRequest const& request) override;
 
   StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>
   GetAuthorizationPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networksecurity::v1::GetAuthorizationPolicyRequest const&
           request) override;
 
@@ -74,13 +74,13 @@ class NetworkSecurityTracingStub : public NetworkSecurityStub {
 
   StatusOr<google::cloud::networksecurity::v1::ListServerTlsPoliciesResponse>
   ListServerTlsPolicies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest const&
           request) override;
 
   StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>
   GetServerTlsPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networksecurity::v1::GetServerTlsPolicyRequest const&
           request) override;
 
@@ -104,13 +104,13 @@ class NetworkSecurityTracingStub : public NetworkSecurityStub {
 
   StatusOr<google::cloud::networksecurity::v1::ListClientTlsPoliciesResponse>
   ListClientTlsPolicies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networksecurity::v1::ListClientTlsPoliciesRequest const&
           request) override;
 
   StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>
   GetClientTlsPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networksecurity::v1::GetClientTlsPolicyRequest const&
           request) override;
 

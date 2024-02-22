@@ -40,11 +40,11 @@ class UserEventServiceAuth : public UserEventServiceStub {
       std::shared_ptr<UserEventServiceStub> child);
 
   StatusOr<google::cloud::retail::v2::UserEvent> WriteUserEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::WriteUserEventRequest const& request) override;
 
   StatusOr<google::api::HttpBody> CollectUserEvent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::retail::v2::CollectUserEventRequest const& request)
       override;
 

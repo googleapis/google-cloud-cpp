@@ -71,10 +71,12 @@ EdgeNetworkConnectionImpl::InitializeZone(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->InitializeZone(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::InitializeZoneRequest const&
-                 request) { return stub_->InitializeZone(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->InitializeZone(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::edgenetwork::v1::Zone>
@@ -86,18 +88,21 @@ EdgeNetworkConnectionImpl::ListZones(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::edgenetwork::v1::Zone>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::edgenetwork::v1::ListZonesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::edgenetwork::v1::ListZonesRequest const&
-                       request) { return stub->ListZones(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListZones(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::edgenetwork::v1::ListZonesResponse r) {
         std::vector<google::cloud::edgenetwork::v1::Zone> result(
@@ -115,11 +120,11 @@ EdgeNetworkConnectionImpl::GetZone(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetZone(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::GetZoneRequest const& request) {
-        return stub_->GetZone(context, request);
+        return stub_->GetZone(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::edgenetwork::v1::Network>
@@ -131,20 +136,21 @@ EdgeNetworkConnectionImpl::ListNetworks(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::edgenetwork::v1::Network>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::edgenetwork::v1::ListNetworksRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::edgenetwork::v1::ListNetworksRequest const&
                        request) {
-              return stub->ListNetworks(context, request);
+              return stub->ListNetworks(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::edgenetwork::v1::ListNetworksResponse r) {
         std::vector<google::cloud::edgenetwork::v1::Network> result(
@@ -162,11 +168,11 @@ EdgeNetworkConnectionImpl::GetNetwork(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNetwork(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::GetNetworkRequest const& request) {
-        return stub_->GetNetwork(context, request);
+        return stub_->GetNetwork(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse>
@@ -176,10 +182,12 @@ EdgeNetworkConnectionImpl::DiagnoseNetwork(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DiagnoseNetwork(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const&
-                 request) { return stub_->DiagnoseNetwork(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DiagnoseNetwork(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Network>>
@@ -265,18 +273,21 @@ EdgeNetworkConnectionImpl::ListSubnets(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::edgenetwork::v1::Subnet>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::edgenetwork::v1::ListSubnetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::edgenetwork::v1::ListSubnetsRequest const&
-                       request) { return stub->ListSubnets(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListSubnets(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::edgenetwork::v1::ListSubnetsResponse r) {
         std::vector<google::cloud::edgenetwork::v1::Subnet> result(
@@ -294,11 +305,11 @@ EdgeNetworkConnectionImpl::GetSubnet(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSubnet(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::GetSubnetRequest const& request) {
-        return stub_->GetSubnet(context, request);
+        return stub_->GetSubnet(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
@@ -421,21 +432,22 @@ EdgeNetworkConnectionImpl::ListInterconnects(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::edgenetwork::v1::Interconnect>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::edgenetwork::v1::ListInterconnectsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::edgenetwork::v1::ListInterconnectsRequest const&
                     request) {
-              return stub->ListInterconnects(context, request);
+              return stub->ListInterconnects(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::edgenetwork::v1::ListInterconnectsResponse r) {
         std::vector<google::cloud::edgenetwork::v1::Interconnect> result(
@@ -453,10 +465,12 @@ EdgeNetworkConnectionImpl::GetInterconnect(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetInterconnect(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::GetInterconnectRequest const&
-                 request) { return stub_->GetInterconnect(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetInterconnect(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse>
@@ -467,12 +481,12 @@ EdgeNetworkConnectionImpl::DiagnoseInterconnect(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DiagnoseInterconnect(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const&
                  request) {
-        return stub_->DiagnoseInterconnect(context, request);
+        return stub_->DiagnoseInterconnect(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::edgenetwork::v1::InterconnectAttachment>
@@ -486,21 +500,23 @@ EdgeNetworkConnectionImpl::ListInterconnectAttachments(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::edgenetwork::v1::InterconnectAttachment>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::edgenetwork::v1::
               ListInterconnectAttachmentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::edgenetwork::v1::
                        ListInterconnectAttachmentsRequest const& request) {
-              return stub->ListInterconnectAttachments(context, request);
+              return stub->ListInterconnectAttachments(context, options,
+                                                       request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::edgenetwork::v1::ListInterconnectAttachmentsResponse
              r) {
@@ -520,12 +536,12 @@ EdgeNetworkConnectionImpl::GetInterconnectAttachment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetInterconnectAttachment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::
                  GetInterconnectAttachmentRequest const& request) {
-        return stub_->GetInterconnectAttachment(context, request);
+        return stub_->GetInterconnectAttachment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
@@ -615,18 +631,21 @@ EdgeNetworkConnectionImpl::ListRouters(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::edgenetwork::v1::Router>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::edgenetwork::v1::ListRoutersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::edgenetwork::v1::ListRoutersRequest const&
-                       request) { return stub->ListRouters(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListRouters(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::edgenetwork::v1::ListRoutersResponse r) {
         std::vector<google::cloud::edgenetwork::v1::Router> result(
@@ -644,11 +663,11 @@ EdgeNetworkConnectionImpl::GetRouter(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRouter(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::GetRouterRequest const& request) {
-        return stub_->GetRouter(context, request);
+        return stub_->GetRouter(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse>
@@ -658,10 +677,12 @@ EdgeNetworkConnectionImpl::DiagnoseRouter(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DiagnoseRouter(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::DiagnoseRouterRequest const&
-                 request) { return stub_->DiagnoseRouter(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DiagnoseRouter(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>

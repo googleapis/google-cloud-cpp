@@ -55,20 +55,20 @@ RepositoryManagerMetadata::AsyncCreateConnection(
 
 StatusOr<google::devtools::cloudbuild::v2::Connection>
 RepositoryManagerMetadata::GetConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::GetConnectionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetConnection(context, request);
+  return child_->GetConnection(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::ListConnectionsResponse>
 RepositoryManagerMetadata::ListConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::ListConnectionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListConnections(context, request);
+  return child_->ListConnections(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -119,20 +119,20 @@ RepositoryManagerMetadata::AsyncBatchCreateRepositories(
 
 StatusOr<google::devtools::cloudbuild::v2::Repository>
 RepositoryManagerMetadata::GetRepository(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::GetRepositoryRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetRepository(context, request);
+  return child_->GetRepository(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::ListRepositoriesResponse>
 RepositoryManagerMetadata::ListRepositories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::ListRepositoriesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListRepositories(context, request);
+  return child_->ListRepositories(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -148,44 +148,44 @@ RepositoryManagerMetadata::AsyncDeleteRepository(
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
 RepositoryManagerMetadata::FetchReadWriteToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("repository=", internal::UrlEncode(request.repository())));
-  return child_->FetchReadWriteToken(context, request);
+  return child_->FetchReadWriteToken(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
 RepositoryManagerMetadata::FetchReadToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::FetchReadTokenRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("repository=", internal::UrlEncode(request.repository())));
-  return child_->FetchReadToken(context, request);
+  return child_->FetchReadToken(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse>
 RepositoryManagerMetadata::FetchLinkableRepositories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("connection=", internal::UrlEncode(request.connection())));
-  return child_->FetchLinkableRepositories(context, request);
+  return child_->FetchLinkableRepositories(context, options, request);
 }
 
 StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
 RepositoryManagerMetadata::FetchGitRefs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("repository=", internal::UrlEncode(request.repository())));
-  return child_->FetchGitRefs(context, request);
+  return child_->FetchGitRefs(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -42,13 +42,13 @@ class ReachabilityServiceMetadata : public ReachabilityServiceStub {
 
   StatusOr<google::cloud::networkmanagement::v1::ListConnectivityTestsResponse>
   ListConnectivityTests(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkmanagement::v1::ListConnectivityTestsRequest const&
           request) override;
 
   StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
   GetConnectivityTest(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
           request) override;
 

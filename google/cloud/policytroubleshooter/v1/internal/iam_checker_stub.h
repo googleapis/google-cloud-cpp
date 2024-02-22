@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_V1_INTERNAL_IAM_CHECKER_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_V1_INTERNAL_IAM_CHECKER_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/policytroubleshooter/v1/checker.grpc.pb.h>
@@ -36,7 +37,7 @@ class IamCheckerStub {
 
   virtual StatusOr<
       google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
-  TroubleshootIamPolicy(grpc::ClientContext& context,
+  TroubleshootIamPolicy(grpc::ClientContext& context, Options const& options,
                         google::cloud::policytroubleshooter::v1::
                             TroubleshootIamPolicyRequest const& request) = 0;
 };
@@ -52,7 +53,7 @@ class DefaultIamCheckerStub : public IamCheckerStub {
   StatusOr<
       google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
   TroubleshootIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::policytroubleshooter::v1::
           TroubleshootIamPolicyRequest const& request) override;
 

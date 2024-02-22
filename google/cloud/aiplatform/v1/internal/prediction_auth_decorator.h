@@ -39,11 +39,11 @@ class PredictionServiceAuth : public PredictionServiceStub {
       std::shared_ptr<PredictionServiceStub> child);
 
   StatusOr<google::cloud::aiplatform::v1::PredictResponse> Predict(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::PredictRequest const& request) override;
 
   StatusOr<google::api::HttpBody> RawPredict(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::RawPredictRequest const& request) override;
 
   std::unique_ptr<
@@ -54,12 +54,12 @@ class PredictionServiceAuth : public PredictionServiceStub {
                        request) override;
 
   StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse> DirectPredict(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::DirectPredictRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
-  DirectRawPredict(grpc::ClientContext& context,
+  DirectRawPredict(grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::DirectRawPredictRequest const&
                        request) override;
 
@@ -98,11 +98,11 @@ class PredictionServiceAuth : public PredictionServiceStub {
       std::shared_ptr<grpc::ClientContext> context) override;
 
   StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ExplainRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
-  GenerateContent(grpc::ClientContext& context,
+  GenerateContent(grpc::ClientContext& context, Options const& options,
                   google::cloud::aiplatform::v1::GenerateContentRequest const&
                       request) override;
 

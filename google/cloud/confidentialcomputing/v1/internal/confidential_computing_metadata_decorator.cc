@@ -44,23 +44,23 @@ ConfidentialComputingMetadata::ConfidentialComputingMetadata(
 
 StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
 ConfidentialComputingMetadata::CreateChallenge(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateChallenge(context, request);
+  return child_->CreateChallenge(context, options, request);
 }
 
 StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
 ConfidentialComputingMetadata::VerifyAttestation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("challenge=", internal::UrlEncode(request.challenge())));
-  return child_->VerifyAttestation(context, request);
+  return child_->VerifyAttestation(context, options, request);
 }
 
 void ConfidentialComputingMetadata::SetMetadata(

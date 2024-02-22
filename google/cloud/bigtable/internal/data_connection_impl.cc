@@ -110,14 +110,14 @@ Status DataConnectionImpl::Apply(std::string const& table_name,
       retry_policy(*current), backoff_policy(*current),
       is_idempotent ? Idempotency::kIdempotent : Idempotency::kNonIdempotent,
       [this, &retry_context](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::bigtable::v2::MutateRowRequest const& request) {
         retry_context.PreCall(context);
-        auto s = stub_->MutateRow(context, request);
+        auto s = stub_->MutateRow(context, options, request);
         retry_context.PostCall(context);
         return s;
       },
-      request, __func__);
+      *current, request, __func__);
   if (!sor) return std::move(sor).status();
   return Status{};
 }
@@ -253,14 +253,14 @@ StatusOr<bigtable::MutationBranch> DataConnectionImpl::CheckAndMutateRow(
   auto sor = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current), idempotency,
       [this, &retry_context](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::bigtable::v2::CheckAndMutateRowRequest const& request) {
         retry_context.PreCall(context);
-        auto s = stub_->CheckAndMutateRow(context, request);
+        auto s = stub_->CheckAndMutateRow(context, options, request);
         retry_context.PostCall(context);
         return s;
       },
-      request, __func__);
+      *current, request, __func__);
   if (!sor) return std::move(sor).status();
   auto response = *std::move(sor);
   return response.predicate_matched()
@@ -387,11 +387,11 @@ StatusOr<bigtable::Row> DataConnectionImpl::ReadModifyWriteRow(
   auto sor = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       Idempotency::kNonIdempotent,
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
-        return stub_->ReadModifyWriteRow(context, request);
+        return stub_->ReadModifyWriteRow(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
   if (!sor) return std::move(sor).status();
   return TransformReadModifyWriteRowResponse(*std::move(sor));
 }

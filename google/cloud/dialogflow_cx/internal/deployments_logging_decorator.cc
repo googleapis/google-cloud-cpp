@@ -37,24 +37,28 @@ DeploymentsLogging::DeploymentsLogging(std::shared_ptr<DeploymentsStub> child,
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListDeploymentsResponse>
 DeploymentsLogging::ListDeployments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListDeploymentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::ListDeploymentsRequest const&
-                 request) { return child_->ListDeployments(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListDeployments(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Deployment>
 DeploymentsLogging::GetDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::GetDeploymentRequest const&
-                 request) { return child_->GetDeployment(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetDeployment(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

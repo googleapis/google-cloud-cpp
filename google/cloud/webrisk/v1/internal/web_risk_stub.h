@@ -40,21 +40,21 @@ class WebRiskServiceStub {
 
   virtual StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
   ComputeThreatListDiff(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::webrisk::v1::ComputeThreatListDiffRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::webrisk::v1::SearchUrisRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
   SearchHashes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::webrisk::v1::SearchHashesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::webrisk::v1::CreateSubmissionRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncSubmitUri(
@@ -84,20 +84,20 @@ class DefaultWebRiskServiceStub : public WebRiskServiceStub {
 
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
   ComputeThreatListDiff(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request)
       override;
 
   StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::webrisk::v1::SearchUrisRequest const& request) override;
 
   StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> SearchHashes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::webrisk::v1::SearchHashesRequest const& request) override;
 
   StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::webrisk::v1::CreateSubmissionRequest const& request)
       override;
 

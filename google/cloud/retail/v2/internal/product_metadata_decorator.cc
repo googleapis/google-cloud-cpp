@@ -44,46 +44,46 @@ ProductServiceMetadata::ProductServiceMetadata(
 
 StatusOr<google::cloud::retail::v2::Product>
 ProductServiceMetadata::CreateProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::CreateProductRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateProduct(context, request);
+  return child_->CreateProduct(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::Product> ProductServiceMetadata::GetProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::GetProductRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetProduct(context, request);
+  return child_->GetProduct(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ListProductsResponse>
 ProductServiceMetadata::ListProducts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::ListProductsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListProducts(context, request);
+  return child_->ListProducts(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::Product>
 ProductServiceMetadata::UpdateProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::UpdateProductRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("product.name=",
                            internal::UrlEncode(request.product().name())));
-  return child_->UpdateProduct(context, request);
+  return child_->UpdateProduct(context, options, request);
 }
 
 Status ProductServiceMetadata::DeleteProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::DeleteProductRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteProduct(context, request);
+  return child_->DeleteProduct(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

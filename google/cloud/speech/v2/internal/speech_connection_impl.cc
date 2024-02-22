@@ -108,20 +108,21 @@ SpeechConnectionImpl::ListRecognizers(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::speech::v2::Recognizer>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<speech_v2::SpeechRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::speech::v2::ListRecognizersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::speech::v2::ListRecognizersRequest const&
                        request) {
-              return stub->ListRecognizers(context, request);
+              return stub->ListRecognizers(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::speech::v2::ListRecognizersResponse r) {
         std::vector<google::cloud::speech::v2::Recognizer> result(
@@ -139,11 +140,11 @@ SpeechConnectionImpl::GetRecognizer(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRecognizer(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v2::GetRecognizerRequest const& request) {
-        return stub_->GetRecognizer(context, request);
+        return stub_->GetRecognizer(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
@@ -264,11 +265,11 @@ SpeechConnectionImpl::Recognize(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Recognize(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v2::RecognizeRequest const& request) {
-        return stub_->Recognize(context, request);
+        return stub_->Recognize(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
@@ -314,11 +315,11 @@ StatusOr<google::cloud::speech::v2::Config> SpeechConnectionImpl::GetConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v2::GetConfigRequest const& request) {
-        return stub_->GetConfig(context, request);
+        return stub_->GetConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::speech::v2::Config> SpeechConnectionImpl::UpdateConfig(
@@ -327,11 +328,11 @@ StatusOr<google::cloud::speech::v2::Config> SpeechConnectionImpl::UpdateConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v2::UpdateConfigRequest const& request) {
-        return stub_->UpdateConfig(context, request);
+        return stub_->UpdateConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
@@ -380,20 +381,21 @@ SpeechConnectionImpl::ListCustomClasses(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::speech::v2::CustomClass>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<speech_v2::SpeechRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::speech::v2::ListCustomClassesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::speech::v2::ListCustomClassesRequest const&
                        request) {
-              return stub->ListCustomClasses(context, request);
+              return stub->ListCustomClasses(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::speech::v2::ListCustomClassesResponse r) {
         std::vector<google::cloud::speech::v2::CustomClass> result(
@@ -411,11 +413,11 @@ SpeechConnectionImpl::GetCustomClass(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCustomClass(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v2::GetCustomClassRequest const& request) {
-        return stub_->GetCustomClass(context, request);
+        return stub_->GetCustomClass(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
@@ -576,20 +578,21 @@ SpeechConnectionImpl::ListPhraseSets(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::speech::v2::PhraseSet>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<speech_v2::SpeechRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::speech::v2::ListPhraseSetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::speech::v2::ListPhraseSetsRequest const&
                        request) {
-              return stub->ListPhraseSets(context, request);
+              return stub->ListPhraseSets(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::speech::v2::ListPhraseSetsResponse r) {
         std::vector<google::cloud::speech::v2::PhraseSet> result(
@@ -607,11 +610,11 @@ SpeechConnectionImpl::GetPhraseSet(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPhraseSet(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::speech::v2::GetPhraseSetRequest const& request) {
-        return stub_->GetPhraseSet(context, request);
+        return stub_->GetPhraseSet(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>

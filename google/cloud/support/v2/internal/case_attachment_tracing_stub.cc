@@ -33,14 +33,14 @@ CaseAttachmentServiceTracingStub::CaseAttachmentServiceTracingStub(
 
 StatusOr<google::cloud::support::v2::ListAttachmentsResponse>
 CaseAttachmentServiceTracingStub::ListAttachments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::ListAttachmentsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.support.v2.CaseAttachmentService", "ListAttachments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListAttachments(context, request));
+                           child_->ListAttachments(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

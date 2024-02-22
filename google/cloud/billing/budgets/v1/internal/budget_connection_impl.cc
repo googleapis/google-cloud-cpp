@@ -68,10 +68,12 @@ BudgetServiceConnectionImpl::CreateBudget(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateBudget(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::billing::budgets::v1::CreateBudgetRequest const&
-                 request) { return stub_->CreateBudget(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreateBudget(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
@@ -81,10 +83,12 @@ BudgetServiceConnectionImpl::UpdateBudget(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateBudget(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::billing::budgets::v1::UpdateBudgetRequest const&
-                 request) { return stub_->UpdateBudget(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->UpdateBudget(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
@@ -94,10 +98,12 @@ BudgetServiceConnectionImpl::GetBudget(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetBudget(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::billing::budgets::v1::GetBudgetRequest const&
-                 request) { return stub_->GetBudget(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetBudget(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::billing::budgets::v1::Budget>
@@ -109,19 +115,22 @@ BudgetServiceConnectionImpl::ListBudgets(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::billing::budgets::v1::Budget>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<billing_budgets_v1::BudgetServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::billing::budgets::v1::ListBudgetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::billing::budgets::v1::ListBudgetsRequest const&
-                    request) { return stub->ListBudgets(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListBudgets(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::billing::budgets::v1::ListBudgetsResponse r) {
         std::vector<google::cloud::billing::budgets::v1::Budget> result(
@@ -138,10 +147,12 @@ Status BudgetServiceConnectionImpl::DeleteBudget(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteBudget(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::billing::budgets::v1::DeleteBudgetRequest const&
-                 request) { return stub_->DeleteBudget(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DeleteBudget(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

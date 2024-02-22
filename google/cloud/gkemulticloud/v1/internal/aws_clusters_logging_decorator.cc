@@ -71,24 +71,28 @@ AwsClustersLogging::AsyncUpdateAwsCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>
 AwsClustersLogging::GetAwsCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::GetAwsClusterRequest const&
-                 request) { return child_->GetAwsCluster(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetAwsCluster(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAwsClustersResponse>
 AwsClustersLogging::ListAwsClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::ListAwsClustersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::ListAwsClustersRequest const&
-                 request) { return child_->ListAwsClusters(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListAwsClusters(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -110,31 +114,31 @@ AwsClustersLogging::AsyncDeleteAwsCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
 AwsClustersLogging::GenerateAwsClusterAgentToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::
                  GenerateAwsClusterAgentTokenRequest const& request) {
-        return child_->GenerateAwsClusterAgentToken(context, request);
+        return child_->GenerateAwsClusterAgentToken(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
 AwsClustersLogging::GenerateAwsAccessToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
               request) {
-        return child_->GenerateAwsAccessToken(context, request);
+        return child_->GenerateAwsAccessToken(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -191,26 +195,28 @@ AwsClustersLogging::AsyncRollbackAwsNodePoolUpdate(
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
 AwsClustersLogging::GetAwsNodePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const&
-                 request) { return child_->GetAwsNodePool(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetAwsNodePool(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAwsNodePoolsResponse>
 AwsClustersLogging::ListAwsNodePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest const&
                  request) {
-        return child_->ListAwsNodePools(context, request);
+        return child_->ListAwsNodePools(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -232,43 +238,43 @@ AwsClustersLogging::AsyncDeleteAwsNodePool(
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
 AwsClustersLogging::GetAwsOpenIdConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
                  request) {
-        return child_->GetAwsOpenIdConfig(context, request);
+        return child_->GetAwsOpenIdConfig(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys>
 AwsClustersLogging::GetAwsJsonWebKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const&
                  request) {
-        return child_->GetAwsJsonWebKeys(context, request);
+        return child_->GetAwsJsonWebKeys(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>
 AwsClustersLogging::GetAwsServerConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&
                  request) {
-        return child_->GetAwsServerConfig(context, request);
+        return child_->GetAwsServerConfig(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

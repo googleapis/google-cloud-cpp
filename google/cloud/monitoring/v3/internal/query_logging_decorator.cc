@@ -37,14 +37,14 @@ QueryServiceLogging::QueryServiceLogging(
 
 StatusOr<google::monitoring::v3::QueryTimeSeriesResponse>
 QueryServiceLogging::QueryTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::QueryTimeSeriesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::QueryTimeSeriesRequest const& request) {
-        return child_->QueryTimeSeries(context, request);
+        return child_->QueryTimeSeries(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

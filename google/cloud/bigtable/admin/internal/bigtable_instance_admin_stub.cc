@@ -50,7 +50,7 @@ DefaultBigtableInstanceAdminStub::AsyncCreateInstance(
 
 StatusOr<google::bigtable::admin::v2::Instance>
 DefaultBigtableInstanceAdminStub::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::GetInstanceRequest const& request) {
   google::bigtable::admin::v2::Instance response;
   auto status = grpc_stub_->GetInstance(&context, request, &response);
@@ -62,7 +62,7 @@ DefaultBigtableInstanceAdminStub::GetInstance(
 
 StatusOr<google::bigtable::admin::v2::ListInstancesResponse>
 DefaultBigtableInstanceAdminStub::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::ListInstancesRequest const& request) {
   google::bigtable::admin::v2::ListInstancesResponse response;
   auto status = grpc_stub_->ListInstances(&context, request, &response);
@@ -74,7 +74,7 @@ DefaultBigtableInstanceAdminStub::ListInstances(
 
 StatusOr<google::bigtable::admin::v2::Instance>
 DefaultBigtableInstanceAdminStub::UpdateInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::Instance const& request) {
   google::bigtable::admin::v2::Instance response;
   auto status = grpc_stub_->UpdateInstance(&context, request, &response);
@@ -103,7 +103,7 @@ DefaultBigtableInstanceAdminStub::AsyncPartialUpdateInstance(
 }
 
 Status DefaultBigtableInstanceAdminStub::DeleteInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::DeleteInstanceRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteInstance(&context, request, &response);
@@ -132,7 +132,7 @@ DefaultBigtableInstanceAdminStub::AsyncCreateCluster(
 
 StatusOr<google::bigtable::admin::v2::Cluster>
 DefaultBigtableInstanceAdminStub::GetCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::GetClusterRequest const& request) {
   google::bigtable::admin::v2::Cluster response;
   auto status = grpc_stub_->GetCluster(&context, request, &response);
@@ -144,7 +144,7 @@ DefaultBigtableInstanceAdminStub::GetCluster(
 
 StatusOr<google::bigtable::admin::v2::ListClustersResponse>
 DefaultBigtableInstanceAdminStub::ListClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::ListClustersRequest const& request) {
   google::bigtable::admin::v2::ListClustersResponse response;
   auto status = grpc_stub_->ListClusters(&context, request, &response);
@@ -189,7 +189,7 @@ DefaultBigtableInstanceAdminStub::AsyncPartialUpdateCluster(
 }
 
 Status DefaultBigtableInstanceAdminStub::DeleteCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::DeleteClusterRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteCluster(&context, request, &response);
@@ -201,7 +201,7 @@ Status DefaultBigtableInstanceAdminStub::DeleteCluster(
 
 StatusOr<google::bigtable::admin::v2::AppProfile>
 DefaultBigtableInstanceAdminStub::CreateAppProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::CreateAppProfileRequest const& request) {
   google::bigtable::admin::v2::AppProfile response;
   auto status = grpc_stub_->CreateAppProfile(&context, request, &response);
@@ -213,7 +213,7 @@ DefaultBigtableInstanceAdminStub::CreateAppProfile(
 
 StatusOr<google::bigtable::admin::v2::AppProfile>
 DefaultBigtableInstanceAdminStub::GetAppProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::GetAppProfileRequest const& request) {
   google::bigtable::admin::v2::AppProfile response;
   auto status = grpc_stub_->GetAppProfile(&context, request, &response);
@@ -225,7 +225,7 @@ DefaultBigtableInstanceAdminStub::GetAppProfile(
 
 StatusOr<google::bigtable::admin::v2::ListAppProfilesResponse>
 DefaultBigtableInstanceAdminStub::ListAppProfiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::ListAppProfilesRequest const& request) {
   google::bigtable::admin::v2::ListAppProfilesResponse response;
   auto status = grpc_stub_->ListAppProfiles(&context, request, &response);
@@ -254,7 +254,7 @@ DefaultBigtableInstanceAdminStub::AsyncUpdateAppProfile(
 }
 
 Status DefaultBigtableInstanceAdminStub::DeleteAppProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::DeleteAppProfileRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteAppProfile(&context, request, &response);
@@ -266,7 +266,7 @@ Status DefaultBigtableInstanceAdminStub::DeleteAppProfile(
 
 StatusOr<google::iam::v1::Policy>
 DefaultBigtableInstanceAdminStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -278,7 +278,7 @@ DefaultBigtableInstanceAdminStub::GetIamPolicy(
 
 StatusOr<google::iam::v1::Policy>
 DefaultBigtableInstanceAdminStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -290,7 +290,7 @@ DefaultBigtableInstanceAdminStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultBigtableInstanceAdminStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
@@ -302,7 +302,7 @@ DefaultBigtableInstanceAdminStub::TestIamPermissions(
 
 StatusOr<google::bigtable::admin::v2::ListHotTabletsResponse>
 DefaultBigtableInstanceAdminStub::ListHotTablets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::admin::v2::ListHotTabletsRequest const& request) {
   google::bigtable::admin::v2::ListHotTabletsResponse response;
   auto status = grpc_stub_->ListHotTablets(&context, request, &response);

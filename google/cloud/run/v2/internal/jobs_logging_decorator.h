@@ -44,11 +44,11 @@ class JobsLogging : public JobsStub {
       google::cloud::run::v2::CreateJobRequest const& request) override;
 
   StatusOr<google::cloud::run::v2::Job> GetJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::GetJobRequest const& request) override;
 
   StatusOr<google::cloud::run::v2::ListJobsResponse> ListJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::run::v2::ListJobsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateJob(
@@ -67,15 +67,15 @@ class JobsLogging : public JobsStub {
       google::cloud::run::v2::RunJobRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

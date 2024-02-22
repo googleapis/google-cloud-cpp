@@ -32,7 +32,7 @@ WebSecurityScannerStub::~WebSecurityScannerStub() = default;
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 DefaultWebSecurityScannerStub::CreateScanConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
         request) {
   google::cloud::websecurityscanner::v1::ScanConfig response;
@@ -44,7 +44,7 @@ DefaultWebSecurityScannerStub::CreateScanConfig(
 }
 
 Status DefaultWebSecurityScannerStub::DeleteScanConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
         request) {
   google::protobuf::Empty response;
@@ -57,7 +57,7 @@ Status DefaultWebSecurityScannerStub::DeleteScanConfig(
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 DefaultWebSecurityScannerStub::GetScanConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
         request) {
   google::cloud::websecurityscanner::v1::ScanConfig response;
@@ -70,7 +70,7 @@ DefaultWebSecurityScannerStub::GetScanConfig(
 
 StatusOr<google::cloud::websecurityscanner::v1::ListScanConfigsResponse>
 DefaultWebSecurityScannerStub::ListScanConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::websecurityscanner::v1::ListScanConfigsRequest const&
         request) {
   google::cloud::websecurityscanner::v1::ListScanConfigsResponse response;
@@ -83,7 +83,7 @@ DefaultWebSecurityScannerStub::ListScanConfigs(
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 DefaultWebSecurityScannerStub::UpdateScanConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
         request) {
   google::cloud::websecurityscanner::v1::ScanConfig response;
@@ -96,7 +96,7 @@ DefaultWebSecurityScannerStub::UpdateScanConfig(
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 DefaultWebSecurityScannerStub::StartScanRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::websecurityscanner::v1::StartScanRunRequest const& request) {
   google::cloud::websecurityscanner::v1::ScanRun response;
   auto status = grpc_stub_->StartScanRun(&context, request, &response);
@@ -108,7 +108,7 @@ DefaultWebSecurityScannerStub::StartScanRun(
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 DefaultWebSecurityScannerStub::GetScanRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::websecurityscanner::v1::GetScanRunRequest const& request) {
   google::cloud::websecurityscanner::v1::ScanRun response;
   auto status = grpc_stub_->GetScanRun(&context, request, &response);
@@ -120,7 +120,7 @@ DefaultWebSecurityScannerStub::GetScanRun(
 
 StatusOr<google::cloud::websecurityscanner::v1::ListScanRunsResponse>
 DefaultWebSecurityScannerStub::ListScanRuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::websecurityscanner::v1::ListScanRunsRequest const& request) {
   google::cloud::websecurityscanner::v1::ListScanRunsResponse response;
   auto status = grpc_stub_->ListScanRuns(&context, request, &response);
@@ -132,7 +132,7 @@ DefaultWebSecurityScannerStub::ListScanRuns(
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 DefaultWebSecurityScannerStub::StopScanRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::websecurityscanner::v1::StopScanRunRequest const& request) {
   google::cloud::websecurityscanner::v1::ScanRun response;
   auto status = grpc_stub_->StopScanRun(&context, request, &response);
@@ -144,7 +144,7 @@ DefaultWebSecurityScannerStub::StopScanRun(
 
 StatusOr<google::cloud::websecurityscanner::v1::ListCrawledUrlsResponse>
 DefaultWebSecurityScannerStub::ListCrawledUrls(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::websecurityscanner::v1::ListCrawledUrlsRequest const&
         request) {
   google::cloud::websecurityscanner::v1::ListCrawledUrlsResponse response;
@@ -157,7 +157,7 @@ DefaultWebSecurityScannerStub::ListCrawledUrls(
 
 StatusOr<google::cloud::websecurityscanner::v1::Finding>
 DefaultWebSecurityScannerStub::GetFinding(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::websecurityscanner::v1::GetFindingRequest const& request) {
   google::cloud::websecurityscanner::v1::Finding response;
   auto status = grpc_stub_->GetFinding(&context, request, &response);
@@ -169,7 +169,7 @@ DefaultWebSecurityScannerStub::GetFinding(
 
 StatusOr<google::cloud::websecurityscanner::v1::ListFindingsResponse>
 DefaultWebSecurityScannerStub::ListFindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::websecurityscanner::v1::ListFindingsRequest const& request) {
   google::cloud::websecurityscanner::v1::ListFindingsResponse response;
   auto status = grpc_stub_->ListFindings(&context, request, &response);
@@ -181,7 +181,7 @@ DefaultWebSecurityScannerStub::ListFindings(
 
 StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
 DefaultWebSecurityScannerStub::ListFindingTypeStats(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
         request) {
   google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse response;

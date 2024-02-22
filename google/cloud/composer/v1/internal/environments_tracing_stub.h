@@ -44,13 +44,13 @@ class EnvironmentsTracingStub : public EnvironmentsStub {
           CreateEnvironmentRequest const& request) override;
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
-  GetEnvironment(grpc::ClientContext& context,
+  GetEnvironment(grpc::ClientContext& context, Options const& options,
                  google::cloud::orchestration::airflow::service::v1::
                      GetEnvironmentRequest const& request) override;
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                ListEnvironmentsResponse>
-  ListEnvironments(grpc::ClientContext& context,
+  ListEnvironments(grpc::ClientContext& context, Options const& options,
                    google::cloud::orchestration::airflow::service::v1::
                        ListEnvironmentsRequest const& request) override;
 
@@ -69,91 +69,91 @@ class EnvironmentsTracingStub : public EnvironmentsStub {
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                ExecuteAirflowCommandResponse>
   ExecuteAirflowCommand(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orchestration::airflow::service::v1::
           ExecuteAirflowCommandRequest const& request) override;
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                StopAirflowCommandResponse>
-  StopAirflowCommand(grpc::ClientContext& context,
+  StopAirflowCommand(grpc::ClientContext& context, Options const& options,
                      google::cloud::orchestration::airflow::service::v1::
                          StopAirflowCommandRequest const& request) override;
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                PollAirflowCommandResponse>
-  PollAirflowCommand(grpc::ClientContext& context,
+  PollAirflowCommand(grpc::ClientContext& context, Options const& options,
                      google::cloud::orchestration::airflow::service::v1::
                          PollAirflowCommandRequest const& request) override;
 
   StatusOr<
       google::cloud::orchestration::airflow::service::v1::ListWorkloadsResponse>
-  ListWorkloads(grpc::ClientContext& context,
+  ListWorkloads(grpc::ClientContext& context, Options const& options,
                 google::cloud::orchestration::airflow::service::v1::
                     ListWorkloadsRequest const& request) override;
 
   StatusOr<
       google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
   CreateUserWorkloadsSecret(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orchestration::airflow::service::v1::
           CreateUserWorkloadsSecretRequest const& request) override;
 
   StatusOr<
       google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
   GetUserWorkloadsSecret(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orchestration::airflow::service::v1::
           GetUserWorkloadsSecretRequest const& request) override;
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                ListUserWorkloadsSecretsResponse>
   ListUserWorkloadsSecrets(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orchestration::airflow::service::v1::
           ListUserWorkloadsSecretsRequest const& request) override;
 
   StatusOr<
       google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
   UpdateUserWorkloadsSecret(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orchestration::airflow::service::v1::
           UpdateUserWorkloadsSecretRequest const& request) override;
 
   Status DeleteUserWorkloadsSecret(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orchestration::airflow::service::v1::
           DeleteUserWorkloadsSecretRequest const& request) override;
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                UserWorkloadsConfigMap>
   CreateUserWorkloadsConfigMap(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orchestration::airflow::service::v1::
           CreateUserWorkloadsConfigMapRequest const& request) override;
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                UserWorkloadsConfigMap>
   GetUserWorkloadsConfigMap(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orchestration::airflow::service::v1::
           GetUserWorkloadsConfigMapRequest const& request) override;
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                ListUserWorkloadsConfigMapsResponse>
   ListUserWorkloadsConfigMaps(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orchestration::airflow::service::v1::
           ListUserWorkloadsConfigMapsRequest const& request) override;
 
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                UserWorkloadsConfigMap>
   UpdateUserWorkloadsConfigMap(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orchestration::airflow::service::v1::
           UpdateUserWorkloadsConfigMapRequest const& request) override;
 
   Status DeleteUserWorkloadsConfigMap(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orchestration::airflow::service::v1::
           DeleteUserWorkloadsConfigMapRequest const& request) override;
 
@@ -178,7 +178,7 @@ class EnvironmentsTracingStub : public EnvironmentsStub {
   StatusOr<google::cloud::orchestration::airflow::service::v1::
                FetchDatabasePropertiesResponse>
   FetchDatabaseProperties(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::orchestration::airflow::service::v1::
           FetchDatabasePropertiesRequest const& request) override;
 

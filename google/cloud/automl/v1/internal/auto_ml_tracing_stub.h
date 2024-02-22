@@ -43,15 +43,15 @@ class AutoMlTracingStub : public AutoMlStub {
       google::cloud::automl::v1::CreateDatasetRequest const& request) override;
 
   StatusOr<google::cloud::automl::v1::Dataset> GetDataset(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::automl::v1::GetDatasetRequest const& request) override;
 
   StatusOr<google::cloud::automl::v1::ListDatasetsResponse> ListDatasets(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::automl::v1::ListDatasetsRequest const& request) override;
 
   StatusOr<google::cloud::automl::v1::Dataset> UpdateDataset(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::automl::v1::UpdateDatasetRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDataset(
@@ -70,7 +70,7 @@ class AutoMlTracingStub : public AutoMlStub {
       google::cloud::automl::v1::ExportDataRequest const& request) override;
 
   StatusOr<google::cloud::automl::v1::AnnotationSpec> GetAnnotationSpec(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::automl::v1::GetAnnotationSpecRequest const& request)
       override;
 
@@ -80,11 +80,11 @@ class AutoMlTracingStub : public AutoMlStub {
       google::cloud::automl::v1::CreateModelRequest const& request) override;
 
   StatusOr<google::cloud::automl::v1::Model> GetModel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::automl::v1::GetModelRequest const& request) override;
 
   StatusOr<google::cloud::automl::v1::ListModelsResponse> ListModels(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::automl::v1::ListModelsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteModel(
@@ -93,7 +93,7 @@ class AutoMlTracingStub : public AutoMlStub {
       google::cloud::automl::v1::DeleteModelRequest const& request) override;
 
   StatusOr<google::cloud::automl::v1::Model> UpdateModel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::automl::v1::UpdateModelRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeployModel(
@@ -112,13 +112,13 @@ class AutoMlTracingStub : public AutoMlStub {
       google::cloud::automl::v1::ExportModelRequest const& request) override;
 
   StatusOr<google::cloud::automl::v1::ModelEvaluation> GetModelEvaluation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::automl::v1::GetModelEvaluationRequest const& request)
       override;
 
   StatusOr<google::cloud::automl::v1::ListModelEvaluationsResponse>
   ListModelEvaluations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::automl::v1::ListModelEvaluationsRequest const& request)
       override;
 

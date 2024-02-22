@@ -69,10 +69,12 @@ DocumentServiceConnectionImpl::CreateDocument(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateDocument(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::CreateDocumentRequest const&
-                 request) { return stub_->CreateDocument(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreateDocument(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::Document>
@@ -82,10 +84,12 @@ DocumentServiceConnectionImpl::GetDocument(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDocument(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::GetDocumentRequest const&
-                 request) { return stub_->GetDocument(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetDocument(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>
@@ -95,10 +99,12 @@ DocumentServiceConnectionImpl::UpdateDocument(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateDocument(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::UpdateDocumentRequest const&
-                 request) { return stub_->UpdateDocument(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->UpdateDocument(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status DocumentServiceConnectionImpl::DeleteDocument(
@@ -107,10 +113,12 @@ Status DocumentServiceConnectionImpl::DeleteDocument(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteDocument(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::DeleteDocumentRequest const&
-                 request) { return stub_->DeleteDocument(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DeleteDocument(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::contentwarehouse::v1::SearchDocumentsResponse::
@@ -124,21 +132,22 @@ DocumentServiceConnectionImpl::SearchDocuments(
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::contentwarehouse::v1::SearchDocumentsResponse::
                       MatchingDocument>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<contentwarehouse_v1::DocumentServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::contentwarehouse::v1::SearchDocumentsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::contentwarehouse::v1::
                        SearchDocumentsRequest const& request) {
-              return stub->SearchDocuments(context, request);
+              return stub->SearchDocuments(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::contentwarehouse::v1::SearchDocumentsResponse r) {
         std::vector<google::cloud::contentwarehouse::v1::
@@ -157,10 +166,12 @@ DocumentServiceConnectionImpl::LockDocument(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->LockDocument(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::LockDocumentRequest const&
-                 request) { return stub_->LockDocument(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->LockDocument(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse>
@@ -171,11 +182,11 @@ DocumentServiceConnectionImpl::FetchAcl(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->FetchAcl(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::contentwarehouse::v1::FetchAclRequest const& request) {
-        return stub_->FetchAcl(context, request);
+        return stub_->FetchAcl(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse>
@@ -186,11 +197,11 @@ DocumentServiceConnectionImpl::SetAcl(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetAcl(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::contentwarehouse::v1::SetAclRequest const& request) {
-        return stub_->SetAcl(context, request);
+        return stub_->SetAcl(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

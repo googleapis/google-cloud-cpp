@@ -163,8 +163,9 @@ $round_robin_class_name$::Async$method_name$(
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
 Status $round_robin_class_name$::$method_name$(
     grpc::ClientContext& context,
+    Options const& options,
     $request_type$ const& request) {
-  return Child()->$method_name$(context, request);
+  return Child()->$method_name$(context, options, request);
 }
 )""");
       continue;
@@ -172,8 +173,9 @@ Status $round_robin_class_name$::$method_name$(
     CcPrintMethod(method, __FILE__, __LINE__, R"""(
 StatusOr<$response_type$> $round_robin_class_name$::$method_name$(
     grpc::ClientContext& context,
+    Options const& options,
     $request_type$ const& request) {
-  return Child()->$method_name$(context, request);
+  return Child()->$method_name$(context, options, request);
 }
 )""");
   }

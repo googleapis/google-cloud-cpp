@@ -69,7 +69,7 @@ DefaultAwsClustersStub::AsyncUpdateAwsCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>
 DefaultAwsClustersStub::GetAwsCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request) {
   google::cloud::gkemulticloud::v1::AwsCluster response;
   auto status = grpc_stub_->GetAwsCluster(&context, request, &response);
@@ -81,7 +81,7 @@ DefaultAwsClustersStub::GetAwsCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAwsClustersResponse>
 DefaultAwsClustersStub::ListAwsClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkemulticloud::v1::ListAwsClustersRequest const& request) {
   google::cloud::gkemulticloud::v1::ListAwsClustersResponse response;
   auto status = grpc_stub_->ListAwsClusters(&context, request, &response);
@@ -111,7 +111,7 @@ DefaultAwsClustersStub::AsyncDeleteAwsCluster(
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
 DefaultAwsClustersStub::GenerateAwsClusterAgentToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenRequest const&
         request) {
   google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse
@@ -126,7 +126,7 @@ DefaultAwsClustersStub::GenerateAwsClusterAgentToken(
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
 DefaultAwsClustersStub::GenerateAwsAccessToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
         request) {
   google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse response;
@@ -195,7 +195,7 @@ DefaultAwsClustersStub::AsyncRollbackAwsNodePoolUpdate(
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
 DefaultAwsClustersStub::GetAwsNodePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request) {
   google::cloud::gkemulticloud::v1::AwsNodePool response;
   auto status = grpc_stub_->GetAwsNodePool(&context, request, &response);
@@ -207,7 +207,7 @@ DefaultAwsClustersStub::GetAwsNodePool(
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAwsNodePoolsResponse>
 DefaultAwsClustersStub::ListAwsNodePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest const& request) {
   google::cloud::gkemulticloud::v1::ListAwsNodePoolsResponse response;
   auto status = grpc_stub_->ListAwsNodePools(&context, request, &response);
@@ -237,7 +237,7 @@ DefaultAwsClustersStub::AsyncDeleteAwsNodePool(
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
 DefaultAwsClustersStub::GetAwsOpenIdConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
         request) {
   google::cloud::gkemulticloud::v1::AwsOpenIdConfig response;
@@ -250,7 +250,7 @@ DefaultAwsClustersStub::GetAwsOpenIdConfig(
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys>
 DefaultAwsClustersStub::GetAwsJsonWebKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request) {
   google::cloud::gkemulticloud::v1::AwsJsonWebKeys response;
   auto status = grpc_stub_->GetAwsJsonWebKeys(&context, request, &response);
@@ -262,7 +262,7 @@ DefaultAwsClustersStub::GetAwsJsonWebKeys(
 
 StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>
 DefaultAwsClustersStub::GetAwsServerConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&
         request) {
   google::cloud::gkemulticloud::v1::AwsServerConfig response;

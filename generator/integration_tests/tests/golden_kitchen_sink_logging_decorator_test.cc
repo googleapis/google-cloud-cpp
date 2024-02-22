@@ -61,7 +61,8 @@ TEST_F(LoggingDecoratorTest, GenerateAccessToken) {
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.GenerateAccessToken(
-      context, google::test::admin::database::v1::GenerateAccessTokenRequest());
+      context, Options{},
+      google::test::admin::database::v1::GenerateAccessTokenRequest());
   EXPECT_STATUS_OK(status);
 
   auto const log_lines = log_.ExtractLines();
@@ -73,7 +74,8 @@ TEST_F(LoggingDecoratorTest, GenerateAccessTokenError) {
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.GenerateAccessToken(
-      context, google::test::admin::database::v1::GenerateAccessTokenRequest());
+      context, Options{},
+      google::test::admin::database::v1::GenerateAccessTokenRequest());
   EXPECT_EQ(TransientError(), status.status());
 
   auto const log_lines = log_.ExtractLines();
@@ -87,7 +89,8 @@ TEST_F(LoggingDecoratorTest, GenerateIdToken) {
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.GenerateIdToken(
-      context, google::test::admin::database::v1::GenerateIdTokenRequest());
+      context, Options{},
+      google::test::admin::database::v1::GenerateIdTokenRequest());
   EXPECT_STATUS_OK(status);
 
   auto const log_lines = log_.ExtractLines();
@@ -99,7 +102,8 @@ TEST_F(LoggingDecoratorTest, GenerateIdTokenError) {
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.GenerateIdToken(
-      context, google::test::admin::database::v1::GenerateIdTokenRequest());
+      context, Options{},
+      google::test::admin::database::v1::GenerateIdTokenRequest());
   EXPECT_EQ(TransientError(), status.status());
 
   auto const log_lines = log_.ExtractLines();
@@ -113,7 +117,8 @@ TEST_F(LoggingDecoratorTest, WriteLogEntries) {
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.WriteLogEntries(
-      context, google::test::admin::database::v1::WriteLogEntriesRequest());
+      context, Options{},
+      google::test::admin::database::v1::WriteLogEntriesRequest());
   EXPECT_STATUS_OK(status);
 
   auto const log_lines = log_.ExtractLines();
@@ -125,7 +130,8 @@ TEST_F(LoggingDecoratorTest, WriteLogEntriesError) {
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.WriteLogEntries(
-      context, google::test::admin::database::v1::WriteLogEntriesRequest());
+      context, Options{},
+      google::test::admin::database::v1::WriteLogEntriesRequest());
   EXPECT_EQ(TransientError(), status.status());
 
   auto const log_lines = log_.ExtractLines();
@@ -139,7 +145,7 @@ TEST_F(LoggingDecoratorTest, ListLogs) {
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.ListLogs(
-      context, google::test::admin::database::v1::ListLogsRequest());
+      context, Options{}, google::test::admin::database::v1::ListLogsRequest());
   EXPECT_STATUS_OK(status);
 
   auto const log_lines = log_.ExtractLines();
@@ -151,7 +157,7 @@ TEST_F(LoggingDecoratorTest, ListLogsError) {
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.ListLogs(
-      context, google::test::admin::database::v1::ListLogsRequest());
+      context, Options{}, google::test::admin::database::v1::ListLogsRequest());
   EXPECT_EQ(TransientError(), status.status());
 
   auto const log_lines = log_.ExtractLines();
@@ -165,7 +171,7 @@ TEST_F(LoggingDecoratorTest, ListServiceAccountKeys) {
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.ListServiceAccountKeys(
-      context,
+      context, Options{},
       google::test::admin::database::v1::ListServiceAccountKeysRequest());
   EXPECT_STATUS_OK(status);
 
@@ -179,7 +185,7 @@ TEST_F(LoggingDecoratorTest, ListServiceAccountKeysError) {
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {});
   grpc::ClientContext context;
   auto status = stub.ListServiceAccountKeys(
-      context,
+      context, Options{},
       google::test::admin::database::v1::ListServiceAccountKeysRequest());
   EXPECT_EQ(TransientError(), status.status());
 

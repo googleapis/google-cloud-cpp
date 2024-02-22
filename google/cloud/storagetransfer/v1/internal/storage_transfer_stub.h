@@ -40,34 +40,34 @@ class StorageTransferServiceStub {
 
   virtual StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
   GetGoogleServiceAccount(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
           request) = 0;
 
   virtual StatusOr<google::storagetransfer::v1::TransferJob> CreateTransferJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::CreateTransferJobRequest const& request) = 0;
 
   virtual StatusOr<google::storagetransfer::v1::TransferJob> UpdateTransferJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::UpdateTransferJobRequest const& request) = 0;
 
   virtual StatusOr<google::storagetransfer::v1::TransferJob> GetTransferJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::GetTransferJobRequest const& request) = 0;
 
   virtual StatusOr<google::storagetransfer::v1::ListTransferJobsResponse>
   ListTransferJobs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::ListTransferJobsRequest const& request) = 0;
 
   virtual Status PauseTransferOperation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::PauseTransferOperationRequest const&
           request) = 0;
 
   virtual Status ResumeTransferOperation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::ResumeTransferOperationRequest const&
           request) = 0;
 
@@ -77,28 +77,28 @@ class StorageTransferServiceStub {
       google::storagetransfer::v1::RunTransferJobRequest const& request) = 0;
 
   virtual Status DeleteTransferJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::DeleteTransferJobRequest const& request) = 0;
 
   virtual StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::CreateAgentPoolRequest const& request) = 0;
 
   virtual StatusOr<google::storagetransfer::v1::AgentPool> UpdateAgentPool(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::UpdateAgentPoolRequest const& request) = 0;
 
   virtual StatusOr<google::storagetransfer::v1::AgentPool> GetAgentPool(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::GetAgentPoolRequest const& request) = 0;
 
   virtual StatusOr<google::storagetransfer::v1::ListAgentPoolsResponse>
   ListAgentPools(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::ListAgentPoolsRequest const& request) = 0;
 
   virtual Status DeleteAgentPool(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::DeleteAgentPoolRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -124,37 +124,37 @@ class DefaultStorageTransferServiceStub : public StorageTransferServiceStub {
 
   StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
   GetGoogleServiceAccount(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
           request) override;
 
   StatusOr<google::storagetransfer::v1::TransferJob> CreateTransferJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::CreateTransferJobRequest const& request)
       override;
 
   StatusOr<google::storagetransfer::v1::TransferJob> UpdateTransferJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::UpdateTransferJobRequest const& request)
       override;
 
   StatusOr<google::storagetransfer::v1::TransferJob> GetTransferJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::GetTransferJobRequest const& request)
       override;
 
   StatusOr<google::storagetransfer::v1::ListTransferJobsResponse>
-  ListTransferJobs(grpc::ClientContext& context,
+  ListTransferJobs(grpc::ClientContext& context, Options const& options,
                    google::storagetransfer::v1::ListTransferJobsRequest const&
                        request) override;
 
   Status PauseTransferOperation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::PauseTransferOperationRequest const& request)
       override;
 
   Status ResumeTransferOperation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::ResumeTransferOperationRequest const&
           request) override;
 
@@ -165,31 +165,31 @@ class DefaultStorageTransferServiceStub : public StorageTransferServiceStub {
       override;
 
   Status DeleteTransferJob(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::DeleteTransferJobRequest const& request)
       override;
 
   StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::CreateAgentPoolRequest const& request)
       override;
 
   StatusOr<google::storagetransfer::v1::AgentPool> UpdateAgentPool(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::UpdateAgentPoolRequest const& request)
       override;
 
   StatusOr<google::storagetransfer::v1::AgentPool> GetAgentPool(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::GetAgentPoolRequest const& request) override;
 
   StatusOr<google::storagetransfer::v1::ListAgentPoolsResponse> ListAgentPools(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::ListAgentPoolsRequest const& request)
       override;
 
   Status DeleteAgentPool(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::storagetransfer::v1::DeleteAgentPoolRequest const& request)
       override;
 

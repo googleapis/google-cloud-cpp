@@ -33,7 +33,7 @@ FoldersStub::~FoldersStub() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::Folder>
 DefaultFoldersStub::GetFolder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::GetFolderRequest const& request) {
   google::cloud::resourcemanager::v3::Folder response;
   auto status = grpc_stub_->GetFolder(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultFoldersStub::GetFolder(
 
 StatusOr<google::cloud::resourcemanager::v3::ListFoldersResponse>
 DefaultFoldersStub::ListFolders(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::ListFoldersRequest const& request) {
   google::cloud::resourcemanager::v3::ListFoldersResponse response;
   auto status = grpc_stub_->ListFolders(&context, request, &response);
@@ -57,7 +57,7 @@ DefaultFoldersStub::ListFolders(
 
 StatusOr<google::cloud::resourcemanager::v3::SearchFoldersResponse>
 DefaultFoldersStub::SearchFolders(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::SearchFoldersRequest const& request) {
   google::cloud::resourcemanager::v3::SearchFoldersResponse response;
   auto status = grpc_stub_->SearchFolders(&context, request, &response);
@@ -158,7 +158,7 @@ DefaultFoldersStub::AsyncUndeleteFolder(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultFoldersStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -169,7 +169,7 @@ StatusOr<google::iam::v1::Policy> DefaultFoldersStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultFoldersStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -181,7 +181,7 @@ StatusOr<google::iam::v1::Policy> DefaultFoldersStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultFoldersStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);

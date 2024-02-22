@@ -39,7 +39,7 @@ class CompletionServiceTracingStub : public CompletionServiceStub {
       std::shared_ptr<CompletionServiceStub> child);
 
   StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
-  CompleteQuery(grpc::ClientContext& context,
+  CompleteQuery(grpc::ClientContext& context, Options const& options,
                 google::cloud::discoveryengine::v1::CompleteQueryRequest const&
                     request) override;
 

@@ -33,65 +33,65 @@ LanguageServiceAuth::LanguageServiceAuth(
 
 StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>
 LanguageServiceAuth::AnalyzeSentiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v1::AnalyzeSentimentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->AnalyzeSentiment(context, request);
+  return child_->AnalyzeSentiment(context, options, request);
 }
 
 StatusOr<google::cloud::language::v1::AnalyzeEntitiesResponse>
 LanguageServiceAuth::AnalyzeEntities(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v1::AnalyzeEntitiesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->AnalyzeEntities(context, request);
+  return child_->AnalyzeEntities(context, options, request);
 }
 
 StatusOr<google::cloud::language::v1::AnalyzeEntitySentimentResponse>
 LanguageServiceAuth::AnalyzeEntitySentiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v1::AnalyzeEntitySentimentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->AnalyzeEntitySentiment(context, request);
+  return child_->AnalyzeEntitySentiment(context, options, request);
 }
 
 StatusOr<google::cloud::language::v1::AnalyzeSyntaxResponse>
 LanguageServiceAuth::AnalyzeSyntax(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v1::AnalyzeSyntaxRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->AnalyzeSyntax(context, request);
+  return child_->AnalyzeSyntax(context, options, request);
 }
 
 StatusOr<google::cloud::language::v1::ClassifyTextResponse>
 LanguageServiceAuth::ClassifyText(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v1::ClassifyTextRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ClassifyText(context, request);
+  return child_->ClassifyText(context, options, request);
 }
 
 StatusOr<google::cloud::language::v1::ModerateTextResponse>
 LanguageServiceAuth::ModerateText(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v1::ModerateTextRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ModerateText(context, request);
+  return child_->ModerateText(context, options, request);
 }
 
 StatusOr<google::cloud::language::v1::AnnotateTextResponse>
 LanguageServiceAuth::AnnotateText(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::language::v1::AnnotateTextRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->AnnotateText(context, request);
+  return child_->AnnotateText(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

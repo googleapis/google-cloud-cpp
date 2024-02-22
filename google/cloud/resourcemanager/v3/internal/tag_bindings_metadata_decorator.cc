@@ -44,10 +44,10 @@ TagBindingsMetadata::TagBindingsMetadata(
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagBindingsResponse>
 TagBindingsMetadata::ListTagBindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListTagBindingsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->ListTagBindings(context, request);
+  SetMetadata(context, options);
+  return child_->ListTagBindings(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -75,11 +75,11 @@ TagBindingsMetadata::AsyncDeleteTagBinding(
 
 StatusOr<google::cloud::resourcemanager::v3::ListEffectiveTagsResponse>
 TagBindingsMetadata::ListEffectiveTags(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListEffectiveTagsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->ListEffectiveTags(context, request);
+  SetMetadata(context, options);
+  return child_->ListEffectiveTags(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

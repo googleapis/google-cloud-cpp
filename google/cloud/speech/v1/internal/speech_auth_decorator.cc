@@ -33,11 +33,11 @@ SpeechAuth::SpeechAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::speech::v1::RecognizeResponse> SpeechAuth::Recognize(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::speech::v1::RecognizeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->Recognize(context, request);
+  return child_->Recognize(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

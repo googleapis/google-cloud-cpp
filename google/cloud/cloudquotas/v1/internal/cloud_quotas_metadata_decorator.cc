@@ -44,58 +44,58 @@ CloudQuotasMetadata::CloudQuotasMetadata(
 
 StatusOr<google::api::cloudquotas::v1::ListQuotaInfosResponse>
 CloudQuotasMetadata::ListQuotaInfos(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::ListQuotaInfosRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListQuotaInfos(context, request);
+  return child_->ListQuotaInfos(context, options, request);
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaInfo>
 CloudQuotasMetadata::GetQuotaInfo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::GetQuotaInfoRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetQuotaInfo(context, request);
+  return child_->GetQuotaInfo(context, options, request);
 }
 
 StatusOr<google::api::cloudquotas::v1::ListQuotaPreferencesResponse>
 CloudQuotasMetadata::ListQuotaPreferences(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::ListQuotaPreferencesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListQuotaPreferences(context, request);
+  return child_->ListQuotaPreferences(context, options, request);
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
 CloudQuotasMetadata::GetQuotaPreference(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::GetQuotaPreferenceRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetQuotaPreference(context, request);
+  return child_->GetQuotaPreference(context, options, request);
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
 CloudQuotasMetadata::CreateQuotaPreference(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateQuotaPreference(context, request);
+  return child_->CreateQuotaPreference(context, options, request);
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
 CloudQuotasMetadata::UpdateQuotaPreference(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("quota_preference.name=",
                    internal::UrlEncode(request.quota_preference().name())));
-  return child_->UpdateQuotaPreference(context, request);
+  return child_->UpdateQuotaPreference(context, options, request);
 }
 
 void CloudQuotasMetadata::SetMetadata(grpc::ClientContext& context,

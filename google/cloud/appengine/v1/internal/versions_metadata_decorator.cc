@@ -44,19 +44,19 @@ VersionsMetadata::VersionsMetadata(
 
 StatusOr<google::appengine::v1::ListVersionsResponse>
 VersionsMetadata::ListVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListVersionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListVersions(context, request);
+  return child_->ListVersions(context, options, request);
 }
 
 StatusOr<google::appengine::v1::Version> VersionsMetadata::GetVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetVersionRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetVersion(context, request);
+  return child_->GetVersion(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

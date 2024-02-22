@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_V1_INTERNAL_AUTHORIZED_CERTIFICATES_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APPENGINE_V1_INTERNAL_AUTHORIZED_CERTIFICATES_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
@@ -37,30 +38,30 @@ class AuthorizedCertificatesStub {
 
   virtual StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse>
   ListAuthorizedCertificates(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListAuthorizedCertificatesRequest const&
           request) = 0;
 
   virtual StatusOr<google::appengine::v1::AuthorizedCertificate>
   GetAuthorizedCertificate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetAuthorizedCertificateRequest const&
           request) = 0;
 
   virtual StatusOr<google::appengine::v1::AuthorizedCertificate>
   CreateAuthorizedCertificate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::CreateAuthorizedCertificateRequest const&
           request) = 0;
 
   virtual StatusOr<google::appengine::v1::AuthorizedCertificate>
   UpdateAuthorizedCertificate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::UpdateAuthorizedCertificateRequest const&
           request) = 0;
 
   virtual Status DeleteAuthorizedCertificate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::DeleteAuthorizedCertificateRequest const&
           request) = 0;
 };
@@ -75,30 +76,30 @@ class DefaultAuthorizedCertificatesStub : public AuthorizedCertificatesStub {
 
   StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse>
   ListAuthorizedCertificates(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListAuthorizedCertificatesRequest const& request)
       override;
 
   StatusOr<google::appengine::v1::AuthorizedCertificate>
   GetAuthorizedCertificate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetAuthorizedCertificateRequest const& request)
       override;
 
   StatusOr<google::appengine::v1::AuthorizedCertificate>
   CreateAuthorizedCertificate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::CreateAuthorizedCertificateRequest const& request)
       override;
 
   StatusOr<google::appengine::v1::AuthorizedCertificate>
   UpdateAuthorizedCertificate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::UpdateAuthorizedCertificateRequest const& request)
       override;
 
   Status DeleteAuthorizedCertificate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::DeleteAuthorizedCertificateRequest const& request)
       override;
 

@@ -33,22 +33,22 @@ TelcoAutomationAuth::TelcoAutomationAuth(
 
 StatusOr<google::cloud::telcoautomation::v1::ListOrchestrationClustersResponse>
 TelcoAutomationAuth::ListOrchestrationClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::ListOrchestrationClustersRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListOrchestrationClusters(context, request);
+  return child_->ListOrchestrationClusters(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>
 TelcoAutomationAuth::GetOrchestrationCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::GetOrchestrationClusterRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetOrchestrationCluster(context, request);
+  return child_->GetOrchestrationCluster(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -93,20 +93,20 @@ TelcoAutomationAuth::AsyncDeleteOrchestrationCluster(
 
 StatusOr<google::cloud::telcoautomation::v1::ListEdgeSlmsResponse>
 TelcoAutomationAuth::ListEdgeSlms(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::ListEdgeSlmsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEdgeSlms(context, request);
+  return child_->ListEdgeSlms(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>
 TelcoAutomationAuth::GetEdgeSlm(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::GetEdgeSlmRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEdgeSlm(context, request);
+  return child_->GetEdgeSlm(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -149,271 +149,271 @@ TelcoAutomationAuth::AsyncDeleteEdgeSlm(
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
 TelcoAutomationAuth::CreateBlueprint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::CreateBlueprintRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateBlueprint(context, request);
+  return child_->CreateBlueprint(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
 TelcoAutomationAuth::UpdateBlueprint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::UpdateBlueprintRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateBlueprint(context, request);
+  return child_->UpdateBlueprint(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
 TelcoAutomationAuth::GetBlueprint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::GetBlueprintRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetBlueprint(context, request);
+  return child_->GetBlueprint(context, options, request);
 }
 
 Status TelcoAutomationAuth::DeleteBlueprint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::DeleteBlueprintRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteBlueprint(context, request);
+  return child_->DeleteBlueprint(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::ListBlueprintsResponse>
 TelcoAutomationAuth::ListBlueprints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::ListBlueprintsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBlueprints(context, request);
+  return child_->ListBlueprints(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
 TelcoAutomationAuth::ApproveBlueprint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::ApproveBlueprintRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ApproveBlueprint(context, request);
+  return child_->ApproveBlueprint(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
 TelcoAutomationAuth::ProposeBlueprint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::ProposeBlueprintRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ProposeBlueprint(context, request);
+  return child_->ProposeBlueprint(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
 TelcoAutomationAuth::RejectBlueprint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::RejectBlueprintRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RejectBlueprint(context, request);
+  return child_->RejectBlueprint(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::ListBlueprintRevisionsResponse>
 TelcoAutomationAuth::ListBlueprintRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::ListBlueprintRevisionsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBlueprintRevisions(context, request);
+  return child_->ListBlueprintRevisions(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::SearchBlueprintRevisionsResponse>
 TelcoAutomationAuth::SearchBlueprintRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::SearchBlueprintRevisionsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SearchBlueprintRevisions(context, request);
+  return child_->SearchBlueprintRevisions(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::SearchDeploymentRevisionsResponse>
 TelcoAutomationAuth::SearchDeploymentRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::SearchDeploymentRevisionsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SearchDeploymentRevisions(context, request);
+  return child_->SearchDeploymentRevisions(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::DiscardBlueprintChangesResponse>
 TelcoAutomationAuth::DiscardBlueprintChanges(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::DiscardBlueprintChangesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DiscardBlueprintChanges(context, request);
+  return child_->DiscardBlueprintChanges(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::ListPublicBlueprintsResponse>
 TelcoAutomationAuth::ListPublicBlueprints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::ListPublicBlueprintsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListPublicBlueprints(context, request);
+  return child_->ListPublicBlueprints(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::PublicBlueprint>
 TelcoAutomationAuth::GetPublicBlueprint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::GetPublicBlueprintRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetPublicBlueprint(context, request);
+  return child_->GetPublicBlueprint(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
 TelcoAutomationAuth::CreateDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::CreateDeploymentRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateDeployment(context, request);
+  return child_->CreateDeployment(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
 TelcoAutomationAuth::UpdateDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::UpdateDeploymentRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateDeployment(context, request);
+  return child_->UpdateDeployment(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
 TelcoAutomationAuth::GetDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::GetDeploymentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDeployment(context, request);
+  return child_->GetDeployment(context, options, request);
 }
 
 Status TelcoAutomationAuth::RemoveDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::RemoveDeploymentRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RemoveDeployment(context, request);
+  return child_->RemoveDeployment(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::ListDeploymentsResponse>
 TelcoAutomationAuth::ListDeployments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::ListDeploymentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDeployments(context, request);
+  return child_->ListDeployments(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::ListDeploymentRevisionsResponse>
 TelcoAutomationAuth::ListDeploymentRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::ListDeploymentRevisionsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDeploymentRevisions(context, request);
+  return child_->ListDeploymentRevisions(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::DiscardDeploymentChangesResponse>
 TelcoAutomationAuth::DiscardDeploymentChanges(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::DiscardDeploymentChangesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DiscardDeploymentChanges(context, request);
+  return child_->DiscardDeploymentChanges(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
 TelcoAutomationAuth::ApplyDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::ApplyDeploymentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ApplyDeployment(context, request);
+  return child_->ApplyDeployment(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::ComputeDeploymentStatusResponse>
 TelcoAutomationAuth::ComputeDeploymentStatus(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::ComputeDeploymentStatusRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ComputeDeploymentStatus(context, request);
+  return child_->ComputeDeploymentStatus(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Deployment>
 TelcoAutomationAuth::RollbackDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::RollbackDeploymentRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RollbackDeployment(context, request);
+  return child_->RollbackDeployment(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
 TelcoAutomationAuth::GetHydratedDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::GetHydratedDeploymentRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetHydratedDeployment(context, request);
+  return child_->GetHydratedDeployment(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::ListHydratedDeploymentsResponse>
 TelcoAutomationAuth::ListHydratedDeployments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::ListHydratedDeploymentsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListHydratedDeployments(context, request);
+  return child_->ListHydratedDeployments(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
 TelcoAutomationAuth::UpdateHydratedDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::UpdateHydratedDeploymentRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateHydratedDeployment(context, request);
+  return child_->UpdateHydratedDeployment(context, options, request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::HydratedDeployment>
 TelcoAutomationAuth::ApplyHydratedDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::telcoautomation::v1::ApplyHydratedDeploymentRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ApplyHydratedDeployment(context, request);
+  return child_->ApplyHydratedDeployment(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

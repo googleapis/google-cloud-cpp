@@ -32,22 +32,23 @@ PoliciesTracingStub::PoliciesTracingStub(std::shared_ptr<PoliciesStub> child)
 
 StatusOr<google::iam::v2::ListPoliciesResponse>
 PoliciesTracingStub::ListPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v2::ListPoliciesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.iam.v2.Policies", "ListPolicies");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListPolicies(context, request));
+                           child_->ListPolicies(context, options, request));
 }
 
 StatusOr<google::iam::v2::Policy> PoliciesTracingStub::GetPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v2::GetPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.iam.v2.Policies", "GetPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetPolicy(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetPolicy(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

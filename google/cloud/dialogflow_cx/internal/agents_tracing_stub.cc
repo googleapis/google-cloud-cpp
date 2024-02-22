@@ -32,59 +32,60 @@ AgentsTracingStub::AgentsTracingStub(std::shared_ptr<AgentsStub> child)
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListAgentsResponse>
 AgentsTracingStub::ListAgents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListAgentsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Agents",
                                      "ListAgents");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListAgents(context, request));
+                           child_->ListAgents(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent> AgentsTracingStub::GetAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetAgentRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Agents",
                                      "GetAgent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetAgent(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetAgent(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent>
 AgentsTracingStub::CreateAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Agents",
                                      "CreateAgent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateAgent(context, request));
+                           child_->CreateAgent(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent>
 AgentsTracingStub::UpdateAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Agents",
                                      "UpdateAgent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateAgent(context, request));
+                           child_->UpdateAgent(context, options, request));
 }
 
 Status AgentsTracingStub::DeleteAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Agents",
                                      "DeleteAgent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteAgent(context, request));
+                           child_->DeleteAgent(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -115,53 +116,55 @@ AgentsTracingStub::AsyncRestoreAgent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
 AgentsTracingStub::ValidateAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Agents",
                                      "ValidateAgent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ValidateAgent(context, request));
+                           child_->ValidateAgent(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
 AgentsTracingStub::GetAgentValidationResult(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Agents",
                                      "GetAgentValidationResult");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetAgentValidationResult(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GetAgentValidationResult(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
 AgentsTracingStub::GetGenerativeSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Agents",
                                      "GetGenerativeSettings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetGenerativeSettings(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetGenerativeSettings(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
 AgentsTracingStub::UpdateGenerativeSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.cx.v3.Agents",
                                      "UpdateGenerativeSettings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateGenerativeSettings(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->UpdateGenerativeSettings(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

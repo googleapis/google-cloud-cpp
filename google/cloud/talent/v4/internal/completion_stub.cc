@@ -32,7 +32,7 @@ CompletionStub::~CompletionStub() = default;
 
 StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
 DefaultCompletionStub::CompleteQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::talent::v4::CompleteQueryRequest const& request) {
   google::cloud::talent::v4::CompleteQueryResponse response;
   auto status = grpc_stub_->CompleteQuery(&context, request, &response);

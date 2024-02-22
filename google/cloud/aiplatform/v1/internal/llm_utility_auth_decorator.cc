@@ -33,20 +33,20 @@ LlmUtilityServiceAuth::LlmUtilityServiceAuth(
 
 StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
 LlmUtilityServiceAuth::CountTokens(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CountTokensRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CountTokens(context, request);
+  return child_->CountTokens(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
 LlmUtilityServiceAuth::ComputeTokens(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ComputeTokensRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ComputeTokens(context, request);
+  return child_->ComputeTokens(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

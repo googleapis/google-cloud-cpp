@@ -33,22 +33,22 @@ KeyTrackingServiceAuth::KeyTrackingServiceAuth(
 
 StatusOr<google::cloud::kms::inventory::v1::ProtectedResourcesSummary>
 KeyTrackingServiceAuth::GetProtectedResourcesSummary(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::inventory::v1::
         GetProtectedResourcesSummaryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetProtectedResourcesSummary(context, request);
+  return child_->GetProtectedResourcesSummary(context, options, request);
 }
 
 StatusOr<google::cloud::kms::inventory::v1::SearchProtectedResourcesResponse>
 KeyTrackingServiceAuth::SearchProtectedResources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::inventory::v1::SearchProtectedResourcesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SearchProtectedResources(context, request);
+  return child_->SearchProtectedResources(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

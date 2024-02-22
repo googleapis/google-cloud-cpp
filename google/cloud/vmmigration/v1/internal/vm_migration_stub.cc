@@ -33,7 +33,7 @@ VmMigrationStub::~VmMigrationStub() = default;
 
 StatusOr<google::cloud::vmmigration::v1::ListSourcesResponse>
 DefaultVmMigrationStub::ListSources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::ListSourcesRequest const& request) {
   google::cloud::vmmigration::v1::ListSourcesResponse response;
   auto status = grpc_stub_->ListSources(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultVmMigrationStub::ListSources(
 
 StatusOr<google::cloud::vmmigration::v1::Source>
 DefaultVmMigrationStub::GetSource(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::GetSourceRequest const& request) {
   google::cloud::vmmigration::v1::Source response;
   auto status = grpc_stub_->GetSource(&context, request, &response);
@@ -108,7 +108,7 @@ DefaultVmMigrationStub::AsyncDeleteSource(
 
 StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
 DefaultVmMigrationStub::FetchInventory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::FetchInventoryRequest const& request) {
   google::cloud::vmmigration::v1::FetchInventoryResponse response;
   auto status = grpc_stub_->FetchInventory(&context, request, &response);
@@ -120,7 +120,7 @@ DefaultVmMigrationStub::FetchInventory(
 
 StatusOr<google::cloud::vmmigration::v1::ListUtilizationReportsResponse>
 DefaultVmMigrationStub::ListUtilizationReports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::ListUtilizationReportsRequest const&
         request) {
   google::cloud::vmmigration::v1::ListUtilizationReportsResponse response;
@@ -134,7 +134,7 @@ DefaultVmMigrationStub::ListUtilizationReports(
 
 StatusOr<google::cloud::vmmigration::v1::UtilizationReport>
 DefaultVmMigrationStub::GetUtilizationReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::GetUtilizationReportRequest const&
         request) {
   google::cloud::vmmigration::v1::UtilizationReport response;
@@ -187,7 +187,7 @@ DefaultVmMigrationStub::AsyncDeleteUtilizationReport(
 
 StatusOr<google::cloud::vmmigration::v1::ListDatacenterConnectorsResponse>
 DefaultVmMigrationStub::ListDatacenterConnectors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest const&
         request) {
   google::cloud::vmmigration::v1::ListDatacenterConnectorsResponse response;
@@ -201,7 +201,7 @@ DefaultVmMigrationStub::ListDatacenterConnectors(
 
 StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
 DefaultVmMigrationStub::GetDatacenterConnector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&
         request) {
   google::cloud::vmmigration::v1::DatacenterConnector response;
@@ -289,7 +289,7 @@ DefaultVmMigrationStub::AsyncCreateMigratingVm(
 
 StatusOr<google::cloud::vmmigration::v1::ListMigratingVmsResponse>
 DefaultVmMigrationStub::ListMigratingVms(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::ListMigratingVmsRequest const& request) {
   google::cloud::vmmigration::v1::ListMigratingVmsResponse response;
   auto status = grpc_stub_->ListMigratingVms(&context, request, &response);
@@ -301,7 +301,7 @@ DefaultVmMigrationStub::ListMigratingVms(
 
 StatusOr<google::cloud::vmmigration::v1::MigratingVm>
 DefaultVmMigrationStub::GetMigratingVm(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::GetMigratingVmRequest const& request) {
   google::cloud::vmmigration::v1::MigratingVm response;
   auto status = grpc_stub_->GetMigratingVm(&context, request, &response);
@@ -457,7 +457,7 @@ DefaultVmMigrationStub::AsyncCancelCloneJob(
 
 StatusOr<google::cloud::vmmigration::v1::ListCloneJobsResponse>
 DefaultVmMigrationStub::ListCloneJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::ListCloneJobsRequest const& request) {
   google::cloud::vmmigration::v1::ListCloneJobsResponse response;
   auto status = grpc_stub_->ListCloneJobs(&context, request, &response);
@@ -469,7 +469,7 @@ DefaultVmMigrationStub::ListCloneJobs(
 
 StatusOr<google::cloud::vmmigration::v1::CloneJob>
 DefaultVmMigrationStub::GetCloneJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::GetCloneJobRequest const& request) {
   google::cloud::vmmigration::v1::CloneJob response;
   auto status = grpc_stub_->GetCloneJob(&context, request, &response);
@@ -517,7 +517,7 @@ DefaultVmMigrationStub::AsyncCancelCutoverJob(
 
 StatusOr<google::cloud::vmmigration::v1::ListCutoverJobsResponse>
 DefaultVmMigrationStub::ListCutoverJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::ListCutoverJobsRequest const& request) {
   google::cloud::vmmigration::v1::ListCutoverJobsResponse response;
   auto status = grpc_stub_->ListCutoverJobs(&context, request, &response);
@@ -529,7 +529,7 @@ DefaultVmMigrationStub::ListCutoverJobs(
 
 StatusOr<google::cloud::vmmigration::v1::CutoverJob>
 DefaultVmMigrationStub::GetCutoverJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::GetCutoverJobRequest const& request) {
   google::cloud::vmmigration::v1::CutoverJob response;
   auto status = grpc_stub_->GetCutoverJob(&context, request, &response);
@@ -541,7 +541,7 @@ DefaultVmMigrationStub::GetCutoverJob(
 
 StatusOr<google::cloud::vmmigration::v1::ListGroupsResponse>
 DefaultVmMigrationStub::ListGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::ListGroupsRequest const& request) {
   google::cloud::vmmigration::v1::ListGroupsResponse response;
   auto status = grpc_stub_->ListGroups(&context, request, &response);
@@ -553,7 +553,7 @@ DefaultVmMigrationStub::ListGroups(
 
 StatusOr<google::cloud::vmmigration::v1::Group>
 DefaultVmMigrationStub::GetGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::GetGroupRequest const& request) {
   google::cloud::vmmigration::v1::Group response;
   auto status = grpc_stub_->GetGroup(&context, request, &response);
@@ -653,7 +653,7 @@ DefaultVmMigrationStub::AsyncRemoveGroupMigration(
 
 StatusOr<google::cloud::vmmigration::v1::ListTargetProjectsResponse>
 DefaultVmMigrationStub::ListTargetProjects(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::ListTargetProjectsRequest const& request) {
   google::cloud::vmmigration::v1::ListTargetProjectsResponse response;
   auto status = grpc_stub_->ListTargetProjects(&context, request, &response);
@@ -665,7 +665,7 @@ DefaultVmMigrationStub::ListTargetProjects(
 
 StatusOr<google::cloud::vmmigration::v1::TargetProject>
 DefaultVmMigrationStub::GetTargetProject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::GetTargetProjectRequest const& request) {
   google::cloud::vmmigration::v1::TargetProject response;
   auto status = grpc_stub_->GetTargetProject(&context, request, &response);
@@ -731,7 +731,7 @@ DefaultVmMigrationStub::AsyncDeleteTargetProject(
 
 StatusOr<google::cloud::vmmigration::v1::ListReplicationCyclesResponse>
 DefaultVmMigrationStub::ListReplicationCycles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::ListReplicationCyclesRequest const&
         request) {
   google::cloud::vmmigration::v1::ListReplicationCyclesResponse response;
@@ -744,7 +744,7 @@ DefaultVmMigrationStub::ListReplicationCycles(
 
 StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
 DefaultVmMigrationStub::GetReplicationCycle(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request) {
   google::cloud::vmmigration::v1::ReplicationCycle response;
   auto status = grpc_stub_->GetReplicationCycle(&context, request, &response);

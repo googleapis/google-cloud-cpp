@@ -32,19 +32,19 @@ TraceServiceAuth::TraceServiceAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 Status TraceServiceAuth::BatchWriteSpans(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->BatchWriteSpans(context, request);
+  return child_->BatchWriteSpans(context, options, request);
 }
 
 StatusOr<google::devtools::cloudtrace::v2::Span> TraceServiceAuth::CreateSpan(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v2::Span const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateSpan(context, request);
+  return child_->CreateSpan(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

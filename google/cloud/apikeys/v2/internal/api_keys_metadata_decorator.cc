@@ -53,28 +53,28 @@ ApiKeysMetadata::AsyncCreateKey(
 }
 
 StatusOr<google::api::apikeys::v2::ListKeysResponse> ApiKeysMetadata::ListKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::ListKeysRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListKeys(context, request);
+  return child_->ListKeys(context, options, request);
 }
 
 StatusOr<google::api::apikeys::v2::Key> ApiKeysMetadata::GetKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::GetKeyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetKey(context, request);
+  return child_->GetKey(context, options, request);
 }
 
 StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
 ApiKeysMetadata::GetKeyString(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::GetKeyStringRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetKeyString(context, request);
+  return child_->GetKeyString(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -110,10 +110,10 @@ ApiKeysMetadata::AsyncUndeleteKey(
 
 StatusOr<google::api::apikeys::v2::LookupKeyResponse>
 ApiKeysMetadata::LookupKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::LookupKeyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->LookupKey(context, request);
+  SetMetadata(context, options);
+  return child_->LookupKey(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

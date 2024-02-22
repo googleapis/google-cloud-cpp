@@ -46,16 +46,16 @@ class DatasetServiceLogging : public DatasetServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::Dataset> GetDataset(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetDatasetRequest const& request) override;
 
   StatusOr<google::cloud::aiplatform::v1::Dataset> UpdateDataset(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::UpdateDatasetRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListDatasetsResponse> ListDatasets(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListDatasetsRequest const& request)
       override;
 
@@ -88,13 +88,13 @@ class DatasetServiceLogging : public DatasetServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::DatasetVersion> GetDatasetVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListDatasetVersionsResponse>
   ListDatasetVersions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListDatasetVersionsRequest const& request)
       override;
 
@@ -105,17 +105,17 @@ class DatasetServiceLogging : public DatasetServiceStub {
           request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListDataItemsResponse> ListDataItems(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListDataItemsRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::SearchDataItemsResponse>
-  SearchDataItems(grpc::ClientContext& context,
+  SearchDataItems(grpc::ClientContext& context, Options const& options,
                   google::cloud::aiplatform::v1::SearchDataItemsRequest const&
                       request) override;
 
   StatusOr<google::cloud::aiplatform::v1::ListSavedQueriesResponse>
-  ListSavedQueries(grpc::ClientContext& context,
+  ListSavedQueries(grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::ListSavedQueriesRequest const&
                        request) override;
 
@@ -126,12 +126,12 @@ class DatasetServiceLogging : public DatasetServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::AnnotationSpec> GetAnnotationSpec(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListAnnotationsResponse>
-  ListAnnotations(grpc::ClientContext& context,
+  ListAnnotations(grpc::ClientContext& context, Options const& options,
                   google::cloud::aiplatform::v1::ListAnnotationsRequest const&
                       request) override;
 

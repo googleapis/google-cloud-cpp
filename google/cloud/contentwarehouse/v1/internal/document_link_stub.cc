@@ -32,7 +32,7 @@ DocumentLinkServiceStub::~DocumentLinkServiceStub() = default;
 
 StatusOr<google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse>
 DefaultDocumentLinkServiceStub::ListLinkedTargets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
         request) {
   google::cloud::contentwarehouse::v1::ListLinkedTargetsResponse response;
@@ -45,7 +45,7 @@ DefaultDocumentLinkServiceStub::ListLinkedTargets(
 
 StatusOr<google::cloud::contentwarehouse::v1::ListLinkedSourcesResponse>
 DefaultDocumentLinkServiceStub::ListLinkedSources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const&
         request) {
   google::cloud::contentwarehouse::v1::ListLinkedSourcesResponse response;
@@ -58,7 +58,7 @@ DefaultDocumentLinkServiceStub::ListLinkedSources(
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentLink>
 DefaultDocumentLinkServiceStub::CreateDocumentLink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
         request) {
   google::cloud::contentwarehouse::v1::DocumentLink response;
@@ -70,7 +70,7 @@ DefaultDocumentLinkServiceStub::CreateDocumentLink(
 }
 
 Status DefaultDocumentLinkServiceStub::DeleteDocumentLink(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
         request) {
   google::protobuf::Empty response;

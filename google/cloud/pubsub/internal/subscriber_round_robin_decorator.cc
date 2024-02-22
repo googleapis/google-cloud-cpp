@@ -29,42 +29,42 @@ SubscriberRoundRobin::SubscriberRoundRobin(
 
 StatusOr<google::pubsub::v1::Subscription>
 SubscriberRoundRobin::CreateSubscription(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::Subscription const& request) {
-  return Child()->CreateSubscription(context, request);
+  return Child()->CreateSubscription(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::Subscription>
 SubscriberRoundRobin::GetSubscription(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::GetSubscriptionRequest const& request) {
-  return Child()->GetSubscription(context, request);
+  return Child()->GetSubscription(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::Subscription>
 SubscriberRoundRobin::UpdateSubscription(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::UpdateSubscriptionRequest const& request) {
-  return Child()->UpdateSubscription(context, request);
+  return Child()->UpdateSubscription(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::ListSubscriptionsResponse>
 SubscriberRoundRobin::ListSubscriptions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListSubscriptionsRequest const& request) {
-  return Child()->ListSubscriptions(context, request);
+  return Child()->ListSubscriptions(context, options, request);
 }
 
 Status SubscriberRoundRobin::DeleteSubscription(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::DeleteSubscriptionRequest const& request) {
-  return Child()->DeleteSubscription(context, request);
+  return Child()->DeleteSubscription(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::PullResponse> SubscriberRoundRobin::Pull(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::PullRequest const& request) {
-  return Child()->Pull(context, request);
+  return Child()->Pull(context, options, request);
 }
 
 std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
@@ -77,46 +77,46 @@ SubscriberRoundRobin::AsyncStreamingPull(
 }
 
 Status SubscriberRoundRobin::ModifyPushConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ModifyPushConfigRequest const& request) {
-  return Child()->ModifyPushConfig(context, request);
+  return Child()->ModifyPushConfig(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::Snapshot> SubscriberRoundRobin::GetSnapshot(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::GetSnapshotRequest const& request) {
-  return Child()->GetSnapshot(context, request);
+  return Child()->GetSnapshot(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::ListSnapshotsResponse>
 SubscriberRoundRobin::ListSnapshots(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListSnapshotsRequest const& request) {
-  return Child()->ListSnapshots(context, request);
+  return Child()->ListSnapshots(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::Snapshot> SubscriberRoundRobin::CreateSnapshot(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::CreateSnapshotRequest const& request) {
-  return Child()->CreateSnapshot(context, request);
+  return Child()->CreateSnapshot(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::Snapshot> SubscriberRoundRobin::UpdateSnapshot(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::UpdateSnapshotRequest const& request) {
-  return Child()->UpdateSnapshot(context, request);
+  return Child()->UpdateSnapshot(context, options, request);
 }
 
 Status SubscriberRoundRobin::DeleteSnapshot(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::DeleteSnapshotRequest const& request) {
-  return Child()->DeleteSnapshot(context, request);
+  return Child()->DeleteSnapshot(context, options, request);
 }
 
 StatusOr<google::pubsub::v1::SeekResponse> SubscriberRoundRobin::Seek(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::SeekRequest const& request) {
-  return Child()->Seek(context, request);
+  return Child()->Seek(context, options, request);
 }
 
 future<Status> SubscriberRoundRobin::AsyncModifyAckDeadline(

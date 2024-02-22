@@ -33,29 +33,29 @@ TagKeysAuth::TagKeysAuth(
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagKeysResponse>
 TagKeysAuth::ListTagKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListTagKeysRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTagKeys(context, request);
+  return child_->ListTagKeys(context, options, request);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::TagKey> TagKeysAuth::GetTagKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::GetTagKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTagKey(context, request);
+  return child_->GetTagKey(context, options, request);
 }
 
 StatusOr<google::cloud::resourcemanager::v3::TagKey>
 TagKeysAuth::GetNamespacedTagKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetNamespacedTagKey(context, request);
+  return child_->GetNamespacedTagKey(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> TagKeysAuth::AsyncCreateTagKey(
@@ -113,28 +113,28 @@ future<StatusOr<google::longrunning::Operation>> TagKeysAuth::AsyncDeleteTagKey(
 }
 
 StatusOr<google::iam::v1::Policy> TagKeysAuth::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> TagKeysAuth::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 TagKeysAuth::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> TagKeysAuth::AsyncGetOperation(

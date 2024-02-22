@@ -49,12 +49,12 @@ class ServiceUsageStub {
       google::api::serviceusage::v1::DisableServiceRequest const& request) = 0;
 
   virtual StatusOr<google::api::serviceusage::v1::Service> GetService(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::serviceusage::v1::GetServiceRequest const& request) = 0;
 
   virtual StatusOr<google::api::serviceusage::v1::ListServicesResponse>
   ListServices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::serviceusage::v1::ListServicesRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
@@ -65,7 +65,7 @@ class ServiceUsageStub {
           request) = 0;
 
   virtual StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
-  BatchGetServices(grpc::ClientContext& context,
+  BatchGetServices(grpc::ClientContext& context, Options const& options,
                    google::api::serviceusage::v1::BatchGetServicesRequest const&
                        request) = 0;
 
@@ -103,11 +103,11 @@ class DefaultServiceUsageStub : public ServiceUsageStub {
       override;
 
   StatusOr<google::api::serviceusage::v1::Service> GetService(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::serviceusage::v1::GetServiceRequest const& request) override;
 
   StatusOr<google::api::serviceusage::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::serviceusage::v1::ListServicesRequest const& request)
       override;
 
@@ -118,7 +118,7 @@ class DefaultServiceUsageStub : public ServiceUsageStub {
       override;
 
   StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
-  BatchGetServices(grpc::ClientContext& context,
+  BatchGetServices(grpc::ClientContext& context, Options const& options,
                    google::api::serviceusage::v1::BatchGetServicesRequest const&
                        request) override;
 

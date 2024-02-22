@@ -82,22 +82,23 @@ CertificateManagerConnectionImpl::ListCertificates(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::certificatemanager::v1::Certificate>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            certificatemanager_v1::CertificateManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::certificatemanager::v1::ListCertificatesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::certificatemanager::v1::
                        ListCertificatesRequest const& request) {
-              return stub->ListCertificates(context, request);
+              return stub->ListCertificates(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::certificatemanager::v1::ListCertificatesResponse r) {
         std::vector<google::cloud::certificatemanager::v1::Certificate> result(
@@ -116,10 +117,12 @@ CertificateManagerConnectionImpl::GetCertificate(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCertificate(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::certificatemanager::v1::GetCertificateRequest const&
-                 request) { return stub_->GetCertificate(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetCertificate(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
@@ -248,22 +251,22 @@ CertificateManagerConnectionImpl::ListCertificateMaps(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::certificatemanager::v1::CertificateMap>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            certificatemanager_v1::CertificateManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::certificatemanager::v1::
-              ListCertificateMapsRequest const& r) {
+          Options const& options, google::cloud::certificatemanager::v1::
+                                      ListCertificateMapsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::certificatemanager::v1::
                        ListCertificateMapsRequest const& request) {
-              return stub->ListCertificateMaps(context, request);
+              return stub->ListCertificateMaps(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::certificatemanager::v1::ListCertificateMapsResponse r) {
         std::vector<google::cloud::certificatemanager::v1::CertificateMap>
@@ -283,10 +286,12 @@ CertificateManagerConnectionImpl::GetCertificateMap(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCertificateMap(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::certificatemanager::v1::GetCertificateMapRequest const&
-              request) { return stub_->GetCertificateMap(context, request); },
-      request, __func__);
+              request) {
+        return stub_->GetCertificateMap(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
@@ -417,22 +422,23 @@ CertificateManagerConnectionImpl::ListCertificateMapEntries(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::certificatemanager::v1::CertificateMapEntry>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            certificatemanager_v1::CertificateManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::certificatemanager::v1::
               ListCertificateMapEntriesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::certificatemanager::v1::
                        ListCertificateMapEntriesRequest const& request) {
-              return stub->ListCertificateMapEntries(context, request);
+              return stub->ListCertificateMapEntries(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::certificatemanager::v1::
              ListCertificateMapEntriesResponse r) {
@@ -452,12 +458,12 @@ CertificateManagerConnectionImpl::GetCertificateMapEntry(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCertificateMapEntry(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::certificatemanager::v1::
                  GetCertificateMapEntryRequest const& request) {
-        return stub_->GetCertificateMapEntry(context, request);
+        return stub_->GetCertificateMapEntry(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
@@ -588,22 +594,22 @@ CertificateManagerConnectionImpl::ListDnsAuthorizations(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::certificatemanager::v1::DnsAuthorization>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            certificatemanager_v1::CertificateManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::certificatemanager::v1::
-              ListDnsAuthorizationsRequest const& r) {
+          Options const& options, google::cloud::certificatemanager::v1::
+                                      ListDnsAuthorizationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::certificatemanager::v1::
                        ListDnsAuthorizationsRequest const& request) {
-              return stub->ListDnsAuthorizations(context, request);
+              return stub->ListDnsAuthorizations(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::certificatemanager::v1::ListDnsAuthorizationsResponse
              r) {
@@ -623,12 +629,12 @@ CertificateManagerConnectionImpl::GetDnsAuthorization(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDnsAuthorization(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::certificatemanager::v1::
                  GetDnsAuthorizationRequest const& request) {
-        return stub_->GetDnsAuthorization(context, request);
+        return stub_->GetDnsAuthorization(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
@@ -759,22 +765,24 @@ CertificateManagerConnectionImpl::ListCertificateIssuanceConfigs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<StreamRange<
       google::cloud::certificatemanager::v1::CertificateIssuanceConfig>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            certificatemanager_v1::CertificateManagerRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::certificatemanager::v1::
               ListCertificateIssuanceConfigsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::certificatemanager::v1::
                        ListCertificateIssuanceConfigsRequest const& request) {
-              return stub->ListCertificateIssuanceConfigs(context, request);
+              return stub->ListCertificateIssuanceConfigs(context, options,
+                                                          request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::certificatemanager::v1::
              ListCertificateIssuanceConfigsResponse r) {
@@ -795,12 +803,12 @@ CertificateManagerConnectionImpl::GetCertificateIssuanceConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCertificateIssuanceConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::certificatemanager::v1::
                  GetCertificateIssuanceConfigRequest const& request) {
-        return stub_->GetCertificateIssuanceConfig(context, request);
+        return stub_->GetCertificateIssuanceConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<

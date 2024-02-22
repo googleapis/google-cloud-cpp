@@ -73,20 +73,21 @@ ConnectorsConnectionImpl::ListConnections(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::connectors::v1::Connection>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<connectors_v1::ConnectorsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::connectors::v1::ListConnectionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::connectors::v1::ListConnectionsRequest const&
                        request) {
-              return stub->ListConnections(context, request);
+              return stub->ListConnections(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::connectors::v1::ListConnectionsResponse r) {
         std::vector<google::cloud::connectors::v1::Connection> result(
@@ -105,11 +106,11 @@ ConnectorsConnectionImpl::GetConnection(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetConnection(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::connectors::v1::GetConnectionRequest const& request) {
-        return stub_->GetConnection(context, request);
+        return stub_->GetConnection(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
@@ -235,20 +236,21 @@ ConnectorsConnectionImpl::ListProviders(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::connectors::v1::Provider>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<connectors_v1::ConnectorsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::connectors::v1::ListProvidersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::connectors::v1::ListProvidersRequest const&
                        request) {
-              return stub->ListProviders(context, request);
+              return stub->ListProviders(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::connectors::v1::ListProvidersResponse r) {
         std::vector<google::cloud::connectors::v1::Provider> result(
@@ -266,11 +268,11 @@ ConnectorsConnectionImpl::GetProvider(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetProvider(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::connectors::v1::GetProviderRequest const& request) {
-        return stub_->GetProvider(context, request);
+        return stub_->GetProvider(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::connectors::v1::Connector>
@@ -282,20 +284,21 @@ ConnectorsConnectionImpl::ListConnectors(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::connectors::v1::Connector>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<connectors_v1::ConnectorsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::connectors::v1::ListConnectorsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::connectors::v1::ListConnectorsRequest const&
                        request) {
-              return stub->ListConnectors(context, request);
+              return stub->ListConnectors(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::connectors::v1::ListConnectorsResponse r) {
         std::vector<google::cloud::connectors::v1::Connector> result(
@@ -314,11 +317,11 @@ ConnectorsConnectionImpl::GetConnector(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetConnector(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::connectors::v1::GetConnectorRequest const& request) {
-        return stub_->GetConnector(context, request);
+        return stub_->GetConnector(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::connectors::v1::ConnectorVersion>
@@ -331,21 +334,22 @@ ConnectorsConnectionImpl::ListConnectorVersions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::connectors::v1::ConnectorVersion>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<connectors_v1::ConnectorsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::connectors::v1::ListConnectorVersionsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::connectors::v1::
                        ListConnectorVersionsRequest const& request) {
-              return stub->ListConnectorVersions(context, request);
+              return stub->ListConnectorVersions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::connectors::v1::ListConnectorVersionsResponse r) {
         std::vector<google::cloud::connectors::v1::ConnectorVersion> result(
@@ -363,12 +367,12 @@ ConnectorsConnectionImpl::GetConnectorVersion(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetConnectorVersion(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::connectors::v1::GetConnectorVersionRequest const&
                  request) {
-        return stub_->GetConnectorVersion(context, request);
+        return stub_->GetConnectorVersion(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
@@ -379,12 +383,12 @@ ConnectorsConnectionImpl::GetConnectionSchemaMetadata(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetConnectionSchemaMetadata(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::connectors::v1::
                  GetConnectionSchemaMetadataRequest const& request) {
-        return stub_->GetConnectionSchemaMetadata(context, request);
+        return stub_->GetConnectionSchemaMetadata(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>>
@@ -437,21 +441,22 @@ ConnectorsConnectionImpl::ListRuntimeEntitySchemas(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<connectors_v1::ConnectorsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::connectors::v1::
                        ListRuntimeEntitySchemasRequest const& request) {
-              return stub->ListRuntimeEntitySchemas(context, request);
+              return stub->ListRuntimeEntitySchemas(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse r) {
         std::vector<google::cloud::connectors::v1::RuntimeEntitySchema> result(
@@ -472,21 +477,22 @@ ConnectorsConnectionImpl::ListRuntimeActionSchemas(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::connectors::v1::RuntimeActionSchema>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<connectors_v1::ConnectorsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::connectors::v1::ListRuntimeActionSchemasRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::connectors::v1::
                        ListRuntimeActionSchemasRequest const& request) {
-              return stub->ListRuntimeActionSchemas(context, request);
+              return stub->ListRuntimeActionSchemas(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::connectors::v1::ListRuntimeActionSchemasResponse r) {
         std::vector<google::cloud::connectors::v1::RuntimeActionSchema> result(
@@ -504,10 +510,12 @@ ConnectorsConnectionImpl::GetRuntimeConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRuntimeConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::connectors::v1::GetRuntimeConfigRequest const&
-                 request) { return stub_->GetRuntimeConfig(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetRuntimeConfig(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::connectors::v1::Settings>
@@ -517,12 +525,12 @@ ConnectorsConnectionImpl::GetGlobalSettings(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetGlobalSettings(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::connectors::v1::GetGlobalSettingsRequest const&
                  request) {
-        return stub_->GetGlobalSettings(context, request);
+        return stub_->GetGlobalSettings(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

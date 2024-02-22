@@ -47,13 +47,13 @@ class SpecialistPoolServiceMetadata : public SpecialistPoolServiceStub {
       override;
 
   StatusOr<google::cloud::aiplatform::v1::SpecialistPool> GetSpecialistPool(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::GetSpecialistPoolRequest const& request)
       override;
 
   StatusOr<google::cloud::aiplatform::v1::ListSpecialistPoolsResponse>
   ListSpecialistPools(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::aiplatform::v1::ListSpecialistPoolsRequest const& request)
       override;
 

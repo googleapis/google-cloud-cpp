@@ -121,10 +121,12 @@ ManagedIdentitiesServiceConnectionImpl::ResetAdminPassword(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ResetAdminPassword(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
-              request) { return stub_->ResetAdminPassword(context, request); },
-      request, __func__);
+              request) {
+        return stub_->ResetAdminPassword(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::managedidentities::v1::Domain>
@@ -136,20 +138,23 @@ ManagedIdentitiesServiceConnectionImpl::ListDomains(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::managedidentities::v1::Domain>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            managedidentities_v1::ManagedIdentitiesServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::managedidentities::v1::ListDomainsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::managedidentities::v1::ListDomainsRequest const&
-                    request) { return stub->ListDomains(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListDomains(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::managedidentities::v1::ListDomainsResponse r) {
         std::vector<google::cloud::managedidentities::v1::Domain> result(
@@ -167,10 +172,12 @@ ManagedIdentitiesServiceConnectionImpl::GetDomain(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDomain(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::managedidentities::v1::GetDomainRequest const&
-                 request) { return stub_->GetDomain(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetDomain(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>

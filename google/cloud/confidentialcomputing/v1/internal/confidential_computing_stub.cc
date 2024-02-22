@@ -32,7 +32,7 @@ ConfidentialComputingStub::~ConfidentialComputingStub() = default;
 
 StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
 DefaultConfidentialComputingStub::CreateChallenge(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
         request) {
   google::cloud::confidentialcomputing::v1::Challenge response;
@@ -45,7 +45,7 @@ DefaultConfidentialComputingStub::CreateChallenge(
 
 StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
 DefaultConfidentialComputingStub::VerifyAttestation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
         request) {
   google::cloud::confidentialcomputing::v1::VerifyAttestationResponse response;

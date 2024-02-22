@@ -39,12 +39,12 @@ class ChangelogsLogging : public ChangelogsStub {
                     std::set<std::string> const& components);
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListChangelogsResponse>
-  ListChangelogs(grpc::ClientContext& context,
+  ListChangelogs(grpc::ClientContext& context, Options const& options,
                  google::cloud::dialogflow::cx::v3::ListChangelogsRequest const&
                      request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Changelog> GetChangelog(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request)
       override;
 

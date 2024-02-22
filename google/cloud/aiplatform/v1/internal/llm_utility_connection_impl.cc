@@ -67,11 +67,11 @@ LlmUtilityServiceConnectionImpl::CountTokens(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CountTokens(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::CountTokensRequest const& request) {
-        return stub_->CountTokens(context, request);
+        return stub_->CountTokens(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
@@ -82,11 +82,11 @@ LlmUtilityServiceConnectionImpl::ComputeTokens(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ComputeTokens(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::ComputeTokensRequest const& request) {
-        return stub_->ComputeTokens(context, request);
+        return stub_->ComputeTokens(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

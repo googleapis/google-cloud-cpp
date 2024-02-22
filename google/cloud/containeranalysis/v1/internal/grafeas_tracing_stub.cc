@@ -31,146 +31,150 @@ GrafeasTracingStub::GrafeasTracingStub(std::shared_ptr<GrafeasStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<grafeas::v1::Occurrence> GrafeasTracingStub::GetOccurrence(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::GetOccurrenceRequest const& request) {
   auto span = internal::MakeSpanGrpc("grafeas.v1.Grafeas", "GetOccurrence");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetOccurrence(context, request));
+                           child_->GetOccurrence(context, options, request));
 }
 
 StatusOr<grafeas::v1::ListOccurrencesResponse>
 GrafeasTracingStub::ListOccurrences(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::ListOccurrencesRequest const& request) {
   auto span = internal::MakeSpanGrpc("grafeas.v1.Grafeas", "ListOccurrences");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListOccurrences(context, request));
+                           child_->ListOccurrences(context, options, request));
 }
 
 Status GrafeasTracingStub::DeleteOccurrence(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::DeleteOccurrenceRequest const& request) {
   auto span = internal::MakeSpanGrpc("grafeas.v1.Grafeas", "DeleteOccurrence");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteOccurrence(context, request));
+                           child_->DeleteOccurrence(context, options, request));
 }
 
 StatusOr<grafeas::v1::Occurrence> GrafeasTracingStub::CreateOccurrence(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::CreateOccurrenceRequest const& request) {
   auto span = internal::MakeSpanGrpc("grafeas.v1.Grafeas", "CreateOccurrence");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateOccurrence(context, request));
+                           child_->CreateOccurrence(context, options, request));
 }
 
 StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>
 GrafeasTracingStub::BatchCreateOccurrences(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::BatchCreateOccurrencesRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("grafeas.v1.Grafeas", "BatchCreateOccurrences");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->BatchCreateOccurrences(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->BatchCreateOccurrences(context, options, request));
 }
 
 StatusOr<grafeas::v1::Occurrence> GrafeasTracingStub::UpdateOccurrence(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::UpdateOccurrenceRequest const& request) {
   auto span = internal::MakeSpanGrpc("grafeas.v1.Grafeas", "UpdateOccurrence");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateOccurrence(context, request));
+                           child_->UpdateOccurrence(context, options, request));
 }
 
 StatusOr<grafeas::v1::Note> GrafeasTracingStub::GetOccurrenceNote(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::GetOccurrenceNoteRequest const& request) {
   auto span = internal::MakeSpanGrpc("grafeas.v1.Grafeas", "GetOccurrenceNote");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetOccurrenceNote(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetOccurrenceNote(context, options, request));
 }
 
 StatusOr<grafeas::v1::Note> GrafeasTracingStub::GetNote(
-    grpc::ClientContext& context, grafeas::v1::GetNoteRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    grafeas::v1::GetNoteRequest const& request) {
   auto span = internal::MakeSpanGrpc("grafeas.v1.Grafeas", "GetNote");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetNote(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetNote(context, options, request));
 }
 
 StatusOr<grafeas::v1::ListNotesResponse> GrafeasTracingStub::ListNotes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::ListNotesRequest const& request) {
   auto span = internal::MakeSpanGrpc("grafeas.v1.Grafeas", "ListNotes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->ListNotes(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListNotes(context, options, request));
 }
 
 Status GrafeasTracingStub::DeleteNote(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::DeleteNoteRequest const& request) {
   auto span = internal::MakeSpanGrpc("grafeas.v1.Grafeas", "DeleteNote");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteNote(context, request));
+                           child_->DeleteNote(context, options, request));
 }
 
 StatusOr<grafeas::v1::Note> GrafeasTracingStub::CreateNote(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::CreateNoteRequest const& request) {
   auto span = internal::MakeSpanGrpc("grafeas.v1.Grafeas", "CreateNote");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateNote(context, request));
+                           child_->CreateNote(context, options, request));
 }
 
 StatusOr<grafeas::v1::BatchCreateNotesResponse>
 GrafeasTracingStub::BatchCreateNotes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::BatchCreateNotesRequest const& request) {
   auto span = internal::MakeSpanGrpc("grafeas.v1.Grafeas", "BatchCreateNotes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->BatchCreateNotes(context, request));
+                           child_->BatchCreateNotes(context, options, request));
 }
 
 StatusOr<grafeas::v1::Note> GrafeasTracingStub::UpdateNote(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::UpdateNoteRequest const& request) {
   auto span = internal::MakeSpanGrpc("grafeas.v1.Grafeas", "UpdateNote");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateNote(context, request));
+                           child_->UpdateNote(context, options, request));
 }
 
 StatusOr<grafeas::v1::ListNoteOccurrencesResponse>
 GrafeasTracingStub::ListNoteOccurrences(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     grafeas::v1::ListNoteOccurrencesRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("grafeas.v1.Grafeas", "ListNoteOccurrences");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListNoteOccurrences(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListNoteOccurrences(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

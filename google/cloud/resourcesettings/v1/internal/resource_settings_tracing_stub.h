@@ -39,17 +39,17 @@ class ResourceSettingsServiceTracingStub : public ResourceSettingsServiceStub {
       std::shared_ptr<ResourceSettingsServiceStub> child);
 
   StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
-  ListSettings(grpc::ClientContext& context,
+  ListSettings(grpc::ClientContext& context, Options const& options,
                google::cloud::resourcesettings::v1::ListSettingsRequest const&
                    request) override;
 
   StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcesettings::v1::GetSettingRequest const& request)
       override;
 
   StatusOr<google::cloud::resourcesettings::v1::Setting> UpdateSetting(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::resourcesettings::v1::UpdateSettingRequest const& request)
       override;
 

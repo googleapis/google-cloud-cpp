@@ -51,28 +51,28 @@ BatchControllerAuth::AsyncCreateBatch(
 }
 
 StatusOr<google::cloud::dataproc::v1::Batch> BatchControllerAuth::GetBatch(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetBatchRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetBatch(context, request);
+  return child_->GetBatch(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::ListBatchesResponse>
 BatchControllerAuth::ListBatches(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::ListBatchesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBatches(context, request);
+  return child_->ListBatches(context, options, request);
 }
 
 Status BatchControllerAuth::DeleteBatch(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::DeleteBatchRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteBatch(context, request);
+  return child_->DeleteBatch(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

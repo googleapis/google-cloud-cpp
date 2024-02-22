@@ -54,20 +54,20 @@ class RapidMigrationAssessmentStub {
 
   virtual StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>
   GetAnnotation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::rapidmigrationassessment::v1::GetAnnotationRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::rapidmigrationassessment::v1::ListCollectorsResponse>
   ListCollectors(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::rapidmigrationassessment::v1::ListCollectorsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>
   GetCollector(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::rapidmigrationassessment::v1::GetCollectorRequest const&
           request) = 0;
 
@@ -138,18 +138,18 @@ class DefaultRapidMigrationAssessmentStub
 
   StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>
   GetAnnotation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::rapidmigrationassessment::v1::GetAnnotationRequest const&
           request) override;
 
   StatusOr<google::cloud::rapidmigrationassessment::v1::ListCollectorsResponse>
   ListCollectors(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::rapidmigrationassessment::v1::ListCollectorsRequest const&
           request) override;
 
   StatusOr<google::cloud::rapidmigrationassessment::v1::Collector> GetCollector(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::rapidmigrationassessment::v1::GetCollectorRequest const&
           request) override;
 

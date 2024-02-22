@@ -33,20 +33,20 @@ DomainMappingsAuth::DomainMappingsAuth(
 
 StatusOr<google::appengine::v1::ListDomainMappingsResponse>
 DomainMappingsAuth::ListDomainMappings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListDomainMappingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDomainMappings(context, request);
+  return child_->ListDomainMappings(context, options, request);
 }
 
 StatusOr<google::appengine::v1::DomainMapping>
 DomainMappingsAuth::GetDomainMapping(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetDomainMappingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDomainMapping(context, request);
+  return child_->GetDomainMapping(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

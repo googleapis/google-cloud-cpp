@@ -33,7 +33,7 @@ DocumentSchemaServiceTracingStub::DocumentSchemaServiceTracingStub(
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DocumentSchemaServiceTracingStub::CreateDocumentSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -41,13 +41,13 @@ DocumentSchemaServiceTracingStub::CreateDocumentSchema(
       "CreateDocumentSchema");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateDocumentSchema(context, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateDocumentSchema(context, options, request));
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DocumentSchemaServiceTracingStub::UpdateDocumentSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -55,13 +55,13 @@ DocumentSchemaServiceTracingStub::UpdateDocumentSchema(
       "UpdateDocumentSchema");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateDocumentSchema(context, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateDocumentSchema(context, options, request));
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DocumentSchemaServiceTracingStub::GetDocumentSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -69,12 +69,12 @@ DocumentSchemaServiceTracingStub::GetDocumentSchema(
       "GetDocumentSchema");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetDocumentSchema(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetDocumentSchema(context, options, request));
 }
 
 Status DocumentSchemaServiceTracingStub::DeleteDocumentSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -82,13 +82,13 @@ Status DocumentSchemaServiceTracingStub::DeleteDocumentSchema(
       "DeleteDocumentSchema");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->DeleteDocumentSchema(context, request));
+  return internal::EndSpan(
+      context, *span, child_->DeleteDocumentSchema(context, options, request));
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::ListDocumentSchemasResponse>
 DocumentSchemaServiceTracingStub::ListDocumentSchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -96,8 +96,8 @@ DocumentSchemaServiceTracingStub::ListDocumentSchemas(
       "ListDocumentSchemas");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListDocumentSchemas(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListDocumentSchemas(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

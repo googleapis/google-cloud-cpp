@@ -33,7 +33,7 @@ PredictionServiceStub::~PredictionServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::PredictResponse>
 DefaultPredictionServiceStub::Predict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::PredictRequest const& request) {
   google::cloud::aiplatform::v1::PredictResponse response;
   auto status = grpc_stub_->Predict(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultPredictionServiceStub::Predict(
 }
 
 StatusOr<google::api::HttpBody> DefaultPredictionServiceStub::RawPredict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::RawPredictRequest const& request) {
   google::api::HttpBody response;
   auto status = grpc_stub_->RawPredict(&context, request, &response);
@@ -67,7 +67,7 @@ DefaultPredictionServiceStub::StreamRawPredict(
 
 StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
 DefaultPredictionServiceStub::DirectPredict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::DirectPredictRequest const& request) {
   google::cloud::aiplatform::v1::DirectPredictResponse response;
   auto status = grpc_stub_->DirectPredict(&context, request, &response);
@@ -79,7 +79,7 @@ DefaultPredictionServiceStub::DirectPredict(
 
 StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
 DefaultPredictionServiceStub::DirectRawPredict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::DirectRawPredictRequest const& request) {
   google::cloud::aiplatform::v1::DirectRawPredictResponse response;
   auto status = grpc_stub_->DirectRawPredict(&context, request, &response);
@@ -162,7 +162,7 @@ DefaultPredictionServiceStub::AsyncStreamingRawPredict(
 
 StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
 DefaultPredictionServiceStub::Explain(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ExplainRequest const& request) {
   google::cloud::aiplatform::v1::ExplainResponse response;
   auto status = grpc_stub_->Explain(&context, request, &response);
@@ -174,7 +174,7 @@ DefaultPredictionServiceStub::Explain(
 
 StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
 DefaultPredictionServiceStub::GenerateContent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GenerateContentRequest const& request) {
   google::cloud::aiplatform::v1::GenerateContentResponse response;
   auto status = grpc_stub_->GenerateContent(&context, request, &response);

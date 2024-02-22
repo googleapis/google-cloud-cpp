@@ -66,11 +66,11 @@ ContentServiceConnectionImpl::CreateContent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateContent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataplex::v1::CreateContentRequest const& request) {
-        return stub_->CreateContent(context, request);
+        return stub_->CreateContent(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataplex::v1::Content>
@@ -80,11 +80,11 @@ ContentServiceConnectionImpl::UpdateContent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateContent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataplex::v1::UpdateContentRequest const& request) {
-        return stub_->UpdateContent(context, request);
+        return stub_->UpdateContent(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status ContentServiceConnectionImpl::DeleteContent(
@@ -93,11 +93,11 @@ Status ContentServiceConnectionImpl::DeleteContent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteContent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataplex::v1::DeleteContentRequest const& request) {
-        return stub_->DeleteContent(context, request);
+        return stub_->DeleteContent(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dataplex::v1::Content>
@@ -107,11 +107,11 @@ ContentServiceConnectionImpl::GetContent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetContent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataplex::v1::GetContentRequest const& request) {
-        return stub_->GetContent(context, request);
+        return stub_->GetContent(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::Policy> ContentServiceConnectionImpl::GetIamPolicy(
@@ -120,11 +120,11 @@ StatusOr<google::iam::v1::Policy> ContentServiceConnectionImpl::GetIamPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
-        return stub_->GetIamPolicy(context, request);
+        return stub_->GetIamPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::Policy> ContentServiceConnectionImpl::SetIamPolicy(
@@ -133,11 +133,11 @@ StatusOr<google::iam::v1::Policy> ContentServiceConnectionImpl::SetIamPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
-        return stub_->SetIamPolicy(context, request);
+        return stub_->SetIamPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
@@ -147,11 +147,11 @@ ContentServiceConnectionImpl::TestIamPermissions(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TestIamPermissions(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
-        return stub_->TestIamPermissions(context, request);
+        return stub_->TestIamPermissions(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::dataplex::v1::Content>
@@ -163,18 +163,21 @@ ContentServiceConnectionImpl::ListContent(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dataplex::v1::Content>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dataplex_v1::ContentServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dataplex::v1::ListContentRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::dataplex::v1::ListContentRequest const&
-                       request) { return stub->ListContent(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListContent(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::dataplex::v1::ListContentResponse r) {
         std::vector<google::cloud::dataplex::v1::Content> result(

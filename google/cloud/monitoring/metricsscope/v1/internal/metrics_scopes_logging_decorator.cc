@@ -37,29 +37,32 @@ MetricsScopesLogging::MetricsScopesLogging(
 
 StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
 MetricsScopesLogging::GetMetricsScope(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
-                 request) { return child_->GetMetricsScope(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetMetricsScope(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::metricsscope::v1::
              ListMetricsScopesByMonitoredProjectResponse>
 MetricsScopesLogging::ListMetricsScopesByMonitoredProject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::metricsscope::v1::
         ListMetricsScopesByMonitoredProjectRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::metricsscope::v1::
                  ListMetricsScopesByMonitoredProjectRequest const& request) {
-        return child_->ListMetricsScopesByMonitoredProject(context, request);
+        return child_->ListMetricsScopesByMonitoredProject(context, options,
+                                                           request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

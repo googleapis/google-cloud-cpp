@@ -32,7 +32,7 @@ WebhooksStub::~WebhooksStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListWebhooksResponse>
 DefaultWebhooksStub::ListWebhooks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ListWebhooksRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListWebhooksResponse response;
   auto status = grpc_stub_->ListWebhooks(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultWebhooksStub::ListWebhooks(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 DefaultWebhooksStub::GetWebhook(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) {
   google::cloud::dialogflow::cx::v3::Webhook response;
   auto status = grpc_stub_->GetWebhook(&context, request, &response);
@@ -56,7 +56,7 @@ DefaultWebhooksStub::GetWebhook(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 DefaultWebhooksStub::CreateWebhook(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request) {
   google::cloud::dialogflow::cx::v3::Webhook response;
   auto status = grpc_stub_->CreateWebhook(&context, request, &response);
@@ -68,7 +68,7 @@ DefaultWebhooksStub::CreateWebhook(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 DefaultWebhooksStub::UpdateWebhook(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request) {
   google::cloud::dialogflow::cx::v3::Webhook response;
   auto status = grpc_stub_->UpdateWebhook(&context, request, &response);
@@ -79,7 +79,7 @@ DefaultWebhooksStub::UpdateWebhook(
 }
 
 Status DefaultWebhooksStub::DeleteWebhook(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteWebhook(&context, request, &response);

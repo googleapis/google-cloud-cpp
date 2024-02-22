@@ -33,20 +33,20 @@ CloudDeployAuth::CloudDeployAuth(
 
 StatusOr<google::cloud::deploy::v1::ListDeliveryPipelinesResponse>
 CloudDeployAuth::ListDeliveryPipelines(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::ListDeliveryPipelinesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDeliveryPipelines(context, request);
+  return child_->ListDeliveryPipelines(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::DeliveryPipeline>
 CloudDeployAuth::GetDeliveryPipeline(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::GetDeliveryPipelineRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDeliveryPipeline(context, request);
+  return child_->GetDeliveryPipeline(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -108,28 +108,28 @@ CloudDeployAuth::AsyncDeleteDeliveryPipeline(
 
 StatusOr<google::cloud::deploy::v1::ListTargetsResponse>
 CloudDeployAuth::ListTargets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::ListTargetsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTargets(context, request);
+  return child_->ListTargets(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::RollbackTargetResponse>
 CloudDeployAuth::RollbackTarget(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::RollbackTargetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RollbackTarget(context, request);
+  return child_->RollbackTarget(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::Target> CloudDeployAuth::GetTarget(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::GetTargetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTarget(context, request);
+  return child_->GetTarget(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -191,20 +191,20 @@ CloudDeployAuth::AsyncDeleteTarget(
 
 StatusOr<google::cloud::deploy::v1::ListCustomTargetTypesResponse>
 CloudDeployAuth::ListCustomTargetTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::ListCustomTargetTypesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCustomTargetTypes(context, request);
+  return child_->ListCustomTargetTypes(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::CustomTargetType>
 CloudDeployAuth::GetCustomTargetType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCustomTargetType(context, request);
+  return child_->GetCustomTargetType(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -266,19 +266,19 @@ CloudDeployAuth::AsyncDeleteCustomTargetType(
 
 StatusOr<google::cloud::deploy::v1::ListReleasesResponse>
 CloudDeployAuth::ListReleases(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::ListReleasesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListReleases(context, request);
+  return child_->ListReleases(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::Release> CloudDeployAuth::GetRelease(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::GetReleaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetRelease(context, request);
+  return child_->GetRelease(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -302,55 +302,55 @@ CloudDeployAuth::AsyncCreateRelease(
 
 StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse>
 CloudDeployAuth::AbandonRelease(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::AbandonReleaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->AbandonRelease(context, request);
+  return child_->AbandonRelease(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>
 CloudDeployAuth::ApproveRollout(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::ApproveRolloutRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ApproveRollout(context, request);
+  return child_->ApproveRollout(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>
 CloudDeployAuth::AdvanceRollout(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::AdvanceRolloutRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->AdvanceRollout(context, request);
+  return child_->AdvanceRollout(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>
 CloudDeployAuth::CancelRollout(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::CancelRolloutRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CancelRollout(context, request);
+  return child_->CancelRollout(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::ListRolloutsResponse>
 CloudDeployAuth::ListRollouts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::ListRolloutsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListRollouts(context, request);
+  return child_->ListRollouts(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::Rollout> CloudDeployAuth::GetRollout(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::GetRolloutRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetRollout(context, request);
+  return child_->GetRollout(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -374,53 +374,53 @@ CloudDeployAuth::AsyncCreateRollout(
 
 StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>
 CloudDeployAuth::IgnoreJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::IgnoreJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->IgnoreJob(context, request);
+  return child_->IgnoreJob(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::RetryJobResponse> CloudDeployAuth::RetryJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::RetryJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RetryJob(context, request);
+  return child_->RetryJob(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::ListJobRunsResponse>
 CloudDeployAuth::ListJobRuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::ListJobRunsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListJobRuns(context, request);
+  return child_->ListJobRuns(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::JobRun> CloudDeployAuth::GetJobRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::GetJobRunRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetJobRun(context, request);
+  return child_->GetJobRun(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>
 CloudDeployAuth::TerminateJobRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::TerminateJobRunRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TerminateJobRun(context, request);
+  return child_->TerminateJobRun(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::Config> CloudDeployAuth::GetConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::GetConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetConfig(context, request);
+  return child_->GetConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -481,47 +481,47 @@ CloudDeployAuth::AsyncDeleteAutomation(
 }
 
 StatusOr<google::cloud::deploy::v1::Automation> CloudDeployAuth::GetAutomation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::GetAutomationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAutomation(context, request);
+  return child_->GetAutomation(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::ListAutomationsResponse>
 CloudDeployAuth::ListAutomations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::ListAutomationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAutomations(context, request);
+  return child_->ListAutomations(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::AutomationRun>
 CloudDeployAuth::GetAutomationRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::GetAutomationRunRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAutomationRun(context, request);
+  return child_->GetAutomationRun(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::ListAutomationRunsResponse>
 CloudDeployAuth::ListAutomationRuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::ListAutomationRunsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAutomationRuns(context, request);
+  return child_->ListAutomationRuns(context, options, request);
 }
 
 StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse>
 CloudDeployAuth::CancelAutomationRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::deploy::v1::CancelAutomationRunRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CancelAutomationRun(context, request);
+  return child_->CancelAutomationRun(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

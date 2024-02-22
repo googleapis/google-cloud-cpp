@@ -66,10 +66,12 @@ ProfilerServiceConnectionImpl::CreateProfile(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateProfile(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::cloudprofiler::v2::CreateProfileRequest const&
-                 request) { return stub_->CreateProfile(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreateProfile(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
@@ -80,12 +82,12 @@ ProfilerServiceConnectionImpl::CreateOfflineProfile(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateOfflineProfile(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::cloudprofiler::v2::
                  CreateOfflineProfileRequest const& request) {
-        return stub_->CreateOfflineProfile(context, request);
+        return stub_->CreateOfflineProfile(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
@@ -95,10 +97,12 @@ ProfilerServiceConnectionImpl::UpdateProfile(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateProfile(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::cloudprofiler::v2::UpdateProfileRequest const&
-                 request) { return stub_->UpdateProfile(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->UpdateProfile(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

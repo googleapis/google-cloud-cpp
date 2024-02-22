@@ -47,13 +47,13 @@ class ConversationDatasetsTracingStub : public ConversationDatasetsStub {
 
   StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
   GetConversationDataset(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::v2::ListConversationDatasetsResponse>
   ListConversationDatasets(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListConversationDatasetsRequest const&
           request) override;
 

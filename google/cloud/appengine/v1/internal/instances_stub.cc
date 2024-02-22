@@ -33,7 +33,7 @@ InstancesStub::~InstancesStub() = default;
 
 StatusOr<google::appengine::v1::ListInstancesResponse>
 DefaultInstancesStub::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::ListInstancesRequest const& request) {
   google::appengine::v1::ListInstancesResponse response;
   auto status = grpc_stub_->ListInstances(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultInstancesStub::ListInstances(
 }
 
 StatusOr<google::appengine::v1::Instance> DefaultInstancesStub::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::GetInstanceRequest const& request) {
   google::appengine::v1::Instance response;
   auto status = grpc_stub_->GetInstance(&context, request, &response);

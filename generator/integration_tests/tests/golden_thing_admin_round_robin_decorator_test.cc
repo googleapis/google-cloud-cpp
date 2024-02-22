@@ -83,8 +83,7 @@ TEST(GoldenThingAdminRoundRobinDecoratorTest, DropDatabase) {
   GoldenThingAdminRoundRobin stub(AsPlainStubs(mocks));
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
     grpc::ClientContext context;
-    auto status = stub.DropDatabase(
-        context, google::test::admin::database::v1::DropDatabaseRequest{});
+    auto status = stub.DropDatabase(context, Options{}, {});
     EXPECT_STATUS_OK(status);
   }
 }

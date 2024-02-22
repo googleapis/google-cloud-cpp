@@ -38,7 +38,7 @@ class SimulatorTracingStub : public SimulatorStub {
   explicit SimulatorTracingStub(std::shared_ptr<SimulatorStub> child);
 
   StatusOr<google::cloud::policysimulator::v1::Replay> GetReplay(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::policysimulator::v1::GetReplayRequest const& request)
       override;
 
@@ -50,7 +50,7 @@ class SimulatorTracingStub : public SimulatorStub {
 
   StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse>
   ListReplayResults(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::policysimulator::v1::ListReplayResultsRequest const&
           request) override;
 

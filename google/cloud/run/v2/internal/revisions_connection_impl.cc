@@ -68,11 +68,11 @@ StatusOr<google::cloud::run::v2::Revision> RevisionsConnectionImpl::GetRevision(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRevision(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::run::v2::GetRevisionRequest const& request) {
-        return stub_->GetRevision(context, request);
+        return stub_->GetRevision(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::run::v2::Revision>
@@ -84,20 +84,21 @@ RevisionsConnectionImpl::ListRevisions(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::run::v2::Revision>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<run_v2::RevisionsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::run::v2::ListRevisionsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::run::v2::ListRevisionsRequest const& request) {
-              return stub->ListRevisions(context, request);
+              return stub->ListRevisions(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::run::v2::ListRevisionsResponse r) {
         std::vector<google::cloud::run::v2::Revision> result(

@@ -33,14 +33,14 @@ CompletionTracingStub::CompletionTracingStub(
 
 StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
 CompletionTracingStub::CompleteQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::CompleteQueryRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.talent.v4.Completion",
                                      "CompleteQuery");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CompleteQuery(context, request));
+                           child_->CompleteQuery(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

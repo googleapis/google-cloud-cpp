@@ -33,10 +33,11 @@ GoldenThingAdminAuth::GoldenThingAdminAuth(
 
 StatusOr<google::test::admin::database::v1::ListDatabasesResponse> GoldenThingAdminAuth::ListDatabases(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ListDatabasesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDatabases(context, request);
+  return child_->ListDatabases(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -59,10 +60,11 @@ GoldenThingAdminAuth::AsyncCreateDatabase(
 
 StatusOr<google::test::admin::database::v1::Database> GoldenThingAdminAuth::GetDatabase(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GetDatabaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDatabase(context, request);
+  return child_->GetDatabase(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -85,42 +87,47 @@ GoldenThingAdminAuth::AsyncUpdateDatabaseDdl(
 
 Status GoldenThingAdminAuth::DropDatabase(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::DropDatabaseRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DropDatabase(context, request);
+  return child_->DropDatabase(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse> GoldenThingAdminAuth::GetDatabaseDdl(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDatabaseDdl(context, request);
+  return child_->GetDatabaseDdl(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> GoldenThingAdminAuth::SetIamPolicy(
     grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> GoldenThingAdminAuth::GetIamPolicy(
     grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse> GoldenThingAdminAuth::TestIamPermissions(
     grpc::ClientContext& context,
+    Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -143,34 +150,38 @@ GoldenThingAdminAuth::AsyncCreateBackup(
 
 StatusOr<google::test::admin::database::v1::Backup> GoldenThingAdminAuth::GetBackup(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::GetBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetBackup(context, request);
+  return child_->GetBackup(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::Backup> GoldenThingAdminAuth::UpdateBackup(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::UpdateBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateBackup(context, request);
+  return child_->UpdateBackup(context, options, request);
 }
 
 Status GoldenThingAdminAuth::DeleteBackup(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::DeleteBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteBackup(context, request);
+  return child_->DeleteBackup(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::ListBackupsResponse> GoldenThingAdminAuth::ListBackups(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ListBackupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBackups(context, request);
+  return child_->ListBackups(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -193,18 +204,20 @@ GoldenThingAdminAuth::AsyncRestoreDatabase(
 
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> GoldenThingAdminAuth::ListDatabaseOperations(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDatabaseOperations(context, request);
+  return child_->ListDatabaseOperations(context, options, request);
 }
 
 StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse> GoldenThingAdminAuth::ListBackupOperations(
     grpc::ClientContext& context,
+    Options const& options,
     google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListBackupOperations(context, request);
+  return child_->ListBackupOperations(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

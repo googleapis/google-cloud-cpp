@@ -32,7 +32,7 @@ OrgPolicyStub::~OrgPolicyStub() = default;
 
 StatusOr<google::cloud::orgpolicy::v2::ListConstraintsResponse>
 DefaultOrgPolicyStub::ListConstraints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orgpolicy::v2::ListConstraintsRequest const& request) {
   google::cloud::orgpolicy::v2::ListConstraintsResponse response;
   auto status = grpc_stub_->ListConstraints(&context, request, &response);
@@ -44,7 +44,7 @@ DefaultOrgPolicyStub::ListConstraints(
 
 StatusOr<google::cloud::orgpolicy::v2::ListPoliciesResponse>
 DefaultOrgPolicyStub::ListPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orgpolicy::v2::ListPoliciesRequest const& request) {
   google::cloud::orgpolicy::v2::ListPoliciesResponse response;
   auto status = grpc_stub_->ListPolicies(&context, request, &response);
@@ -55,7 +55,7 @@ DefaultOrgPolicyStub::ListPolicies(
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy> DefaultOrgPolicyStub::GetPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orgpolicy::v2::GetPolicyRequest const& request) {
   google::cloud::orgpolicy::v2::Policy response;
   auto status = grpc_stub_->GetPolicy(&context, request, &response);
@@ -67,7 +67,7 @@ StatusOr<google::cloud::orgpolicy::v2::Policy> DefaultOrgPolicyStub::GetPolicy(
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
 DefaultOrgPolicyStub::GetEffectivePolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request) {
   google::cloud::orgpolicy::v2::Policy response;
   auto status = grpc_stub_->GetEffectivePolicy(&context, request, &response);
@@ -79,7 +79,7 @@ DefaultOrgPolicyStub::GetEffectivePolicy(
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
 DefaultOrgPolicyStub::CreatePolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) {
   google::cloud::orgpolicy::v2::Policy response;
   auto status = grpc_stub_->CreatePolicy(&context, request, &response);
@@ -91,7 +91,7 @@ DefaultOrgPolicyStub::CreatePolicy(
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
 DefaultOrgPolicyStub::UpdatePolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) {
   google::cloud::orgpolicy::v2::Policy response;
   auto status = grpc_stub_->UpdatePolicy(&context, request, &response);
@@ -102,7 +102,7 @@ DefaultOrgPolicyStub::UpdatePolicy(
 }
 
 Status DefaultOrgPolicyStub::DeletePolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeletePolicy(&context, request, &response);
@@ -114,7 +114,7 @@ Status DefaultOrgPolicyStub::DeletePolicy(
 
 StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
 DefaultOrgPolicyStub::CreateCustomConstraint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
         request) {
   google::cloud::orgpolicy::v2::CustomConstraint response;
@@ -128,7 +128,7 @@ DefaultOrgPolicyStub::CreateCustomConstraint(
 
 StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
 DefaultOrgPolicyStub::UpdateCustomConstraint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
         request) {
   google::cloud::orgpolicy::v2::CustomConstraint response;
@@ -142,7 +142,7 @@ DefaultOrgPolicyStub::UpdateCustomConstraint(
 
 StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
 DefaultOrgPolicyStub::GetCustomConstraint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request) {
   google::cloud::orgpolicy::v2::CustomConstraint response;
   auto status = grpc_stub_->GetCustomConstraint(&context, request, &response);
@@ -154,7 +154,7 @@ DefaultOrgPolicyStub::GetCustomConstraint(
 
 StatusOr<google::cloud::orgpolicy::v2::ListCustomConstraintsResponse>
 DefaultOrgPolicyStub::ListCustomConstraints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orgpolicy::v2::ListCustomConstraintsRequest const& request) {
   google::cloud::orgpolicy::v2::ListCustomConstraintsResponse response;
   auto status = grpc_stub_->ListCustomConstraints(&context, request, &response);
@@ -165,7 +165,7 @@ DefaultOrgPolicyStub::ListCustomConstraints(
 }
 
 Status DefaultOrgPolicyStub::DeleteCustomConstraint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
         request) {
   google::protobuf::Empty response;

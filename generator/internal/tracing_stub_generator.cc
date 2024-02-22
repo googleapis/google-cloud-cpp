@@ -205,25 +205,21 @@ $tracing_stub_class_name$::$method_name$(
 )""");
       continue;
     }
-    CcPrintMethod(
-        method,
-        {MethodPattern({{IsResponseTypeEmpty,
-                         R"""(
-Status $tracing_stub_class_name$::$method_name$()""",
-                         R"""(
-StatusOr<$response_type$> $tracing_stub_class_name$::$method_name$()"""},
-                        {R"""(
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  IsResponseTypeEmpty(method) ? "\nStatus"
+                                              : "\nStatusOr<$response_type$>");
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  R"""( $tracing_stub_class_name$::$method_name$(
     grpc::ClientContext& context,
+    Options const& options,
     $request_type$ const& request) {
   auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->$method_name$(context, request));
+                           child_->$method_name$(context, options, request));
 }
-)"""}},
-                       And(IsNonStreaming, Not(IsLongrunningOperation)))},
-        __FILE__, __LINE__);
+)""");
   }
 
   for (auto const& method : async_methods()) {

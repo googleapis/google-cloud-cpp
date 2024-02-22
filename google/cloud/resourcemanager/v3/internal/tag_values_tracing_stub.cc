@@ -32,39 +32,39 @@ TagValuesTracingStub::TagValuesTracingStub(std::shared_ptr<TagValuesStub> child)
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagValuesResponse>
 TagValuesTracingStub::ListTagValues(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::ListTagValuesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.resourcemanager.v3.TagValues", "ListTagValues");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListTagValues(context, request));
+                           child_->ListTagValues(context, options, request));
 }
 
 StatusOr<google::cloud::resourcemanager::v3::TagValue>
 TagValuesTracingStub::GetTagValue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::GetTagValueRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.resourcemanager.v3.TagValues", "GetTagValue");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetTagValue(context, request));
+                           child_->GetTagValue(context, options, request));
 }
 
 StatusOr<google::cloud::resourcemanager::v3::TagValue>
 TagValuesTracingStub::GetNamespacedTagValue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcemanager::v3::GetNamespacedTagValueRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.resourcemanager.v3.TagValues", "GetNamespacedTagValue");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetNamespacedTagValue(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetNamespacedTagValue(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -107,37 +107,37 @@ TagValuesTracingStub::AsyncDeleteTagValue(
 }
 
 StatusOr<google::iam::v1::Policy> TagValuesTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.resourcemanager.v3.TagValues", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetIamPolicy(context, request));
+                           child_->GetIamPolicy(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy> TagValuesTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.resourcemanager.v3.TagValues", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->SetIamPolicy(context, request));
+                           child_->SetIamPolicy(context, options, request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 TagValuesTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.resourcemanager.v3.TagValues", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

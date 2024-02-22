@@ -33,52 +33,52 @@ FirewallAuth::FirewallAuth(
 
 StatusOr<google::appengine::v1::ListIngressRulesResponse>
 FirewallAuth::ListIngressRules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListIngressRulesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListIngressRules(context, request);
+  return child_->ListIngressRules(context, options, request);
 }
 
 StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
 FirewallAuth::BatchUpdateIngressRules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::BatchUpdateIngressRulesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->BatchUpdateIngressRules(context, request);
+  return child_->BatchUpdateIngressRules(context, options, request);
 }
 
 StatusOr<google::appengine::v1::FirewallRule> FirewallAuth::CreateIngressRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::CreateIngressRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateIngressRule(context, request);
+  return child_->CreateIngressRule(context, options, request);
 }
 
 StatusOr<google::appengine::v1::FirewallRule> FirewallAuth::GetIngressRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetIngressRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIngressRule(context, request);
+  return child_->GetIngressRule(context, options, request);
 }
 
 StatusOr<google::appengine::v1::FirewallRule> FirewallAuth::UpdateIngressRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::UpdateIngressRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateIngressRule(context, request);
+  return child_->UpdateIngressRule(context, options, request);
 }
 
 Status FirewallAuth::DeleteIngressRule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::DeleteIngressRuleRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteIngressRule(context, request);
+  return child_->DeleteIngressRule(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

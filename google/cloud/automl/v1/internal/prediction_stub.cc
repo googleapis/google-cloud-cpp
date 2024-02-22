@@ -33,7 +33,7 @@ PredictionServiceStub::~PredictionServiceStub() = default;
 
 StatusOr<google::cloud::automl::v1::PredictResponse>
 DefaultPredictionServiceStub::Predict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::automl::v1::PredictRequest const& request) {
   google::cloud::automl::v1::PredictResponse response;
   auto status = grpc_stub_->Predict(&context, request, &response);

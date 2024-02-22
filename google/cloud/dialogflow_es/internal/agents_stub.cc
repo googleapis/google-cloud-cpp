@@ -32,7 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AgentsStub::~AgentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::Agent> DefaultAgentsStub::GetAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::GetAgentRequest const& request) {
   google::cloud::dialogflow::v2::Agent response;
   auto status = grpc_stub_->GetAgent(&context, request, &response);
@@ -43,7 +43,7 @@ StatusOr<google::cloud::dialogflow::v2::Agent> DefaultAgentsStub::GetAgent(
 }
 
 StatusOr<google::cloud::dialogflow::v2::Agent> DefaultAgentsStub::SetAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::SetAgentRequest const& request) {
   google::cloud::dialogflow::v2::Agent response;
   auto status = grpc_stub_->SetAgent(&context, request, &response);
@@ -54,7 +54,7 @@ StatusOr<google::cloud::dialogflow::v2::Agent> DefaultAgentsStub::SetAgent(
 }
 
 Status DefaultAgentsStub::DeleteAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::DeleteAgentRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteAgent(&context, request, &response);
@@ -66,7 +66,7 @@ Status DefaultAgentsStub::DeleteAgent(
 
 StatusOr<google::cloud::dialogflow::v2::SearchAgentsResponse>
 DefaultAgentsStub::SearchAgents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::SearchAgentsRequest const& request) {
   google::cloud::dialogflow::v2::SearchAgentsResponse response;
   auto status = grpc_stub_->SearchAgents(&context, request, &response);
@@ -146,7 +146,7 @@ DefaultAgentsStub::AsyncRestoreAgent(
 
 StatusOr<google::cloud::dialogflow::v2::ValidationResult>
 DefaultAgentsStub::GetValidationResult(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::GetValidationResultRequest const& request) {
   google::cloud::dialogflow::v2::ValidationResult response;
   auto status = grpc_stub_->GetValidationResult(&context, request, &response);

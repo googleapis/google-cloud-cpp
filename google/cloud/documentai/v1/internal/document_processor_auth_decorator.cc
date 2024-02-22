@@ -33,11 +33,11 @@ DocumentProcessorServiceAuth::DocumentProcessorServiceAuth(
 
 StatusOr<google::cloud::documentai::v1::ProcessResponse>
 DocumentProcessorServiceAuth::ProcessDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::ProcessRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ProcessDocument(context, request);
+  return child_->ProcessDocument(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -61,47 +61,47 @@ DocumentProcessorServiceAuth::AsyncBatchProcessDocuments(
 
 StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
 DocumentProcessorServiceAuth::FetchProcessorTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::FetchProcessorTypesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->FetchProcessorTypes(context, request);
+  return child_->FetchProcessorTypes(context, options, request);
 }
 
 StatusOr<google::cloud::documentai::v1::ListProcessorTypesResponse>
 DocumentProcessorServiceAuth::ListProcessorTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::ListProcessorTypesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListProcessorTypes(context, request);
+  return child_->ListProcessorTypes(context, options, request);
 }
 
 StatusOr<google::cloud::documentai::v1::ProcessorType>
 DocumentProcessorServiceAuth::GetProcessorType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::GetProcessorTypeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetProcessorType(context, request);
+  return child_->GetProcessorType(context, options, request);
 }
 
 StatusOr<google::cloud::documentai::v1::ListProcessorsResponse>
 DocumentProcessorServiceAuth::ListProcessors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::ListProcessorsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListProcessors(context, request);
+  return child_->ListProcessors(context, options, request);
 }
 
 StatusOr<google::cloud::documentai::v1::Processor>
 DocumentProcessorServiceAuth::GetProcessor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::GetProcessorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetProcessor(context, request);
+  return child_->GetProcessor(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -126,21 +126,21 @@ DocumentProcessorServiceAuth::AsyncTrainProcessorVersion(
 
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DocumentProcessorServiceAuth::GetProcessorVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::GetProcessorVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetProcessorVersion(context, request);
+  return child_->GetProcessorVersion(context, options, request);
 }
 
 StatusOr<google::cloud::documentai::v1::ListProcessorVersionsResponse>
 DocumentProcessorServiceAuth::ListProcessorVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::ListProcessorVersionsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListProcessorVersions(context, request);
+  return child_->ListProcessorVersions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -205,11 +205,11 @@ DocumentProcessorServiceAuth::AsyncUndeployProcessorVersion(
 
 StatusOr<google::cloud::documentai::v1::Processor>
 DocumentProcessorServiceAuth::CreateProcessor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::CreateProcessorRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateProcessor(context, request);
+  return child_->CreateProcessor(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -330,20 +330,20 @@ DocumentProcessorServiceAuth::AsyncEvaluateProcessorVersion(
 
 StatusOr<google::cloud::documentai::v1::Evaluation>
 DocumentProcessorServiceAuth::GetEvaluation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::GetEvaluationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEvaluation(context, request);
+  return child_->GetEvaluation(context, options, request);
 }
 
 StatusOr<google::cloud::documentai::v1::ListEvaluationsResponse>
 DocumentProcessorServiceAuth::ListEvaluations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::documentai::v1::ListEvaluationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEvaluations(context, request);
+  return child_->ListEvaluations(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

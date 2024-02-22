@@ -39,7 +39,7 @@ class CloudShellServiceTracingStub : public CloudShellServiceStub {
       std::shared_ptr<CloudShellServiceStub> child);
 
   StatusOr<google::cloud::shell::v1::Environment> GetEnvironment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::shell::v1::GetEnvironmentRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStartEnvironment(

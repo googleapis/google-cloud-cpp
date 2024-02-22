@@ -44,68 +44,68 @@ ServingConfigServiceMetadata::ServingConfigServiceMetadata(
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceMetadata::CreateServingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::CreateServingConfigRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateServingConfig(context, request);
+  return child_->CreateServingConfig(context, options, request);
 }
 
 Status ServingConfigServiceMetadata::DeleteServingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::DeleteServingConfigRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteServingConfig(context, request);
+  return child_->DeleteServingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceMetadata::UpdateServingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::UpdateServingConfigRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("serving_config.name=",
                    internal::UrlEncode(request.serving_config().name())));
-  return child_->UpdateServingConfig(context, request);
+  return child_->UpdateServingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceMetadata::GetServingConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::GetServingConfigRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetServingConfig(context, request);
+  return child_->GetServingConfig(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ListServingConfigsResponse>
 ServingConfigServiceMetadata::ListServingConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::ListServingConfigsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListServingConfigs(context, request);
+  return child_->ListServingConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceMetadata::AddControl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::AddControlRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("serving_config=",
                            internal::UrlEncode(request.serving_config())));
-  return child_->AddControl(context, request);
+  return child_->AddControl(context, options, request);
 }
 
 StatusOr<google::cloud::retail::v2::ServingConfig>
 ServingConfigServiceMetadata::RemoveControl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::RemoveControlRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("serving_config=",
                            internal::UrlEncode(request.serving_config())));
-  return child_->RemoveControl(context, request);
+  return child_->RemoveControl(context, options, request);
 }
 
 void ServingConfigServiceMetadata::SetMetadata(

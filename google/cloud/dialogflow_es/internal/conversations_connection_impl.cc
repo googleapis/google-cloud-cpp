@@ -67,12 +67,12 @@ ConversationsConnectionImpl::CreateConversation(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateConversation(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::CreateConversationRequest const&
                  request) {
-        return stub_->CreateConversation(context, request);
+        return stub_->CreateConversation(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::dialogflow::v2::Conversation>
@@ -84,21 +84,22 @@ ConversationsConnectionImpl::ListConversations(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::v2::Conversation>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dialogflow_es::ConversationsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dialogflow::v2::ListConversationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::dialogflow::v2::ListConversationsRequest const&
                     request) {
-              return stub->ListConversations(context, request);
+              return stub->ListConversations(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dialogflow::v2::ListConversationsResponse r) {
         std::vector<google::cloud::dialogflow::v2::Conversation> result(
@@ -116,10 +117,12 @@ ConversationsConnectionImpl::GetConversation(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetConversation(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::GetConversationRequest const&
-                 request) { return stub_->GetConversation(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetConversation(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
@@ -129,12 +132,12 @@ ConversationsConnectionImpl::CompleteConversation(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CompleteConversation(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::CompleteConversationRequest const&
                  request) {
-        return stub_->CompleteConversation(context, request);
+        return stub_->CompleteConversation(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::dialogflow::v2::Message>
@@ -146,20 +149,21 @@ ConversationsConnectionImpl::ListMessages(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::v2::Message>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dialogflow_es::ConversationsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dialogflow::v2::ListMessagesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::dialogflow::v2::ListMessagesRequest const&
                        request) {
-              return stub->ListMessages(context, request);
+              return stub->ListMessages(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::dialogflow::v2::ListMessagesResponse r) {
         std::vector<google::cloud::dialogflow::v2::Message> result(
@@ -178,12 +182,12 @@ ConversationsConnectionImpl::SuggestConversationSummary(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SuggestConversationSummary(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::
                  SuggestConversationSummaryRequest const& request) {
-        return stub_->SuggestConversationSummary(context, request);
+        return stub_->SuggestConversationSummary(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
@@ -195,12 +199,12 @@ ConversationsConnectionImpl::GenerateStatelessSummary(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GenerateStatelessSummary(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
               request) {
-        return stub_->GenerateStatelessSummary(context, request);
+        return stub_->GenerateStatelessSummary(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
@@ -210,10 +214,12 @@ ConversationsConnectionImpl::SearchKnowledge(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SearchKnowledge(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::SearchKnowledgeRequest const&
-                 request) { return stub_->SearchKnowledge(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->SearchKnowledge(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

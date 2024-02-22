@@ -44,21 +44,21 @@ AccessContextManagerMetadata::AccessContextManagerMetadata(
 
 StatusOr<google::identity::accesscontextmanager::v1::ListAccessPoliciesResponse>
 AccessContextManagerMetadata::ListAccessPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->ListAccessPolicies(context, request);
+  SetMetadata(context, options);
+  return child_->ListAccessPolicies(context, options, request);
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
 AccessContextManagerMetadata::GetAccessPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAccessPolicy(context, request);
+  return child_->GetAccessPolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -98,22 +98,22 @@ AccessContextManagerMetadata::AsyncDeleteAccessPolicy(
 
 StatusOr<google::identity::accesscontextmanager::v1::ListAccessLevelsResponse>
 AccessContextManagerMetadata::ListAccessLevels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::ListAccessLevelsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListAccessLevels(context, request);
+  return child_->ListAccessLevels(context, options, request);
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
 AccessContextManagerMetadata::GetAccessLevel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::GetAccessLevelRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAccessLevel(context, request);
+  return child_->GetAccessLevel(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -168,22 +168,22 @@ AccessContextManagerMetadata::AsyncReplaceAccessLevels(
 StatusOr<
     google::identity::accesscontextmanager::v1::ListServicePerimetersResponse>
 AccessContextManagerMetadata::ListServicePerimeters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::
         ListServicePerimetersRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListServicePerimeters(context, request);
+  return child_->ListServicePerimeters(context, options, request);
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
 AccessContextManagerMetadata::GetServicePerimeter(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::
         GetServicePerimeterRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetServicePerimeter(context, request);
+  return child_->GetServicePerimeter(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -251,22 +251,22 @@ AccessContextManagerMetadata::AsyncCommitServicePerimeters(
 StatusOr<google::identity::accesscontextmanager::v1::
              ListGcpUserAccessBindingsResponse>
 AccessContextManagerMetadata::ListGcpUserAccessBindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::
         ListGcpUserAccessBindingsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListGcpUserAccessBindings(context, request);
+  return child_->ListGcpUserAccessBindings(context, options, request);
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
 AccessContextManagerMetadata::GetGcpUserAccessBinding(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::
         GetGcpUserAccessBindingRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetGcpUserAccessBinding(context, request);
+  return child_->GetGcpUserAccessBinding(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -308,31 +308,31 @@ AccessContextManagerMetadata::AsyncDeleteGcpUserAccessBinding(
 }
 
 StatusOr<google::iam::v1::Policy> AccessContextManagerMetadata::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> AccessContextManagerMetadata::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 AccessContextManagerMetadata::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

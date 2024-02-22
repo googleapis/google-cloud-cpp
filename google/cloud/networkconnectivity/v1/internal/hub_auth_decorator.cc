@@ -33,19 +33,19 @@ HubServiceAuth::HubServiceAuth(
 
 StatusOr<google::cloud::networkconnectivity::v1::ListHubsResponse>
 HubServiceAuth::ListHubs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::ListHubsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListHubs(context, request);
+  return child_->ListHubs(context, options, request);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::Hub> HubServiceAuth::GetHub(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::GetHubRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetHub(context, request);
+  return child_->GetHub(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>> HubServiceAuth::AsyncCreateHub(
@@ -101,30 +101,30 @@ future<StatusOr<google::longrunning::Operation>> HubServiceAuth::AsyncDeleteHub(
 
 StatusOr<google::cloud::networkconnectivity::v1::ListHubSpokesResponse>
 HubServiceAuth::ListHubSpokes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::ListHubSpokesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListHubSpokes(context, request);
+  return child_->ListHubSpokes(context, options, request);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::ListSpokesResponse>
 HubServiceAuth::ListSpokes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::ListSpokesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSpokes(context, request);
+  return child_->ListSpokes(context, options, request);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::Spoke>
 HubServiceAuth::GetSpoke(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::GetSpokeRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetSpoke(context, request);
+  return child_->GetSpoke(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -226,58 +226,58 @@ HubServiceAuth::AsyncDeleteSpoke(
 
 StatusOr<google::cloud::networkconnectivity::v1::RouteTable>
 HubServiceAuth::GetRouteTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetRouteTable(context, request);
+  return child_->GetRouteTable(context, options, request);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::Route>
 HubServiceAuth::GetRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::GetRouteRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetRoute(context, request);
+  return child_->GetRoute(context, options, request);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::ListRoutesResponse>
 HubServiceAuth::ListRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::ListRoutesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListRoutes(context, request);
+  return child_->ListRoutes(context, options, request);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::ListRouteTablesResponse>
 HubServiceAuth::ListRouteTables(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::ListRouteTablesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListRouteTables(context, request);
+  return child_->ListRouteTables(context, options, request);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::Group>
 HubServiceAuth::GetGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::GetGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetGroup(context, request);
+  return child_->GetGroup(context, options, request);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::ListGroupsResponse>
 HubServiceAuth::ListGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::ListGroupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListGroups(context, request);
+  return child_->ListGroups(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -37,23 +37,25 @@ HubServiceLogging::HubServiceLogging(std::shared_ptr<HubServiceStub> child,
 
 StatusOr<google::cloud::networkconnectivity::v1::ListHubsResponse>
 HubServiceLogging::ListHubs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::ListHubsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::ListHubsRequest const&
-                 request) { return child_->ListHubs(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListHubs(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::Hub> HubServiceLogging::GetHub(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::GetHubRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::GetHubRequest const&
-                 request) { return child_->GetHub(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) { return child_->GetHub(context, options, request); },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -106,36 +108,42 @@ HubServiceLogging::AsyncDeleteHub(
 
 StatusOr<google::cloud::networkconnectivity::v1::ListHubSpokesResponse>
 HubServiceLogging::ListHubSpokes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::ListHubSpokesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::ListHubSpokesRequest const&
-                 request) { return child_->ListHubSpokes(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListHubSpokes(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::ListSpokesResponse>
 HubServiceLogging::ListSpokes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::ListSpokesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::ListSpokesRequest const&
-                 request) { return child_->ListSpokes(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListSpokes(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::Spoke>
 HubServiceLogging::GetSpoke(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::GetSpokeRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::GetSpokeRequest const&
-                 request) { return child_->GetSpoke(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetSpoke(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -227,71 +235,83 @@ HubServiceLogging::AsyncDeleteSpoke(
 
 StatusOr<google::cloud::networkconnectivity::v1::RouteTable>
 HubServiceLogging::GetRouteTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
-                 request) { return child_->GetRouteTable(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetRouteTable(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::Route>
 HubServiceLogging::GetRoute(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::GetRouteRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::GetRouteRequest const&
-                 request) { return child_->GetRoute(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetRoute(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::ListRoutesResponse>
 HubServiceLogging::ListRoutes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::ListRoutesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::ListRoutesRequest const&
-                 request) { return child_->ListRoutes(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListRoutes(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::ListRouteTablesResponse>
 HubServiceLogging::ListRouteTables(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::ListRouteTablesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::networkconnectivity::v1::ListRouteTablesRequest const&
-              request) { return child_->ListRouteTables(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->ListRouteTables(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::Group>
 HubServiceLogging::GetGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::GetGroupRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::GetGroupRequest const&
-                 request) { return child_->GetGroup(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetGroup(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::networkconnectivity::v1::ListGroupsResponse>
 HubServiceLogging::ListGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::networkconnectivity::v1::ListGroupsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::ListGroupsRequest const&
-                 request) { return child_->ListGroups(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListGroups(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

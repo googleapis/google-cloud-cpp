@@ -33,11 +33,11 @@ FleetRoutingAuth::FleetRoutingAuth(
 
 StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
 FleetRoutingAuth::OptimizeTours(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::optimization::v1::OptimizeToursRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->OptimizeTours(context, request);
+  return child_->OptimizeTours(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

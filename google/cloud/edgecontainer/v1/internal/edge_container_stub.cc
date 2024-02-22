@@ -33,7 +33,7 @@ EdgeContainerStub::~EdgeContainerStub() = default;
 
 StatusOr<google::cloud::edgecontainer::v1::ListClustersResponse>
 DefaultEdgeContainerStub::ListClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::edgecontainer::v1::ListClustersRequest const& request) {
   google::cloud::edgecontainer::v1::ListClustersResponse response;
   auto status = grpc_stub_->ListClusters(&context, request, &response);
@@ -45,7 +45,7 @@ DefaultEdgeContainerStub::ListClusters(
 
 StatusOr<google::cloud::edgecontainer::v1::Cluster>
 DefaultEdgeContainerStub::GetCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::edgecontainer::v1::GetClusterRequest const& request) {
   google::cloud::edgecontainer::v1::Cluster response;
   auto status = grpc_stub_->GetCluster(&context, request, &response);
@@ -111,7 +111,7 @@ DefaultEdgeContainerStub::AsyncDeleteCluster(
 
 StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
 DefaultEdgeContainerStub::GenerateAccessToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
         request) {
   google::cloud::edgecontainer::v1::GenerateAccessTokenResponse response;
@@ -124,7 +124,7 @@ DefaultEdgeContainerStub::GenerateAccessToken(
 
 StatusOr<google::cloud::edgecontainer::v1::ListNodePoolsResponse>
 DefaultEdgeContainerStub::ListNodePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::edgecontainer::v1::ListNodePoolsRequest const& request) {
   google::cloud::edgecontainer::v1::ListNodePoolsResponse response;
   auto status = grpc_stub_->ListNodePools(&context, request, &response);
@@ -136,7 +136,7 @@ DefaultEdgeContainerStub::ListNodePools(
 
 StatusOr<google::cloud::edgecontainer::v1::NodePool>
 DefaultEdgeContainerStub::GetNodePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::edgecontainer::v1::GetNodePoolRequest const& request) {
   google::cloud::edgecontainer::v1::NodePool response;
   auto status = grpc_stub_->GetNodePool(&context, request, &response);
@@ -202,7 +202,7 @@ DefaultEdgeContainerStub::AsyncDeleteNodePool(
 
 StatusOr<google::cloud::edgecontainer::v1::ListMachinesResponse>
 DefaultEdgeContainerStub::ListMachines(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::edgecontainer::v1::ListMachinesRequest const& request) {
   google::cloud::edgecontainer::v1::ListMachinesResponse response;
   auto status = grpc_stub_->ListMachines(&context, request, &response);
@@ -214,7 +214,7 @@ DefaultEdgeContainerStub::ListMachines(
 
 StatusOr<google::cloud::edgecontainer::v1::Machine>
 DefaultEdgeContainerStub::GetMachine(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::edgecontainer::v1::GetMachineRequest const& request) {
   google::cloud::edgecontainer::v1::Machine response;
   auto status = grpc_stub_->GetMachine(&context, request, &response);
@@ -226,7 +226,7 @@ DefaultEdgeContainerStub::GetMachine(
 
 StatusOr<google::cloud::edgecontainer::v1::ListVpnConnectionsResponse>
 DefaultEdgeContainerStub::ListVpnConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::edgecontainer::v1::ListVpnConnectionsRequest const&
         request) {
   google::cloud::edgecontainer::v1::ListVpnConnectionsResponse response;
@@ -239,7 +239,7 @@ DefaultEdgeContainerStub::ListVpnConnections(
 
 StatusOr<google::cloud::edgecontainer::v1::VpnConnection>
 DefaultEdgeContainerStub::GetVpnConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::edgecontainer::v1::GetVpnConnectionRequest const& request) {
   google::cloud::edgecontainer::v1::VpnConnection response;
   auto status = grpc_stub_->GetVpnConnection(&context, request, &response);
