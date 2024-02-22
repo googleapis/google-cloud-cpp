@@ -53,13 +53,6 @@ class AsyncStreamingReadRpcImpl : public AsyncStreamingReadRpc<Response> {
         options_(std::move(options)),
         stream_(std::move(stream)) {}
 
-  AsyncStreamingReadRpcImpl(
-      std::shared_ptr<CompletionQueueImpl> cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      std::unique_ptr<grpc::ClientAsyncReaderInterface<Response>> stream)
-      : AsyncStreamingReadRpcImpl(std::move(cq), std::move(context),
-                                  SaveCurrentOptions(), std::move(stream)) {}
-
   void Cancel() override { context_->TryCancel(); }
 
   future<bool> Start() override {
@@ -156,11 +149,13 @@ using PrepareAsyncReadRpc = absl::FunctionRef<
 template <typename Request, typename Response>
 std::unique_ptr<AsyncStreamingReadRpc<Response>> MakeStreamingReadRpc(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
-    Request const& request, PrepareAsyncReadRpc<Request, Response> async_call) {
+    ImmutableOptions options, Request const& request,
+    PrepareAsyncReadRpc<Request, Response> async_call) {
   auto cq_impl = GetCompletionQueueImpl(cq);
   auto stream = async_call(context.get(), request, cq_impl->cq());
   return std::make_unique<AsyncStreamingReadRpcImpl<Response>>(
-      std::move(cq_impl), std::move(context), std::move(stream));
+      std::move(cq_impl), std::move(context), std::move(options),
+      std::move(stream));
 }
 
 /**

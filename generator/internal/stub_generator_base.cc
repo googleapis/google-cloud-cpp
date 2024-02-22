@@ -100,6 +100,7 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
   Async$method_name$(
       google::cloud::CompletionQueue const& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) override;
 )""";
       HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);

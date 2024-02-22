@@ -113,9 +113,10 @@ TEST(AsyncStreamingReadRpcTest, Basic) {
 
   google::cloud::CompletionQueue cq(mock_cq);
 
-  OptionsSpan span(user_project("create"));
+  OptionsSpan span(user_project("unused"));
   auto stream = MakeStreamingReadRpc<FakeRequest, FakeResponse>(
-      cq, std::make_shared<grpc::ClientContext>(), FakeRequest{},
+      cq, std::make_shared<grpc::ClientContext>(),
+      MakeImmutableOptions(user_project("create")), FakeRequest{},
       [&mock](grpc::ClientContext* context, FakeRequest const& request,
               grpc::CompletionQueue* cq) {
         return mock.FakeRpc(context, request, cq);
@@ -215,7 +216,8 @@ TEST(AsyncStreamingReadRpcTest, SpanActiveAcrossAsyncGrpcOperations) {
     auto span = MakeSpan("create");
     OTelScope scope(span);
     return MakeStreamingReadRpc<FakeRequest, FakeResponse>(
-        cq, std::make_shared<grpc::ClientContext>(), FakeRequest{},
+        cq, std::make_shared<grpc::ClientContext>(), MakeImmutableOptions({}),
+        FakeRequest{},
         [&mock, span](grpc::ClientContext* context, FakeRequest const& request,
                       grpc::CompletionQueue* cq) {
           EXPECT_THAT(span, IsActive());

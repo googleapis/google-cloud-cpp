@@ -224,13 +224,14 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 $auth_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     $request_type$ const& request) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadRpcAuth<
     $response_type$>;
 
   auto& child = child_;
-  auto call = [child, cq, request](std::shared_ptr<grpc::ClientContext> ctx) {
-    return child->Async$method_name$(cq, std::move(ctx), request);
+  auto call = [child, cq, opts = std::move(options), request](std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->Async$method_name$(cq, std::move(ctx), opts, request);
   };
   return std::make_unique<StreamAuth>(
     std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));

@@ -188,8 +188,10 @@ std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
 $round_robin_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     $request_type$ const& request) {
-  return Child()->Async$method_name$(cq, std::move(context), request);
+  return Child()->Async$method_name$(
+      cq, std::move(context), std::move(options), request);
 }
 )""");
       continue;

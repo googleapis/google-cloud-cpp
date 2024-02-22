@@ -302,11 +302,13 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     $request_type$ const& request) {
 )""",
-          SetMetadataText(method, kPointer, "internal::CurrentOptions()"),
+          SetMetadataText(method, kPointer, "*options"),
           R"""(
-  return child_->Async$method_name$(cq, std::move(context), request);
+  return child_->Async$method_name$(
+      cq, std::move(context), std::move(options), request);
 }
 )""");
       CcPrintMethod(method, __FILE__, __LINE__, definition);
