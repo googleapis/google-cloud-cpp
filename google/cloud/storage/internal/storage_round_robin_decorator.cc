@@ -270,8 +270,9 @@ std::unique_ptr<google::cloud::internal::AsyncStreamingWriteRpc<
     google::storage::v2::WriteObjectResponse>>
 StorageRoundRobin::AsyncWriteObject(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  return Child()->AsyncWriteObject(cq, std::move(context));
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  return Child()->AsyncWriteObject(cq, std::move(context), std::move(options));
 }
 
 future<StatusOr<google::storage::v2::RewriteResponse>>

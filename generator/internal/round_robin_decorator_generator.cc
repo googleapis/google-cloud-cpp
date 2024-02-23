@@ -203,8 +203,10 @@ std::unique_ptr<google::cloud::internal::AsyncStreamingWriteRpc<
     $response_type$>>
 $round_robin_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  return Child()->Async$method_name$(cq, std::move(context));
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  return Child()->Async$method_name$(
+      cq, std::move(context), std::move(options));
 }
 )""");
       continue;

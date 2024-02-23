@@ -312,8 +312,9 @@ TEST_F(LoggingDecoratorTest, AsyncStreamingWrite) {
   GoldenKitchenSinkLogging stub(mock_, TracingOptions{}, {"rpc-streams"});
 
   google::cloud::CompletionQueue cq;
-  auto stream =
-      stub.AsyncStreamingWrite(cq, std::make_shared<grpc::ClientContext>());
+  auto stream = stub.AsyncStreamingWrite(
+      cq, std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::MakeImmutableOptions({}));
 
   auto start = stream->Start().get();
   EXPECT_FALSE(start);

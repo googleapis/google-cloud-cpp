@@ -47,22 +47,13 @@ class AsyncStreamingWriteRpcImpl
   AsyncStreamingWriteRpcImpl(
       std::shared_ptr<CompletionQueueImpl> cq,
       std::shared_ptr<grpc::ClientContext> context,
-      std::unique_ptr<Response> response,
-      std::unique_ptr<grpc::ClientAsyncWriterInterface<Request>> stream)
-      : AsyncStreamingWriteRpcImpl(std::move(cq), std::move(context),
-                                   std::move(response), SaveCurrentOptions(),
-                                   std::move(stream)) {}
-
-  AsyncStreamingWriteRpcImpl(
-      std::shared_ptr<CompletionQueueImpl> cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      std::unique_ptr<Response> response,
       google::cloud::internal::ImmutableOptions options,
+      std::unique_ptr<Response> response,
       std::unique_ptr<grpc::ClientAsyncWriterInterface<Request>> stream)
       : cq_(std::move(cq)),
         context_(std::move(context)),
-        response_(std::move(response)),
         options_(std::move(options)),
+        response_(std::move(response)),
         stream_(std::move(stream)) {}
 
   void Cancel() override { context_->TryCancel(); }
@@ -161,8 +152,8 @@ class AsyncStreamingWriteRpcImpl
  private:
   std::shared_ptr<CompletionQueueImpl> cq_;
   std::shared_ptr<grpc::ClientContext> context_;
-  std::unique_ptr<Response> response_;
   ImmutableOptions options_;
+  std::unique_ptr<Response> response_;
   std::unique_ptr<grpc::ClientAsyncWriterInterface<Request>> stream_;
 };
 
@@ -185,13 +176,14 @@ template <typename Request, typename Response>
 std::unique_ptr<AsyncStreamingWriteRpc<Request, Response>>
 MakeStreamingWriteRpc(CompletionQueue const& cq,
                       std::shared_ptr<grpc::ClientContext> context,
+                      google::cloud::internal::ImmutableOptions options,
                       PrepareAsyncWriteRpc<Request, Response> async_call) {
   auto cq_impl = GetCompletionQueueImpl(cq);
   auto response = std::make_unique<Response>();
   auto stream = async_call(context.get(), response.get(), cq_impl->cq());
   return std::make_unique<AsyncStreamingWriteRpcImpl<Request, Response>>(
-      std::move(cq_impl), std::move(context), std::move(response),
-      std::move(stream));
+      std::move(cq_impl), std::move(context), std::move(options),
+      std::move(response), std::move(stream));
 }
 
 /**

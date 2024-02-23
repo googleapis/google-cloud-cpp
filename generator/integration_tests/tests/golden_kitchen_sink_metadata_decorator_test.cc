@@ -307,7 +307,8 @@ TEST_F(MetadataDecoratorTest, AsyncStreamingRead) {
 
 TEST_F(MetadataDecoratorTest, AsyncStreamingWrite) {
   EXPECT_CALL(*mock_, AsyncStreamingWrite)
-      .WillOnce([this](google::cloud::CompletionQueue const&, auto context) {
+      .WillOnce([this](google::cloud::CompletionQueue const&, auto context,
+                       auto) {
         IsContextMDValid(
             *context,
             "google.test.admin.database.v1.GoldenKitchenSink.StreamingWrite",
@@ -321,8 +322,9 @@ TEST_F(MetadataDecoratorTest, AsyncStreamingWrite) {
   GoldenKitchenSinkMetadata stub(mock_, {});
 
   google::cloud::CompletionQueue cq;
-  auto stream =
-      stub.AsyncStreamingWrite(cq, std::make_shared<grpc::ClientContext>());
+  auto stream = stub.AsyncStreamingWrite(
+      cq, std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::MakeImmutableOptions({}));
 
   auto start = stream->Start().get();
   EXPECT_FALSE(start);

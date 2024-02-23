@@ -121,7 +121,8 @@ class MockGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
            ::google::test::admin::database::v1::Response>>),
       AsyncStreamingWrite,
       (google::cloud::CompletionQueue const& cq,
-       std::shared_ptr<grpc::ClientContext> context),
+       std::shared_ptr<grpc::ClientContext> context,
+       google::cloud::internal::ImmutableOptions options),
       (override));
 };
 

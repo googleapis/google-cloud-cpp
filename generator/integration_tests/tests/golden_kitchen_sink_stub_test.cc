@@ -687,8 +687,9 @@ TEST_F(GoldenKitchenSinkStubTest, AsyncStreamingWrite) {
 
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
 
-  auto stream =
-      stub.AsyncStreamingWrite(cq, std::make_shared<grpc::ClientContext>());
+  auto stream = stub.AsyncStreamingWrite(
+      cq, std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::MakeImmutableOptions({}));
   auto start = stream->Start();
   notify_next_op(true);
   EXPECT_TRUE(start.get());

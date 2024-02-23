@@ -204,7 +204,8 @@ class StorageStub {
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>>
   AsyncWriteObject(google::cloud::CompletionQueue const& cq,
-                   std::shared_ptr<grpc::ClientContext> context) = 0;
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options) = 0;
 
   virtual future<StatusOr<google::storage::v2::RewriteResponse>>
   AsyncRewriteObject(
@@ -395,7 +396,8 @@ class DefaultStorageStub : public StorageStub {
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>>
   AsyncWriteObject(google::cloud::CompletionQueue const& cq,
-                   std::shared_ptr<grpc::ClientContext> context) override;
+                   std::shared_ptr<grpc::ClientContext> context,
+                   google::cloud::internal::ImmutableOptions options) override;
 
   future<StatusOr<google::storage::v2::RewriteResponse>> AsyncRewriteObject(
       google::cloud::CompletionQueue& cq,

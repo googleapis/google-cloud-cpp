@@ -131,8 +131,10 @@ std::unique_ptr<google::cloud::internal::AsyncStreamingWriteRpc<
     google::test::admin::database::v1::Response>>
 GoldenKitchenSinkRoundRobin::AsyncStreamingWrite(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  return Child()->AsyncStreamingWrite(cq, std::move(context));
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  return Child()->AsyncStreamingWrite(
+      cq, std::move(context), std::move(options));
 }
 
 std::shared_ptr<GoldenKitchenSinkStub>

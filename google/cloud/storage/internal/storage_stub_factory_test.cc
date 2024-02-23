@@ -145,7 +145,7 @@ TEST_F(StorageStubFactory, WriteObject) {
         auto mock = std::make_shared<MockStorageStub>();
         EXPECT_CALL(*mock, AsyncWriteObject)
             .WillOnce([this](google::cloud::CompletionQueue const&,
-                             auto context) {
+                             auto context, auto /*options*/) {
               // Verify the Auth decorator is present
               EXPECT_THAT(context->credentials(), NotNull());
               // Verify the Metadata decorator is present
@@ -172,8 +172,9 @@ TEST_F(StorageStubFactory, WriteObject) {
   ScopedLog log;
   internal::AutomaticallyCreatedBackgroundThreads pool;
   auto stub = CreateTestStub(pool.cq(), factory.AsStdFunction(), {});
-  auto stream = stub->AsyncWriteObject(pool.cq(),
-                                       std::make_shared<grpc::ClientContext>());
+  auto stream =
+      stub->AsyncWriteObject(pool.cq(), std::make_shared<grpc::ClientContext>(),
+                             google::cloud::internal::MakeImmutableOptions({}));
   EXPECT_TRUE(stream->Start().get());
   auto close = stream->Finish().get();
   EXPECT_THAT(close, StatusIs(StatusCode::kUnavailable));

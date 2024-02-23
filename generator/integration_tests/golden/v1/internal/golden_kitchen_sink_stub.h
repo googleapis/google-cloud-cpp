@@ -120,7 +120,8 @@ class GoldenKitchenSinkStub {
       google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>>
   AsyncStreamingWrite(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) = 0;
+      std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) = 0;
 };
 
 class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
@@ -206,7 +207,8 @@ class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
       google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>>
   AsyncStreamingWrite(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
  private:
   std::unique_ptr<google::test::admin::database::v1::GoldenKitchenSink::StubInterface> grpc_stub_;

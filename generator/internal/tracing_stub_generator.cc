@@ -250,11 +250,12 @@ std::unique_ptr<
     internal::AsyncStreamingWriteRpc<$request_type$, $response_type$>>
 $tracing_stub_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->Async$method_name$(cq, context);
+  auto stream = child_->Async$method_name$(cq, context, std::move(options));
   return std::make_unique<
       internal::AsyncStreamingWriteRpcTracing<$request_type$, $response_type$>>(
       std::move(context), std::move(stream), std::move(span));

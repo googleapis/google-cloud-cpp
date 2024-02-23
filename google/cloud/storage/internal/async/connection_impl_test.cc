@@ -142,9 +142,10 @@ TEST_F(AsyncConnectionImplTest, AsyncInsertObject) {
       })
       .WillOnce([&](CompletionQueue const&,
                     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-                    std::shared_ptr<grpc::ClientContext> context) {
-        // TODO(#12359) - use the explicit `options` when available.
-        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
+                    std::shared_ptr<grpc::ClientContext> context,
+                    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+                    internal::ImmutableOptions options) {
+        EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(*context);
         EXPECT_THAT(metadata,
                     UnorderedElementsAre(
