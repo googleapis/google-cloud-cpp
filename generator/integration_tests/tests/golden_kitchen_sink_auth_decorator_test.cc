@@ -225,14 +225,16 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, AsyncStreamingWrite) {
   auto under_test = GoldenKitchenSinkAuth(MakeTypicalAsyncMockAuth(), mock);
 
   auto auth_failure = under_test.AsyncStreamingWrite(
-      cq, std::make_shared<grpc::ClientContext>());
+      cq, std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::MakeImmutableOptions({}));
   auto start = auth_failure->Start().get();
   EXPECT_FALSE(start);
   auto finish = auth_failure->Finish().get();
   EXPECT_THAT(finish, StatusIs(StatusCode::kInvalidArgument));
 
   auto auth_success = under_test.AsyncStreamingWrite(
-      cq, std::make_shared<grpc::ClientContext>());
+      cq, std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::MakeImmutableOptions({}));
   start = auth_success->Start().get();
   EXPECT_FALSE(start);
   finish = auth_success->Finish().get();

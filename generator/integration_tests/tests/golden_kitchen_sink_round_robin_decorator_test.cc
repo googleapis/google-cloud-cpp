@@ -150,7 +150,7 @@ TEST(GoldenKitchenSinkRoundRobinDecoratorTest, AsyncStreamingWrite) {
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
     for (auto& m : mocks) {
-      EXPECT_CALL(*m, AsyncStreamingWrite).WillOnce([](auto&, auto) {
+      EXPECT_CALL(*m, AsyncStreamingWrite).WillOnce([](auto&, auto, auto) {
         return std::make_unique<MockAsyncStreamingWriteRpc>();
       });
     }
@@ -159,8 +159,9 @@ TEST(GoldenKitchenSinkRoundRobinDecoratorTest, AsyncStreamingWrite) {
   CompletionQueue cq;
   GoldenKitchenSinkRoundRobin stub(AsPlainStubs(mocks));
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
-    auto stream =
-        stub.AsyncStreamingWrite(cq, std::make_shared<grpc::ClientContext>());
+    auto stream = stub.AsyncStreamingWrite(
+        cq, std::make_shared<grpc::ClientContext>(),
+        google::cloud::internal::MakeImmutableOptions({}));
     EXPECT_THAT(stream, NotNull());
   }
 }
