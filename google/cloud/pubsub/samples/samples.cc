@@ -2180,7 +2180,7 @@ void AutoRunProtobuf(
 }
 
 void AutoRun(std::vector<std::string> const& argv) {
- using google::cloud::pubsub::examples::Cleanup;
+  using google::cloud::pubsub::examples::Cleanup;
   namespace examples = ::google::cloud::testing_util;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
@@ -2254,15 +2254,6 @@ void AutoRun(std::vector<std::string> const& argv) {
                   << std::endl;
         (void)topic_admin.DeleteTopic(dead_letter_topic.FullName());
       });
-<<<<<<< HEAD
-
-  std::cout << "\nRunning ListTopics() sample" << std::endl;
-  ListTopics(topic_admin_client, {project_id});
-
-  std::cout << "\nRunning the StatusOr example" << std::endl;
-  ExampleStatusOr(topic_admin_client, {project_id});
-=======
->>>>>>> a4b978fa46 (cleanup(pubsub): remove duplicate old samples)
 
   std::cout << "\nRunning CreateSubscription() sample [1]" << std::endl;
   CreateSubscription(subscription_admin_client,
