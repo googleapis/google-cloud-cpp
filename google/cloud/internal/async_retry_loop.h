@@ -243,16 +243,15 @@ class AsyncRetryLoopImpl
             .then([self](future<T> f) { self->OnAttempt(f.get()); }));
   }
 
-  void StartBackoff() {
+  void StartBackoff(std::chrono::milliseconds delay) {
     auto self = this->shared_from_this();
     auto state = StartOperation();
     if (state.cancelled) return;
-    SetPending(
-        state.operation,
-        TracedAsyncBackoff(cq_, *call_context_.options,
-                           backoff_policy_->OnCompletion(), "Async Backoff")
-            .then(
-                [self](future<TimerArgType> f) { self->OnBackoff(f.get()); }));
+    SetPending(state.operation, TracedAsyncBackoff(cq_, *call_context_.options,
+                                                   delay, "Async Backoff")
+                                    .then([self](future<TimerArgType> f) {
+                                      self->OnBackoff(f.get());
+                                    }));
   }
 
   void OnAttempt(T result) {
@@ -260,17 +259,10 @@ class AsyncRetryLoopImpl
     if (result.ok()) return SetDone(std::move(result));
     // Some kind of failure, first verify that it is retryable.
     last_status_ = GetResultStatus(std::move(result));
-    if (idempotency_ == Idempotency::kNonIdempotent) {
-      return SetDone(
-          RetryLoopNonIdempotentError(std::move(last_status_), location_));
-    }
-    if (!retry_policy_->OnFailure(last_status_)) {
-      if (retry_policy_->IsPermanentFailure(last_status_)) {
-        return SetDone(RetryLoopPermanentError(last_status_, location_));
-      }
-      return SetDone(RetryLoopPolicyExhaustedError(last_status_, location_));
-    }
-    StartBackoff();
+    auto delay = Backoff(last_status_, location_, *retry_policy_,
+                         *backoff_policy_, idempotency_);
+    if (!delay) return SetDone(std::move(delay).status());
+    StartBackoff(*delay);
   }
 
   void OnBackoff(TimerArgType tp) {

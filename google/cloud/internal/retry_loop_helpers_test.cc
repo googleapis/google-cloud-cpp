@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/retry_loop_helpers.h"
+#include "google/cloud/internal/make_status.h"
+#include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -22,11 +24,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOkAndHolds;
+using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::IsSupersetOf;
 using ::testing::Pair;
+using ::testing::Return;
 
 ErrorInfo TestErrorInfo() {
   return ErrorInfo("conditionNotMet", "global",
@@ -143,6 +148,78 @@ TEST(RetryLoopHelpers, RetryLoopErrorCancelledButOkay) {
               Contains(Pair("gcloud-cpp.retry.function", "SomeFunction")));
   EXPECT_THAT(actual.error_info().metadata(),
               Contains(Pair("gcloud-cpp.retry.reason", "cancelled")));
+}
+
+class MockRetryPolicy : public RetryPolicy {
+ public:
+  MOCK_METHOD(bool, OnFailure, (Status const&), (override));
+  MOCK_METHOD(bool, IsExhausted, (), (const, override));
+  MOCK_METHOD(bool, IsPermanentFailure, (Status const&), (const, override));
+};
+
+TEST(Backoff, NoRetriesIfPolicyExhausted) {
+  auto const retry_delay = std::chrono::minutes(5);
+  auto status = internal::ResourceExhaustedError("try again");
+  internal::SetRetryInfo(status, internal::RetryInfo{retry_delay});
+
+  auto mock_r = std::make_unique<MockRetryPolicy>();
+  EXPECT_CALL(*mock_r, OnFailure(status)).WillOnce(Return(false));
+  EXPECT_CALL(*mock_r, IsExhausted).WillOnce(Return(true));
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
+
+  auto actual = Backoff(status, "SomeFunction", *mock_r, *mock_b,
+                        Idempotency::kIdempotent);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kResourceExhausted,
+                               HasSubstr("policy exhausted")));
+}
+
+TEST(Backoff, PermanentFailureWhenIgnoringRetryInfo) {
+  auto const retry_delay = std::chrono::minutes(5);
+  auto status = internal::ResourceExhaustedError("try again");
+  internal::SetRetryInfo(status, internal::RetryInfo{retry_delay});
+
+  auto mock_r = std::make_unique<MockRetryPolicy>();
+  EXPECT_CALL(*mock_r, OnFailure).WillOnce(Return(false));
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
+
+  auto actual = Backoff(status, "SomeFunction", *mock_r, *mock_b,
+                        Idempotency::kIdempotent);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kResourceExhausted,
+                               HasSubstr("Permanent error")));
+}
+
+TEST(Backoff, TransientFailureWhenIgnoringRetryInfo) {
+  auto const retry_delay = std::chrono::minutes(5);
+  auto status = internal::UnavailableError("try again");
+  internal::SetRetryInfo(status, internal::RetryInfo{retry_delay});
+
+  auto mock_r = std::make_unique<MockRetryPolicy>();
+  EXPECT_CALL(*mock_r, OnFailure).WillOnce(Return(true));
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion)
+      .WillOnce(Return(std::chrono::milliseconds(10)));
+
+  auto actual = Backoff(status, "SomeFunction", *mock_r, *mock_b,
+                        Idempotency::kIdempotent);
+  EXPECT_THAT(actual, IsOkAndHolds(std::chrono::milliseconds(10)));
+}
+
+TEST(Backoff, NonIdempotentFailureWhenIgnoringRetryInfo) {
+  auto const retry_delay = std::chrono::minutes(5);
+  auto status = internal::ResourceExhaustedError("try again");
+  internal::SetRetryInfo(status, internal::RetryInfo{retry_delay});
+
+  auto mock_r = std::make_unique<MockRetryPolicy>();
+  ON_CALL(*mock_r, OnFailure).WillByDefault(Return(true));
+  auto mock_b = std::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
+
+  auto actual = Backoff(status, "SomeFunction", *mock_r, *mock_b,
+                        Idempotency::kNonIdempotent);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kResourceExhausted,
+                               HasSubstr("non-idempotent")));
 }
 
 }  // namespace

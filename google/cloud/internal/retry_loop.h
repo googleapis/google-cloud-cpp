@@ -78,15 +78,11 @@ auto RetryLoopImpl(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
     ConfigureContext(context, options);
     auto result = functor(context, options, request);
     if (result.ok()) return result;
-
     last_status = GetResultStatus(std::move(result));
-    if (idempotency == Idempotency::kNonIdempotent) {
-      return RetryLoopNonIdempotentError(std::move(last_status), location);
-    }
-    // The retry policy is exhausted or the error is not retryable. Either
-    // way, exit the loop.
-    if (!retry_policy.OnFailure(last_status)) break;
-    sleeper(backoff_policy.OnCompletion());
+    auto delay = Backoff(last_status, location, retry_policy, backoff_policy,
+                         idempotency);
+    if (!delay) return std::move(delay).status();
+    sleeper(*delay);
   }
   return internal::RetryLoopError(last_status, location,
                                   retry_policy.IsExhausted());

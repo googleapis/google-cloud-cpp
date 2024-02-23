@@ -106,6 +106,18 @@ Status RetryLoopCancelled(Status const& status, char const* location) {
   return Status(status.code(), std::move(message), std::move(ei));
 }
 
+StatusOr<std::chrono::milliseconds> Backoff(Status const& status,
+                                            char const* location,
+                                            RetryPolicy& retry,
+                                            BackoffPolicy& backoff,
+                                            Idempotency idempotency) {
+  if (idempotency == Idempotency::kNonIdempotent) {
+    return RetryLoopNonIdempotentError(status, location);
+  }
+  if (retry.OnFailure(status)) return backoff.OnCompletion();
+  return RetryLoopError(status, location, retry.IsExhausted());
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
