@@ -333,7 +333,6 @@ if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
         internal/grpc/sign_blob_request_parser_test.cc
         internal/grpc/split_write_object_data_test.cc
         internal/grpc/stub_acl_test.cc
-        internal/grpc/stub_failures_test.cc
         internal/grpc/stub_insert_object_media_test.cc
         internal/grpc/stub_read_object_test.cc
         internal/grpc/stub_test.cc
