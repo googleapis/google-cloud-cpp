@@ -69,7 +69,9 @@ jobs:
     # when PR gets the has a `gha:full-build` label, or when it had the
     # label already and it gets a new commit.
     if: |-
+      # TODO(coryan) - temporarily disable this build to save cores
       ${{
+        false &&
         github.event_name == 'schedule' ||
         github.event_name == 'push' ||
         github.event_name == 'workflow_dispatch' ||
@@ -87,6 +89,8 @@ jobs:
     # label already and it gets a new commit.
     if: |-
       ${{
+        # TODO(coryan) - temporarily disable this build to save cores
+        false &&
         github.event_name == 'schedule' ||
         github.event_name == 'push' ||
         github.event_name == 'workflow_dispatch' ||
@@ -142,12 +146,24 @@ jobs:
       - windows-bazel
       - windows-cmake
     # Run even if the other jobs failed or were skipped.
-    if: ${{ contains(fromJSON('["schedule", "push", "workflow_dispatch"]'), github.event_name) }}
+    if: always()
     runs-on: ubuntu-latest
     steps:
       - name: Notify Google Chat
         shell: bash
         run: |
+          event_name="${{ github.event_name }}"
+          case "${event_name}" in
+            schedule)
+              ;;
+            push)
+              ;;
+            workflow_dispatch)
+              ;;
+            *)
+              exit 0
+              ;;
+          esac
           failure="${{ contains(needs.*.result, 'failure') }}"
           cancelled="${{ contains(needs.*.result, 'cancelled') }}"
           status=""
