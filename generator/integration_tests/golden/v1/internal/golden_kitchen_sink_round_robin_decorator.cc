@@ -97,8 +97,10 @@ std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
     google::test::admin::database::v1::Response>>
 GoldenKitchenSinkRoundRobin::AsyncStreamingReadWrite(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  return Child()->AsyncStreamingReadWrite(cq, std::move(context));
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  return Child()->AsyncStreamingReadWrite(
+      cq, std::move(context), std::move(options));
 }
 
 Status GoldenKitchenSinkRoundRobin::ExplicitRouting1(
