@@ -50,6 +50,7 @@ jobs:
       id: dynamic
       shell: bash
       run: |
+        exit 1 # TODO(coryan) - restore build once tested
         echo "vcpkg-version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
         core_features=(
           bigtable

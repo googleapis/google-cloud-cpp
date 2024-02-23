@@ -77,6 +77,7 @@ jobs:
     - name: Build google-cloud-cpp
       shell: bash
       run: |
+        exit 1 # TODO(coryan) - restore build once tested
         # Having `/usr/bin/link` in the path will conflict with the MSVC linker.
         rm -f /usr/bin/link >/dev/null 2>&1
         # Bazel creates really long paths, sometimes exceeding the MSVC limits.

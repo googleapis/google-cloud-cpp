@@ -136,6 +136,7 @@ jobs:
       run: brew install bash
     - name: Build google-cloud-cpp
       run: |
+        exit 1 # TODO(coryan) - restore build once tested
         /opt/homebrew/bin/bash ci/gha/builds/macos-bazel.sh ${{ join(matrix.targets, ' ') }}
     env:
       BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-gha-cache/bazel-cache/${{ matrix.os }}
