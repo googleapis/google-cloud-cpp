@@ -113,7 +113,8 @@ class GoldenKitchenSinkRoundRobin : public GoldenKitchenSinkStub {
       google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>>
   AsyncStreamingWrite(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
  private:
   std::shared_ptr<GoldenKitchenSinkStub> Child();

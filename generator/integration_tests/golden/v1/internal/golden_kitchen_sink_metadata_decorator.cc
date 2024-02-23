@@ -230,9 +230,10 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
     google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>>
 GoldenKitchenSinkMetadata::AsyncStreamingWrite(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->AsyncStreamingWrite(cq, std::move(context));
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  SetMetadata(*context, *options);
+  return child_->AsyncStreamingWrite(cq, std::move(context), std::move(options));
 }
 
 void GoldenKitchenSinkMetadata::SetMetadata(grpc::ClientContext& context,
