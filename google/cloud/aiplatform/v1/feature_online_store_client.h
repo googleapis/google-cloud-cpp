@@ -109,8 +109,8 @@ class FeatureOnlineStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.FetchFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L85}
-  /// [google.cloud.aiplatform.v1.FetchFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L107}
+  /// [google.cloud.aiplatform.v1.FetchFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L96}
+  /// [google.cloud.aiplatform.v1.FetchFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L118}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
@@ -142,8 +142,8 @@ class FeatureOnlineStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.FetchFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L85}
-  /// [google.cloud.aiplatform.v1.FetchFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L107}
+  /// [google.cloud.aiplatform.v1.FetchFeatureValuesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L96}
+  /// [google.cloud.aiplatform.v1.FetchFeatureValuesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L118}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
@@ -176,8 +176,8 @@ class FeatureOnlineStoreServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.SearchNearestEntitiesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L210}
-  /// [google.cloud.aiplatform.v1.SearchNearestEntitiesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L253}
+  /// [google.cloud.aiplatform.v1.SearchNearestEntitiesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L221}
+  /// [google.cloud.aiplatform.v1.SearchNearestEntitiesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_service.proto#L264}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>

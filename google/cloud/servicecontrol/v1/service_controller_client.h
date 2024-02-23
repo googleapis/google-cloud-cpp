@@ -173,8 +173,8 @@ class ServiceControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.servicecontrol.v1.ReportRequest]: @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L189}
-  /// [google.api.servicecontrol.v1.ReportResponse]: @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L220}
+  /// [google.api.servicecontrol.v1.ReportRequest]: @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L194}
+  /// [google.api.servicecontrol.v1.ReportResponse]: @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L225}
   ///
   // clang-format on
   StatusOr<google::api::servicecontrol::v1::ReportResponse> Report(
