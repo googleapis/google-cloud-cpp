@@ -372,15 +372,17 @@ StorageAuth::AsyncReadObject(
 std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>
-StorageAuth::AsyncWriteObject(google::cloud::CompletionQueue const& cq,
-                              std::shared_ptr<grpc::ClientContext> context) {
+StorageAuth::AsyncWriteObject(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   using StreamAuth = google::cloud::internal::AsyncStreamingWriteRpcAuth<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>;
 
   auto& child = child_;
-  auto call = [child, cq](std::shared_ptr<grpc::ClientContext> ctx) {
-    return child->AsyncWriteObject(cq, std::move(ctx));
+  auto call = [child, cq, options](std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncWriteObject(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));

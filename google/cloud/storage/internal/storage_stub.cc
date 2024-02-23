@@ -468,11 +468,12 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
     google::storage::v2::WriteObjectResponse>>
 DefaultStorageStub::AsyncWriteObject(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   return google::cloud::internal::MakeStreamingWriteRpc<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>(
-      cq, std::move(context),
+      cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context,
              google::storage::v2::WriteObjectResponse* response,
              grpc::CompletionQueue* cq) {

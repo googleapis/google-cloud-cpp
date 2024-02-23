@@ -487,8 +487,10 @@ StorageLogging::AsyncReadObject(
 std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
     google::storage::v2::WriteObjectRequest,
     google::storage::v2::WriteObjectResponse>>
-StorageLogging::AsyncWriteObject(google::cloud::CompletionQueue const& cq,
-                                 std::shared_ptr<grpc::ClientContext> context) {
+StorageLogging::AsyncWriteObject(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   using LoggingStream =
       ::google::cloud::internal::AsyncStreamingWriteRpcLogging<
           google::storage::v2::WriteObjectRequest,
@@ -496,7 +498,8 @@ StorageLogging::AsyncWriteObject(google::cloud::CompletionQueue const& cq,
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->AsyncWriteObject(cq, std::move(context));
+  auto stream =
+      child_->AsyncWriteObject(cq, std::move(context), std::move(options));
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));

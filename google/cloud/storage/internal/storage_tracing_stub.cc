@@ -463,12 +463,13 @@ std::unique_ptr<
                                      google::storage::v2::WriteObjectResponse>>
 StorageTracingStub::AsyncWriteObject(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "WriteObject");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncWriteObject(cq, context);
+  auto stream = child_->AsyncWriteObject(cq, context, std::move(options));
   return std::make_unique<internal::AsyncStreamingWriteRpcTracing<
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>>(
