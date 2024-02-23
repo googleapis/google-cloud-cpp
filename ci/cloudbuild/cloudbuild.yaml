@@ -86,6 +86,7 @@ steps:
 - name: 'gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}'
   id: 'download-runner-image-attempt-1'
   entrypoint: '/bin/true'
+  allowFailure: true
 
 - name: 'gcr.io/kaniko-project/executor:v1.20.1'
   id: 'kaniko-attempt-2'
