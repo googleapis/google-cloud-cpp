@@ -110,11 +110,23 @@ StatusOr<std::chrono::milliseconds> Backoff(Status const& status,
                                             char const* location,
                                             RetryPolicy& retry,
                                             BackoffPolicy& backoff,
-                                            Idempotency idempotency) {
+                                            Idempotency idempotency,
+                                            bool enable_server_retries) {
+  bool should_retry = retry.OnFailure(status);
+  if (enable_server_retries) {
+    auto ri = internal::GetRetryInfo(status);
+    if (ri.has_value()) {
+      if (retry.IsExhausted()) {
+        return RetryLoopPolicyExhaustedError(status, location);
+      }
+      return std::chrono::duration_cast<std::chrono::milliseconds>(
+          ri->retry_delay());
+    }
+  }
   if (idempotency == Idempotency::kNonIdempotent) {
     return RetryLoopNonIdempotentError(status, location);
   }
-  if (retry.OnFailure(status)) return backoff.OnCompletion();
+  if (should_retry) return backoff.OnCompletion();
   return RetryLoopError(status, location, retry.IsExhausted());
 }
 
