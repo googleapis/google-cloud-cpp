@@ -158,6 +158,7 @@ Status StubGenerator::GenerateHeader() {
   Async$method_name$(
       google::cloud::CompletionQueue const& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) = 0;
 )""";
       HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
@@ -413,9 +414,10 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 Default$stub_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     $request_type$ const& request) {
   return google::cloud::internal::MakeStreamingReadRpc<$request_type$, $response_type$>(
-    cq, std::move(context), request,
+    cq, std::move(context), std::move(options), request,
     [this](grpc::ClientContext* context, $request_type$ const& request, grpc::CompletionQueue* cq) {
       return grpc_stub_->PrepareAsync$method_name$(context, request, cq);
     });

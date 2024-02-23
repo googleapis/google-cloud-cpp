@@ -450,11 +450,12 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 DefaultStorageStub::AsyncReadObject(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::ReadObjectRequest const& request) {
   return google::cloud::internal::MakeStreamingReadRpc<
       google::storage::v2::ReadObjectRequest,
       google::storage::v2::ReadObjectResponse>(
-      cq, std::move(context), request,
+      cq, std::move(context), std::move(options), request,
       [this](grpc::ClientContext* context,
              google::storage::v2::ReadObjectRequest const& request,
              grpc::CompletionQueue* cq) {

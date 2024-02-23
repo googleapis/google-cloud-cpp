@@ -109,6 +109,7 @@ class GoldenKitchenSinkMetadata : public GoldenKitchenSinkStub {
   AsyncStreamingRead(
       google::cloud::CompletionQueue const& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::Request const& request) override;
 
   std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<

@@ -197,14 +197,16 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, AsyncStreamingRead) {
   ::google::test::admin::database::v1::Request request;
 
   auto auth_failure = under_test.AsyncStreamingRead(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::MakeImmutableOptions({}), request);
   auto start = auth_failure->Start().get();
   EXPECT_FALSE(start);
   auto finish = auth_failure->Finish().get();
   EXPECT_THAT(finish, StatusIs(StatusCode::kInvalidArgument));
 
   auto auth_success = under_test.AsyncStreamingRead(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::MakeImmutableOptions({}), request);
   start = auth_success->Start().get();
   EXPECT_FALSE(start);
   finish = auth_success->Finish().get();

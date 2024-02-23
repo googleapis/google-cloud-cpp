@@ -180,11 +180,13 @@ std::unique_ptr<internal::AsyncStreamingReadRpc<google::test::admin::database::v
 GoldenKitchenSinkTracingStub::AsyncStreamingRead(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::test::admin::database::v1::Request const& request) {
   auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenKitchenSink", "StreamingRead");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncStreamingRead(cq, context, request);
+  auto stream = child_->AsyncStreamingRead(
+      cq, context, std::move(options), request);
   return std::make_unique<
       internal::AsyncStreamingReadRpcTracing<google::test::admin::database::v1::Response>>(
       std::move(context), std::move(stream), std::move(span));

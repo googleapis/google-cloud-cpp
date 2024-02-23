@@ -355,13 +355,15 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 StorageAuth::AsyncReadObject(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::ReadObjectRequest const& request) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadRpcAuth<
       google::storage::v2::ReadObjectResponse>;
 
   auto& child = child_;
-  auto call = [child, cq, request](std::shared_ptr<grpc::ClientContext> ctx) {
-    return child->AsyncReadObject(cq, std::move(ctx), request);
+  auto call = [child, cq, opts = std::move(options),
+               request](std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncReadObject(cq, std::move(ctx), opts, request);
   };
   return std::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));

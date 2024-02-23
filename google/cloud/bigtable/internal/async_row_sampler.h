@@ -22,6 +22,7 @@
 #include "google/cloud/bigtable/row_key_sample.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/call_context.h"
+#include "google/cloud/options.h"
 #include <atomic>
 #include <memory>
 #include <string>
@@ -66,6 +67,7 @@ class AsyncRowSampler : public std::enable_shared_from_this<AsyncRowSampler> {
   std::atomic<bool> keep_reading_{true};
   std::vector<bigtable::RowKeySample> samples_;
   promise<StatusOr<std::vector<bigtable::RowKeySample>>> promise_;
+  internal::ImmutableOptions options_;
   internal::CallContext call_context_;
   std::shared_ptr<grpc::ClientContext> context_;
   std::shared_ptr<RetryContext> retry_context_ =

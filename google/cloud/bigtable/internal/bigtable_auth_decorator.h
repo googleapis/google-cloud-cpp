@@ -75,6 +75,7 @@ class BigtableAuth : public BigtableStub {
       google::bigtable::v2::ReadRowsResponse>>
   AsyncReadRows(google::cloud::CompletionQueue const& cq,
                 std::shared_ptr<grpc::ClientContext> context,
+                google::cloud::internal::ImmutableOptions options,
                 google::bigtable::v2::ReadRowsRequest const& request) override;
 
   std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
@@ -82,6 +83,7 @@ class BigtableAuth : public BigtableStub {
   AsyncSampleRowKeys(
       google::cloud::CompletionQueue const& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::bigtable::v2::SampleRowKeysRequest const& request) override;
 
   future<StatusOr<google::bigtable::v2::MutateRowResponse>> AsyncMutateRow(
@@ -94,6 +96,7 @@ class BigtableAuth : public BigtableStub {
   AsyncMutateRows(
       google::cloud::CompletionQueue const& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::bigtable::v2::MutateRowsRequest const& request) override;
 
   future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>

@@ -75,6 +75,7 @@ class AsyncBulkApplier : public std::enable_shared_from_this<AsyncBulkApplier> {
   BulkMutatorState state_;
   std::atomic<bool> keep_reading_{true};
   promise<std::vector<bigtable::FailedMutation>> promise_;
+  internal::ImmutableOptions options_;
   internal::CallContext call_context_;
   std::shared_ptr<grpc::ClientContext> context_;
   std::shared_ptr<RetryContext> retry_context_ =

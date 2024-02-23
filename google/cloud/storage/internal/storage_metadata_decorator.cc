@@ -746,6 +746,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 StorageMetadata::AsyncReadObject(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::ReadObjectRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -756,12 +757,12 @@ StorageMetadata::AsyncReadObject(
   }
 
   if (params.empty()) {
-    SetMetadata(*context, internal::CurrentOptions());
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncReadObject(cq, std::move(context), request);
+  return child_->AsyncReadObject(cq, std::move(context), std::move(options),
+                                 request);
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<

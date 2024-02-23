@@ -148,6 +148,7 @@ class TestStub : public GoldenKitchenSinkStub {
   AsyncStreamingRead(
       google::cloud::CompletionQueue const&,
       std::shared_ptr<grpc::ClientContext>,
+      google::cloud::internal::ImmutableOptions,
       google::test::admin::database::v1::Request const&) override {
     return nullptr;
   }

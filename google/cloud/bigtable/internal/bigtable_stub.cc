@@ -117,11 +117,12 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 DefaultBigtableStub::AsyncReadRows(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::ReadRowsRequest const& request) {
   return google::cloud::internal::MakeStreamingReadRpc<
       google::bigtable::v2::ReadRowsRequest,
       google::bigtable::v2::ReadRowsResponse>(
-      cq, std::move(context), request,
+      cq, std::move(context), std::move(options), request,
       [this](grpc::ClientContext* context,
              google::bigtable::v2::ReadRowsRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -134,11 +135,12 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 DefaultBigtableStub::AsyncSampleRowKeys(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::SampleRowKeysRequest const& request) {
   return google::cloud::internal::MakeStreamingReadRpc<
       google::bigtable::v2::SampleRowKeysRequest,
       google::bigtable::v2::SampleRowKeysResponse>(
-      cq, std::move(context), request,
+      cq, std::move(context), std::move(options), request,
       [this](grpc::ClientContext* context,
              google::bigtable::v2::SampleRowKeysRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -167,11 +169,12 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 DefaultBigtableStub::AsyncMutateRows(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::MutateRowsRequest const& request) {
   return google::cloud::internal::MakeStreamingReadRpc<
       google::bigtable::v2::MutateRowsRequest,
       google::bigtable::v2::MutateRowsResponse>(
-      cq, std::move(context), request,
+      cq, std::move(context), std::move(options), request,
       [this](grpc::ClientContext* context,
              google::bigtable::v2::MutateRowsRequest const& request,
              grpc::CompletionQueue* cq) {

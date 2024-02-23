@@ -50,7 +50,7 @@ void AsyncRowReader::MakeRequest() {
 
   auto self = this->shared_from_this();
   PerformAsyncStreamingRead(
-      stub_->AsyncReadRows(cq_, context_, request),
+      stub_->AsyncReadRows(cq_, context_, options_, request),
       [self](v2::ReadRowsResponse r) {
         return self->OnDataReceived(std::move(r));
       },

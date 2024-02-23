@@ -129,11 +129,12 @@ std::unique_ptr<
 BigtableTracingStub::AsyncReadRows(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::ReadRowsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "ReadRows");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncReadRows(cq, context, request);
+  auto stream = child_->AsyncReadRows(cq, context, std::move(options), request);
   return std::make_unique<internal::AsyncStreamingReadRpcTracing<
       google::bigtable::v2::ReadRowsResponse>>(
       std::move(context), std::move(stream), std::move(span));
@@ -144,12 +145,14 @@ std::unique_ptr<internal::AsyncStreamingReadRpc<
 BigtableTracingStub::AsyncSampleRowKeys(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::SampleRowKeysRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "SampleRowKeys");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncSampleRowKeys(cq, context, request);
+  auto stream =
+      child_->AsyncSampleRowKeys(cq, context, std::move(options), request);
   return std::make_unique<internal::AsyncStreamingReadRpcTracing<
       google::bigtable::v2::SampleRowKeysResponse>>(
       std::move(context), std::move(stream), std::move(span));
@@ -173,12 +176,14 @@ std::unique_ptr<
 BigtableTracingStub::AsyncMutateRows(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::MutateRowsRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "MutateRows");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncMutateRows(cq, context, request);
+  auto stream =
+      child_->AsyncMutateRows(cq, context, std::move(options), request);
   return std::make_unique<internal::AsyncStreamingReadRpcTracing<
       google::bigtable::v2::MutateRowsResponse>>(
       std::move(context), std::move(stream), std::move(span));

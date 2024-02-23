@@ -446,11 +446,13 @@ std::unique_ptr<
 StorageTracingStub::AsyncReadObject(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::ReadObjectRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.v2.Storage", "ReadObject");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncReadObject(cq, context, request);
+  auto stream =
+      child_->AsyncReadObject(cq, context, std::move(options), request);
   return std::make_unique<internal::AsyncStreamingReadRpcTracing<
       google::storage::v2::ReadObjectResponse>>(
       std::move(context), std::move(stream), std::move(span));

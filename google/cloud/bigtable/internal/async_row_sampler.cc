@@ -51,7 +51,9 @@ AsyncRowSampler::AsyncRowSampler(
       enable_server_retries_(enable_server_retries),
       app_profile_id_(std::move(app_profile_id)),
       table_name_(std::move(table_name)),
-      promise_([this] { keep_reading_ = false; }) {}
+      promise_([this] { keep_reading_ = false; }),
+      options_(internal::SaveCurrentOptions()),
+      call_context_(options_) {}
 
 void AsyncRowSampler::StartIteration() {
   v2::SampleRowKeysRequest request;
@@ -65,7 +67,7 @@ void AsyncRowSampler::StartIteration() {
 
   auto self = this->shared_from_this();
   PerformAsyncStreamingRead<v2::SampleRowKeysResponse>(
-      stub_->AsyncSampleRowKeys(cq_, context_, request),
+      stub_->AsyncSampleRowKeys(cq_, context_, options_, request),
       [self](v2::SampleRowKeysResponse response) {
         return self->OnRead(std::move(response));
       },
