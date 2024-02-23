@@ -99,12 +99,14 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamDirectPredictRequest,
     google::cloud::aiplatform::v1::StreamDirectPredictResponse>>
 PredictionServiceTracingStub::AsyncStreamDirectPredict(
-    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PredictionService", "StreamDirectPredict");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncStreamDirectPredict(cq, context);
+  auto stream =
+      child_->AsyncStreamDirectPredict(cq, context, std::move(options));
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::aiplatform::v1::StreamDirectPredictRequest,
       google::cloud::aiplatform::v1::StreamDirectPredictResponse>>(
@@ -115,12 +117,14 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamDirectRawPredictRequest,
     google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>>
 PredictionServiceTracingStub::AsyncStreamDirectRawPredict(
-    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PredictionService", "StreamDirectRawPredict");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncStreamDirectRawPredict(cq, context);
+  auto stream =
+      child_->AsyncStreamDirectRawPredict(cq, context, std::move(options));
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::aiplatform::v1::StreamDirectRawPredictRequest,
       google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>>(
@@ -131,12 +135,13 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamingPredictRequest,
     google::cloud::aiplatform::v1::StreamingPredictResponse>>
 PredictionServiceTracingStub::AsyncStreamingPredict(
-    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PredictionService", "StreamingPredict");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncStreamingPredict(cq, context);
+  auto stream = child_->AsyncStreamingPredict(cq, context, std::move(options));
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::aiplatform::v1::StreamingPredictRequest,
       google::cloud::aiplatform::v1::StreamingPredictResponse>>(
@@ -162,12 +167,14 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamingRawPredictRequest,
     google::cloud::aiplatform::v1::StreamingRawPredictResponse>>
 PredictionServiceTracingStub::AsyncStreamingRawPredict(
-    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.aiplatform.v1.PredictionService", "StreamingRawPredict");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncStreamingRawPredict(cq, context);
+  auto stream =
+      child_->AsyncStreamingRawPredict(cq, context, std::move(options));
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::aiplatform::v1::StreamingRawPredictRequest,
       google::cloud::aiplatform::v1::StreamingRawPredictResponse>>(

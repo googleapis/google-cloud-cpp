@@ -46,7 +46,8 @@ class BigQueryWriteTracingStub : public BigQueryWriteStub {
       google::cloud::bigquery::storage::v1::AppendRowsRequest,
       google::cloud::bigquery::storage::v1::AppendRowsResponse>>
   AsyncAppendRows(google::cloud::CompletionQueue const& cq,
-                  std::shared_ptr<grpc::ClientContext> context) override;
+                  std::shared_ptr<grpc::ClientContext> context,
+                  google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> GetWriteStream(
       grpc::ClientContext& context, Options const& options,

@@ -41,7 +41,8 @@ class PublisherServiceStub {
       google::cloud::pubsublite::v1::PublishRequest,
       google::cloud::pubsublite::v1::PublishResponse>>
   AsyncPublish(google::cloud::CompletionQueue const& cq,
-               std::shared_ptr<grpc::ClientContext> context) = 0;
+               std::shared_ptr<grpc::ClientContext> context,
+               google::cloud::internal::ImmutableOptions options) = 0;
 };
 
 class DefaultPublisherServiceStub : public PublisherServiceStub {
@@ -56,7 +57,8 @@ class DefaultPublisherServiceStub : public PublisherServiceStub {
       google::cloud::pubsublite::v1::PublishRequest,
       google::cloud::pubsublite::v1::PublishResponse>>
   AsyncPublish(google::cloud::CompletionQueue const& cq,
-               std::shared_ptr<grpc::ClientContext> context) override;
+               std::shared_ptr<grpc::ClientContext> context,
+               google::cloud::internal::ImmutableOptions options) override;
 
  private:
   std::unique_ptr<

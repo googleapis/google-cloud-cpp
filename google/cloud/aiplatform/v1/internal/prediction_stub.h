@@ -66,20 +66,25 @@ class PredictionServiceStub {
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::aiplatform::v1::StreamDirectPredictRequest,
       google::cloud::aiplatform::v1::StreamDirectPredictResponse>>
-  AsyncStreamDirectPredict(google::cloud::CompletionQueue const& cq,
-                           std::shared_ptr<grpc::ClientContext> context) = 0;
+  AsyncStreamDirectPredict(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) = 0;
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::aiplatform::v1::StreamDirectRawPredictRequest,
       google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>>
-  AsyncStreamDirectRawPredict(google::cloud::CompletionQueue const& cq,
-                              std::shared_ptr<grpc::ClientContext> context) = 0;
+  AsyncStreamDirectRawPredict(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) = 0;
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::aiplatform::v1::StreamingPredictRequest,
       google::cloud::aiplatform::v1::StreamingPredictResponse>>
   AsyncStreamingPredict(google::cloud::CompletionQueue const& cq,
-                        std::shared_ptr<grpc::ClientContext> context) = 0;
+                        std::shared_ptr<grpc::ClientContext> context,
+                        google::cloud::internal::ImmutableOptions options) = 0;
 
   virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::cloud::aiplatform::v1::StreamingPredictResponse>>
@@ -91,8 +96,10 @@ class PredictionServiceStub {
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::aiplatform::v1::StreamingRawPredictRequest,
       google::cloud::aiplatform::v1::StreamingRawPredictResponse>>
-  AsyncStreamingRawPredict(google::cloud::CompletionQueue const& cq,
-                           std::shared_ptr<grpc::ClientContext> context) = 0;
+  AsyncStreamingRawPredict(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) = 0;
 
   virtual StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
       grpc::ClientContext& context, Options const& options,
@@ -148,20 +155,24 @@ class DefaultPredictionServiceStub : public PredictionServiceStub {
       google::cloud::aiplatform::v1::StreamDirectPredictResponse>>
   AsyncStreamDirectPredict(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::aiplatform::v1::StreamDirectRawPredictRequest,
       google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>>
   AsyncStreamDirectRawPredict(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::aiplatform::v1::StreamingPredictRequest,
       google::cloud::aiplatform::v1::StreamingPredictResponse>>
-  AsyncStreamingPredict(google::cloud::CompletionQueue const& cq,
-                        std::shared_ptr<grpc::ClientContext> context) override;
+  AsyncStreamingPredict(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::cloud::aiplatform::v1::StreamingPredictResponse>>
@@ -175,7 +186,8 @@ class DefaultPredictionServiceStub : public PredictionServiceStub {
       google::cloud::aiplatform::v1::StreamingRawPredictResponse>>
   AsyncStreamingRawPredict(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
       grpc::ClientContext& context, Options const& options,

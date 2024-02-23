@@ -139,7 +139,8 @@ class StorageStub {
       google::storage::v2::BidiWriteObjectRequest,
       google::storage::v2::BidiWriteObjectResponse>>
   AsyncBidiWriteObject(google::cloud::CompletionQueue const& cq,
-                       std::shared_ptr<grpc::ClientContext> context) = 0;
+                       std::shared_ptr<grpc::ClientContext> context,
+                       google::cloud::internal::ImmutableOptions options) = 0;
 
   virtual StatusOr<google::storage::v2::ListObjectsResponse> ListObjects(
       grpc::ClientContext& context, Options const& options,
@@ -330,8 +331,10 @@ class DefaultStorageStub : public StorageStub {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::storage::v2::BidiWriteObjectRequest,
       google::storage::v2::BidiWriteObjectResponse>>
-  AsyncBidiWriteObject(google::cloud::CompletionQueue const& cq,
-                       std::shared_ptr<grpc::ClientContext> context) override;
+  AsyncBidiWriteObject(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::storage::v2::ListObjectsResponse> ListObjects(
       grpc::ClientContext& context, Options const& options,

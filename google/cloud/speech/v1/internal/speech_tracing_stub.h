@@ -52,7 +52,8 @@ class SpeechTracingStub : public SpeechStub {
       google::cloud::speech::v1::StreamingRecognizeResponse>>
   AsyncStreamingRecognize(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

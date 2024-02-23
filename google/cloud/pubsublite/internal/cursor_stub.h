@@ -40,8 +40,10 @@ class CursorServiceStub {
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
       google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>
-  AsyncStreamingCommitCursor(google::cloud::CompletionQueue const& cq,
-                             std::shared_ptr<grpc::ClientContext> context) = 0;
+  AsyncStreamingCommitCursor(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) = 0;
 
   virtual StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse>
   CommitCursor(
@@ -68,7 +70,8 @@ class DefaultCursorServiceStub : public CursorServiceStub {
       google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>
   AsyncStreamingCommitCursor(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse> CommitCursor(
       grpc::ClientContext& context, Options const& options,

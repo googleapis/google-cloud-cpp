@@ -105,12 +105,13 @@ std::unique_ptr<
     AsyncStreamingReadWriteRpc<google::pubsub::v1::StreamingPullRequest,
                                google::pubsub::v1::StreamingPullResponse>>
 SubscriberTracingStub::AsyncStreamingPull(
-    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   auto span =
       internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "StreamingPull");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncStreamingPull(cq, context);
+  auto stream = child_->AsyncStreamingPull(cq, context, std::move(options));
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>>(
