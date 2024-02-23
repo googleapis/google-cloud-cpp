@@ -657,6 +657,29 @@ void SeekWithTimestamp(google::cloud::pubsub::SubscriptionAdminClient client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
+void ExampleStatusOr(google::cloud::pubsub::TopicAdminClient client,
+                     std::vector<std::string> const& argv) {
+  //! [example-status-or]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::TopicAdminClient client, std::string const& project_id) {
+    // The actual type of `topic` is
+    // google::cloud::StatusOr<google::pubsub::v1::Topic>, but
+    // we expect it'll most often be declared with auto like this.
+    for (auto& topic : client.ListTopics(project_id)) {
+      // Use `topic` like a smart pointer; check it before de-referencing
+      if (!topic) {
+        // `topic` doesn't contain a value, so `.status()` will contain error
+        // info
+        std::cerr << topic.status() << "\n";
+        break;
+      }
+      std::cout << topic->DebugString() << "\n";
+    }
+  }
+  //! [example-status-or]
+  (std::move(client), argv.at(0));
+}
+
 void CreateAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
                       std::vector<std::string> const& argv) {
   //! [START pubsub_create_avro_schema] [create-avro-schema]
@@ -2053,6 +2076,9 @@ void AutoRunAvro(
       google::cloud::pubsub::Subscription(project_id, subscription_id);
   auto subscriber = google::cloud::pubsub::Subscriber(
       google::cloud::pubsub::MakeSubscriberConnection(subscription));
+
+  std::cout << "\nRunning the StatusOr example" << std::endl;
+  ExampleStatusOr(topic_admin_client, {project_id});
 
   std::cout << "\nRunning CreateSubscription() sample [avro]" << std::endl;
   CreateSubscription(subscription_admin_client,
