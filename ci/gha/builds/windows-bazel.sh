@@ -20,17 +20,7 @@ source "$(dirname "$0")/../../lib/init.sh"
 source module ci/gha/builds/lib/windows.sh
 source module ci/gha/builds/lib/bazel.sh
 
-# Usage: windows-bazel.sh <compilation-mode> [bazel query expression]
-#
-# The compilation mode is passed to Bazel via `--compilation_mode`.
-#
-# The build compiles the targets found via `bazel query`. Recall that:
-#    bazel query //a/...
-# returns the targets matching the pattern `//a/...`.` Furthermore, the
-# expressions can be combined using `+` and `-`, so:
-#    bazel query //a/... +//b/... -//a/c/...
-# Returns the targets that match `//a/...` or `//b/...`, but not `//a/c/...`.
-#
+# Usage: windows-bazel.sh <compilation-mode>
 
 test_args+=("${msvc_args[@]}")
 mapfile -t args < <(bazel::common_args)
@@ -50,20 +40,10 @@ if [[ -z "${VCINSTALLDIR}" ]]; then
 fi
 export BAZEL_VC="${VCINSTALLDIR}"
 
-io::log_h1 "Get target list for: " "$@"
-# The output from `bazelisk query` includes \r\n lines as this is running
-# on Windows. We need to clean things up before feeding them through bash.
-#
-# I (coryan@) do not understand why: `//examples` gets converted to `/examples`
-# somewhere in the `printf ... | xargs -n 64 bazelisk ...` call. Ditto for
-# `//protos`. Using `///` seems to work.
-mapfile -t targets < <(bazelisk "${args[@]}" query -- "$@" | tr -d '\r' | sed -e 's;//examples;///examples;g' -e 's;//protos;///protos;g' | sort)
-
 io::log_h1 "Starting Build"
 TIMEFORMAT="==> 🕑 bazel test done in %R seconds"
 time {
   # Always run //google/cloud:status_test in case the list of targets has
   # no unit tests.
-  io::log_bold bazelisk "${args[@]}" test "${test_args[@]}" -- //google/cloud:status_test "${targets[@]}"
-  printf "%s\n" "${targets[@]}" | xargs -n 64 bazelisk "${args[@]}" test "${test_args[@]}" -- //google/cloud:status_test
+  io::run bazelisk "${args[@]}" test "${test_args[@]}" -- //...
 }
