@@ -26,7 +26,8 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::test::admin::database::v1::Response>>
 GoldenKitchenSinkConnectionImpl::AsyncStreamingReadWrite() {
   return stub_->AsyncStreamingReadWrite(
-      background_->cq(), std::make_shared<grpc::ClientContext>());
+      background_->cq(), std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::SaveCurrentOptions());
 }
 
 void GoldenKitchenSinkStreamingReadStreamingUpdater(

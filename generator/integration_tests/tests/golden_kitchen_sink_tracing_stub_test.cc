@@ -379,7 +379,7 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingReadWrite) {
 
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
   EXPECT_CALL(*mock, AsyncStreamingReadWrite)
-      .WillOnce([](auto const&, auto context) {
+      .WillOnce([](auto const&, auto context, auto) {
         ValidatePropagator(*context);
         EXPECT_TRUE(ThereIsAnActiveSpan());
         EXPECT_TRUE(OTelContextCaptured());
@@ -392,7 +392,8 @@ TEST(GoldenKitchenSinkTracingStubTest, AsyncStreamingReadWrite) {
   google::cloud::CompletionQueue cq;
   auto under_test = GoldenKitchenSinkTracingStub(mock);
   auto stream = under_test.AsyncStreamingReadWrite(
-      cq, std::make_shared<grpc::ClientContext>());
+      cq, std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::MakeImmutableOptions({}));
   auto start = stream->Start().get();
   EXPECT_FALSE(start);
   auto finish = stream->Finish().get();
