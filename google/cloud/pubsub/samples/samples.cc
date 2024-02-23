@@ -37,8 +37,6 @@
 
 namespace {
 
-using ::google::cloud::pubsub::examples::CleanupSchemas;
-using ::google::cloud::pubsub::examples::CommitSchemaWithRevisionsForTesting;
 using ::google::cloud::pubsub::examples::RandomSchemaId;
 using ::google::cloud::pubsub::examples::RandomSnapshotId;
 using ::google::cloud::pubsub::examples::RandomSubscriptionId;
