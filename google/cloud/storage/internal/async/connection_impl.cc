@@ -95,12 +95,10 @@ future<StatusOr<storage::ObjectMetadata>> AsyncConnectionImpl::InsertObject(
     ApplyQueryParameters(*context, options, params.request);
     ApplyRoutingHeaders(*context, params.request);
     context->AddMetadata("x-goog-gcs-idempotency-token", id);
-    // TODO(#12359) - pass the `options` parameter
-    google::cloud::internal::OptionsSpan span(current);
-    auto rpc = stub->AsyncWriteObject(cq, std::move(context));
-    auto running =
-        InsertObject::Call(std::move(rpc), hash_function(params.request), proto,
-                           WritePayloadImpl::GetImpl(params.payload), current);
+    auto rpc = stub->AsyncWriteObject(cq, std::move(context), current);
+    auto running = InsertObject::Call(
+        std::move(rpc), hash_function(params.request), proto,
+        WritePayloadImpl::GetImpl(params.payload), std::move(current));
     return running->Start().then([running](auto f) mutable {
       running.reset();  // extend the life of the co-routine until it co-returns
       return f.get();

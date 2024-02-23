@@ -201,7 +201,8 @@ class MockStorageStub : public storage_internal::StorageStub {
           google::storage::v2::WriteObjectResponse>>;
   MOCK_METHOD(AsyncWriteObjectReturnType, AsyncWriteObject,
               (google::cloud::CompletionQueue const&,
-               std::shared_ptr<grpc::ClientContext>),
+               std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions),
               (override));
   MOCK_METHOD(
       future<StatusOr<google::storage::v2::StartResumableWriteResponse>>,
