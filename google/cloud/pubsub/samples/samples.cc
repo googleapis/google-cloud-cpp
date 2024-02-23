@@ -2180,11 +2180,7 @@ void AutoRunProtobuf(
 }
 
 void AutoRun(std::vector<std::string> const& argv) {
-<<<<<<< HEAD
-  using google::cloud::pubsub::examples::Cleanup;
-=======
  using google::cloud::pubsub::examples::Cleanup;
->>>>>>> a4b978fa46 (cleanup(pubsub): remove duplicate old samples)
   namespace examples = ::google::cloud::testing_util;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
@@ -2210,19 +2206,12 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const bigquery_subscription_id = RandomSubscriptionId(generator);
   auto const ordering_subscription_id = RandomSubscriptionId(generator);
   auto const ordering_topic_id = "ordering-" + RandomTopicId(generator);
-<<<<<<< HEAD
   auto const ordering_topic =
       google::cloud::pubsub::Topic(project_id, ordering_topic_id);
   auto const dead_letter_subscription_id = RandomSubscriptionId(generator);
   auto const dead_letter_topic_id = "dead-letter-" + RandomTopicId(generator);
   auto const dead_letter_topic =
       google::cloud::pubsub::Topic(project_id, dead_letter_topic_id);
-=======
-  auto const ordering_topic = google::cloud::pubsub::Topic(project_id, ordering_topic_id);
-  auto const dead_letter_subscription_id = RandomSubscriptionId(generator);
-  auto const dead_letter_topic_id = "dead-letter-" + RandomTopicId(generator);
-  auto const dead_letter_topic = google::cloud::pubsub::Topic(project_id, dead_letter_topic_id);
->>>>>>> a4b978fa46 (cleanup(pubsub): remove duplicate old samples)
   auto const snapshot_id = RandomSnapshotId(generator);
 
   using ::google::cloud::StatusCode;
