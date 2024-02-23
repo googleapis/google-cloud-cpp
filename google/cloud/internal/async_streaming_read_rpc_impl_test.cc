@@ -123,7 +123,7 @@ TEST(AsyncStreamingReadRpcTest, Basic) {
 
   OptionsSpan start_span(user_project("start"));
   auto start = stream->Start().then([](future<bool> f) {
-    EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "start");
+    EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "create");
     return f.get();
   });
   ASSERT_THAT(operations, SizeIs(1));
@@ -132,7 +132,7 @@ TEST(AsyncStreamingReadRpcTest, Basic) {
   EXPECT_TRUE(start.get());
 
   OptionsSpan read0_span(user_project("read0"));
-  auto read0 = stream->Read().then(check_read_span("read0"));
+  auto read0 = stream->Read().then(check_read_span("create"));
   ASSERT_THAT(operations, SizeIs(1));
   OptionsSpan read0_clear(Options{});
   notify_next_op();
@@ -142,7 +142,7 @@ TEST(AsyncStreamingReadRpcTest, Basic) {
   EXPECT_EQ("value0_0", response0->value);
 
   OptionsSpan read1_span(user_project("read1"));
-  auto read1 = stream->Read().then(check_read_span("read1"));
+  auto read1 = stream->Read().then(check_read_span("create"));
   ASSERT_THAT(operations, SizeIs(1));
   OptionsSpan read1_clear(Options{});
   notify_next_op(false);
@@ -151,7 +151,7 @@ TEST(AsyncStreamingReadRpcTest, Basic) {
 
   OptionsSpan finish_span(user_project("finish"));
   auto finish = stream->Finish().then([](future<Status> f) {
-    EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "finish");
+    EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "create");
     return f.get();
   });
   ASSERT_THAT(operations, SizeIs(1));

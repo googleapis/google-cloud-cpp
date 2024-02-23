@@ -21,11 +21,13 @@
 #include "google/cloud/internal/call_context.h"
 #include "google/cloud/internal/completion_queue_impl.h"
 #include "google/cloud/internal/grpc_request_metadata.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include "absl/functional/function_ref.h"
 #include "absl/types/optional.h"
 #include <grpcpp/support/async_stream.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -44,35 +46,45 @@ class AsyncStreamingReadRpcImpl : public AsyncStreamingReadRpc<Response> {
  public:
   AsyncStreamingReadRpcImpl(
       std::shared_ptr<CompletionQueueImpl> cq,
-      std::shared_ptr<grpc::ClientContext> context,
+      std::shared_ptr<grpc::ClientContext> context, ImmutableOptions options,
       std::unique_ptr<grpc::ClientAsyncReaderInterface<Response>> stream)
       : cq_(std::move(cq)),
         context_(std::move(context)),
+        options_(std::move(options)),
         stream_(std::move(stream)) {}
+
+  AsyncStreamingReadRpcImpl(
+      std::shared_ptr<CompletionQueueImpl> cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      std::unique_ptr<grpc::ClientAsyncReaderInterface<Response>> stream)
+      : AsyncStreamingReadRpcImpl(std::move(cq), std::move(context),
+                                  SaveCurrentOptions(), std::move(stream)) {}
 
   void Cancel() override { context_->TryCancel(); }
 
   future<bool> Start() override {
     struct OnStart : public AsyncGrpcOperation {
-      promise<bool> p;
-      CallContext call_context;
+      explicit OnStart(ImmutableOptions o) : call_context(std::move(o)) {}
+
       bool Notify(bool ok) override {
         ScopedCallContext scope(call_context);
         p.set_value(ok);
         return true;
       }
       void Cancel() override {}
+
+      promise<bool> p;
+      CallContext call_context;
     };
-    auto op = std::make_shared<OnStart>();
+    auto op = std::make_shared<OnStart>(options_);
     cq_->StartOperation(op, [&](void* tag) { stream_->StartCall(tag); });
     return op->p.get_future();
   }
 
   future<absl::optional<Response>> Read() override {
     struct OnRead : public AsyncGrpcOperation {
-      promise<absl::optional<Response>> p;
-      Response response;
-      CallContext call_context;
+      explicit OnRead(ImmutableOptions o) : call_context(std::move(o)) {}
+
       bool Notify(bool ok) override {
         ScopedCallContext scope(call_context);
         if (!ok) {
@@ -83,8 +95,12 @@ class AsyncStreamingReadRpcImpl : public AsyncStreamingReadRpc<Response> {
         return true;
       }
       void Cancel() override {}
+
+      promise<absl::optional<Response>> p;
+      Response response;
+      CallContext call_context;
     };
-    auto op = std::make_shared<OnRead>();
+    auto op = std::make_shared<OnRead>(options_);
     cq_->StartOperation(op,
                         [&](void* tag) { stream_->Read(&op->response, tag); });
     return op->p.get_future();
@@ -92,17 +108,20 @@ class AsyncStreamingReadRpcImpl : public AsyncStreamingReadRpc<Response> {
 
   future<Status> Finish() override {
     struct OnFinish : public AsyncGrpcOperation {
-      promise<Status> p;
-      CallContext call_context;
-      grpc::Status status;
+      explicit OnFinish(ImmutableOptions o) : call_context(std::move(o)) {}
+
       bool Notify(bool /*ok*/) override {
         ScopedCallContext scope(call_context);
         p.set_value(MakeStatusFromRpcError(std::move(status)));
         return true;
       }
       void Cancel() override {}
+
+      promise<Status> p;
+      CallContext call_context;
+      grpc::Status status;
     };
-    auto op = std::make_shared<OnFinish>();
+    auto op = std::make_shared<OnFinish>(options_);
     cq_->StartOperation(op,
                         [&](void* tag) { stream_->Finish(&op->status, tag); });
     return op->p.get_future();
@@ -115,6 +134,7 @@ class AsyncStreamingReadRpcImpl : public AsyncStreamingReadRpc<Response> {
  private:
   std::shared_ptr<CompletionQueueImpl> cq_;
   std::shared_ptr<grpc::ClientContext> context_;
+  ImmutableOptions options_;
   std::unique_ptr<grpc::ClientAsyncReaderInterface<Response>> stream_;
 };
 
