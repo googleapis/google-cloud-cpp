@@ -123,6 +123,9 @@ Status TransientError() {
 }
 
 TEST(RequestIdTest, UnaryRpc) {
+#if GTEST_USES_POSIX_RE == 0
+  GTEST_SKIP();
+#endif // GTEST_USES_POSIX_RE
   auto mock = std::make_shared<MockRequestIdServiceStub>();
   EXPECT_CALL(*mock, CreateFoo(_, _, RequestIdIsUuidV4<CreateFooRequest>()))
       .WillOnce(Return(TransientError()))
@@ -152,6 +155,9 @@ TEST(RequestIdTest, UnaryRpcExplicit) {
 }
 
 TEST(RequestIdTest, AsyncUnaryRpc) {
+#if GTEST_USES_POSIX_RE == 0
+  GTEST_SKIP();
+#endif // GTEST_USES_POSIX_RE
   auto mock = std::make_shared<MockRequestIdServiceStub>();
   EXPECT_CALL(*mock,
               AsyncCreateFoo(_, _, RequestIdIsUuidV4<CreateFooRequest>()))
@@ -184,6 +190,9 @@ TEST(RequestIdTest, AsyncUnaryRpcExplicit) {
 }
 
 TEST(RequestIdTest, Lro) {
+#if GTEST_USES_POSIX_RE == 0
+  GTEST_SKIP();
+#endif // GTEST_USES_POSIX_RE
   auto mock = std::make_shared<MockRequestIdServiceStub>();
   EXPECT_CALL(*mock,
               AsyncRenameFoo(_, _, _, RequestIdIsUuidV4<RenameFooRequest>()))
