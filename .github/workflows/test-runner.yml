@@ -68,8 +68,8 @@ jobs:
     # Build the full matrix only on push events to the default branch, or
     # when PR gets the has a `gha:full-build` label, or when it had the
     # label already and it gets a new commit.
+    # TODO(coryan) - temporarily disabled this build to save cores
     if: |-
-      # TODO(coryan) - temporarily disable this build to save cores
       ${{
         false &&
         github.event_name == 'schedule' ||
@@ -87,9 +87,9 @@ jobs:
     # Build the full matrix only on push events to the default branch, or
     # when PR gets the has a `gha:full-build` label, or when it had the
     # label already and it gets a new commit.
+    # TODO(coryan) - temporarily disabled this build to save cores
     if: |-
       ${{
-        # TODO(coryan) - temporarily disable this build to save cores
         false &&
         github.event_name == 'schedule' ||
         github.event_name == 'push' ||
