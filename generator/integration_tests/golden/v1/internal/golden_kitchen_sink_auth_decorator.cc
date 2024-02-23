@@ -185,8 +185,8 @@ GoldenKitchenSinkAuth::AsyncStreamingWrite(
   using StreamAuth = google::cloud::internal::AsyncStreamingWriteRpcAuth<
     google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>;
 
-  auto& child = child_;
-  auto call = [child, cq, options](std::shared_ptr<grpc::ClientContext> ctx) {
+  auto call = [child = child_, cq, options = std::move(options)](
+                  std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncStreamingWrite(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(

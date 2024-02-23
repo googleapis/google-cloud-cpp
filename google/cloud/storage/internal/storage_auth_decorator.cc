@@ -380,8 +380,8 @@ StorageAuth::AsyncWriteObject(
       google::storage::v2::WriteObjectRequest,
       google::storage::v2::WriteObjectResponse>;
 
-  auto& child = child_;
-  auto call = [child, cq, options](std::shared_ptr<grpc::ClientContext> ctx) {
+  auto call = [child = child_, cq, options = std::move(options)](
+                  std::shared_ptr<grpc::ClientContext> ctx) {
     return child->AsyncWriteObject(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(
