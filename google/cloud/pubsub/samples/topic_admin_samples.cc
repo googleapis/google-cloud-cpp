@@ -340,7 +340,6 @@ void ExampleStatusOr(google::cloud::pubsub_admin::TopicAdminClient client,
                      std::vector<std::string> const& argv) {
   //! [example-status-or]
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
-  namespace pubsub = ::google::cloud::pubsub;
   [](pubsub_admin::TopicAdminClient client, std::string const& project_id) {
     // The actual type of `topic` is
     // google::cloud::StatusOr<google::pubsub::v1::Topic>, but
