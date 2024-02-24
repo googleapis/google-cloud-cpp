@@ -61,12 +61,13 @@ StreamingSubscriptionBatchSource::StreamingSubscriptionBatchSource(
       stub_(std::move(stub)),
       subscription_full_name_(std::move(subscription_full_name)),
       client_id_(std::move(client_id)),
-      options_(std::move(opts)),
+      options_(google::cloud::internal::MakeImmutableOptions(std::move(opts))),
       max_outstanding_messages_(
-          options_.get<pubsub::MaxOutstandingMessagesOption>()),
-      max_outstanding_bytes_(options_.get<pubsub::MaxOutstandingBytesOption>()),
-      min_deadline_time_(options_.get<pubsub::MinDeadlineExtensionOption>()),
-      max_deadline_time_(options_.get<pubsub::MaxDeadlineTimeOption>()) {}
+          options_->get<pubsub::MaxOutstandingMessagesOption>()),
+      max_outstanding_bytes_(
+          options_->get<pubsub::MaxOutstandingBytesOption>()),
+      min_deadline_time_(options_->get<pubsub::MinDeadlineExtensionOption>()),
+      max_deadline_time_(options_->get<pubsub::MaxDeadlineTimeOption>()) {}
 
 void StreamingSubscriptionBatchSource::Start(BatchCallback callback) {
   std::unique_lock<std::mutex> lk(mu_);
@@ -75,8 +76,8 @@ void StreamingSubscriptionBatchSource::Start(BatchCallback callback) {
   lk.unlock();
 
   shutdown_manager_->StartOperation(__func__, "stream", [this] {
-    StartStream(options_.get<pubsub::RetryPolicyOption>()->clone(),
-                options_.get<pubsub::BackoffPolicyOption>()->clone());
+    StartStream(options_->get<pubsub::RetryPolicyOption>()->clone(),
+                options_->get<pubsub::BackoffPolicyOption>()->clone());
   });
 }
 
@@ -189,7 +190,7 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
 void StreamingSubscriptionBatchSource::StartStream(
     std::shared_ptr<pubsub::RetryPolicy> retry_policy,
     std::shared_ptr<pubsub::BackoffPolicy> backoff_policy) {
-  internal::OptionsSpan span(options_);
+  internal::OptionsSpan span(*options_);
 
   // Starting a stream is a 4-step process.
   // 1. Create a new SubscriberStub::AsyncPullStream object.
@@ -208,7 +209,7 @@ void StreamingSubscriptionBatchSource::StartStream(
   context->AddMetadata(
       "x-goog-request-params",
       "subscription=" + internal::UrlEncode(request.subscription()));
-  auto stream = stub_->AsyncStreamingPull(cq_, std::move(context));
+  auto stream = stub_->AsyncStreamingPull(cq_, std::move(context), options_);
   if (!stream) {
     OnRetryFailure(Status(StatusCode::kUnknown, "null stream"));
     return;
@@ -427,8 +428,8 @@ void StreamingSubscriptionBatchSource::OnFinish(Status status) {
   if (shutdown_manager_->FinishedOperation("stream")) return;
   lk.unlock();
   shutdown_manager_->StartOperation(__func__, "stream", [this] {
-    StartStream(options_.get<pubsub::RetryPolicyOption>()->clone(),
-                options_.get<pubsub::BackoffPolicyOption>()->clone());
+    StartStream(options_->get<pubsub::RetryPolicyOption>()->clone(),
+                options_->get<pubsub::BackoffPolicyOption>()->clone());
   });
 }
 

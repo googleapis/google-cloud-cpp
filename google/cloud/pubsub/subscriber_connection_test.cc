@@ -133,20 +133,21 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsMetadata) {
 
   EXPECT_CALL(*mock, AsyncStreamingPull)
       .Times(AtLeast(1))
-      .WillRepeatedly(
-          [&](google::cloud::CompletionQueue const& cq, auto context) {
-            ValidateMetadataFixture fixture;
-            auto metadata = fixture.GetMetadata(*context);
-            EXPECT_THAT(
-                metadata,
-                UnorderedElementsAre(
-                    Pair("x-goog-api-client",
-                         google::cloud::internal::HandCraftedLibClientHeader()),
-                    Pair("x-goog-request-params",
-                         "subscription=" +
-                             internal::UrlEncode(subscription.FullName()))));
-            return FakeAsyncStreamingPull(cq, std::move(context));
-          });
+      .WillRepeatedly([&](google::cloud::CompletionQueue const& cq,
+                          auto context, auto options) {
+        ValidateMetadataFixture fixture;
+        auto metadata = fixture.GetMetadata(*context);
+        EXPECT_THAT(
+            metadata,
+            UnorderedElementsAre(
+                Pair("x-goog-api-client",
+                     google::cloud::internal::HandCraftedLibClientHeader()),
+                Pair("x-goog-request-params",
+                     "subscription=" +
+                         internal::UrlEncode(subscription.FullName()))));
+        return FakeAsyncStreamingPull(cq, std::move(context),
+                                      std::move(options));
+      });
 
   auto subscriber = MakeTestSubscriberConnection(subscription, mock);
   std::atomic_flag received_one{false};

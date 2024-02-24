@@ -26,7 +26,9 @@ using ::testing::AtMost;
 std::unique_ptr<pubsub_testing::MockAsyncPullStream> FakeAsyncStreamingPull(
     google::cloud::CompletionQueue const& completion_queue,
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::shared_ptr<grpc::ClientContext>) {
+    std::shared_ptr<grpc::ClientContext>,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions) {
   using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
   using us = std::chrono::microseconds;
 

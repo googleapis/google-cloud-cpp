@@ -65,12 +65,14 @@ Options MakeTestOptions(Subscription subscription, CompletionQueue const& cq) {
 using StreamingPullMock =
     std::function<std::unique_ptr<pubsub_testing::MockAsyncPullStream>(
         google::cloud::CompletionQueue const&,
-        std::shared_ptr<grpc::ClientContext>)>;
+        std::shared_ptr<grpc::ClientContext>,
+        google::cloud::internal::ImmutableOptions)>;
 
 StreamingPullMock MakeAsyncStreamingPullMock(
     std::string const& expected_subscription_name) {
   return [expected_subscription_name](
-             google::cloud::CompletionQueue const& completion_queue, auto) {
+             google::cloud::CompletionQueue const& completion_queue, auto,
+             auto) {
     using us = std::chrono::microseconds;
 
     auto cq = completion_queue;
@@ -332,7 +334,7 @@ TEST(SubscriberConnectionTest, StreamingPullFailure) {
       });
   EXPECT_CALL(*mock, AsyncStreamingPull)
       .Times(AtLeast(1))
-      .WillRepeatedly([](google::cloud::CompletionQueue const& cq, auto) {
+      .WillRepeatedly([](google::cloud::CompletionQueue const& cq, auto, auto) {
         using TimerFuture =
             future<StatusOr<std::chrono::system_clock::time_point>>;
         using us = std::chrono::microseconds;

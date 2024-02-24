@@ -182,8 +182,9 @@ TEST_F(SubscriberIntegrationTest, Stub) {
   request.set_stream_ack_deadline_seconds(600);
 
   auto stream = [&stub](CompletionQueue const& cq) {
-    auto context = std::make_shared<grpc::ClientContext>();
-    return stub->AsyncStreamingPull(cq, std::move(context));
+    return stub->AsyncStreamingPull(
+        cq, std::make_shared<grpc::ClientContext>(),
+        google::cloud::internal::MakeImmutableOptions({}));
   }(background.cq());
 
   ASSERT_TRUE(stream->Start().get());
