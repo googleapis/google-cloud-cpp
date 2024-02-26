@@ -33,9 +33,6 @@ using ::google::cloud::bigquery_v2_minimal_testing::
 using ::google::cloud::bigquery_v2_minimal_testing::MakeJob;
 using ::google::cloud::bigquery_v2_minimal_testing::MakePostQueryRequest;
 
-using ::google::cloud::testing_util::StatusIs;
-using ::testing::HasSubstr;
-
 auto static const kMinCreationTimeMs = 1111111111111;
 auto static const kMaxCreationTimeMs = 1111111111211;
 auto static const kMinTime = std::chrono::system_clock::from_time_t(0) +
