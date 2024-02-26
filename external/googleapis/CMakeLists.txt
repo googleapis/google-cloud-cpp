@@ -147,7 +147,7 @@ externalproject_add(
     PATCH_COMMAND
         patch
         -p1
-        --input=/workspace/external/googleapis.patch
+        --input=external/googleapis.patch
         # ~~~
         # Scaffolding for patching googleapis after download. For example:
         #   PATCH_COMMAND
