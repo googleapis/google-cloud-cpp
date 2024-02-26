@@ -183,7 +183,9 @@ class AsyncRetryLoopImpl
       : retry_policy_(std::move(retry_policy)),
         backoff_policy_(std::move(backoff_policy)),
         idempotency_(idempotency),
-        enable_server_retries_(options->get<EnableServerRetriesOption>()),
+        retry_info_policy_(options->get<EnableServerRetriesOption>()
+                               ? RetryInfoPolicy::kHeed
+                               : RetryInfoPolicy::kIgnore),
         cq_(std::move(cq)),
         functor_(std::forward<Functor>(functor)),
         request_(std::move(request)),
@@ -260,9 +262,8 @@ class AsyncRetryLoopImpl
     if (result.ok()) return SetDone(std::move(result));
     // Some kind of failure, first verify that it is retryable.
     last_status_ = GetResultStatus(std::move(result));
-    auto delay =
-        Backoff(last_status_, location_, *retry_policy_, *backoff_policy_,
-                idempotency_, enable_server_retries_);
+    auto delay = Backoff(last_status_, location_, *retry_policy_,
+                         *backoff_policy_, idempotency_, retry_info_policy_);
     if (!delay) return SetDone(std::move(delay).status());
     StartBackoff(*delay);
   }
@@ -317,7 +318,7 @@ class AsyncRetryLoopImpl
   std::unique_ptr<RetryPolicyType> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
   Idempotency idempotency_ = Idempotency::kNonIdempotent;
-  bool enable_server_retries_;
+  RetryInfoPolicy retry_info_policy_;
   google::cloud::CompletionQueue cq_;
   std::decay_t<Functor> functor_;
   Request request_;

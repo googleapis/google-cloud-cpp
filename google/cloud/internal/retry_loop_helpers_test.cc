@@ -166,10 +166,10 @@ TEST(Backoff, HeedsRetryInfo) {
   EXPECT_CALL(*mock_r, OnFailure(status)).WillOnce(Return(false));
   EXPECT_CALL(*mock_r, IsExhausted).WillOnce(Return(false));
   auto mock_b = std::make_unique<MockBackoffPolicy>();
-  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
+  EXPECT_CALL(*mock_b, OnCompletion);
 
   auto actual = Backoff(status, "SomeFunction", *mock_r, *mock_b,
-                        Idempotency::kNonIdempotent, true);
+                        Idempotency::kNonIdempotent, RetryInfoPolicy::kHeed);
   EXPECT_THAT(actual, IsOkAndHolds(retry_delay));
 }
 
@@ -185,7 +185,7 @@ TEST(Backoff, NoRetriesIfPolicyExhausted) {
   EXPECT_CALL(*mock_b, OnCompletion).Times(0);
 
   auto actual = Backoff(status, "SomeFunction", *mock_r, *mock_b,
-                        Idempotency::kIdempotent, true);
+                        Idempotency::kIdempotent, RetryInfoPolicy::kHeed);
   EXPECT_THAT(actual, StatusIs(StatusCode::kResourceExhausted,
                                HasSubstr("policy exhausted")));
 }
@@ -201,7 +201,7 @@ TEST(Backoff, PermanentFailureWhenIgnoringRetryInfo) {
   EXPECT_CALL(*mock_b, OnCompletion).Times(0);
 
   auto actual = Backoff(status, "SomeFunction", *mock_r, *mock_b,
-                        Idempotency::kIdempotent, false);
+                        Idempotency::kIdempotent, RetryInfoPolicy::kIgnore);
   EXPECT_THAT(actual, StatusIs(StatusCode::kResourceExhausted,
                                HasSubstr("Permanent error")));
 }
@@ -218,7 +218,7 @@ TEST(Backoff, TransientFailureWhenIgnoringRetryInfo) {
       .WillOnce(Return(std::chrono::milliseconds(10)));
 
   auto actual = Backoff(status, "SomeFunction", *mock_r, *mock_b,
-                        Idempotency::kIdempotent, false);
+                        Idempotency::kIdempotent, RetryInfoPolicy::kIgnore);
   EXPECT_THAT(actual, IsOkAndHolds(std::chrono::milliseconds(10)));
 }
 
@@ -233,7 +233,7 @@ TEST(Backoff, NonIdempotentFailureWhenIgnoringRetryInfo) {
   EXPECT_CALL(*mock_b, OnCompletion).Times(0);
 
   auto actual = Backoff(status, "SomeFunction", *mock_r, *mock_b,
-                        Idempotency::kNonIdempotent, false);
+                        Idempotency::kNonIdempotent, RetryInfoPolicy::kIgnore);
   EXPECT_THAT(actual, StatusIs(StatusCode::kResourceExhausted,
                                HasSubstr("non-idempotent")));
 }

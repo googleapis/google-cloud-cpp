@@ -111,14 +111,17 @@ StatusOr<std::chrono::milliseconds> Backoff(Status const& status,
                                             RetryPolicy& retry,
                                             BackoffPolicy& backoff,
                                             Idempotency idempotency,
-                                            bool enable_server_retries) {
+                                            RetryInfoPolicy retry_info) {
   bool should_retry = retry.OnFailure(status);
-  if (enable_server_retries) {
+  if (retry_info == RetryInfoPolicy::kHeed) {
     auto ri = internal::GetRetryInfo(status);
-    if (ri.has_value()) {
+    if (ri) {
       if (retry.IsExhausted()) {
         return RetryLoopPolicyExhaustedError(status, location);
       }
+      // Ping the backoff policy, but ignore the result. We do the same with the
+      // retry policy.
+      (void)backoff.OnCompletion();
       return std::chrono::duration_cast<std::chrono::milliseconds>(
           ri->retry_delay());
     }
