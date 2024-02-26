@@ -36,12 +36,13 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::SubscribeRequest,
     google::cloud::pubsublite::v1::SubscribeResponse>>
 SubscriberServiceTracingStub::AsyncSubscribe(
-    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.pubsublite.v1.SubscriberService", "Subscribe");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncSubscribe(cq, context);
+  auto stream = child_->AsyncSubscribe(cq, context, std::move(options));
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::pubsublite::v1::SubscribeRequest,
       google::cloud::pubsublite::v1::SubscribeResponse>>(

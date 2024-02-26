@@ -72,8 +72,10 @@ std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
     google::pubsub::v1::StreamingPullResponse>>
 SubscriberRoundRobin::AsyncStreamingPull(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  return Child()->AsyncStreamingPull(cq, std::move(context));
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  return Child()->AsyncStreamingPull(cq, std::move(context),
+                                     std::move(options));
 }
 
 Status SubscriberRoundRobin::ModifyPushConfig(

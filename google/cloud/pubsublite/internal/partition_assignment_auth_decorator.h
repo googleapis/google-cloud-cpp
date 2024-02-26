@@ -41,8 +41,10 @@ class PartitionAssignmentServiceAuth : public PartitionAssignmentServiceStub {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::PartitionAssignmentRequest,
       google::cloud::pubsublite::v1::PartitionAssignment>>
-  AsyncAssignPartitions(google::cloud::CompletionQueue const& cq,
-                        std::shared_ptr<grpc::ClientContext> context) override;
+  AsyncAssignPartitions(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

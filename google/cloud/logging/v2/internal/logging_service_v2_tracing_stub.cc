@@ -97,12 +97,13 @@ std::unique_ptr<
     AsyncStreamingReadWriteRpc<google::logging::v2::TailLogEntriesRequest,
                                google::logging::v2::TailLogEntriesResponse>>
 LoggingServiceV2TracingStub::AsyncTailLogEntries(
-    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   auto span = internal::MakeSpanGrpc("google.logging.v2.LoggingServiceV2",
                                      "TailLogEntries");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncTailLogEntries(cq, context);
+  auto stream = child_->AsyncTailLogEntries(cq, context, std::move(options));
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>(

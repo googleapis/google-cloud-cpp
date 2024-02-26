@@ -222,14 +222,15 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::storage::v2::BidiWriteObjectResponse>>
 StorageAuth::AsyncBidiWriteObject(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
       google::storage::v2::BidiWriteObjectRequest,
       google::storage::v2::BidiWriteObjectResponse>;
 
-  auto& child = child_;
-  auto call = [child, cq](std::shared_ptr<grpc::ClientContext> ctx) {
-    return child->AsyncBidiWriteObject(cq, std::move(ctx));
+  auto call = [child = child_, cq, options = std::move(options)](
+                  std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncBidiWriteObject(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));

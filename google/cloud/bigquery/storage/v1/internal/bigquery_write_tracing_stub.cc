@@ -49,12 +49,13 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
     google::cloud::bigquery::storage::v1::AppendRowsRequest,
     google::cloud::bigquery::storage::v1::AppendRowsResponse>>
 BigQueryWriteTracingStub::AsyncAppendRows(
-    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.storage.v1.BigQueryWrite", "AppendRows");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncAppendRows(cq, context);
+  auto stream = child_->AsyncAppendRows(cq, context, std::move(options));
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::bigquery::storage::v1::AppendRowsRequest,
       google::cloud::bigquery::storage::v1::AppendRowsResponse>>(

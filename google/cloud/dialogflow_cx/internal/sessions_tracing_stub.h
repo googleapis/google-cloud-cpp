@@ -54,7 +54,8 @@ class SessionsTracingStub : public SessionsStub {
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>
   AsyncStreamingDetectIntent(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse> MatchIntent(
       grpc::ClientContext& context, Options const& options,

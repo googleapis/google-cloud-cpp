@@ -42,7 +42,8 @@ class SubscriberServiceAuth : public SubscriberServiceStub {
       google::cloud::pubsublite::v1::SubscribeRequest,
       google::cloud::pubsublite::v1::SubscribeResponse>>
   AsyncSubscribe(google::cloud::CompletionQueue const& cq,
-                 std::shared_ptr<grpc::ClientContext> context) override;
+                 std::shared_ptr<grpc::ClientContext> context,
+                 google::cloud::internal::ImmutableOptions options) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

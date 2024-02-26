@@ -169,8 +169,10 @@ std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
     google::storage::v2::BidiWriteObjectResponse>>
 StorageRoundRobin::AsyncBidiWriteObject(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  return Child()->AsyncBidiWriteObject(cq, std::move(context));
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  return Child()->AsyncBidiWriteObject(cq, std::move(context),
+                                       std::move(options));
 }
 
 StatusOr<google::storage::v2::ListObjectsResponse>

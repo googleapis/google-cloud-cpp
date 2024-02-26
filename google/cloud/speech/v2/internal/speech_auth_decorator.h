@@ -81,7 +81,8 @@ class SpeechAuth : public SpeechStub {
       google::cloud::speech::v2::StreamingRecognizeResponse>>
   AsyncStreamingRecognize(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchRecognize(
       google::cloud::CompletionQueue& cq,

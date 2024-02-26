@@ -441,10 +441,7 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
           RequestPlaceholder const&)
       -> future<StatusOr<std::unique_ptr<StreamingRpc>>> {
     configure_context(*context);
-    // TODO(#12359) - pass the `options` parameter
-    google::cloud::internal::OptionsSpan span(current);
-
-    auto rpc = stub->AsyncBidiWriteObject(cq, std::move(context));
+    auto rpc = stub->AsyncBidiWriteObject(cq, std::move(context), current);
     auto start = rpc->Start();
     // TODO(coryan): I think we just call `Start()` and then send the data and
     // the metadata (if needed) on the first Write() call.

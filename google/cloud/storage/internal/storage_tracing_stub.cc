@@ -287,12 +287,13 @@ std::unique_ptr<
     AsyncStreamingReadWriteRpc<google::storage::v2::BidiWriteObjectRequest,
                                google::storage::v2::BidiWriteObjectResponse>>
 StorageTracingStub::AsyncBidiWriteObject(
-    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "BidiWriteObject");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncBidiWriteObject(cq, context);
+  auto stream = child_->AsyncBidiWriteObject(cq, context, std::move(options));
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::storage::v2::BidiWriteObjectRequest,
       google::storage::v2::BidiWriteObjectResponse>>(

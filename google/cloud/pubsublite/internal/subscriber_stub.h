@@ -41,7 +41,8 @@ class SubscriberServiceStub {
       google::cloud::pubsublite::v1::SubscribeRequest,
       google::cloud::pubsublite::v1::SubscribeResponse>>
   AsyncSubscribe(google::cloud::CompletionQueue const& cq,
-                 std::shared_ptr<grpc::ClientContext> context) = 0;
+                 std::shared_ptr<grpc::ClientContext> context,
+                 google::cloud::internal::ImmutableOptions options) = 0;
 };
 
 class DefaultSubscriberServiceStub : public SubscriberServiceStub {
@@ -56,7 +57,8 @@ class DefaultSubscriberServiceStub : public SubscriberServiceStub {
       google::cloud::pubsublite::v1::SubscribeRequest,
       google::cloud::pubsublite::v1::SubscribeResponse>>
   AsyncSubscribe(google::cloud::CompletionQueue const& cq,
-                 std::shared_ptr<grpc::ClientContext> context) override;
+                 std::shared_ptr<grpc::ClientContext> context,
+                 google::cloud::internal::ImmutableOptions options) override;
 
  private:
   std::unique_ptr<

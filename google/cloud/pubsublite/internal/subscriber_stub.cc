@@ -36,11 +36,12 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::SubscribeResponse>>
 DefaultSubscriberServiceStub::AsyncSubscribe(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   return google::cloud::internal::MakeStreamingReadWriteRpc<
       google::cloud::pubsublite::v1::SubscribeRequest,
       google::cloud::pubsublite::v1::SubscribeResponse>(
-      cq, std::move(context),
+      cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return grpc_stub_->PrepareAsyncSubscribe(context, cq);
       });

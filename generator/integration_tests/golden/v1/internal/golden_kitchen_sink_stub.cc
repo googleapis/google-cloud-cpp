@@ -154,9 +154,10 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::test::admin::database::v1::Response>>
 DefaultGoldenKitchenSinkStub::AsyncStreamingReadWrite(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   return google::cloud::internal::MakeStreamingReadWriteRpc<google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>(
-      cq, std::move(context),
+      cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return grpc_stub_->PrepareAsyncStreamingReadWrite(context, cq);
       });

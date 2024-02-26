@@ -56,9 +56,11 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>
 SessionsMetadata::AsyncStreamingDetectIntent(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->AsyncStreamingDetectIntent(cq, std::move(context));
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  SetMetadata(*context, *options);
+  return child_->AsyncStreamingDetectIntent(cq, std::move(context),
+                                            std::move(options));
 }
 
 void SessionsMetadata::SetMetadata(grpc::ClientContext& context,

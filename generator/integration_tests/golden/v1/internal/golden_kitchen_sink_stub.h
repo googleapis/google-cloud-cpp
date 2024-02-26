@@ -96,7 +96,8 @@ class GoldenKitchenSinkStub {
       google::test::admin::database::v1::Response>>
   AsyncStreamingReadWrite(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) = 0;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) = 0;
 
   virtual Status ExplicitRouting1(
       grpc::ClientContext& context,
@@ -183,7 +184,8 @@ class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
       google::test::admin::database::v1::Response>>
   AsyncStreamingReadWrite(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   Status ExplicitRouting1(
       grpc::ClientContext& context,

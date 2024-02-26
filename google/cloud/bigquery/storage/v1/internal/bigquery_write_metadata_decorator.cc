@@ -57,9 +57,10 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::bigquery::storage::v1::AppendRowsResponse>>
 BigQueryWriteMetadata::AsyncAppendRows(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->AsyncAppendRows(cq, std::move(context));
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  SetMetadata(*context, *options);
+  return child_->AsyncAppendRows(cq, std::move(context), std::move(options));
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::WriteStream>

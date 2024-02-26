@@ -67,7 +67,8 @@ class SubscriberStub {
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>>
   AsyncStreamingPull(google::cloud::CompletionQueue const& cq,
-                     std::shared_ptr<grpc::ClientContext> context) = 0;
+                     std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options) = 0;
 
   virtual Status ModifyPushConfig(
       grpc::ClientContext& context, Options const& options,
@@ -141,8 +142,10 @@ class DefaultSubscriberStub : public SubscriberStub {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>>
-  AsyncStreamingPull(google::cloud::CompletionQueue const& cq,
-                     std::shared_ptr<grpc::ClientContext> context) override;
+  AsyncStreamingPull(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   Status ModifyPushConfig(
       grpc::ClientContext& context, Options const& options,

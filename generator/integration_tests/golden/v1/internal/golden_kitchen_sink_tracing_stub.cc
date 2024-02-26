@@ -143,11 +143,12 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
     google::test::admin::database::v1::Request,
     google::test::admin::database::v1::Response>>
 GoldenKitchenSinkTracingStub::AsyncStreamingReadWrite(
-    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenKitchenSink", "StreamingReadWrite");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncStreamingReadWrite(cq, context);
+  auto stream = child_->AsyncStreamingReadWrite(cq, context, std::move(options));
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::test::admin::database::v1::Request,
       google::test::admin::database::v1::Response>>(

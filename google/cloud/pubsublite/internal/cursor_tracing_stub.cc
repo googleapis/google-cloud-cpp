@@ -36,12 +36,14 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
     google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>
 CursorServiceTracingStub::AsyncStreamingCommitCursor(
-    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.CursorService",
                                      "StreamingCommitCursor");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncStreamingCommitCursor(cq, context);
+  auto stream =
+      child_->AsyncStreamingCommitCursor(cq, context, std::move(options));
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::pubsublite::v1::StreamingCommitCursorRequest,
       google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>(

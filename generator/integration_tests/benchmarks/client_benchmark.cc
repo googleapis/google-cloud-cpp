@@ -125,7 +125,8 @@ class TestStub : public GoldenKitchenSinkStub {
       google::test::admin::database::v1::Request,
       google::test::admin::database::v1::Response>>
   AsyncStreamingReadWrite(google::cloud::CompletionQueue const&,
-                          std::shared_ptr<grpc::ClientContext>) override {
+                          std::shared_ptr<grpc::ClientContext>,
+                          google::cloud::internal::ImmutableOptions) override {
     return nullptr;
   }
 

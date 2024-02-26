@@ -81,14 +81,15 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::logging::v2::TailLogEntriesResponse>>
 LoggingServiceV2Auth::AsyncTailLogEntries(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>;
 
-  auto& child = child_;
-  auto call = [child, cq](std::shared_ptr<grpc::ClientContext> ctx) {
-    return child->AsyncTailLogEntries(cq, std::move(ctx));
+  auto call = [child = child_, cq, options = std::move(options)](
+                  std::shared_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncTailLogEntries(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));

@@ -66,7 +66,8 @@ class LoggingServiceV2Stub {
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
   AsyncTailLogEntries(google::cloud::CompletionQueue const& cq,
-                      std::shared_ptr<grpc::ClientContext> context) = 0;
+                      std::shared_ptr<grpc::ClientContext> context,
+                      google::cloud::internal::ImmutableOptions options) = 0;
 
   virtual future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
   AsyncWriteLogEntries(
@@ -107,8 +108,10 @@ class DefaultLoggingServiceV2Stub : public LoggingServiceV2Stub {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
-  AsyncTailLogEntries(google::cloud::CompletionQueue const& cq,
-                      std::shared_ptr<grpc::ClientContext> context) override;
+  AsyncTailLogEntries(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
   AsyncWriteLogEntries(

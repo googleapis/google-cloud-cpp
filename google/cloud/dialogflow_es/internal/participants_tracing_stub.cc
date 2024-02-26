@@ -96,12 +96,14 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
     google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
 ParticipantsTracingStub::AsyncStreamingAnalyzeContent(
-    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
                                      "StreamingAnalyzeContent");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncStreamingAnalyzeContent(cq, context);
+  auto stream =
+      child_->AsyncStreamingAnalyzeContent(cq, context, std::move(options));
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
       google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>(

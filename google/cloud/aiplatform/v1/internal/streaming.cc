@@ -46,7 +46,8 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamDirectPredictResponse>>
 PredictionServiceConnectionImpl::AsyncStreamDirectPredict() {
   return stub_->AsyncStreamDirectPredict(
-      background_->cq(), std::make_shared<grpc::ClientContext>());
+      background_->cq(), std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::SaveCurrentOptions());
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -54,15 +55,17 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>>
 PredictionServiceConnectionImpl::AsyncStreamDirectRawPredict() {
   return stub_->AsyncStreamDirectRawPredict(
-      background_->cq(), std::make_shared<grpc::ClientContext>());
+      background_->cq(), std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::SaveCurrentOptions());
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamingPredictRequest,
     google::cloud::aiplatform::v1::StreamingPredictResponse>>
 PredictionServiceConnectionImpl::AsyncStreamingPredict() {
-  return stub_->AsyncStreamingPredict(background_->cq(),
-                                      std::make_shared<grpc::ClientContext>());
+  return stub_->AsyncStreamingPredict(
+      background_->cq(), std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::SaveCurrentOptions());
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -70,7 +73,8 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamingRawPredictResponse>>
 PredictionServiceConnectionImpl::AsyncStreamingRawPredict() {
   return stub_->AsyncStreamingRawPredict(
-      background_->cq(), std::make_shared<grpc::ClientContext>());
+      background_->cq(), std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::SaveCurrentOptions());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

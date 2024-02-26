@@ -119,9 +119,11 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::speech::v2::StreamingRecognizeResponse>>
 SpeechMetadata::AsyncStreamingRecognize(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->AsyncStreamingRecognize(cq, std::move(context));
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  SetMetadata(*context, *options);
+  return child_->AsyncStreamingRecognize(cq, std::move(context),
+                                         std::move(options));
 }
 
 future<StatusOr<google::longrunning::Operation>>

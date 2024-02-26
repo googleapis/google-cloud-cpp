@@ -236,9 +236,10 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $response_type$>>
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->Async$method_name$(cq, std::move(context));
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  SetMetadata(*context, *options);
+  return child_->Async$method_name$(cq, std::move(context), std::move(options));
 }
 )""");
       continue;

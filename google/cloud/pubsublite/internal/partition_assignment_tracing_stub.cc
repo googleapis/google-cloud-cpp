@@ -36,13 +36,14 @@ std::unique_ptr<AsyncStreamingReadWriteRpc<
     google::cloud::pubsublite::v1::PartitionAssignmentRequest,
     google::cloud::pubsublite::v1::PartitionAssignment>>
 PartitionAssignmentServiceTracingStub::AsyncAssignPartitions(
-    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.pubsublite.v1.PartitionAssignmentService",
       "AssignPartitions");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncAssignPartitions(cq, context);
+  auto stream = child_->AsyncAssignPartitions(cq, context, std::move(options));
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::pubsublite::v1::PartitionAssignmentRequest,
       google::cloud::pubsublite::v1::PartitionAssignment>>(

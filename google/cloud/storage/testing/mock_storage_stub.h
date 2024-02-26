@@ -126,7 +126,8 @@ class MockStorageStub : public storage_internal::StorageStub {
                    google::storage::v2::BidiWriteObjectResponse>>),
               AsyncBidiWriteObject,
               (google::cloud::CompletionQueue const&,
-               std::shared_ptr<grpc::ClientContext>),
+               std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions),
               (override));
 
   MOCK_METHOD(StatusOr<google::storage::v2::ListObjectsResponse>, ListObjects,

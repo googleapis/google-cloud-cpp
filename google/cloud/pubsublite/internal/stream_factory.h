@@ -51,8 +51,11 @@ inline StreamFactory<pubsublite::v1::PublishRequest,
 MakeStreamFactory(std::shared_ptr<PublisherServiceStub> const& stub,
                   google::cloud::CompletionQueue const& cq,
                   ClientMetadata const& metadata) {
-  return
-      [=] { return stub->AsyncPublish(cq, MakeGrpcClientContext(metadata)); };
+  return [=] {
+    return stub->AsyncPublish(
+        cq, MakeGrpcClientContext(metadata),
+        google::cloud::internal::MakeImmutableOptions({}));
+  };
 }
 
 inline StreamFactory<pubsublite::v1::SubscribeRequest,
@@ -60,8 +63,11 @@ inline StreamFactory<pubsublite::v1::SubscribeRequest,
 MakeStreamFactory(std::shared_ptr<SubscriberServiceStub> const& stub,
                   google::cloud::CompletionQueue const& cq,
                   ClientMetadata const& metadata) {
-  return
-      [=] { return stub->AsyncSubscribe(cq, MakeGrpcClientContext(metadata)); };
+  return [=] {
+    return stub->AsyncSubscribe(
+        cq, MakeGrpcClientContext(metadata),
+        google::cloud::internal::MakeImmutableOptions({}));
+  };
 }
 
 inline StreamFactory<pubsublite::v1::StreamingCommitCursorRequest,
@@ -70,8 +76,9 @@ MakeStreamFactory(std::shared_ptr<CursorServiceStub> const& stub,
                   google::cloud::CompletionQueue const& cq,
                   ClientMetadata const& metadata) {
   return [=] {
-    return stub->AsyncStreamingCommitCursor(cq,
-                                            MakeGrpcClientContext(metadata));
+    return stub->AsyncStreamingCommitCursor(
+        cq, MakeGrpcClientContext(metadata),
+        google::cloud::internal::MakeImmutableOptions({}));
   };
 }
 
@@ -81,7 +88,9 @@ MakeStreamFactory(std::shared_ptr<PartitionAssignmentServiceStub> const& stub,
                   google::cloud::CompletionQueue const& cq,
                   ClientMetadata const& metadata) {
   return [=] {
-    return stub->AsyncAssignPartitions(cq, MakeGrpcClientContext(metadata));
+    return stub->AsyncAssignPartitions(
+        cq, MakeGrpcClientContext(metadata),
+        google::cloud::internal::MakeImmutableOptions({}));
   };
 }
 

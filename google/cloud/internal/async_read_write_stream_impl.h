@@ -46,15 +46,6 @@ class AsyncStreamingReadWriteRpcImpl
  public:
   AsyncStreamingReadWriteRpcImpl(
       std::shared_ptr<CompletionQueueImpl> cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      std::unique_ptr<grpc::ClientAsyncReaderWriterInterface<Request, Response>>
-          stream)
-      : AsyncStreamingReadWriteRpcImpl(std::move(cq), std::move(context),
-                                       SaveCurrentOptions(),
-                                       std::move(stream)) {}
-
-  AsyncStreamingReadWriteRpcImpl(
-      std::shared_ptr<CompletionQueueImpl> cq,
       std::shared_ptr<grpc::ClientContext> context, ImmutableOptions options,
       std::unique_ptr<grpc::ClientAsyncReaderWriterInterface<Request, Response>>
           stream)
@@ -202,11 +193,13 @@ template <typename Request, typename Response>
 std::unique_ptr<AsyncStreamingReadWriteRpc<Request, Response>>
 MakeStreamingReadWriteRpc(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     PrepareAsyncReadWriteRpc<Request, Response> async_call) {
   auto cq_impl = GetCompletionQueueImpl(cq);
   auto stream = async_call(context.get(), cq_impl->cq());
   return std::make_unique<AsyncStreamingReadWriteRpcImpl<Request, Response>>(
-      std::move(cq_impl), std::move(context), std::move(stream));
+      std::move(cq_impl), std::move(context), std::move(options),
+      std::move(stream));
 }
 
 /**

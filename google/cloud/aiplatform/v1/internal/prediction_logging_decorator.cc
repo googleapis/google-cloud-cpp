@@ -116,7 +116,8 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamDirectPredictResponse>>
 PredictionServiceLogging::AsyncStreamDirectPredict(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   using LoggingStream =
       ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
           google::cloud::aiplatform::v1::StreamDirectPredictRequest,
@@ -124,7 +125,8 @@ PredictionServiceLogging::AsyncStreamDirectPredict(
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->AsyncStreamDirectPredict(cq, std::move(context));
+  auto stream = child_->AsyncStreamDirectPredict(cq, std::move(context),
+                                                 std::move(options));
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
@@ -137,7 +139,8 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamDirectRawPredictResponse>>
 PredictionServiceLogging::AsyncStreamDirectRawPredict(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   using LoggingStream =
       ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
           google::cloud::aiplatform::v1::StreamDirectRawPredictRequest,
@@ -145,7 +148,8 @@ PredictionServiceLogging::AsyncStreamDirectRawPredict(
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->AsyncStreamDirectRawPredict(cq, std::move(context));
+  auto stream = child_->AsyncStreamDirectRawPredict(cq, std::move(context),
+                                                    std::move(options));
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
@@ -158,7 +162,8 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamingPredictResponse>>
 PredictionServiceLogging::AsyncStreamingPredict(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   using LoggingStream =
       ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
           google::cloud::aiplatform::v1::StreamingPredictRequest,
@@ -166,7 +171,8 @@ PredictionServiceLogging::AsyncStreamingPredict(
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->AsyncStreamingPredict(cq, std::move(context));
+  auto stream =
+      child_->AsyncStreamingPredict(cq, std::move(context), std::move(options));
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
@@ -204,7 +210,8 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::aiplatform::v1::StreamingRawPredictResponse>>
 PredictionServiceLogging::AsyncStreamingRawPredict(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   using LoggingStream =
       ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
           google::cloud::aiplatform::v1::StreamingRawPredictRequest,
@@ -212,7 +219,8 @@ PredictionServiceLogging::AsyncStreamingRawPredict(
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->AsyncStreamingRawPredict(cq, std::move(context));
+  auto stream = child_->AsyncStreamingRawPredict(cq, std::move(context),
+                                                 std::move(options));
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));

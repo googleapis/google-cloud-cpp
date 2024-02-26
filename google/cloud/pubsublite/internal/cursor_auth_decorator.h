@@ -43,7 +43,8 @@ class CursorServiceAuth : public CursorServiceStub {
       google::cloud::pubsublite::v1::StreamingCommitCursorResponse>>
   AsyncStreamingCommitCursor(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::cloud::pubsublite::v1::CommitCursorResponse> CommitCursor(
       grpc::ClientContext& context, Options const& options,
