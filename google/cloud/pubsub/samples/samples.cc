@@ -588,7 +588,6 @@ void ExampleStatusOr(google::cloud::pubsub_admin::TopicAdminClient client,
 >>>>>>> f7f7ec914a (cleanup(pubsub): remove handwritten topic admin client from samples.cc)
                      std::vector<std::string> const& argv) {
   //! [example-status-or]
-  namespace pubsub = ::google::cloud::pubsub;
   namespace pubsub_admin = ::google::cloud::pubsub_admin;
   [](pubsub_admin::TopicAdminClient client, std::string const& project_id) {
     // The actual type of `topic` is
