@@ -1,0 +1,20 @@
+diff --git a/google/cloud/securitycenter/v1/mitre_attack.proto b/google/cloud/securitycenter/v1/mitre_attack.proto
+index 56bf0c399..d7e5e7113 100644
+--- a/google/cloud/securitycenter/v1/mitre_attack.proto
++++ b/google/cloud/securitycenter/v1/mitre_attack.proto
+@@ -182,6 +182,7 @@ message MitreAttack {
+     // T1485
+     DATA_DESTRUCTION = 29;
+ 
++    // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     // T1489
+     SERVICE_STOP = 52;
+ 
+@@ -230,6 +231,7 @@ message MitreAttack {
+     // T1567.002
+     EXFILTRATION_TO_CLOUD_STORAGE = 21;
+ 
++    // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     // T1568
+     DYNAMIC_RESOLUTION = 12;
+ 

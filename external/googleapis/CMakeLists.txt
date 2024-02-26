@@ -145,7 +145,9 @@ externalproject_add(
     URL ${GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL}
     URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL_HASH}
     PATCH_COMMAND
-        ""
+        patch
+        -p1
+        --input=/workspace/external/googleapis.patch
         # ~~~
         # Scaffolding for patching googleapis after download. For example:
         #   PATCH_COMMAND

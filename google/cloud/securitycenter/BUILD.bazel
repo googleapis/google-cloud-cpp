@@ -49,13 +49,6 @@ cc_library(
     name = "google_cloud_cpp_securitycenter",
     srcs = [":srcs"],
     hdrs = [":hdrs"],
-    # Cannot compile on macOS or Windows - the protos have enum values that
-    # conflict with some system macros.
-    target_compatible_with = select({
-        "@platforms//os:macos": ["@platforms//:incompatible"],
-        "@platforms//os:windows": ["@platforms//:incompatible"],
-        "//conditions:default": [],
-    }),
     visibility = ["//:__pkg__"],
     deps = [
         "//:common",
@@ -67,13 +60,6 @@ cc_library(
 cc_library(
     name = "google_cloud_cpp_securitycenter_mocks",
     hdrs = [":mocks"],
-    # Cannot compile on macOS or Windows - the protos have enum values that
-    # conflict with some system macros.
-    target_compatible_with = select({
-        "@platforms//os:macos": ["@platforms//:incompatible"],
-        "@platforms//os:windows": ["@platforms//:incompatible"],
-        "//conditions:default": [],
-    }),
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_securitycenter",
