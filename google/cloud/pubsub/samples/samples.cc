@@ -431,25 +431,6 @@ void RemoveDeadLetterPolicy(
   (std::move(client), argv.at(0), argv.at(1));
 }
 
-void ListSubscriptions(google::cloud::pubsub::SubscriptionAdminClient client,
-                       std::vector<std::string> const& argv) {
-  //! [START pubsub_list_subscriptions] [list-subscriptions]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id) {
-    int count = 0;
-    for (auto& subscription : client.ListSubscriptions(project_id)) {
-      if (!subscription) throw std::move(subscription).status();
-      std::cout << "Subscription Name: " << subscription->name() << "\n";
-      ++count;
-    }
-    if (count == 0) {
-      std::cout << "No subscriptions found in project " << project_id << "\n";
-    }
-  }
-  //! [END pubsub_list_subscriptions] [list-subscriptions]
-  (std::move(client), argv.at(0));
-}
-
 void DeleteSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
                         std::vector<std::string> const& argv) {
   //! [START pubsub_delete_subscription] [delete-subscription]
