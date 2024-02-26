@@ -79,7 +79,7 @@ class AsyncPollingLoopImpl
     auto w = WeakFromThis();
     auto context = std::make_shared<grpc::ClientContext>();
     ConfigurePollContext(*context, *options_);
-    cancel_(cq_, std::move(context), *options_, request)
+    cancel_(cq_, std::move(context), options_, request)
         .then([w](future<Status> f) {
           if (auto self = w.lock()) self->OnCancel(f.get());
         });
@@ -126,7 +126,7 @@ class AsyncPollingLoopImpl
     auto self = shared_from_this();
     auto context = std::make_shared<grpc::ClientContext>();
     ConfigurePollContext(*context, *options_);
-    poll_(cq_, std::move(context), *options_, request)
+    poll_(cq_, std::move(context), options_, request)
         .then([self](future<StatusOr<Operation>> g) {
           self->OnPoll(std::move(g));
         });
@@ -194,14 +194,14 @@ future<StatusOr<google::longrunning::Operation>> AsyncPollingLoop(
   auto poll_wrapper =
       [poll = std::move(poll)](
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
-          Options const&,
+          ImmutableOptions const&,
           google::longrunning::GetOperationRequest const& request) {
         return poll(cq, std::move(context), request);
       };
   auto cancel_wrapper =
       [cancel = std::move(cancel)](
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
-          Options const&,
+          ImmutableOptions const&,
           google::longrunning::CancelOperationRequest const& request) {
         return cancel(cq, std::move(context), request);
       };

@@ -81,7 +81,8 @@ future<StatusOr<storage::ObjectMetadata>> AsyncConnectionImpl::InsertObject(
                id = invocation_id_generator_.MakeInvocationId()](
                   CompletionQueue& cq,
                   std::shared_ptr<grpc::ClientContext> context,
-                  Options const& options,
+                  // NOLINTNEXTLINE(performance-unnecessary-value-param)
+                  google::cloud::internal::ImmutableOptions options,
                   google::storage::v2::WriteObjectRequest const& proto) {
     auto hash_function =
         [](storage_experimental::InsertObjectRequest const& r) {
@@ -92,7 +93,7 @@ future<StatusOr<storage::ObjectMetadata>> AsyncConnectionImpl::InsertObject(
               r.GetOption<storage::DisableMD5Hash>());
         };
 
-    ApplyQueryParameters(*context, options, params.request);
+    ApplyQueryParameters(*context, *options, params.request);
     ApplyRoutingHeaders(*context, params.request);
     context->AddMetadata("x-goog-gcs-idempotency-token", id);
     auto rpc = stub->AsyncWriteObject(cq, std::move(context), current);

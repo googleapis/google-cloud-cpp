@@ -161,20 +161,21 @@ future<StatusOr<ReturnType>> AsyncLongRunningOperation(
   auto start_wrapper = [start = std::forward<StartFunctor>(start)](
                            google::cloud::CompletionQueue& cq,
                            std::shared_ptr<grpc::ClientContext> context,
-                           Options const&, RequestType const& request) {
+                           ImmutableOptions const&,
+                           RequestType const& request) {
     return start(cq, std::move(context), request);
   };
   auto poll_wrapper =
       [poll = std::move(poll)](
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
-          Options const&,
+          ImmutableOptions const&,
           google::longrunning::GetOperationRequest const& request) {
         return poll(cq, std::move(context), request);
       };
   auto cancel_wrapper =
       [cancel = std::move(cancel)](
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
-          Options const&,
+          ImmutableOptions const&,
           google::longrunning::CancelOperationRequest const& request) {
         return cancel(cq, std::move(context), request);
       };
