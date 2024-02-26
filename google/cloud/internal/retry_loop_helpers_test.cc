@@ -168,8 +168,9 @@ TEST(Backoff, HeedsRetryInfo) {
   auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion);
 
-  auto actual = Backoff(status, "SomeFunction", *mock_r, *mock_b,
-                        Idempotency::kNonIdempotent, RetryInfoPolicy::kHeed);
+  auto actual =
+      Backoff(status, "SomeFunction", *mock_r, *mock_b,
+              Idempotency::kNonIdempotent, /*enable_server_retries=*/true);
   EXPECT_THAT(actual, IsOkAndHolds(retry_delay));
 }
 
@@ -184,8 +185,9 @@ TEST(Backoff, NoRetriesIfPolicyExhausted) {
   auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion).Times(0);
 
-  auto actual = Backoff(status, "SomeFunction", *mock_r, *mock_b,
-                        Idempotency::kIdempotent, RetryInfoPolicy::kHeed);
+  auto actual =
+      Backoff(status, "SomeFunction", *mock_r, *mock_b,
+              Idempotency::kIdempotent, /*enable_server_retries=*/true);
   EXPECT_THAT(actual, StatusIs(StatusCode::kResourceExhausted,
                                HasSubstr("policy exhausted")));
 }
@@ -200,8 +202,9 @@ TEST(Backoff, PermanentFailureWhenIgnoringRetryInfo) {
   auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion).Times(0);
 
-  auto actual = Backoff(status, "SomeFunction", *mock_r, *mock_b,
-                        Idempotency::kIdempotent, RetryInfoPolicy::kIgnore);
+  auto actual =
+      Backoff(status, "SomeFunction", *mock_r, *mock_b,
+              Idempotency::kIdempotent, /*enable_server_retries=*/false);
   EXPECT_THAT(actual, StatusIs(StatusCode::kResourceExhausted,
                                HasSubstr("Permanent error")));
 }
@@ -217,8 +220,9 @@ TEST(Backoff, TransientFailureWhenIgnoringRetryInfo) {
   EXPECT_CALL(*mock_b, OnCompletion)
       .WillOnce(Return(std::chrono::milliseconds(10)));
 
-  auto actual = Backoff(status, "SomeFunction", *mock_r, *mock_b,
-                        Idempotency::kIdempotent, RetryInfoPolicy::kIgnore);
+  auto actual =
+      Backoff(status, "SomeFunction", *mock_r, *mock_b,
+              Idempotency::kIdempotent, /*enable_server_retries=*/false);
   EXPECT_THAT(actual, IsOkAndHolds(std::chrono::milliseconds(10)));
 }
 
@@ -232,8 +236,9 @@ TEST(Backoff, NonIdempotentFailureWhenIgnoringRetryInfo) {
   auto mock_b = std::make_unique<MockBackoffPolicy>();
   EXPECT_CALL(*mock_b, OnCompletion).Times(0);
 
-  auto actual = Backoff(status, "SomeFunction", *mock_r, *mock_b,
-                        Idempotency::kNonIdempotent, RetryInfoPolicy::kIgnore);
+  auto actual =
+      Backoff(status, "SomeFunction", *mock_r, *mock_b,
+              Idempotency::kNonIdempotent, /*enable_server_retries=*/false);
   EXPECT_THAT(actual, StatusIs(StatusCode::kResourceExhausted,
                                HasSubstr("non-idempotent")));
 }

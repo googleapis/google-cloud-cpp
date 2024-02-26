@@ -111,9 +111,9 @@ StatusOr<std::chrono::milliseconds> Backoff(Status const& status,
                                             RetryPolicy& retry,
                                             BackoffPolicy& backoff,
                                             Idempotency idempotency,
-                                            RetryInfoPolicy retry_info) {
+                                            bool enable_server_retries) {
   bool should_retry = retry.OnFailure(status);
-  if (retry_info == RetryInfoPolicy::kHeed) {
+  if (enable_server_retries) {
     auto ri = internal::GetRetryInfo(status);
     if (ri) {
       if (retry.IsExhausted()) {

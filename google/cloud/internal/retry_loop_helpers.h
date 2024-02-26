@@ -58,18 +58,6 @@ Status RetryLoopPolicyExhaustedError(Status const& status,
 /// cancelled.
 Status RetryLoopCancelled(Status const& status, char const* location);
 
-// Determines how the client should react if the server returns a `RetryInfo` in
-// the error details.
-enum class RetryInfoPolicy {
-  // Treat the error as transient. Use the `RetryInfo::retry_delay()` as the
-  // next backoff.
-  kHeed,
-  // Ignore the `RetryInfo`. Use the retry and idempotency policies to determine
-  // whether the request can be retried. Use the backoff policy to determine the
-  // next backoff.
-  kIgnore
-};
-
 /**
  * Returns the backoff given the status, retry policy, and backoff policy.
  *
@@ -89,7 +77,7 @@ StatusOr<std::chrono::milliseconds> Backoff(Status const& status,
                                             RetryPolicy& retry,
                                             BackoffPolicy& backoff,
                                             Idempotency idempotency,
-                                            RetryInfoPolicy retry_info);
+                                            bool enable_server_retries);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
