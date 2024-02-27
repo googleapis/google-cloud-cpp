@@ -239,6 +239,10 @@ cmake_dependent_option(
     ON "GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS;BUILD_TESTING" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
 
+option(GOOGLE_CLOUD_CPP_WITH_MOCKS
+       "Install the google-cloud-cpp mocking libraries." ON)
+mark_as_advanced(GOOGLE_CLOUD_CPP_WITH_MOCKS)
+
 # Add any subdirectories configured in the application.
 
 # `docfx/` must be included before any library directories. The tool is used to
