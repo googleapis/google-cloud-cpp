@@ -431,61 +431,6 @@ void RemoveDeadLetterPolicy(
   (std::move(client), argv.at(0), argv.at(1));
 }
 
-void GetSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
-                     std::vector<std::string> const& argv) {
-  //! [get-subscription]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& subscription_id) {
-    auto sub = client.GetSubscription(
-        pubsub::Subscription(project_id, subscription_id));
-    if (!sub) throw std::move(sub).status();
-
-    std::cout << "The subscription exists and its metadata is: "
-              << sub->DebugString() << "\n";
-  }
-  //! [get-subscription]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void UpdateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
-                        std::vector<std::string> const& argv) {
-  //! [update-subscription]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& subscription_id) {
-    auto s = client.UpdateSubscription(
-        pubsub::Subscription(project_id, subscription_id),
-        pubsub::SubscriptionBuilder{}.set_ack_deadline(
-            std::chrono::seconds(60)));
-    if (!s) throw std::move(s).status();
-
-    std::cout << "The subscription has been updated to: " << s->DebugString()
-              << "\n";
-  }
-  //! [update-subscription]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void ListSubscriptions(google::cloud::pubsub::SubscriptionAdminClient client,
-                       std::vector<std::string> const& argv) {
-  //! [START pubsub_list_subscriptions] [list-subscriptions]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id) {
-    int count = 0;
-    for (auto& subscription : client.ListSubscriptions(project_id)) {
-      if (!subscription) throw std::move(subscription).status();
-      std::cout << "Subscription Name: " << subscription->name() << "\n";
-      ++count;
-    }
-    if (count == 0) {
-      std::cout << "No subscriptions found in project " << project_id << "\n";
-    }
-  }
-  //! [END pubsub_list_subscriptions] [list-subscriptions]
-  (std::move(client), argv.at(0));
-}
-
 void DeleteSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
                         std::vector<std::string> const& argv) {
   //! [START pubsub_delete_subscription] [delete-subscription]
@@ -522,136 +467,6 @@ void ModifyPushConfig(google::cloud::pubsub::SubscriptionAdminClient client,
               << " modified\n";
   }
   //! [END pubsub_update_push_configuration] [modify-push-config]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void CreateSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
-                    std::vector<std::string> const& argv) {
-  //! [create-snapshot-with-name]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& subscription_id, std::string const& snapshot_id) {
-    auto snapshot =
-        client.CreateSnapshot(pubsub::Subscription(project_id, subscription_id),
-                              pubsub::Snapshot(project_id, snapshot_id));
-    if (snapshot.status().code() == google::cloud::StatusCode::kAlreadyExists) {
-      std::cout << "The snapshot already exists\n";
-      return;
-    }
-    if (!snapshot.ok()) throw std::move(snapshot).status();
-
-    std::cout << "The snapshot was successfully created: "
-              << snapshot->DebugString() << "\n";
-  }
-  //! [create-snapshot-with-name]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void GetSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
-                 std::vector<std::string> const& argv) {
-  //! [get-snapshot]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& snapshot_id) {
-    auto response =
-        client.GetSnapshot(pubsub::Snapshot(project_id, snapshot_id));
-    if (!response.ok()) throw std::move(response).status();
-
-    std::cout << "The snapshot details are: " << response->DebugString()
-              << "\n";
-  }
-  //! [get-snapshot]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void UpdateSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
-                    std::vector<std::string> const& argv) {
-  //! [update-snapshot]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string snapshot_id) {
-    auto snap = client.UpdateSnapshot(
-        pubsub::Snapshot(project_id, std::move(snapshot_id)),
-        pubsub::SnapshotBuilder{}.add_label("samples-cpp", "gcp"));
-    if (!snap.ok()) throw std::move(snap).status();
-
-    std::cout << "The snapshot was successfully updated: "
-              << snap->DebugString() << "\n";
-  }
-  //! [update-snapshot]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void ListSnapshots(google::cloud::pubsub::SubscriptionAdminClient client,
-                   std::vector<std::string> const& argv) {
-  //! [list-snapshots]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id) {
-    std::cout << "Snapshot list for project " << project_id << ":\n";
-    for (auto& snapshot : client.ListSnapshots(project_id)) {
-      if (!snapshot) throw std::move(snapshot).status();
-      std::cout << "Snapshot Name: " << snapshot->name() << "\n";
-    }
-  }
-  //! [list-snapshots]
-  (std::move(client), argv.at(0));
-}
-
-void DeleteSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
-                    std::vector<std::string> const& argv) {
-  //! [delete-snapshot]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& snapshot_id) {
-    auto status =
-        client.DeleteSnapshot(pubsub::Snapshot(project_id, snapshot_id));
-    // Note that kNotFound is a possible result when the library retries.
-    if (status.code() == google::cloud::StatusCode::kNotFound) {
-      std::cout << "The snapshot was not found\n";
-      return;
-    }
-    if (!status.ok()) throw std::runtime_error(status.message());
-
-    std::cout << "The snapshot was successfully deleted\n";
-  }
-  //! [delete-snapshot]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void SeekWithSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
-                      std::vector<std::string> const& argv) {
-  //! [seek-with-snapshot]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& subscription_id, std::string const& snapshot_id) {
-    auto response =
-        client.Seek(pubsub::Subscription(project_id, subscription_id),
-                    pubsub::Snapshot(project_id, snapshot_id));
-    if (!response.ok()) throw std::move(response).status();
-
-    std::cout << "The subscription seek was successful: "
-              << response->DebugString() << "\n";
-  }
-  //! [seek-with-snapshot]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void SeekWithTimestamp(google::cloud::pubsub::SubscriptionAdminClient client,
-                       std::vector<std::string> const& argv) {
-  //! [seek-with-timestamp]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& subscription_id, std::string const& seconds) {
-    auto response =
-        client.Seek(pubsub::Subscription(project_id, subscription_id),
-                    std::chrono::system_clock::now() -
-                        std::chrono::seconds(std::stoi(seconds)));
-    if (!response.ok()) throw std::move(response).status();
-
-    std::cout << "The subscription seek was successful: "
-              << response->DebugString() << "\n";
-  }
-  //! [seek-with-timestamp]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
@@ -1865,15 +1680,6 @@ void AutoRun(std::vector<std::string> const& argv) {
       subscription_admin_client,
       {project_id, topic_id, exactly_once_subscription_id});
 
-  std::cout << "\nRunning GetSubscription() sample" << std::endl;
-  GetSubscription(subscription_admin_client, {project_id, subscription_id});
-
-  std::cout << "\nRunning UpdateSubscription() sample" << std::endl;
-  UpdateSubscription(subscription_admin_client, {project_id, subscription_id});
-
-  std::cout << "\nRunning ListSubscriptions() sample" << std::endl;
-  ListSubscriptions(subscription_admin_client, {project_id});
-
   auto const endpoint1 = "https://" + project_id + ".appspot.com/push1";
   auto const endpoint2 = "https://" + project_id + ".appspot.com/push2";
   std::cout << "\nRunning CreatePushSubscription() sample [1]" << std::endl;
@@ -1925,39 +1731,6 @@ void AutoRun(std::vector<std::string> const& argv) {
         {project_id, dead_letter_subscription_id, dead_letter_topic_id,
          std::to_string(kUpdatedDeadLetterDeliveryAttempts)});
   });
-
-  std::cout << "\nRunning CreateSnapshot() sample [1]" << std::endl;
-  CreateSnapshot(subscription_admin_client,
-                 {project_id, subscription_id, snapshot_id});
-
-  std::cout << "\nRunning CreateSnapshot() sample [2]" << std::endl;
-  CreateSnapshot(subscription_admin_client,
-                 {project_id, subscription_id, snapshot_id});
-
-  std::cout << "\nRunning GetSnapshot() sample" << std::endl;
-  GetSnapshot(subscription_admin_client, {project_id, snapshot_id});
-
-  std::cout << "\nRunning UpdateSnapshot() sample" << std::endl;
-  ignore_emulator_failures([&] {
-    UpdateSnapshot(subscription_admin_client, {project_id, snapshot_id});
-  });
-
-  std::cout << "\nRunning ListSnapshots() sample" << std::endl;
-  ListSnapshots(subscription_admin_client, {project_id});
-
-  std::cout << "\nRunning SeekWithSnapshot() sample" << std::endl;
-  SeekWithSnapshot(subscription_admin_client,
-                   {project_id, subscription_id, snapshot_id});
-
-  std::cout << "\nRunning DeleteSnapshot() sample [1]" << std::endl;
-  DeleteSnapshot(subscription_admin_client, {project_id, snapshot_id});
-
-  std::cout << "\nRunning DeleteSnapshot() sample [2]" << std::endl;
-  DeleteSnapshot(subscription_admin_client, {project_id, snapshot_id});
-
-  std::cout << "\nRunning SeekWithTimestamp() sample" << std::endl;
-  SeekWithTimestamp(subscription_admin_client,
-                    {project_id, subscription_id, "2"});
 
   ignore_emulator_failures([&] {
     AutoRunAvro(project_id, testdata_directory, generator, topic_admin_client,
