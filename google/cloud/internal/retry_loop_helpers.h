@@ -61,17 +61,23 @@ Status RetryLoopCancelled(Status const& status, char const* location);
 /**
  * Returns the backoff given the status, retry policy, and backoff policy.
  *
+ * Takes into account whether the server has returned a `RetryInfo` in the
+ * status's error details.
+ *
  * Returns a `Status`, representing the loop error, if no backoff should be
  * performed.
  *
  * This function is responsible for calling `retry.OnFailure()`, which might,
- * for example, increment an error based retry policy.
+ * for example, increment an error based retry policy. This function is also
+ * responsible for calling `backoff.OnCompletion()`, if a backoff is to be
+ * performed.
  */
 StatusOr<std::chrono::milliseconds> Backoff(Status const& status,
                                             char const* location,
                                             RetryPolicy& retry,
                                             BackoffPolicy& backoff,
-                                            Idempotency idempotency);
+                                            Idempotency idempotency,
+                                            bool enable_server_retries);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

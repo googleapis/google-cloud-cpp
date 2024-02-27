@@ -35,6 +35,7 @@ namespace {
 
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
@@ -376,6 +377,28 @@ TEST(AsyncRetryLoopTest, ExhaustedBeforeStart) {
   EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.on-entry", "true")));
   EXPECT_THAT(metadata,
               Contains(Pair("gcloud-cpp.retry.function", "test-location")));
+}
+
+TEST(AsyncRetryLoopTest, HeedsRetryInfo) {
+  MockFunction<future<StatusOr<int>>(CompletionQueue&,
+                                     std::shared_ptr<grpc::ClientContext>,
+                                     Options const&, int)>
+      mock;
+  EXPECT_CALL(mock, Call)
+      .WillOnce([] {
+        auto status = ResourceExhaustedError("try again");
+        SetRetryInfo(status, RetryInfo{std::chrono::seconds(0)});
+        return make_ready_future<StatusOr<int>>(status);
+      })
+      .WillOnce(Return(make_ready_future<StatusOr<int>>(5)));
+
+  AutomaticallyCreatedBackgroundThreads background;
+  auto pending = AsyncRetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kNonIdempotent,
+      background.cq(), mock.AsStdFunction(),
+      MakeImmutableOptions(Options{}.set<EnableServerRetriesOption>(true)), 42,
+      "test-location");
+  EXPECT_THAT(pending.get(), IsOkAndHolds(5));
 }
 
 TEST(AsyncRetryLoopTest, SetsTimeout) {

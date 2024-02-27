@@ -28,11 +28,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::testing::MockFunction;
 using ::testing::Pair;
 using ::testing::Return;
 
@@ -235,6 +237,23 @@ TEST(RetryLoopTest, ExhaustedOnStart) {
                                       "retry-policy-exhausted")));
   EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.on-entry", "true")));
   EXPECT_THAT(metadata, Contains(Pair("gcloud-cpp.retry.function", __func__)));
+}
+
+TEST(RetryLoopTest, HeedsRetryInfo) {
+  MockFunction<StatusOr<int>(grpc::ClientContext&, Options const&, int)> mock;
+  EXPECT_CALL(mock, Call)
+      .WillOnce([] {
+        auto status = ResourceExhaustedError("try again");
+        SetRetryInfo(status, RetryInfo{std::chrono::seconds(0)});
+        return status;
+      })
+      .WillOnce(Return(make_status_or(5)));
+
+  StatusOr<int> actual = RetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kNonIdempotent,
+      mock.AsStdFunction(), Options{}.set<EnableServerRetriesOption>(true),
+      /*request=*/42, __func__);
+  EXPECT_THAT(actual, IsOkAndHolds(5));
 }
 
 TEST(RetryLoopTest, ConfigureContext) {

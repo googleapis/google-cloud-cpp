@@ -71,6 +71,7 @@ auto RetryLoopImpl(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
                    char const* location, Sleeper sleeper)
     -> google::cloud::internal::invoke_result_t<
         Functor, grpc::ClientContext&, Options const&, Request const&> {
+  auto const enable_server_retries = options.get<EnableServerRetriesOption>();
   auto last_status = Status{};
   while (!retry_policy.IsExhausted()) {
     // Need to create a new context for each retry.
@@ -80,7 +81,7 @@ auto RetryLoopImpl(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
     if (result.ok()) return result;
     last_status = GetResultStatus(std::move(result));
     auto delay = Backoff(last_status, location, retry_policy, backoff_policy,
-                         idempotency);
+                         idempotency, enable_server_retries);
     if (!delay) return std::move(delay).status();
     sleeper(*delay);
   }
