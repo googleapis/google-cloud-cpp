@@ -296,6 +296,8 @@ $metadata_class_name$::$method_name$(
   }
 
   for (auto const& method : async_methods()) {
+    // Nothing to do, these are always asynchronous.
+    if (IsBidirStreaming(method) || IsLongrunningOperation(method)) continue;
     if (IsStreamingRead(method)) {
       auto const definition = absl::StrCat(
           R"""(
@@ -336,25 +338,24 @@ $metadata_class_name$::Async$method_name$(
       CcPrintMethod(method, __FILE__, __LINE__, definition);
       continue;
     }
-    CcPrintMethod(
-        method,
-        {MethodPattern(
-            {{IsResponseTypeEmpty,
-              // clang-format off
-    "\nfuture<Status>\n",
-    "\nfuture<StatusOr<$response_type$>>\n"},
-    {R"""($metadata_class_name$::Async$method_name$(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    $request_type$ const& request) {
-)"""},
-   {SetMetadataText(method, kPointer, "internal::CurrentOptions()")}, {R"""(
-  return child_->Async$method_name$(cq, std::move(context), request);
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  IsResponseTypeEmpty(method)
+                      ? "\nfuture<Status>"
+                      : "\nfuture<StatusOr<$response_type$>>");
+    CcPrintMethod(method, __FILE__, __LINE__, R"""(
+$metadata_class_name$::Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      $request_type$ const& request) {
+)""");
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  SetMetadataText(method, kPointer, "*options"));
+    CcPrintMethod(method, __FILE__, __LINE__, R"""(
+  return child_->Async$method_name$(
+      cq, std::move(context), std::move(options), request);
 }
-)"""}},
-            // clang-format on
-            And(IsNonStreaming, Not(IsLongrunningOperation)))},
-        __FILE__, __LINE__);
+)""");
   }
 
   // long running operation support methods

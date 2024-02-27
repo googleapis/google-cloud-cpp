@@ -219,6 +219,8 @@ $auth_class_name$::$method_name$(
   }
 
   for (auto const& method : async_methods()) {
+    // Nothing to do, these are always asynchronous.
+    if (IsBidirStreaming(method) || IsLongrunningOperation(method)) continue;
     if (IsStreamingRead(method)) {
       auto constexpr kDefinition = R"""(
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
@@ -264,41 +266,46 @@ $auth_class_name$::Async$method_name$(
       CcPrintMethod(method, __FILE__, __LINE__, kDefinition);
       continue;
     }
-    CcPrintMethod(
-        method,
-        {MethodPattern({{IsResponseTypeEmpty,
-                         R"""(
-future<Status> $auth_class_name$::Async$method_name$(
+    if (IsResponseTypeEmpty(method)) {
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+future<Status>
+$auth_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) {
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
+      [cq, child = child_, options = std::move(options), request](
           future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
-        if (!context) return make_ready_future(std::move(context).status());)""",
-                         R"""(
-future<StatusOr<$response_type$>> $auth_class_name$::Async$method_name$(
+        if (!context) return make_ready_future(std::move(context).status());
+        return child->Async$method_name$(
+            cq, *std::move(context), std::move(options), request);
+      });
+}
+)""");
+      continue;
+    }
+    CcPrintMethod(method, __FILE__, __LINE__, R"""(
+future<StatusOr<$response_type$>>
+$auth_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) {
-  using ReturnType = StatusOr<$response_type$>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
+      [cq, child = child_, options = std::move(options), request](
           future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
-        })"""},
-                        {R"""(
-        return child->Async$method_name$(cq, *std::move(context), request);
+          return make_ready_future(StatusOr<$response_type$>(
+              std::move(context).status()));
+        }
+        return child->Async$method_name$(
+            cq, *std::move(context), std::move(options), request);
       });
 }
-)"""}},
-                       And(IsNonStreaming, Not(IsLongrunningOperation)))},
-        __FILE__, __LINE__);
+)""");
   }
 
   // long running operation support methods

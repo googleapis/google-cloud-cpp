@@ -94,6 +94,8 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
   }
 
   for (auto const& method : async_methods()) {
+    // Nothing to do, these are always asynchronous.
+    if (IsBidirStreaming(method) || IsLongrunningOperation(method)) continue;
     if (IsStreamingRead(method)) {
       auto constexpr kDeclaration = R"""(
   std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
@@ -119,24 +121,23 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
       HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
       continue;
     }
-    HeaderPrintMethod(
-        method,
-        {MethodPattern({{IsResponseTypeEmpty,
-                         R"""(
+    if (IsResponseTypeEmpty(method)) {
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   future<Status> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) override;
-)""",
-                         R"""(
+)""");
+      continue;
+    }
+    HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   future<StatusOr<$response_type$>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) override;
-)"""},
-                        {""}},
-                       And(IsNonStreaming, Not(IsLongrunningOperation)))},
-        __FILE__, __LINE__);
+)""");
   }
 
   if (HasLongrunningMethod()) {

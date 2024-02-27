@@ -99,21 +99,24 @@ class $logging_rest_class_name$ : public $stub_rest_class_name$ {
   }
 
   for (auto const& method : async_methods()) {
-    if (IsStreaming(method)) continue;
+    // Nothing to do, these are always asynchronous.
+    if (IsBidirStreaming(method) || IsLongrunningOperation(method)) continue;
     if (!HasHttpAnnotation(method)) continue;
     if (IsResponseTypeEmpty(method)) {
       HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   future<Status> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options, $request_type$ const& request) override;
+      google::cloud::internal::ImmutableOptions options,
+      $request_type$ const& request) override;
 )""");
     } else {
       HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   future<StatusOr<$response_type$>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options, $request_type$ const& request) override;
+      google::cloud::internal::ImmutableOptions options,
+      $request_type$ const& request) override;
 )""");
     }
   }
@@ -238,7 +241,8 @@ $logging_rest_class_name$::$method_name$(
   }
 
   for (auto const& method : async_methods()) {
-    if (IsStreaming(method)) continue;
+    // No streaming RPCs for REST, and Longrunning is already taken care of.
+    if (IsStreaming(method) || IsLongrunningOperation(method)) continue;
     if (!HasHttpAnnotation(method)) continue;
     if (IsResponseTypeEmpty(method)) {
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
@@ -246,16 +250,18 @@ future<Status>
 $logging_rest_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              $request_type$ const& request) {
-        return child_->Async$method_name$(cq, std::move(rest_context), options, request);
+        return child_->Async$method_name$(
+            cq, std::move(rest_context), std::move(options), request);
       },
-      cq, std::move(rest_context), options, request, __func__, tracing_options_);
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
 }
 )""");
     } else {
@@ -264,15 +270,18 @@ future<StatusOr<$response_type$>>
 $logging_rest_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     $request_type$ const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             Options const& options, $request_type$ const& request) {
-        return child_->Async$method_name$(cq, std::move(rest_context), options, request);
+             google::cloud::internal::ImmutableOptions options,
+             $request_type$ const& request) {
+        return child_->Async$method_name$(
+            cq, std::move(rest_context), std::move(options), request);
       },
-      cq, std::move(rest_context), options, request, __func__, tracing_options_);
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
 }
 )""");
     }

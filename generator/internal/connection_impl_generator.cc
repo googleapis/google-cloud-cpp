@@ -501,15 +501,18 @@ $connection_class_name$Impl::Async$method_name$($request_type$ const& request) {
                       request_id_fragment, R"""(
   auto const idempotent =
       idempotency_policy(*current)->$method_name$(request_copy);
+  auto retry = retry_policy(*current);
+  auto backoff = backoff_policy(*current);
   return google::cloud::internal::AsyncRetryLoop(
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      background_->cq(),
+      std::move(retry), std::move(backoff), idempotent, background_->cq(),
       [stub = stub_](CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
                      $request_type$ const& request) {
-        return stub->Async$method_name$(cq, std::move(context), request);
+        return stub->Async$method_name$(
+            cq, std::move(context), std::move(options), request);
       },
-      std::move(request_copy), __func__);
+      std::move(current), std::move(request_copy), __func__);
 }
 )""");
 }
