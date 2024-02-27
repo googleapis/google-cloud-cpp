@@ -33,6 +33,14 @@ ExportServiceClient::ExportServiceClient(
 ExportServiceClient::~ExportServiceClient() = default;
 
 StreamRange<google::devtools::cloudprofiler::v2::Profile>
+ExportServiceClient::ListProfiles(std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::devtools::cloudprofiler::v2::ListProfilesRequest request;
+  request.set_parent(parent);
+  return connection_->ListProfiles(request);
+}
+
+StreamRange<google::devtools::cloudprofiler::v2::Profile>
 ExportServiceClient::ListProfiles(
     google::devtools::cloudprofiler::v2::ListProfilesRequest request,
     Options opts) {
