@@ -135,11 +135,13 @@ class GoldenThingAdminTracingStub : public GoldenThingAdminStub {
   future<StatusOr<google::test::admin::database::v1::Database>> AsyncGetDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::GetDatabaseRequest const& request) override;
 
   future<Status> AsyncDropDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::DropDatabaseRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

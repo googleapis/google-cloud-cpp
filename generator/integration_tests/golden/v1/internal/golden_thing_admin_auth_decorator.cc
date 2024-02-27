@@ -243,34 +243,38 @@ GoldenThingAdminAuth::AsyncLongRunningWithoutRouting(
       });
 }
 
-future<StatusOr<google::test::admin::database::v1::Database>> GoldenThingAdminAuth::AsyncGetDatabase(
+future<StatusOr<google::test::admin::database::v1::Database>>
+GoldenThingAdminAuth::AsyncGetDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::GetDatabaseRequest const& request) {
-  using ReturnType = StatusOr<google::test::admin::database::v1::Database>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
+      [cq, child = child_, options = std::move(options), request](
           future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
+          return make_ready_future(StatusOr<google::test::admin::database::v1::Database>(
+              std::move(context).status()));
         }
-        return child->AsyncGetDatabase(cq, *std::move(context), request);
+        return child->AsyncGetDatabase(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
-future<Status> GoldenThingAdminAuth::AsyncDropDatabase(
+future<Status>
+GoldenThingAdminAuth::AsyncDropDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::DropDatabaseRequest const& request) {
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
+      [cq, child = child_, options = std::move(options), request](
           future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncDropDatabase(cq, *std::move(context), request);
+        return child->AsyncDropDatabase(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

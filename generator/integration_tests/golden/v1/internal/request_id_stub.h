@@ -58,6 +58,7 @@ class RequestIdServiceStub {
   AsyncCreateFoo(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::test::requestid::v1::CreateFooRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -100,6 +101,7 @@ class DefaultRequestIdServiceStub : public RequestIdServiceStub {
   future<StatusOr<google::test::requestid::v1::Foo>> AsyncCreateFoo(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::test::requestid::v1::CreateFooRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

@@ -407,37 +407,37 @@ GoldenThingAdminRestConnectionImpl::ListBackupOperations(google::test::admin::da
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminRestConnectionImpl::AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto retry = retry_policy(*current);
+  auto backoff = backoff_policy(*current);
+  auto const idempotent = idempotency_policy(*current)->GetDatabase(request);
   return rest_internal::AsyncRestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->GetDatabase(request),
-      background_->cq(),
+      std::move(retry), std::move(backoff), idempotent, background_->cq(),
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
-                     // NOLINTNEXTLINE(performance-unnecessary-value-param)
                      google::cloud::internal::ImmutableOptions options,
                      google::test::admin::database::v1::GetDatabaseRequest const& request) {
         return stub->AsyncGetDatabase(
-            cq, std::move(context), *options, request);
+            cq, std::move(context), std::move(options), request);
       },
-      current, request, __func__);
+      std::move(current), request, __func__);
 }
 
 future<Status>
 GoldenThingAdminRestConnectionImpl::AsyncDropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto retry = retry_policy(*current);
+  auto backoff = backoff_policy(*current);
+  auto const idempotent = idempotency_policy(*current)->DropDatabase(request);
   return rest_internal::AsyncRestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DropDatabase(request),
-      background_->cq(),
+      std::move(retry), std::move(backoff), idempotent, background_->cq(),
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
-                     // NOLINTNEXTLINE(performance-unnecessary-value-param)
                      google::cloud::internal::ImmutableOptions options,
                      google::test::admin::database::v1::DropDatabaseRequest const& request) {
         return stub->AsyncDropDatabase(
-            cq, std::move(context), *options, request);
+            cq, std::move(context), std::move(options), request);
       },
-      current, request, __func__);
+      std::move(current), request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

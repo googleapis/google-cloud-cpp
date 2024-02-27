@@ -289,6 +289,8 @@ future<StatusOr<google::test::admin::database::v1::Database>>
 DefaultGoldenThingAdminStub::AsyncGetDatabase(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::test::admin::database::v1::GetDatabaseRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::test::admin::database::v1::GetDatabaseRequest,
                                     google::test::admin::database::v1::Database>(
@@ -305,6 +307,8 @@ future<Status>
 DefaultGoldenThingAdminStub::AsyncDropDatabase(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::test::admin::database::v1::DropDatabaseRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::test::admin::database::v1::DropDatabaseRequest,
                                     google::protobuf::Empty>(
@@ -315,15 +319,16 @@ DefaultGoldenThingAdminStub::AsyncDropDatabase(
         return grpc_stub_->AsyncDropDatabase(context, request, cq);
       },
       request, std::move(context))
-      .then([](future<StatusOr<google::protobuf::Empty>> f) {
-        return f.get().status();
-      });
+          .then([](future<StatusOr<google::protobuf::Empty>> f) {
+            return f.get().status();
+          });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DefaultGoldenThingAdminStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
@@ -340,6 +345,7 @@ DefaultGoldenThingAdminStub::AsyncGetOperation(
 future<Status> DefaultGoldenThingAdminStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
