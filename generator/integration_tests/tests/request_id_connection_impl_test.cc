@@ -69,6 +69,7 @@ class MockRequestIdServiceStub
               AsyncCreateFoo,
               (google::cloud::CompletionQueue&,
                std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions,
                google::test::requestid::v1::CreateFooRequest const&),
               (override));
 
@@ -163,7 +164,7 @@ TEST(RequestIdTest, AsyncUnaryRpc) {
 #endif  // GTEST_USES_POSIX_RE
   auto mock = std::make_shared<MockRequestIdServiceStub>();
   EXPECT_CALL(*mock,
-              AsyncCreateFoo(_, _, RequestIdIsUuidV4<CreateFooRequest>()))
+              AsyncCreateFoo(_, _, _, RequestIdIsUuidV4<CreateFooRequest>()))
       .WillOnce(
           Return(ByMove(make_ready_future(StatusOr<Foo>(TransientError())))))
       .WillOnce(Return(ByMove(make_ready_future(make_status_or(Foo{})))));
@@ -178,8 +179,8 @@ TEST(RequestIdTest, AsyncUnaryRpc) {
 TEST(RequestIdTest, AsyncUnaryRpcExplicit) {
   auto mock = std::make_shared<MockRequestIdServiceStub>();
   EXPECT_CALL(
-      *mock,
-      AsyncCreateFoo(_, _, WithRequestId<CreateFooRequest>("test-request-id")))
+      *mock, AsyncCreateFoo(_, _, _,
+                            WithRequestId<CreateFooRequest>("test-request-id")))
       .WillOnce(
           Return(ByMove(make_ready_future(StatusOr<Foo>(TransientError())))))
       .WillOnce(Return(ByMove(make_ready_future(make_status_or(Foo{})))));

@@ -1274,7 +1274,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseSuccess) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncGetDatabase)
       .WillOnce(
-          [](CompletionQueue&, auto,
+          [](CompletionQueue&, auto, auto,
              ::google::test::admin::database::v1::GetDatabaseRequest const&) {
             google::test::admin::database::v1::Database db;
             db.set_name("test-database");
@@ -1296,7 +1296,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseTooManyFailures) {
   EXPECT_CALL(*mock, AsyncGetDatabase)
       .Times(AtLeast(2))
       .WillRepeatedly(
-          [](CompletionQueue&, auto,
+          [](CompletionQueue&, auto, auto,
              ::google::test::admin::database::v1::GetDatabaseRequest const&) {
             return make_ready_future<
                 StatusOr<google::test::admin::database::v1::Database>>(
@@ -1330,7 +1330,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncGetDatabaseCancel) {
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncGetDatabase)
       .WillOnce(
-          [&p](CompletionQueue&, auto,
+          [&p](CompletionQueue&, auto, auto,
                ::google::test::admin::database::v1::GetDatabaseRequest const&) {
             return p.get_future();
           });
@@ -1357,7 +1357,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseSuccess) {
   EXPECT_CALL(*mock, AsyncDropDatabase)
       .WillOnce(
           [&expected_name](
-              CompletionQueue&, auto,
+              CompletionQueue&, auto, auto,
               ::google::test::admin::database::v1::DropDatabaseRequest const&
                   request) {
             EXPECT_EQ(expected_name, request.database());
@@ -1383,7 +1383,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseFailure) {
       .Times(AtLeast(2))
       .WillRepeatedly(
           [&expected_name](
-              CompletionQueue&, auto,
+              CompletionQueue&, auto, auto,
               ::google::test::admin::database::v1::DropDatabaseRequest const&
                   request) {
             EXPECT_EQ(expected_name, request.database());
@@ -1418,7 +1418,7 @@ TEST(GoldenThingAdminConnectionTest, AsyncDropDatabaseCancel) {
   EXPECT_CALL(*mock, AsyncDropDatabase)
       .WillOnce(
           [&p, &expected_name](
-              CompletionQueue&, auto,
+              CompletionQueue&, auto, auto,
               ::google::test::admin::database::v1::DropDatabaseRequest const&
                   request) {
             EXPECT_EQ(expected_name, request.database());

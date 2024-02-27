@@ -758,9 +758,10 @@ TEST(GoldenThingAdminRestStubTest, AsyncGetDatabase) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success = stub.AsyncGetDatabase(cq, std::move(rest_context), Options{},
-                                       proto_request)
-                     .get();
+  auto success =
+      stub.AsyncGetDatabase(cq, std::move(rest_context),
+                            internal::MakeImmutableOptions({}), proto_request)
+          .get();
   cq.Shutdown();
   t.join();
 
@@ -795,9 +796,11 @@ TEST(GoldenThingAdminRestStubTest, AsyncDropDatabase) {
       });
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
-  auto success = stub.AsyncDropDatabase(cq, std::move(rest_context), Options{},
-                                        proto_request)
-                     .get();
+  auto success =
+      stub.AsyncDropDatabase(cq, std::move(rest_context),
+                             google::cloud::internal::MakeImmutableOptions({}),
+                             proto_request)
+          .get();
   cq.Shutdown();
   t.join();
 

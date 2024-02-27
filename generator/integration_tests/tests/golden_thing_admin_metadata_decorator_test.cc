@@ -459,7 +459,7 @@ TEST_F(MetadataDecoratorTest, ListBackupOperations) {
 TEST_F(MetadataDecoratorTest, AsyncGetDatabase) {
   EXPECT_CALL(*mock_, AsyncGetDatabase)
       .WillOnce(
-          [this](google::cloud::CompletionQueue&, auto context,
+          [this](google::cloud::CompletionQueue&, auto context, auto,
                  google::test::admin::database::v1::GetDatabaseRequest const&
                      request) {
             IsContextMDValid(*context,
@@ -476,15 +476,16 @@ TEST_F(MetadataDecoratorTest, AsyncGetDatabase) {
   google::test::admin::database::v1::GetDatabaseRequest request;
   request.set_name(
       "projects/my_project/instances/my_instance/databases/my_database");
-  auto status = stub.AsyncGetDatabase(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+  auto status =
+      stub.AsyncGetDatabase(cq, std::make_shared<grpc::ClientContext>(),
+                            internal::MakeImmutableOptions({}), request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
 TEST_F(MetadataDecoratorTest, AsyncDropDatabase) {
   EXPECT_CALL(*mock_, AsyncDropDatabase)
       .WillOnce(
-          [this](google::cloud::CompletionQueue&, auto context,
+          [this](google::cloud::CompletionQueue&, auto context, auto,
                  google::test::admin::database::v1::DropDatabaseRequest const&
                      request) {
             IsContextMDValid(*context,
@@ -500,7 +501,8 @@ TEST_F(MetadataDecoratorTest, AsyncDropDatabase) {
   request.set_database(
       "projects/my_project/instances/my_instance/databases/my_database");
   auto status = stub.AsyncDropDatabase(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::MakeImmutableOptions({}), request);
   EXPECT_EQ(TransientError(), status.get());
 }
 
