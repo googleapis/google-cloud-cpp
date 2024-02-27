@@ -107,7 +107,7 @@ using AsyncCancelLongRunningOperation = std::function<future<Status>(
  *       if (!op) return make_ready_future(op);
  *       return AsyncPollingLoop(
  *           std::move(cq), current, *std::move(op),
- *           [stub](auto cq, auto context, auto  options, auto const& r) {
+ *           [stub](auto cq, auto context, auto options, auto const& r) {
  *             return stub->AsyncGetOperation(
  *                 cq, std::move(context), std::move(options), r);
  *           },
