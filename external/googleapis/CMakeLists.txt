@@ -21,11 +21,10 @@ endif ()
 include(GoogleapisConfig)
 
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
-    "https://github.com/googleapis/googleapis/archive/${_GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA}.tar.gz"
-    "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/${_GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA}.tar.gz"
+    "https://github.com/devbww/googleapis/archive/refs/heads/securitycenter-enum-names.tar.gz"
 )
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL_HASH
-    "${_GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256}")
+    "9ac078c5a17e272d9c8bad2e6c312304900bfbe988eb84fda1ff8617538d1a8e")
 if (GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL)
     set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
         ${GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL})
