@@ -55,14 +55,15 @@ StatusOr<google::cloud::dataproc::v1::Job> JobControllerMetadata::SubmitJob(
 future<StatusOr<google::longrunning::Operation>>
 JobControllerMetadata::AsyncSubmitJobAsOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::dataproc::v1::SubmitJobRequest const& request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "region=", internal::UrlEncode(request.region())));
-  return child_->AsyncSubmitJobAsOperation(cq, std::move(context), options,
-                                           request);
+  return child_->AsyncSubmitJobAsOperation(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerMetadata::GetJob(
@@ -123,20 +124,24 @@ Status JobControllerMetadata::DeleteJob(
 future<StatusOr<google::longrunning::Operation>>
 JobControllerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> JobControllerMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void JobControllerMetadata::SetMetadata(grpc::ClientContext& context,

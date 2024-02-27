@@ -58,7 +58,8 @@ DefaultApiGatewayServiceStub::GetGateway(
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncCreateGateway(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::apigateway::v1::CreateGatewayRequest,
@@ -75,7 +76,8 @@ DefaultApiGatewayServiceStub::AsyncCreateGateway(
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncUpdateGateway(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::apigateway::v1::UpdateGatewayRequest,
@@ -92,7 +94,8 @@ DefaultApiGatewayServiceStub::AsyncUpdateGateway(
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncDeleteGateway(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::apigateway::v1::DeleteGatewayRequest,
@@ -133,7 +136,8 @@ DefaultApiGatewayServiceStub::GetApi(
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncCreateApi(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::apigateway::v1::CreateApiRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::apigateway::v1::CreateApiRequest,
@@ -150,7 +154,8 @@ DefaultApiGatewayServiceStub::AsyncCreateApi(
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncUpdateApi(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::apigateway::v1::UpdateApiRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::apigateway::v1::UpdateApiRequest,
@@ -167,7 +172,8 @@ DefaultApiGatewayServiceStub::AsyncUpdateApi(
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncDeleteApi(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::apigateway::v1::DeleteApiRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::apigateway::v1::DeleteApiRequest,
@@ -208,7 +214,8 @@ DefaultApiGatewayServiceStub::GetApiConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncCreateApiConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::apigateway::v1::CreateApiConfigRequest,
@@ -226,7 +233,8 @@ DefaultApiGatewayServiceStub::AsyncCreateApiConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncUpdateApiConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::apigateway::v1::UpdateApiConfigRequest,
@@ -244,7 +252,8 @@ DefaultApiGatewayServiceStub::AsyncUpdateApiConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncDeleteApiConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::apigateway::v1::DeleteApiConfigRequest,
@@ -262,7 +271,8 @@ DefaultApiGatewayServiceStub::AsyncDeleteApiConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultApiGatewayServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -277,7 +287,8 @@ DefaultApiGatewayServiceStub::AsyncGetOperation(
 
 future<Status> DefaultApiGatewayServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

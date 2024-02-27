@@ -45,21 +45,25 @@ ServiceUsageMetadata::ServiceUsageMetadata(
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageMetadata::AsyncEnableService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::serviceusage::v1::EnableServiceRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncEnableService(cq, std::move(context), options, request);
+  return child_->AsyncEnableService(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageMetadata::AsyncDisableService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::serviceusage::v1::DisableServiceRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDisableService(cq, std::move(context), options, request);
+  return child_->AsyncDisableService(cq, std::move(context), std::move(options),
+                                     request);
 }
 
 StatusOr<google::api::serviceusage::v1::Service>
@@ -83,12 +87,13 @@ ServiceUsageMetadata::ListServices(
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageMetadata::AsyncBatchEnableServices(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBatchEnableServices(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncBatchEnableServices(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
@@ -103,20 +108,24 @@ ServiceUsageMetadata::BatchGetServices(
 future<StatusOr<google::longrunning::Operation>>
 ServiceUsageMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> ServiceUsageMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void ServiceUsageMetadata::SetMetadata(grpc::ClientContext& context,

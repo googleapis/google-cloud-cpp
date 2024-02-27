@@ -54,14 +54,16 @@ class TelcoAutomationStub {
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateOrchestrationCluster(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::telcoautomation::v1::
           CreateOrchestrationClusterRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteOrchestrationCluster(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::telcoautomation::v1::
           DeleteOrchestrationClusterRequest const& request) = 0;
 
@@ -76,13 +78,15 @@ class TelcoAutomationStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateEdgeSlm(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteEdgeSlm(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const&
           request) = 0;
 
@@ -261,12 +265,14 @@ class TelcoAutomationStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -296,14 +302,16 @@ class DefaultTelcoAutomationStub : public TelcoAutomationStub {
   future<StatusOr<google::longrunning::Operation>>
   AsyncCreateOrchestrationCluster(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::telcoautomation::v1::
           CreateOrchestrationClusterRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteOrchestrationCluster(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::telcoautomation::v1::
           DeleteOrchestrationClusterRequest const& request) override;
 
@@ -319,13 +327,15 @@ class DefaultTelcoAutomationStub : public TelcoAutomationStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEdgeSlm(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEdgeSlm(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request)
       override;
 
@@ -487,12 +497,14 @@ class DefaultTelcoAutomationStub : public TelcoAutomationStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

@@ -83,7 +83,8 @@ class MigrationCenterTracingStub : public MigrationCenterStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateImportJob(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::CreateImportJobRequest const& request)
       override;
 
@@ -100,25 +101,29 @@ class MigrationCenterTracingStub : public MigrationCenterStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteImportJob(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateImportJob(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncValidateImportJob(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::ValidateImportJobRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRunImportJob(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::RunImportJobRequest const& request)
       override;
 
@@ -136,13 +141,15 @@ class MigrationCenterTracingStub : public MigrationCenterStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateImportDataFile(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteImportDataFile(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
           request) override;
 
@@ -158,31 +165,36 @@ class MigrationCenterTracingStub : public MigrationCenterStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateGroup(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::CreateGroupRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateGroup(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::UpdateGroupRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteGroup(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::DeleteGroupRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncAddAssetsToGroup(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRemoveAssetsFromGroup(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
           request) override;
 
@@ -209,19 +221,22 @@ class MigrationCenterTracingStub : public MigrationCenterStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateSource(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::CreateSourceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateSource(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::UpdateSourceRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSource(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::DeleteSourceRequest const& request)
       override;
 
@@ -238,19 +253,22 @@ class MigrationCenterTracingStub : public MigrationCenterStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreatePreferenceSet(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdatePreferenceSet(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeletePreferenceSet(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
           request) override;
 
@@ -261,13 +279,15 @@ class MigrationCenterTracingStub : public MigrationCenterStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateSettings(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateReportConfig(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
           request) override;
 
@@ -284,13 +304,15 @@ class MigrationCenterTracingStub : public MigrationCenterStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteReportConfig(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateReport(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::CreateReportRequest const& request)
       override;
 
@@ -306,18 +328,21 @@ class MigrationCenterTracingStub : public MigrationCenterStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteReport(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::migrationcenter::v1::DeleteReportRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

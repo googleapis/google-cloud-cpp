@@ -58,7 +58,8 @@ DefaultEdgeContainerStub::GetCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeContainerStub::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::edgecontainer::v1::CreateClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::edgecontainer::v1::CreateClusterRequest,
@@ -76,7 +77,8 @@ DefaultEdgeContainerStub::AsyncCreateCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeContainerStub::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::edgecontainer::v1::UpdateClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::edgecontainer::v1::UpdateClusterRequest,
@@ -94,7 +96,8 @@ DefaultEdgeContainerStub::AsyncUpdateCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeContainerStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::edgecontainer::v1::DeleteClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::edgecontainer::v1::DeleteClusterRequest,
@@ -149,7 +152,8 @@ DefaultEdgeContainerStub::GetNodePool(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeContainerStub::AsyncCreateNodePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::edgecontainer::v1::CreateNodePoolRequest,
@@ -167,7 +171,8 @@ DefaultEdgeContainerStub::AsyncCreateNodePool(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeContainerStub::AsyncUpdateNodePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::edgecontainer::v1::UpdateNodePoolRequest,
@@ -185,7 +190,8 @@ DefaultEdgeContainerStub::AsyncUpdateNodePool(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeContainerStub::AsyncDeleteNodePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::edgecontainer::v1::DeleteNodePoolRequest,
@@ -252,7 +258,8 @@ DefaultEdgeContainerStub::GetVpnConnection(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeContainerStub::AsyncCreateVpnConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -271,7 +278,8 @@ DefaultEdgeContainerStub::AsyncCreateVpnConnection(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeContainerStub::AsyncDeleteVpnConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -290,7 +298,8 @@ DefaultEdgeContainerStub::AsyncDeleteVpnConnection(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeContainerStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -305,7 +314,8 @@ DefaultEdgeContainerStub::AsyncGetOperation(
 
 future<Status> DefaultEdgeContainerStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

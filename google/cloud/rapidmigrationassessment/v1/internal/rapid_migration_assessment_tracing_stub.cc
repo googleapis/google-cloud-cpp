@@ -35,7 +35,8 @@ RapidMigrationAssessmentTracingStub::RapidMigrationAssessmentTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentTracingStub::AsyncCreateCollector(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::rapidmigrationassessment::v1::CreateCollectorRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -43,14 +44,16 @@ RapidMigrationAssessmentTracingStub::AsyncCreateCollector(
       "CreateCollector");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateCollector(cq, context, options, request);
+  auto f =
+      child_->AsyncCreateCollector(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentTracingStub::AsyncCreateAnnotation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::rapidmigrationassessment::v1::CreateAnnotationRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -58,7 +61,8 @@ RapidMigrationAssessmentTracingStub::AsyncCreateAnnotation(
       "CreateAnnotation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateAnnotation(cq, context, options, request);
+  auto f =
+      child_->AsyncCreateAnnotation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -107,7 +111,8 @@ RapidMigrationAssessmentTracingStub::GetCollector(
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentTracingStub::AsyncUpdateCollector(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::rapidmigrationassessment::v1::UpdateCollectorRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -115,14 +120,16 @@ RapidMigrationAssessmentTracingStub::AsyncUpdateCollector(
       "UpdateCollector");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateCollector(cq, context, options, request);
+  auto f =
+      child_->AsyncUpdateCollector(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentTracingStub::AsyncDeleteCollector(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::rapidmigrationassessment::v1::DeleteCollectorRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -130,14 +137,16 @@ RapidMigrationAssessmentTracingStub::AsyncDeleteCollector(
       "DeleteCollector");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteCollector(cq, context, options, request);
+  auto f =
+      child_->AsyncDeleteCollector(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentTracingStub::AsyncResumeCollector(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::rapidmigrationassessment::v1::ResumeCollectorRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -145,14 +154,16 @@ RapidMigrationAssessmentTracingStub::AsyncResumeCollector(
       "ResumeCollector");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncResumeCollector(cq, context, options, request);
+  auto f =
+      child_->AsyncResumeCollector(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentTracingStub::AsyncRegisterCollector(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::rapidmigrationassessment::v1::RegisterCollectorRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -160,14 +171,16 @@ RapidMigrationAssessmentTracingStub::AsyncRegisterCollector(
       "RegisterCollector");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRegisterCollector(cq, context, options, request);
+  auto f =
+      child_->AsyncRegisterCollector(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentTracingStub::AsyncPauseCollector(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -175,32 +188,36 @@ RapidMigrationAssessmentTracingStub::AsyncPauseCollector(
       "PauseCollector");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncPauseCollector(cq, context, options, request);
+  auto f =
+      child_->AsyncPauseCollector(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 RapidMigrationAssessmentTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> RapidMigrationAssessmentTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

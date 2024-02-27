@@ -48,7 +48,7 @@ class AutoscalersRestStub {
   AsyncDeleteAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::autoscalers::v1::
           DeleteAutoscalerRequest const& request) = 0;
 
@@ -62,7 +62,7 @@ class AutoscalersRestStub {
   AsyncInsertAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::autoscalers::v1::
           InsertAutoscalerRequest const& request) = 0;
 
@@ -76,7 +76,7 @@ class AutoscalersRestStub {
   AsyncPatchAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::autoscalers::v1::
           PatchAutoscalerRequest const& request) = 0;
 
@@ -84,7 +84,7 @@ class AutoscalersRestStub {
   AsyncUpdateAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::autoscalers::v1::
           UpdateAutoscalerRequest const& request) = 0;
 
@@ -92,14 +92,14 @@ class AutoscalersRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::zone_operations::v1::
           GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::zone_operations::v1::
           DeleteOperationRequest const& request) = 0;
 };
@@ -124,7 +124,7 @@ class DefaultAutoscalersRestStub : public AutoscalersRestStub {
   AsyncDeleteAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::autoscalers::v1::
           DeleteAutoscalerRequest const& request) override;
 
@@ -138,7 +138,7 @@ class DefaultAutoscalersRestStub : public AutoscalersRestStub {
   AsyncInsertAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::autoscalers::v1::
           InsertAutoscalerRequest const& request) override;
 
@@ -152,7 +152,7 @@ class DefaultAutoscalersRestStub : public AutoscalersRestStub {
   AsyncPatchAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::autoscalers::v1::
           PatchAutoscalerRequest const& request) override;
 
@@ -160,7 +160,7 @@ class DefaultAutoscalersRestStub : public AutoscalersRestStub {
   AsyncUpdateAutoscaler(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::autoscalers::v1::
           UpdateAutoscalerRequest const& request) override;
 
@@ -168,14 +168,14 @@ class DefaultAutoscalersRestStub : public AutoscalersRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::zone_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::zone_operations::v1::
           DeleteOperationRequest const& request) override;
 

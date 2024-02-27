@@ -34,7 +34,8 @@ OsConfigZonalServiceTracingStub::OsConfigZonalServiceTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 OsConfigZonalServiceTracingStub::AsyncCreateOSPolicyAssignment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
         request) {
   auto span =
@@ -42,14 +43,16 @@ OsConfigZonalServiceTracingStub::AsyncCreateOSPolicyAssignment(
                              "CreateOSPolicyAssignment");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateOSPolicyAssignment(cq, context, options, request);
+  auto f = child_->AsyncCreateOSPolicyAssignment(cq, context,
+                                                 std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 OsConfigZonalServiceTracingStub::AsyncUpdateOSPolicyAssignment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
         request) {
   auto span =
@@ -57,7 +60,8 @@ OsConfigZonalServiceTracingStub::AsyncUpdateOSPolicyAssignment(
                              "UpdateOSPolicyAssignment");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateOSPolicyAssignment(cq, context, options, request);
+  auto f = child_->AsyncUpdateOSPolicyAssignment(cq, context,
+                                                 std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -106,7 +110,8 @@ OsConfigZonalServiceTracingStub::ListOSPolicyAssignmentRevisions(
 future<StatusOr<google::longrunning::Operation>>
 OsConfigZonalServiceTracingStub::AsyncDeleteOSPolicyAssignment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
         request) {
   auto span =
@@ -114,7 +119,8 @@ OsConfigZonalServiceTracingStub::AsyncDeleteOSPolicyAssignment(
                              "DeleteOSPolicyAssignment");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteOSPolicyAssignment(cq, context, options, request);
+  auto f = child_->AsyncDeleteOSPolicyAssignment(cq, context,
+                                                 std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -204,25 +210,28 @@ OsConfigZonalServiceTracingStub::ListVulnerabilityReports(
 future<StatusOr<google::longrunning::Operation>>
 OsConfigZonalServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> OsConfigZonalServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

@@ -64,36 +64,39 @@ AccessContextManagerMetadata::GetAccessPolicy(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncCreateAccessPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::AccessPolicy const& request) {
-  SetMetadata(*context, options);
-  return child_->AsyncCreateAccessPolicy(cq, std::move(context), options,
-                                         request);
+  SetMetadata(*context, *options);
+  return child_->AsyncCreateAccessPolicy(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncUpdateAccessPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("policy.name=",
                            internal::UrlEncode(request.policy().name())));
-  return child_->AsyncUpdateAccessPolicy(cq, std::move(context), options,
-                                         request);
+  return child_->AsyncUpdateAccessPolicy(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncDeleteAccessPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteAccessPolicy(cq, std::move(context), options,
-                                         request);
+  return child_->AsyncDeleteAccessPolicy(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::ListAccessLevelsResponse>
@@ -119,50 +122,54 @@ AccessContextManagerMetadata::GetAccessLevel(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncCreateAccessLevel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateAccessLevel(cq, std::move(context), options,
-                                        request);
+  return child_->AsyncCreateAccessLevel(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncUpdateAccessLevel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("access_level.name=",
                            internal::UrlEncode(request.access_level().name())));
-  return child_->AsyncUpdateAccessLevel(cq, std::move(context), options,
-                                        request);
+  return child_->AsyncUpdateAccessLevel(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncDeleteAccessLevel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteAccessLevel(cq, std::move(context), options,
-                                        request);
+  return child_->AsyncDeleteAccessLevel(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncReplaceAccessLevels(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         ReplaceAccessLevelsRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncReplaceAccessLevels(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncReplaceAccessLevels(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 StatusOr<
@@ -189,63 +196,68 @@ AccessContextManagerMetadata::GetServicePerimeter(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncCreateServicePerimeter(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         CreateServicePerimeterRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateServicePerimeter(cq, std::move(context), options,
-                                             request);
+  return child_->AsyncCreateServicePerimeter(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncUpdateServicePerimeter(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         UpdateServicePerimeterRequest const& request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("service_perimeter.name=",
                    internal::UrlEncode(request.service_perimeter().name())));
-  return child_->AsyncUpdateServicePerimeter(cq, std::move(context), options,
-                                             request);
+  return child_->AsyncUpdateServicePerimeter(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncDeleteServicePerimeter(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         DeleteServicePerimeterRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteServicePerimeter(cq, std::move(context), options,
-                                             request);
+  return child_->AsyncDeleteServicePerimeter(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncReplaceServicePerimeters(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         ReplaceServicePerimetersRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncReplaceServicePerimeters(cq, std::move(context), options,
-                                               request);
+  return child_->AsyncReplaceServicePerimeters(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncCommitServicePerimeters(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         CommitServicePerimetersRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCommitServicePerimeters(cq, std::move(context), options,
-                                              request);
+  return child_->AsyncCommitServicePerimeters(cq, std::move(context),
+                                              std::move(options), request);
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::
@@ -272,39 +284,42 @@ AccessContextManagerMetadata::GetGcpUserAccessBinding(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncCreateGcpUserAccessBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         CreateGcpUserAccessBindingRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateGcpUserAccessBinding(cq, std::move(context),
-                                                 options, request);
+                                                 std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncUpdateGcpUserAccessBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         UpdateGcpUserAccessBindingRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("gcp_user_access_binding.name=",
                            internal::UrlEncode(
                                request.gcp_user_access_binding().name())));
   return child_->AsyncUpdateGcpUserAccessBinding(cq, std::move(context),
-                                                 options, request);
+                                                 std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncDeleteGcpUserAccessBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         DeleteGcpUserAccessBindingRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteGcpUserAccessBinding(cq, std::move(context),
-                                                 options, request);
+                                                 std::move(options), request);
 }
 
 StatusOr<google::iam::v1::Policy> AccessContextManagerMetadata::SetIamPolicy(
@@ -338,20 +353,24 @@ AccessContextManagerMetadata::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> AccessContextManagerMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void AccessContextManagerMetadata::SetMetadata(

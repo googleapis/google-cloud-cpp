@@ -120,11 +120,13 @@ MigrationCenterMetadata::AggregateAssetsValues(
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncCreateImportJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::CreateImportJobRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateImportJob(cq, std::move(context), options, request);
+  return child_->AsyncCreateImportJob(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListImportJobsResponse>
@@ -148,44 +150,51 @@ MigrationCenterMetadata::GetImportJob(
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncDeleteImportJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::DeleteImportJobRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteImportJob(cq, std::move(context), options, request);
+  return child_->AsyncDeleteImportJob(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncUpdateImportJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::UpdateImportJobRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("import_job.name=",
                            internal::UrlEncode(request.import_job().name())));
-  return child_->AsyncUpdateImportJob(cq, std::move(context), options, request);
+  return child_->AsyncUpdateImportJob(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncValidateImportJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::ValidateImportJobRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncValidateImportJob(cq, std::move(context), options,
-                                        request);
+  return child_->AsyncValidateImportJob(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncRunImportJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::RunImportJobRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncRunImportJob(cq, std::move(context), options, request);
+  return child_->AsyncRunImportJob(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ImportDataFile>
@@ -211,25 +220,27 @@ MigrationCenterMetadata::ListImportDataFiles(
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncCreateImportDataFile(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::CreateImportDataFileRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateImportDataFile(cq, std::move(context), options,
-                                           request);
+  return child_->AsyncCreateImportDataFile(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncDeleteImportDataFile(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::DeleteImportDataFileRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteImportDataFile(cq, std::move(context), options,
-                                           request);
+  return child_->AsyncDeleteImportDataFile(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListGroupsResponse>
@@ -253,56 +264,64 @@ MigrationCenterMetadata::GetGroup(
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncCreateGroup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::CreateGroupRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateGroup(cq, std::move(context), options, request);
+  return child_->AsyncCreateGroup(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncUpdateGroup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::UpdateGroupRequest const& request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("group.name=", internal::UrlEncode(request.group().name())));
-  return child_->AsyncUpdateGroup(cq, std::move(context), options, request);
+  return child_->AsyncUpdateGroup(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncDeleteGroup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::DeleteGroupRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteGroup(cq, std::move(context), options, request);
+  return child_->AsyncDeleteGroup(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncAddAssetsToGroup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::AddAssetsToGroupRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("group=", internal::UrlEncode(request.group())));
-  return child_->AsyncAddAssetsToGroup(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncAddAssetsToGroup(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncRemoveAssetsFromGroup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::RemoveAssetsFromGroupRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("group=", internal::UrlEncode(request.group())));
-  return child_->AsyncRemoveAssetsFromGroup(cq, std::move(context), options,
-                                            request);
+  return child_->AsyncRemoveAssetsFromGroup(cq, std::move(context),
+                                            std::move(options), request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListErrorFramesResponse>
@@ -344,32 +363,38 @@ MigrationCenterMetadata::GetSource(
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncCreateSource(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::CreateSourceRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateSource(cq, std::move(context), options, request);
+  return child_->AsyncCreateSource(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncUpdateSource(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::UpdateSourceRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("source.name=",
                            internal::UrlEncode(request.source().name())));
-  return child_->AsyncUpdateSource(cq, std::move(context), options, request);
+  return child_->AsyncUpdateSource(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncDeleteSource(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::DeleteSourceRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteSource(cq, std::move(context), options, request);
+  return child_->AsyncDeleteSource(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ListPreferenceSetsResponse>
@@ -395,39 +420,42 @@ MigrationCenterMetadata::GetPreferenceSet(
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncCreatePreferenceSet(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::CreatePreferenceSetRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreatePreferenceSet(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncCreatePreferenceSet(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncUpdatePreferenceSet(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::UpdatePreferenceSetRequest const&
         request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("preference_set.name=",
                    internal::UrlEncode(request.preference_set().name())));
-  return child_->AsyncUpdatePreferenceSet(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncUpdatePreferenceSet(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncDeletePreferenceSet(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::DeletePreferenceSetRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeletePreferenceSet(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncDeletePreferenceSet(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Settings>
@@ -442,24 +470,27 @@ MigrationCenterMetadata::GetSettings(
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncUpdateSettings(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::UpdateSettingsRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("settings.name=",
                            internal::UrlEncode(request.settings().name())));
-  return child_->AsyncUpdateSettings(cq, std::move(context), options, request);
+  return child_->AsyncUpdateSettings(cq, std::move(context), std::move(options),
+                                     request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncCreateReportConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::CreateReportConfigRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateReportConfig(cq, std::move(context), options,
-                                         request);
+  return child_->AsyncCreateReportConfig(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::ReportConfig>
@@ -484,23 +515,26 @@ MigrationCenterMetadata::ListReportConfigs(
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncDeleteReportConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::DeleteReportConfigRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteReportConfig(cq, std::move(context), options,
-                                         request);
+  return child_->AsyncDeleteReportConfig(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncCreateReport(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::CreateReportRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateReport(cq, std::move(context), options, request);
+  return child_->AsyncCreateReport(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 StatusOr<google::cloud::migrationcenter::v1::Report>
@@ -524,30 +558,36 @@ MigrationCenterMetadata::ListReports(
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncDeleteReport(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::migrationcenter::v1::DeleteReportRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteReport(cq, std::move(context), options, request);
+  return child_->AsyncDeleteReport(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MigrationCenterMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> MigrationCenterMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void MigrationCenterMetadata::SetMetadata(grpc::ClientContext& context,

@@ -138,7 +138,8 @@ DefaultArtifactRegistryStub::GetPythonPackage(
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncImportAptArtifacts(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -157,7 +158,8 @@ DefaultArtifactRegistryStub::AsyncImportAptArtifacts(
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncImportYumArtifacts(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -202,7 +204,8 @@ DefaultArtifactRegistryStub::GetRepository(
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncCreateRepository(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -235,7 +238,8 @@ DefaultArtifactRegistryStub::UpdateRepository(
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncDeleteRepository(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -280,7 +284,8 @@ DefaultArtifactRegistryStub::GetPackage(
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncDeletePackage(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::devtools::artifactregistry::v1::DeletePackageRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -324,7 +329,8 @@ DefaultArtifactRegistryStub::GetVersion(
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncDeleteVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::devtools::artifactregistry::v1::DeleteVersionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -343,7 +349,8 @@ DefaultArtifactRegistryStub::AsyncDeleteVersion(
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncBatchDeleteVersions(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -531,7 +538,8 @@ DefaultArtifactRegistryStub::UpdateVPCSCConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultArtifactRegistryStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -546,7 +554,8 @@ DefaultArtifactRegistryStub::AsyncGetOperation(
 
 future<Status> DefaultArtifactRegistryStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

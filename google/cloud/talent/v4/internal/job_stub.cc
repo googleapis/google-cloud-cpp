@@ -45,7 +45,8 @@ StatusOr<google::cloud::talent::v4::Job> DefaultJobServiceStub::CreateJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobServiceStub::AsyncBatchCreateJobs(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::talent::v4::BatchCreateJobsRequest,
@@ -84,7 +85,8 @@ StatusOr<google::cloud::talent::v4::Job> DefaultJobServiceStub::UpdateJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobServiceStub::AsyncBatchUpdateJobs(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::talent::v4::BatchUpdateJobsRequest,
@@ -112,7 +114,8 @@ Status DefaultJobServiceStub::DeleteJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobServiceStub::AsyncBatchDeleteJobs(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::talent::v4::BatchDeleteJobsRequest,
@@ -165,7 +168,8 @@ DefaultJobServiceStub::SearchJobsForAlert(
 future<StatusOr<google::longrunning::Operation>>
 DefaultJobServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -180,7 +184,8 @@ DefaultJobServiceStub::AsyncGetOperation(
 
 future<Status> DefaultJobServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

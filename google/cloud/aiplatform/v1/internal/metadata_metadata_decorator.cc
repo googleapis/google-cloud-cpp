@@ -45,12 +45,13 @@ MetadataServiceMetadata::MetadataServiceMetadata(
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceMetadata::AsyncCreateMetadataStore(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateMetadataStore(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncCreateMetadataStore(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::MetadataStore>
@@ -74,12 +75,13 @@ MetadataServiceMetadata::ListMetadataStores(
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceMetadata::AsyncDeleteMetadataStore(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteMetadataStore(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncDeleteMetadataStore(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
@@ -122,21 +124,25 @@ MetadataServiceMetadata::UpdateArtifact(
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceMetadata::AsyncDeleteArtifact(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteArtifact(cq, std::move(context), options, request);
+  return child_->AsyncDeleteArtifact(cq, std::move(context), std::move(options),
+                                     request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceMetadata::AsyncPurgeArtifacts(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncPurgeArtifacts(cq, std::move(context), options, request);
+  return child_->AsyncPurgeArtifacts(cq, std::move(context), std::move(options),
+                                     request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Context>
@@ -179,21 +185,25 @@ MetadataServiceMetadata::UpdateContext(
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceMetadata::AsyncDeleteContext(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteContext(cq, std::move(context), options, request);
+  return child_->AsyncDeleteContext(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceMetadata::AsyncPurgeContexts(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncPurgeContexts(cq, std::move(context), options, request);
+  return child_->AsyncPurgeContexts(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<
@@ -276,21 +286,25 @@ MetadataServiceMetadata::UpdateExecution(
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceMetadata::AsyncDeleteExecution(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteExecution(cq, std::move(context), options, request);
+  return child_->AsyncDeleteExecution(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceMetadata::AsyncPurgeExecutions(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncPurgeExecutions(cq, std::move(context), options, request);
+  return child_->AsyncPurgeExecutions(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>
@@ -355,20 +369,24 @@ MetadataServiceMetadata::QueryArtifactLineageSubgraph(
 future<StatusOr<google::longrunning::Operation>>
 MetadataServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> MetadataServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void MetadataServiceMetadata::SetMetadata(grpc::ClientContext& context,

@@ -90,7 +90,8 @@ StatusOr<google::cloud::dialogflow::cx::v3::Flow> DefaultFlowsStub::UpdateFlow(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFlowsStub::AsyncTrainFlow(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::TrainFlowRequest,
@@ -133,7 +134,8 @@ DefaultFlowsStub::GetFlowValidationResult(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFlowsStub::AsyncImportFlow(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::ImportFlowRequest,
@@ -151,7 +153,8 @@ DefaultFlowsStub::AsyncImportFlow(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFlowsStub::AsyncExportFlow(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::ExportFlowRequest,
@@ -169,7 +172,8 @@ DefaultFlowsStub::AsyncExportFlow(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFlowsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -184,7 +188,8 @@ DefaultFlowsStub::AsyncGetOperation(
 
 future<Status> DefaultFlowsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

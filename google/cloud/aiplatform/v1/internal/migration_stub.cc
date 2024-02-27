@@ -48,7 +48,8 @@ DefaultMigrationServiceStub::SearchMigratableResources(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationServiceStub::AsyncBatchMigrateResources(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -67,7 +68,8 @@ DefaultMigrationServiceStub::AsyncBatchMigrateResources(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -82,7 +84,8 @@ DefaultMigrationServiceStub::AsyncGetOperation(
 
 future<Status> DefaultMigrationServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -59,13 +59,15 @@ DomainsTracingStub::RetrieveRegisterParameters(
 future<StatusOr<google::longrunning::Operation>>
 DomainsTracingStub::AsyncRegisterDomain(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::domains::v1::RegisterDomainRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
                                      "RegisterDomain");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRegisterDomain(cq, context, options, request);
+  auto f =
+      child_->AsyncRegisterDomain(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -86,13 +88,15 @@ DomainsTracingStub::RetrieveTransferParameters(
 future<StatusOr<google::longrunning::Operation>>
 DomainsTracingStub::AsyncTransferDomain(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::domains::v1::TransferDomainRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
                                      "TransferDomain");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncTransferDomain(cq, context, options, request);
+  auto f =
+      child_->AsyncTransferDomain(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -123,81 +127,92 @@ DomainsTracingStub::GetRegistration(
 future<StatusOr<google::longrunning::Operation>>
 DomainsTracingStub::AsyncUpdateRegistration(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
                                      "UpdateRegistration");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateRegistration(cq, context, options, request);
+  auto f =
+      child_->AsyncUpdateRegistration(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsTracingStub::AsyncConfigureManagementSettings(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
                                      "ConfigureManagementSettings");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncConfigureManagementSettings(cq, context, options, request);
+  auto f = child_->AsyncConfigureManagementSettings(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsTracingStub::AsyncConfigureDnsSettings(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
                                      "ConfigureDnsSettings");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncConfigureDnsSettings(cq, context, options, request);
+  auto f = child_->AsyncConfigureDnsSettings(cq, context, std::move(options),
+                                             request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsTracingStub::AsyncConfigureContactSettings(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::domains::v1::ConfigureContactSettingsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
                                      "ConfigureContactSettings");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncConfigureContactSettings(cq, context, options, request);
+  auto f = child_->AsyncConfigureContactSettings(cq, context,
+                                                 std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsTracingStub::AsyncExportRegistration(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::domains::v1::ExportRegistrationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
                                      "ExportRegistration");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncExportRegistration(cq, context, options, request);
+  auto f =
+      child_->AsyncExportRegistration(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DomainsTracingStub::AsyncDeleteRegistration(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.domains.v1.Domains",
                                      "DeleteRegistration");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteRegistration(cq, context, options, request);
+  auto f =
+      child_->AsyncDeleteRegistration(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -231,25 +246,28 @@ DomainsTracingStub::ResetAuthorizationCode(
 future<StatusOr<google::longrunning::Operation>>
 DomainsTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> DomainsTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

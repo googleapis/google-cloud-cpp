@@ -53,21 +53,21 @@ class AppConnectionsServiceStub {
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateAppConnection(google::cloud::CompletionQueue& cq,
                            std::shared_ptr<grpc::ClientContext> context,
-                           Options const& options,
+                           google::cloud::internal::ImmutableOptions options,
                            google::cloud::beyondcorp::appconnections::v1::
                                CreateAppConnectionRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateAppConnection(google::cloud::CompletionQueue& cq,
                            std::shared_ptr<grpc::ClientContext> context,
-                           Options const& options,
+                           google::cloud::internal::ImmutableOptions options,
                            google::cloud::beyondcorp::appconnections::v1::
                                UpdateAppConnectionRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteAppConnection(google::cloud::CompletionQueue& cq,
                            std::shared_ptr<grpc::ClientContext> context,
-                           Options const& options,
+                           google::cloud::internal::ImmutableOptions options,
                            google::cloud::beyondcorp::appconnections::v1::
                                DeleteAppConnectionRequest const& request) = 0;
 
@@ -79,12 +79,14 @@ class AppConnectionsServiceStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -111,19 +113,22 @@ class DefaultAppConnectionsServiceStub : public AppConnectionsServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAppConnection(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::beyondcorp::appconnections::v1::
           CreateAppConnectionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAppConnection(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::beyondcorp::appconnections::v1::
           UpdateAppConnectionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAppConnection(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::beyondcorp::appconnections::v1::
           DeleteAppConnectionRequest const& request) override;
 
@@ -136,12 +141,14 @@ class DefaultAppConnectionsServiceStub : public AppConnectionsServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

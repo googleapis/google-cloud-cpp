@@ -64,7 +64,8 @@ TelcoAutomationTracingStub::GetOrchestrationCluster(
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationTracingStub::AsyncCreateOrchestrationCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
         request) {
   auto span =
@@ -72,15 +73,16 @@ TelcoAutomationTracingStub::AsyncCreateOrchestrationCluster(
                              "CreateOrchestrationCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreateOrchestrationCluster(cq, context, options, request);
+  auto f = child_->AsyncCreateOrchestrationCluster(cq, context,
+                                                   std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationTracingStub::AsyncDeleteOrchestrationCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
         request) {
   auto span =
@@ -88,8 +90,8 @@ TelcoAutomationTracingStub::AsyncDeleteOrchestrationCluster(
                              "DeleteOrchestrationCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDeleteOrchestrationCluster(cq, context, options, request);
+  auto f = child_->AsyncDeleteOrchestrationCluster(cq, context,
+                                                   std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -120,26 +122,28 @@ TelcoAutomationTracingStub::GetEdgeSlm(
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationTracingStub::AsyncCreateEdgeSlm(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.telcoautomation.v1.TelcoAutomation", "CreateEdgeSlm");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateEdgeSlm(cq, context, options, request);
+  auto f = child_->AsyncCreateEdgeSlm(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationTracingStub::AsyncDeleteEdgeSlm(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.telcoautomation.v1.TelcoAutomation", "DeleteEdgeSlm");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteEdgeSlm(cq, context, options, request);
+  auto f = child_->AsyncDeleteEdgeSlm(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -521,25 +525,28 @@ TelcoAutomationTracingStub::ApplyHydratedDeployment(
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> TelcoAutomationTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

@@ -71,7 +71,8 @@ DefaultTagKeysStub::GetNamespacedTagKey(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagKeysStub::AsyncCreateTagKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::resourcemanager::v3::CreateTagKeyRequest,
@@ -89,7 +90,8 @@ DefaultTagKeysStub::AsyncCreateTagKey(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagKeysStub::AsyncUpdateTagKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::resourcemanager::v3::UpdateTagKeyRequest,
@@ -107,7 +109,8 @@ DefaultTagKeysStub::AsyncUpdateTagKey(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagKeysStub::AsyncDeleteTagKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::resourcemanager::v3::DeleteTagKeyRequest,
@@ -159,7 +162,8 @@ DefaultTagKeysStub::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagKeysStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -174,7 +178,8 @@ DefaultTagKeysStub::AsyncGetOperation(
 
 future<Status> DefaultTagKeysStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

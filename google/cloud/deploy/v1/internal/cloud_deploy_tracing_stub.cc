@@ -58,39 +58,45 @@ CloudDeployTracingStub::GetDeliveryPipeline(
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncCreateDeliveryPipeline(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
                                      "CreateDeliveryPipeline");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateDeliveryPipeline(cq, context, options, request);
+  auto f = child_->AsyncCreateDeliveryPipeline(cq, context, std::move(options),
+                                               request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncUpdateDeliveryPipeline(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
                                      "UpdateDeliveryPipeline");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateDeliveryPipeline(cq, context, options, request);
+  auto f = child_->AsyncUpdateDeliveryPipeline(cq, context, std::move(options),
+                                               request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncDeleteDeliveryPipeline(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
                                      "DeleteDeliveryPipeline");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteDeliveryPipeline(cq, context, options, request);
+  auto f = child_->AsyncDeleteDeliveryPipeline(cq, context, std::move(options),
+                                               request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -132,39 +138,42 @@ StatusOr<google::cloud::deploy::v1::Target> CloudDeployTracingStub::GetTarget(
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncCreateTarget(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::deploy::v1::CreateTargetRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
                                      "CreateTarget");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateTarget(cq, context, options, request);
+  auto f = child_->AsyncCreateTarget(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncUpdateTarget(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::deploy::v1::UpdateTargetRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
                                      "UpdateTarget");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateTarget(cq, context, options, request);
+  auto f = child_->AsyncUpdateTarget(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncDeleteTarget(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::deploy::v1::DeleteTargetRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
                                      "DeleteTarget");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteTarget(cq, context, options, request);
+  auto f = child_->AsyncDeleteTarget(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -195,39 +204,45 @@ CloudDeployTracingStub::GetCustomTargetType(
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncCreateCustomTargetType(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
                                      "CreateCustomTargetType");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateCustomTargetType(cq, context, options, request);
+  auto f = child_->AsyncCreateCustomTargetType(cq, context, std::move(options),
+                                               request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncUpdateCustomTargetType(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
                                      "UpdateCustomTargetType");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateCustomTargetType(cq, context, options, request);
+  auto f = child_->AsyncUpdateCustomTargetType(cq, context, std::move(options),
+                                               request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncDeleteCustomTargetType(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
                                      "DeleteCustomTargetType");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteCustomTargetType(cq, context, options, request);
+  auto f = child_->AsyncDeleteCustomTargetType(cq, context, std::move(options),
+                                               request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -257,13 +272,14 @@ StatusOr<google::cloud::deploy::v1::Release> CloudDeployTracingStub::GetRelease(
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncCreateRelease(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::deploy::v1::CreateReleaseRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
                                      "CreateRelease");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateRelease(cq, context, options, request);
+  auto f = child_->AsyncCreateRelease(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -341,13 +357,14 @@ StatusOr<google::cloud::deploy::v1::Rollout> CloudDeployTracingStub::GetRollout(
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncCreateRollout(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::deploy::v1::CreateRolloutRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
                                      "CreateRollout");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateRollout(cq, context, options, request);
+  auto f = child_->AsyncCreateRollout(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -424,39 +441,45 @@ StatusOr<google::cloud::deploy::v1::Config> CloudDeployTracingStub::GetConfig(
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncCreateAutomation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::deploy::v1::CreateAutomationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
                                      "CreateAutomation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateAutomation(cq, context, options, request);
+  auto f =
+      child_->AsyncCreateAutomation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncUpdateAutomation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::deploy::v1::UpdateAutomationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
                                      "UpdateAutomation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateAutomation(cq, context, options, request);
+  auto f =
+      child_->AsyncUpdateAutomation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncDeleteAutomation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::deploy::v1::DeleteAutomationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.deploy.v1.CloudDeploy",
                                      "DeleteAutomation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteAutomation(cq, context, options, request);
+  auto f =
+      child_->AsyncDeleteAutomation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -523,25 +546,28 @@ CloudDeployTracingStub::CancelAutomationRun(
 future<StatusOr<google::longrunning::Operation>>
 CloudDeployTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> CloudDeployTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

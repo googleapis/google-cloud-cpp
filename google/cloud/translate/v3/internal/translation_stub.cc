@@ -83,7 +83,8 @@ DefaultTranslationServiceStub::TranslateDocument(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTranslationServiceStub::AsyncBatchTranslateText(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::translation::v3::BatchTranslateTextRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::translation::v3::BatchTranslateTextRequest,
@@ -101,7 +102,8 @@ DefaultTranslationServiceStub::AsyncBatchTranslateText(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTranslationServiceStub::AsyncBatchTranslateDocument(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::translation::v3::BatchTranslateDocumentRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -121,7 +123,8 @@ DefaultTranslationServiceStub::AsyncBatchTranslateDocument(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTranslationServiceStub::AsyncCreateGlossary(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::translation::v3::CreateGlossaryRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::translation::v3::CreateGlossaryRequest,
@@ -163,7 +166,8 @@ DefaultTranslationServiceStub::GetGlossary(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTranslationServiceStub::AsyncDeleteGlossary(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::translation::v3::DeleteGlossaryRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::translation::v3::DeleteGlossaryRequest,
@@ -310,7 +314,8 @@ DefaultTranslationServiceStub::ListAdaptiveMtSentences(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTranslationServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -325,7 +330,8 @@ DefaultTranslationServiceStub::AsyncGetOperation(
 
 future<Status> DefaultTranslationServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

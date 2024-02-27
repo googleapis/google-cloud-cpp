@@ -58,7 +58,8 @@ DefaultDataprocMetastoreFederationStub::GetFederation(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataprocMetastoreFederationStub::AsyncCreateFederation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::metastore::v1::CreateFederationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::metastore::v1::CreateFederationRequest,
@@ -76,7 +77,8 @@ DefaultDataprocMetastoreFederationStub::AsyncCreateFederation(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataprocMetastoreFederationStub::AsyncUpdateFederation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::metastore::v1::UpdateFederationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::metastore::v1::UpdateFederationRequest,
@@ -94,7 +96,8 @@ DefaultDataprocMetastoreFederationStub::AsyncUpdateFederation(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataprocMetastoreFederationStub::AsyncDeleteFederation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::metastore::v1::DeleteFederationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::metastore::v1::DeleteFederationRequest,
@@ -112,7 +115,8 @@ DefaultDataprocMetastoreFederationStub::AsyncDeleteFederation(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataprocMetastoreFederationStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -127,7 +131,8 @@ DefaultDataprocMetastoreFederationStub::AsyncGetOperation(
 
 future<Status> DefaultDataprocMetastoreFederationStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

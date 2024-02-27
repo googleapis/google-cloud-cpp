@@ -93,7 +93,8 @@ Status DefaultProductServiceStub::DeleteProduct(
 future<StatusOr<google::longrunning::Operation>>
 DefaultProductServiceStub::AsyncImportProducts(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::retail::v2::ImportProductsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::retail::v2::ImportProductsRequest,
@@ -110,7 +111,8 @@ DefaultProductServiceStub::AsyncImportProducts(
 future<StatusOr<google::longrunning::Operation>>
 DefaultProductServiceStub::AsyncSetInventory(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::retail::v2::SetInventoryRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::retail::v2::SetInventoryRequest,
@@ -127,7 +129,8 @@ DefaultProductServiceStub::AsyncSetInventory(
 future<StatusOr<google::longrunning::Operation>>
 DefaultProductServiceStub::AsyncAddFulfillmentPlaces(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::retail::v2::AddFulfillmentPlacesRequest,
@@ -145,7 +148,8 @@ DefaultProductServiceStub::AsyncAddFulfillmentPlaces(
 future<StatusOr<google::longrunning::Operation>>
 DefaultProductServiceStub::AsyncRemoveFulfillmentPlaces(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::retail::v2::RemoveFulfillmentPlacesRequest,
@@ -163,7 +167,8 @@ DefaultProductServiceStub::AsyncRemoveFulfillmentPlaces(
 future<StatusOr<google::longrunning::Operation>>
 DefaultProductServiceStub::AsyncAddLocalInventories(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::retail::v2::AddLocalInventoriesRequest,
@@ -181,7 +186,8 @@ DefaultProductServiceStub::AsyncAddLocalInventories(
 future<StatusOr<google::longrunning::Operation>>
 DefaultProductServiceStub::AsyncRemoveLocalInventories(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::retail::v2::RemoveLocalInventoriesRequest,
@@ -199,7 +205,8 @@ DefaultProductServiceStub::AsyncRemoveLocalInventories(
 future<StatusOr<google::longrunning::Operation>>
 DefaultProductServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -214,7 +221,8 @@ DefaultProductServiceStub::AsyncGetOperation(
 
 future<Status> DefaultProductServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

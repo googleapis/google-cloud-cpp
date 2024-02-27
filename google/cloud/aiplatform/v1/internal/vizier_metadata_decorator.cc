@@ -88,11 +88,13 @@ VizierServiceMetadata::LookupStudy(
 future<StatusOr<google::longrunning::Operation>>
 VizierServiceMetadata::AsyncSuggestTrials(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncSuggestTrials(cq, std::move(context), options, request);
+  return child_->AsyncSuggestTrials(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
@@ -151,14 +153,15 @@ Status VizierServiceMetadata::DeleteTrial(
 future<StatusOr<google::longrunning::Operation>>
 VizierServiceMetadata::AsyncCheckTrialEarlyStoppingState(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
         request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("trial_name=", internal::UrlEncode(request.trial_name())));
   return child_->AsyncCheckTrialEarlyStoppingState(cq, std::move(context),
-                                                   options, request);
+                                                   std::move(options), request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial> VizierServiceMetadata::StopTrial(
@@ -181,20 +184,24 @@ VizierServiceMetadata::ListOptimalTrials(
 future<StatusOr<google::longrunning::Operation>>
 VizierServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> VizierServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void VizierServiceMetadata::SetMetadata(grpc::ClientContext& context,

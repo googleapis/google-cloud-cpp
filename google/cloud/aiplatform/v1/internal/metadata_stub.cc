@@ -34,7 +34,8 @@ MetadataServiceStub::~MetadataServiceStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncCreateMetadataStore(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::CreateMetadataStoreRequest,
@@ -76,7 +77,8 @@ DefaultMetadataServiceStub::ListMetadataStores(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncDeleteMetadataStore(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteMetadataStoreRequest,
@@ -142,7 +144,8 @@ DefaultMetadataServiceStub::UpdateArtifact(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncDeleteArtifact(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteArtifactRequest,
@@ -160,7 +163,8 @@ DefaultMetadataServiceStub::AsyncDeleteArtifact(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncPurgeArtifacts(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::PurgeArtifactsRequest,
@@ -226,7 +230,8 @@ DefaultMetadataServiceStub::UpdateContext(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncDeleteContext(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteContextRequest,
@@ -243,7 +248,8 @@ DefaultMetadataServiceStub::AsyncDeleteContext(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncPurgeContexts(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::PurgeContextsRequest,
@@ -363,7 +369,8 @@ DefaultMetadataServiceStub::UpdateExecution(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncDeleteExecution(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteExecutionRequest,
@@ -381,7 +388,8 @@ DefaultMetadataServiceStub::AsyncDeleteExecution(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncPurgeExecutions(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::PurgeExecutionsRequest,
@@ -475,7 +483,8 @@ DefaultMetadataServiceStub::QueryArtifactLineageSubgraph(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -490,7 +499,8 @@ DefaultMetadataServiceStub::AsyncGetOperation(
 
 future<Status> DefaultMetadataServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

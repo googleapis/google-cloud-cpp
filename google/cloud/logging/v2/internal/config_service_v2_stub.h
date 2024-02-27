@@ -49,13 +49,15 @@ class ConfigServiceV2Stub {
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateBucketAsync(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::logging::v2::CreateBucketRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateBucketAsync(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::logging::v2::UpdateBucketRequest const& request) = 0;
 
   virtual StatusOr<google::logging::v2::LogBucket> CreateBucket(
@@ -116,12 +118,14 @@ class ConfigServiceV2Stub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateLink(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::logging::v2::CreateLinkRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteLink(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::logging::v2::DeleteLinkRequest const& request) = 0;
 
   virtual StatusOr<google::logging::v2::ListLinksResponse> ListLinks(
@@ -170,17 +174,20 @@ class ConfigServiceV2Stub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCopyLogEntries(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::logging::v2::CopyLogEntriesRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -203,12 +210,14 @@ class DefaultConfigServiceV2Stub : public ConfigServiceV2Stub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBucketAsync(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::logging::v2::CreateBucketRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateBucketAsync(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::logging::v2::UpdateBucketRequest const& request) override;
 
   StatusOr<google::logging::v2::LogBucket> CreateBucket(
@@ -269,12 +278,14 @@ class DefaultConfigServiceV2Stub : public ConfigServiceV2Stub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateLink(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::logging::v2::CreateLinkRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteLink(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::logging::v2::DeleteLinkRequest const& request) override;
 
   StatusOr<google::logging::v2::ListLinksResponse> ListLinks(
@@ -323,17 +334,20 @@ class DefaultConfigServiceV2Stub : public ConfigServiceV2Stub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCopyLogEntries(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::logging::v2::CopyLogEntriesRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

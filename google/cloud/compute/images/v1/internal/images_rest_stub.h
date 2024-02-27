@@ -41,7 +41,7 @@ class ImagesRestStub {
   AsyncDeleteImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
           request) = 0;
 
@@ -49,7 +49,7 @@ class ImagesRestStub {
   AsyncDeprecate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::images::v1::DeprecateRequest const&
           request) = 0;
 
@@ -75,7 +75,7 @@ class ImagesRestStub {
   AsyncInsertImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::images::v1::InsertImageRequest const&
           request) = 0;
 
@@ -89,7 +89,7 @@ class ImagesRestStub {
   AsyncPatchImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::images::v1::PatchImageRequest const&
           request) = 0;
 
@@ -103,7 +103,7 @@ class ImagesRestStub {
   AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::images::v1::SetLabelsRequest const&
           request) = 0;
 
@@ -118,14 +118,14 @@ class ImagesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) = 0;
 };
@@ -142,14 +142,14 @@ class DefaultImagesRestStub : public ImagesRestStub {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::images::v1::DeleteImageRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeprecate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::images::v1::DeprecateRequest const& request)
       override;
 
@@ -174,7 +174,7 @@ class DefaultImagesRestStub : public ImagesRestStub {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncInsertImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::images::v1::InsertImageRequest const&
           request) override;
 
@@ -187,7 +187,7 @@ class DefaultImagesRestStub : public ImagesRestStub {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchImage(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::images::v1::PatchImageRequest const& request)
       override;
 
@@ -200,7 +200,7 @@ class DefaultImagesRestStub : public ImagesRestStub {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::images::v1::SetLabelsRequest const& request)
       override;
 
@@ -215,14 +215,14 @@ class DefaultImagesRestStub : public ImagesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 
