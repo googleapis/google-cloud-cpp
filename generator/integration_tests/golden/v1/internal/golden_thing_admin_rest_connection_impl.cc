@@ -401,8 +401,11 @@ GoldenThingAdminRestConnectionImpl::AsyncGetDatabase(google::test::admin::databa
       background_->cq(),
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
-                     Options const& options, google::test::admin::database::v1::GetDatabaseRequest const& request) {
-        return stub->AsyncGetDatabase(cq, std::move(context), options, request);
+                     // NOLINTNEXTLINE(performance-unnecessary-value-param)
+                     google::cloud::internal::ImmutableOptions options,
+                     google::test::admin::database::v1::GetDatabaseRequest const& request) {
+        return stub->AsyncGetDatabase(
+            cq, std::move(context), *options, request);
       },
       current, request, __func__);
 }
@@ -416,8 +419,11 @@ GoldenThingAdminRestConnectionImpl::AsyncDropDatabase(google::test::admin::datab
       background_->cq(),
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
-                     Options const& options, google::test::admin::database::v1::DropDatabaseRequest const& request) {
-        return stub->AsyncDropDatabase(cq, std::move(context), options, request);
+                     // NOLINTNEXTLINE(performance-unnecessary-value-param)
+                     google::cloud::internal::ImmutableOptions options,
+                     google::test::admin::database::v1::DropDatabaseRequest const& request) {
+        return stub->AsyncDropDatabase(
+            cq, std::move(context), *options, request);
       },
       current, request, __func__);
 }

@@ -61,7 +61,7 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
   future<StatusOr<google::longrunning::Operation>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) override;
 )""");
       continue;
@@ -144,13 +144,13 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 )""");
   }

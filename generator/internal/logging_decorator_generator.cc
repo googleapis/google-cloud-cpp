@@ -189,16 +189,18 @@ future<StatusOr<google::longrunning::Operation>>
 $logging_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              $request_type$ const& request) {
-        return child_->Async$method_name$(cq, std::move(context), options, request);
+        return child_->Async$method_name$(
+            cq, std::move(context), std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 )""");
       continue;
@@ -336,31 +338,35 @@ future<StatusOr<google::longrunning::Operation>>
 $logging_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context), options, request);
+        return child_->AsyncGetOperation(
+            cq, std::move(context), std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<Status> $logging_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+        return child_->AsyncCancelOperation(
+            cq, std::move(context), std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 )""");
   }

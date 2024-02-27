@@ -355,20 +355,23 @@ $connection_impl_rest_class_name$::$method_name$($request_type$ const& request) 
     background_->cq(), current, request,
     [stub = stub_](CompletionQueue& cq,
                    std::unique_ptr<rest_internal::RestContext> context,
-                   Options const& options, $request_type$ const& request) {
-     return stub->Async$method_name$(cq, std::move(context), options, request);
+                   google::cloud::internal::ImmutableOptions options, $request_type$ const& request) {
+      return stub->Async$method_name$(
+          cq, std::move(context), std::move(options), request);
     },
     [stub = stub_](CompletionQueue& cq,
                    std::unique_ptr<rest_internal::RestContext> context,
-                   Options const& options,
+                   google::cloud::internal::ImmutableOptions options,
                    $longrunning_get_operation_request_type$ const& request) {
-     return stub->AsyncGetOperation(cq, std::move(context), options, request);
+      return stub->AsyncGetOperation(
+          cq, std::move(context), std::move(options), request);
     },
     [stub = stub_](CompletionQueue& cq,
                    std::unique_ptr<rest_internal::RestContext> context,
-                   Options const& options,
+                   google::cloud::internal::ImmutableOptions options,
                    $longrunning_cancel_operation_request_type$ const& request) {
-     return stub->AsyncCancelOperation(cq, std::move(context), options, request);
+      return stub->AsyncCancelOperation(
+          cq, std::move(context), std::move(options), request);
     },)""",
         extractor(),
         R"""(
@@ -426,8 +429,11 @@ $connection_impl_rest_class_name$::Async$method_name$($request_type$ const& requ
       background_->cq(),
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
-                     Options const& options, $request_type$ const& request) {
-        return stub->Async$method_name$(cq, std::move(context), options, request);
+                     // NOLINTNEXTLINE(performance-unnecessary-value-param)
+                     google::cloud::internal::ImmutableOptions options,
+                     $request_type$ const& request) {
+        return stub->Async$method_name$(
+            cq, std::move(context), *options, request);
       },
       current, request, __func__);
 }

@@ -119,7 +119,7 @@ Status StubGenerator::GenerateHeader() {
   virtual future<StatusOr<google::longrunning::Operation>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) = 0;
 )""");
       continue;
@@ -203,13 +203,13 @@ Status StubGenerator::GenerateHeader() {
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
+    google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 )""");
   }
@@ -345,7 +345,7 @@ future<StatusOr<google::longrunning::Operation>>
 Default$stub_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      Options const&,
+      google::cloud::internal::ImmutableOptions,
       $request_type$ const& request) {
   return internal::MakeUnaryRpcImpl<$request_type$,
                                     google::longrunning::Operation>(
@@ -486,7 +486,7 @@ future<StatusOr<google::longrunning::Operation>>
 Default$stub_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const&,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -502,7 +502,7 @@ Default$stub_class_name$::AsyncGetOperation(
 future<Status> Default$stub_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const&,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(
