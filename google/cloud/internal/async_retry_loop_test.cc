@@ -387,7 +387,7 @@ TEST(AsyncRetryLoopTest, ExhaustedBeforeStart) {
 TEST(AsyncRetryLoopTest, HeedsRetryInfo) {
   MockFunction<future<StatusOr<int>>(CompletionQueue&,
                                      std::shared_ptr<grpc::ClientContext>,
-                                     Options const&, int)>
+                                     ImmutableOptions, int)>
       mock;
   EXPECT_CALL(mock, Call)
       .WillOnce([] {
