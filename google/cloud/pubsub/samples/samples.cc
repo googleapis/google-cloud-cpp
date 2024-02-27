@@ -36,7 +36,7 @@
 
 namespace {
 
-using google::cloud::pubsub::examples::Cleanup;
+using ::google::cloud::pubsub::examples::Cleanup;
 using ::google::cloud::pubsub::examples::RandomSchemaId;
 using ::google::cloud::pubsub::examples::RandomSnapshotId;
 using ::google::cloud::pubsub::examples::RandomSubscriptionId;
