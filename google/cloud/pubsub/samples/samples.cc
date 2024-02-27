@@ -1483,7 +1483,9 @@ void AutoRunAvro(
   schema_request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
   std::string const definition = ReadFile(avro_schema_definition_file);
   schema_request.mutable_schema()->set_definition(definition);
-  schema_admin.CreateSchema(schema_request);
+  auto schema_result = schema_admin.CreateSchema(schema_request);
+  if (!schema_result) throw std::move(schema_result).status();
+
   Cleanup cleanup;
   cleanup.Defer([schema_admin, schema]() mutable {
     std::cout << "\nDelete schema (" << schema.schema_id() << ")" << std::endl;
@@ -1556,7 +1558,8 @@ void AutoRunProtobuf(
       google::pubsub::v1::Schema::PROTOCOL_BUFFER);
   std::string const definition = ReadFile(proto_schema_definition_file);
   schema_request.mutable_schema()->set_definition(definition);
-  schema_admin.CreateSchema(schema_request);
+  auto schema_result = schema_admin.CreateSchema(schema_request);
+  if (!schema_result) throw std::move(schema_result).status();
 
   Cleanup cleanup;
   cleanup.Defer([schema_admin, schema]() mutable {
