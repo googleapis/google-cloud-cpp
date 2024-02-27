@@ -44,17 +44,18 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminAuth::AsyncCreateDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::CreateDatabaseRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options, request](
+      [cq, child = child_, options = std::move(options), request](
           future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateDatabase(cq, *std::move(context), options, request);
+        return child->AsyncCreateDatabase(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -71,17 +72,18 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminAuth::AsyncUpdateDatabaseDdl(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options, request](
+      [cq, child = child_, options = std::move(options), request](
           future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateDatabaseDdl(cq, *std::move(context), options, request);
+        return child->AsyncUpdateDatabaseDdl(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -134,17 +136,18 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminAuth::AsyncCreateBackup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::CreateBackupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options, request](
+      [cq, child = child_, options = std::move(options), request](
           future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateBackup(cq, *std::move(context), options, request);
+        return child->AsyncCreateBackup(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -188,17 +191,18 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminAuth::AsyncRestoreDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options, request](
+      [cq, child = child_, options = std::move(options), request](
           future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRestoreDatabase(cq, *std::move(context), options, request);
+        return child->AsyncRestoreDatabase(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -224,17 +228,18 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminAuth::AsyncLongRunningWithoutRouting(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options, request](
+      [cq, child = child_, options = std::move(options), request](
           future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncLongRunningWithoutRouting(cq, *std::move(context), options, request);
+        return child->AsyncLongRunningWithoutRouting(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
@@ -273,33 +278,33 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options, request](
+      [cq, child = child_, options = std::move(options), request](
           future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncGetOperation(
-            cq, *std::move(context), options, request);
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 future<Status> GoldenThingAdminAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options, request](
+      [cq, child = child_, options = std::move(options), request](
           future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
         return child->AsyncCancelOperation(
-            cq, *std::move(context), options, request);
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
