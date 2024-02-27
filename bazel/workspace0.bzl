@@ -123,7 +123,7 @@ def gl_cpp_workspace0(name = None):
         urls = [
             "https://github.com/devbww/googleapis/archive/refs/heads/securitycenter-enum-names.tar.gz",
         ],
-        sha256 = "43bf32dca522e684525d199a51cb33ff31fd7befc730a8f2d0bcf41c41f9dc55",
+        sha256 = "32979111a5e53d1fd025b445c25561a55af54b20732fbf8f5dd671ad52cc7376",
         strip_prefix = "googleapis-securitycenter-enum-names",
         build_file = Label("//bazel:googleapis.BUILD"),
         # Scaffolding for patching googleapis after download. For example:
