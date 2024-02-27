@@ -186,7 +186,7 @@ TEST(GoldenThingAdminConnectionTest, CreateDatabaseSuccess) {
     return make_ready_future(make_status_or(op));
   });
   EXPECT_CALL(*mock, AsyncGetOperation)
-      .WillOnce([](CompletionQueue&, auto, Options const&,
+      .WillOnce([](CompletionQueue&, auto, auto,
                    google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
@@ -218,13 +218,13 @@ TEST(GoldenThingAdminConnectionTest, CreateDatabaseCancel) {
   AsyncSequencer<StatusOr<google::longrunning::Operation>> get;
   EXPECT_CALL(*mock, AsyncGetOperation)
       .Times(AtLeast(1))
-      .WillRepeatedly([&](CompletionQueue&, auto, Options const&,
+      .WillRepeatedly([&](CompletionQueue&, auto, auto,
                           google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         return get.PushBack();
       });
   EXPECT_CALL(*mock, AsyncCancelOperation)
-      .WillOnce([](CompletionQueue&, auto, Options const&,
+      .WillOnce([](CompletionQueue&, auto, auto,
                    google::longrunning::CancelOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         return make_ready_future(Status{});
@@ -318,7 +318,7 @@ TEST(GoldenThingAdminConnectionTest, UpdateDatabaseDdlSuccess) {
     return make_ready_future(make_status_or(op));
   });
   EXPECT_CALL(*mock, AsyncGetOperation)
-      .WillOnce([](CompletionQueue&, auto, Options const&,
+      .WillOnce([](CompletionQueue&, auto, auto,
                    google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
@@ -354,13 +354,13 @@ TEST(GoldenThingAdminConnectionTest, UpdateDatabaseDdlCancel) {
   AsyncSequencer<StatusOr<google::longrunning::Operation>> get;
   EXPECT_CALL(*mock, AsyncGetOperation)
       .Times(AtLeast(1))
-      .WillRepeatedly([&](CompletionQueue&, auto, Options const&,
+      .WillRepeatedly([&](CompletionQueue&, auto, auto,
                           google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         return get.PushBack();
       });
   EXPECT_CALL(*mock, AsyncCancelOperation)
-      .WillOnce([](CompletionQueue&, auto, Options const&,
+      .WillOnce([](CompletionQueue&, auto, auto,
                    google::longrunning::CancelOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         return make_ready_future(Status{});
@@ -700,7 +700,7 @@ TEST(GoldenThingAdminConnectionTest, CreateBackupSuccess) {
     return make_ready_future(make_status_or(op));
   });
   EXPECT_CALL(*mock, AsyncGetOperation)
-      .WillOnce([](CompletionQueue&, auto, Options const&,
+      .WillOnce([](CompletionQueue&, auto, auto,
                    google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
@@ -735,13 +735,13 @@ TEST(GoldenThingAdminConnectionTest, CreateBackupCancel) {
   AsyncSequencer<StatusOr<google::longrunning::Operation>> get;
   EXPECT_CALL(*mock, AsyncGetOperation)
       .Times(AtLeast(1))
-      .WillRepeatedly([&](CompletionQueue&, auto, Options const&,
+      .WillRepeatedly([&](CompletionQueue&, auto, auto,
                           google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         return get.PushBack();
       });
   EXPECT_CALL(*mock, AsyncCancelOperation)
-      .WillOnce([](CompletionQueue&, auto, Options const&,
+      .WillOnce([](CompletionQueue&, auto, auto,
                    google::longrunning::CancelOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         return make_ready_future(Status{});
@@ -1028,7 +1028,7 @@ TEST(GoldenThingAdminConnectionTest, RestoreDatabaseSuccess) {
     return make_ready_future(make_status_or(op));
   });
   EXPECT_CALL(*mock, AsyncGetOperation)
-      .WillOnce([](CompletionQueue&, auto, Options const&,
+      .WillOnce([](CompletionQueue&, auto, auto,
                    google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         google::longrunning::Operation op;
@@ -1065,13 +1065,13 @@ TEST(GoldenThingAdminConnectionTest, RestoreBackupCancel) {
   AsyncSequencer<StatusOr<google::longrunning::Operation>> get;
   EXPECT_CALL(*mock, AsyncGetOperation)
       .Times(AtLeast(1))
-      .WillRepeatedly([&](CompletionQueue&, auto, Options const&,
+      .WillRepeatedly([&](CompletionQueue&, auto, auto,
                           google::longrunning::GetOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         return get.PushBack();
       });
   EXPECT_CALL(*mock, AsyncCancelOperation)
-      .WillOnce([](CompletionQueue&, auto, Options const&,
+      .WillOnce([](CompletionQueue&, auto, auto,
                    google::longrunning::CancelOperationRequest const& r) {
         EXPECT_EQ("test-operation-name", r.name());
         return make_ready_future(Status{});

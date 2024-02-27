@@ -55,7 +55,8 @@ class MockRequestIdServiceStub
 
   MOCK_METHOD(future<StatusOr<google::longrunning::Operation>>, AsyncRenameFoo,
               (google::cloud::CompletionQueue&,
-               std::shared_ptr<grpc::ClientContext>, Options const&,
+               std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions,
                google::test::requestid::v1::RenameFooRequest const&),
               (override));
 
@@ -74,13 +75,15 @@ class MockRequestIdServiceStub
   MOCK_METHOD(future<StatusOr<google::longrunning::Operation>>,
               AsyncGetOperation,
               (google::cloud::CompletionQueue&,
-               std::shared_ptr<grpc::ClientContext>, Options const&,
+               std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions,
                google::longrunning::GetOperationRequest const&),
               (override));
 
   MOCK_METHOD(future<Status>, AsyncCancelOperation,
               (google::cloud::CompletionQueue&,
-               std::shared_ptr<grpc::ClientContext>, Options const&,
+               std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions,
                google::longrunning::CancelOperationRequest const&),
               (override));
 };
