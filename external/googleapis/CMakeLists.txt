@@ -24,7 +24,7 @@ set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
     "https://github.com/devbww/googleapis/archive/refs/heads/securitycenter-enum-names.tar.gz"
 )
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL_HASH
-    "71cb5a4cbad02db13bb8acd383f5d9bfef682de5b09de91a19bbe9d2fe05a67e")
+    "9df9226067562e8cb154ce61deea7ba8342cf3f333c9e1481d0b926de9af794b")
 if (GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL)
     set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
         ${GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL})
