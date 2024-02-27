@@ -125,10 +125,12 @@ Status MetricServiceMetadata::CreateServiceTimeSeries(
 future<Status> MetricServiceMetadata::AsyncCreateTimeSeries(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCreateTimeSeries(cq, std::move(context), request);
+  return child_->AsyncCreateTimeSeries(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 void MetricServiceMetadata::SetMetadata(grpc::ClientContext& context,

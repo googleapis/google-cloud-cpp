@@ -198,24 +198,27 @@ StatusOr<google::pubsub::v1::SeekResponse> SubscriberTracingStub::Seek(
 future<Status> SubscriberTracingStub::AsyncModifyAckDeadline(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber",
                                      "ModifyAckDeadline");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncModifyAckDeadline(cq, context, request);
+  auto f =
+      child_->AsyncModifyAckDeadline(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> SubscriberTracingStub::AsyncAcknowledge(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::pubsub::v1::AcknowledgeRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "Acknowledge");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncAcknowledge(cq, context, request);
+  auto f = child_->AsyncAcknowledge(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

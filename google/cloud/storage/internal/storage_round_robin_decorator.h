@@ -183,11 +183,13 @@ class StorageRoundRobin : public StorageStub {
   future<StatusOr<google::storage::v2::Object>> AsyncComposeObject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::storage::v2::ComposeObjectRequest const& request) override;
 
   future<Status> AsyncDeleteObject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::storage::v2::DeleteObjectRequest const& request) override;
 
   std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
@@ -208,18 +210,21 @@ class StorageRoundRobin : public StorageStub {
   future<StatusOr<google::storage::v2::RewriteResponse>> AsyncRewriteObject(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::storage::v2::RewriteObjectRequest const& request) override;
 
   future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
   AsyncStartResumableWrite(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::storage::v2::StartResumableWriteRequest const& request) override;
 
   future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
   AsyncQueryWriteStatus(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::storage::v2::QueryWriteStatusRequest const& request) override;
 
  private:

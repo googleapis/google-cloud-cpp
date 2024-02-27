@@ -152,6 +152,8 @@ future<StatusOr<google::bigtable::v2::MutateRowResponse>>
 DefaultBigtableStub::AsyncMutateRow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::bigtable::v2::MutateRowRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::bigtable::v2::MutateRowRequest,
                                     google::bigtable::v2::MutateRowResponse>(
@@ -186,6 +188,8 @@ future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>
 DefaultBigtableStub::AsyncCheckAndMutateRow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::bigtable::v2::CheckAndMutateRowRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::bigtable::v2::CheckAndMutateRowRequest,
@@ -203,6 +207,8 @@ future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
 DefaultBigtableStub::AsyncReadModifyWriteRow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::bigtable::v2::ReadModifyWriteRowRequest,

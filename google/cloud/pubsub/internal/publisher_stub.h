@@ -79,6 +79,7 @@ class PublisherStub {
   virtual future<StatusOr<google::pubsub::v1::PublishResponse>> AsyncPublish(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::pubsub::v1::PublishRequest const& request) = 0;
 };
 
@@ -129,6 +130,7 @@ class DefaultPublisherStub : public PublisherStub {
   future<StatusOr<google::pubsub::v1::PublishResponse>> AsyncPublish(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::pubsub::v1::PublishRequest const& request) override;
 
  private:

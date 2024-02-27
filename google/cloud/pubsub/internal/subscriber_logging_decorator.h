@@ -101,11 +101,13 @@ class SubscriberLogging : public SubscriberStub {
   future<Status> AsyncModifyAckDeadline(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::pubsub::v1::ModifyAckDeadlineRequest const& request) override;
 
   future<Status> AsyncAcknowledge(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::pubsub::v1::AcknowledgeRequest const& request) override;
 
  private:

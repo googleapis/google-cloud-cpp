@@ -145,6 +145,8 @@ Status DefaultMetricServiceStub::CreateServiceTimeSeries(
 future<Status> DefaultMetricServiceStub::AsyncCreateTimeSeries(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
              google::monitoring::v3::CreateTimeSeriesRequest,
