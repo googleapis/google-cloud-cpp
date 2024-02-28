@@ -41,8 +41,9 @@ class MockSpannerStub : public google::cloud::spanner_internal::SpannerStub {
   MOCK_METHOD(
       future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>,
       AsyncBatchCreateSessions,
-      (CompletionQueue & cq, std::shared_ptr<grpc::ClientContext> context,
-       google::spanner::v1::BatchCreateSessionsRequest const& request),
+      (CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
+       google::cloud::internal::ImmutableOptions,
+       google::spanner::v1::BatchCreateSessionsRequest const&),
       (override));
 
   MOCK_METHOD(Status, DeleteSession,
@@ -52,6 +53,7 @@ class MockSpannerStub : public google::cloud::spanner_internal::SpannerStub {
 
   MOCK_METHOD(future<Status>, AsyncDeleteSession,
               (CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions,
                google::spanner::v1::DeleteSessionRequest const&),
               (override));
 
@@ -62,6 +64,7 @@ class MockSpannerStub : public google::cloud::spanner_internal::SpannerStub {
 
   MOCK_METHOD(future<StatusOr<google::spanner::v1::ResultSet>>, AsyncExecuteSql,
               (CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions,
                google::spanner::v1::ExecuteSqlRequest const&),
               (override));
 
