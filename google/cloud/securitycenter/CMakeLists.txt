@@ -14,9 +14,9 @@
 # limitations under the License.
 # ~~~
 
-if (APPLE OR WIN32)
+if (WIN32)
     message(
-        WARNING "Cannot build google/cloud/securitycenter on macOS or Windows"
+        WARNING "Cannot build google/cloud/securitycenter on Windows"
                 " - the protos have enum names that conflict with some system"
                 " macros.")
     return()
