@@ -312,8 +312,7 @@ AsyncConnectionImpl::StartResumableWrite(
   auto backoff = backoff_policy(*current);
   return google::cloud::internal::AsyncRetryLoop(
       std::move(retry), std::move(backoff), idempotency, cq_,
-      [stub = stub_,
-       request = std::move(request)](
+      [stub = stub_, request = std::move(request)](
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
           google::cloud::internal::ImmutableOptions options,
           google::storage::v2::StartResumableWriteRequest const& proto) {
@@ -354,8 +353,7 @@ AsyncConnectionImpl::QueryWriteStatus(
   auto backoff = backoff_policy(*current);
   return google::cloud::internal::AsyncRetryLoop(
       std::move(retry), std::move(backoff), idempotency, cq_,
-      [stub = stub_,
-       request = std::move(request)](
+      [stub = stub_, request = std::move(request)](
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
           google::cloud::internal::ImmutableOptions options,
           google::storage::v2::QueryWriteStatusRequest const& proto) {

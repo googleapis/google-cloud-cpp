@@ -86,7 +86,8 @@ TEST_F(RewriterConnectionImplTest, Basic) {
           return TransientError();
         });
       })
-      .WillOnce([&](auto&, auto context, internal::ImmutableOptions const& options,
+      .WillOnce([&](auto&, auto context,
+                    internal::ImmutableOptions const& options,
                     auto const& request) {
         EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(*context);
@@ -113,7 +114,8 @@ TEST_F(RewriterConnectionImplTest, Basic) {
           return TransientError();
         });
       })
-      .WillOnce([&](auto&, auto context, internal::ImmutableOptions const& options,
+      .WillOnce([&](auto&, auto context,
+                    internal::ImmutableOptions const& options,
                     auto const& request) {
         EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(*context);
@@ -140,7 +142,8 @@ TEST_F(RewriterConnectionImplTest, Basic) {
           return TransientError();
         });
       })
-      .WillOnce([&](auto&, auto context, internal::ImmutableOptions const& options,
+      .WillOnce([&](auto&, auto context,
+                    internal::ImmutableOptions const& options,
                     auto const& request) {
         EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(*context);

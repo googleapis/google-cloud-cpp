@@ -637,21 +637,22 @@ TEST_F(PublisherStubFactory, AsyncPublish) {
       .WillOnce([this](std::shared_ptr<grpc::Channel> const&) {
         auto mock = std::make_shared<MockPublisherStub>();
         EXPECT_CALL(*mock, AsyncPublish)
-            .WillOnce([this](
-                          google::cloud::CompletionQueue&, auto context,
-                          google::cloud::internal::ImmutableOptions const& options,
-                          google::pubsub::v1::PublishRequest const& request) {
-              // Verify the Auth decorator is present
-              EXPECT_THAT(context->credentials(), NotNull());
-              // Verify the Metadata decorator is present
-              IsContextMDValid(*context, "google.pubsub.v1.Publisher.Publish",
-                               request);
-              // Verify the options are carried forward
-              EXPECT_EQ(options->get<UserProjectOption>(), "test-user-project");
-              return make_ready_future(
-                  StatusOr<google::pubsub::v1::PublishResponse>(
-                      Status(StatusCode::kUnavailable, "nothing here")));
-            });
+            .WillOnce(
+                [this](google::cloud::CompletionQueue&, auto context,
+                       google::cloud::internal::ImmutableOptions const& options,
+                       google::pubsub::v1::PublishRequest const& request) {
+                  // Verify the Auth decorator is present
+                  EXPECT_THAT(context->credentials(), NotNull());
+                  // Verify the Metadata decorator is present
+                  IsContextMDValid(
+                      *context, "google.pubsub.v1.Publisher.Publish", request);
+                  // Verify the options are carried forward
+                  EXPECT_EQ(options->get<UserProjectOption>(),
+                            "test-user-project");
+                  return make_ready_future(
+                      StatusOr<google::pubsub::v1::PublishResponse>(
+                          Status(StatusCode::kUnavailable, "nothing here")));
+                });
         return mock;
       });
   EXPECT_CALL(factory, Call)
