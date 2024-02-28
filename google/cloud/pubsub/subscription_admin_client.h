@@ -175,9 +175,6 @@ class SubscriptionAdminClient {
    * This operation is idempotent, the state of the system is the same after one
    * or several calls, and therefore it is always retried.
    *
-   * @par Example
-   * @snippet samples.cc modify-push-config
-   *
    * @param subscription the name of the subscription to be modified.
    * @param builder a description of the changes to be made.
    * @param opts Override the class-level options, such as retry and backoff
