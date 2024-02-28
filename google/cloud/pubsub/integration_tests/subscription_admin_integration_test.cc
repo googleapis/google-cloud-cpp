@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/pubsub/admin/topic_admin_client.h"
 #include "google/cloud/pubsub/snapshot_builder.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
-#include "google/cloud/pubsub/admin/topic_admin_client.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -190,9 +190,9 @@ TEST_F(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
 
   // Skip, as this is not supported by the emulator.
   if (!UsingEmulator()) {
-         google::pubsub::v1::DetachSubscriptionRequest request;
+    google::pubsub::v1::DetachSubscriptionRequest request;
     request.set_subscription(subscription.FullName());
-       auto detach_response = topic_admin.DetachSubscription(request);
+    auto detach_response = topic_admin.DetachSubscription(request);
     ASSERT_STATUS_OK(detach_response);
   }
 

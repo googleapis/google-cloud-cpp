@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/pubsub/admin/topic_admin_client.h"
+#include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
-#include "google/cloud/pubsub/version.h"
-#include "google/cloud/pubsub/admin/topic_admin_client.h"
 #include "google/cloud/pubsub/topic.h"
-#include "google/cloud/pubsub/subscription.h"
+#include "google/cloud/pubsub/version.h"
 #include "google/cloud/credentials.h"
-#include "google/cloud/project.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/project.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -62,7 +62,8 @@ using TopicAdminIntegrationTest =
 StatusOr<std::vector<std::string>> TopicNames(TopicAdminClient client,
                                               std::string const& project_id) {
   std::vector<std::string> names;
-  for (auto& topic : client.ListTopics(google::cloud::Project(project_id).FullName())) {
+  for (auto& topic :
+       client.ListTopics(google::cloud::Project(project_id).FullName())) {
     if (!topic) return std::move(topic).status();
     names.push_back(std::move(*topic->mutable_name()));
   }
@@ -163,11 +164,10 @@ TEST_F(TopicAdminIntegrationTest, DeleteTopicFailure) {
 TEST_F(TopicAdminIntegrationTest, DetachSubscriptionFailure) {
   ScopedEnvironment env("PUBSUB_EMULATOR_HOST", "localhost:1");
   auto publisher = MakeTestTopicAdminClient();
-      google::pubsub::v1::DetachSubscriptionRequest request;
-    request.set_subscription(
-       Subscription("invalid-project", "invalid-subscription").FullName());
-  auto response = publisher.DetachSubscription(
-      request);
+  google::pubsub::v1::DetachSubscriptionRequest request;
+  request.set_subscription(
+      Subscription("invalid-project", "invalid-subscription").FullName());
+  auto response = publisher.DetachSubscription(request);
   ASSERT_FALSE(response.ok());
 }
 
