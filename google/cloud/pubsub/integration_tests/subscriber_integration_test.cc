@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/pubsub/admin/topic_admin_client.h"
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
 #include "google/cloud/pubsub/internal/subscriber_stub_factory.h"
@@ -21,7 +22,6 @@
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
-#include "google/cloud/pubsub/admin/topic_admin_client.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -42,14 +42,14 @@ namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::pubsub_admin::MakeTopicAdminConnection;
+using ::google::cloud::pubsub_admin::TopicAdminClient;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 using ::testing::ElementsAreArray;
 using ::testing::IsEmpty;
 using ::testing::NotNull;
-using ::google::cloud::pubsub_admin::TopicAdminClient;
-using ::google::cloud::pubsub_admin::MakeTopicAdminConnection;
 
 class SubscriberIntegrationTest
     : public ::google::cloud::testing_util::IntegrationTest {
