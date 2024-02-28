@@ -122,6 +122,16 @@ InstanceAdminAuth::ListInstances(
   return child_->ListInstances(context, options, request);
 }
 
+StatusOr<google::spanner::admin::instance::v1::ListInstancePartitionsResponse>
+InstanceAdminAuth::ListInstancePartitions(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::instance::v1::ListInstancePartitionsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListInstancePartitions(context, options, request);
+}
+
 StatusOr<google::spanner::admin::instance::v1::Instance>
 InstanceAdminAuth::GetInstance(
     grpc::ClientContext& context, Options const& options,
@@ -205,6 +215,78 @@ InstanceAdminAuth::TestIamPermissions(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
+}
+
+StatusOr<google::spanner::admin::instance::v1::InstancePartition>
+InstanceAdminAuth::GetInstancePartition(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetInstancePartition(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+InstanceAdminAuth::AsyncCreateInstancePartition(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateInstancePartition(cq, *std::move(context),
+                                                   std::move(options), request);
+      });
+}
+
+Status InstanceAdminAuth::DeleteInstancePartition(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteInstancePartition(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+InstanceAdminAuth::AsyncUpdateInstancePartition(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateInstancePartition(cq, *std::move(context),
+                                                   std::move(options), request);
+      });
+}
+
+StatusOr<google::spanner::admin::instance::v1::
+             ListInstancePartitionOperationsResponse>
+InstanceAdminAuth::ListInstancePartitionOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::instance::v1::
+        ListInstancePartitionOperationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListInstancePartitionOperations(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

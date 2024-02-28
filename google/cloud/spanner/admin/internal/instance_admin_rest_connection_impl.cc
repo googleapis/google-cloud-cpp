@@ -260,6 +260,45 @@ InstanceAdminRestConnectionImpl::ListInstances(
       });
 }
 
+StreamRange<google::spanner::admin::instance::v1::InstancePartition>
+InstanceAdminRestConnectionImpl::ListInstancePartitions(
+    google::spanner::admin::instance::v1::ListInstancePartitionsRequest
+        request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListInstancePartitions(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::spanner::admin::instance::v1::InstancePartition>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options, google::spanner::admin::instance::v1::
+                                      ListInstancePartitionsRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
+                   google::spanner::admin::instance::v1::
+                       ListInstancePartitionsRequest const& request) {
+              return stub->ListInstancePartitions(rest_context, options,
+                                                  request);
+            },
+            options, r, function_name);
+      },
+      [](google::spanner::admin::instance::v1::ListInstancePartitionsResponse
+             r) {
+        std::vector<google::spanner::admin::instance::v1::InstancePartition>
+            result(r.instance_partitions().size());
+        auto& messages = *r.mutable_instance_partitions();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 StatusOr<google::spanner::admin::instance::v1::Instance>
 InstanceAdminRestConnectionImpl::GetInstance(
     google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
@@ -406,6 +445,153 @@ InstanceAdminRestConnectionImpl::TestIamPermissions(
         return stub_->TestIamPermissions(rest_context, options, request);
       },
       *current, request, __func__);
+}
+
+StatusOr<google::spanner::admin::instance::v1::InstancePartition>
+InstanceAdminRestConnectionImpl::GetInstancePartition(
+    google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->GetInstancePartition(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::instance::v1::
+                 GetInstancePartitionRequest const& request) {
+        return stub_->GetInstancePartition(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+InstanceAdminRestConnectionImpl::CreateInstancePartition(
+    google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return rest_internal::AsyncRestLongRunningOperation<
+      google::spanner::admin::instance::v1::InstancePartition>(
+      background_->cq(), current, request,
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::spanner::admin::instance::v1::
+                         CreateInstancePartitionRequest const& request) {
+        return stub->AsyncCreateInstancePartition(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::spanner::admin::instance::v1::InstancePartition>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->CreateInstancePartition(request),
+      polling_policy(*current), __func__);
+}
+
+Status InstanceAdminRestConnectionImpl::DeleteInstancePartition(
+    google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return google::cloud::rest_internal::RestRetryLoop(
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->DeleteInstancePartition(request),
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::spanner::admin::instance::v1::
+                 DeleteInstancePartitionRequest const& request) {
+        return stub_->DeleteInstancePartition(rest_context, options, request);
+      },
+      *current, request, __func__);
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+InstanceAdminRestConnectionImpl::UpdateInstancePartition(
+    google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
+        request) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  return rest_internal::AsyncRestLongRunningOperation<
+      google::spanner::admin::instance::v1::InstancePartition>(
+      background_->cq(), current, request,
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::spanner::admin::instance::v1::
+                         UpdateInstancePartitionRequest const& request) {
+        return stub->AsyncUpdateInstancePartition(cq, std::move(context),
+                                                  std::move(options), request);
+      },
+      [stub = stub_](CompletionQueue& cq,
+                     std::unique_ptr<rest_internal::RestContext> context,
+                     google::cloud::internal::ImmutableOptions options,
+                     google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
+      },
+      [stub = stub_](
+          CompletionQueue& cq,
+          std::unique_ptr<rest_internal::RestContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::spanner::admin::instance::v1::InstancePartition>,
+      retry_policy(*current), backoff_policy(*current),
+      idempotency_policy(*current)->UpdateInstancePartition(request),
+      polling_policy(*current), __func__);
+}
+
+StreamRange<google::longrunning::Operation>
+InstanceAdminRestConnectionImpl::ListInstancePartitionOperations(
+    google::spanner::admin::instance::v1::ListInstancePartitionOperationsRequest
+        request) {
+  request.clear_page_token();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto idempotency =
+      idempotency_policy(*current)->ListInstancePartitionOperations(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
+      current, std::move(request),
+      [idempotency, function_name, stub = stub_,
+       retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy>(
+           retry_policy(*current)),
+       backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
+          google::spanner::admin::instance::v1::
+              ListInstancePartitionOperationsRequest const& r) {
+        return google::cloud::rest_internal::RestRetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](rest_internal::RestContext& rest_context,
+                   Options const& options,
+                   google::spanner::admin::instance::v1::
+                       ListInstancePartitionOperationsRequest const& request) {
+              return stub->ListInstancePartitionOperations(rest_context,
+                                                           options, request);
+            },
+            options, r, function_name);
+      },
+      [](google::spanner::admin::instance::v1::
+             ListInstancePartitionOperationsResponse r) {
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
+        auto& messages = *r.mutable_operations();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

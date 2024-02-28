@@ -38,9 +38,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Manage the collection of continuous profiling data provided by profiling
 /// agents running in the cloud or by an offline provider of profiling data.
 ///
-/// General guidelines:
-/// * Profiles for a single deployment must be created in ascending time order.
-/// * Profiles can be created in either online or offline mode, see below.
+/// __The APIs listed in this service are intended for use within our profiler
+/// agents only.__
 ///
 /// @par Equality
 ///
@@ -95,6 +94,11 @@ class ProfilerServiceClient {
   ///
   /// CreateProfile creates a new profile resource in the online mode.
   ///
+  /// _Direct use of this API is discouraged, please use a [supported
+  /// profiler
+  /// agent](https://cloud.google.com/profiler/docs/about-profiler#profiling_agent)
+  /// instead for profile collection._
+  ///
   /// The server ensures that the new profiles are created at a constant rate per
   /// deployment, so the creation request may hang for some time until the next
   /// profile session is available.
@@ -127,8 +131,8 @@ class ProfilerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudprofiler.v2.CreateProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L115}
-  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L153}
+  /// [google.devtools.cloudprofiler.v2.CreateProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L131}
+  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L169}
   ///
   // clang-format on
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
@@ -137,9 +141,14 @@ class ProfilerServiceClient {
 
   // clang-format off
   ///
-  /// CreateOfflineProfile creates a new profile resource in the offline mode.
-  /// The client provides the profile to create along with the profile bytes, the
-  /// server records it.
+  /// CreateOfflineProfile creates a new profile resource in the offline
+  /// mode. The client provides the profile to create along with the profile
+  /// bytes, the server records it.
+  ///
+  /// _Direct use of this API is discouraged, please use a [supported
+  /// profiler
+  /// agent](https://cloud.google.com/profiler/docs/about-profiler#profiling_agent)
+  /// instead for profile collection._
   ///
   /// @param parent  Parent project to create the profile in.
   /// @param profile  Contents of the profile to create.
@@ -156,8 +165,8 @@ class ProfilerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudprofiler.v2.CreateOfflineProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L130}
-  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L153}
+  /// [google.devtools.cloudprofiler.v2.CreateOfflineProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L146}
+  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L169}
   ///
   // clang-format on
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateOfflineProfile(
@@ -167,9 +176,14 @@ class ProfilerServiceClient {
 
   // clang-format off
   ///
-  /// CreateOfflineProfile creates a new profile resource in the offline mode.
-  /// The client provides the profile to create along with the profile bytes, the
-  /// server records it.
+  /// CreateOfflineProfile creates a new profile resource in the offline
+  /// mode. The client provides the profile to create along with the profile
+  /// bytes, the server records it.
+  ///
+  /// _Direct use of this API is discouraged, please use a [supported
+  /// profiler
+  /// agent](https://cloud.google.com/profiler/docs/about-profiler#profiling_agent)
+  /// instead for profile collection._
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -190,8 +204,8 @@ class ProfilerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudprofiler.v2.CreateOfflineProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L130}
-  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L153}
+  /// [google.devtools.cloudprofiler.v2.CreateOfflineProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L146}
+  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L169}
   ///
   // clang-format on
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateOfflineProfile(
@@ -205,6 +219,11 @@ class ProfilerServiceClient {
   /// created in the online mode. Updating the bytes for profiles created in the
   /// offline mode is currently not supported: the profile content must be
   /// provided at the time of the profile creation.
+  ///
+  /// _Direct use of this API is discouraged, please use a [supported
+  /// profiler
+  /// agent](https://cloud.google.com/profiler/docs/about-profiler#profiling_agent)
+  /// instead for profile collection._
   ///
   /// @param profile  Profile to update.
   /// @param update_mask  Field mask used to specify the fields to be overwritten. Currently only
@@ -224,8 +243,8 @@ class ProfilerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L153}
-  /// [google.devtools.cloudprofiler.v2.UpdateProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L141}
+  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L169}
+  /// [google.devtools.cloudprofiler.v2.UpdateProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L157}
   ///
   // clang-format on
   StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
@@ -238,6 +257,11 @@ class ProfilerServiceClient {
   /// created in the online mode. Updating the bytes for profiles created in the
   /// offline mode is currently not supported: the profile content must be
   /// provided at the time of the profile creation.
+  ///
+  /// _Direct use of this API is discouraged, please use a [supported
+  /// profiler
+  /// agent](https://cloud.google.com/profiler/docs/about-profiler#profiling_agent)
+  /// instead for profile collection._
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -258,8 +282,8 @@ class ProfilerServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L153}
-  /// [google.devtools.cloudprofiler.v2.UpdateProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L141}
+  /// [google.devtools.cloudprofiler.v2.Profile]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L169}
+  /// [google.devtools.cloudprofiler.v2.UpdateProfileRequest]: @googleapis_reference_link{google/devtools/cloudprofiler/v2/profiler.proto#L157}
   ///
   // clang-format on
   StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
