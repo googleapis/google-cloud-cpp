@@ -219,39 +219,42 @@ install(
 google_cloud_cpp_install_headers(google_cloud_cpp_storage_grpc
                                  include/google/cloud/storage)
 
-# Create a header-only library for the mocks. We use a CMake `INTERFACE` library
-# for these, a regular library would not work on macOS (where the library needs
-# at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
-# that they need absolute paths for their sources.
-add_library(google_cloud_cpp_storage_grpc_mocks INTERFACE)
-set(google_cloud_cpp_storage_grpc_mocks_hdrs
-    # cmake-format: sort
-    mocks/mock_async_connection.h mocks/mock_async_reader_connection.h
-    mocks/mock_async_rewriter_connection.h mocks/mock_async_writer_connection.h)
-export_list_to_bazel("google_cloud_cpp_storage_grpc_mocks.bzl"
-                     "google_cloud_cpp_storage_grpc_mocks_hdrs" YEAR "2023")
-target_link_libraries(
-    google_cloud_cpp_storage_grpc_mocks
-    INTERFACE google-cloud-cpp::experimental-storage_grpc GTest::gmock)
-set_target_properties(
-    google_cloud_cpp_storage_grpc_mocks
-    PROPERTIES EXPORT_NAME "google-cloud-cpp::experimental-storage_grpc_mocks")
-target_include_directories(
-    google_cloud_cpp_storage_grpc_mocks
-    INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-              $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-              $<INSTALL_INTERFACE:include>)
-target_compile_options(google_cloud_cpp_storage_grpc_mocks
-                       INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-add_library(google-cloud-cpp::experimental-storage_grpc_mocks ALIAS
-            google_cloud_cpp_storage_grpc_mocks)
-
-install(
-    FILES ${google_cloud_cpp_storage_grpc_mocks_hdrs}
-    DESTINATION "include/google/cloud/storage/mocks"
-    COMPONENT google_cloud_cpp_development)
-
 if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
+    # Create a header-only library for the mocks. We use a CMake `INTERFACE`
+    # library for these, a regular library would not work on macOS (where the
+    # library needs at least one .o file). Unfortunately INTERFACE libraries are
+    # a bit weird in that they need absolute paths for their sources.
+    add_library(google_cloud_cpp_storage_grpc_mocks INTERFACE)
+    set(google_cloud_cpp_storage_grpc_mocks_hdrs
+        # cmake-format: sort
+        mocks/mock_async_connection.h
+        mocks/mock_async_reader_connection.h
+        mocks/mock_async_rewriter_connection.h
+        mocks/mock_async_writer_connection.h)
+    export_list_to_bazel("google_cloud_cpp_storage_grpc_mocks.bzl"
+                         "google_cloud_cpp_storage_grpc_mocks_hdrs" YEAR "2023")
+    target_link_libraries(
+        google_cloud_cpp_storage_grpc_mocks
+        INTERFACE google-cloud-cpp::experimental-storage_grpc GTest::gmock)
+    set_target_properties(
+        google_cloud_cpp_storage_grpc_mocks
+        PROPERTIES EXPORT_NAME
+                   "google-cloud-cpp::experimental-storage_grpc_mocks")
+    target_include_directories(
+        google_cloud_cpp_storage_grpc_mocks
+        INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+                  $<INSTALL_INTERFACE:include>)
+    target_compile_options(google_cloud_cpp_storage_grpc_mocks
+                           INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+    add_library(google-cloud-cpp::experimental-storage_grpc_mocks ALIAS
+                google_cloud_cpp_storage_grpc_mocks)
+
+    install(
+        FILES ${google_cloud_cpp_storage_grpc_mocks_hdrs}
+        DESTINATION "include/google/cloud/storage/mocks"
+        COMPONENT google_cloud_cpp_development)
+
     install(
         EXPORT storage_grpc_mocks-targets
         DESTINATION
