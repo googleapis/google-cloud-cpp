@@ -39,7 +39,8 @@ class AssetServiceTracingStub : public AssetServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportAssets(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::asset::v1::ExportAssetsRequest const& request) override;
 
   StatusOr<google::cloud::asset::v1::ListAssetsResponse> ListAssets(
@@ -91,7 +92,8 @@ class AssetServiceTracingStub : public AssetServiceStub {
   future<StatusOr<google::longrunning::Operation>>
   AsyncAnalyzeIamPolicyLongrunning(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
           request) override;
 
@@ -152,12 +154,14 @@ class AssetServiceTracingStub : public AssetServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

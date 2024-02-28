@@ -60,7 +60,8 @@ DefaultDomainsStub::RetrieveRegisterParameters(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncRegisterDomain(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::domains::v1::RegisterDomainRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::domains::v1::RegisterDomainRequest,
@@ -91,7 +92,8 @@ DefaultDomainsStub::RetrieveTransferParameters(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncTransferDomain(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::domains::v1::TransferDomainRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::domains::v1::TransferDomainRequest,
@@ -132,7 +134,8 @@ DefaultDomainsStub::GetRegistration(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncUpdateRegistration(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::domains::v1::UpdateRegistrationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::domains::v1::UpdateRegistrationRequest,
@@ -150,7 +153,8 @@ DefaultDomainsStub::AsyncUpdateRegistration(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncConfigureManagementSettings(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -171,7 +175,8 @@ DefaultDomainsStub::AsyncConfigureManagementSettings(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncConfigureDnsSettings(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::domains::v1::ConfigureDnsSettingsRequest,
@@ -189,7 +194,8 @@ DefaultDomainsStub::AsyncConfigureDnsSettings(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncConfigureContactSettings(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::domains::v1::ConfigureContactSettingsRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -208,7 +214,8 @@ DefaultDomainsStub::AsyncConfigureContactSettings(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncExportRegistration(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::domains::v1::ExportRegistrationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::domains::v1::ExportRegistrationRequest,
@@ -226,7 +233,8 @@ DefaultDomainsStub::AsyncExportRegistration(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncDeleteRegistration(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::domains::v1::DeleteRegistrationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::domains::v1::DeleteRegistrationRequest,
@@ -271,7 +279,8 @@ DefaultDomainsStub::ResetAuthorizationCode(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDomainsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -286,7 +295,8 @@ DefaultDomainsStub::AsyncGetOperation(
 
 future<Status> DefaultDomainsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

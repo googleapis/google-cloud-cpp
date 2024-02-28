@@ -61,42 +61,48 @@ WorkstationsTracingStub::ListWorkstationClusters(
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsTracingStub::AsyncCreateWorkstationCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::workstations::v1::CreateWorkstationClusterRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workstations.v1.Workstations", "CreateWorkstationCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateWorkstationCluster(cq, context, options, request);
+  auto f = child_->AsyncCreateWorkstationCluster(cq, context,
+                                                 std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsTracingStub::AsyncUpdateWorkstationCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::workstations::v1::UpdateWorkstationClusterRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workstations.v1.Workstations", "UpdateWorkstationCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateWorkstationCluster(cq, context, options, request);
+  auto f = child_->AsyncUpdateWorkstationCluster(cq, context,
+                                                 std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsTracingStub::AsyncDeleteWorkstationCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::workstations::v1::DeleteWorkstationClusterRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workstations.v1.Workstations", "DeleteWorkstationCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteWorkstationCluster(cq, context, options, request);
+  auto f = child_->AsyncDeleteWorkstationCluster(cq, context,
+                                                 std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -145,42 +151,48 @@ WorkstationsTracingStub::ListUsableWorkstationConfigs(
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsTracingStub::AsyncCreateWorkstationConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::workstations::v1::CreateWorkstationConfigRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workstations.v1.Workstations", "CreateWorkstationConfig");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateWorkstationConfig(cq, context, options, request);
+  auto f = child_->AsyncCreateWorkstationConfig(cq, context, std::move(options),
+                                                request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsTracingStub::AsyncUpdateWorkstationConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::workstations::v1::UpdateWorkstationConfigRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workstations.v1.Workstations", "UpdateWorkstationConfig");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateWorkstationConfig(cq, context, options, request);
+  auto f = child_->AsyncUpdateWorkstationConfig(cq, context, std::move(options),
+                                                request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsTracingStub::AsyncDeleteWorkstationConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::workstations::v1::DeleteWorkstationConfigRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workstations.v1.Workstations", "DeleteWorkstationConfig");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteWorkstationConfig(cq, context, options, request);
+  auto f = child_->AsyncDeleteWorkstationConfig(cq, context, std::move(options),
+                                                request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -225,65 +237,75 @@ WorkstationsTracingStub::ListUsableWorkstations(
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsTracingStub::AsyncCreateWorkstation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::workstations::v1::CreateWorkstationRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workstations.v1.Workstations", "CreateWorkstation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateWorkstation(cq, context, options, request);
+  auto f =
+      child_->AsyncCreateWorkstation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsTracingStub::AsyncUpdateWorkstation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::workstations::v1::UpdateWorkstationRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workstations.v1.Workstations", "UpdateWorkstation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateWorkstation(cq, context, options, request);
+  auto f =
+      child_->AsyncUpdateWorkstation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsTracingStub::AsyncDeleteWorkstation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::workstations::v1::DeleteWorkstationRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workstations.v1.Workstations", "DeleteWorkstation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteWorkstation(cq, context, options, request);
+  auto f =
+      child_->AsyncDeleteWorkstation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsTracingStub::AsyncStartWorkstation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::workstations::v1::StartWorkstationRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workstations.v1.Workstations", "StartWorkstation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncStartWorkstation(cq, context, options, request);
+  auto f =
+      child_->AsyncStartWorkstation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsTracingStub::AsyncStopWorkstation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::workstations::v1::StopWorkstationRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.workstations.v1.Workstations", "StopWorkstation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncStopWorkstation(cq, context, options, request);
+  auto f =
+      child_->AsyncStopWorkstation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -303,25 +325,28 @@ WorkstationsTracingStub::GenerateAccessToken(
 future<StatusOr<google::longrunning::Operation>>
 WorkstationsTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> WorkstationsTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

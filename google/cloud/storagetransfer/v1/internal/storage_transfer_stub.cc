@@ -121,7 +121,8 @@ Status DefaultStorageTransferServiceStub::ResumeTransferOperation(
 future<StatusOr<google::longrunning::Operation>>
 DefaultStorageTransferServiceStub::AsyncRunTransferJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::storagetransfer::v1::RunTransferJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::storagetransfer::v1::RunTransferJobRequest,
@@ -208,7 +209,8 @@ Status DefaultStorageTransferServiceStub::DeleteAgentPool(
 future<StatusOr<google::longrunning::Operation>>
 DefaultStorageTransferServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -223,7 +225,8 @@ DefaultStorageTransferServiceStub::AsyncGetOperation(
 
 future<Status> DefaultStorageTransferServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

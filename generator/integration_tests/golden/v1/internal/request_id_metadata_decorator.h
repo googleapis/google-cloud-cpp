@@ -48,7 +48,7 @@ class RequestIdServiceMetadata : public RequestIdServiceStub {
   future<StatusOr<google::longrunning::Operation>> AsyncRenameFoo(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::test::requestid::v1::RenameFooRequest const& request) override;
 
   StatusOr<google::test::requestid::v1::ListFoosResponse> ListFoos(
@@ -64,13 +64,13 @@ class RequestIdServiceMetadata : public RequestIdServiceStub {
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

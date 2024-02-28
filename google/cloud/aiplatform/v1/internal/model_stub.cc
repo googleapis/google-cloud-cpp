@@ -34,7 +34,8 @@ ModelServiceStub::~ModelServiceStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultModelServiceStub::AsyncUploadModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::UploadModelRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::UploadModelRequest,
@@ -99,7 +100,8 @@ DefaultModelServiceStub::UpdateModel(
 future<StatusOr<google::longrunning::Operation>>
 DefaultModelServiceStub::AsyncUpdateExplanationDataset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -119,7 +121,8 @@ DefaultModelServiceStub::AsyncUpdateExplanationDataset(
 future<StatusOr<google::longrunning::Operation>>
 DefaultModelServiceStub::AsyncDeleteModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteModelRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteModelRequest,
@@ -136,7 +139,8 @@ DefaultModelServiceStub::AsyncDeleteModel(
 future<StatusOr<google::longrunning::Operation>>
 DefaultModelServiceStub::AsyncDeleteModelVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteModelVersionRequest,
@@ -166,7 +170,8 @@ DefaultModelServiceStub::MergeVersionAliases(
 future<StatusOr<google::longrunning::Operation>>
 DefaultModelServiceStub::AsyncExportModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::ExportModelRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::ExportModelRequest,
@@ -183,7 +188,8 @@ DefaultModelServiceStub::AsyncExportModel(
 future<StatusOr<google::longrunning::Operation>>
 DefaultModelServiceStub::AsyncCopyModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::CopyModelRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::CopyModelRequest,
@@ -296,7 +302,8 @@ DefaultModelServiceStub::ListModelEvaluationSlices(
 future<StatusOr<google::longrunning::Operation>>
 DefaultModelServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -311,7 +318,8 @@ DefaultModelServiceStub::AsyncGetOperation(
 
 future<Status> DefaultModelServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

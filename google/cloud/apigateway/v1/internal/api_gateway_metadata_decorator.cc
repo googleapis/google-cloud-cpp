@@ -63,32 +63,38 @@ ApiGatewayServiceMetadata::GetGateway(
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceMetadata::AsyncCreateGateway(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::apigateway::v1::CreateGatewayRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateGateway(cq, std::move(context), options, request);
+  return child_->AsyncCreateGateway(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceMetadata::AsyncUpdateGateway(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::apigateway::v1::UpdateGatewayRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("gateway.name=",
                            internal::UrlEncode(request.gateway().name())));
-  return child_->AsyncUpdateGateway(cq, std::move(context), options, request);
+  return child_->AsyncUpdateGateway(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceMetadata::AsyncDeleteGateway(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::apigateway::v1::DeleteGatewayRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteGateway(cq, std::move(context), options, request);
+  return child_->AsyncDeleteGateway(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::cloud::apigateway::v1::ListApisResponse>
@@ -111,32 +117,38 @@ StatusOr<google::cloud::apigateway::v1::Api> ApiGatewayServiceMetadata::GetApi(
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceMetadata::AsyncCreateApi(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::apigateway::v1::CreateApiRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateApi(cq, std::move(context), options, request);
+  return child_->AsyncCreateApi(cq, std::move(context), std::move(options),
+                                request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceMetadata::AsyncUpdateApi(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::apigateway::v1::UpdateApiRequest const& request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("api.name=", internal::UrlEncode(request.api().name())));
-  return child_->AsyncUpdateApi(cq, std::move(context), options, request);
+  return child_->AsyncUpdateApi(cq, std::move(context), std::move(options),
+                                request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceMetadata::AsyncDeleteApi(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::apigateway::v1::DeleteApiRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteApi(cq, std::move(context), options, request);
+  return child_->AsyncDeleteApi(cq, std::move(context), std::move(options),
+                                request);
 }
 
 StatusOr<google::cloud::apigateway::v1::ListApiConfigsResponse>
@@ -160,51 +172,61 @@ ApiGatewayServiceMetadata::GetApiConfig(
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceMetadata::AsyncCreateApiConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::apigateway::v1::CreateApiConfigRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateApiConfig(cq, std::move(context), options, request);
+  return child_->AsyncCreateApiConfig(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceMetadata::AsyncUpdateApiConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("api_config.name=",
                            internal::UrlEncode(request.api_config().name())));
-  return child_->AsyncUpdateApiConfig(cq, std::move(context), options, request);
+  return child_->AsyncUpdateApiConfig(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceMetadata::AsyncDeleteApiConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteApiConfig(cq, std::move(context), options, request);
+  return child_->AsyncDeleteApiConfig(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApiGatewayServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> ApiGatewayServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void ApiGatewayServiceMetadata::SetMetadata(grpc::ClientContext& context,

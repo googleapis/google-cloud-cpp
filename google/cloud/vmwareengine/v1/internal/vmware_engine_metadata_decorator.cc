@@ -63,48 +63,52 @@ VmwareEngineMetadata::GetPrivateCloud(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncCreatePrivateCloud(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreatePrivateCloud(cq, std::move(context), options,
-                                         request);
+  return child_->AsyncCreatePrivateCloud(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncUpdatePrivateCloud(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const& request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("private_cloud.name=",
                    internal::UrlEncode(request.private_cloud().name())));
-  return child_->AsyncUpdatePrivateCloud(cq, std::move(context), options,
-                                         request);
+  return child_->AsyncUpdatePrivateCloud(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncDeletePrivateCloud(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeletePrivateCloud(cq, std::move(context), options,
-                                         request);
+  return child_->AsyncDeletePrivateCloud(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncUndeletePrivateCloud(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncUndeletePrivateCloud(cq, std::move(context), options,
-                                           request);
+  return child_->AsyncUndeletePrivateCloud(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListClustersResponse>
@@ -128,32 +132,38 @@ VmwareEngineMetadata::GetCluster(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::CreateClusterRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateCluster(cq, std::move(context), options, request);
+  return child_->AsyncCreateCluster(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::UpdateClusterRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("cluster.name=",
                            internal::UrlEncode(request.cluster().name())));
-  return child_->AsyncUpdateCluster(cq, std::move(context), options, request);
+  return child_->AsyncUpdateCluster(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::DeleteClusterRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteCluster(cq, std::move(context), options, request);
+  return child_->AsyncDeleteCluster(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListNodesResponse>
@@ -207,39 +217,42 @@ VmwareEngineMetadata::GetExternalAddress(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncCreateExternalAddress(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateExternalAddress(cq, std::move(context), options,
-                                            request);
+  return child_->AsyncCreateExternalAddress(cq, std::move(context),
+                                            std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncUpdateExternalAddress(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
         request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("external_address.name=",
                    internal::UrlEncode(request.external_address().name())));
-  return child_->AsyncUpdateExternalAddress(cq, std::move(context), options,
-                                            request);
+  return child_->AsyncUpdateExternalAddress(cq, std::move(context),
+                                            std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncDeleteExternalAddress(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteExternalAddress(cq, std::move(context), options,
-                                            request);
+  return child_->AsyncDeleteExternalAddress(cq, std::move(context),
+                                            std::move(options), request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListSubnetsResponse>
@@ -263,12 +276,14 @@ VmwareEngineMetadata::GetSubnet(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncUpdateSubnet(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("subnet.name=",
                            internal::UrlEncode(request.subnet().name())));
-  return child_->AsyncUpdateSubnet(cq, std::move(context), options, request);
+  return child_->AsyncUpdateSubnet(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListExternalAccessRulesResponse>
@@ -294,39 +309,42 @@ VmwareEngineMetadata::GetExternalAccessRule(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncCreateExternalAccessRule(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateExternalAccessRule(cq, std::move(context), options,
-                                               request);
+  return child_->AsyncCreateExternalAccessRule(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncUpdateExternalAccessRule(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
         request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("external_access_rule.name=",
                    internal::UrlEncode(request.external_access_rule().name())));
-  return child_->AsyncUpdateExternalAccessRule(cq, std::move(context), options,
-                                               request);
+  return child_->AsyncUpdateExternalAccessRule(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncDeleteExternalAccessRule(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteExternalAccessRule(cq, std::move(context), options,
-                                               request);
+  return child_->AsyncDeleteExternalAccessRule(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListLoggingServersResponse>
@@ -350,39 +368,42 @@ VmwareEngineMetadata::GetLoggingServer(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncCreateLoggingServer(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateLoggingServer(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncCreateLoggingServer(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncUpdateLoggingServer(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
         request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("logging_server.name=",
                    internal::UrlEncode(request.logging_server().name())));
-  return child_->AsyncUpdateLoggingServer(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncUpdateLoggingServer(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncDeleteLoggingServer(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteLoggingServer(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncDeleteLoggingServer(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListNodeTypesResponse>
@@ -427,27 +448,29 @@ VmwareEngineMetadata::ShowVcenterCredentials(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncResetNsxCredentials(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("private_cloud=",
                            internal::UrlEncode(request.private_cloud())));
-  return child_->AsyncResetNsxCredentials(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncResetNsxCredentials(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncResetVcenterCredentials(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("private_cloud=",
                            internal::UrlEncode(request.private_cloud())));
-  return child_->AsyncResetVcenterCredentials(cq, std::move(context), options,
-                                              request);
+  return child_->AsyncResetVcenterCredentials(cq, std::move(context),
+                                              std::move(options), request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>
@@ -462,15 +485,16 @@ VmwareEngineMetadata::GetDnsForwarding(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncUpdateDnsForwarding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
         request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("dns_forwarding.name=",
                    internal::UrlEncode(request.dns_forwarding().name())));
-  return child_->AsyncUpdateDnsForwarding(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncUpdateDnsForwarding(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>
@@ -495,39 +519,42 @@ VmwareEngineMetadata::ListNetworkPeerings(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncCreateNetworkPeering(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateNetworkPeering(cq, std::move(context), options,
-                                           request);
+  return child_->AsyncCreateNetworkPeering(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncDeleteNetworkPeering(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteNetworkPeering(cq, std::move(context), options,
-                                           request);
+  return child_->AsyncDeleteNetworkPeering(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncUpdateNetworkPeering(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
         request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("network_peering.name=",
                    internal::UrlEncode(request.network_peering().name())));
-  return child_->AsyncUpdateNetworkPeering(cq, std::move(context), options,
-                                           request);
+  return child_->AsyncUpdateNetworkPeering(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListPeeringRoutesResponse>
@@ -542,13 +569,14 @@ VmwareEngineMetadata::ListPeeringRoutes(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncCreateHcxActivationKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateHcxActivationKey(cq, std::move(context), options,
-                                             request);
+  return child_->AsyncCreateHcxActivationKey(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListHcxActivationKeysResponse>
@@ -593,39 +621,42 @@ VmwareEngineMetadata::ListNetworkPolicies(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncCreateNetworkPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateNetworkPolicy(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncCreateNetworkPolicy(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncUpdateNetworkPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
         request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("network_policy.name=",
                    internal::UrlEncode(request.network_policy().name())));
-  return child_->AsyncUpdateNetworkPolicy(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncUpdateNetworkPolicy(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncDeleteNetworkPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteNetworkPolicy(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncDeleteNetworkPolicy(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::ListManagementDnsZoneBindingsResponse>
@@ -651,89 +682,96 @@ VmwareEngineMetadata::GetManagementDnsZoneBinding(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncCreateManagementDnsZoneBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::
         CreateManagementDnsZoneBindingRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateManagementDnsZoneBinding(cq, std::move(context),
-                                                     options, request);
+  return child_->AsyncCreateManagementDnsZoneBinding(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncUpdateManagementDnsZoneBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::
         UpdateManagementDnsZoneBindingRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("management_dns_zone_binding.name=",
                            internal::UrlEncode(
                                request.management_dns_zone_binding().name())));
-  return child_->AsyncUpdateManagementDnsZoneBinding(cq, std::move(context),
-                                                     options, request);
+  return child_->AsyncUpdateManagementDnsZoneBinding(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncDeleteManagementDnsZoneBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::
         DeleteManagementDnsZoneBindingRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteManagementDnsZoneBinding(cq, std::move(context),
-                                                     options, request);
+  return child_->AsyncDeleteManagementDnsZoneBinding(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncRepairManagementDnsZoneBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::
         RepairManagementDnsZoneBindingRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncRepairManagementDnsZoneBinding(cq, std::move(context),
-                                                     options, request);
+  return child_->AsyncRepairManagementDnsZoneBinding(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncCreateVmwareEngineNetwork(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateVmwareEngineNetwork(cq, std::move(context), options,
-                                                request);
+  return child_->AsyncCreateVmwareEngineNetwork(cq, std::move(context),
+                                                std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncUpdateVmwareEngineNetwork(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat(
                   "vmware_engine_network.name=",
                   internal::UrlEncode(request.vmware_engine_network().name())));
-  return child_->AsyncUpdateVmwareEngineNetwork(cq, std::move(context), options,
-                                                request);
+  return child_->AsyncUpdateVmwareEngineNetwork(cq, std::move(context),
+                                                std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncDeleteVmwareEngineNetwork(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteVmwareEngineNetwork(cq, std::move(context), options,
-                                                request);
+  return child_->AsyncDeleteVmwareEngineNetwork(cq, std::move(context),
+                                                std::move(options), request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
@@ -759,13 +797,14 @@ VmwareEngineMetadata::ListVmwareEngineNetworks(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncCreatePrivateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreatePrivateConnection(cq, std::move(context), options,
-                                              request);
+  return child_->AsyncCreatePrivateConnection(cq, std::move(context),
+                                              std::move(options), request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>
@@ -791,27 +830,29 @@ VmwareEngineMetadata::ListPrivateConnections(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncUpdatePrivateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
         request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("private_connection.name=",
                    internal::UrlEncode(request.private_connection().name())));
-  return child_->AsyncUpdatePrivateConnection(cq, std::move(context), options,
-                                              request);
+  return child_->AsyncUpdatePrivateConnection(cq, std::move(context),
+                                              std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncDeletePrivateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeletePrivateConnection(cq, std::move(context), options,
-                                              request);
+  return child_->AsyncDeletePrivateConnection(cq, std::move(context),
+                                              std::move(options), request);
 }
 
 StatusOr<
@@ -828,13 +869,14 @@ VmwareEngineMetadata::ListPrivateConnectionPeeringRoutes(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncGrantDnsBindPermission(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGrantDnsBindPermission(cq, std::move(context), options,
-                                             request);
+  return child_->AsyncGrantDnsBindPermission(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>
@@ -850,32 +892,37 @@ VmwareEngineMetadata::GetDnsBindPermission(
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncRevokeDnsBindPermission(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncRevokeDnsBindPermission(cq, std::move(context), options,
-                                              request);
+  return child_->AsyncRevokeDnsBindPermission(cq, std::move(context),
+                                              std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 VmwareEngineMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> VmwareEngineMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void VmwareEngineMetadata::SetMetadata(grpc::ClientContext& context,

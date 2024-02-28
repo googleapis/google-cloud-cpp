@@ -46,7 +46,8 @@ DefaultSimulatorStub::GetReplay(
 future<StatusOr<google::longrunning::Operation>>
 DefaultSimulatorStub::AsyncCreateReplay(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::policysimulator::v1::CreateReplayRequest,
@@ -77,7 +78,8 @@ DefaultSimulatorStub::ListReplayResults(
 future<StatusOr<google::longrunning::Operation>>
 DefaultSimulatorStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -92,7 +94,8 @@ DefaultSimulatorStub::AsyncGetOperation(
 
 future<Status> DefaultSimulatorStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

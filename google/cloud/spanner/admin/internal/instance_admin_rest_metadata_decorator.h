@@ -58,7 +58,7 @@ class InstanceAdminRestMetadata : public InstanceAdminRestStub {
   AsyncCreateInstanceConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
           request) override;
 
@@ -66,7 +66,7 @@ class InstanceAdminRestMetadata : public InstanceAdminRestStub {
   AsyncUpdateInstanceConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
           request) override;
 
@@ -101,7 +101,7 @@ class InstanceAdminRestMetadata : public InstanceAdminRestStub {
   AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::spanner::admin::instance::v1::CreateInstanceRequest const&
           request) override;
 
@@ -109,7 +109,7 @@ class InstanceAdminRestMetadata : public InstanceAdminRestStub {
   AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::spanner::admin::instance::v1::UpdateInstanceRequest const&
           request) override;
 
@@ -138,13 +138,13 @@ class InstanceAdminRestMetadata : public InstanceAdminRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

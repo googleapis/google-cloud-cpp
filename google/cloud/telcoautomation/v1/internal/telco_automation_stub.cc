@@ -63,7 +63,8 @@ DefaultTelcoAutomationStub::GetOrchestrationCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTelcoAutomationStub::AsyncCreateOrchestrationCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -83,7 +84,8 @@ DefaultTelcoAutomationStub::AsyncCreateOrchestrationCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTelcoAutomationStub::AsyncDeleteOrchestrationCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -127,7 +129,8 @@ DefaultTelcoAutomationStub::GetEdgeSlm(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTelcoAutomationStub::AsyncCreateEdgeSlm(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::telcoautomation::v1::CreateEdgeSlmRequest,
@@ -145,7 +148,8 @@ DefaultTelcoAutomationStub::AsyncCreateEdgeSlm(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTelcoAutomationStub::AsyncDeleteEdgeSlm(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest,
@@ -527,7 +531,8 @@ DefaultTelcoAutomationStub::ApplyHydratedDeployment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTelcoAutomationStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -542,7 +547,8 @@ DefaultTelcoAutomationStub::AsyncGetOperation(
 
 future<Status> DefaultTelcoAutomationStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -88,13 +88,15 @@ class ArtifactRegistryMetadata : public ArtifactRegistryStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportAptArtifacts(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportYumArtifacts(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
           request) override;
 
@@ -111,7 +113,8 @@ class ArtifactRegistryMetadata : public ArtifactRegistryStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRepository(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
           request) override;
 
@@ -122,7 +125,8 @@ class ArtifactRegistryMetadata : public ArtifactRegistryStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRepository(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
           request) override;
 
@@ -139,7 +143,8 @@ class ArtifactRegistryMetadata : public ArtifactRegistryStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeletePackage(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::devtools::artifactregistry::v1::DeletePackageRequest const&
           request) override;
 
@@ -156,13 +161,15 @@ class ArtifactRegistryMetadata : public ArtifactRegistryStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteVersion(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::devtools::artifactregistry::v1::DeleteVersionRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchDeleteVersions(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
           request) override;
 
@@ -238,12 +245,14 @@ class ArtifactRegistryMetadata : public ArtifactRegistryStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

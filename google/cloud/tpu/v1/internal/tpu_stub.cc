@@ -56,7 +56,8 @@ StatusOr<google::cloud::tpu::v1::Node> DefaultTpuStub::GetNode(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTpuStub::AsyncCreateNode(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::tpu::v1::CreateNodeRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::tpu::v1::CreateNodeRequest,
                                     google::longrunning::Operation>(
@@ -72,7 +73,8 @@ DefaultTpuStub::AsyncCreateNode(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTpuStub::AsyncDeleteNode(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::tpu::v1::DeleteNodeRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::tpu::v1::DeleteNodeRequest,
                                     google::longrunning::Operation>(
@@ -88,7 +90,8 @@ DefaultTpuStub::AsyncDeleteNode(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTpuStub::AsyncReimageNode(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::tpu::v1::ReimageNodeRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::tpu::v1::ReimageNodeRequest,
                                     google::longrunning::Operation>(
@@ -103,7 +106,8 @@ DefaultTpuStub::AsyncReimageNode(
 
 future<StatusOr<google::longrunning::Operation>> DefaultTpuStub::AsyncStopNode(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::tpu::v1::StopNodeRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::tpu::v1::StopNodeRequest,
                                     google::longrunning::Operation>(
@@ -118,7 +122,8 @@ future<StatusOr<google::longrunning::Operation>> DefaultTpuStub::AsyncStopNode(
 
 future<StatusOr<google::longrunning::Operation>> DefaultTpuStub::AsyncStartNode(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::tpu::v1::StartNodeRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::tpu::v1::StartNodeRequest,
                                     google::longrunning::Operation>(
@@ -183,7 +188,8 @@ DefaultTpuStub::GetAcceleratorType(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTpuStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -198,7 +204,8 @@ DefaultTpuStub::AsyncGetOperation(
 
 future<Status> DefaultTpuStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

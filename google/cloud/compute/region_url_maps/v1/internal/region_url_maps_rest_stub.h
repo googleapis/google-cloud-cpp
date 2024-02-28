@@ -41,7 +41,7 @@ class RegionUrlMapsRestStub {
   AsyncDeleteUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_url_maps::v1::
           DeleteUrlMapRequest const& request) = 0;
 
@@ -55,7 +55,7 @@ class RegionUrlMapsRestStub {
   AsyncInsertUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_url_maps::v1::
           InsertUrlMapRequest const& request) = 0;
 
@@ -69,7 +69,7 @@ class RegionUrlMapsRestStub {
   AsyncPatchUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_url_maps::v1::
           PatchUrlMapRequest const& request) = 0;
 
@@ -77,7 +77,7 @@ class RegionUrlMapsRestStub {
   AsyncUpdateUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_url_maps::v1::
           UpdateUrlMapRequest const& request) = 0;
 
@@ -92,14 +92,14 @@ class RegionUrlMapsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) = 0;
 };
@@ -117,7 +117,7 @@ class DefaultRegionUrlMapsRestStub : public RegionUrlMapsRestStub {
   AsyncDeleteUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_url_maps::v1::
           DeleteUrlMapRequest const& request) override;
 
@@ -131,7 +131,7 @@ class DefaultRegionUrlMapsRestStub : public RegionUrlMapsRestStub {
   AsyncInsertUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_url_maps::v1::
           InsertUrlMapRequest const& request) override;
 
@@ -144,7 +144,7 @@ class DefaultRegionUrlMapsRestStub : public RegionUrlMapsRestStub {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncPatchUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_url_maps::v1::
           PatchUrlMapRequest const& request) override;
 
@@ -152,7 +152,7 @@ class DefaultRegionUrlMapsRestStub : public RegionUrlMapsRestStub {
   AsyncUpdateUrlMap(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_url_maps::v1::
           UpdateUrlMapRequest const& request) override;
 
@@ -166,14 +166,14 @@ class DefaultRegionUrlMapsRestStub : public RegionUrlMapsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 

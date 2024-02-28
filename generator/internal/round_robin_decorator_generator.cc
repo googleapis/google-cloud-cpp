@@ -154,9 +154,10 @@ future<StatusOr<google::longrunning::Operation>>
 $round_robin_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     $request_type$ const& request) {
-  return Child()->Async$method_name$(cq, std::move(context), options, request);
+  return Child()->Async$method_name$(
+      cq, std::move(context), std::move(options), request);
 }
 )""");
       continue;
@@ -251,18 +252,20 @@ future<StatusOr<google::longrunning::Operation>>
 $round_robin_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  return Child()->AsyncGetOperation(cq, std::move(context), options, request);
+  return Child()->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status>
 $round_robin_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return Child()->AsyncCancelOperation(cq, std::move(context), options, request);
+  return Child()->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 )""");
   }

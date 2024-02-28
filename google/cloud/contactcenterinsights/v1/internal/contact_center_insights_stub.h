@@ -47,7 +47,8 @@ class ContactCenterInsightsStub {
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUploadConversation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
           request) = 0;
 
@@ -77,7 +78,8 @@ class ContactCenterInsightsStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateAnalysis(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
           request) = 0;
 
@@ -102,35 +104,39 @@ class ContactCenterInsightsStub {
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncBulkAnalyzeConversations(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::contactcenterinsights::v1::
           BulkAnalyzeConversationsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncBulkDeleteConversations(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::contactcenterinsights::v1::
           BulkDeleteConversationsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncIngestConversations(google::cloud::CompletionQueue& cq,
                            std::shared_ptr<grpc::ClientContext> context,
-                           Options const& options,
+                           google::cloud::internal::ImmutableOptions options,
                            google::cloud::contactcenterinsights::v1::
                                IngestConversationsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncExportInsightsData(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateIssueModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
           request) = 0;
 
@@ -156,21 +162,24 @@ class ContactCenterInsightsStub {
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteIssueModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeployIssueModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUndeployIssueModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
           request) = 0;
 
@@ -275,12 +284,14 @@ class ContactCenterInsightsStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -302,7 +313,8 @@ class DefaultContactCenterInsightsStub : public ContactCenterInsightsStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUploadConversation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
           request) override;
 
@@ -331,7 +343,8 @@ class DefaultContactCenterInsightsStub : public ContactCenterInsightsStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAnalysis(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
           request) override;
 
@@ -354,31 +367,36 @@ class DefaultContactCenterInsightsStub : public ContactCenterInsightsStub {
   future<StatusOr<google::longrunning::Operation>>
   AsyncBulkAnalyzeConversations(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::contactcenterinsights::v1::
           BulkAnalyzeConversationsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBulkDeleteConversations(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::contactcenterinsights::v1::
           BulkDeleteConversationsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncIngestConversations(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::contactcenterinsights::v1::
           IngestConversationsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportInsightsData(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateIssueModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
           request) override;
 
@@ -401,19 +419,22 @@ class DefaultContactCenterInsightsStub : public ContactCenterInsightsStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteIssueModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeployIssueModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUndeployIssueModel(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
           request) override;
 
@@ -514,12 +535,14 @@ class DefaultContactCenterInsightsStub : public ContactCenterInsightsStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

@@ -250,13 +250,14 @@ future<StatusOr<google::longrunning::Operation>>
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     $request_type$ const& request) {
 )""");
       CcPrintMethod(method, __FILE__, __LINE__,
-                    SetMetadataText(method, kPointer, "options"));
+                    SetMetadataText(method, kPointer, "*options"));
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
-  return child_->Async$method_name$(cq, std::move(context), options, request);
+  return child_->Async$method_name$(
+      cq, std::move(context), std::move(options), request);
 }
 )""");
       continue;
@@ -363,21 +364,23 @@ future<StatusOr<google::longrunning::Operation>>
 $metadata_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> $metadata_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-   SetMetadata(*context, options,
-               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 )""");
   }

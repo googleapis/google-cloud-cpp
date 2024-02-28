@@ -34,7 +34,8 @@ SecurityCenterStub::~SecurityCenterStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultSecurityCenterStub::AsyncBulkMuteFindings(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::securitycenter::v1::BulkMuteFindingsRequest,
@@ -396,7 +397,8 @@ DefaultSecurityCenterStub::ListSources(
 future<StatusOr<google::longrunning::Operation>>
 DefaultSecurityCenterStub::AsyncRunAssetDiscovery(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -634,7 +636,8 @@ DefaultSecurityCenterStub::ListBigQueryExports(
 future<StatusOr<google::longrunning::Operation>>
 DefaultSecurityCenterStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -649,7 +652,8 @@ DefaultSecurityCenterStub::AsyncGetOperation(
 
 future<Status> DefaultSecurityCenterStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

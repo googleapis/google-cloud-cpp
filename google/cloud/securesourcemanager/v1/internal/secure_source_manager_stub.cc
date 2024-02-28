@@ -59,7 +59,8 @@ DefaultSecureSourceManagerStub::GetInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultSecureSourceManagerStub::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -79,7 +80,8 @@ DefaultSecureSourceManagerStub::AsyncCreateInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultSecureSourceManagerStub::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -125,7 +127,8 @@ DefaultSecureSourceManagerStub::GetRepository(
 future<StatusOr<google::longrunning::Operation>>
 DefaultSecureSourceManagerStub::AsyncCreateRepository(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -145,7 +148,8 @@ DefaultSecureSourceManagerStub::AsyncCreateRepository(
 future<StatusOr<google::longrunning::Operation>>
 DefaultSecureSourceManagerStub::AsyncDeleteRepository(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -202,7 +206,8 @@ DefaultSecureSourceManagerStub::TestIamPermissionsRepo(
 future<StatusOr<google::longrunning::Operation>>
 DefaultSecureSourceManagerStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -217,7 +222,8 @@ DefaultSecureSourceManagerStub::AsyncGetOperation(
 
 future<Status> DefaultSecureSourceManagerStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

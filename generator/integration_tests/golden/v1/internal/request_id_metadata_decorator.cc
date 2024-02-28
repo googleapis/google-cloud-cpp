@@ -68,7 +68,7 @@ future<StatusOr<google::longrunning::Operation>>
 RequestIdServiceMetadata::AsyncRenameFoo(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::test::requestid::v1::RenameFooRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -85,11 +85,12 @@ RequestIdServiceMetadata::AsyncRenameFoo(
   parent_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context, options);
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, options, absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncRenameFoo(cq, std::move(context), options, request);
+  return child_->AsyncRenameFoo(
+      cq, std::move(context), std::move(options), request);
 }
 
 StatusOr<google::test::requestid::v1::ListFoosResponse>
@@ -136,21 +137,23 @@ future<StatusOr<google::longrunning::Operation>>
 RequestIdServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status> RequestIdServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-   SetMetadata(*context, options,
-               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 void RequestIdServiceMetadata::SetMetadata(grpc::ClientContext& context,

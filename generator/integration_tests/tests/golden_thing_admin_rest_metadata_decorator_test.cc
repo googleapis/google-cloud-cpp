@@ -174,8 +174,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncCreateDatabase) {
   EXPECT_CALL(*mock, AsyncCreateDatabase)
       .WillOnce(
           [](CompletionQueue&,
-             std::unique_ptr<rest_internal::RestContext> context,
-             Options const&,
+             std::unique_ptr<rest_internal::RestContext> context, auto,
              google::test::admin::database::v1::CreateDatabaseRequest const&) {
             EXPECT_THAT(
                 context->GetHeader("x-goog-api-client"),
@@ -194,7 +193,9 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncCreateDatabase) {
   google::test::admin::database::v1::CreateDatabaseRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
   auto status = stub.AsyncCreateDatabase(
-      cq, std::move(context), Options{}.set<QuotaUserOption>("test-quota-user"),
+      cq, std::move(context),
+      internal::MakeImmutableOptions(
+          Options{}.set<QuotaUserOption>("test-quota-user")),
       request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
@@ -203,8 +204,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncUpdateDatabaseDdl) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, AsyncUpdateDatabaseDdl)
       .WillOnce([](CompletionQueue&,
-                   std::unique_ptr<rest_internal::RestContext> context,
-                   Options const&,
+                   std::unique_ptr<rest_internal::RestContext> context, auto,
                    google::test::admin::database::v1::
                        UpdateDatabaseDdlRequest const&) {
         EXPECT_THAT(
@@ -223,8 +223,8 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncUpdateDatabaseDdl) {
   google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
   request.set_database(
       "projects/my_project/instances/my_instance/databases/my_database");
-  auto status =
-      stub.AsyncUpdateDatabaseDdl(cq, std::move(context), Options{}, request);
+  auto status = stub.AsyncUpdateDatabaseDdl(
+      cq, std::move(context), internal::MakeImmutableOptions({}), request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
@@ -387,8 +387,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncCreateBackup) {
   EXPECT_CALL(*mock, AsyncCreateBackup)
       .WillOnce(
           [](CompletionQueue&,
-             std::unique_ptr<rest_internal::RestContext> context,
-             Options const&,
+             std::unique_ptr<rest_internal::RestContext> context, auto,
              google::test::admin::database::v1::CreateBackupRequest const&) {
             EXPECT_THAT(
                 context->GetHeader("x-goog-api-client"),
@@ -405,8 +404,8 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncCreateBackup) {
   auto context = std::make_unique<rest_internal::RestContext>();
   google::test::admin::database::v1::CreateBackupRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
-  auto status =
-      stub.AsyncCreateBackup(cq, std::move(context), Options{}, request);
+  auto status = stub.AsyncCreateBackup(
+      cq, std::move(context), internal::MakeImmutableOptions({}), request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 
@@ -513,8 +512,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncRestoreDatabase) {
   EXPECT_CALL(*mock, AsyncRestoreDatabase)
       .WillOnce(
           [](CompletionQueue&,
-             std::unique_ptr<rest_internal::RestContext> context,
-             Options const&,
+             std::unique_ptr<rest_internal::RestContext> context, auto,
              google::test::admin::database::v1::RestoreDatabaseRequest const&) {
             EXPECT_THAT(
                 context->GetHeader("x-goog-api-client"),
@@ -531,8 +529,8 @@ TEST(ThingAdminRestMetadataDecoratorTest, AsyncRestoreDatabase) {
   auto context = std::make_unique<rest_internal::RestContext>();
   google::test::admin::database::v1::RestoreDatabaseRequest request;
   request.set_parent("projects/my_project/instances/my_instance");
-  auto status =
-      stub.AsyncRestoreDatabase(cq, std::move(context), Options{}, request);
+  auto status = stub.AsyncRestoreDatabase(
+      cq, std::move(context), internal::MakeImmutableOptions({}), request);
   EXPECT_EQ(TransientError(), status.get().status());
 }
 

@@ -178,7 +178,8 @@ Status DefaultAdminServiceStub::DeleteSubscription(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAdminServiceStub::AsyncSeekSubscription(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::pubsublite::v1::SeekSubscriptionRequest,
@@ -286,7 +287,8 @@ DefaultAdminServiceStub::AsyncGetTopicPartitions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAdminServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -301,7 +303,8 @@ DefaultAdminServiceStub::AsyncGetOperation(
 
 future<Status> DefaultAdminServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

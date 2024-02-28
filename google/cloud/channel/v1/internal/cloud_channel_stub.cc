@@ -119,7 +119,8 @@ DefaultCloudChannelServiceStub::ImportCustomer(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudChannelServiceStub::AsyncProvisionCloudIdentity(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::channel::v1::ProvisionCloudIdentityRequest,
@@ -186,7 +187,8 @@ DefaultCloudChannelServiceStub::GetEntitlement(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudChannelServiceStub::AsyncCreateEntitlement(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::channel::v1::CreateEntitlementRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::channel::v1::CreateEntitlementRequest,
@@ -204,7 +206,8 @@ DefaultCloudChannelServiceStub::AsyncCreateEntitlement(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudChannelServiceStub::AsyncChangeParameters(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::channel::v1::ChangeParametersRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::channel::v1::ChangeParametersRequest,
@@ -221,7 +224,8 @@ DefaultCloudChannelServiceStub::AsyncChangeParameters(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudChannelServiceStub::AsyncChangeRenewalSettings(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::channel::v1::ChangeRenewalSettingsRequest,
@@ -239,7 +243,8 @@ DefaultCloudChannelServiceStub::AsyncChangeRenewalSettings(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudChannelServiceStub::AsyncChangeOffer(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::channel::v1::ChangeOfferRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::channel::v1::ChangeOfferRequest,
@@ -256,7 +261,8 @@ DefaultCloudChannelServiceStub::AsyncChangeOffer(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudChannelServiceStub::AsyncStartPaidService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::channel::v1::StartPaidServiceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::channel::v1::StartPaidServiceRequest,
@@ -273,7 +279,8 @@ DefaultCloudChannelServiceStub::AsyncStartPaidService(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudChannelServiceStub::AsyncSuspendEntitlement(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::channel::v1::SuspendEntitlementRequest,
@@ -291,7 +298,8 @@ DefaultCloudChannelServiceStub::AsyncSuspendEntitlement(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudChannelServiceStub::AsyncCancelEntitlement(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::channel::v1::CancelEntitlementRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::channel::v1::CancelEntitlementRequest,
@@ -309,7 +317,8 @@ DefaultCloudChannelServiceStub::AsyncCancelEntitlement(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudChannelServiceStub::AsyncActivateEntitlement(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::channel::v1::ActivateEntitlementRequest,
@@ -327,7 +336,8 @@ DefaultCloudChannelServiceStub::AsyncActivateEntitlement(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudChannelServiceStub::AsyncTransferEntitlements(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::channel::v1::TransferEntitlementsRequest,
@@ -345,7 +355,8 @@ DefaultCloudChannelServiceStub::AsyncTransferEntitlements(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudChannelServiceStub::AsyncTransferEntitlementsToGoogle(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -719,7 +730,8 @@ DefaultCloudChannelServiceStub::ListEntitlementChanges(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudChannelServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -734,7 +746,8 @@ DefaultCloudChannelServiceStub::AsyncGetOperation(
 
 future<Status> DefaultCloudChannelServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

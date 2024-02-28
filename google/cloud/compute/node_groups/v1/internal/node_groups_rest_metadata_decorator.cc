@@ -43,11 +43,12 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestMetadata::AsyncAddNodes(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
         request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncAddNodes(cq, std::move(rest_context), options, request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncAddNodes(cq, std::move(rest_context), std::move(options),
+                               request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupAggregatedList>
@@ -63,24 +64,24 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestMetadata::AsyncDeleteNodeGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::node_groups::v1::DeleteNodeGroupRequest const&
         request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncDeleteNodeGroup(cq, std::move(rest_context), options,
-                                      request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncDeleteNodeGroup(cq, std::move(rest_context),
+                                      std::move(options), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestMetadata::AsyncDeleteNodes(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
         request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncDeleteNodes(cq, std::move(rest_context), options,
-                                  request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncDeleteNodes(cq, std::move(rest_context),
+                                  std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroup>
@@ -105,12 +106,12 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestMetadata::AsyncInsertNodeGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::node_groups::v1::InsertNodeGroupRequest const&
         request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncInsertNodeGroup(cq, std::move(rest_context), options,
-                                      request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncInsertNodeGroup(cq, std::move(rest_context),
+                                      std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NodeGroupList>
@@ -135,12 +136,12 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestMetadata::AsyncPatchNodeGroup(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
         request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncPatchNodeGroup(cq, std::move(rest_context), options,
-                                     request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncPatchNodeGroup(cq, std::move(rest_context),
+                                     std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Policy>
@@ -156,24 +157,24 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestMetadata::AsyncSetNodeTemplate(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::node_groups::v1::SetNodeTemplateRequest const&
         request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncSetNodeTemplate(cq, std::move(rest_context), options,
-                                      request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncSetNodeTemplate(cq, std::move(rest_context),
+                                      std::move(options), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestMetadata::AsyncSimulateMaintenanceEvent(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::node_groups::v1::
         SimulateMaintenanceEventRequest const& request) {
-  SetMetadata(*rest_context, options);
+  SetMetadata(*rest_context, *options);
   return child_->AsyncSimulateMaintenanceEvent(cq, std::move(rest_context),
-                                               options, request);
+                                               std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
@@ -189,23 +190,23 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NodeGroupsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::zone_operations::v1::GetOperationRequest const&
         request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
-                                   request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                   std::move(options), request);
 }
 
 future<Status> NodeGroupsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::zone_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
-                                      request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                      std::move(options), request);
 }
 
 void NodeGroupsRestMetadata::SetMetadata(

@@ -58,7 +58,8 @@ DefaultFunctionServiceStub::ListFunctions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFunctionServiceStub::AsyncCreateFunction(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::functions::v2::CreateFunctionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::functions::v2::CreateFunctionRequest,
@@ -75,7 +76,8 @@ DefaultFunctionServiceStub::AsyncCreateFunction(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFunctionServiceStub::AsyncUpdateFunction(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::functions::v2::UpdateFunctionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::functions::v2::UpdateFunctionRequest,
@@ -92,7 +94,8 @@ DefaultFunctionServiceStub::AsyncUpdateFunction(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFunctionServiceStub::AsyncDeleteFunction(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::functions::v2::DeleteFunctionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::functions::v2::DeleteFunctionRequest,
@@ -145,7 +148,8 @@ DefaultFunctionServiceStub::ListRuntimes(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFunctionServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -160,7 +164,8 @@ DefaultFunctionServiceStub::AsyncGetOperation(
 
 future<Status> DefaultFunctionServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

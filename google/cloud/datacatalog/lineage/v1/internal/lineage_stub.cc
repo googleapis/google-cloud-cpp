@@ -101,7 +101,8 @@ DefaultLineageStub::ListProcesses(
 future<StatusOr<google::longrunning::Operation>>
 DefaultLineageStub::AsyncDeleteProcess(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -169,7 +170,8 @@ DefaultLineageStub::ListRuns(
 future<StatusOr<google::longrunning::Operation>>
 DefaultLineageStub::AsyncDeleteRun(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::datacatalog::lineage::v1::DeleteRunRequest,
@@ -267,7 +269,8 @@ DefaultLineageStub::BatchSearchLinkProcesses(
 future<StatusOr<google::longrunning::Operation>>
 DefaultLineageStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -282,7 +285,8 @@ DefaultLineageStub::AsyncGetOperation(
 
 future<Status> DefaultLineageStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

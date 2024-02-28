@@ -144,7 +144,8 @@ ArtifactRegistryTracingStub::GetPythonPackage(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryTracingStub::AsyncImportAptArtifacts(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -152,14 +153,16 @@ ArtifactRegistryTracingStub::AsyncImportAptArtifacts(
       "ImportAptArtifacts");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncImportAptArtifacts(cq, context, options, request);
+  auto f =
+      child_->AsyncImportAptArtifacts(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryTracingStub::AsyncImportYumArtifacts(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -167,7 +170,8 @@ ArtifactRegistryTracingStub::AsyncImportYumArtifacts(
       "ImportYumArtifacts");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncImportYumArtifacts(cq, context, options, request);
+  auto f =
+      child_->AsyncImportYumArtifacts(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -201,7 +205,8 @@ ArtifactRegistryTracingStub::GetRepository(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryTracingStub::AsyncCreateRepository(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -209,7 +214,8 @@ ArtifactRegistryTracingStub::AsyncCreateRepository(
       "CreateRepository");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateRepository(cq, context, options, request);
+  auto f =
+      child_->AsyncCreateRepository(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -230,7 +236,8 @@ ArtifactRegistryTracingStub::UpdateRepository(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryTracingStub::AsyncDeleteRepository(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -238,7 +245,8 @@ ArtifactRegistryTracingStub::AsyncDeleteRepository(
       "DeleteRepository");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteRepository(cq, context, options, request);
+  auto f =
+      child_->AsyncDeleteRepository(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -270,14 +278,15 @@ ArtifactRegistryTracingStub::GetPackage(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryTracingStub::AsyncDeletePackage(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::artifactregistry::v1::DeletePackageRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.devtools.artifactregistry.v1.ArtifactRegistry", "DeletePackage");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeletePackage(cq, context, options, request);
+  auto f = child_->AsyncDeletePackage(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -309,21 +318,23 @@ ArtifactRegistryTracingStub::GetVersion(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryTracingStub::AsyncDeleteVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::artifactregistry::v1::DeleteVersionRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.devtools.artifactregistry.v1.ArtifactRegistry", "DeleteVersion");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteVersion(cq, context, options, request);
+  auto f = child_->AsyncDeleteVersion(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryTracingStub::AsyncBatchDeleteVersions(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -331,7 +342,8 @@ ArtifactRegistryTracingStub::AsyncBatchDeleteVersions(
       "BatchDeleteVersions");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncBatchDeleteVersions(cq, context, options, request);
+  auto f = child_->AsyncBatchDeleteVersions(cq, context, std::move(options),
+                                            request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -511,25 +523,28 @@ ArtifactRegistryTracingStub::UpdateVPCSCConfig(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> ArtifactRegistryTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

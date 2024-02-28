@@ -237,7 +237,8 @@ DefaultProductSearchStub::ListProductsInProductSet(
 future<StatusOr<google::longrunning::Operation>>
 DefaultProductSearchStub::AsyncImportProductSets(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vision::v1::ImportProductSetsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vision::v1::ImportProductSetsRequest,
@@ -254,7 +255,8 @@ DefaultProductSearchStub::AsyncImportProductSets(
 future<StatusOr<google::longrunning::Operation>>
 DefaultProductSearchStub::AsyncPurgeProducts(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vision::v1::PurgeProductsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vision::v1::PurgeProductsRequest,
@@ -271,7 +273,8 @@ DefaultProductSearchStub::AsyncPurgeProducts(
 future<StatusOr<google::longrunning::Operation>>
 DefaultProductSearchStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -286,7 +289,8 @@ DefaultProductSearchStub::AsyncGetOperation(
 
 future<Status> DefaultProductSearchStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

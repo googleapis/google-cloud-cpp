@@ -58,7 +58,8 @@ DefaultImageAnnotatorStub::BatchAnnotateFiles(
 future<StatusOr<google::longrunning::Operation>>
 DefaultImageAnnotatorStub::AsyncAsyncBatchAnnotateImages(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest,
@@ -76,7 +77,8 @@ DefaultImageAnnotatorStub::AsyncAsyncBatchAnnotateImages(
 future<StatusOr<google::longrunning::Operation>>
 DefaultImageAnnotatorStub::AsyncAsyncBatchAnnotateFiles(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest,
@@ -94,7 +96,8 @@ DefaultImageAnnotatorStub::AsyncAsyncBatchAnnotateFiles(
 future<StatusOr<google::longrunning::Operation>>
 DefaultImageAnnotatorStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -109,7 +112,8 @@ DefaultImageAnnotatorStub::AsyncGetOperation(
 
 future<Status> DefaultImageAnnotatorStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

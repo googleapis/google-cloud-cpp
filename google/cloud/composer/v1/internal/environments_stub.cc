@@ -34,7 +34,8 @@ EnvironmentsStub::~EnvironmentsStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncCreateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::orchestration::airflow::service::v1::
         CreateEnvironmentRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::orchestration::airflow::
@@ -81,7 +82,8 @@ DefaultEnvironmentsStub::ListEnvironments(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::orchestration::airflow::service::v1::
         UpdateEnvironmentRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::orchestration::airflow::
@@ -100,7 +102,8 @@ DefaultEnvironmentsStub::AsyncUpdateEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncDeleteEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::orchestration::airflow::service::v1::
         DeleteEnvironmentRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::orchestration::airflow::
@@ -333,7 +336,8 @@ Status DefaultEnvironmentsStub::DeleteUserWorkloadsConfigMap(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncSaveSnapshot(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::orchestration::airflow::service::v1::
         SaveSnapshotRequest const& request) {
   return internal::MakeUnaryRpcImpl<
@@ -352,7 +356,8 @@ DefaultEnvironmentsStub::AsyncSaveSnapshot(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncLoadSnapshot(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::orchestration::airflow::service::v1::
         LoadSnapshotRequest const& request) {
   return internal::MakeUnaryRpcImpl<
@@ -371,7 +376,8 @@ DefaultEnvironmentsStub::AsyncLoadSnapshot(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncDatabaseFailover(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::orchestration::airflow::service::v1::
         DatabaseFailoverRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::orchestration::airflow::
@@ -406,7 +412,8 @@ DefaultEnvironmentsStub::FetchDatabaseProperties(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -421,7 +428,8 @@ DefaultEnvironmentsStub::AsyncGetOperation(
 
 future<Status> DefaultEnvironmentsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -50,19 +50,22 @@ class ConfigMetadata : public ConfigStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDeployment(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::config::v1::CreateDeploymentRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateDeployment(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::config::v1::UpdateDeploymentRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteDeployment(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::config::v1::DeleteDeploymentRequest const& request)
       override;
 
@@ -104,12 +107,14 @@ class ConfigMetadata : public ConfigStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncLockDeployment(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::config::v1::LockDeploymentRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUnlockDeployment(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::config::v1::UnlockDeploymentRequest const& request)
       override;
 
@@ -119,7 +124,8 @@ class ConfigMetadata : public ConfigStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreatePreview(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::config::v1::CreatePreviewRequest const& request) override;
 
   StatusOr<google::cloud::config::v1::Preview> GetPreview(
@@ -132,7 +138,8 @@ class ConfigMetadata : public ConfigStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeletePreview(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::config::v1::DeletePreviewRequest const& request) override;
 
   StatusOr<google::cloud::config::v1::ExportPreviewResultResponse>
@@ -143,12 +150,14 @@ class ConfigMetadata : public ConfigStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

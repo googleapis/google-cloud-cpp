@@ -125,25 +125,27 @@ ArtifactRegistryMetadata::GetPythonPackage(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryMetadata::AsyncImportAptArtifacts(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncImportAptArtifacts(cq, std::move(context), options,
-                                         request);
+  return child_->AsyncImportAptArtifacts(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryMetadata::AsyncImportYumArtifacts(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncImportYumArtifacts(cq, std::move(context), options,
-                                         request);
+  return child_->AsyncImportYumArtifacts(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListRepositoriesResponse>
@@ -169,13 +171,14 @@ ArtifactRegistryMetadata::GetRepository(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryMetadata::AsyncCreateRepository(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateRepository(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncCreateRepository(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Repository>
@@ -192,13 +195,14 @@ ArtifactRegistryMetadata::UpdateRepository(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryMetadata::AsyncDeleteRepository(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteRepository(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncDeleteRepository(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListPackagesResponse>
@@ -223,12 +227,14 @@ ArtifactRegistryMetadata::GetPackage(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryMetadata::AsyncDeletePackage(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::artifactregistry::v1::DeletePackageRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeletePackage(cq, std::move(context), options, request);
+  return child_->AsyncDeletePackage(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListVersionsResponse>
@@ -253,24 +259,27 @@ ArtifactRegistryMetadata::GetVersion(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryMetadata::AsyncDeleteVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::artifactregistry::v1::DeleteVersionRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteVersion(cq, std::move(context), options, request);
+  return child_->AsyncDeleteVersion(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryMetadata::AsyncBatchDeleteVersions(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::devtools::artifactregistry::v1::BatchDeleteVersionsRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBatchDeleteVersions(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncBatchDeleteVersions(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ListFilesResponse>
@@ -410,20 +419,24 @@ ArtifactRegistryMetadata::UpdateVPCSCConfig(
 future<StatusOr<google::longrunning::Operation>>
 ArtifactRegistryMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> ArtifactRegistryMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void ArtifactRegistryMetadata::SetMetadata(grpc::ClientContext& context,

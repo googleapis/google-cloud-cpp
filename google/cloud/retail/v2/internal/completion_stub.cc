@@ -46,7 +46,8 @@ DefaultCompletionServiceStub::CompleteQuery(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCompletionServiceStub::AsyncImportCompletionData(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::retail::v2::ImportCompletionDataRequest,
@@ -64,7 +65,8 @@ DefaultCompletionServiceStub::AsyncImportCompletionData(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCompletionServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -79,7 +81,8 @@ DefaultCompletionServiceStub::AsyncGetOperation(
 
 future<Status> DefaultCompletionServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

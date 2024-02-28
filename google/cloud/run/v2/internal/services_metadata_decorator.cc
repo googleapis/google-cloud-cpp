@@ -47,7 +47,8 @@ ServicesMetadata::ServicesMetadata(
 future<StatusOr<google::longrunning::Operation>>
 ServicesMetadata::AsyncCreateService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::run::v2::CreateServiceRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -66,11 +67,12 @@ ServicesMetadata::AsyncCreateService(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context, options);
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, options, absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncCreateService(cq, std::move(context), options, request);
+  return child_->AsyncCreateService(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::cloud::run::v2::Service> ServicesMetadata::GetService(
@@ -131,7 +133,8 @@ ServicesMetadata::ListServices(
 future<StatusOr<google::longrunning::Operation>>
 ServicesMetadata::AsyncUpdateService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::run::v2::UpdateServiceRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -150,17 +153,19 @@ ServicesMetadata::AsyncUpdateService(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context, options);
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, options, absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncUpdateService(cq, std::move(context), options, request);
+  return child_->AsyncUpdateService(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ServicesMetadata::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::run::v2::DeleteServiceRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -179,11 +184,12 @@ ServicesMetadata::AsyncDeleteService(
   location_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context, options);
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, options, absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncDeleteService(cq, std::move(context), options, request);
+  return child_->AsyncDeleteService(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::iam::v1::Policy> ServicesMetadata::GetIamPolicy(
@@ -217,20 +223,24 @@ ServicesMetadata::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 ServicesMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> ServicesMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void ServicesMetadata::SetMetadata(grpc::ClientContext& context,

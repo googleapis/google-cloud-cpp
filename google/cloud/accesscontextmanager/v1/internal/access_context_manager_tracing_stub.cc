@@ -62,21 +62,24 @@ AccessContextManagerTracingStub::GetAccessPolicy(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncCreateAccessPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::AccessPolicy const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.identity.accesscontextmanager.v1.AccessContextManager",
       "CreateAccessPolicy");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateAccessPolicy(cq, context, options, request);
+  auto f =
+      child_->AsyncCreateAccessPolicy(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncUpdateAccessPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -84,14 +87,16 @@ AccessContextManagerTracingStub::AsyncUpdateAccessPolicy(
       "UpdateAccessPolicy");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateAccessPolicy(cq, context, options, request);
+  auto f =
+      child_->AsyncUpdateAccessPolicy(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncDeleteAccessPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -99,7 +104,8 @@ AccessContextManagerTracingStub::AsyncDeleteAccessPolicy(
       "DeleteAccessPolicy");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteAccessPolicy(cq, context, options, request);
+  auto f =
+      child_->AsyncDeleteAccessPolicy(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -134,7 +140,8 @@ AccessContextManagerTracingStub::GetAccessLevel(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncCreateAccessLevel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -142,14 +149,16 @@ AccessContextManagerTracingStub::AsyncCreateAccessLevel(
       "CreateAccessLevel");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateAccessLevel(cq, context, options, request);
+  auto f =
+      child_->AsyncCreateAccessLevel(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncUpdateAccessLevel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -157,14 +166,16 @@ AccessContextManagerTracingStub::AsyncUpdateAccessLevel(
       "UpdateAccessLevel");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateAccessLevel(cq, context, options, request);
+  auto f =
+      child_->AsyncUpdateAccessLevel(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncDeleteAccessLevel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -172,14 +183,16 @@ AccessContextManagerTracingStub::AsyncDeleteAccessLevel(
       "DeleteAccessLevel");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteAccessLevel(cq, context, options, request);
+  auto f =
+      child_->AsyncDeleteAccessLevel(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncReplaceAccessLevels(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         ReplaceAccessLevelsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
@@ -187,7 +200,8 @@ AccessContextManagerTracingStub::AsyncReplaceAccessLevels(
       "ReplaceAccessLevels");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncReplaceAccessLevels(cq, context, options, request);
+  auto f = child_->AsyncReplaceAccessLevels(cq, context, std::move(options),
+                                            request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -223,7 +237,8 @@ AccessContextManagerTracingStub::GetServicePerimeter(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncCreateServicePerimeter(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         CreateServicePerimeterRequest const& request) {
   auto span = internal::MakeSpanGrpc(
@@ -231,14 +246,16 @@ AccessContextManagerTracingStub::AsyncCreateServicePerimeter(
       "CreateServicePerimeter");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateServicePerimeter(cq, context, options, request);
+  auto f = child_->AsyncCreateServicePerimeter(cq, context, std::move(options),
+                                               request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncUpdateServicePerimeter(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         UpdateServicePerimeterRequest const& request) {
   auto span = internal::MakeSpanGrpc(
@@ -246,14 +263,16 @@ AccessContextManagerTracingStub::AsyncUpdateServicePerimeter(
       "UpdateServicePerimeter");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateServicePerimeter(cq, context, options, request);
+  auto f = child_->AsyncUpdateServicePerimeter(cq, context, std::move(options),
+                                               request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncDeleteServicePerimeter(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         DeleteServicePerimeterRequest const& request) {
   auto span = internal::MakeSpanGrpc(
@@ -261,14 +280,16 @@ AccessContextManagerTracingStub::AsyncDeleteServicePerimeter(
       "DeleteServicePerimeter");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteServicePerimeter(cq, context, options, request);
+  auto f = child_->AsyncDeleteServicePerimeter(cq, context, std::move(options),
+                                               request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncReplaceServicePerimeters(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         ReplaceServicePerimetersRequest const& request) {
   auto span = internal::MakeSpanGrpc(
@@ -276,14 +297,16 @@ AccessContextManagerTracingStub::AsyncReplaceServicePerimeters(
       "ReplaceServicePerimeters");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncReplaceServicePerimeters(cq, context, options, request);
+  auto f = child_->AsyncReplaceServicePerimeters(cq, context,
+                                                 std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncCommitServicePerimeters(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         CommitServicePerimetersRequest const& request) {
   auto span = internal::MakeSpanGrpc(
@@ -291,7 +314,8 @@ AccessContextManagerTracingStub::AsyncCommitServicePerimeters(
       "CommitServicePerimeters");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCommitServicePerimeters(cq, context, options, request);
+  auto f = child_->AsyncCommitServicePerimeters(cq, context, std::move(options),
+                                                request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -329,7 +353,8 @@ AccessContextManagerTracingStub::GetGcpUserAccessBinding(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncCreateGcpUserAccessBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         CreateGcpUserAccessBindingRequest const& request) {
   auto span = internal::MakeSpanGrpc(
@@ -337,15 +362,16 @@ AccessContextManagerTracingStub::AsyncCreateGcpUserAccessBinding(
       "CreateGcpUserAccessBinding");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCreateGcpUserAccessBinding(cq, context, options, request);
+  auto f = child_->AsyncCreateGcpUserAccessBinding(cq, context,
+                                                   std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncUpdateGcpUserAccessBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         UpdateGcpUserAccessBindingRequest const& request) {
   auto span = internal::MakeSpanGrpc(
@@ -353,15 +379,16 @@ AccessContextManagerTracingStub::AsyncUpdateGcpUserAccessBinding(
       "UpdateGcpUserAccessBinding");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncUpdateGcpUserAccessBinding(cq, context, options, request);
+  auto f = child_->AsyncUpdateGcpUserAccessBinding(cq, context,
+                                                   std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncDeleteGcpUserAccessBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         DeleteGcpUserAccessBindingRequest const& request) {
   auto span = internal::MakeSpanGrpc(
@@ -369,8 +396,8 @@ AccessContextManagerTracingStub::AsyncDeleteGcpUserAccessBinding(
       "DeleteGcpUserAccessBinding");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncDeleteGcpUserAccessBinding(cq, context, options, request);
+  auto f = child_->AsyncDeleteGcpUserAccessBinding(cq, context,
+                                                   std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -414,25 +441,28 @@ AccessContextManagerTracingStub::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> AccessContextManagerTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

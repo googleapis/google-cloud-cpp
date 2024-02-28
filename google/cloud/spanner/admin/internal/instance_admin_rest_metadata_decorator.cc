@@ -61,24 +61,24 @@ future<StatusOr<google::longrunning::Operation>>
 InstanceAdminRestMetadata::AsyncCreateInstanceConfig(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
         request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncCreateInstanceConfig(cq, std::move(rest_context), options,
-                                           request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncCreateInstanceConfig(cq, std::move(rest_context),
+                                           std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminRestMetadata::AsyncUpdateInstanceConfig(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
         request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncUpdateInstanceConfig(cq, std::move(rest_context), options,
-                                           request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncUpdateInstanceConfig(cq, std::move(rest_context),
+                                           std::move(options), request);
 }
 
 Status InstanceAdminRestMetadata::DeleteInstanceConfig(
@@ -119,24 +119,24 @@ future<StatusOr<google::longrunning::Operation>>
 InstanceAdminRestMetadata::AsyncCreateInstance(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::spanner::admin::instance::v1::CreateInstanceRequest const&
         request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncCreateInstance(cq, std::move(rest_context), options,
-                                     request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncCreateInstance(cq, std::move(rest_context),
+                                     std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminRestMetadata::AsyncUpdateInstance(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::spanner::admin::instance::v1::UpdateInstanceRequest const&
         request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncUpdateInstance(cq, std::move(rest_context), options,
-                                     request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncUpdateInstance(cq, std::move(rest_context),
+                                     std::move(options), request);
 }
 
 Status InstanceAdminRestMetadata::DeleteInstance(
@@ -173,21 +173,21 @@ future<StatusOr<google::longrunning::Operation>>
 InstanceAdminRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
-                                   request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                   std::move(options), request);
 }
 
 future<Status> InstanceAdminRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
-                                      request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                      std::move(options), request);
 }
 
 void InstanceAdminRestMetadata::SetMetadata(

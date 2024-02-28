@@ -109,13 +109,14 @@ CloudChannelServiceMetadata::ImportCustomer(
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceMetadata::AsyncProvisionCloudIdentity(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("customer=", internal::UrlEncode(request.customer())));
-  return child_->AsyncProvisionCloudIdentity(cq, std::move(context), options,
-                                             request);
+  return child_->AsyncProvisionCloudIdentity(cq, std::move(context),
+                                             std::move(options), request);
 }
 
 StatusOr<google::cloud::channel::v1::ListEntitlementsResponse>
@@ -157,111 +158,122 @@ CloudChannelServiceMetadata::GetEntitlement(
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceMetadata::AsyncCreateEntitlement(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::CreateEntitlementRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateEntitlement(cq, std::move(context), options,
-                                        request);
+  return child_->AsyncCreateEntitlement(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceMetadata::AsyncChangeParameters(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::ChangeParametersRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncChangeParameters(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncChangeParameters(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceMetadata::AsyncChangeRenewalSettings(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncChangeRenewalSettings(cq, std::move(context), options,
-                                            request);
+  return child_->AsyncChangeRenewalSettings(cq, std::move(context),
+                                            std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceMetadata::AsyncChangeOffer(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::ChangeOfferRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncChangeOffer(cq, std::move(context), options, request);
+  return child_->AsyncChangeOffer(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceMetadata::AsyncStartPaidService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::StartPaidServiceRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncStartPaidService(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncStartPaidService(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceMetadata::AsyncSuspendEntitlement(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncSuspendEntitlement(cq, std::move(context), options,
-                                         request);
+  return child_->AsyncSuspendEntitlement(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceMetadata::AsyncCancelEntitlement(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::CancelEntitlementRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelEntitlement(cq, std::move(context), options,
-                                        request);
+  return child_->AsyncCancelEntitlement(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceMetadata::AsyncActivateEntitlement(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncActivateEntitlement(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncActivateEntitlement(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceMetadata::AsyncTransferEntitlements(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncTransferEntitlements(cq, std::move(context), options,
-                                           request);
+  return child_->AsyncTransferEntitlements(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceMetadata::AsyncTransferEntitlementsToGoogle(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncTransferEntitlementsToGoogle(cq, std::move(context),
-                                                   options, request);
+                                                   std::move(options), request);
 }
 
 StatusOr<google::cloud::channel::v1::ListChannelPartnerLinksResponse>
@@ -530,20 +542,24 @@ CloudChannelServiceMetadata::ListEntitlementChanges(
 future<StatusOr<google::longrunning::Operation>>
 CloudChannelServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> CloudChannelServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void CloudChannelServiceMetadata::SetMetadata(

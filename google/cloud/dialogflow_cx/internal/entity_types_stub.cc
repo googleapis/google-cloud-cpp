@@ -93,7 +93,8 @@ DefaultEntityTypesStub::ListEntityTypes(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEntityTypesStub::AsyncExportEntityTypes(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -112,7 +113,8 @@ DefaultEntityTypesStub::AsyncExportEntityTypes(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEntityTypesStub::AsyncImportEntityTypes(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -131,7 +133,8 @@ DefaultEntityTypesStub::AsyncImportEntityTypes(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEntityTypesStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -146,7 +149,8 @@ DefaultEntityTypesStub::AsyncGetOperation(
 
 future<Status> DefaultEntityTypesStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

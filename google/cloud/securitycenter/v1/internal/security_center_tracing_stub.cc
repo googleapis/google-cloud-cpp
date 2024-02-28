@@ -34,13 +34,15 @@ SecurityCenterTracingStub::SecurityCenterTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 SecurityCenterTracingStub::AsyncBulkMuteFindings(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "BulkMuteFindings");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncBulkMuteFindings(cq, context, options, request);
+  auto f =
+      child_->AsyncBulkMuteFindings(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -399,14 +401,16 @@ SecurityCenterTracingStub::ListSources(
 future<StatusOr<google::longrunning::Operation>>
 SecurityCenterTracingStub::AsyncRunAssetDiscovery(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.securitycenter.v1.SecurityCenter", "RunAssetDiscovery");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRunAssetDiscovery(cq, context, options, request);
+  auto f =
+      child_->AsyncRunAssetDiscovery(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -634,25 +638,28 @@ SecurityCenterTracingStub::ListBigQueryExports(
 future<StatusOr<google::longrunning::Operation>>
 SecurityCenterTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> SecurityCenterTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

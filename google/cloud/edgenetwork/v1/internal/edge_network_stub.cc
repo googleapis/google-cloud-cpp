@@ -105,7 +105,8 @@ DefaultEdgeNetworkStub::DiagnoseNetwork(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncCreateNetwork(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::edgenetwork::v1::CreateNetworkRequest,
@@ -123,7 +124,8 @@ DefaultEdgeNetworkStub::AsyncCreateNetwork(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncDeleteNetwork(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::edgenetwork::v1::DeleteNetworkRequest,
@@ -165,7 +167,8 @@ DefaultEdgeNetworkStub::GetSubnet(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncCreateSubnet(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::edgenetwork::v1::CreateSubnetRequest,
@@ -182,7 +185,8 @@ DefaultEdgeNetworkStub::AsyncCreateSubnet(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncUpdateSubnet(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::edgenetwork::v1::UpdateSubnetRequest,
@@ -199,7 +203,8 @@ DefaultEdgeNetworkStub::AsyncUpdateSubnet(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncDeleteSubnet(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::edgenetwork::v1::DeleteSubnetRequest,
@@ -281,7 +286,8 @@ DefaultEdgeNetworkStub::GetInterconnectAttachment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncCreateInterconnectAttachment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -301,7 +307,8 @@ DefaultEdgeNetworkStub::AsyncCreateInterconnectAttachment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncDeleteInterconnectAttachment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -357,7 +364,8 @@ DefaultEdgeNetworkStub::DiagnoseRouter(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncCreateRouter(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::edgenetwork::v1::CreateRouterRequest,
@@ -374,7 +382,8 @@ DefaultEdgeNetworkStub::AsyncCreateRouter(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncUpdateRouter(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::edgenetwork::v1::UpdateRouterRequest,
@@ -391,7 +400,8 @@ DefaultEdgeNetworkStub::AsyncUpdateRouter(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncDeleteRouter(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::edgenetwork::v1::DeleteRouterRequest,
@@ -408,7 +418,8 @@ DefaultEdgeNetworkStub::AsyncDeleteRouter(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEdgeNetworkStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -423,7 +434,8 @@ DefaultEdgeNetworkStub::AsyncGetOperation(
 
 future<Status> DefaultEdgeNetworkStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

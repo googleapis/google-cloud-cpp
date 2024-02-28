@@ -60,7 +60,8 @@ DefaultDatastreamStub::GetConnectionProfile(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatastreamStub::AsyncCreateConnectionProfile(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::datastream::v1::CreateConnectionProfileRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -80,7 +81,8 @@ DefaultDatastreamStub::AsyncCreateConnectionProfile(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatastreamStub::AsyncUpdateConnectionProfile(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -100,7 +102,8 @@ DefaultDatastreamStub::AsyncUpdateConnectionProfile(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatastreamStub::AsyncDeleteConnectionProfile(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -158,7 +161,8 @@ DefaultDatastreamStub::GetStream(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatastreamStub::AsyncCreateStream(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::datastream::v1::CreateStreamRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::datastream::v1::CreateStreamRequest,
@@ -175,7 +179,8 @@ DefaultDatastreamStub::AsyncCreateStream(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatastreamStub::AsyncUpdateStream(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::datastream::v1::UpdateStreamRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::datastream::v1::UpdateStreamRequest,
@@ -192,7 +197,8 @@ DefaultDatastreamStub::AsyncUpdateStream(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatastreamStub::AsyncDeleteStream(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::datastream::v1::DeleteStreamRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::datastream::v1::DeleteStreamRequest,
@@ -281,7 +287,8 @@ DefaultDatastreamStub::FetchStaticIps(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatastreamStub::AsyncCreatePrivateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -327,7 +334,8 @@ DefaultDatastreamStub::ListPrivateConnections(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatastreamStub::AsyncDeletePrivateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -347,7 +355,8 @@ DefaultDatastreamStub::AsyncDeletePrivateConnection(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatastreamStub::AsyncCreateRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::datastream::v1::CreateRouteRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::datastream::v1::CreateRouteRequest,
@@ -387,7 +396,8 @@ DefaultDatastreamStub::ListRoutes(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatastreamStub::AsyncDeleteRoute(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::datastream::v1::DeleteRouteRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::datastream::v1::DeleteRouteRequest,
@@ -404,7 +414,8 @@ DefaultDatastreamStub::AsyncDeleteRoute(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatastreamStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -419,7 +430,8 @@ DefaultDatastreamStub::AsyncGetOperation(
 
 future<Status> DefaultDatastreamStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

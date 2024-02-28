@@ -46,7 +46,8 @@ DefaultDatabaseAdminStub::ListDatabases(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatabaseAdminStub::AsyncCreateDatabase(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::spanner::admin::database::v1::CreateDatabaseRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -77,7 +78,8 @@ DefaultDatabaseAdminStub::GetDatabase(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatabaseAdminStub::AsyncUpdateDatabase(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::spanner::admin::database::v1::UpdateDatabaseRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -96,7 +98,8 @@ DefaultDatabaseAdminStub::AsyncUpdateDatabase(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatabaseAdminStub::AsyncUpdateDatabaseDdl(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -174,7 +177,8 @@ DefaultDatabaseAdminStub::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatabaseAdminStub::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::spanner::admin::database::v1::CreateBackupRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::spanner::admin::database::v1::CreateBackupRequest,
@@ -192,7 +196,8 @@ DefaultDatabaseAdminStub::AsyncCreateBackup(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatabaseAdminStub::AsyncCopyBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::spanner::admin::database::v1::CopyBackupRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::spanner::admin::database::v1::CopyBackupRequest,
@@ -257,7 +262,8 @@ DefaultDatabaseAdminStub::ListBackups(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatabaseAdminStub::AsyncRestoreDatabase(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::spanner::admin::database::v1::RestoreDatabaseRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -316,7 +322,8 @@ DefaultDatabaseAdminStub::ListDatabaseRoles(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDatabaseAdminStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -331,7 +338,8 @@ DefaultDatabaseAdminStub::AsyncGetOperation(
 
 future<Status> DefaultDatabaseAdminStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

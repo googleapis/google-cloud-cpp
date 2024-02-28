@@ -58,7 +58,8 @@ DefaultEnvironmentsStub::GetEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncCreateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -77,7 +78,8 @@ DefaultEnvironmentsStub::AsyncCreateEnvironment(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncUpdateEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -122,7 +124,8 @@ DefaultEnvironmentsStub::LookupEnvironmentHistory(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncRunContinuousTest(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -155,7 +158,8 @@ DefaultEnvironmentsStub::ListContinuousTestResults(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncDeployFlow(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::DeployFlowRequest,
@@ -173,7 +177,8 @@ DefaultEnvironmentsStub::AsyncDeployFlow(
 future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -188,7 +193,8 @@ DefaultEnvironmentsStub::AsyncGetOperation(
 
 future<Status> DefaultEnvironmentsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

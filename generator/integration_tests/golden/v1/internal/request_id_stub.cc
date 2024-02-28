@@ -48,7 +48,7 @@ future<StatusOr<google::longrunning::Operation>>
 DefaultRequestIdServiceStub::AsyncRenameFoo(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      Options const&,
+      google::cloud::internal::ImmutableOptions,
       google::test::requestid::v1::RenameFooRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::test::requestid::v1::RenameFooRequest,
                                     google::longrunning::Operation>(
@@ -94,7 +94,7 @@ future<StatusOr<google::longrunning::Operation>>
 DefaultRequestIdServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const&,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -110,7 +110,7 @@ DefaultRequestIdServiceStub::AsyncGetOperation(
 future<Status> DefaultRequestIdServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const&,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

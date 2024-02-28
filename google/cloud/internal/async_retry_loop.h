@@ -55,7 +55,7 @@ struct FutureValueType<future<T>> {
  *   virtual future<StatusOr<ResponseProto>> AsyncRpcName(
  *      google::cloud::CompletionQueue& cq,
  *      std::shared_ptr<grpc::ClientContext> context,
- *      Options const& options,
+ *      ImmutableOptions options,
  *      RequestProto const& request) = 0;
  * };
  * @endcode
@@ -192,7 +192,7 @@ class AsyncRetryLoopImpl
 
   using ReturnType = ::google::cloud::internal::invoke_result_t<
       Functor, google::cloud::CompletionQueue&,
-      std::shared_ptr<grpc::ClientContext>, Options const&, Request const&>;
+      std::shared_ptr<grpc::ClientContext>, ImmutableOptions, Request const&>;
   using T = typename FutureValueType<ReturnType>::value_type;
 
   future<T> Start() {
@@ -240,7 +240,7 @@ class AsyncRetryLoopImpl
     SetupContext<RetryPolicyType>::Setup(*retry_policy_, *context);
     SetPending(
         state.operation,
-        functor_(cq_, std::move(context), *call_context_.options, request_)
+        functor_(cq_, std::move(context), call_context_.options, request_)
             .then([self](future<T> f) { self->OnAttempt(f.get()); }));
   }
 
@@ -343,7 +343,7 @@ template <typename Functor, typename Request, typename RetryPolicyType,
           std::enable_if_t<google::cloud::internal::is_invocable<
                                Functor, google::cloud::CompletionQueue&,
                                std::shared_ptr<grpc::ClientContext>,
-                               Options const&, Request const&>::value,
+                               ImmutableOptions, Request const&>::value,
                            int> = 0>
 auto AsyncRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
                     std::unique_ptr<BackoffPolicy> backoff_policy,
@@ -352,7 +352,8 @@ auto AsyncRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
                     Request request, char const* location)
     -> google::cloud::internal::invoke_result_t<
         Functor, google::cloud::CompletionQueue&,
-        std::shared_ptr<grpc::ClientContext>, Options const&, Request const&> {
+        std::shared_ptr<grpc::ClientContext>, ImmutableOptions,
+        Request const&> {
   auto loop =
       std::make_shared<AsyncRetryLoopImpl<Functor, Request, RetryPolicyType>>(
           std::move(retry_policy), std::move(backoff_policy), idempotency,
@@ -381,7 +382,7 @@ auto AsyncRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
   auto wrapper = [functor = std::forward<Functor>(functor)](
                      CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const&, Request const& request) {
+                     ImmutableOptions const&, Request const& request) {
     return functor(cq, std::move(context), request);
   };
   return AsyncRetryLoop(std::move(retry_policy), std::move(backoff_policy),

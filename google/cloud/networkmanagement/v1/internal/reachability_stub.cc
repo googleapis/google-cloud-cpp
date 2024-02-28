@@ -60,7 +60,8 @@ DefaultReachabilityServiceStub::GetConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 DefaultReachabilityServiceStub::AsyncCreateConnectivityTest(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -79,7 +80,8 @@ DefaultReachabilityServiceStub::AsyncCreateConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 DefaultReachabilityServiceStub::AsyncUpdateConnectivityTest(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -98,7 +100,8 @@ DefaultReachabilityServiceStub::AsyncUpdateConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 DefaultReachabilityServiceStub::AsyncRerunConnectivityTest(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -117,7 +120,8 @@ DefaultReachabilityServiceStub::AsyncRerunConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 DefaultReachabilityServiceStub::AsyncDeleteConnectivityTest(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -136,7 +140,8 @@ DefaultReachabilityServiceStub::AsyncDeleteConnectivityTest(
 future<StatusOr<google::longrunning::Operation>>
 DefaultReachabilityServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -151,7 +156,8 @@ DefaultReachabilityServiceStub::AsyncGetOperation(
 
 future<Status> DefaultReachabilityServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -41,14 +41,16 @@ class OsConfigZonalServiceTracingStub : public OsConfigZonalServiceStub {
   future<StatusOr<google::longrunning::Operation>>
   AsyncCreateOSPolicyAssignment(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateOSPolicyAssignment(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
           request) override;
 
@@ -73,7 +75,8 @@ class OsConfigZonalServiceTracingStub : public OsConfigZonalServiceStub {
   future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteOSPolicyAssignment(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
           request) override;
 
@@ -112,12 +115,14 @@ class OsConfigZonalServiceTracingStub : public OsConfigZonalServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

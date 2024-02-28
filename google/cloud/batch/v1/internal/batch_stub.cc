@@ -56,7 +56,8 @@ StatusOr<google::cloud::batch::v1::Job> DefaultBatchServiceStub::GetJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBatchServiceStub::AsyncDeleteJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::batch::v1::DeleteJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::batch::v1::DeleteJobRequest,
                                     google::longrunning::Operation>(
@@ -107,7 +108,8 @@ DefaultBatchServiceStub::ListTasks(
 future<StatusOr<google::longrunning::Operation>>
 DefaultBatchServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -122,7 +124,8 @@ DefaultBatchServiceStub::AsyncGetOperation(
 
 future<Status> DefaultBatchServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

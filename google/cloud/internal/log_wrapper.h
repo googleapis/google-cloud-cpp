@@ -158,6 +158,23 @@ Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
                      where, std::move(args), options);
 }
 
+template <typename Functor, typename Request, typename Context,
+          typename Result = google::cloud::internal::invoke_result_t<
+              Functor, google::cloud::CompletionQueue&, Context,
+              ImmutableOptions, Request const&>>
+Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
+                  Context&& context, ImmutableOptions opts,
+                  Request const& request, char const* where,
+                  TracingOptions const& options) {
+  // Because this is an asynchronous request we need a unique identifier so
+  // applications can match the request and response in the log.
+  auto args = RequestIdForLogging();
+  LogRequest(where, args, DebugString(request, options));
+  return LogResponse(
+      functor(cq, std::forward<Context>(context), std::move(opts), request),
+      where, std::move(args), options);
+}
+
 template <
     typename Functor, typename Request, typename Context,
     typename Result = google::cloud::internal::invoke_result_t<

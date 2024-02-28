@@ -58,7 +58,8 @@ DefaultConnectorsStub::GetConnection(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConnectorsStub::AsyncCreateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::connectors::v1::CreateConnectionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::connectors::v1::CreateConnectionRequest,
@@ -76,7 +77,8 @@ DefaultConnectorsStub::AsyncCreateConnection(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConnectorsStub::AsyncUpdateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::connectors::v1::UpdateConnectionRequest,
@@ -94,7 +96,8 @@ DefaultConnectorsStub::AsyncUpdateConnection(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConnectorsStub::AsyncDeleteConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::connectors::v1::DeleteConnectionRequest,
@@ -199,7 +202,8 @@ DefaultConnectorsStub::GetConnectionSchemaMetadata(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConnectorsStub::AsyncRefreshConnectionSchemaMetadata(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -271,7 +275,8 @@ DefaultConnectorsStub::GetGlobalSettings(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConnectorsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -286,7 +291,8 @@ DefaultConnectorsStub::AsyncGetOperation(
 
 future<Status> DefaultConnectorsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -70,7 +70,8 @@ DefaultFoldersStub::SearchFolders(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFoldersStub::AsyncCreateFolder(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::resourcemanager::v3::CreateFolderRequest,
@@ -88,7 +89,8 @@ DefaultFoldersStub::AsyncCreateFolder(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFoldersStub::AsyncUpdateFolder(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::resourcemanager::v3::UpdateFolderRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::resourcemanager::v3::UpdateFolderRequest,
@@ -106,7 +108,8 @@ DefaultFoldersStub::AsyncUpdateFolder(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFoldersStub::AsyncMoveFolder(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::resourcemanager::v3::MoveFolderRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::resourcemanager::v3::MoveFolderRequest,
@@ -124,7 +127,8 @@ DefaultFoldersStub::AsyncMoveFolder(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFoldersStub::AsyncDeleteFolder(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::resourcemanager::v3::DeleteFolderRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::resourcemanager::v3::DeleteFolderRequest,
@@ -142,7 +146,8 @@ DefaultFoldersStub::AsyncDeleteFolder(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFoldersStub::AsyncUndeleteFolder(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::resourcemanager::v3::UndeleteFolderRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::resourcemanager::v3::UndeleteFolderRequest,
@@ -194,7 +199,8 @@ DefaultFoldersStub::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFoldersStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -209,7 +215,8 @@ DefaultFoldersStub::AsyncGetOperation(
 
 future<Status> DefaultFoldersStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

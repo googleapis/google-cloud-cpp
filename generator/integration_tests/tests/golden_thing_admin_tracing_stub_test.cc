@@ -96,7 +96,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncCreateDatabase) {
   google::test::admin::database::v1::CreateDatabaseRequest request;
   CompletionQueue cq;
   auto result = under_test.AsyncCreateDatabase(
-      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
+      cq, std::make_shared<grpc::ClientContext>(),
+      internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -152,7 +153,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncUpdateDatabaseDdl) {
   google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
   CompletionQueue cq;
   auto result = under_test.AsyncUpdateDatabaseDdl(
-      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
+      cq, std::make_shared<grpc::ClientContext>(),
+      internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -327,8 +329,9 @@ TEST(GoldenThingAdminTracingStubTest, AsyncCreateBackup) {
   auto under_test = GoldenThingAdminTracingStub(mock);
   google::test::admin::database::v1::CreateBackupRequest request;
   CompletionQueue cq;
-  auto result = under_test.AsyncCreateBackup(
-      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
+  auto result =
+      under_test.AsyncCreateBackup(cq, std::make_shared<grpc::ClientContext>(),
+                                   internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -473,7 +476,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncRestoreDatabase) {
   google::test::admin::database::v1::RestoreDatabaseRequest request;
   CompletionQueue cq;
   auto result = under_test.AsyncRestoreDatabase(
-      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
+      cq, std::make_shared<grpc::ClientContext>(),
+      internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -624,8 +628,9 @@ TEST(GoldenThingAdminTracingStubTest, AsyncGetOperation) {
   auto under_test = GoldenThingAdminTracingStub(mock);
   google::longrunning::GetOperationRequest request;
   CompletionQueue cq;
-  auto result = under_test.AsyncGetOperation(
-      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
+  auto result =
+      under_test.AsyncGetOperation(cq, std::make_shared<grpc::ClientContext>(),
+                                   internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();
@@ -645,7 +650,7 @@ TEST(GoldenThingAdminTracingStubTest, AsyncCancelOperation) {
 
   auto mock = std::make_shared<MockGoldenThingAdminStub>();
   EXPECT_CALL(*mock, AsyncCancelOperation)
-      .WillOnce([](auto const&, auto context, Options const&, auto const&) {
+      .WillOnce([](auto const&, auto context, auto, auto const&) {
         ValidatePropagator(*context);
         EXPECT_TRUE(ThereIsAnActiveSpan());
         EXPECT_TRUE(OTelContextCaptured());
@@ -656,7 +661,8 @@ TEST(GoldenThingAdminTracingStubTest, AsyncCancelOperation) {
   google::longrunning::CancelOperationRequest request;
   CompletionQueue cq;
   auto result = under_test.AsyncCancelOperation(
-      cq, std::make_shared<grpc::ClientContext>(), Options{}, request);
+      cq, std::make_shared<grpc::ClientContext>(),
+      internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(result.get(), StatusIs(StatusCode::kAborted));
 
   auto spans = span_catcher->GetSpans();

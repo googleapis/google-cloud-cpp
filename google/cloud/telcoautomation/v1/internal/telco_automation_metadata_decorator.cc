@@ -65,25 +65,27 @@ TelcoAutomationMetadata::GetOrchestrationCluster(
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationMetadata::AsyncCreateOrchestrationCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::telcoautomation::v1::CreateOrchestrationClusterRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateOrchestrationCluster(cq, std::move(context),
-                                                 options, request);
+                                                 std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationMetadata::AsyncDeleteOrchestrationCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::telcoautomation::v1::DeleteOrchestrationClusterRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteOrchestrationCluster(cq, std::move(context),
-                                                 options, request);
+                                                 std::move(options), request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::ListEdgeSlmsResponse>
@@ -107,21 +109,25 @@ TelcoAutomationMetadata::GetEdgeSlm(
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationMetadata::AsyncCreateEdgeSlm(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateEdgeSlm(cq, std::move(context), options, request);
+  return child_->AsyncCreateEdgeSlm(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationMetadata::AsyncDeleteEdgeSlm(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteEdgeSlm(cq, std::move(context), options, request);
+  return child_->AsyncDeleteEdgeSlm(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::cloud::telcoautomation::v1::Blueprint>
@@ -400,20 +406,24 @@ TelcoAutomationMetadata::ApplyHydratedDeployment(
 future<StatusOr<google::longrunning::Operation>>
 TelcoAutomationMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> TelcoAutomationMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void TelcoAutomationMetadata::SetMetadata(grpc::ClientContext& context,

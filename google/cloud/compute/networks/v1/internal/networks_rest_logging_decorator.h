@@ -45,7 +45,7 @@ class NetworksRestLogging : public NetworksRestStub {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAddPeering(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::networks::v1::AddPeeringRequest const&
           request) override;
 
@@ -53,7 +53,7 @@ class NetworksRestLogging : public NetworksRestStub {
   AsyncDeleteNetwork(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::networks::v1::DeleteNetworkRequest const&
           request) override;
 
@@ -75,7 +75,7 @@ class NetworksRestLogging : public NetworksRestStub {
   AsyncInsertNetwork(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::networks::v1::InsertNetworkRequest const&
           request) override;
 
@@ -96,7 +96,7 @@ class NetworksRestLogging : public NetworksRestStub {
   AsyncPatchNetwork(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::networks::v1::PatchNetworkRequest const&
           request) override;
 
@@ -104,7 +104,7 @@ class NetworksRestLogging : public NetworksRestStub {
   AsyncRemovePeering(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::networks::v1::RemovePeeringRequest const&
           request) override;
 
@@ -112,7 +112,7 @@ class NetworksRestLogging : public NetworksRestStub {
   AsyncSwitchToCustomMode(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::networks::v1::
           SwitchToCustomModeRequest const& request) override;
 
@@ -120,7 +120,7 @@ class NetworksRestLogging : public NetworksRestStub {
   AsyncUpdatePeering(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::networks::v1::UpdatePeeringRequest const&
           request) override;
 
@@ -128,14 +128,14 @@ class NetworksRestLogging : public NetworksRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 

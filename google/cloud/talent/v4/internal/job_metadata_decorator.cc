@@ -53,11 +53,13 @@ StatusOr<google::cloud::talent::v4::Job> JobServiceMetadata::CreateJob(
 future<StatusOr<google::longrunning::Operation>>
 JobServiceMetadata::AsyncBatchCreateJobs(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::talent::v4::BatchCreateJobsRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBatchCreateJobs(cq, std::move(context), options, request);
+  return child_->AsyncBatchCreateJobs(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 StatusOr<google::cloud::talent::v4::Job> JobServiceMetadata::GetJob(
@@ -80,11 +82,13 @@ StatusOr<google::cloud::talent::v4::Job> JobServiceMetadata::UpdateJob(
 future<StatusOr<google::longrunning::Operation>>
 JobServiceMetadata::AsyncBatchUpdateJobs(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::talent::v4::BatchUpdateJobsRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBatchUpdateJobs(cq, std::move(context), options, request);
+  return child_->AsyncBatchUpdateJobs(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 Status JobServiceMetadata::DeleteJob(
@@ -98,11 +102,13 @@ Status JobServiceMetadata::DeleteJob(
 future<StatusOr<google::longrunning::Operation>>
 JobServiceMetadata::AsyncBatchDeleteJobs(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::talent::v4::BatchDeleteJobsRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBatchDeleteJobs(cq, std::move(context), options, request);
+  return child_->AsyncBatchDeleteJobs(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 StatusOr<google::cloud::talent::v4::ListJobsResponse>
@@ -135,20 +141,24 @@ JobServiceMetadata::SearchJobsForAlert(
 future<StatusOr<google::longrunning::Operation>>
 JobServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> JobServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void JobServiceMetadata::SetMetadata(grpc::ClientContext& context,

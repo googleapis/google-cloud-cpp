@@ -81,7 +81,8 @@ DefaultStorageControlStub::ListFolders(
 future<StatusOr<google::longrunning::Operation>>
 DefaultStorageControlStub::AsyncRenameFolder(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::storage::control::v2::RenameFolderRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::storage::control::v2::RenameFolderRequest,
@@ -110,7 +111,8 @@ DefaultStorageControlStub::GetStorageLayout(
 future<StatusOr<google::longrunning::Operation>>
 DefaultStorageControlStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -125,7 +127,8 @@ DefaultStorageControlStub::AsyncGetOperation(
 
 future<Status> DefaultStorageControlStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

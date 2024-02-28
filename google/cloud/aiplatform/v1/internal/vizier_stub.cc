@@ -93,7 +93,8 @@ DefaultVizierServiceStub::LookupStudy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVizierServiceStub::AsyncSuggestTrials(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::SuggestTrialsRequest,
@@ -181,7 +182,8 @@ Status DefaultVizierServiceStub::DeleteTrial(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVizierServiceStub::AsyncCheckTrialEarlyStoppingState(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -225,7 +227,8 @@ DefaultVizierServiceStub::ListOptimalTrials(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVizierServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -240,7 +243,8 @@ DefaultVizierServiceStub::AsyncGetOperation(
 
 future<Status> DefaultVizierServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

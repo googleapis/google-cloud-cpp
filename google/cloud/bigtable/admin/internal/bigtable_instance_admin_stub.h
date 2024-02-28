@@ -40,7 +40,8 @@ class BigtableInstanceAdminStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::bigtable::admin::v2::CreateInstanceRequest const& request) = 0;
 
   virtual StatusOr<google::bigtable::admin::v2::Instance> GetInstance(
@@ -59,7 +60,8 @@ class BigtableInstanceAdminStub {
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncPartialUpdateInstance(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::bigtable::admin::v2::PartialUpdateInstanceRequest const&
           request) = 0;
 
@@ -69,7 +71,8 @@ class BigtableInstanceAdminStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateCluster(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::bigtable::admin::v2::CreateClusterRequest const& request) = 0;
 
   virtual StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
@@ -83,13 +86,15 @@ class BigtableInstanceAdminStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateCluster(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::bigtable::admin::v2::Cluster const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncPartialUpdateCluster(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::bigtable::admin::v2::PartialUpdateClusterRequest const&
           request) = 0;
 
@@ -113,7 +118,8 @@ class BigtableInstanceAdminStub {
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateAppProfile(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::bigtable::admin::v2::UpdateAppProfileRequest const& request) = 0;
 
   virtual Status DeleteAppProfile(
@@ -140,12 +146,14 @@ class BigtableInstanceAdminStub {
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -161,7 +169,8 @@ class DefaultBigtableInstanceAdminStub : public BigtableInstanceAdminStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::bigtable::admin::v2::CreateInstanceRequest const& request)
       override;
 
@@ -180,7 +189,8 @@ class DefaultBigtableInstanceAdminStub : public BigtableInstanceAdminStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncPartialUpdateInstance(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request)
       override;
 
@@ -191,7 +201,8 @@ class DefaultBigtableInstanceAdminStub : public BigtableInstanceAdminStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateCluster(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::bigtable::admin::v2::CreateClusterRequest const& request)
       override;
 
@@ -205,12 +216,14 @@ class DefaultBigtableInstanceAdminStub : public BigtableInstanceAdminStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateCluster(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::bigtable::admin::v2::Cluster const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncPartialUpdateCluster(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::bigtable::admin::v2::PartialUpdateClusterRequest const& request)
       override;
 
@@ -235,7 +248,8 @@ class DefaultBigtableInstanceAdminStub : public BigtableInstanceAdminStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAppProfile(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::bigtable::admin::v2::UpdateAppProfileRequest const& request)
       override;
 
@@ -263,12 +277,14 @@ class DefaultBigtableInstanceAdminStub : public BigtableInstanceAdminStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
