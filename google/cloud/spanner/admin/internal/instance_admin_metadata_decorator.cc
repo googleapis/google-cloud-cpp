@@ -119,6 +119,16 @@ InstanceAdminMetadata::ListInstances(
   return child_->ListInstances(context, options, request);
 }
 
+StatusOr<google::spanner::admin::instance::v1::ListInstancePartitionsResponse>
+InstanceAdminMetadata::ListInstancePartitions(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::instance::v1::ListInstancePartitionsRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListInstancePartitions(context, options, request);
+}
+
 StatusOr<google::spanner::admin::instance::v1::Instance>
 InstanceAdminMetadata::GetInstance(
     grpc::ClientContext& context, Options const& options,
@@ -190,6 +200,64 @@ InstanceAdminMetadata::TestIamPermissions(
       context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
   return child_->TestIamPermissions(context, options, request);
+}
+
+StatusOr<google::spanner::admin::instance::v1::InstancePartition>
+InstanceAdminMetadata::GetInstancePartition(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetInstancePartition(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+InstanceAdminMetadata::AsyncCreateInstancePartition(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
+        request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateInstancePartition(cq, std::move(context),
+                                              std::move(options), request);
+}
+
+Status InstanceAdminMetadata::DeleteInstancePartition(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const&
+        request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteInstancePartition(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+InstanceAdminMetadata::AsyncUpdateInstancePartition(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
+        request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("instance_partition.name=",
+                   internal::UrlEncode(request.instance_partition().name())));
+  return child_->AsyncUpdateInstancePartition(cq, std::move(context),
+                                              std::move(options), request);
+}
+
+StatusOr<google::spanner::admin::instance::v1::
+             ListInstancePartitionOperationsResponse>
+InstanceAdminMetadata::ListInstancePartitionOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::instance::v1::
+        ListInstancePartitionOperationsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListInstancePartitionOperations(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -63,6 +63,10 @@ class InstanceAdminConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ListInstances(
       google::spanner::admin::instance::v1::ListInstancesRequest request);
 
+  virtual google::cloud::Idempotency ListInstancePartitions(
+      google::spanner::admin::instance::v1::ListInstancePartitionsRequest
+          request);
+
   virtual google::cloud::Idempotency GetInstance(
       google::spanner::admin::instance::v1::GetInstanceRequest const& request);
 
@@ -86,6 +90,26 @@ class InstanceAdminConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request);
+
+  virtual google::cloud::Idempotency GetInstancePartition(
+      google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
+          request);
+
+  virtual google::cloud::Idempotency CreateInstancePartition(
+      google::spanner::admin::instance::v1::
+          CreateInstancePartitionRequest const& request);
+
+  virtual google::cloud::Idempotency DeleteInstancePartition(
+      google::spanner::admin::instance::v1::
+          DeleteInstancePartitionRequest const& request);
+
+  virtual google::cloud::Idempotency UpdateInstancePartition(
+      google::spanner::admin::instance::v1::
+          UpdateInstancePartitionRequest const& request);
+
+  virtual google::cloud::Idempotency ListInstancePartitionOperations(
+      google::spanner::admin::instance::v1::
+          ListInstancePartitionOperationsRequest request);
 };
 
 std::unique_ptr<InstanceAdminConnectionIdempotencyPolicy>
