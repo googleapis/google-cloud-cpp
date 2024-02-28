@@ -1333,7 +1333,8 @@ void AutoRunAvro(
 
   Cleanup cleanup;
   cleanup.Defer([schema_admin, schema]() mutable {
-    std::cout << "\nDelete schema (" << schema.schema_id() << ") [avro]" << std::endl;
+    std::cout << "\nDelete schema (" << schema.schema_id() << ") [avro]"
+              << std::endl;
     google::pubsub::v1::DeleteSchemaRequest request;
     request.set_name(schema.FullName());
     schema_admin.DeleteSchema(request);
@@ -1352,7 +1353,8 @@ void AutoRunAvro(
     std::cerr << t.status() << "\n";
   }
   cleanup.Defer([topic_admin, topic]() mutable {
-    std::cout << "\nDelete topic (" << topic.topic_id() << ") [avro]" << std::endl;
+    std::cout << "\nDelete topic (" << topic.topic_id() << ") [avro]"
+              << std::endl;
     (void)topic_admin.DeleteTopic(topic.FullName());
   });
 
@@ -1389,12 +1391,11 @@ void AutoRunAvro(
   WaitForSession(std::move(session), "SubscribeAvroRecords");
 }
 
-void AutoRunProtobuf(std::string const& project_id,
-                     std::string const& testdata_directory,
-                     google::cloud::internal::DefaultPRNG& generator,
-                     google::cloud::pubsub_admin::TopicAdminClient& topic_admin,
-                     google::cloud::pubsub_admin::SubscriptionAdminClient&
-                         subscription_admin) {
+void AutoRunProtobuf(
+    std::string const& project_id, std::string const& testdata_directory,
+    google::cloud::internal::DefaultPRNG& generator,
+    google::cloud::pubsub_admin::TopicAdminClient& topic_admin,
+    google::cloud::pubsub_admin::SubscriptionAdminClient& subscription_admin) {
   auto schema_admin = google::cloud::pubsub::SchemaServiceClient(
       google::cloud::pubsub::MakeSchemaServiceConnection());
   auto proto_schema_id = RandomSchemaId(generator);
@@ -1414,7 +1415,8 @@ void AutoRunProtobuf(std::string const& project_id,
 
   Cleanup cleanup;
   cleanup.Defer([schema_admin, schema]() mutable {
-    std::cout << "\nDelete schema (" << schema.schema_id() << ") [proto]" << std::endl;
+    std::cout << "\nDelete schema (" << schema.schema_id() << ") [proto]"
+              << std::endl;
     google::pubsub::v1::DeleteSchemaRequest request;
     request.set_name(schema.FullName());
     schema_admin.DeleteSchema(request);
@@ -1430,7 +1432,8 @@ void AutoRunProtobuf(std::string const& project_id,
       google::pubsub::v1::BINARY);
   topic_admin.CreateTopic(topic_request);
   cleanup.Defer([topic_admin, topic]() mutable {
-    std::cout << "\nDelete topic (" << topic.topic_id() << ") [proto]" << std::endl;
+    std::cout << "\nDelete topic (" << topic.topic_id() << ") [proto]"
+              << std::endl;
     (void)topic_admin.DeleteTopic(topic.FullName());
   });
 
