@@ -31,9 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Performs subscription administrative operations in Cloud Pub/Sub.
  *
- * @deprecated Please use \ref
- * google::cloud::pubsub_admin::SubscriptionAdminClient and \ref
- * google::cloud::pubsub_admin::SubscriptionAdminClient instead.
+ * @deprecated Please use #google::cloud::pubsub_admin::SubscriptionAdminClient
+ *     and #google::cloud::pubsub_admin::SubscriptionAdminClient instead.
  *
  * Applications use this class to perform subscription administrative operations
  * on [Cloud Pub/Sub][pubsub-doc-link].
@@ -63,16 +62,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class SubscriptionAdminClient {
  public:
-  explicit SubscriptionAdminClient(
-      std::shared_ptr<SubscriptionAdminConnection> connection,
-      Options opts = {});
+  [[deprecated(
+      "Replaced by "
+      "google::cloud::pubsub_admin::"
+      "SubscriptionAdminClient")]] explicit SubscriptionAdminClient(std::
+                                                                        shared_ptr<
+                                                                            SubscriptionAdminConnection>
+                                                                            connection,
+                                                                    Options
+                                                                        opts =
+                                                                            {});
 
   /**
    * The default constructor is deleted.
    *
    * Use `SubscriberClient(std::shared_ptr<SubscriberConnection>)`
    */
-  SubscriptionAdminClient() = delete;
+  [[deprecated(
+      "Replaced by "
+      "google::cloud::pubsub_admin::"
+      "SubscriptionAdminClient")]] SubscriptionAdminClient() = delete;
 
   /**
    * Creates a new subscription in Cloud Pub/Sub.
@@ -83,21 +92,18 @@ class SubscriptionAdminClient {
    * status code of `kAlreadyExists` as a consequence of retrying a successful
    * (but reported as failed) request.
    *
-   * @par Example: Create a Pull Subscription
-   * @snippet samples.cc create-subscription
-   *
-   * @par Example: Create a Push Subscription
-   * @snippet samples.cc create-push-subscription
-   *
    * @param topic the topic that the subscription will attach to
    * @param subscription the name for the subscription
    * @param builder any additional configuration for the subscription
    * @param opts Override the class-level options, such as retry and backoff
    *     policies.
    */
-  StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
-      Topic const& topic, Subscription const& subscription,
-      SubscriptionBuilder builder = {}, Options opts = {}) {
+  [[deprecated(
+      "Replaced by "
+      "google::cloud::pubsub_admin::SubscriptionAdminClient")]] StatusOr<google::pubsub::
+                                                                             v1::Subscription>
+  CreateSubscription(Topic const& topic, Subscription const& subscription,
+                     SubscriptionBuilder builder = {}, Options opts = {}) {
     internal::OptionsSpan span(
         internal::MergeOptions(std::move(opts), options_));
     return connection_->CreateSubscription(
@@ -110,8 +116,11 @@ class SubscriptionAdminClient {
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
    */
-  StatusOr<google::pubsub::v1::Subscription> GetSubscription(
-      Subscription subscription, Options opts = {}) {
+  [[deprecated(
+      "Replaced by "
+      "google::cloud::pubsub_admin::SubscriptionAdminClient")]] StatusOr<google::pubsub::
+                                                                             v1::Subscription>
+  GetSubscription(Subscription subscription, Options opts = {}) {
     internal::OptionsSpan span(
         internal::MergeOptions(std::move(opts), options_));
     return connection_->GetSubscription({std::move(subscription)});
@@ -129,9 +138,12 @@ class SubscriptionAdminClient {
    * @param opts Override the class-level options, such as retry and backoff
    *     policies.
    */
-  StatusOr<google::pubsub::v1::Subscription> UpdateSubscription(
-      Subscription const& subscription, SubscriptionBuilder builder,
-      Options opts = {}) {
+  [[deprecated(
+      "Replaced by "
+      "google::cloud::pubsub_admin::SubscriptionAdminClient")]] StatusOr<google::pubsub::
+                                                                             v1::Subscription>
+  UpdateSubscription(Subscription const& subscription,
+                     SubscriptionBuilder builder, Options opts = {}) {
     internal::OptionsSpan span(
         internal::MergeOptions(std::move(opts), options_));
     return connection_->UpdateSubscription(
@@ -144,8 +156,11 @@ class SubscriptionAdminClient {
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
    */
-  ListSubscriptionsRange ListSubscriptions(std::string const& project_id,
-                                           Options opts = {}) {
+  [[deprecated(
+      "Replaced by "
+      "google::cloud::pubsub_admin::"
+      "SubscriptionAdminClient")]] ListSubscriptionsRange
+  ListSubscriptions(std::string const& project_id, Options opts = {}) {
     internal::OptionsSpan span(
         internal::MergeOptions(std::move(opts), options_));
     return connection_->ListSubscriptions({"projects/" + project_id});
@@ -164,7 +179,10 @@ class SubscriptionAdminClient {
    * @param opts Override the class-level options, such as retry and backoff
    *     policies.
    */
-  Status DeleteSubscription(Subscription subscription, Options opts = {}) {
+  [[deprecated(
+      "Replaced by "
+      "google::cloud::pubsub_admin::SubscriptionAdminClient")]] Status
+  DeleteSubscription(Subscription subscription, Options opts = {}) {
     internal::OptionsSpan span(
         internal::MergeOptions(std::move(opts), options_));
     return connection_->DeleteSubscription({std::move(subscription)});
@@ -181,16 +199,16 @@ class SubscriptionAdminClient {
    * This operation is idempotent, the state of the system is the same after one
    * or several calls, and therefore it is always retried.
    *
-   * @par Example
-   * @snippet samples.cc modify-push-config
-   *
    * @param subscription the name of the subscription to be modified.
    * @param builder a description of the changes to be made.
    * @param opts Override the class-level options, such as retry and backoff
    *     policies.
    */
-  Status ModifyPushSubscription(Subscription const& subscription,
-                                PushConfigBuilder builder, Options opts = {}) {
+  [[deprecated(
+      "Replaced by "
+      "google::cloud::pubsub_admin::SubscriptionAdminClient")]] Status
+  ModifyPushSubscription(Subscription const& subscription,
+                         PushConfigBuilder builder, Options opts = {}) {
     internal::OptionsSpan span(
         internal::MergeOptions(std::move(opts), options_));
     return connection_->ModifyPushConfig(
@@ -210,9 +228,12 @@ class SubscriptionAdminClient {
    * @param opts Override the class-level options, such as retry and backoff
    *     policies.
    */
-  StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
-      Subscription const& subscription, SnapshotBuilder builder = {},
-      Options opts = {}) {
+  [[deprecated(
+      "Replaced by "
+      "google::cloud::pubsub_admin::SubscriptionAdminClient")]] StatusOr<google::pubsub::
+                                                                             v1::Snapshot>
+  CreateSnapshot(Subscription const& subscription, SnapshotBuilder builder = {},
+                 Options opts = {}) {
     internal::OptionsSpan span(
         internal::MergeOptions(std::move(opts), options_));
     return connection_->CreateSnapshot(
@@ -235,9 +256,12 @@ class SubscriptionAdminClient {
    * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
    *     description of Cloud Pub/Sub's snapshots.
    */
-  StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
-      Subscription const& subscription, Snapshot const& snapshot,
-      SnapshotBuilder builder = {}, Options opts = {}) {
+  [[deprecated(
+      "Replaced by "
+      "google::cloud::pubsub_admin::SubscriptionAdminClient")]] StatusOr<google::pubsub::
+                                                                             v1::Snapshot>
+  CreateSnapshot(Subscription const& subscription, Snapshot const& snapshot,
+                 SnapshotBuilder builder = {}, Options opts = {}) {
     internal::OptionsSpan span(
         internal::MergeOptions(std::move(opts), options_));
     return connection_->CreateSnapshot(
@@ -257,8 +281,11 @@ class SubscriptionAdminClient {
    * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
    *     description of Cloud Pub/Sub's snapshots.
    */
-  StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(Snapshot const& snapshot,
-                                                     Options opts = {}) {
+  [[deprecated(
+      "Replaced by "
+      "google::cloud::pubsub_admin::SubscriptionAdminClient")]] StatusOr<google::pubsub::
+                                                                             v1::Snapshot>
+  GetSnapshot(Snapshot const& snapshot, Options opts = {}) {
     internal::OptionsSpan span(
         internal::MergeOptions(std::move(opts), options_));
     return connection_->GetSnapshot({snapshot});
@@ -279,8 +306,12 @@ class SubscriptionAdminClient {
    * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
    *     description of Cloud Pub/Sub's snapshots.
    */
-  StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
-      Snapshot const& snapshot, SnapshotBuilder builder, Options opts = {}) {
+  [[deprecated(
+      "Replaced by "
+      "google::cloud::pubsub_admin::SubscriptionAdminClient")]] StatusOr<google::pubsub::
+                                                                             v1::Snapshot>
+  UpdateSnapshot(Snapshot const& snapshot, SnapshotBuilder builder,
+                 Options opts = {}) {
     internal::OptionsSpan span(
         internal::MergeOptions(std::move(opts), options_));
     return connection_->UpdateSnapshot(
@@ -296,8 +327,11 @@ class SubscriptionAdminClient {
    * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
    *     description of Cloud Pub/Sub's snapshots.
    */
-  ListSnapshotsRange ListSnapshots(std::string const& project_id,
-                                   Options opts = {}) {
+  [[deprecated(
+      "Replaced by "
+      "google::cloud::pubsub_admin::"
+      "SubscriptionAdminClient")]] ListSnapshotsRange
+  ListSnapshots(std::string const& project_id, Options opts = {}) {
     internal::OptionsSpan span(
         internal::MergeOptions(std::move(opts), options_));
     return connection_->ListSnapshots({"projects/" + project_id});
@@ -317,7 +351,10 @@ class SubscriptionAdminClient {
    * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
    *     description of Cloud Pub/Sub's snapshots.
    */
-  Status DeleteSnapshot(Snapshot const& snapshot, Options opts = {}) {
+  [[deprecated(
+      "Replaced by "
+      "google::cloud::pubsub_admin::SubscriptionAdminClient")]] Status
+  DeleteSnapshot(Snapshot const& snapshot, Options opts = {}) {
     internal::OptionsSpan span(
         internal::MergeOptions(std::move(opts), options_));
     return connection_->DeleteSnapshot({snapshot});
@@ -337,9 +374,12 @@ class SubscriptionAdminClient {
    * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
    *     description of Cloud Pub/Sub's `Seek()` functionality.
    */
-  StatusOr<google::pubsub::v1::SeekResponse> Seek(
-      Subscription const& subscription,
-      std::chrono::system_clock::time_point timestamp, Options opts = {});
+  [[deprecated(
+      "Replaced by "
+      "google::cloud::pubsub_admin::SubscriptionAdminClient")]] StatusOr<google::pubsub::
+                                                                             v1::SeekResponse>
+  Seek(Subscription const& subscription,
+       std::chrono::system_clock::time_point timestamp, Options opts = {});
 
   /**
    * Seeks a subscription to its state at @p snapshot.
@@ -351,9 +391,12 @@ class SubscriptionAdminClient {
    * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
    *     description of Cloud Pub/Sub's `Seek()` functionality.
    */
-  StatusOr<google::pubsub::v1::SeekResponse> Seek(
-      Subscription const& subscription, Snapshot const& snapshot,
-      Options opts = {});
+  [[deprecated(
+      "Replaced by "
+      "google::cloud::pubsub_admin::SubscriptionAdminClient")]] StatusOr<google::pubsub::
+                                                                             v1::SeekResponse>
+  Seek(Subscription const& subscription, Snapshot const& snapshot,
+       Options opts = {});
 
  private:
   std::shared_ptr<SubscriptionAdminConnection> connection_;
