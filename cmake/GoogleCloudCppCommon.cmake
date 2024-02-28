@@ -165,16 +165,6 @@ function (google_cloud_cpp_install_mocks library display_name)
     set(library_target "google_cloud_cpp_${library}")
     set(mocks_target "google_cloud_cpp_${library}_mocks")
 
-    # Always install the mock headers. These are harmless, in the sense that
-    # they will not cause build failures in environments without GoogleTest. The
-    # same is not true about the mocking libraries which link GoogleTest.
-    google_cloud_cpp_install_headers("${mocks_target}"
-                                     "include/google/cloud/${library}")
-
-    if (NOT GOOGLE_CLOUD_CPP_WITH_MOCKS)
-        # Only install modules for the mock libraries if they are requested.
-        return()
-    endif ()
     install(
         EXPORT ${mocks_target}-targets
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${mocks_target}"
@@ -183,6 +173,9 @@ function (google_cloud_cpp_install_mocks library display_name)
         TARGETS ${mocks_target}
         EXPORT ${mocks_target}-targets
         COMPONENT google_cloud_cpp_development)
+
+    google_cloud_cpp_install_headers("${mocks_target}"
+                                     "include/google/cloud/${library}")
 
     google_cloud_cpp_add_pkgconfig(
         ${library}_mocks "${display_name} Mocks"
