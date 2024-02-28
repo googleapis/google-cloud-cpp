@@ -74,7 +74,7 @@ TEST(DefaultPullLeaseManager, ExtendLeaseDeadlineSimple) {
                kLeaseExtension.count()),
       Property(&ModifyAckDeadlineRequest::subscription,
                subscription.FullName()));
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, request_matcher))
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _, request_matcher))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
@@ -115,7 +115,7 @@ TEST(DefaultPullLeaseManager, TracingEnabled) {
                kLeaseExtension.count()),
       Property(&ModifyAckDeadlineRequest::subscription,
                subscription.FullName()));
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, request_matcher))
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _, request_matcher))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
@@ -150,7 +150,7 @@ TEST(DefaultPullLeaseManager, TracingDisabled) {
                kLeaseExtension.count()),
       Property(&ModifyAckDeadlineRequest::subscription,
                subscription.FullName()));
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, request_matcher))
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _, request_matcher))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);

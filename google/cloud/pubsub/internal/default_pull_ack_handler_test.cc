@@ -82,7 +82,7 @@ TEST(PullAckHandlerTest, AckSimple) {
   auto request_matcher = AllOf(
       Property(&AcknowledgeRequest::ack_ids, ElementsAre("test-ack-id")),
       Property(&AcknowledgeRequest::subscription, subscription.FullName()));
-  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, request_matcher))
+  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _, request_matcher))
       .WillOnce(Return(ByMove(make_ready_future(TransientError()))))
       .WillOnce(
           Return(ByMove(make_ready_future(TransientError("test-ack-id")))))
@@ -110,7 +110,7 @@ TEST(PullAckHandlerTest, AckPermanentError) {
   auto request_matcher = AllOf(
       Property(&AcknowledgeRequest::ack_ids, ElementsAre("test-ack-id")),
       Property(&AcknowledgeRequest::subscription, subscription.FullName()));
-  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, request_matcher))
+  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _, request_matcher))
       .WillOnce(Return(ByMove(make_ready_future(PermanentError()))));
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
@@ -132,7 +132,7 @@ TEST(PullAckHandlerTest, NackSimple) {
       Property(&ModifyAckDeadlineRequest::ack_deadline_seconds, 0),
       Property(&ModifyAckDeadlineRequest::subscription,
                subscription.FullName()));
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, request_matcher))
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _, request_matcher))
       .WillOnce(Return(ByMove(make_ready_future(TransientError()))))
       .WillOnce(
           Return(ByMove(make_ready_future(TransientError("test-ack-id")))))
@@ -162,7 +162,7 @@ TEST(PullAckHandlerTest, NackPermanentError) {
       Property(&ModifyAckDeadlineRequest::ack_deadline_seconds, 0),
       Property(&ModifyAckDeadlineRequest::subscription,
                subscription.FullName()));
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, request_matcher))
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _, request_matcher))
       .WillOnce(Return(ByMove(make_ready_future(PermanentError()))));
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);

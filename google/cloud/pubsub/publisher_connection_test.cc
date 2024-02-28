@@ -57,7 +57,7 @@ TEST(PublisherConnectionTest, Basic) {
   Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, AsyncPublish)
-      .WillOnce([&](google::cloud::CompletionQueue&, auto,
+      .WillOnce([&](google::cloud::CompletionQueue&, auto, auto,
                     google::pubsub::v1::PublishRequest const& request) {
         EXPECT_EQ(topic.FullName(), request.topic());
         EXPECT_EQ(1, request.messages_size());
@@ -81,7 +81,7 @@ TEST(PublisherConnectionTest, Metadata) {
 
   EXPECT_CALL(*mock, AsyncPublish)
       .Times(AtLeast(1))
-      .WillRepeatedly([&](google::cloud::CompletionQueue&, auto context,
+      .WillRepeatedly([&](google::cloud::CompletionQueue&, auto context, auto,
                           google::pubsub::v1::PublishRequest const& request) {
         google::cloud::testing_util::ValidateMetadataFixture fixture;
         fixture.IsContextMDValid(
@@ -109,7 +109,7 @@ TEST(PublisherConnectionTest, Logging) {
 
   EXPECT_CALL(*mock, AsyncPublish)
       .Times(AtLeast(1))
-      .WillRepeatedly([&](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([&](google::cloud::CompletionQueue&, auto, auto,
                           google::pubsub::v1::PublishRequest const& request) {
         google::pubsub::v1::PublishResponse response;
         for (auto const& m : request.messages()) {
@@ -142,7 +142,7 @@ TEST(PublisherConnectionTest, FlowControl) {
   AsyncSequencer<void> publish;
   EXPECT_CALL(*mock, AsyncPublish)
       .Times(AtLeast(1))
-      .WillRepeatedly([&](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([&](google::cloud::CompletionQueue&, auto, auto,
                           google::pubsub::v1::PublishRequest const& request) {
         {
           std::lock_guard<std::mutex> lk(mu);
@@ -193,7 +193,7 @@ TEST(PublisherConnectionTest, OrderingKey) {
   Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, AsyncPublish)
-      .WillOnce([&](google::cloud::CompletionQueue&, auto,
+      .WillOnce([&](google::cloud::CompletionQueue&, auto, auto,
                     google::pubsub::v1::PublishRequest const& request) {
         EXPECT_EQ(topic.FullName(), request.topic());
         EXPECT_EQ(1, request.messages_size());
@@ -233,7 +233,7 @@ TEST(PublisherConnectionTest, HandleInvalidResponse) {
   Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, AsyncPublish)
-      .WillOnce([&](google::cloud::CompletionQueue&, auto,
+      .WillOnce([&](google::cloud::CompletionQueue&, auto, auto,
                     google::pubsub::v1::PublishRequest const&) {
         google::pubsub::v1::PublishResponse response;
         return make_ready_future(make_status_or(response));
@@ -257,7 +257,7 @@ TEST(PublisherConnectionTest, HandleTooManyFailures) {
 
   EXPECT_CALL(*mock, AsyncPublish)
       .Times(AtLeast(2))
-      .WillRepeatedly([&](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([&](google::cloud::CompletionQueue&, auto, auto,
                           google::pubsub::v1::PublishRequest const&) {
         return make_ready_future(StatusOr<google::pubsub::v1::PublishResponse>(
             Status(StatusCode::kUnavailable, "try-again")));
@@ -276,7 +276,7 @@ TEST(PublisherConnectionTest, HandlePermanentError) {
   Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, AsyncPublish)
-      .WillOnce([&](google::cloud::CompletionQueue&, auto,
+      .WillOnce([&](google::cloud::CompletionQueue&, auto, auto,
                     google::pubsub::v1::PublishRequest const&) {
         return make_ready_future(StatusOr<google::pubsub::v1::PublishResponse>(
             Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -295,7 +295,7 @@ TEST(PublisherConnectionTest, HandleTransientDisabledRetry) {
   Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, AsyncPublish)
-      .WillOnce([&](google::cloud::CompletionQueue&, auto,
+      .WillOnce([&](google::cloud::CompletionQueue&, auto, auto,
                     google::pubsub::v1::PublishRequest const&) {
         return make_ready_future(StatusOr<google::pubsub::v1::PublishResponse>(
             Status(StatusCode::kUnavailable, "try-again")));
@@ -317,12 +317,12 @@ TEST(PublisherConnectionTest, HandleTransientEnabledRetry) {
   Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, AsyncPublish)
-      .WillOnce([&](google::cloud::CompletionQueue&, auto,
+      .WillOnce([&](google::cloud::CompletionQueue&, auto, auto,
                     google::pubsub::v1::PublishRequest const&) {
         return make_ready_future(StatusOr<google::pubsub::v1::PublishResponse>(
             Status(StatusCode::kUnavailable, "try-again")));
       })
-      .WillOnce([&](google::cloud::CompletionQueue&, auto,
+      .WillOnce([&](google::cloud::CompletionQueue&, auto, auto,
                     google::pubsub::v1::PublishRequest const& request) {
         EXPECT_EQ(topic.FullName(), request.topic());
         EXPECT_EQ(1, request.messages_size());
@@ -355,7 +355,7 @@ TEST(MakePublisherConnectionTest, TracingEnabled) {
   Topic const topic("test-project", "test-topic");
 
   EXPECT_CALL(*mock, AsyncPublish)
-      .WillOnce([&](google::cloud::CompletionQueue&, auto context,
+      .WillOnce([&](google::cloud::CompletionQueue&, auto context, auto,
                     google::pubsub::v1::PublishRequest const&) {
         ValidatePropagator(*context);
         google::pubsub::v1::PublishResponse response;
@@ -387,7 +387,7 @@ TEST(MakePublisherConnectionTest, TracingDisabled) {
   auto mock = std::make_shared<pubsub_testing::MockPublisherStub>();
   Topic const topic("test-project", "test-topic");
   EXPECT_CALL(*mock, AsyncPublish)
-      .WillOnce([&](google::cloud::CompletionQueue&, auto,
+      .WillOnce([&](google::cloud::CompletionQueue&, auto, auto,
                     google::pubsub::v1::PublishRequest const&) {
         google::pubsub::v1::PublishResponse response;
         response.add_message_ids("test-message-id-0");
