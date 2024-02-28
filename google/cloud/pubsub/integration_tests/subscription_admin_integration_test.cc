@@ -34,7 +34,6 @@ namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::pubsub::Topic;
 using ::google::cloud::pubsub_admin::MakeTopicAdminConnection;
 using ::google::cloud::pubsub_admin::TopicAdminClient;
 using ::google::cloud::pubsub_testing::MakeTestOptions;
