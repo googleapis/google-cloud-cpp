@@ -1374,7 +1374,7 @@ void AutoRunAvro(
   google::pubsub::v1::Subscription request;
   request.set_name(subscription.FullName());
   request.set_topic(topic.FullName());
-(void) subscription_admin.CreateSubscription(request);
+  (void)subscription_admin.CreateSubscription(request);
   cleanup.Defer([subscription_admin, subscription]() mutable {
     std::cout << "\nDelete subscription (" << subscription.subscription_id()
               << ") [avro]" << std::endl;
@@ -1453,7 +1453,7 @@ void AutoRunProtobuf(
   google::pubsub::v1::Subscription request;
   request.set_name(subscription.FullName());
   request.set_topic(topic.FullName());
-(void) subscription_admin.CreateSubscription(request);
+  (void)subscription_admin.CreateSubscription(request);
   cleanup.Defer([subscription_admin, subscription]() mutable {
     std::cout << "\nDelete subscription (" << subscription.subscription_id()
               << ") [proto]" << std::endl;
@@ -1554,7 +1554,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   google::pubsub::v1::Subscription request;
   request.set_name(subscription.FullName());
   request.set_topic(topic.FullName());
-(void) subscription_admin.CreateSubscription(request);
+  (void)subscription_admin.CreateSubscription(request);
   cleanup.Defer([subscription_admin, subscription]() mutable {
     std::cout << "\nDelete subscription (" << subscription.subscription_id()
               << ")" << std::endl;
