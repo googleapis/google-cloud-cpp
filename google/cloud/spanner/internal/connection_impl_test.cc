@@ -2537,14 +2537,14 @@ TEST(ConnectionImplTest, CommitSuccessWithMaxCommitDelay) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",
                               "placeholder_database_id");
-  EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
   google::spanner::v1::Transaction txn = MakeTestTransaction();
   EXPECT_CALL(*mock, BeginTransaction).WillOnce(Return(txn));
-  EXPECT_CALL(
-      *mock,
-      Commit(_, AllOf(HasSession("test-session-name"),
-                      HasMaxCommitDelay(std::chrono::milliseconds(100)))))
+  EXPECT_CALL(*mock,
+              Commit(_, _,
+                     AllOf(HasSession("test-session-name"),
+                           HasMaxCommitDelay(std::chrono::milliseconds(100)))))
       .WillOnce(Return(MakeCommitResponse(
           spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
               .value())));
