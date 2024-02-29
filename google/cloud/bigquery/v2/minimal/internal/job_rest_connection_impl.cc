@@ -53,11 +53,11 @@ StatusOr<Job> BigQueryJobRestConnectionImpl::GetJob(
   auto result = rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetJob(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const&,
              GetJobRequest const& request) {
         return stub_->GetJob(rest_context, request);
       },
-      request, __func__);
+      *current, request, __func__);
   if (!result) return std::move(result).status();
   return result->job;
 }
@@ -75,16 +75,17 @@ StreamRange<ListFormatJob> BigQueryJobRestConnectionImpl::ListJobs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<ListFormatJob>>(
-      std::move(req),
+      std::move(current), std::move(req),
       [stub = stub_, retry = std::move(retry), backoff = std::move(backoff),
-       idempotency, function_name](ListJobsRequest const& r) {
+       idempotency,
+       function_name](Options const& options, ListJobsRequest const& r) {
         return rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& context,
+            [stub](rest_internal::RestContext& context, Options const&,
                    ListJobsRequest const& request) {
               return stub->ListJobs(context, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](ListJobsResponse r) {
         std::vector<ListFormatJob> result(r.jobs.size());
@@ -100,11 +101,11 @@ StatusOr<Job> BigQueryJobRestConnectionImpl::InsertJob(
   auto result = rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->InsertJob(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const&,
              InsertJobRequest const& request) {
         return stub_->InsertJob(rest_context, request);
       },
-      request, __func__);
+      *current, request, __func__);
   if (!result) return std::move(result).status();
   return result->job;
 }
@@ -115,11 +116,11 @@ StatusOr<Job> BigQueryJobRestConnectionImpl::CancelJob(
   auto result = rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CancelJob(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const&,
              CancelJobRequest const& request) {
         return stub_->CancelJob(rest_context, request);
       },
-      request, __func__);
+      *current, request, __func__);
   if (!result) return std::move(result).status();
   return std::move(result->job);
 }
@@ -130,11 +131,11 @@ StatusOr<PostQueryResults> BigQueryJobRestConnectionImpl::Query(
   auto result = rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Query(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const&,
              PostQueryRequest const& request) {
         return stub_->Query(rest_context, request);
       },
-      request, __func__);
+      *current, request, __func__);
   if (!result) return std::move(result).status();
   return result->post_query_results;
 }
@@ -145,11 +146,11 @@ StatusOr<GetQueryResults> BigQueryJobRestConnectionImpl::QueryResults(
   auto result = rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetQueryResults(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const&,
              GetQueryResultsRequest const& request) {
         return stub_->GetQueryResults(rest_context, request);
       },
-      request, __func__);
+      *current, request, __func__);
   if (!result) return std::move(result).status();
   return result->get_query_results;
 }
