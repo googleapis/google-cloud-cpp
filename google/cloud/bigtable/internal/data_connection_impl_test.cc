@@ -789,7 +789,7 @@ TEST_F(DataConnectionTest, BulkApplyRetryInfoHeeded) {
 
   auto conn = TestConnection(std::move(mock));
   internal::OptionsSpan span(
-      CallOptions().set<internal::EnableServerRetriesOption>(true));
+      CallOptions().set<EnableServerRetriesOption>(true));
   auto actual = conn->BulkApply(kTableName, std::move(mut));
   CheckFailedMutations(actual, {});
 }
@@ -810,7 +810,7 @@ TEST_F(DataConnectionTest, BulkApplyRetryInfoIgnored) {
 
   auto conn = TestConnection(std::move(mock));
   internal::OptionsSpan span(
-      CallOptions().set<internal::EnableServerRetriesOption>(false));
+      CallOptions().set<EnableServerRetriesOption>(false));
   auto actual = conn->BulkApply(kTableName, std::move(mut));
   CheckFailedMutations(actual, expected);
 }
@@ -955,7 +955,7 @@ TEST_F(DataConnectionTest, ReadRowsRetryInfoHeeded) {
 
   auto conn = TestConnection(std::move(mock));
   internal::OptionsSpan span(
-      CallOptions().set<internal::EnableServerRetriesOption>(true));
+      CallOptions().set<EnableServerRetriesOption>(true));
   auto reader = conn->ReadRowsFull(bigtable::ReadRowsParams{
       kTableName, kAppProfile, TestRowSet(), 42, TestFilter(), true});
   EXPECT_EQ(reader.begin(), reader.end());
@@ -975,7 +975,7 @@ TEST_F(DataConnectionTest, ReadRowsRetryInfoIgnored) {
 
   auto conn = TestConnection(std::move(mock));
   internal::OptionsSpan span(
-      CallOptions().set<internal::EnableServerRetriesOption>(false));
+      CallOptions().set<EnableServerRetriesOption>(false));
   auto reader = conn->ReadRowsFull(bigtable::ReadRowsParams{
       kTableName, kAppProfile, TestRowSet(), 42, TestFilter(), true});
   std::vector<StatusOr<bigtable::Row>> rows;
@@ -1639,7 +1639,7 @@ TEST_F(DataConnectionTest, SampleRowsRetryInfoHeeded) {
 
   auto conn = TestConnection(std::move(mock));
   internal::OptionsSpan span(
-      CallOptions().set<internal::EnableServerRetriesOption>(true));
+      CallOptions().set<EnableServerRetriesOption>(true));
   auto samples = conn->SampleRows(kTableName);
   EXPECT_STATUS_OK(samples);
 }
@@ -1657,7 +1657,7 @@ TEST_F(DataConnectionTest, SampleRowsRetryInfoIgnored) {
 
   auto conn = TestConnection(std::move(mock));
   internal::OptionsSpan span(
-      CallOptions().set<internal::EnableServerRetriesOption>(false));
+      CallOptions().set<EnableServerRetriesOption>(false));
   auto samples = conn->SampleRows(kTableName);
   EXPECT_THAT(samples, StatusIs(StatusCode::kPermissionDenied));
 }

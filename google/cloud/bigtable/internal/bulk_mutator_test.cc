@@ -31,7 +31,6 @@ using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
 using ::google::cloud::bigtable::testing::MockBigtableStub;
 using ::google::cloud::bigtable::testing::MockMutateRowsLimiter;
 using ::google::cloud::bigtable::testing::MockMutateRowsStream;
-using ::google::cloud::internal::EnableServerRetriesOption;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 using ::testing::Contains;
