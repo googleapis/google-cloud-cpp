@@ -129,42 +129,6 @@ auto RestRetryLoop(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
                            location, std::move(sleeper));
 }
 
-// TODO(#12359) - remove the variants not using Options
-/// @copydoc RestRetryLoopImpl
-template <typename Functor, typename Request,
-          std::enable_if_t<google::cloud::internal::is_invocable<
-                               Functor, RestContext&, Request const&>::value,
-                           int> = 0>
-auto RestRetryLoop(RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
-                   Idempotency idempotency, Functor&& functor,
-                   Request const& request, char const* location)
-    -> google::cloud::internal::invoke_result_t<Functor, RestContext&,
-                                                Request const&> {
-  auto with_options = [&functor](RestContext& context, Options const&,
-                                 Request const& request) {
-    return functor(context, request);
-  };
-  auto const& current = google::cloud::internal::CurrentOptions();
-  return RestRetryLoop(retry_policy, backoff_policy, idempotency,
-                       std::move(with_options), current, request, location);
-}
-
-// TODO(#12359) - remove the variants not using Options
-/// @copydoc RestRetryLoopImpl
-template <typename Functor, typename Request,
-          std::enable_if_t<google::cloud::internal::is_invocable<
-                               Functor, RestContext&, Request const&>::value,
-                           int> = 0>
-auto RestRetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
-                   std::unique_ptr<BackoffPolicy> backoff_policy,
-                   Idempotency idempotency, Functor&& functor,
-                   Request const& request, char const* location)
-    -> google::cloud::internal::invoke_result_t<Functor, RestContext&,
-                                                Request const&> {
-  return RestRetryLoop(*retry_policy, *backoff_policy, idempotency,
-                       std::forward<Functor>(functor), request, location);
-}
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
