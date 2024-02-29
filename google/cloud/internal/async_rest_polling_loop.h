@@ -153,19 +153,6 @@ future<StatusOr<google::longrunning::Operation>> AsyncRestPollingLoopAip151(
         cancel,
     std::unique_ptr<PollingPolicy> polling_policy, std::string location);
 
-// TODO(#12359) - remove once this is no longer used.
-future<StatusOr<google::longrunning::Operation>> AsyncRestPollingLoopAip151(
-    google::cloud::CompletionQueue cq,
-    future<StatusOr<google::longrunning::Operation>> op,
-    AsyncRestPollLongRunningOperationImplicitOptions<
-        google::longrunning::Operation,
-        google::longrunning::GetOperationRequest>
-        poll,
-    AsyncRestCancelLongRunningOperationImplicitOptions<
-        google::longrunning::CancelOperationRequest>
-        cancel,
-    std::unique_ptr<PollingPolicy> polling_policy, std::string location);
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
