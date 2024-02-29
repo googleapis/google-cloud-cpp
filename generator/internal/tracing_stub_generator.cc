@@ -135,6 +135,9 @@ $tracing_stub_class_name$::$tracing_stub_class_name$(
 
   // Tracing stub class member methods
   for (auto const& method : methods()) {
+    auto const* request_id_fragment = HasRequestId(method) ? R"""(
+  span->SetAttribute("gl-cpp.request_id", request.$request_id_field_name$());)"""
+                                                           : "";
     if (IsStreamingWrite(method)) {
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
 std::unique_ptr<internal::StreamingWriteRpc<$request_type$, $response_type$>>
@@ -180,7 +183,9 @@ $tracing_stub_class_name$::Async$method_name$(
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) {
-  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
+  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");)""");
+      CcPrintMethod(method, __FILE__, __LINE__, request_id_fragment);
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->Async$method_name$(cq, context, std::move(options), request);
@@ -214,7 +219,9 @@ $tracing_stub_class_name$::$method_name$(
     grpc::ClientContext& context,
     Options const& options,
     $request_type$ const& request) {
-  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
+  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");)""");
+    CcPrintMethod(method, __FILE__, __LINE__, request_id_fragment);
+    CcPrintMethod(method, __FILE__, __LINE__, R"""(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -224,6 +231,9 @@ $tracing_stub_class_name$::$method_name$(
   }
 
   for (auto const& method : async_methods()) {
+    auto const* request_id_fragment = HasRequestId(method) ? R"""(
+  span->SetAttribute("gl-cpp.request_id", request.$request_id_field_name$());)"""
+                                                           : "";
     // Nothing to do, these are always asynchronous.
     if (IsBidirStreaming(method) || IsLongrunningOperation(method)) continue;
     if (IsStreamingRead(method)) {
@@ -277,7 +287,9 @@ $tracing_stub_class_name$::Async$method_name$(
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) {
-  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");
+  auto span = internal::MakeSpanGrpc("$grpc_service$", "$method_name$");)""");
+    CcPrintMethod(method, __FILE__, __LINE__, request_id_fragment);
+    CcPrintMethod(method, __FILE__, __LINE__, R"""(
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->Async$method_name$(cq, context, std::move(options), request);
