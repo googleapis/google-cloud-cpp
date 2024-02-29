@@ -129,6 +129,21 @@ InstanceAdminTracingStub::ListInstances(
                            child_->ListInstances(context, options, request));
 }
 
+StatusOr<google::spanner::admin::instance::v1::ListInstancePartitionsResponse>
+InstanceAdminTracingStub::ListInstancePartitions(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::instance::v1::ListInstancePartitionsRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.spanner.admin.instance.v1.InstanceAdmin",
+                             "ListInstancePartitions");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListInstancePartitions(context, options, request));
+}
+
 StatusOr<google::spanner::admin::instance::v1::Instance>
 InstanceAdminTracingStub::GetInstance(
     grpc::ClientContext& context, Options const& options,
@@ -217,6 +232,83 @@ InstanceAdminTracingStub::TestIamPermissions(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span, child_->TestIamPermissions(context, options, request));
+}
+
+StatusOr<google::spanner::admin::instance::v1::InstancePartition>
+InstanceAdminTracingStub::GetInstancePartition(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
+        request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.spanner.admin.instance.v1.InstanceAdmin", "GetInstancePartition");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetInstancePartition(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+InstanceAdminTracingStub::AsyncCreateInstancePartition(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.spanner.admin.instance.v1.InstanceAdmin",
+                             "CreateInstancePartition");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateInstancePartition(cq, context, std::move(options),
+                                                request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+Status InstanceAdminTracingStub::DeleteInstancePartition(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.spanner.admin.instance.v1.InstanceAdmin",
+                             "DeleteInstancePartition");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->DeleteInstancePartition(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+InstanceAdminTracingStub::AsyncUpdateInstancePartition(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
+        request) {
+  auto span =
+      internal::MakeSpanGrpc("google.spanner.admin.instance.v1.InstanceAdmin",
+                             "UpdateInstancePartition");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateInstancePartition(cq, context, std::move(options),
+                                                request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::spanner::admin::instance::v1::
+             ListInstancePartitionOperationsResponse>
+InstanceAdminTracingStub::ListInstancePartitionOperations(
+    grpc::ClientContext& context, Options const& options,
+    google::spanner::admin::instance::v1::
+        ListInstancePartitionOperationsRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.spanner.admin.instance.v1.InstanceAdmin",
+                             "ListInstancePartitionOperations");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span,
+      child_->ListInstancePartitionOperations(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>

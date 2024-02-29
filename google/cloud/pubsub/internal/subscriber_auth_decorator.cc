@@ -160,30 +160,32 @@ StatusOr<google::pubsub::v1::SeekResponse> SubscriberAuth::Seek(
 future<Status> SubscriberAuth::AsyncModifyAckDeadline(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncModifyAckDeadline(cq, *std::move(context), request);
+        return child->AsyncModifyAckDeadline(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
 future<Status> SubscriberAuth::AsyncAcknowledge(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::pubsub::v1::AcknowledgeRequest const& request) {
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncAcknowledge(cq, *std::move(context), request);
+        return child->AsyncAcknowledge(cq, *std::move(context),
+                                       std::move(options), request);
       });
 }
 

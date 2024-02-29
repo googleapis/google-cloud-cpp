@@ -455,6 +455,9 @@ TEST_F(HttpOptionUtilsTest, SetHttpDerivedMethodVarsSimpleInfo) {
   EXPECT_THAT(
       vars.at("method_rest_path"),
       Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/simple"))"""));
+  EXPECT_THAT(
+      vars.at("method_rest_path_async"),
+      Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", *options), "/simple"))"""));
 }
 
 TEST_F(HttpOptionUtilsTest, SetHttpDerivedMethodVarsExtensionInfoSingleParam) {
@@ -471,6 +474,9 @@ TEST_F(HttpOptionUtilsTest, SetHttpDerivedMethodVarsExtensionInfoSingleParam) {
   EXPECT_THAT(
       vars.at("method_rest_path"),
       Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", request.parent(), "/", "databases"))"""));
+  EXPECT_THAT(
+      vars.at("method_rest_path_async"),
+      Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", *options), "/", request.parent(), "/", "databases"))"""));
 }
 
 TEST_F(HttpOptionUtilsTest,
@@ -490,6 +496,9 @@ TEST_F(HttpOptionUtilsTest,
   EXPECT_THAT(
       vars.at("method_rest_path"),
       Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases"))"""));
+  EXPECT_THAT(
+      vars.at("method_rest_path_async"),
+      Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases"))"""));
 }
 
 TEST_F(HttpOptionUtilsTest,
@@ -505,6 +514,9 @@ TEST_F(HttpOptionUtilsTest,
   EXPECT_THAT(
       vars.at("method_rest_path"),
       Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases"))"""));
+  EXPECT_THAT(
+      vars.at("method_rest_path_async"),
+      Eq(R"""(absl::StrCat("/", rest_internal::DetermineApiVersion("v1", *options), "/", "projects", "/", request.project(), "/", "instances", "/", request.instance(), "/", "databases"))"""));
 }
 
 TEST_F(HttpOptionUtilsTest, SetHttpQueryParametersNoParams) {

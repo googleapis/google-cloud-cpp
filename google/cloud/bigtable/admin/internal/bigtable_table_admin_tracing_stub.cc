@@ -283,12 +283,14 @@ future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
 BigtableTableAdminTracingStub::AsyncCheckConsistency(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.bigtable.admin.v2.BigtableTableAdmin", "CheckConsistency");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCheckConsistency(cq, context, request);
+  auto f =
+      child_->AsyncCheckConsistency(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

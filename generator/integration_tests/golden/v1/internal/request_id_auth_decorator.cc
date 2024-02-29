@@ -68,20 +68,22 @@ StatusOr<google::test::requestid::v1::ListFoosResponse> RequestIdServiceAuth::Li
   return child_->ListFoos(context, options, request);
 }
 
-future<StatusOr<google::test::requestid::v1::Foo>> RequestIdServiceAuth::AsyncCreateFoo(
+future<StatusOr<google::test::requestid::v1::Foo>>
+RequestIdServiceAuth::AsyncCreateFoo(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::test::requestid::v1::CreateFooRequest const& request) {
-  using ReturnType = StatusOr<google::test::requestid::v1::Foo>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child, request](
+      [cq, child = child_, options = std::move(options), request](
           future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
         auto context = f.get();
         if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
+          return make_ready_future(StatusOr<google::test::requestid::v1::Foo>(
+              std::move(context).status()));
         }
-        return child->AsyncCreateFoo(cq, *std::move(context), request);
+        return child->AsyncCreateFoo(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 

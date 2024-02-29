@@ -30,6 +30,9 @@ CommitOptions::CommitOptions(Options const& opts)
   if (opts.has<TransactionTagOption>()) {
     transaction_tag_ = opts.get<TransactionTagOption>();
   }
+  if (opts.has<MaxCommitDelayOption>()) {
+    max_commit_delay_ = opts.get<MaxCommitDelayOption>();
+  }
 }
 
 CommitOptions::operator Options() const {
@@ -37,6 +40,7 @@ CommitOptions::operator Options() const {
   if (return_stats_) opts.set<CommitReturnStatsOption>(true);
   if (request_priority_) opts.set<RequestPriorityOption>(*request_priority_);
   if (transaction_tag_) opts.set<TransactionTagOption>(*transaction_tag_);
+  if (max_commit_delay_) opts.set<MaxCommitDelayOption>(*max_commit_delay_);
   return opts;
 }
 

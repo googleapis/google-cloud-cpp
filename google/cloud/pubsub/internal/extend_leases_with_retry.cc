@@ -108,7 +108,10 @@ class ExtendLeasesWithRetryHandle
   void MakeAttempt() {
     ++attempts_;
     auto context = std::make_shared<grpc::ClientContext>();
-    stub_->AsyncModifyAckDeadline(cq_, std::move(context), request_)
+    auto options = google::cloud::internal::MakeImmutableOptions({});
+    stub_
+        ->AsyncModifyAckDeadline(cq_, std::move(context), std::move(options),
+                                 request_)
         .then(
             [self = shared_from_this()](auto f) { self->OnAttempt(f.get()); });
   }

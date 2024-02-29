@@ -416,6 +416,8 @@ future<StatusOr<google::storage::v2::Object>>
 DefaultStorageStub::AsyncComposeObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::storage::v2::ComposeObjectRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::storage::v2::ComposeObjectRequest,
                                     google::storage::v2::Object>(
@@ -431,6 +433,8 @@ DefaultStorageStub::AsyncComposeObject(
 future<Status> DefaultStorageStub::AsyncDeleteObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::storage::v2::DeleteObjectRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::storage::v2::DeleteObjectRequest,
                                     google::protobuf::Empty>(
@@ -486,6 +490,8 @@ future<StatusOr<google::storage::v2::RewriteResponse>>
 DefaultStorageStub::AsyncRewriteObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::storage::v2::RewriteObjectRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::storage::v2::RewriteObjectRequest,
                                     google::storage::v2::RewriteResponse>(
@@ -502,6 +508,8 @@ future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
 DefaultStorageStub::AsyncStartResumableWrite(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::storage::v2::StartResumableWriteRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::storage::v2::StartResumableWriteRequest,
@@ -519,6 +527,8 @@ future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
 DefaultStorageStub::AsyncQueryWriteStatus(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::storage::v2::QueryWriteStatusRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::storage::v2::QueryWriteStatusRequest,

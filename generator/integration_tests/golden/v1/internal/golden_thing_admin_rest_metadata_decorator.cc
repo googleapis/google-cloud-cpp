@@ -229,17 +229,20 @@ GoldenThingAdminRestMetadata::ListBackupOperations(
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminRestMetadata::AsyncGetDatabase(
     google::cloud::CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options, google::test::admin::database::v1::GetDatabaseRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncGetDatabase(cq, std::move(rest_context), options, request);
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::test::admin::database::v1::GetDatabaseRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncGetDatabase(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 future<Status>
 GoldenThingAdminRestMetadata::AsyncDropDatabase(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options, google::test::admin::database::v1::DropDatabaseRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::test::admin::database::v1::DropDatabaseRequest const& request) {
   std::vector<std::string> params;
   params.reserve(3);
 
@@ -276,9 +279,10 @@ GoldenThingAdminRestMetadata::AsyncDropDatabase(
   }();
   database_matcher->AppendParam(request, params);
 
-  SetMetadata(*rest_context, options, params);
+  SetMetadata(*rest_context, *options, params);
 
-  return child_->AsyncDropDatabase(cq, std::move(rest_context), options, request);
+  return child_->AsyncDropDatabase(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

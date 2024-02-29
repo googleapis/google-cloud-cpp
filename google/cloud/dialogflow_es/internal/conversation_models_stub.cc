@@ -196,6 +196,7 @@ future<StatusOr<google::longrunning::Operation>>
 DefaultConversationModelsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
@@ -212,6 +213,7 @@ DefaultConversationModelsStub::AsyncGetOperation(
 future<Status> DefaultConversationModelsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,

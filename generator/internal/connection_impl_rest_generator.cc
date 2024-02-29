@@ -423,19 +423,19 @@ future<StatusOr<$response_type$>>)""",
                       R"""(
 $connection_impl_rest_class_name$::Async$method_name$($request_type$ const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto retry = retry_policy(*current);
+  auto backoff = backoff_policy(*current);
+  auto const idempotent = idempotency_policy(*current)->$method_name$(request);
   return rest_internal::AsyncRestRetryLoop(
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->$method_name$(request),
-      background_->cq(),
+      std::move(retry), std::move(backoff), idempotent, background_->cq(),
       [stub = stub_](CompletionQueue& cq,
                      std::unique_ptr<rest_internal::RestContext> context,
-                     // NOLINTNEXTLINE(performance-unnecessary-value-param)
                      google::cloud::internal::ImmutableOptions options,
                      $request_type$ const& request) {
         return stub->Async$method_name$(
-            cq, std::move(context), *options, request);
+            cq, std::move(context), std::move(options), request);
       },
-      current, request, __func__);
+      std::move(current), request, __func__);
 }
 )""");
 }

@@ -198,6 +198,8 @@ StatusOr<google::pubsub::v1::SeekResponse> DefaultSubscriberStub::Seek(
 future<Status> DefaultSubscriberStub::AsyncModifyAckDeadline(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
   return internal::MakeUnaryRpcImpl<
              google::pubsub::v1::ModifyAckDeadlineRequest,
@@ -217,6 +219,8 @@ future<Status> DefaultSubscriberStub::AsyncModifyAckDeadline(
 future<Status> DefaultSubscriberStub::AsyncAcknowledge(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::pubsub::v1::AcknowledgeRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::pubsub::v1::AcknowledgeRequest,
                                     google::protobuf::Empty>(

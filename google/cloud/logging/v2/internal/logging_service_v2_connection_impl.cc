@@ -194,15 +194,18 @@ LoggingServiceV2ConnectionImpl::AsyncWriteLogEntries(
   auto request_copy = request;
   auto const idempotent =
       idempotency_policy(*current)->WriteLogEntries(request_copy);
+  auto retry = retry_policy(*current);
+  auto backoff = backoff_policy(*current);
   return google::cloud::internal::AsyncRetryLoop(
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      background_->cq(),
+      std::move(retry), std::move(backoff), idempotent, background_->cq(),
       [stub = stub_](
           CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::logging::v2::WriteLogEntriesRequest const& request) {
-        return stub->AsyncWriteLogEntries(cq, std::move(context), request);
+        return stub->AsyncWriteLogEntries(cq, std::move(context),
+                                          std::move(options), request);
       },
-      std::move(request_copy), __func__);
+      std::move(current), std::move(request_copy), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

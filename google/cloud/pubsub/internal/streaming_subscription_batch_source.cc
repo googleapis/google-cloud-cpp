@@ -92,7 +92,6 @@ void StreamingSubscriptionBatchSource::Shutdown() {
 
 future<Status> StreamingSubscriptionBatchSource::AckMessage(
     std::string const& ack_id) {
-  internal::OptionsSpan span(options_);
   google::pubsub::v1::AcknowledgeRequest request;
   request.set_subscription(subscription_full_name_);
   *request.add_ack_ids() = ack_id;
@@ -104,19 +103,20 @@ future<Status> StreamingSubscriptionBatchSource::AckMessage(
     return google::cloud::internal::AsyncRetryLoop(
         std::move(retry), ExactlyOnceBackoffPolicy(), Idempotency::kIdempotent,
         cq_,
-        [stub = stub_](auto& cq, auto context, auto const& request) {
-          return stub->AsyncAcknowledge(cq, std::move(context), request);
+        [stub = stub_](auto& cq, auto context, auto options,
+                       auto const& request) {
+          return stub->AsyncAcknowledge(cq, std::move(context),
+                                        std::move(options), request);
         },
-        std::move(request), __func__);
+        options_, std::move(request), __func__);
   }
   lk.unlock();
   return stub_->AsyncAcknowledge(cq_, std::make_shared<grpc::ClientContext>(),
-                                 request);
+                                 options_, request);
 }
 
 future<Status> StreamingSubscriptionBatchSource::NackMessage(
     std::string const& ack_id) {
-  internal::OptionsSpan span(options_);
   google::pubsub::v1::ModifyAckDeadlineRequest request;
   request.set_subscription(subscription_full_name_);
   *request.add_ack_ids() = ack_id;
@@ -129,20 +129,20 @@ future<Status> StreamingSubscriptionBatchSource::NackMessage(
     return google::cloud::internal::AsyncRetryLoop(
         std::move(retry), ExactlyOnceBackoffPolicy(), Idempotency::kIdempotent,
         cq_,
-        [stub = stub_](auto& cq, auto context, auto const& request) {
-          return stub->AsyncModifyAckDeadline(cq, std::move(context), request);
+        [stub = stub_](auto& cq, auto context, auto options,
+                       auto const& request) {
+          return stub->AsyncModifyAckDeadline(cq, std::move(context),
+                                              std::move(options), request);
         },
-        std::move(request), __func__);
+        options_, std::move(request), __func__);
   }
   lk.unlock();
   return stub_->AsyncModifyAckDeadline(
-      cq_, std::make_shared<grpc::ClientContext>(), request);
+      cq_, std::make_shared<grpc::ClientContext>(), options_, request);
 }
 
 future<Status> StreamingSubscriptionBatchSource::BulkNack(
     std::vector<std::string> ack_ids) {
-  internal::OptionsSpan span(options_);
-
   google::pubsub::v1::ModifyAckDeadlineRequest request;
   request.set_subscription(subscription_full_name_);
   for (auto& a : ack_ids) *request.add_ack_ids() = std::move(a);
@@ -152,14 +152,16 @@ future<Status> StreamingSubscriptionBatchSource::BulkNack(
       SplitModifyAckDeadline(std::move(request), kMaxAckIdsPerMessage);
   if (requests.size() == 1) {
     return stub_->AsyncModifyAckDeadline(
-        cq_, std::make_shared<grpc::ClientContext>(), requests.front());
+        cq_, std::make_shared<grpc::ClientContext>(), options_,
+        requests.front());
   }
 
   std::vector<future<Status>> pending(requests.size());
   std::transform(requests.begin(), requests.end(), pending.begin(),
                  [this](auto const& request) {
                    return stub_->AsyncModifyAckDeadline(
-                       cq_, std::make_shared<grpc::ClientContext>(), request);
+                       cq_, std::make_shared<grpc::ClientContext>(), options_,
+                       request);
                  });
   return Reduce(std::move(pending));
 }
@@ -183,7 +185,7 @@ void StreamingSubscriptionBatchSource::ExtendLeases(
   lk.unlock();
   for (auto& r : split) {
     (void)stub_->AsyncModifyAckDeadline(
-        cq_, std::make_shared<grpc::ClientContext>(), r);
+        cq_, std::make_shared<grpc::ClientContext>(), options_, r);
   }
 }
 

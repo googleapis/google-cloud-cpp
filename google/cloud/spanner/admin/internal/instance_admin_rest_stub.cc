@@ -186,6 +186,22 @@ DefaultInstanceAdminRestStub::ListInstances(
            std::make_pair("filter", request.filter())}));
 }
 
+StatusOr<google::spanner::admin::instance::v1::ListInstancePartitionsResponse>
+DefaultInstanceAdminRestStub::ListInstancePartitions(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::spanner::admin::instance::v1::ListInstancePartitionsRequest const&
+        request) {
+  return rest_internal::Get<
+      google::spanner::admin::instance::v1::ListInstancePartitionsResponse>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   request.parent(), "/", "instancePartitions"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("page_size", std::to_string(request.page_size())),
+           std::make_pair("page_token", request.page_token())}));
+}
+
 StatusOr<google::spanner::admin::instance::v1::Instance>
 DefaultInstanceAdminRestStub::GetInstance(
     google::cloud::rest_internal::RestContext& rest_context,
@@ -295,6 +311,108 @@ DefaultInstanceAdminRestStub::TestIamPermissions(
       *service_, rest_context, request, false,
       absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
                    request.resource(), ":testIamPermissions"));
+}
+
+StatusOr<google::spanner::admin::instance::v1::InstancePartition>
+DefaultInstanceAdminRestStub::GetInstancePartition(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
+        request) {
+  return rest_internal::Get<
+      google::spanner::admin::instance::v1::InstancePartition>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   request.name()));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultInstanceAdminRestStub::AsyncCreateInstancePartition(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
+        request) {
+  promise<StatusOr<google::longrunning::Operation>> p;
+  future<StatusOr<google::longrunning::Operation>> f = p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        p.set_value(rest_internal::Post<google::longrunning::Operation>(
+            *service, *rest_context, request, false,
+            absl::StrCat("/",
+                         rest_internal::DetermineApiVersion("v1", *options),
+                         "/", request.parent(), "/", "instancePartitions"),
+            rest_internal::TrimEmptyQueryParameters({std::make_pair(
+                "instance_partition_id", request.instance_partition_id())})));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    return f.get();
+  });
+}
+
+Status DefaultInstanceAdminRestStub::DeleteInstancePartition(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const&
+        request) {
+  return rest_internal::Delete(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   request.name()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("etag", request.etag())}));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultInstanceAdminRestStub::AsyncUpdateInstancePartition(
+    CompletionQueue& cq,
+    std::unique_ptr<rest_internal::RestContext> rest_context,
+    google::cloud::internal::ImmutableOptions options,
+    google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
+        request) {
+  promise<StatusOr<google::longrunning::Operation>> p;
+  future<StatusOr<google::longrunning::Operation>> f = p.get_future();
+  std::thread t{
+      [](auto p, auto service, auto request, auto rest_context, auto options) {
+        p.set_value(rest_internal::Patch<google::longrunning::Operation>(
+            *service, *rest_context, request, false,
+            absl::StrCat("/",
+                         rest_internal::DetermineApiVersion("v1", *options),
+                         "/", request.instance_partition().name())));
+      },
+      std::move(p),
+      service_,
+      request,
+      std::move(rest_context),
+      std::move(options)};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
+    return f.get();
+  });
+}
+
+StatusOr<google::spanner::admin::instance::v1::
+             ListInstancePartitionOperationsResponse>
+DefaultInstanceAdminRestStub::ListInstancePartitionOperations(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::spanner::admin::instance::v1::
+        ListInstancePartitionOperationsRequest const& request) {
+  return rest_internal::Get<google::spanner::admin::instance::v1::
+                                ListInstancePartitionOperationsResponse>(
+      *service_, rest_context, request, false,
+      absl::StrCat("/", rest_internal::DetermineApiVersion("v1", options), "/",
+                   request.parent(), "/", "instancePartitionOperations"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("page_size", std::to_string(request.page_size())),
+           std::make_pair("page_token", request.page_token())}));
 }
 
 future<StatusOr<google::longrunning::Operation>>

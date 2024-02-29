@@ -140,6 +140,7 @@ class BigtableTableAdminStub {
   AsyncCheckConsistency(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::bigtable::admin::v2::CheckConsistencyRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -264,6 +265,7 @@ class DefaultBigtableTableAdminStub : public BigtableTableAdminStub {
   AsyncCheckConsistency(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::bigtable::admin::v2::CheckConsistencyRequest const& request)
       override;
 

@@ -302,6 +302,8 @@ future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
 DefaultBigtableTableAdminStub::AsyncCheckConsistency(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::bigtable::admin::v2::CheckConsistencyRequest,
@@ -320,6 +322,7 @@ future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableTableAdminStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
@@ -336,6 +339,7 @@ DefaultBigtableTableAdminStub::AsyncGetOperation(
 future<Status> DefaultBigtableTableAdminStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,

@@ -255,6 +255,8 @@ $logging_class_name$::$method_name$(
   }
 
   for (auto const& method : async_methods()) {
+    // Nothing to do, these are always asynchronous.
+    if (IsBidirStreaming(method) || IsLongrunningOperation(method)) continue;
     if (IsStreamingRead(method)) {
       auto constexpr kDefinition = R"""(
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
@@ -306,29 +308,27 @@ $logging_class_name$::Async$method_name$(
       CcPrintMethod(method, __FILE__, __LINE__, kDefinition);
       continue;
     }
-    CcPrintMethod(
-        method,
-        {MethodPattern(
-            {{IsResponseTypeEmpty,
-              // clang-format off
-    "\nfuture<Status>\n",
-    "\nfuture<StatusOr<$response_type$>>\n"},
-    {R"""($logging_class_name$::Async$method_name$(
+    CcPrintMethod(method, __FILE__, __LINE__,
+                  IsResponseTypeEmpty(method)
+                      ? "\nfuture<Status>"
+                      : "\nfuture<StatusOr<$response_type$>>");
+    CcPrintMethod(method, __FILE__, __LINE__, R"""(
+$logging_class_name$::Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
              $request_type$ const& request) {
-        return child_->Async$method_name$(cq, std::move(context), request);
+        return child_->Async$method_name$(
+            cq, std::move(context), std::move(options), request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__, tracing_options_);
 }
-)"""}},
-            // clang-format on
-            And(IsNonStreaming, Not(IsLongrunningOperation)))},
-        __FILE__, __LINE__);
+)""");
   }
 
   // long running operation support methods

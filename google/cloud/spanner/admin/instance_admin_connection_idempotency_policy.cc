@@ -72,6 +72,12 @@ Idempotency InstanceAdminConnectionIdempotencyPolicy::ListInstances(
   return Idempotency::kIdempotent;
 }
 
+Idempotency InstanceAdminConnectionIdempotencyPolicy::ListInstancePartitions(
+    google::spanner::admin::instance::v1::
+        ListInstancePartitionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 Idempotency InstanceAdminConnectionIdempotencyPolicy::GetInstance(
     google::spanner::admin::instance::v1::GetInstanceRequest const&) {
   return Idempotency::kIdempotent;
@@ -105,6 +111,36 @@ Idempotency InstanceAdminConnectionIdempotencyPolicy::GetIamPolicy(
 
 Idempotency InstanceAdminConnectionIdempotencyPolicy::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency InstanceAdminConnectionIdempotencyPolicy::GetInstancePartition(
+    google::spanner::admin::instance::v1::GetInstancePartitionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency InstanceAdminConnectionIdempotencyPolicy::CreateInstancePartition(
+    google::spanner::admin::instance::v1::
+        CreateInstancePartitionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency InstanceAdminConnectionIdempotencyPolicy::DeleteInstancePartition(
+    google::spanner::admin::instance::v1::
+        DeleteInstancePartitionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency InstanceAdminConnectionIdempotencyPolicy::UpdateInstancePartition(
+    google::spanner::admin::instance::v1::
+        UpdateInstancePartitionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+InstanceAdminConnectionIdempotencyPolicy::ListInstancePartitionOperations(
+    google::spanner::admin::instance::v1::
+        ListInstancePartitionOperationsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 

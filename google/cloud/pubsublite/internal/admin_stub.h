@@ -143,6 +143,7 @@ class AdminServiceStub {
   AsyncGetTopicPartitions(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::pubsublite::v1::GetTopicPartitionsRequest const&
           request) = 0;
 
@@ -270,6 +271,7 @@ class DefaultAdminServiceStub : public AdminServiceStub {
   AsyncGetTopicPartitions(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request)
       override;
 

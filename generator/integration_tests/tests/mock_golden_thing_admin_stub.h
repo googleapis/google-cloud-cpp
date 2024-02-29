@@ -127,12 +127,14 @@ class MockGoldenThingAdminStub
               AsyncGetDatabase,
               (google::cloud::CompletionQueue&,
                std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions,
                ::google::test::admin::database::v1::GetDatabaseRequest const&),
               (override));
 
   MOCK_METHOD(future<Status>, AsyncDropDatabase,
               (google::cloud::CompletionQueue&,
                std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions,
                ::google::test::admin::database::v1::DropDatabaseRequest const&),
               (override));
 

@@ -69,12 +69,12 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsLogging) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   Subscription const subscription("test-project", "test-subscription");
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::AcknowledgeRequest const&) {
         return make_ready_future(Status{});
       });
@@ -121,12 +121,12 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsMetadata) {
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   Subscription const subscription("test-project", "test-subscription");
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::AcknowledgeRequest const&) {
         return make_ready_future(Status{});
       });
@@ -183,13 +183,13 @@ TEST(MakeSubscriberConnectionTest, TracingEnabledForUnaryPull) {
   auto const subscription = Subscription("test-project", "test-subscription");
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto context,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto context, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
         SetServerMetadata(*context, {});
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillOnce([](google::cloud::CompletionQueue&, auto context,
+      .WillOnce([](google::cloud::CompletionQueue&, auto context, auto,
                    google::pubsub::v1::AcknowledgeRequest const& request) {
         SetServerMetadata(*context, {});
         EXPECT_THAT(request.ack_ids(), Contains("test-ack-id-0"));
@@ -233,12 +233,12 @@ TEST(MakeSubscriberConnectionTest, TracingDisabledForUnaryPull) {
   auto const subscription = Subscription("test-project", "test-subscription");
   auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillOnce([](google::cloud::CompletionQueue&, auto,
+      .WillOnce([](google::cloud::CompletionQueue&, auto, auto,
                    google::pubsub::v1::AcknowledgeRequest const& request) {
         EXPECT_THAT(request.ack_ids(), Contains("test-ack-id-0"));
         return make_ready_future(

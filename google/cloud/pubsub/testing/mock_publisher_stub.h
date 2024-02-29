@@ -78,6 +78,7 @@ class MockPublisherStub : public pubsub_internal::PublisherStub {
               AsyncPublish,
               (google::cloud::CompletionQueue&,
                std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions,
                google::pubsub::v1::PublishRequest const&),
               (override));
 

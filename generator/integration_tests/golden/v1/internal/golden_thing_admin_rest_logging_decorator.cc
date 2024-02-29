@@ -292,31 +292,36 @@ future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminRestLogging::AsyncGetDatabase(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::test::admin::database::v1::GetDatabaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             Options const& options, google::test::admin::database::v1::GetDatabaseRequest const& request) {
-        return child_->AsyncGetDatabase(cq, std::move(rest_context), options, request);
+             google::cloud::internal::ImmutableOptions options,
+             google::test::admin::database::v1::GetDatabaseRequest const& request) {
+        return child_->AsyncGetDatabase(
+            cq, std::move(rest_context), std::move(options), request);
       },
-      cq, std::move(rest_context), options, request, __func__, tracing_options_);
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<Status>
 GoldenThingAdminRestLogging::AsyncDropDatabase(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::DropDatabaseRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq,
              std::unique_ptr<rest_internal::RestContext> rest_context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::test::admin::database::v1::DropDatabaseRequest const& request) {
-        return child_->AsyncDropDatabase(cq, std::move(rest_context), options, request);
+        return child_->AsyncDropDatabase(
+            cq, std::move(rest_context), std::move(options), request);
       },
-      cq, std::move(rest_context), options, request, __func__, tracing_options_);
+      cq, std::move(rest_context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

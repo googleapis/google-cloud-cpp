@@ -138,6 +138,7 @@ class BigtableTableAdminAuth : public BigtableTableAdminStub {
   AsyncCheckConsistency(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::bigtable::admin::v2::CheckConsistencyRequest const& request)
       override;
 

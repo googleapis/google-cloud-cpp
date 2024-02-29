@@ -155,15 +155,18 @@ RequestIdServiceConnectionImpl::AsyncCreateFoo(google::test::requestid::v1::Crea
   }
   auto const idempotent =
       idempotency_policy(*current)->CreateFoo(request_copy);
+  auto retry = retry_policy(*current);
+  auto backoff = backoff_policy(*current);
   return google::cloud::internal::AsyncRetryLoop(
-      retry_policy(*current), backoff_policy(*current), idempotent,
-      background_->cq(),
+      std::move(retry), std::move(backoff), idempotent, background_->cq(),
       [stub = stub_](CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
+                     google::cloud::internal::ImmutableOptions options,
                      google::test::requestid::v1::CreateFooRequest const& request) {
-        return stub->AsyncCreateFoo(cq, std::move(context), request);
+        return stub->AsyncCreateFoo(
+            cq, std::move(context), std::move(options), request);
       },
-      std::move(request_copy), __func__);
+      std::move(current), std::move(request_copy), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

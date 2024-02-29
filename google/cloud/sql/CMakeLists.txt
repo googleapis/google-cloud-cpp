@@ -81,50 +81,6 @@ target_compile_options(google_cloud_cpp_sql
 
 add_library(google-cloud-cpp::sql ALIAS google_cloud_cpp_sql)
 
-# Create a header-only library for the mocks. We use a CMake `INTERFACE` library
-# for these, a regular library would not work on macOS (where the library needs
-# at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
-# that they need absolute paths for their sources.
-file(
-    GLOB relative_mock_files
-    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    ${mocks_globs})
-list(SORT relative_mock_files)
-set(mock_files)
-foreach (file IN LISTS relative_mock_files)
-    # We use a generator expression per the recommendation in:
-    # https://stackoverflow.com/a/62465051
-    list(APPEND mock_files
-         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${file}>")
-endforeach ()
-add_library(google_cloud_cpp_sql_mocks INTERFACE)
-target_sources(google_cloud_cpp_sql_mocks INTERFACE ${mock_files})
-target_link_libraries(
-    google_cloud_cpp_sql_mocks
-    INTERFACE google-cloud-cpp::sql GTest::gmock_main GTest::gmock GTest::gtest)
-set_target_properties(google_cloud_cpp_sql_mocks
-                      PROPERTIES EXPORT_NAME google-cloud-cpp::sql_mocks)
-target_include_directories(
-    google_cloud_cpp_sql_mocks
-    INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-              $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-              $<INSTALL_INTERFACE:include>)
-target_compile_options(google_cloud_cpp_sql_mocks
-                       INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-
-if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-    add_executable(sql_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(sql_quickstart PRIVATE google-cloud-cpp::sql)
-    google_cloud_cpp_add_common_options(sql_quickstart)
-    add_test(
-        NAME sql_quickstart
-        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-                $<TARGET_FILE:sql_quickstart> GOOGLE_CLOUD_PROJECT)
-    set_tests_properties(sql_quickstart
-                         PROPERTIES LABELS "integration-test;quickstart")
-    add_subdirectory(integration_tests)
-endif ()
-
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
 
@@ -180,7 +136,54 @@ install(
 
 external_googleapis_install_pc("google_cloud_cpp_sql_protos")
 
-google_cloud_cpp_install_mocks(sql "Cloud SQL Admin API")
+if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
+    # Create a header-only library for the mocks. We use a CMake `INTERFACE`
+    # library for these, a regular library would not work on macOS (where the
+    # library needs at least one .o file). Unfortunately INTERFACE libraries are
+    # a bit weird in that they need absolute paths for their sources.
+    file(
+        GLOB relative_mock_files
+        RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+        ${mocks_globs})
+    list(SORT relative_mock_files)
+    set(mock_files)
+    foreach (file IN LISTS relative_mock_files)
+        # We use a generator expression per the recommendation in:
+        # https://stackoverflow.com/a/62465051
+        list(APPEND mock_files
+             "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${file}>")
+    endforeach ()
+    add_library(google_cloud_cpp_sql_mocks INTERFACE)
+    target_sources(google_cloud_cpp_sql_mocks INTERFACE ${mock_files})
+    target_link_libraries(
+        google_cloud_cpp_sql_mocks
+        INTERFACE google-cloud-cpp::sql GTest::gmock_main GTest::gmock
+                  GTest::gtest)
+    set_target_properties(google_cloud_cpp_sql_mocks
+                          PROPERTIES EXPORT_NAME google-cloud-cpp::sql_mocks)
+    target_include_directories(
+        google_cloud_cpp_sql_mocks
+        INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+                  $<INSTALL_INTERFACE:include>)
+    target_compile_options(google_cloud_cpp_sql_mocks
+                           INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+
+    google_cloud_cpp_install_mocks(sql "Cloud SQL Admin API")
+endif ()
+
+if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    add_executable(sql_quickstart "quickstart/quickstart.cc")
+    target_link_libraries(sql_quickstart PRIVATE google-cloud-cpp::sql)
+    google_cloud_cpp_add_common_options(sql_quickstart)
+    add_test(
+        NAME sql_quickstart
+        COMMAND cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+                $<TARGET_FILE:sql_quickstart> GOOGLE_CLOUD_PROJECT)
+    set_tests_properties(sql_quickstart
+                         PROPERTIES LABELS "integration-test;quickstart")
+    add_subdirectory(integration_tests)
+endif ()
 
 # google-cloud-cpp::sql must be defined before we can add the samples.
 foreach (dir IN LISTS service_dirs)

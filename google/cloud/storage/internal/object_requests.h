@@ -18,6 +18,7 @@
 #include "google/cloud/storage/auto_finalize.h"
 #include "google/cloud/storage/download_options.h"
 #include "google/cloud/storage/hashing_options.h"
+#include "google/cloud/storage/include_folders_as_prefixes.h"
 #include "google/cloud/storage/internal/const_buffer.h"
 #include "google/cloud/storage/internal/generic_object_request.h"
 #include "google/cloud/storage/internal/hash_function.h"
@@ -47,9 +48,9 @@ namespace internal {
  */
 class ListObjectsRequest
     : public GenericRequest<ListObjectsRequest, MaxResults, Prefix, Delimiter,
-                            IncludeTrailingDelimiter, StartOffset, EndOffset,
-                            MatchGlob, Projection, SoftDeleted, UserProject,
-                            Versions> {
+                            IncludeFoldersAsPrefixes, IncludeTrailingDelimiter,
+                            StartOffset, EndOffset, MatchGlob, Projection,
+                            SoftDeleted, UserProject, Versions> {
  public:
   ListObjectsRequest() = default;
   explicit ListObjectsRequest(std::string bucket_name)

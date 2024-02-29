@@ -89,8 +89,10 @@ future<StatusOr<google::pubsub::v1::PublishResponse>>
 PublisherRoundRobin::AsyncPublish(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::pubsub::v1::PublishRequest const& request) {
-  return Child()->AsyncPublish(cq, std::move(context), request);
+  return Child()->AsyncPublish(cq, std::move(context), std::move(options),
+                               request);
 }
 
 std::shared_ptr<PublisherStub> PublisherRoundRobin::Child() {

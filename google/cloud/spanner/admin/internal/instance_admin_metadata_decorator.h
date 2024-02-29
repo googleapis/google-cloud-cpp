@@ -83,6 +83,12 @@ class InstanceAdminMetadata : public InstanceAdminStub {
       google::spanner::admin::instance::v1::ListInstancesRequest const& request)
       override;
 
+  StatusOr<google::spanner::admin::instance::v1::ListInstancePartitionsResponse>
+  ListInstancePartitions(
+      grpc::ClientContext& context, Options const& options,
+      google::spanner::admin::instance::v1::ListInstancePartitionsRequest const&
+          request) override;
+
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
       grpc::ClientContext& context, Options const& options,
       google::spanner::admin::instance::v1::GetInstanceRequest const& request)
@@ -118,6 +124,38 @@ class InstanceAdminMetadata : public InstanceAdminStub {
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
+
+  StatusOr<google::spanner::admin::instance::v1::InstancePartition>
+  GetInstancePartition(
+      grpc::ClientContext& context, Options const& options,
+      google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateInstancePartition(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::instance::v1::
+          CreateInstancePartitionRequest const& request) override;
+
+  Status DeleteInstancePartition(
+      grpc::ClientContext& context, Options const& options,
+      google::spanner::admin::instance::v1::
+          DeleteInstancePartitionRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstancePartition(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::spanner::admin::instance::v1::
+          UpdateInstancePartitionRequest const& request) override;
+
+  StatusOr<google::spanner::admin::instance::v1::
+               ListInstancePartitionOperationsResponse>
+  ListInstancePartitionOperations(
+      grpc::ClientContext& context, Options const& options,
+      google::spanner::admin::instance::v1::
+          ListInstancePartitionOperationsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
