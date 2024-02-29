@@ -981,6 +981,27 @@ TEST(ClientTest, CommitStats) {
   EXPECT_EQ(42, result->commit_stats->mutation_count);
 }
 
+TEST(ClientTest, MaxCommitDelay) {
+  auto timestamp =
+      spanner_internal::TimestampFromRFC3339("2020-10-20T02:20:09.123Z");
+  ASSERT_STATUS_OK(timestamp);
+
+  auto conn = std::make_shared<MockConnection>();
+  EXPECT_CALL(*conn, Commit)
+      .WillOnce([&timestamp](Connection::CommitParams const& cp) {
+        EXPECT_EQ(cp.options.max_commit_delay(),
+                  std::chrono::milliseconds(100));
+        return CommitResult{*timestamp, absl::nullopt};
+      });
+
+  Client client(conn);
+  Options options;
+  options.set<MaxCommitDelayOption>(std::chrono::milliseconds(100));
+  auto result = client.Commit(Mutations{}, options);
+  ASSERT_STATUS_OK(result);
+  EXPECT_EQ(*timestamp, result->commit_timestamp);
+}
+
 TEST(ClientTest, CommitAtLeastOnce) {
   auto timestamp =
       spanner_internal::TimestampFromRFC3339("2023-06-02T07:36:52.808Z");
@@ -996,6 +1017,7 @@ TEST(ClientTest, CommitAtLeastOnce) {
         EXPECT_EQ(cp.mutations, Mutations{mutation});
         EXPECT_FALSE(cp.options.return_stats());
         EXPECT_FALSE(cp.options.request_priority().has_value());
+        EXPECT_FALSE(cp.options.max_commit_delay().has_value());
         EXPECT_EQ(cp.options.transaction_tag(), transaction_tag);
         return CommitResult{*timestamp, absl::nullopt};
       });
