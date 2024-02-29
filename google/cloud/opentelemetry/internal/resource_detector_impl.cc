@@ -203,7 +203,7 @@ class GcpResourceDetector
  private:
   StatusOr<nlohmann::json> QueryMetadataServer() {
     auto stub_call = [client = client_factory_(options_)](
-                         rest_internal::RestContext& context,
+                         rest_internal::RestContext& context, Options const&,
                          rest_internal::RestRequest const& request)
         -> StatusOr<nlohmann::json> {
       auto response = client->Get(context, request);
@@ -229,7 +229,7 @@ class GcpResourceDetector
 
     return rest_internal::RestRetryLoop(retry_->clone(), backoff_->clone(),
                                         Idempotency::kIdempotent, stub_call,
-                                        request_, __func__);
+                                        options_, request_, __func__);
   }
 
   rest_internal::RestRequest request_;
