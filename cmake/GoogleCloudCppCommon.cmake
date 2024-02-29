@@ -164,7 +164,6 @@ endfunction ()
 function (google_cloud_cpp_install_mocks library display_name)
     set(library_target "google_cloud_cpp_${library}")
     set(mocks_target "google_cloud_cpp_${library}_mocks")
-
     install(
         EXPORT ${mocks_target}-targets
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${mocks_target}"
