@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/pubsub/admin/topic_admin_client.h"
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
 #include "google/cloud/pubsub/internal/subscriber_stub_factory.h"
@@ -21,7 +22,6 @@
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
-#include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -42,6 +42,8 @@ namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::pubsub_admin::MakeTopicAdminConnection;
+using ::google::cloud::pubsub_admin::TopicAdminClient;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
@@ -69,7 +71,7 @@ class SubscriberIntegrationTest
     auto subscription_admin =
         SubscriptionAdminClient(MakeSubscriptionAdminConnection());
 
-    auto topic_metadata = topic_admin.CreateTopic(TopicBuilder(topic_));
+    auto topic_metadata = topic_admin.CreateTopic(topic_.FullName());
     ASSERT_THAT(topic_metadata,
                 AnyOf(IsOk(), StatusIs(StatusCode::kAlreadyExists)));
 
@@ -114,7 +116,7 @@ class SubscriberIntegrationTest
         subscription_admin.DeleteSubscription(subscription_);
     EXPECT_THAT(delete_subscription,
                 AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
-    auto delete_topic = topic_admin.DeleteTopic(topic_);
+    auto delete_topic = topic_admin.DeleteTopic(topic_.FullName());
     EXPECT_THAT(delete_topic, AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
   }
 
