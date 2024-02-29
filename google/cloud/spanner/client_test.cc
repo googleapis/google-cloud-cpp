@@ -991,7 +991,7 @@ TEST(ClientTest, MaxCommitDelay) {
       .WillOnce([&timestamp](Connection::CommitParams const& cp) {
         EXPECT_EQ(cp.options.max_commit_delay(),
                   std::chrono::milliseconds(100));
-	return CommitResult{*timestamp, absl::nullopt};
+        return CommitResult{*timestamp, absl::nullopt};
       });
 
   Client client(conn);
