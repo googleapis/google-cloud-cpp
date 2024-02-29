@@ -362,34 +362,6 @@ auto AsyncRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
   return loop->Start();
 }
 
-// TODO(#12359) - remove the overload without an `Options const&` parameter.
-/**
- * Create the right AsyncRetryLoopImpl object and start the retry loop on it.
- */
-template <typename Functor, typename Request, typename RetryPolicyType,
-          std::enable_if_t<
-              google::cloud::internal::is_invocable<
-                  Functor, google::cloud::CompletionQueue&,
-                  std::shared_ptr<grpc::ClientContext>, Request const&>::value,
-              int> = 0>
-auto AsyncRetryLoop(std::unique_ptr<RetryPolicyType> retry_policy,
-                    std::unique_ptr<BackoffPolicy> backoff_policy,
-                    Idempotency idempotency, google::cloud::CompletionQueue cq,
-                    Functor&& functor, Request request, char const* location)
-    -> google::cloud::internal::invoke_result_t<
-        Functor, google::cloud::CompletionQueue&,
-        std::shared_ptr<grpc::ClientContext>, Request const&> {
-  auto wrapper = [functor = std::forward<Functor>(functor)](
-                     CompletionQueue& cq,
-                     std::shared_ptr<grpc::ClientContext> context,
-                     ImmutableOptions const&, Request const& request) {
-    return functor(cq, std::move(context), request);
-  };
-  return AsyncRetryLoop(std::move(retry_policy), std::move(backoff_policy),
-                        idempotency, std::move(cq), std::move(wrapper),
-                        SaveCurrentOptions(), std::move(request), location);
-}
-
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
