@@ -53,7 +53,11 @@ class StorageControlRetryPolicy : public ::google::cloud::RetryPolicy {
  * - More than a prescribed number of transient failures is detected.
  *
  * In this class the following status codes are treated as transient errors:
+ * - [`kDeadlineExceeded`](@ref google::cloud::StatusCode)
+ * - [`kInternal`](@ref google::cloud::StatusCode)
+ * - [`kResourceExhausted`](@ref google::cloud::StatusCode)
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ * - [`kUnknown`](@ref google::cloud::StatusCode)
  */
 class StorageControlLimitedErrorCountRetryPolicy
     : public StorageControlRetryPolicy {
@@ -106,7 +110,11 @@ class StorageControlLimitedErrorCountRetryPolicy
  * - The elapsed time in the retry loop exceeds a prescribed duration.
  *
  * In this class the following status codes are treated as transient errors:
+ * - [`kDeadlineExceeded`](@ref google::cloud::StatusCode)
+ * - [`kInternal`](@ref google::cloud::StatusCode)
+ * - [`kResourceExhausted`](@ref google::cloud::StatusCode)
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
+ * - [`kUnknown`](@ref google::cloud::StatusCode)
  */
 class StorageControlLimitedTimeRetryPolicy : public StorageControlRetryPolicy {
  public:
