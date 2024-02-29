@@ -161,30 +161,36 @@ future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
 SpannerMetadata::AsyncBatchCreateSessions(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::spanner::v1::BatchCreateSessionsRequest const& request) {
   SetMetadata(
-      *context, internal::CurrentOptions(),
+      *context, *options,
       absl::StrCat("database=", internal::UrlEncode(request.database())));
-  return child_->AsyncBatchCreateSessions(cq, std::move(context), request);
+  return child_->AsyncBatchCreateSessions(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 future<Status> SpannerMetadata::AsyncDeleteSession(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::spanner::v1::DeleteSessionRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteSession(cq, std::move(context), request);
+  return child_->AsyncDeleteSession(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::spanner::v1::ResultSet>>
 SpannerMetadata::AsyncExecuteSql(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::spanner::v1::ExecuteSqlRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, *options,
               absl::StrCat("session=", internal::UrlEncode(request.session())));
-  return child_->AsyncExecuteSql(cq, std::move(context), request);
+  return child_->AsyncExecuteSql(cq, std::move(context), std::move(options),
+                                 request);
 }
 
 void SpannerMetadata::SetMetadata(grpc::ClientContext& context,

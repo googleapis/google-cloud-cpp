@@ -239,25 +239,29 @@ GoldenThingAdminTracingStub::AsyncLongRunningWithoutRouting(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-future<StatusOr<google::test::admin::database::v1::Database>> GoldenThingAdminTracingStub::AsyncGetDatabase(
+future<StatusOr<google::test::admin::database::v1::Database>>
+GoldenThingAdminTracingStub::AsyncGetDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::GetDatabaseRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "GetDatabase");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetDatabase(cq, context, request);
+  auto f = child_->AsyncGetDatabase(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-future<Status> GoldenThingAdminTracingStub::AsyncDropDatabase(
+future<Status>
+GoldenThingAdminTracingStub::AsyncDropDatabase(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::DropDatabaseRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.test.admin.database.v1.GoldenThingAdmin", "DropDatabase");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDropDatabase(cq, context, request);
+  auto f = child_->AsyncDropDatabase(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

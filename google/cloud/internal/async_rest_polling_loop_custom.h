@@ -64,46 +64,6 @@ future<StatusOr<OperationType>> AsyncRestPollingLoop(
   return loop->Start(std::move(op));
 }
 
-// TODO(#12359) - remove once it is no longer used.
-template <typename OperationType, typename GetOperationRequestType,
-          typename CancelOperationRequestType>
-future<StatusOr<OperationType>> AsyncRestPollingLoop(
-    google::cloud::CompletionQueue cq, future<StatusOr<OperationType>> op,
-    AsyncRestPollLongRunningOperationImplicitOptions<OperationType,
-                                                     GetOperationRequestType>
-        poll,
-    AsyncRestCancelLongRunningOperationImplicitOptions<
-        CancelOperationRequestType>
-        cancel,
-    std::unique_ptr<PollingPolicy> polling_policy, std::string location,
-    std::function<bool(OperationType const&)> is_operation_done,
-    std::function<void(std::string const&, GetOperationRequestType&)>
-        get_request_set_operation_name,
-    std::function<void(std::string const&, CancelOperationRequestType&)>
-        cancel_request_set_operation_name) {
-  auto poll_wrapper = [poll = std::move(poll)](
-                          google::cloud::CompletionQueue& cq,
-                          std::unique_ptr<RestContext> context,
-                          internal::ImmutableOptions const&,
-                          GetOperationRequestType const& request) {
-    return poll(cq, std::move(context), request);
-  };
-  auto cancel_wrapper = [cancel = std::move(cancel)](
-                            google::cloud::CompletionQueue& cq,
-                            std::unique_ptr<RestContext> context,
-                            internal::ImmutableOptions const&,
-                            CancelOperationRequestType const& request) {
-    return cancel(cq, std::move(context), request);
-  };
-  auto loop = std::make_shared<AsyncRestPollingLoopImpl<
-      OperationType, GetOperationRequestType, CancelOperationRequestType>>(
-      std::move(cq), internal::SaveCurrentOptions(), std::move(poll_wrapper),
-      std::move(cancel_wrapper), std::move(polling_policy), std::move(location),
-      std::move(is_operation_done), std::move(get_request_set_operation_name),
-      std::move(cancel_request_set_operation_name));
-  return loop->Start(std::move(op));
-}
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud

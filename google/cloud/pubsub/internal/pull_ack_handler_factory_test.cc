@@ -69,10 +69,10 @@ TEST(PullAckHandlerTest, AckSimple) {
   auto request_matcher = AllOf(
       Property(&AcknowledgeRequest::ack_ids, ElementsAre("test-ack-id")),
       Property(&AcknowledgeRequest::subscription, subscription.FullName()));
-  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _)).WillRepeatedly([]() {
+  EXPECT_CALL(*mock, AsyncAcknowledge).WillRepeatedly([] {
     return make_ready_future(Status{});
   });
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _)).WillRepeatedly([]() {
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline).WillRepeatedly([] {
     return make_ready_future(Status{});
   });
   AsyncSequencer<bool> aseq;
@@ -112,11 +112,11 @@ TEST(PullAckHandlerTest, TracingEnabled) {
   auto request_matcher = AllOf(
       Property(&AcknowledgeRequest::ack_ids, ElementsAre("test-ack-id")),
       Property(&AcknowledgeRequest::subscription, subscription.FullName()));
-  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, request_matcher))
+  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _, request_matcher))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   // Since the lease manager is started in the constructor of the ack handler,
   // we need to match the lease manager calls.
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _)).WillRepeatedly([]() {
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline).WillRepeatedly([] {
     return make_ready_future(Status{});
   });
   AsyncSequencer<bool> aseq;
@@ -150,11 +150,11 @@ TEST(PullAckHandlerTest, TracingDisabled) {
   auto request_matcher = AllOf(
       Property(&AcknowledgeRequest::ack_ids, ElementsAre("test-ack-id")),
       Property(&AcknowledgeRequest::subscription, subscription.FullName()));
-  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, request_matcher))
+  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _, request_matcher))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   // Since the lease manager is started in the constructor of the ack handler,
   // we need to match the lease manager calls.
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _)).WillRepeatedly([]() {
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline).WillRepeatedly([]() {
     return make_ready_future(Status{});
   });
   AsyncSequencer<bool> aseq;

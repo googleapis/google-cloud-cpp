@@ -161,6 +161,23 @@ InstanceAdminClient::ListInstances(
   return connection_->ListInstances(std::move(request));
 }
 
+StreamRange<google::spanner::admin::instance::v1::InstancePartition>
+InstanceAdminClient::ListInstancePartitions(std::string const& parent,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::instance::v1::ListInstancePartitionsRequest request;
+  request.set_parent(parent);
+  return connection_->ListInstancePartitions(request);
+}
+
+StreamRange<google::spanner::admin::instance::v1::InstancePartition>
+InstanceAdminClient::ListInstancePartitions(
+    google::spanner::admin::instance::v1::ListInstancePartitionsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListInstancePartitions(std::move(request));
+}
+
 StatusOr<google::spanner::admin::instance::v1::Instance>
 InstanceAdminClient::GetInstance(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -311,6 +328,103 @@ InstanceAdminClient::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
+}
+
+StatusOr<google::spanner::admin::instance::v1::InstancePartition>
+InstanceAdminClient::GetInstancePartition(std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::instance::v1::GetInstancePartitionRequest request;
+  request.set_name(name);
+  return connection_->GetInstancePartition(request);
+}
+
+StatusOr<google::spanner::admin::instance::v1::InstancePartition>
+InstanceAdminClient::GetInstancePartition(
+    google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetInstancePartition(request);
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+InstanceAdminClient::CreateInstancePartition(
+    std::string const& parent,
+    google::spanner::admin::instance::v1::InstancePartition const&
+        instance_partition,
+    std::string const& instance_partition_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::instance::v1::CreateInstancePartitionRequest request;
+  request.set_parent(parent);
+  *request.mutable_instance_partition() = instance_partition;
+  request.set_instance_partition_id(instance_partition_id);
+  return connection_->CreateInstancePartition(request);
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+InstanceAdminClient::CreateInstancePartition(
+    google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateInstancePartition(request);
+}
+
+Status InstanceAdminClient::DeleteInstancePartition(std::string const& name,
+                                                    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::instance::v1::DeleteInstancePartitionRequest request;
+  request.set_name(name);
+  return connection_->DeleteInstancePartition(request);
+}
+
+Status InstanceAdminClient::DeleteInstancePartition(
+    google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteInstancePartition(request);
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+InstanceAdminClient::UpdateInstancePartition(
+    google::spanner::admin::instance::v1::InstancePartition const&
+        instance_partition,
+    google::protobuf::FieldMask const& field_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::instance::v1::UpdateInstancePartitionRequest request;
+  *request.mutable_instance_partition() = instance_partition;
+  *request.mutable_field_mask() = field_mask;
+  return connection_->UpdateInstancePartition(request);
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+InstanceAdminClient::UpdateInstancePartition(
+    google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateInstancePartition(request);
+}
+
+StreamRange<google::longrunning::Operation>
+InstanceAdminClient::ListInstancePartitionOperations(std::string const& parent,
+                                                     Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::spanner::admin::instance::v1::ListInstancePartitionOperationsRequest
+      request;
+  request.set_parent(parent);
+  return connection_->ListInstancePartitionOperations(request);
+}
+
+StreamRange<google::longrunning::Operation>
+InstanceAdminClient::ListInstancePartitionOperations(
+    google::spanner::admin::instance::v1::ListInstancePartitionOperationsRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListInstancePartitionOperations(std::move(request));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

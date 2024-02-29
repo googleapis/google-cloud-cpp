@@ -141,14 +141,18 @@ future<StatusOr<google::pubsub::v1::PublishResponse>>
 PublisherLogging::AsyncPublish(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::pubsub::v1::PublishRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
              google::pubsub::v1::PublishRequest const& request) {
-        return child_->AsyncPublish(cq, std::move(context), request);
+        return child_->AsyncPublish(cq, std::move(context), std::move(options),
+                                    request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

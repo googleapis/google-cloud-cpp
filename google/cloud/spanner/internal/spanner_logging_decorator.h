@@ -100,16 +100,19 @@ class SpannerLogging : public SpannerStub {
   AsyncBatchCreateSessions(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::spanner::v1::BatchCreateSessionsRequest const& request) override;
 
   future<Status> AsyncDeleteSession(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::spanner::v1::DeleteSessionRequest const& request) override;
 
   future<StatusOr<google::spanner::v1::ResultSet>> AsyncExecuteSql(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::spanner::v1::ExecuteSqlRequest const& request) override;
 
  private:

@@ -109,18 +109,20 @@ PublisherAuth::DetachSubscription(
 future<StatusOr<google::pubsub::v1::PublishResponse>>
 PublisherAuth::AsyncPublish(google::cloud::CompletionQueue& cq,
                             std::shared_ptr<grpc::ClientContext> context,
+                            google::cloud::internal::ImmutableOptions options,
                             google::pubsub::v1::PublishRequest const& request) {
-  using ReturnType = StatusOr<google::pubsub::v1::PublishResponse>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
+          return make_ready_future(
+              StatusOr<google::pubsub::v1::PublishResponse>(
+                  std::move(context).status()));
         }
-        return child->AsyncPublish(cq, *std::move(context), request);
+        return child->AsyncPublish(cq, *std::move(context), std::move(options),
+                                   request);
       });
 }
 

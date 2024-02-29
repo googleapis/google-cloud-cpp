@@ -153,52 +153,55 @@ future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
 SpannerAuth::AsyncBatchCreateSessions(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::spanner::v1::BatchCreateSessionsRequest const& request) {
-  using ReturnType = StatusOr<google::spanner::v1::BatchCreateSessionsResponse>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
+          return make_ready_future(
+              StatusOr<google::spanner::v1::BatchCreateSessionsResponse>(
+                  std::move(context).status()));
         }
         return child->AsyncBatchCreateSessions(cq, *std::move(context),
-                                               request);
+                                               std::move(options), request);
       });
 }
 
 future<Status> SpannerAuth::AsyncDeleteSession(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::spanner::v1::DeleteSessionRequest const& request) {
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncDeleteSession(cq, *std::move(context), request);
+        return child->AsyncDeleteSession(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
 future<StatusOr<google::spanner::v1::ResultSet>> SpannerAuth::AsyncExecuteSql(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::spanner::v1::ExecuteSqlRequest const& request) {
-  using ReturnType = StatusOr<google::spanner::v1::ResultSet>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
+          return make_ready_future(StatusOr<google::spanner::v1::ResultSet>(
+              std::move(context).status()));
         }
-        return child->AsyncExecuteSql(cq, *std::move(context), request);
+        return child->AsyncExecuteSql(cq, *std::move(context),
+                                      std::move(options), request);
       });
 }
 

@@ -120,26 +120,6 @@ class AsyncRestRetryLoopCancelTest : public ::testing::Test {
   AsyncSequencer<Status> sequencer_;
 };
 
-TEST(AsyncRestRetryLoopTest, SuccessWithImplicitOptions) {
-  EXPECT_EQ(internal::CurrentOptions().get<TestOption>(), "");
-  internal::OptionsSpan span(Options{}.set<TestOption>("Success"));
-  EXPECT_EQ(internal::CurrentOptions().get<TestOption>(), "Success");
-  AutomaticallyCreatedRestBackgroundThreads background;
-  auto pending = AsyncRestRetryLoop(
-      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
-      background.cq(),
-      [](CompletionQueue&, std::unique_ptr<RestContext>,
-         int request) -> future<StatusOr<int>> {
-        EXPECT_EQ(internal::CurrentOptions().get<TestOption>(), "Success");
-        return make_ready_future(StatusOr<int>(2 * request));
-      },
-      42, "error message");
-  internal::OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
-  StatusOr<int> actual = pending.get();
-  ASSERT_THAT(actual.status(), IsOk());
-  EXPECT_EQ(84, *actual);
-}
-
 TEST(AsyncRestRetryLoopTest, SuccessWithExplicitOptions) {
   AutomaticallyCreatedRestBackgroundThreads background;
   auto pending = AsyncRestRetryLoop(

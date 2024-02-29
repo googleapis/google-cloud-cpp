@@ -266,12 +266,14 @@ future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
 AdminServiceTracingStub::AsyncGetTopicPartitions(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.pubsublite.v1.AdminService",
                                      "GetTopicPartitions");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetTopicPartitions(cq, context, request);
+  auto f =
+      child_->AsyncGetTopicPartitions(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

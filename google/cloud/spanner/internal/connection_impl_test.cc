@@ -31,6 +31,7 @@
 #include "absl/time/time.h"
 #include "absl/types/optional.h"
 #include <google/protobuf/text_format.h>
+#include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 #include <array>
@@ -147,6 +148,14 @@ MATCHER_P(HasNakedTransactionId, transaction_id, "has transaction id") {
 
 MATCHER_P(HasReturnStats, return_commit_stats, "has return-stats value") {
   return arg.return_commit_stats() == return_commit_stats;
+}
+
+MATCHER_P(HasMaxCommitDelay, max_commit_delay, "has max commit delay") {
+  return arg.max_commit_delay() ==
+         google::protobuf::util::TimeUtil::MillisecondsToDuration(
+             std::chrono::duration_cast<std::chrono::milliseconds>(
+                 max_commit_delay)
+                 .count());
 }
 
 MATCHER(HasBeginTransaction, "has begin TransactionSelector set") {
@@ -2522,6 +2531,31 @@ TEST(ConnectionImplTest, CommitSuccessWithStats) {
   ASSERT_STATUS_OK(commit);
   ASSERT_TRUE(commit->commit_stats.has_value());
   EXPECT_EQ(42, commit->commit_stats->mutation_count);
+}
+
+TEST(ConnectionImplTest, CommitSuccessWithMaxCommitDelay) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  google::spanner::v1::Transaction txn = MakeTestTransaction();
+  EXPECT_CALL(*mock, BeginTransaction).WillOnce(Return(txn));
+  EXPECT_CALL(*mock,
+              Commit(_, _,
+                     AllOf(HasSession("test-session-name"),
+                           HasMaxCommitDelay(std::chrono::milliseconds(100)))))
+      .WillOnce(Return(MakeCommitResponse(
+          spanner::MakeTimestamp(std::chrono::system_clock::from_time_t(123))
+              .value())));
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  auto commit = conn->Commit({spanner::MakeReadWriteTransaction(),
+                              {},
+                              spanner::CommitOptions{}.set_max_commit_delay(
+                                  std::chrono::milliseconds(100))});
+  ASSERT_STATUS_OK(commit);
 }
 
 TEST(ConnectionImplTest, CommitSuccessWithCompression) {

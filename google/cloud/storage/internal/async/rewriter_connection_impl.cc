@@ -55,19 +55,21 @@ RewriterConnectionImpl::Iterate() {
           request_)
           ? Idempotency::kIdempotent
           : Idempotency::kNonIdempotent;
-  auto call = [stub = stub_, current = current_, request = request_](
+  auto call = [stub = stub_, request = request_](
                   CompletionQueue& cq,
                   std::shared_ptr<grpc::ClientContext> context,
+                  google::cloud::internal::ImmutableOptions options,
                   google::storage::v2::RewriteObjectRequest const& proto) {
-    ApplyQueryParameters(*context, *current, request);
-    internal::OptionsSpan span(*current);
-    return stub->AsyncRewriteObject(cq, std::move(context), proto);
+    ApplyQueryParameters(*context, *options, request);
+    return stub->AsyncRewriteObject(cq, std::move(context), std::move(options),
+                                    proto);
   };
 
   return google::cloud::internal::AsyncRetryLoop(
              current_->get<storage::RetryPolicyOption>()->clone(),
              current_->get<storage::BackoffPolicyOption>()->clone(),
-             idempotency, cq_, std::move(call), *std::move(proto), __func__)
+             idempotency, cq_, std::move(call), current_, *std::move(proto),
+             __func__)
       .then([w = WeakFromThis()](auto f) {
         if (auto self = w.lock()) return self->OnRewrite(f.get());
         return CannotLockSelf(GCP_ERROR_INFO());

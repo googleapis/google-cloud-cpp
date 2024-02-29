@@ -146,12 +146,14 @@ Status MetricServiceTracingStub::CreateServiceTimeSeries(
 future<Status> MetricServiceTracingStub::AsyncCreateTimeSeries(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.monitoring.v3.MetricService",
                                      "CreateTimeSeries");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateTimeSeries(cq, context, request);
+  auto f =
+      child_->AsyncCreateTimeSeries(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

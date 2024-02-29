@@ -138,6 +138,8 @@ future<StatusOr<google::pubsub::v1::PublishResponse>>
 DefaultPublisherStub::AsyncPublish(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::pubsub::v1::PublishRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::pubsub::v1::PublishRequest,
                                     google::pubsub::v1::PublishResponse>(

@@ -124,15 +124,19 @@ StatusOr<google::pubsub::v1::SeekResponse> SubscriberRoundRobin::Seek(
 future<Status> SubscriberRoundRobin::AsyncModifyAckDeadline(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
-  return Child()->AsyncModifyAckDeadline(cq, std::move(context), request);
+  return Child()->AsyncModifyAckDeadline(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 future<Status> SubscriberRoundRobin::AsyncAcknowledge(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::pubsub::v1::AcknowledgeRequest const& request) {
-  return Child()->AsyncAcknowledge(cq, std::move(context), request);
+  return Child()->AsyncAcknowledge(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 std::shared_ptr<SubscriberStub> SubscriberRoundRobin::Child() {

@@ -704,6 +704,7 @@ future<StatusOr<google::storage::v2::Object>>
 StorageMetadata::AsyncComposeObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::ComposeObjectRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -714,17 +715,18 @@ StorageMetadata::AsyncComposeObject(
   }
 
   if (params.empty()) {
-    SetMetadata(*context, internal::CurrentOptions());
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncComposeObject(cq, std::move(context), request);
+  return child_->AsyncComposeObject(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<Status> StorageMetadata::AsyncDeleteObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::DeleteObjectRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -735,12 +737,12 @@ future<Status> StorageMetadata::AsyncDeleteObject(
   }
 
   if (params.empty()) {
-    SetMetadata(*context, internal::CurrentOptions());
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncDeleteObject(cq, std::move(context), request);
+  return child_->AsyncDeleteObject(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
@@ -782,6 +784,7 @@ future<StatusOr<google::storage::v2::RewriteResponse>>
 StorageMetadata::AsyncRewriteObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::RewriteObjectRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -797,18 +800,19 @@ StorageMetadata::AsyncRewriteObject(
   }
 
   if (params.empty()) {
-    SetMetadata(*context, internal::CurrentOptions());
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncRewriteObject(cq, std::move(context), request);
+  return child_->AsyncRewriteObject(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
 StorageMetadata::AsyncStartResumableWrite(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::StartResumableWriteRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -820,18 +824,19 @@ StorageMetadata::AsyncStartResumableWrite(
   }
 
   if (params.empty()) {
-    SetMetadata(*context, internal::CurrentOptions());
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncStartResumableWrite(cq, std::move(context), request);
+  return child_->AsyncStartResumableWrite(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
 StorageMetadata::AsyncQueryWriteStatus(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::QueryWriteStatusRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
@@ -850,12 +855,12 @@ StorageMetadata::AsyncQueryWriteStatus(
   bucket_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context, internal::CurrentOptions());
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncQueryWriteStatus(cq, std::move(context), request);
+  return child_->AsyncQueryWriteStatus(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 void StorageMetadata::SetMetadata(grpc::ClientContext& context,

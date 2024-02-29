@@ -113,15 +113,16 @@ Status MetricServiceAuth::CreateServiceTimeSeries(
 future<Status> MetricServiceAuth::AsyncCreateTimeSeries(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCreateTimeSeries(cq, *std::move(context), request);
+        return child->AsyncCreateTimeSeries(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 

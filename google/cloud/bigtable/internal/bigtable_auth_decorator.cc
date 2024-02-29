@@ -144,18 +144,20 @@ future<StatusOr<google::bigtable::v2::MutateRowResponse>>
 BigtableAuth::AsyncMutateRow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::MutateRowRequest const& request) {
-  using ReturnType = StatusOr<google::bigtable::v2::MutateRowResponse>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
+          return make_ready_future(
+              StatusOr<google::bigtable::v2::MutateRowResponse>(
+                  std::move(context).status()));
         }
-        return child->AsyncMutateRow(cq, *std::move(context), request);
+        return child->AsyncMutateRow(cq, *std::move(context),
+                                     std::move(options), request);
       });
 }
 
@@ -182,18 +184,20 @@ future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>
 BigtableAuth::AsyncCheckAndMutateRow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::CheckAndMutateRowRequest const& request) {
-  using ReturnType = StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
+          return make_ready_future(
+              StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>(
+                  std::move(context).status()));
         }
-        return child->AsyncCheckAndMutateRow(cq, *std::move(context), request);
+        return child->AsyncCheckAndMutateRow(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
@@ -201,18 +205,20 @@ future<StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>>
 BigtableAuth::AsyncReadModifyWriteRow(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
-  using ReturnType = StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
+          return make_ready_future(
+              StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>(
+                  std::move(context).status()));
         }
-        return child->AsyncReadModifyWriteRow(cq, *std::move(context), request);
+        return child->AsyncReadModifyWriteRow(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 

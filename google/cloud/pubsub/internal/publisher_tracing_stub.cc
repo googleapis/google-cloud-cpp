@@ -136,11 +136,12 @@ future<StatusOr<google::pubsub::v1::PublishResponse>>
 PublisherTracingStub::AsyncPublish(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::pubsub::v1::PublishRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.pubsub.v1.Publisher", "Publish");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncPublish(cq, context, request);
+  auto f = child_->AsyncPublish(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

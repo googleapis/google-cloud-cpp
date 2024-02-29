@@ -114,12 +114,14 @@ future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
 LoggingServiceV2TracingStub::AsyncWriteLogEntries(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::logging::v2::WriteLogEntriesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.logging.v2.LoggingServiceV2",
                                      "WriteLogEntries");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncWriteLogEntries(cq, context, request);
+  auto f =
+      child_->AsyncWriteLogEntries(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

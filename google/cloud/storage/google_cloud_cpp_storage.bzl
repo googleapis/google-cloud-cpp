@@ -42,6 +42,7 @@ google_cloud_cpp_storage_hdrs = [
     "hmac_key_metadata.h",
     "iam_policy.h",
     "idempotency_policy.h",
+    "include_folders_as_prefixes.h",
     "internal/access_control_common.h",
     "internal/access_control_common_parser.h",
     "internal/access_token_credentials.h",

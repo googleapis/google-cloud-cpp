@@ -65,10 +65,12 @@ future<Status> DefaultPullAckHandler::ack() {
         std::make_unique<ExactlyOnceRetryPolicy>(ack_id_),
         ExactlyOnceBackoffPolicy(), google::cloud::Idempotency::kIdempotent,
         cq_,
-        [stub = std::move(s)](auto cq, auto context, auto const& request) {
-          return stub->AsyncAcknowledge(cq, std::move(context), request);
+        [stub = std::move(s)](auto cq, auto context, auto options,
+                              auto const& request) {
+          return stub->AsyncAcknowledge(cq, std::move(context),
+                                        std::move(options), request);
         },
-        request, __func__);
+        google::cloud::internal::MakeImmutableOptions({}), request, __func__);
   }
   return make_ready_future(
       Status(StatusCode::kFailedPrecondition, "session already shutdown"));
@@ -84,10 +86,12 @@ future<Status> DefaultPullAckHandler::nack() {
         std::make_unique<ExactlyOnceRetryPolicy>(ack_id_),
         ExactlyOnceBackoffPolicy(), google::cloud::Idempotency::kIdempotent,
         cq_,
-        [stub = std::move(s)](auto cq, auto context, auto const& request) {
-          return stub->AsyncModifyAckDeadline(cq, std::move(context), request);
+        [stub = std::move(s)](auto cq, auto context, auto options,
+                              auto const& request) {
+          return stub->AsyncModifyAckDeadline(cq, std::move(context),
+                                              std::move(options), request);
         },
-        request, __func__);
+        google::cloud::internal::MakeImmutableOptions({}), request, __func__);
   }
   return make_ready_future(
       Status(StatusCode::kFailedPrecondition, "session already shutdown"));

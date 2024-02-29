@@ -221,10 +221,12 @@ future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
 AdminServiceMetadata::AsyncGetTopicPartitions(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetTopicPartitions(cq, std::move(context), request);
+  return child_->AsyncGetTopicPartitions(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
