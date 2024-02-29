@@ -186,31 +186,6 @@ future<StatusOr<Operation>> AsyncPollingLoop(
   return loop->Start(std::move(op));
 }
 
-future<StatusOr<google::longrunning::Operation>> AsyncPollingLoop(
-    google::cloud::CompletionQueue cq, future<StatusOr<Operation>> op,
-    AsyncPollLongRunningOperationImplicitOptions poll,
-    AsyncCancelLongRunningOperationImplicitOptions cancel,
-    std::unique_ptr<PollingPolicy> polling_policy, std::string location) {
-  auto poll_wrapper =
-      [poll = std::move(poll)](
-          CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
-          ImmutableOptions const&,
-          google::longrunning::GetOperationRequest const& request) {
-        return poll(cq, std::move(context), request);
-      };
-  auto cancel_wrapper =
-      [cancel = std::move(cancel)](
-          CompletionQueue& cq, std::shared_ptr<grpc::ClientContext> context,
-          ImmutableOptions const&,
-          google::longrunning::CancelOperationRequest const& request) {
-        return cancel(cq, std::move(context), request);
-      };
-  return AsyncPollingLoop(std::move(cq), internal::SaveCurrentOptions(),
-                          std::move(op), std::move(poll_wrapper),
-                          std::move(cancel_wrapper), std::move(polling_policy),
-                          std::move(location));
-}
-
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
