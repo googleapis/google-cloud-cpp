@@ -25,9 +25,7 @@ namespace cloud {
  * Contains experimental features for the GCS C++ Client Library.
  *
  * @warning The types, functions, aliases, and objects in this namespace are
- *   subject to change without notice. Some of these features depend on aspects
- *   of the service that are not generally available, do not have an SLA, and
- *   may require projects to be allow-listed.
+ *   subject to change without notice.
  */
 namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
@@ -41,9 +39,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *   and `InsertObject()` use gRPC.
  * - "metadata": use gRPC for all operations.
  *
- * @warning GCS+gRPC is an experimental feature of the C++ client library, and
- *   subject to change without notice.  The service itself is not generally
- *   available, does not have an SLA and requires projects to be allow-listed.
+ * @warning At present, GCS gRPC is GA with Allowlist. To access this API,
+ *   kindly contact the Google Cloud Storage gRPC team at
+ *   gcs-grpc-contact@google.com with a list of GCS buckets you would like to
+ *   Allowlist. Please note that while the **service** is GA (with Allowlist),
+ *   the client library features remain experimental and subject to change
+ *   without notice.
  */
 struct GrpcPluginOption {
   using Type = std::string;
@@ -52,13 +53,14 @@ struct GrpcPluginOption {
 /**
  * Create a `google::cloud::storage::Client` object configured to use gRPC.
  *
- * @note The Credentials parameter in the configuration is ignored. The gRPC
- *     client only supports Google Default Credentials.
- *
  * @param opts the configuration parameters for the Client.
  *
- * @warning This is an experimental feature, and subject to change without
- *     notice.
+ * @warning At present, GCS gRPC is GA with Allowlist. To access this API,
+ *   kindly contact the Google Cloud Storage gRPC team at
+ *   gcs-grpc-contact@google.com with a list of GCS buckets you would like to
+ *   Allowlist. Please note that while the **service** is GA (with Allowlist),
+ *   the client library features remain experimental and subject to change
+ *   without notice.
  *
  * @par Example
  * @snippet storage_grpc_samples.cc grpc-read-write
