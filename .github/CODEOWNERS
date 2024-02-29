@@ -4,3 +4,6 @@
 
 # The owners for all files in the repo.
 * @googleapis/cloud-cxx-owners
+
+# This code is also owned by the GCS clients team.
+/google/cloud/storage @googleapis/cloud-storage-dpe @googleapis/cloud-cxx-owners
