@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/admin/topic_admin_client.h"
 #include "google/cloud/pubsub/snapshot_builder.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
+#include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
@@ -34,8 +34,6 @@ namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::pubsub_admin::MakeTopicAdminConnection;
-using ::google::cloud::pubsub_admin::TopicAdminClient;
 using ::google::cloud::pubsub_testing::MakeTestOptions;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
@@ -97,7 +95,7 @@ TEST_F(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
   ASSERT_STATUS_OK(names);
   EXPECT_THAT(*names, Not(Contains(subscription.FullName())));
 
-  auto topic_metadata = topic_admin.CreateTopic(topic.FullName());
+  auto topic_metadata = topic_admin.CreateTopic(TopicBuilder(topic));
   ASSERT_THAT(topic_metadata,
               AnyOf(IsOk(), StatusIs(StatusCode::kAlreadyExists)));
 
@@ -107,7 +105,7 @@ TEST_F(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
     ~Cleanup() { action(); }
   };
   Cleanup cleanup_topic{
-      [&topic_admin, &topic] { topic_admin.DeleteTopic(topic.FullName()); }};
+      [&topic_admin, &topic] { topic_admin.DeleteTopic(topic); }};
 
   auto endpoint = "https://" + project_id + ".appspot.com/push";
   auto create_response = subscription_admin.CreateSubscription(
@@ -139,7 +137,7 @@ TEST_F(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
 
   auto const topic_subscriptions = [&] {
     std::vector<std::string> names;
-    for (auto& name : topic_admin.ListTopicSubscriptions(topic.FullName())) {
+    for (auto& name : topic_admin.ListTopicSubscriptions(topic)) {
       EXPECT_STATUS_OK(name);
       names.push_back(std::move(*name));
     }
@@ -157,7 +155,7 @@ TEST_F(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
 
   auto const topic_snapshots = [&] {
     std::vector<std::string> names;
-    for (auto& name : topic_admin.ListTopicSnapshots(topic.FullName())) {
+    for (auto& name : topic_admin.ListTopicSnapshots(topic)) {
       EXPECT_STATUS_OK(name);
       names.push_back(std::move(*name));
     }
@@ -189,9 +187,7 @@ TEST_F(SubscriptionAdminIntegrationTest, SubscriptionCRUD) {
 
   // Skip, as this is not supported by the emulator.
   if (!UsingEmulator()) {
-    google::pubsub::v1::DetachSubscriptionRequest request;
-    request.set_subscription(subscription.FullName());
-    auto detach_response = topic_admin.DetachSubscription(request);
+    auto detach_response = topic_admin.DetachSubscription(subscription);
     ASSERT_STATUS_OK(detach_response);
   }
 
