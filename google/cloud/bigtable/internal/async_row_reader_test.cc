@@ -539,7 +539,7 @@ TEST_F(AsyncRowReaderTest, RetryInfoHeeded) {
 
   auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
   auto mock_b = std::make_unique<MockBackoffPolicy>();
-  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
+  EXPECT_CALL(*mock_b, OnCompletion);
 
   AsyncRowReader::Create(cq, mock, kAppProfile, kTableName,
                          on_row.AsStdFunction(), on_finish.AsStdFunction(),

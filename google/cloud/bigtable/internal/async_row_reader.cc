@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/async_row_reader.h"
-#include "google/cloud/bigtable/internal/retry_info_helper.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/retry_loop_helpers.h"
 #include "google/cloud/log.h"
 
 namespace google {
@@ -209,10 +209,12 @@ void AsyncRowReader::OnStreamFinished(Status status) {
     return;
   }
 
-  auto delay = BackoffOrBreak(enable_server_retries_, status_, *retry_policy_,
-                              *backoff_policy_);
+  auto delay = internal::Backoff(status_, "AsyncReadRows", *retry_policy_,
+                                 *backoff_policy_, Idempotency::kIdempotent,
+                                 enable_server_retries_);
   if (!delay) {
     // Can't retry.
+    status_ = std::move(delay).status();
     whole_op_finished_ = true;
     TryGiveRowToUser();
     return;

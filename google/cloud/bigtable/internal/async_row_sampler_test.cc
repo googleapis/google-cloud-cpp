@@ -293,7 +293,7 @@ TEST_F(AsyncSampleRowKeysTest, RetryInfoHeeded) {
 
   auto retry = DataLimitedErrorCountRetryPolicy(kNumRetries).clone();
   auto mock_b = std::make_unique<MockBackoffPolicy>();
-  EXPECT_CALL(*mock_b, OnCompletion).Times(0);
+  EXPECT_CALL(*mock_b, OnCompletion);
 
   auto sor =
       AsyncRowSampler::Create(cq, mock, std::move(retry), std::move(mock_b),
@@ -594,7 +594,7 @@ TEST_F(AsyncSampleRowKeysTest, BigtableCookie) {
                               false, kAppProfile, kTableName)
           .get();
 
-  EXPECT_THAT(sor, StatusIs(StatusCode::kPermissionDenied, "fail"));
+  EXPECT_THAT(sor, StatusIs(StatusCode::kPermissionDenied, HasSubstr("fail")));
 }
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

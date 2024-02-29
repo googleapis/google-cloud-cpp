@@ -54,7 +54,7 @@ class AsyncRowSampler : public std::enable_shared_from_this<AsyncRowSampler> {
 
   void StartIteration();
   future<bool> OnRead(google::bigtable::v2::SampleRowKeysResponse response);
-  void OnFinish(Status status);
+  void OnFinish(Status const& status);
 
   CompletionQueue cq_;
   std::shared_ptr<BigtableStub> stub_;
