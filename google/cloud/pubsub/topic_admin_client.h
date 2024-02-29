@@ -30,8 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Performs topic admin operations in Cloud Pub/Sub.
  *
- * @deprecated Please use #google::cloud::pubsub_admin::TopicAdminClient
- *     and #google::cloud::pubsub_admin::TopicAdminClient instead.
+ * @deprecated Please use \ref google::cloud::pubsub_admin::TopicAdminClient
+ *     and \ref google::cloud::pubsub_admin::TopicAdminClient instead.
  *
  * Applications use this class to perform operations on
  * [Cloud Pub/Sub][pubsub-doc-link].
@@ -61,24 +61,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class TopicAdminClient {
  public:
-  [[deprecated(
-      "Replaced by "
-      "google::cloud::pubsub_admin::"
-      "TopicAdminClient")]] explicit TopicAdminClient(std::
-                                                          shared_ptr<
-                                                              TopicAdminConnection>
-                                                              connection,
-                                                      Options opts = {});
+  explicit TopicAdminClient(std::shared_ptr<TopicAdminConnection> connection,
+                            Options opts = {});
 
   /**
    * The default constructor is deleted.
    *
    * Use `PublisherClient(std::shared_ptr<PublisherConnection>)`
    */
-  [[deprecated(
-      "Replaced by "
-      "google::cloud::pubsub_admin::TopicAdminClient")]] TopicAdminClient() =
-      delete;
+  TopicAdminClient() = delete;
 
   /**
    * Creates a new topic in Cloud Pub/Sub.
@@ -93,19 +84,15 @@ class TopicAdminClient {
    * @param opts Override the class-level options, such as retry and backoff
    *     policies.
    */
-  [[deprecated(
-      "Replaced by google::cloud::pubsub_admin::TopicAdminClient")]] StatusOr<google::pubsub::
-                                                                                  v1::Topic>
-  CreateTopic(TopicBuilder builder, Options opts = {}) {
+  StatusOr<google::pubsub::v1::Topic> CreateTopic(TopicBuilder builder,
+                                                  Options opts = {}) {
     return CreateTopic(std::move(builder).BuildCreateRequest(),
                        std::move(opts));
   }
 
   /// Create a new topic in Cloud Pub/Sub.
-  [[deprecated(
-      "Replaced by google::cloud::pubsub_admin::TopicAdminClient")]] StatusOr<google::pubsub::
-                                                                                  v1::Topic>
-  CreateTopic(google::pubsub::v1::Topic request, Options opts = {}) {
+  StatusOr<google::pubsub::v1::Topic> CreateTopic(
+      google::pubsub::v1::Topic request, Options opts = {}) {
     internal::OptionsSpan span(
         internal::MergeOptions(std::move(opts), options_));
     return connection_->CreateTopic({std::move(request)});
@@ -117,10 +104,7 @@ class TopicAdminClient {
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
    */
-  [[deprecated(
-      "Replaced by google::cloud::pubsub_admin::TopicAdminClient")]] StatusOr<google::pubsub::
-                                                                                  v1::Topic>
-  GetTopic(Topic topic, Options opts = {}) {
+  StatusOr<google::pubsub::v1::Topic> GetTopic(Topic topic, Options opts = {}) {
     internal::OptionsSpan span(
         internal::MergeOptions(std::move(opts), options_));
     return connection_->GetTopic({std::move(topic)});
@@ -137,10 +121,8 @@ class TopicAdminClient {
    * @param opts Override the class-level options, such as retry and backoff
    *     policies.
    */
-  [[deprecated(
-      "Replaced by google::cloud::pubsub_admin::TopicAdminClient")]] StatusOr<google::pubsub::
-                                                                                  v1::Topic>
-  UpdateTopic(TopicBuilder builder, Options opts = {}) {
+  StatusOr<google::pubsub::v1::Topic> UpdateTopic(TopicBuilder builder,
+                                                  Options opts = {}) {
     internal::OptionsSpan span(
         internal::MergeOptions(std::move(opts), options_));
     return connection_->UpdateTopic({std::move(builder).BuildUpdateRequest()});
@@ -152,10 +134,7 @@ class TopicAdminClient {
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
    */
-  [[deprecated(
-      "Replaced by "
-      "google::cloud::pubsub_admin::TopicAdminClient")]] ListTopicsRange
-  ListTopics(std::string const& project_id, Options opts = {}) {
+  ListTopicsRange ListTopics(std::string const& project_id, Options opts = {}) {
     internal::OptionsSpan span(
         internal::MergeOptions(std::move(opts), options_));
     return connection_->ListTopics({"projects/" + project_id});
@@ -174,9 +153,7 @@ class TopicAdminClient {
    * @param opts Override the class-level options, such as retry and backoff
    *     policies.
    */
-  [[deprecated(
-      "Replaced by google::cloud::pubsub_admin::TopicAdminClient")]] Status
-  DeleteTopic(Topic topic, Options opts = {}) {
+  Status DeleteTopic(Topic topic, Options opts = {}) {
     internal::OptionsSpan span(
         internal::MergeOptions(std::move(opts), options_));
     return connection_->DeleteTopic({std::move(topic)});
@@ -197,10 +174,8 @@ class TopicAdminClient {
    * @param opts Override the class-level options, such as retry and backoff
    *     policies.
    */
-  [[deprecated(
-      "Replaced by google::cloud::pubsub_admin::TopicAdminClient")]] StatusOr<google::pubsub::
-                                                                                  v1::DetachSubscriptionResponse>
-  DetachSubscription(Subscription subscription, Options opts = {}) {
+  StatusOr<google::pubsub::v1::DetachSubscriptionResponse> DetachSubscription(
+      Subscription subscription, Options opts = {}) {
     internal::OptionsSpan span(
         internal::MergeOptions(std::move(opts), options_));
     return connection_->DetachSubscription({std::move(subscription)});
@@ -217,11 +192,8 @@ class TopicAdminClient {
    * @par Idempotency
    * This is a read-only operation and therefore always idempotent and retried.
    */
-  [[deprecated(
-      "Replaced by "
-      "google::cloud::pubsub_admin::"
-      "TopicAdminClient")]] ListTopicSubscriptionsRange
-  ListTopicSubscriptions(Topic const& topic, Options opts = {}) {
+  ListTopicSubscriptionsRange ListTopicSubscriptions(Topic const& topic,
+                                                     Options opts = {}) {
     internal::OptionsSpan span(
         internal::MergeOptions(std::move(opts), options_));
     return connection_->ListTopicSubscriptions({topic.FullName()});
@@ -241,10 +213,8 @@ class TopicAdminClient {
    * @see https://cloud.google.com/pubsub/docs/replay-overview for a detailed
    *     description of Cloud Pub/Sub's snapshots.
    */
-  [[deprecated(
-      "Replaced by "
-      "google::cloud::pubsub_admin::TopicAdminClient")]] ListTopicSnapshotsRange
-  ListTopicSnapshots(Topic const& topic, Options opts = {}) {
+  ListTopicSnapshotsRange ListTopicSnapshots(Topic const& topic,
+                                             Options opts = {}) {
     internal::OptionsSpan span(
         internal::MergeOptions(std::move(opts), options_));
     return connection_->ListTopicSnapshots({topic.FullName()});
