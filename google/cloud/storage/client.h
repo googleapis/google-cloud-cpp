@@ -1051,13 +1051,17 @@ class Client {
    *     Valid types for this operation include
    *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
    *     `Projection`, `Prefix`, `Delimiter`, `IncludeTrailingDelimiter`,
-   *     `StartOffset`, `EndOffset`, `MatchGlob`, and `Versions`.
+   *     `IncludeFoldersAsPrefixes`, `StartOffset`, `EndOffset`, `MatchGlob`,
+   *     `SoftDeleted`, and `Versions`.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
    * @par Example
    * @snippet storage_object_samples.cc list objects and prefixes
+   *
+   * @par Example
+   * @snippet storage_object_samples.cc list-objects-and-folders
    */
   template <typename... Options>
   ListObjectsAndPrefixesReader ListObjectsAndPrefixes(
