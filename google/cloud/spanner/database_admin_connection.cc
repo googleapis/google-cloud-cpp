@@ -156,23 +156,28 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     for (auto& s : p.extra_statements) {
       *request.add_extra_statements() = std::move(s);
     }
-    auto& stub = stub_;
     return google::cloud::internal::AsyncLongRunningOperation<
         gsad::v1::Database>(
-        background_threads_->cq(), std::move(request),
-        [stub](google::cloud::CompletionQueue& cq,
-               std::shared_ptr<grpc::ClientContext> context,
-               gsad::v1::CreateDatabaseRequest const& request) {
+        background_threads_->cq(), internal::SaveCurrentOptions(),
+        std::move(request),
+        [stub = stub_](google::cloud::CompletionQueue& cq,
+                       std::shared_ptr<grpc::ClientContext> context,
+                       google::cloud::internal::ImmutableOptions const&,
+                       gsad::v1::CreateDatabaseRequest const& request) {
           return stub->AsyncCreateDatabase(cq, std::move(context), request);
         },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::shared_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
+        [stub = stub_](
+            google::cloud::CompletionQueue& cq,
+            std::shared_ptr<grpc::ClientContext> context,
+            google::cloud::internal::ImmutableOptions const&,
+            google::longrunning::GetOperationRequest const& request) {
           return stub->AsyncGetOperation(cq, std::move(context), request);
         },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::shared_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
+        [stub = stub_](
+            google::cloud::CompletionQueue& cq,
+            std::shared_ptr<grpc::ClientContext> context,
+            google::cloud::internal::ImmutableOptions const&,
+            google::longrunning::CancelOperationRequest const& request) {
           return stub->AsyncCancelOperation(cq, std::move(context), request);
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
@@ -218,23 +223,28 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     for (auto& s : p.statements) {
       *request.add_statements() = std::move(s);
     }
-    auto& stub = stub_;
     return google::cloud::internal::AsyncLongRunningOperation<
         gsad::v1::UpdateDatabaseDdlMetadata>(
-        background_threads_->cq(), std::move(request),
-        [stub](google::cloud::CompletionQueue& cq,
-               std::shared_ptr<grpc::ClientContext> context,
-               gsad::v1::UpdateDatabaseDdlRequest const& request) {
+        background_threads_->cq(), internal::SaveCurrentOptions(),
+        std::move(request),
+        [stub = stub_](google::cloud::CompletionQueue& cq,
+                       std::shared_ptr<grpc::ClientContext> context,
+                       google::cloud::internal::ImmutableOptions const&,
+                       gsad::v1::UpdateDatabaseDdlRequest const& request) {
           return stub->AsyncUpdateDatabaseDdl(cq, std::move(context), request);
         },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::shared_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
+        [stub = stub_](
+            google::cloud::CompletionQueue& cq,
+            std::shared_ptr<grpc::ClientContext> context,
+            google::cloud::internal::ImmutableOptions const&,
+            google::longrunning::GetOperationRequest const& request) {
           return stub->AsyncGetOperation(cq, std::move(context), request);
         },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::shared_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
+        [stub = stub_](
+            google::cloud::CompletionQueue& cq,
+            std::shared_ptr<grpc::ClientContext> context,
+            google::cloud::internal::ImmutableOptions const&,
+            google::longrunning::CancelOperationRequest const& request) {
           return stub->AsyncCancelOperation(cq, std::move(context), request);
         },
         &google::cloud::internal::ExtractLongRunningResultMetadata<
@@ -317,23 +327,28 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       gsad::v1::RestoreDatabaseRequest& request_;
     };
     absl::visit(EncryptionVisitor(request), p.encryption_config);
-    auto& stub = stub_;
     return google::cloud::internal::AsyncLongRunningOperation<
         gsad::v1::Database>(
-        background_threads_->cq(), std::move(request),
-        [stub](google::cloud::CompletionQueue& cq,
-               std::shared_ptr<grpc::ClientContext> context,
-               gsad::v1::RestoreDatabaseRequest const& request) {
+        background_threads_->cq(), internal::SaveCurrentOptions(),
+        std::move(request),
+        [stub = stub_](google::cloud::CompletionQueue& cq,
+                       std::shared_ptr<grpc::ClientContext> context,
+                       google::cloud::internal::ImmutableOptions const&,
+                       gsad::v1::RestoreDatabaseRequest const& request) {
           return stub->AsyncRestoreDatabase(cq, std::move(context), request);
         },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::shared_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
+        [stub = stub_](
+            google::cloud::CompletionQueue& cq,
+            std::shared_ptr<grpc::ClientContext> context,
+            google::cloud::internal::ImmutableOptions const&,
+            google::longrunning::GetOperationRequest const& request) {
           return stub->AsyncGetOperation(cq, std::move(context), request);
         },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::shared_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
+        [stub = stub_](
+            google::cloud::CompletionQueue& cq,
+            std::shared_ptr<grpc::ClientContext> context,
+            google::cloud::internal::ImmutableOptions const&,
+            google::longrunning::CancelOperationRequest const& request) {
           return stub->AsyncCancelOperation(cq, std::move(context), request);
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
@@ -427,22 +442,27 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       gsad::v1::CreateBackupRequest& request_;
     };
     absl::visit(EncryptionVisitor(request), p.encryption_config);
-    auto& stub = stub_;
     return google::cloud::internal::AsyncLongRunningOperation<gsad::v1::Backup>(
-        background_threads_->cq(), std::move(request),
-        [stub](google::cloud::CompletionQueue& cq,
-               std::shared_ptr<grpc::ClientContext> context,
-               gsad::v1::CreateBackupRequest const& request) {
+        background_threads_->cq(), internal::SaveCurrentOptions(),
+        std::move(request),
+        [stub = stub_](google::cloud::CompletionQueue& cq,
+                       std::shared_ptr<grpc::ClientContext> context,
+                       google::cloud::internal::ImmutableOptions const&,
+                       gsad::v1::CreateBackupRequest const& request) {
           return stub->AsyncCreateBackup(cq, std::move(context), request);
         },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::shared_ptr<grpc::ClientContext> context,
-               google::longrunning::GetOperationRequest const& request) {
+        [stub = stub_](
+            google::cloud::CompletionQueue& cq,
+            std::shared_ptr<grpc::ClientContext> context,
+            google::cloud::internal::ImmutableOptions const&,
+            google::longrunning::GetOperationRequest const& request) {
           return stub->AsyncGetOperation(cq, std::move(context), request);
         },
-        [stub](google::cloud::CompletionQueue& cq,
-               std::shared_ptr<grpc::ClientContext> context,
-               google::longrunning::CancelOperationRequest const& request) {
+        [stub = stub_](
+            google::cloud::CompletionQueue& cq,
+            std::shared_ptr<grpc::ClientContext> context,
+            google::cloud::internal::ImmutableOptions const&,
+            google::longrunning::CancelOperationRequest const& request) {
           return stub->AsyncCancelOperation(cq, std::move(context), request);
         },
         &google::cloud::internal::ExtractLongRunningResultResponse<
