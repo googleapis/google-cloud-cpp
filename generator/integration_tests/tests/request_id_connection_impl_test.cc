@@ -22,6 +22,7 @@
 #include <memory>
 #include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -104,14 +105,17 @@ auto WithoutRequestId() {
       [](Request const& request) { return request.request_id(); }, IsEmpty());
 }
 
+auto IsUuidV4() {
+  using ::testing::ContainsRegex;
+  return ContainsRegex(
+      "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
+}
+
 template <typename Request>
 auto RequestIdIsUuidV4() {
-  using ::testing::ContainsRegex;
   return ResultOf(
       "request has request_id in UUIDV4 format",
-      [](Request const& request) { return request.request_id(); },
-      ContainsRegex(
-          "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"));
+      [](Request const& request) { return request.request_id(); }, IsUuidV4());
 }
 
 auto MakeTestConnection(
@@ -130,16 +134,25 @@ TEST(RequestIdTest, UnaryRpc) {
 #if GTEST_USES_POSIX_RE == 0
   GTEST_SKIP();
 #endif  // GTEST_USES_POSIX_RE
+  std::vector<std::string> captured_ids;
   auto mock = std::make_shared<MockRequestIdServiceStub>();
   EXPECT_CALL(*mock, CreateFoo(_, _, RequestIdIsUuidV4<CreateFooRequest>()))
-      .WillOnce(Return(TransientError()))
-      .WillOnce(Return(Foo{}));
+      .WillOnce([&](auto&, auto const&, auto const& request) {
+        captured_ids.push_back(request.request_id());
+        return StatusOr<Foo>(TransientError());
+      })
+      .WillOnce([&](auto&, auto const&, auto const& request) {
+        captured_ids.push_back(request.request_id());
+        return make_status_or(Foo{});
+      });
 
   auto connection = MakeTestConnection(mock);
   internal::OptionsSpan span(connection->options());
   CreateFooRequest request;
   auto result = connection->CreateFoo(request);
   EXPECT_STATUS_OK(result);
+  ASSERT_THAT(captured_ids, ElementsAre(IsUuidV4(), IsUuidV4()));
+  EXPECT_EQ(captured_ids[0], captured_ids[1]);
 }
 
 TEST(RequestIdTest, UnaryRpcExplicit) {
@@ -162,18 +175,26 @@ TEST(RequestIdTest, AsyncUnaryRpc) {
 #if GTEST_USES_POSIX_RE == 0
   GTEST_SKIP();
 #endif  // GTEST_USES_POSIX_RE
+  std::vector<std::string> captured_ids;
   auto mock = std::make_shared<MockRequestIdServiceStub>();
   EXPECT_CALL(*mock,
               AsyncCreateFoo(_, _, _, RequestIdIsUuidV4<CreateFooRequest>()))
-      .WillOnce(
-          Return(ByMove(make_ready_future(StatusOr<Foo>(TransientError())))))
-      .WillOnce(Return(ByMove(make_ready_future(make_status_or(Foo{})))));
+      .WillOnce([&](auto, auto, auto const&, auto const& request) {
+        captured_ids.push_back(request.request_id());
+        return make_ready_future(StatusOr<Foo>(TransientError()));
+      })
+      .WillOnce([&](auto, auto, auto const&, auto const& request) {
+        captured_ids.push_back(request.request_id());
+        return make_ready_future(make_status_or(Foo{}));
+      });
 
   auto connection = MakeTestConnection(mock);
   internal::OptionsSpan span(connection->options());
   CreateFooRequest request;
   auto result = connection->AsyncCreateFoo(request).get();
   EXPECT_STATUS_OK(result);
+  ASSERT_THAT(captured_ids, ElementsAre(IsUuidV4(), IsUuidV4()));
+  EXPECT_EQ(captured_ids[0], captured_ids[1]);
 }
 
 TEST(RequestIdTest, AsyncUnaryRpcExplicit) {
@@ -198,12 +219,19 @@ TEST(RequestIdTest, Lro) {
   GTEST_SKIP();
 #endif  // GTEST_USES_POSIX_RE
   auto mock = std::make_shared<MockRequestIdServiceStub>();
+  std::vector<std::string> captured_ids;
   EXPECT_CALL(*mock,
               AsyncRenameFoo(_, _, _, RequestIdIsUuidV4<RenameFooRequest>()))
-      .WillOnce(Return(ByMove(make_ready_future(
-          StatusOr<google::longrunning::Operation>(TransientError())))))
-      .WillOnce(Return(ByMove(make_ready_future(
-          make_status_or(google::longrunning::Operation{})))));
+      .WillOnce([&](auto, auto, auto, auto const& request) {
+        captured_ids.push_back(request.request_id());
+        return make_ready_future(
+            StatusOr<google::longrunning::Operation>(TransientError()));
+      })
+      .WillOnce([&](auto, auto, auto, auto const& request) {
+        captured_ids.push_back(request.request_id());
+        return make_ready_future(
+            make_status_or(google::longrunning::Operation{}));
+      });
   EXPECT_CALL(*mock, AsyncGetOperation).WillOnce([] {
     google::longrunning::Operation result;
     result.set_done(true);
@@ -216,6 +244,8 @@ TEST(RequestIdTest, Lro) {
   RenameFooRequest request;
   auto result = connection->RenameFoo(request).get();
   EXPECT_STATUS_OK(result);
+  ASSERT_THAT(captured_ids, ElementsAre(IsUuidV4(), IsUuidV4()));
+  EXPECT_EQ(captured_ids[0], captured_ids[1]);
 }
 
 TEST(RequestIdTest, LroExplicit) {
