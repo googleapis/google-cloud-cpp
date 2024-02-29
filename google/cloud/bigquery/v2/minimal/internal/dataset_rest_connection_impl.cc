@@ -53,11 +53,11 @@ StatusOr<Dataset> DatasetRestConnectionImpl::GetDataset(
   auto result = rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDataset(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const&,
              GetDatasetRequest const& request) {
         return stub_->GetDataset(rest_context, request);
       },
-      request, __func__);
+      *current, request, __func__);
   if (!result) return std::move(result).status();
   return result->dataset;
 }
@@ -76,16 +76,16 @@ StreamRange<ListFormatDataset> DatasetRestConnectionImpl::ListDatasets(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<ListFormatDataset>>(
-      std::move(req),
-      [stub, retry, backoff, idempotency,
-       function_name](ListDatasetsRequest const& r) {
+      std::move(current), std::move(req),
+      [stub, retry, backoff, idempotency, function_name](
+          Options const& options, ListDatasetsRequest const& r) {
         return rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& context,
+            [stub](rest_internal::RestContext& context, Options const&,
                    ListDatasetsRequest const& request) {
               return stub->ListDatasets(context, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](ListDatasetsResponse r) {
         std::vector<ListFormatDataset> result(r.datasets.size());
