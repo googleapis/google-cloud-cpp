@@ -3238,7 +3238,13 @@ service {
   service_proto_path: "google/storage/control/v2/storage_control.proto"
   product_path: "google/cloud/storagecontrol/v2"
   initial_copyright_year: "2024"
-  retryable_status_codes: ["kUnavailable"]
+  retryable_status_codes: [
+    "kResourceExhausted",
+    "kUnavailable",
+    "kDeadlineExceeded",
+    "kInternal",
+    "kUnknown"
+  ]
   omit_repo_metadata: true
   idempotency_overrides: [
     {rpc_name: "StorageControl.GetFolder", idempotency: IDEMPOTENT},
