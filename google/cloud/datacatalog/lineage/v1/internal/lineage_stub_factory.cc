@@ -30,6 +30,7 @@
 #include "google/cloud/options.h"
 #include <google/cloud/datacatalog/lineage/v1/lineage.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

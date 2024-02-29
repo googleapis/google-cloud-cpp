@@ -22,6 +22,7 @@
 #include <google/cloud/automl/v1/prediction_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ PredictionServiceStub::~PredictionServiceStub() = default;
 
 StatusOr<google::cloud::automl::v1::PredictResponse>
 DefaultPredictionServiceStub::Predict(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::automl::v1::PredictRequest const& request) {
   google::cloud::automl::v1::PredictResponse response;
   auto status = grpc_stub_->Predict(&context, request, &response);
@@ -45,7 +46,8 @@ DefaultPredictionServiceStub::Predict(
 future<StatusOr<google::longrunning::Operation>>
 DefaultPredictionServiceStub::AsyncBatchPredict(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::automl::v1::BatchPredictRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::automl::v1::BatchPredictRequest,
@@ -62,7 +64,8 @@ DefaultPredictionServiceStub::AsyncBatchPredict(
 future<StatusOr<google::longrunning::Operation>>
 DefaultPredictionServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -77,7 +80,8 @@ DefaultPredictionServiceStub::AsyncGetOperation(
 
 future<Status> DefaultPredictionServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -26,6 +26,7 @@
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/cx/v3/session.pb.h>
 #include <memory>
@@ -182,6 +183,10 @@ class SessionsConnection {
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
   DetectIntent(
+      google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request);
+
+  virtual StreamRange<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
+  ServerStreamingDetectIntent(
       google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request);
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

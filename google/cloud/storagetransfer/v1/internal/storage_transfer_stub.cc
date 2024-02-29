@@ -22,6 +22,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <google/storagetransfer/v1/transfer.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ StorageTransferServiceStub::~StorageTransferServiceStub() = default;
 
 StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
 DefaultStorageTransferServiceStub::GetGoogleServiceAccount(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
         request) {
   google::storagetransfer::v1::GoogleServiceAccount response;
@@ -46,7 +47,7 @@ DefaultStorageTransferServiceStub::GetGoogleServiceAccount(
 
 StatusOr<google::storagetransfer::v1::TransferJob>
 DefaultStorageTransferServiceStub::CreateTransferJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storagetransfer::v1::CreateTransferJobRequest const& request) {
   google::storagetransfer::v1::TransferJob response;
   auto status = grpc_stub_->CreateTransferJob(&context, request, &response);
@@ -58,7 +59,7 @@ DefaultStorageTransferServiceStub::CreateTransferJob(
 
 StatusOr<google::storagetransfer::v1::TransferJob>
 DefaultStorageTransferServiceStub::UpdateTransferJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storagetransfer::v1::UpdateTransferJobRequest const& request) {
   google::storagetransfer::v1::TransferJob response;
   auto status = grpc_stub_->UpdateTransferJob(&context, request, &response);
@@ -70,7 +71,7 @@ DefaultStorageTransferServiceStub::UpdateTransferJob(
 
 StatusOr<google::storagetransfer::v1::TransferJob>
 DefaultStorageTransferServiceStub::GetTransferJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storagetransfer::v1::GetTransferJobRequest const& request) {
   google::storagetransfer::v1::TransferJob response;
   auto status = grpc_stub_->GetTransferJob(&context, request, &response);
@@ -82,7 +83,7 @@ DefaultStorageTransferServiceStub::GetTransferJob(
 
 StatusOr<google::storagetransfer::v1::ListTransferJobsResponse>
 DefaultStorageTransferServiceStub::ListTransferJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storagetransfer::v1::ListTransferJobsRequest const& request) {
   google::storagetransfer::v1::ListTransferJobsResponse response;
   auto status = grpc_stub_->ListTransferJobs(&context, request, &response);
@@ -93,7 +94,7 @@ DefaultStorageTransferServiceStub::ListTransferJobs(
 }
 
 Status DefaultStorageTransferServiceStub::PauseTransferOperation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storagetransfer::v1::PauseTransferOperationRequest const& request) {
   google::protobuf::Empty response;
   auto status =
@@ -105,7 +106,7 @@ Status DefaultStorageTransferServiceStub::PauseTransferOperation(
 }
 
 Status DefaultStorageTransferServiceStub::ResumeTransferOperation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storagetransfer::v1::ResumeTransferOperationRequest const&
         request) {
   google::protobuf::Empty response;
@@ -120,7 +121,8 @@ Status DefaultStorageTransferServiceStub::ResumeTransferOperation(
 future<StatusOr<google::longrunning::Operation>>
 DefaultStorageTransferServiceStub::AsyncRunTransferJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::storagetransfer::v1::RunTransferJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::storagetransfer::v1::RunTransferJobRequest,
@@ -135,7 +137,7 @@ DefaultStorageTransferServiceStub::AsyncRunTransferJob(
 }
 
 Status DefaultStorageTransferServiceStub::DeleteTransferJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storagetransfer::v1::DeleteTransferJobRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteTransferJob(&context, request, &response);
@@ -147,7 +149,7 @@ Status DefaultStorageTransferServiceStub::DeleteTransferJob(
 
 StatusOr<google::storagetransfer::v1::AgentPool>
 DefaultStorageTransferServiceStub::CreateAgentPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storagetransfer::v1::CreateAgentPoolRequest const& request) {
   google::storagetransfer::v1::AgentPool response;
   auto status = grpc_stub_->CreateAgentPool(&context, request, &response);
@@ -159,7 +161,7 @@ DefaultStorageTransferServiceStub::CreateAgentPool(
 
 StatusOr<google::storagetransfer::v1::AgentPool>
 DefaultStorageTransferServiceStub::UpdateAgentPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storagetransfer::v1::UpdateAgentPoolRequest const& request) {
   google::storagetransfer::v1::AgentPool response;
   auto status = grpc_stub_->UpdateAgentPool(&context, request, &response);
@@ -171,7 +173,7 @@ DefaultStorageTransferServiceStub::UpdateAgentPool(
 
 StatusOr<google::storagetransfer::v1::AgentPool>
 DefaultStorageTransferServiceStub::GetAgentPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storagetransfer::v1::GetAgentPoolRequest const& request) {
   google::storagetransfer::v1::AgentPool response;
   auto status = grpc_stub_->GetAgentPool(&context, request, &response);
@@ -183,7 +185,7 @@ DefaultStorageTransferServiceStub::GetAgentPool(
 
 StatusOr<google::storagetransfer::v1::ListAgentPoolsResponse>
 DefaultStorageTransferServiceStub::ListAgentPools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storagetransfer::v1::ListAgentPoolsRequest const& request) {
   google::storagetransfer::v1::ListAgentPoolsResponse response;
   auto status = grpc_stub_->ListAgentPools(&context, request, &response);
@@ -194,7 +196,7 @@ DefaultStorageTransferServiceStub::ListAgentPools(
 }
 
 Status DefaultStorageTransferServiceStub::DeleteAgentPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::storagetransfer::v1::DeleteAgentPoolRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteAgentPool(&context, request, &response);
@@ -207,7 +209,8 @@ Status DefaultStorageTransferServiceStub::DeleteAgentPool(
 future<StatusOr<google::longrunning::Operation>>
 DefaultStorageTransferServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -222,7 +225,8 @@ DefaultStorageTransferServiceStub::AsyncGetOperation(
 
 future<Status> DefaultStorageTransferServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

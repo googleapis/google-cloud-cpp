@@ -24,6 +24,7 @@
 #include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/object_metadata.h"
+#include "google/cloud/storage/soft_deleted.h"
 #include "google/cloud/storage/upload_options.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
@@ -47,7 +48,8 @@ namespace internal {
 class ListObjectsRequest
     : public GenericRequest<ListObjectsRequest, MaxResults, Prefix, Delimiter,
                             IncludeTrailingDelimiter, StartOffset, EndOffset,
-                            MatchGlob, Projection, UserProject, Versions> {
+                            MatchGlob, Projection, SoftDeleted, UserProject,
+                            Versions> {
  public:
   ListObjectsRequest() = default;
   explicit ListObjectsRequest(std::string bucket_name)
@@ -87,7 +89,7 @@ class GetObjectMetadataRequest
     : public GenericObjectRequest<
           GetObjectMetadataRequest, Generation, IfGenerationMatch,
           IfGenerationNotMatch, IfMetagenerationMatch, IfMetagenerationNotMatch,
-          Projection, UserProject> {
+          Projection, SoftDeleted, UserProject> {
  public:
   using GenericObjectRequest::GenericObjectRequest;
 };

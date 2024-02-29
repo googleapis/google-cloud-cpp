@@ -44,42 +44,42 @@ ExecutionsMetadata::ExecutionsMetadata(
 
 StatusOr<google::cloud::workflows::executions::v1::ListExecutionsResponse>
 ExecutionsMetadata::ListExecutions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::executions::v1::ListExecutionsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListExecutions(context, request);
+  return child_->ListExecutions(context, options, request);
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 ExecutionsMetadata::CreateExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::executions::v1::CreateExecutionRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateExecution(context, request);
+  return child_->CreateExecution(context, options, request);
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 ExecutionsMetadata::GetExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::executions::v1::GetExecutionRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetExecution(context, request);
+  return child_->GetExecution(context, options, request);
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 ExecutionsMetadata::CancelExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::workflows::executions::v1::CancelExecutionRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->CancelExecution(context, request);
+  return child_->CancelExecution(context, options, request);
 }
 
 void ExecutionsMetadata::SetMetadata(grpc::ClientContext& context,

@@ -22,6 +22,7 @@
 #include <google/cloud/videointelligence/v1/video_intelligence.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ VideoIntelligenceServiceStub::~VideoIntelligenceServiceStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultVideoIntelligenceServiceStub::AsyncAnnotateVideo(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::videointelligence::v1::AnnotateVideoRequest,
@@ -51,7 +53,8 @@ DefaultVideoIntelligenceServiceStub::AsyncAnnotateVideo(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVideoIntelligenceServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -66,7 +69,8 @@ DefaultVideoIntelligenceServiceStub::AsyncGetOperation(
 
 future<Status> DefaultVideoIntelligenceServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

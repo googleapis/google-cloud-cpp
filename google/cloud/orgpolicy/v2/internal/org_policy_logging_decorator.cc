@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/orgpolicy/v2/orgpolicy.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,151 +37,151 @@ OrgPolicyLogging::OrgPolicyLogging(std::shared_ptr<OrgPolicyStub> child,
 
 StatusOr<google::cloud::orgpolicy::v2::ListConstraintsResponse>
 OrgPolicyLogging::ListConstraints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::ListConstraintsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::orgpolicy::v2::ListConstraintsRequest const& request) {
-        return child_->ListConstraints(context, request);
+        return child_->ListConstraints(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::ListPoliciesResponse>
 OrgPolicyLogging::ListPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::ListPoliciesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::orgpolicy::v2::ListPoliciesRequest const& request) {
-        return child_->ListPolicies(context, request);
+        return child_->ListPolicies(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyLogging::GetPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::GetPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::orgpolicy::v2::GetPolicyRequest const& request) {
-        return child_->GetPolicy(context, request);
+        return child_->GetPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
 OrgPolicyLogging::GetEffectivePolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const&
                  request) {
-        return child_->GetEffectivePolicy(context, request);
+        return child_->GetEffectivePolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyLogging::CreatePolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) {
-        return child_->CreatePolicy(context, request);
+        return child_->CreatePolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy> OrgPolicyLogging::UpdatePolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) {
-        return child_->UpdatePolicy(context, request);
+        return child_->UpdatePolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status OrgPolicyLogging::DeletePolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) {
-        return child_->DeletePolicy(context, request);
+        return child_->DeletePolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
 OrgPolicyLogging::CreateCustomConstraint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::orgpolicy::v2::CreateCustomConstraintRequest const&
                  request) {
-        return child_->CreateCustomConstraint(context, request);
+        return child_->CreateCustomConstraint(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
 OrgPolicyLogging::UpdateCustomConstraint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::orgpolicy::v2::UpdateCustomConstraintRequest const&
                  request) {
-        return child_->UpdateCustomConstraint(context, request);
+        return child_->UpdateCustomConstraint(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::CustomConstraint>
 OrgPolicyLogging::GetCustomConstraint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::GetCustomConstraintRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::orgpolicy::v2::GetCustomConstraintRequest const&
                  request) {
-        return child_->GetCustomConstraint(context, request);
+        return child_->GetCustomConstraint(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::orgpolicy::v2::ListCustomConstraintsResponse>
 OrgPolicyLogging::ListCustomConstraints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::ListCustomConstraintsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::orgpolicy::v2::ListCustomConstraintsRequest const&
                  request) {
-        return child_->ListCustomConstraints(context, request);
+        return child_->ListCustomConstraints(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status OrgPolicyLogging::DeleteCustomConstraint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::orgpolicy::v2::DeleteCustomConstraintRequest const&
                  request) {
-        return child_->DeleteCustomConstraint(context, request);
+        return child_->DeleteCustomConstraint(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

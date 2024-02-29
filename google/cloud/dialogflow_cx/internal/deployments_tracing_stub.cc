@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/internal/deployments_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,26 +33,26 @@ DeploymentsTracingStub::DeploymentsTracingStub(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListDeploymentsResponse>
 DeploymentsTracingStub::ListDeployments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListDeploymentsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Deployments", "ListDeployments");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListDeployments(context, request));
+                           child_->ListDeployments(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Deployment>
 DeploymentsTracingStub::GetDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.dialogflow.cx.v3.Deployments", "GetDeployment");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetDeployment(context, request));
+                           child_->GetDeployment(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

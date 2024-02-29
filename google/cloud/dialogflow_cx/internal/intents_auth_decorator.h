@@ -40,50 +40,54 @@ class IntentsAuth : public IntentsStub {
       std::shared_ptr<IntentsStub> child);
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListIntentsResponse> ListIntents(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::ListIntentsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Intent> GetIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetIntentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Intent> CreateIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::CreateIntentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Intent> UpdateIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::UpdateIntentRequest const& request)
       override;
 
   Status DeleteIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncImportIntents(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::dialogflow::cx::v3::ImportIntentsRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncExportIntents(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::dialogflow::cx::v3::ExportIntentsRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

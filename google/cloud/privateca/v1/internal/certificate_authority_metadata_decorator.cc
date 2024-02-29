@@ -44,346 +44,367 @@ CertificateAuthorityServiceMetadata::CertificateAuthorityServiceMetadata(
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 CertificateAuthorityServiceMetadata::CreateCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::CreateCertificateRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateCertificate(context, request);
+  return child_->CreateCertificate(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 CertificateAuthorityServiceMetadata::GetCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::GetCertificateRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetCertificate(context, request);
+  return child_->GetCertificate(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::ListCertificatesResponse>
 CertificateAuthorityServiceMetadata::ListCertificates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::ListCertificatesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListCertificates(context, request);
+  return child_->ListCertificates(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 CertificateAuthorityServiceMetadata::RevokeCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::RevokeCertificateRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->RevokeCertificate(context, request);
+  return child_->RevokeCertificate(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 CertificateAuthorityServiceMetadata::UpdateCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::UpdateCertificateRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("certificate.name=",
                            internal::UrlEncode(request.certificate().name())));
-  return child_->UpdateCertificate(context, request);
+  return child_->UpdateCertificate(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncActivateCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         ActivateCertificateAuthorityRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncActivateCertificateAuthority(cq, std::move(context),
-                                                   options, request);
+                                                   std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncCreateCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         CreateCertificateAuthorityRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->AsyncCreateCertificateAuthority(cq, std::move(context),
-                                                 options, request);
+                                                 std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncDisableCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         DisableCertificateAuthorityRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDisableCertificateAuthority(cq, std::move(context),
-                                                  options, request);
+                                                  std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncEnableCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         EnableCertificateAuthorityRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncEnableCertificateAuthority(cq, std::move(context),
-                                                 options, request);
+                                                 std::move(options), request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::
              FetchCertificateAuthorityCsrResponse>
 CertificateAuthorityServiceMetadata::FetchCertificateAuthorityCsr(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::
         FetchCertificateAuthorityCsrRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->FetchCertificateAuthorityCsr(context, request);
+  return child_->FetchCertificateAuthorityCsr(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>
 CertificateAuthorityServiceMetadata::GetCertificateAuthority(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::
         GetCertificateAuthorityRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetCertificateAuthority(context, request);
+  return child_->GetCertificateAuthority(context, options, request);
 }
 
 StatusOr<
     google::cloud::security::privateca::v1::ListCertificateAuthoritiesResponse>
 CertificateAuthorityServiceMetadata::ListCertificateAuthorities(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::
         ListCertificateAuthoritiesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListCertificateAuthorities(context, request);
+  return child_->ListCertificateAuthorities(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncUndeleteCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         UndeleteCertificateAuthorityRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncUndeleteCertificateAuthority(cq, std::move(context),
-                                                   options, request);
+                                                   std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncDeleteCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         DeleteCertificateAuthorityRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->AsyncDeleteCertificateAuthority(cq, std::move(context),
-                                                 options, request);
+                                                 std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncUpdateCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         UpdateCertificateAuthorityRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat(
                   "certificate_authority.name=",
                   internal::UrlEncode(request.certificate_authority().name())));
   return child_->AsyncUpdateCertificateAuthority(cq, std::move(context),
-                                                 options, request);
+                                                 std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncCreateCaPool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::CreateCaPoolRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateCaPool(cq, std::move(context), options, request);
+  return child_->AsyncCreateCaPool(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncUpdateCaPool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("ca_pool.name=",
                            internal::UrlEncode(request.ca_pool().name())));
-  return child_->AsyncUpdateCaPool(cq, std::move(context), options, request);
+  return child_->AsyncUpdateCaPool(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CaPool>
 CertificateAuthorityServiceMetadata::GetCaPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::GetCaPoolRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetCaPool(context, request);
+  return child_->GetCaPool(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::ListCaPoolsResponse>
 CertificateAuthorityServiceMetadata::ListCaPools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::ListCaPoolsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListCaPools(context, request);
+  return child_->ListCaPools(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncDeleteCaPool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteCaPool(cq, std::move(context), options, request);
+  return child_->AsyncDeleteCaPool(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
 CertificateAuthorityServiceMetadata::FetchCaCerts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::FetchCaCertsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("ca_pool=", internal::UrlEncode(request.ca_pool())));
-  return child_->FetchCaCerts(context, request);
+  return child_->FetchCaCerts(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>
 CertificateAuthorityServiceMetadata::GetCertificateRevocationList(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::
         GetCertificateRevocationListRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetCertificateRevocationList(context, request);
+  return child_->GetCertificateRevocationList(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::
              ListCertificateRevocationListsResponse>
 CertificateAuthorityServiceMetadata::ListCertificateRevocationLists(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::
         ListCertificateRevocationListsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListCertificateRevocationLists(context, request);
+  return child_->ListCertificateRevocationLists(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncUpdateCertificateRevocationList(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         UpdateCertificateRevocationListRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("certificate_revocation_list.name=",
                            internal::UrlEncode(
                                request.certificate_revocation_list().name())));
-  return child_->AsyncUpdateCertificateRevocationList(cq, std::move(context),
-                                                      options, request);
+  return child_->AsyncUpdateCertificateRevocationList(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncCreateCertificateTemplate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         CreateCertificateTemplateRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateCertificateTemplate(cq, std::move(context), options,
-                                                request);
+  return child_->AsyncCreateCertificateTemplate(cq, std::move(context),
+                                                std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncDeleteCertificateTemplate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         DeleteCertificateTemplateRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteCertificateTemplate(cq, std::move(context), options,
-                                                request);
+  return child_->AsyncDeleteCertificateTemplate(cq, std::move(context),
+                                                std::move(options), request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
 CertificateAuthorityServiceMetadata::GetCertificateTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::GetCertificateTemplateRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetCertificateTemplate(context, request);
+  return child_->GetCertificateTemplate(context, options, request);
 }
 
 StatusOr<
     google::cloud::security::privateca::v1::ListCertificateTemplatesResponse>
 CertificateAuthorityServiceMetadata::ListCertificateTemplates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::
         ListCertificateTemplatesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListCertificateTemplates(context, request);
+  return child_->ListCertificateTemplates(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncUpdateCertificateTemplate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         UpdateCertificateTemplateRequest const& request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("certificate_template.name=",
                    internal::UrlEncode(request.certificate_template().name())));
-  return child_->AsyncUpdateCertificateTemplate(cq, std::move(context), options,
-                                                request);
+  return child_->AsyncUpdateCertificateTemplate(cq, std::move(context),
+                                                std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> CertificateAuthorityServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void CertificateAuthorityServiceMetadata::SetMetadata(

@@ -37,61 +37,63 @@ class SubscriberRoundRobin : public SubscriberStub {
   ~SubscriberRoundRobin() override = default;
 
   StatusOr<google::pubsub::v1::Subscription> CreateSubscription(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::Subscription const& request) override;
 
   StatusOr<google::pubsub::v1::Subscription> GetSubscription(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::GetSubscriptionRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Subscription> UpdateSubscription(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::UpdateSubscriptionRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListSubscriptionsResponse> ListSubscriptions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ListSubscriptionsRequest const& request) override;
 
   Status DeleteSubscription(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::DeleteSubscriptionRequest const& request) override;
 
   StatusOr<google::pubsub::v1::PullResponse> Pull(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::PullRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>>
-  AsyncStreamingPull(google::cloud::CompletionQueue const& cq,
-                     std::shared_ptr<grpc::ClientContext> context) override;
+  AsyncStreamingPull(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   Status ModifyPushConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ModifyPushConfigRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Snapshot> GetSnapshot(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::GetSnapshotRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListSnapshotsResponse> ListSnapshots(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ListSnapshotsRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::CreateSnapshotRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Snapshot> UpdateSnapshot(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::UpdateSnapshotRequest const& request) override;
 
   Status DeleteSnapshot(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::DeleteSnapshotRequest const& request) override;
 
   StatusOr<google::pubsub::v1::SeekResponse> Seek(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::SeekRequest const& request) override;
 
   future<Status> AsyncModifyAckDeadline(

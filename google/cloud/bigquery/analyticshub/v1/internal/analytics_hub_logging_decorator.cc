@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/analyticshub/v1/analyticshub.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,339 +37,360 @@ AnalyticsHubServiceLogging::AnalyticsHubServiceLogging(
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::ListDataExchangesResponse>
 AnalyticsHubServiceLogging::ListDataExchanges(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::analyticshub::v1::ListDataExchangesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::analyticshub::v1::
                  ListDataExchangesRequest const& request) {
-        return child_->ListDataExchanges(context, request);
+        return child_->ListDataExchanges(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<
     google::cloud::bigquery::analyticshub::v1::ListOrgDataExchangesResponse>
 AnalyticsHubServiceLogging::ListOrgDataExchanges(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::analyticshub::v1::
         ListOrgDataExchangesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::analyticshub::v1::
                  ListOrgDataExchangesRequest const& request) {
-        return child_->ListOrgDataExchanges(context, request);
+        return child_->ListOrgDataExchanges(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
 AnalyticsHubServiceLogging::GetDataExchange(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::analyticshub::v1::
                  GetDataExchangeRequest const& request) {
-        return child_->GetDataExchange(context, request);
+        return child_->GetDataExchange(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
 AnalyticsHubServiceLogging::CreateDataExchange(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::analyticshub::v1::
                  CreateDataExchangeRequest const& request) {
-        return child_->CreateDataExchange(context, request);
+        return child_->CreateDataExchange(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
 AnalyticsHubServiceLogging::UpdateDataExchange(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::analyticshub::v1::
                  UpdateDataExchangeRequest const& request) {
-        return child_->UpdateDataExchange(context, request);
+        return child_->UpdateDataExchange(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status AnalyticsHubServiceLogging::DeleteDataExchange(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::analyticshub::v1::
                  DeleteDataExchangeRequest const& request) {
-        return child_->DeleteDataExchange(context, request);
+        return child_->DeleteDataExchange(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::ListListingsResponse>
 AnalyticsHubServiceLogging::ListListings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::analyticshub::v1::ListListingsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::bigquery::analyticshub::v1::ListListingsRequest const&
-              request) { return child_->ListListings(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->ListListings(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
 AnalyticsHubServiceLogging::GetListing(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::analyticshub::v1::GetListingRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::analyticshub::v1::GetListingRequest const&
-                 request) { return child_->GetListing(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetListing(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
 AnalyticsHubServiceLogging::CreateListing(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&
-              request) { return child_->CreateListing(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->CreateListing(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
 AnalyticsHubServiceLogging::UpdateListing(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
-              request) { return child_->UpdateListing(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->UpdateListing(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status AnalyticsHubServiceLogging::DeleteListing(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&
-              request) { return child_->DeleteListing(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->DeleteListing(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>
 AnalyticsHubServiceLogging::SubscribeListing(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::analyticshub::v1::
                  SubscribeListingRequest const& request) {
-        return child_->SubscribeListing(context, request);
+        return child_->SubscribeListing(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AnalyticsHubServiceLogging::AsyncSubscribeDataExchange(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::bigquery::analyticshub::v1::
         SubscribeDataExchangeRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::bigquery::analyticshub::v1::
                  SubscribeDataExchangeRequest const& request) {
         return child_->AsyncSubscribeDataExchange(cq, std::move(context),
-                                                  options, request);
+                                                  std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AnalyticsHubServiceLogging::AsyncRefreshSubscription(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::bigquery::analyticshub::v1::RefreshSubscriptionRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::bigquery::analyticshub::v1::
                  RefreshSubscriptionRequest const& request) {
-        return child_->AsyncRefreshSubscription(cq, std::move(context), options,
-                                                request);
+        return child_->AsyncRefreshSubscription(cq, std::move(context),
+                                                std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>
 AnalyticsHubServiceLogging::GetSubscription(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::analyticshub::v1::GetSubscriptionRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::analyticshub::v1::
                  GetSubscriptionRequest const& request) {
-        return child_->GetSubscription(context, request);
+        return child_->GetSubscription(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::ListSubscriptionsResponse>
 AnalyticsHubServiceLogging::ListSubscriptions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::analyticshub::v1::ListSubscriptionsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::analyticshub::v1::
                  ListSubscriptionsRequest const& request) {
-        return child_->ListSubscriptions(context, request);
+        return child_->ListSubscriptions(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::
              ListSharedResourceSubscriptionsResponse>
 AnalyticsHubServiceLogging::ListSharedResourceSubscriptions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::analyticshub::v1::
         ListSharedResourceSubscriptionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::analyticshub::v1::
                  ListSharedResourceSubscriptionsRequest const& request) {
-        return child_->ListSharedResourceSubscriptions(context, request);
+        return child_->ListSharedResourceSubscriptions(context, options,
+                                                       request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionResponse>
 AnalyticsHubServiceLogging::RevokeSubscription(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::analyticshub::v1::RevokeSubscriptionRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::analyticshub::v1::
                  RevokeSubscriptionRequest const& request) {
-        return child_->RevokeSubscription(context, request);
+        return child_->RevokeSubscription(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AnalyticsHubServiceLogging::AsyncDeleteSubscription(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::bigquery::analyticshub::v1::DeleteSubscriptionRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::bigquery::analyticshub::v1::
                  DeleteSubscriptionRequest const& request) {
-        return child_->AsyncDeleteSubscription(cq, std::move(context), options,
-                                               request);
+        return child_->AsyncDeleteSubscription(cq, std::move(context),
+                                               std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> AnalyticsHubServiceLogging::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
-        return child_->GetIamPolicy(context, request);
+        return child_->GetIamPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> AnalyticsHubServiceLogging::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
-        return child_->SetIamPolicy(context, request);
+        return child_->SetIamPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 AnalyticsHubServiceLogging::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
-        return child_->TestIamPermissions(context, request);
+        return child_->TestIamPermissions(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AnalyticsHubServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context), options,
-                                         request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<Status> AnalyticsHubServiceLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context), options,
-                                            request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

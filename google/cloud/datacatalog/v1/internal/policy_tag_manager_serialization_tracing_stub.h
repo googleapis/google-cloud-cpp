@@ -40,19 +40,19 @@ class PolicyTagManagerSerializationTracingStub
       std::shared_ptr<PolicyTagManagerSerializationStub> child);
 
   StatusOr<google::cloud::datacatalog::v1::Taxonomy> ReplaceTaxonomy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
   ImportTaxonomies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request)
       override;
 
   StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
   ExportTaxonomies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request)
       override;
 

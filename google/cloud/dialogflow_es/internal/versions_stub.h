@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_VERSIONS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_VERSIONS_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/v2/version.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,23 +37,23 @@ class VersionsStub {
 
   virtual StatusOr<google::cloud::dialogflow::v2::ListVersionsResponse>
   ListVersions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListVersionsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::Version> GetVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetVersionRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::Version> CreateVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::CreateVersionRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::Version> UpdateVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::UpdateVersionRequest const& request) = 0;
 
   virtual Status DeleteVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::DeleteVersionRequest const& request) = 0;
 };
 
@@ -63,26 +65,26 @@ class DefaultVersionsStub : public VersionsStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dialogflow::v2::ListVersionsResponse> ListVersions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListVersionsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Version> GetVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetVersionRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::Version> CreateVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::CreateVersionRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Version> UpdateVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::UpdateVersionRequest const& request)
       override;
 
   Status DeleteVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::DeleteVersionRequest const& request)
       override;
 

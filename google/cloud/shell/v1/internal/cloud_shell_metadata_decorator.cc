@@ -44,74 +44,84 @@ CloudShellServiceMetadata::CloudShellServiceMetadata(
 
 StatusOr<google::cloud::shell::v1::Environment>
 CloudShellServiceMetadata::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::shell::v1::GetEnvironmentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetEnvironment(context, request);
+  return child_->GetEnvironment(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudShellServiceMetadata::AsyncStartEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::shell::v1::StartEnvironmentRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncStartEnvironment(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncStartEnvironment(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudShellServiceMetadata::AsyncAuthorizeEnvironment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncAuthorizeEnvironment(cq, std::move(context), options,
-                                           request);
+  return child_->AsyncAuthorizeEnvironment(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudShellServiceMetadata::AsyncAddPublicKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::shell::v1::AddPublicKeyRequest const& request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("environment=", internal::UrlEncode(request.environment())));
-  return child_->AsyncAddPublicKey(cq, std::move(context), options, request);
+  return child_->AsyncAddPublicKey(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudShellServiceMetadata::AsyncRemovePublicKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("environment=", internal::UrlEncode(request.environment())));
-  return child_->AsyncRemovePublicKey(cq, std::move(context), options, request);
+  return child_->AsyncRemovePublicKey(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CloudShellServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> CloudShellServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void CloudShellServiceMetadata::SetMetadata(grpc::ClientContext& context,

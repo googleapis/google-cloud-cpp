@@ -30,6 +30,7 @@
 #include "google/cloud/options.h"
 #include <google/cloud/eventarc/v1/eventarc.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

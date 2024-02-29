@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_NOTIFICATION_CHANNEL_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_NOTIFICATION_CHANNEL_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/monitoring/v3/notification_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,59 +38,59 @@ class NotificationChannelServiceStub {
   virtual StatusOr<
       google::monitoring::v3::ListNotificationChannelDescriptorsResponse>
   ListNotificationChannelDescriptors(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListNotificationChannelDescriptorsRequest const&
           request) = 0;
 
   virtual StatusOr<google::monitoring::v3::NotificationChannelDescriptor>
   GetNotificationChannelDescriptor(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::GetNotificationChannelDescriptorRequest const&
           request) = 0;
 
   virtual StatusOr<google::monitoring::v3::ListNotificationChannelsResponse>
   ListNotificationChannels(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListNotificationChannelsRequest const&
           request) = 0;
 
   virtual StatusOr<google::monitoring::v3::NotificationChannel>
   GetNotificationChannel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::GetNotificationChannelRequest const& request) = 0;
 
   virtual StatusOr<google::monitoring::v3::NotificationChannel>
   CreateNotificationChannel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::CreateNotificationChannelRequest const&
           request) = 0;
 
   virtual StatusOr<google::monitoring::v3::NotificationChannel>
   UpdateNotificationChannel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::UpdateNotificationChannelRequest const&
           request) = 0;
 
   virtual Status DeleteNotificationChannel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::DeleteNotificationChannelRequest const&
           request) = 0;
 
   virtual Status SendNotificationChannelVerificationCode(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::
           SendNotificationChannelVerificationCodeRequest const& request) = 0;
 
   virtual StatusOr<
       google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
   GetNotificationChannelVerificationCode(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::
           GetNotificationChannelVerificationCodeRequest const& request) = 0;
 
   virtual StatusOr<google::monitoring::v3::NotificationChannel>
   VerifyNotificationChannel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::VerifyNotificationChannelRequest const&
           request) = 0;
 };
@@ -104,46 +106,46 @@ class DefaultNotificationChannelServiceStub
 
   StatusOr<google::monitoring::v3::ListNotificationChannelDescriptorsResponse>
   ListNotificationChannelDescriptors(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListNotificationChannelDescriptorsRequest const&
           request) override;
 
   StatusOr<google::monitoring::v3::NotificationChannelDescriptor>
   GetNotificationChannelDescriptor(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::GetNotificationChannelDescriptorRequest const&
           request) override;
 
   StatusOr<google::monitoring::v3::ListNotificationChannelsResponse>
   ListNotificationChannels(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListNotificationChannelsRequest const& request)
       override;
 
   StatusOr<google::monitoring::v3::NotificationChannel> GetNotificationChannel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::GetNotificationChannelRequest const& request)
       override;
 
   StatusOr<google::monitoring::v3::NotificationChannel>
   CreateNotificationChannel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::CreateNotificationChannelRequest const& request)
       override;
 
   StatusOr<google::monitoring::v3::NotificationChannel>
   UpdateNotificationChannel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::UpdateNotificationChannelRequest const& request)
       override;
 
   Status DeleteNotificationChannel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::DeleteNotificationChannelRequest const& request)
       override;
 
   Status SendNotificationChannelVerificationCode(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::
           SendNotificationChannelVerificationCodeRequest const& request)
       override;
@@ -151,14 +153,14 @@ class DefaultNotificationChannelServiceStub
   StatusOr<
       google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
   GetNotificationChannelVerificationCode(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::
           GetNotificationChannelVerificationCodeRequest const& request)
       override;
 
   StatusOr<google::monitoring::v3::NotificationChannel>
   VerifyNotificationChannel(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::VerifyNotificationChannelRequest const& request)
       override;
 

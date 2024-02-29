@@ -18,6 +18,7 @@
 
 #include "google/cloud/iam/v1/iam_policy_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

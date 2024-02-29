@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_DEPLOYMENTS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_INTERNAL_DEPLOYMENTS_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/cx/v3/deployment.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,12 +37,12 @@ class DeploymentsStub {
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::ListDeploymentsResponse>
   ListDeployments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::ListDeploymentsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::Deployment> GetDeployment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetDeploymentRequest const&
           request) = 0;
 };
@@ -55,12 +57,12 @@ class DefaultDeploymentsStub : public DeploymentsStub {
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListDeploymentsResponse>
   ListDeployments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::ListDeploymentsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Deployment> GetDeployment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request)
       override;
 

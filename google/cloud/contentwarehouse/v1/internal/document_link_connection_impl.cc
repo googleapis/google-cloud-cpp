@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -73,10 +74,12 @@ DocumentLinkServiceConnectionImpl::ListLinkedTargets(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ListLinkedTargets(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::contentwarehouse::v1::ListLinkedTargetsRequest const&
-              request) { return stub_->ListLinkedTargets(context, request); },
-      request, __func__);
+              request) {
+        return stub_->ListLinkedTargets(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::contentwarehouse::v1::DocumentLink>
@@ -88,22 +91,23 @@ DocumentLinkServiceConnectionImpl::ListLinkedSources(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::contentwarehouse::v1::DocumentLink>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<contentwarehouse_v1::DocumentLinkServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::contentwarehouse::v1::ListLinkedSourcesRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::contentwarehouse::v1::
                        ListLinkedSourcesRequest const& request) {
-              return stub->ListLinkedSources(context, request);
+              return stub->ListLinkedSources(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::contentwarehouse::v1::ListLinkedSourcesResponse r) {
         std::vector<google::cloud::contentwarehouse::v1::DocumentLink> result(
@@ -123,10 +127,12 @@ DocumentLinkServiceConnectionImpl::CreateDocumentLink(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateDocumentLink(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::contentwarehouse::v1::CreateDocumentLinkRequest const&
-              request) { return stub_->CreateDocumentLink(context, request); },
-      request, __func__);
+              request) {
+        return stub_->CreateDocumentLink(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status DocumentLinkServiceConnectionImpl::DeleteDocumentLink(
@@ -137,10 +143,12 @@ Status DocumentLinkServiceConnectionImpl::DeleteDocumentLink(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteDocumentLink(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::contentwarehouse::v1::DeleteDocumentLinkRequest const&
-              request) { return stub_->DeleteDocumentLink(context, request); },
-      request, __func__);
+              request) {
+        return stub_->DeleteDocumentLink(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

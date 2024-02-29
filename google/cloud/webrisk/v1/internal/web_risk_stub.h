@@ -27,6 +27,7 @@
 #include <google/cloud/webrisk/v1/webrisk.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -39,36 +40,39 @@ class WebRiskServiceStub {
 
   virtual StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
   ComputeThreatListDiff(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::webrisk::v1::ComputeThreatListDiffRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::webrisk::v1::SearchUrisRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
   SearchHashes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::webrisk::v1::SearchHashesRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::webrisk::v1::CreateSubmissionRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncSubmitUri(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::webrisk::v1::SubmitUriRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -83,36 +87,39 @@ class DefaultWebRiskServiceStub : public WebRiskServiceStub {
 
   StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
   ComputeThreatListDiff(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request)
       override;
 
   StatusOr<google::cloud::webrisk::v1::SearchUrisResponse> SearchUris(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::webrisk::v1::SearchUrisRequest const& request) override;
 
   StatusOr<google::cloud::webrisk::v1::SearchHashesResponse> SearchHashes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::webrisk::v1::SearchHashesRequest const& request) override;
 
   StatusOr<google::cloud::webrisk::v1::Submission> CreateSubmission(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::webrisk::v1::CreateSubmissionRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSubmitUri(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::webrisk::v1::SubmitUriRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

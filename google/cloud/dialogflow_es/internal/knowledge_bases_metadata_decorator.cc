@@ -44,48 +44,48 @@ KnowledgeBasesMetadata::KnowledgeBasesMetadata(
 
 StatusOr<google::cloud::dialogflow::v2::ListKnowledgeBasesResponse>
 KnowledgeBasesMetadata::ListKnowledgeBases(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListKnowledgeBasesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListKnowledgeBases(context, request);
+  return child_->ListKnowledgeBases(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesMetadata::GetKnowledgeBase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetKnowledgeBase(context, request);
+  return child_->GetKnowledgeBase(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesMetadata::CreateKnowledgeBase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateKnowledgeBase(context, request);
+  return child_->CreateKnowledgeBase(context, options, request);
 }
 
 Status KnowledgeBasesMetadata::DeleteKnowledgeBase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteKnowledgeBase(context, request);
+  return child_->DeleteKnowledgeBase(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesMetadata::UpdateKnowledgeBase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("knowledge_base.name=",
                    internal::UrlEncode(request.knowledge_base().name())));
-  return child_->UpdateKnowledgeBase(context, request);
+  return child_->UpdateKnowledgeBase(context, options, request);
 }
 
 void KnowledgeBasesMetadata::SetMetadata(grpc::ClientContext& context,

@@ -44,12 +44,12 @@ SearchServiceMetadata::SearchServiceMetadata(
 
 StatusOr<google::cloud::discoveryengine::v1::SearchResponse>
 SearchServiceMetadata::Search(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::SearchRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("serving_config=",
                            internal::UrlEncode(request.serving_config())));
-  return child_->Search(context, request);
+  return child_->Search(context, options, request);
 }
 
 void SearchServiceMetadata::SetMetadata(grpc::ClientContext& context,

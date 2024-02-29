@@ -18,6 +18,7 @@
 
 #include "google/cloud/webrisk/v1/web_risk_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

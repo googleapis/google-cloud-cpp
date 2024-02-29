@@ -51,7 +51,8 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
       $response_type$>>
   Async$method_name$(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 )""");
       continue;
     }
@@ -60,7 +61,7 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
   future<StatusOr<google::longrunning::Operation>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) override;
 )""");
       continue;
@@ -75,22 +76,21 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
 )""");
       continue;
     }
-    HeaderPrintMethod(
-        method,
-        {MethodPattern({{IsResponseTypeEmpty,
-                         R"""(
+    if (IsResponseTypeEmpty(method)) {
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   Status $method_name$(
       grpc::ClientContext& context,
+      Options const& options,
       $request_type$ const& request) override;
-)""",
-                         R"""(
+)""");
+      continue;
+    }
+    HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   StatusOr<$response_type$> $method_name$(
       grpc::ClientContext& context,
+      Options const& options,
       $request_type$ const& request) override;
-)"""},
-                        {""}},
-                       And(IsNonStreaming, Not(IsLongrunningOperation)))},
-        __FILE__, __LINE__);
+)""");
   }
 
   for (auto const& method : async_methods()) {
@@ -101,6 +101,7 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
   Async$method_name$(
       google::cloud::CompletionQueue const& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       $request_type$ const& request) override;
 )""";
       HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
@@ -112,7 +113,8 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
       $request_type$, $response_type$>>
   Async$method_name$(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 )""";
       HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
       continue;
@@ -142,13 +144,13 @@ void StubGeneratorBase::HeaderPrintPublicMethods() {
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 )""");
   }

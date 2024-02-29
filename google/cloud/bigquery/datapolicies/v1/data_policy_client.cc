@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/datapolicies/v1/data_policy_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

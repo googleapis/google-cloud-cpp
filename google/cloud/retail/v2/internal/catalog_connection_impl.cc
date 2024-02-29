@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -67,20 +68,21 @@ CatalogServiceConnectionImpl::ListCatalogs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::retail::v2::Catalog>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<retail_v2::CatalogServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::retail::v2::ListCatalogsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::retail::v2::ListCatalogsRequest const& request) {
-              return stub->ListCatalogs(context, request);
+              return stub->ListCatalogs(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::retail::v2::ListCatalogsResponse r) {
         std::vector<google::cloud::retail::v2::Catalog> result(
@@ -98,11 +100,11 @@ CatalogServiceConnectionImpl::UpdateCatalog(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateCatalog(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::UpdateCatalogRequest const& request) {
-        return stub_->UpdateCatalog(context, request);
+        return stub_->UpdateCatalog(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status CatalogServiceConnectionImpl::SetDefaultBranch(
@@ -112,11 +114,11 @@ Status CatalogServiceConnectionImpl::SetDefaultBranch(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetDefaultBranch(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::retail::v2::SetDefaultBranchRequest const& request) {
-        return stub_->SetDefaultBranch(context, request);
+        return stub_->SetDefaultBranch(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
@@ -127,11 +129,11 @@ CatalogServiceConnectionImpl::GetDefaultBranch(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDefaultBranch(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::retail::v2::GetDefaultBranchRequest const& request) {
-        return stub_->GetDefaultBranch(context, request);
+        return stub_->GetDefaultBranch(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::retail::v2::CompletionConfig>
@@ -141,12 +143,12 @@ CatalogServiceConnectionImpl::GetCompletionConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetCompletionConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::GetCompletionConfigRequest const&
                  request) {
-        return stub_->GetCompletionConfig(context, request);
+        return stub_->GetCompletionConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::retail::v2::CompletionConfig>
@@ -156,12 +158,12 @@ CatalogServiceConnectionImpl::UpdateCompletionConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateCompletionConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::UpdateCompletionConfigRequest const&
                  request) {
-        return stub_->UpdateCompletionConfig(context, request);
+        return stub_->UpdateCompletionConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
@@ -171,12 +173,12 @@ CatalogServiceConnectionImpl::GetAttributesConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetAttributesConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::GetAttributesConfigRequest const&
                  request) {
-        return stub_->GetAttributesConfig(context, request);
+        return stub_->GetAttributesConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
@@ -186,12 +188,12 @@ CatalogServiceConnectionImpl::UpdateAttributesConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateAttributesConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::UpdateAttributesConfigRequest const&
                  request) {
-        return stub_->UpdateAttributesConfig(context, request);
+        return stub_->UpdateAttributesConfig(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
@@ -201,12 +203,12 @@ CatalogServiceConnectionImpl::AddCatalogAttribute(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AddCatalogAttribute(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::AddCatalogAttributeRequest const&
                  request) {
-        return stub_->AddCatalogAttribute(context, request);
+        return stub_->AddCatalogAttribute(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
@@ -216,12 +218,12 @@ CatalogServiceConnectionImpl::RemoveCatalogAttribute(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RemoveCatalogAttribute(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::RemoveCatalogAttributeRequest const&
                  request) {
-        return stub_->RemoveCatalogAttribute(context, request);
+        return stub_->RemoveCatalogAttribute(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
@@ -231,12 +233,12 @@ CatalogServiceConnectionImpl::ReplaceCatalogAttribute(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ReplaceCatalogAttribute(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::ReplaceCatalogAttributeRequest const&
                  request) {
-        return stub_->ReplaceCatalogAttribute(context, request);
+        return stub_->ReplaceCatalogAttribute(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

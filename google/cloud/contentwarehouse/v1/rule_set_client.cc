@@ -18,6 +18,7 @@
 
 #include "google/cloud/contentwarehouse/v1/rule_set_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

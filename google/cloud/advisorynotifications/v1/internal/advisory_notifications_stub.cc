@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/advisorynotifications/v1/service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ AdvisoryNotificationsServiceStub::~AdvisoryNotificationsServiceStub() = default;
 
 StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
 DefaultAdvisoryNotificationsServiceStub::ListNotifications(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::advisorynotifications::v1::ListNotificationsRequest const&
         request) {
   google::cloud::advisorynotifications::v1::ListNotificationsResponse response;
@@ -44,7 +45,7 @@ DefaultAdvisoryNotificationsServiceStub::ListNotifications(
 
 StatusOr<google::cloud::advisorynotifications::v1::Notification>
 DefaultAdvisoryNotificationsServiceStub::GetNotification(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::advisorynotifications::v1::GetNotificationRequest const&
         request) {
   google::cloud::advisorynotifications::v1::Notification response;
@@ -57,7 +58,7 @@ DefaultAdvisoryNotificationsServiceStub::GetNotification(
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
 DefaultAdvisoryNotificationsServiceStub::GetSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::advisorynotifications::v1::GetSettingsRequest const&
         request) {
   google::cloud::advisorynotifications::v1::Settings response;
@@ -70,7 +71,7 @@ DefaultAdvisoryNotificationsServiceStub::GetSettings(
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
 DefaultAdvisoryNotificationsServiceStub::UpdateSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
         request) {
   google::cloud::advisorynotifications::v1::Settings response;

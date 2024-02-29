@@ -23,6 +23,7 @@
 #include "google/cloud/status_or.h"
 #include <generator/integration_tests/test2.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -58,7 +58,7 @@ class TestStub : public GoldenKitchenSinkStub {
  public:
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
   GenerateAccessToken(
-      grpc::ClientContext&,
+      grpc::ClientContext&, Options const&,
       google::test::admin::database::v1::GenerateAccessTokenRequest const&)
       override {
     return internal::UnimplementedError("unimplemented");
@@ -66,7 +66,7 @@ class TestStub : public GoldenKitchenSinkStub {
 
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
   GenerateIdToken(
-      grpc::ClientContext&,
+      grpc::ClientContext&, Options const&,
       google::test::admin::database::v1::GenerateIdTokenRequest const&)
       override {
     return internal::UnimplementedError("unimplemented");
@@ -74,33 +74,33 @@ class TestStub : public GoldenKitchenSinkStub {
 
   StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
   WriteLogEntries(
-      grpc::ClientContext&,
+      grpc::ClientContext&, Options const&,
       google::test::admin::database::v1::WriteLogEntriesRequest const&)
       override {
     return internal::UnimplementedError("unimplemented");
   }
 
   StatusOr<google::test::admin::database::v1::ListLogsResponse> ListLogs(
-      grpc::ClientContext&,
+      grpc::ClientContext&, Options const&,
       google::test::admin::database::v1::ListLogsRequest const&) override {
     return internal::UnimplementedError("unimplemented");
   }
 
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(
-      grpc::ClientContext&,
+      grpc::ClientContext&, Options const&,
       google::test::admin::database::v1::ListServiceAccountKeysRequest const&)
       override {
     return internal::UnimplementedError("unimplemented");
   }
 
-  Status DoNothing(grpc::ClientContext&,
+  Status DoNothing(grpc::ClientContext&, Options const&,
                    google::protobuf::Empty const&) override {
     return Status();
   }
 
   Status Deprecated2(
-      grpc::ClientContext&,
+      grpc::ClientContext&, Options const&,
       google::test::admin::database::v1::GenerateAccessTokenRequest const&)
       override {
     return Status();
@@ -125,19 +125,20 @@ class TestStub : public GoldenKitchenSinkStub {
       google::test::admin::database::v1::Request,
       google::test::admin::database::v1::Response>>
   AsyncStreamingReadWrite(google::cloud::CompletionQueue const&,
-                          std::shared_ptr<grpc::ClientContext>) override {
+                          std::shared_ptr<grpc::ClientContext>,
+                          google::cloud::internal::ImmutableOptions) override {
     return nullptr;
   }
 
   Status ExplicitRouting1(
-      grpc::ClientContext&,
+      grpc::ClientContext&, Options const&,
       google::test::admin::database::v1::ExplicitRoutingRequest const&)
       override {
     return Status();
   }
 
   Status ExplicitRouting2(
-      grpc::ClientContext&,
+      grpc::ClientContext&, Options const&,
       google::test::admin::database::v1::ExplicitRoutingRequest const&)
       override {
     return Status();
@@ -148,6 +149,7 @@ class TestStub : public GoldenKitchenSinkStub {
   AsyncStreamingRead(
       google::cloud::CompletionQueue const&,
       std::shared_ptr<grpc::ClientContext>,
+      google::cloud::internal::ImmutableOptions,
       google::test::admin::database::v1::Request const&) override {
     return nullptr;
   }
@@ -156,7 +158,8 @@ class TestStub : public GoldenKitchenSinkStub {
       google::test::admin::database::v1::Request,
       google::test::admin::database::v1::Response>>
   AsyncStreamingWrite(google::cloud::CompletionQueue const&,
-                      std::shared_ptr<grpc::ClientContext>) override {
+                      std::shared_ptr<grpc::ClientContext>,
+                      google::cloud::internal::ImmutableOptions) override {
     return nullptr;
   }
 };

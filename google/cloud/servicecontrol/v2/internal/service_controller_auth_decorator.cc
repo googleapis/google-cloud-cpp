@@ -19,6 +19,7 @@
 #include "google/cloud/servicecontrol/v2/internal/service_controller_auth_decorator.h"
 #include <google/api/servicecontrol/v2/service_controller.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,20 +33,20 @@ ServiceControllerAuth::ServiceControllerAuth(
 
 StatusOr<google::api::servicecontrol::v2::CheckResponse>
 ServiceControllerAuth::Check(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicecontrol::v2::CheckRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->Check(context, request);
+  return child_->Check(context, options, request);
 }
 
 StatusOr<google::api::servicecontrol::v2::ReportResponse>
 ServiceControllerAuth::Report(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicecontrol::v2::ReportRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->Report(context, request);
+  return child_->Report(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

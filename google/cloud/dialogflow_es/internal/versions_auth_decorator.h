@@ -39,26 +39,26 @@ class VersionsAuth : public VersionsStub {
       std::shared_ptr<VersionsStub> child);
 
   StatusOr<google::cloud::dialogflow::v2::ListVersionsResponse> ListVersions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListVersionsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Version> GetVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetVersionRequest const& request) override;
 
   StatusOr<google::cloud::dialogflow::v2::Version> CreateVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::CreateVersionRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Version> UpdateVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::UpdateVersionRequest const& request)
       override;
 
   Status DeleteVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::DeleteVersionRequest const& request)
       override;
 

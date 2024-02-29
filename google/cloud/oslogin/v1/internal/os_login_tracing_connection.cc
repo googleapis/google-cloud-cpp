@@ -19,6 +19,7 @@
 #include "google/cloud/oslogin/v1/internal/os_login_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/run/v2/task.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -30,7 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TasksStub::~TasksStub() = default;
 
 StatusOr<google::cloud::run::v2::Task> DefaultTasksStub::GetTask(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::run::v2::GetTaskRequest const& request) {
   google::cloud::run::v2::Task response;
   auto status = grpc_stub_->GetTask(&context, request, &response);
@@ -41,7 +42,7 @@ StatusOr<google::cloud::run::v2::Task> DefaultTasksStub::GetTask(
 }
 
 StatusOr<google::cloud::run::v2::ListTasksResponse> DefaultTasksStub::ListTasks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::run::v2::ListTasksRequest const& request) {
   google::cloud::run::v2::ListTasksResponse response;
   auto status = grpc_stub_->ListTasks(&context, request, &response);

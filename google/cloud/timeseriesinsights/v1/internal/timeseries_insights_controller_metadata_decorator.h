@@ -41,38 +41,38 @@ class TimeseriesInsightsControllerMetadata
       std::string api_client_header = "");
 
   StatusOr<google::cloud::timeseriesinsights::v1::ListDataSetsResponse>
-  ListDataSets(grpc::ClientContext& context,
+  ListDataSets(grpc::ClientContext& context, Options const& options,
                google::cloud::timeseriesinsights::v1::ListDataSetsRequest const&
                    request) override;
 
   StatusOr<google::cloud::timeseriesinsights::v1::DataSet> CreateDataSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::timeseriesinsights::v1::CreateDataSetRequest const&
           request) override;
 
   Status DeleteDataSet(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::timeseriesinsights::v1::DeleteDataSetRequest const&
           request) override;
 
   StatusOr<google::cloud::timeseriesinsights::v1::AppendEventsResponse>
-  AppendEvents(grpc::ClientContext& context,
+  AppendEvents(grpc::ClientContext& context, Options const& options,
                google::cloud::timeseriesinsights::v1::AppendEventsRequest const&
                    request) override;
 
   StatusOr<google::cloud::timeseriesinsights::v1::QueryDataSetResponse>
-  QueryDataSet(grpc::ClientContext& context,
+  QueryDataSet(grpc::ClientContext& context, Options const& options,
                google::cloud::timeseriesinsights::v1::QueryDataSetRequest const&
                    request) override;
 
   StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice> EvaluateSlice(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::timeseriesinsights::v1::EvaluateSliceRequest const&
           request) override;
 
   StatusOr<google::cloud::timeseriesinsights::v1::EvaluatedSlice>
   EvaluateTimeseries(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::timeseriesinsights::v1::EvaluateTimeseriesRequest const&
           request) override;
 

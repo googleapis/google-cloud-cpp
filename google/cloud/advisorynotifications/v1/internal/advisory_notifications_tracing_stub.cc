@@ -18,6 +18,7 @@
 
 #include "google/cloud/advisorynotifications/v1/internal/advisory_notifications_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,7 @@ AdvisoryNotificationsServiceTracingStub::
 
 StatusOr<google::cloud::advisorynotifications::v1::ListNotificationsResponse>
 AdvisoryNotificationsServiceTracingStub::ListNotifications(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::advisorynotifications::v1::ListNotificationsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -41,13 +42,13 @@ AdvisoryNotificationsServiceTracingStub::ListNotifications(
       "ListNotifications");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListNotifications(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListNotifications(context, options, request));
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Notification>
 AdvisoryNotificationsServiceTracingStub::GetNotification(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::advisorynotifications::v1::GetNotificationRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -56,12 +57,12 @@ AdvisoryNotificationsServiceTracingStub::GetNotification(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetNotification(context, request));
+                           child_->GetNotification(context, options, request));
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
 AdvisoryNotificationsServiceTracingStub::GetSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::advisorynotifications::v1::GetSettingsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -70,12 +71,12 @@ AdvisoryNotificationsServiceTracingStub::GetSettings(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetSettings(context, request));
+                           child_->GetSettings(context, options, request));
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
 AdvisoryNotificationsServiceTracingStub::UpdateSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -84,7 +85,7 @@ AdvisoryNotificationsServiceTracingStub::UpdateSettings(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateSettings(context, request));
+                           child_->UpdateSettings(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

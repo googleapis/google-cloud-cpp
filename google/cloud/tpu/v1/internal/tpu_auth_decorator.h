@@ -40,68 +40,75 @@ class TpuAuth : public TpuStub {
       std::shared_ptr<TpuStub> child);
 
   StatusOr<google::cloud::tpu::v1::ListNodesResponse> ListNodes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v1::ListNodesRequest const& request) override;
 
   StatusOr<google::cloud::tpu::v1::Node> GetNode(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v1::GetNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateNode(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v1::CreateNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteNode(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v1::DeleteNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncReimageNode(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v1::ReimageNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStopNode(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v1::StopNodeRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncStartNode(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::tpu::v1::StartNodeRequest const& request) override;
 
   StatusOr<google::cloud::tpu::v1::ListTensorFlowVersionsResponse>
   ListTensorFlowVersions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v1::ListTensorFlowVersionsRequest const& request)
       override;
 
   StatusOr<google::cloud::tpu::v1::TensorFlowVersion> GetTensorFlowVersion(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request)
       override;
 
   StatusOr<google::cloud::tpu::v1::ListAcceleratorTypesResponse>
   ListAcceleratorTypes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v1::ListAcceleratorTypesRequest const& request)
       override;
 
   StatusOr<google::cloud::tpu::v1::AcceleratorType> GetAcceleratorType(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

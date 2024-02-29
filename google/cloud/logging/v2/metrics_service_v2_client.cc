@@ -18,6 +18,7 @@
 
 #include "google/cloud/logging/v2/metrics_service_v2_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

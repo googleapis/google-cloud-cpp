@@ -43,12 +43,12 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsRestMetadata::AsyncDeleteInterconnect(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::interconnects::v1::
         DeleteInterconnectRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncDeleteInterconnect(cq, std::move(rest_context), options,
-                                         request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncDeleteInterconnect(cq, std::move(rest_context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::Interconnect>
@@ -82,12 +82,12 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsRestMetadata::AsyncInsertInterconnect(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::interconnects::v1::
         InsertInterconnectRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncInsertInterconnect(cq, std::move(rest_context), options,
-                                         request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncInsertInterconnect(cq, std::move(rest_context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::InterconnectList>
@@ -103,46 +103,47 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsRestMetadata::AsyncPatchInterconnect(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::interconnects::v1::
         PatchInterconnectRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncPatchInterconnect(cq, std::move(rest_context), options,
-                                        request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncPatchInterconnect(cq, std::move(rest_context),
+                                        std::move(options), request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsRestMetadata::AsyncSetLabels(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::interconnects::v1::SetLabelsRequest const&
         request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncSetLabels(cq, std::move(rest_context), options, request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncSetLabels(cq, std::move(rest_context), std::move(options),
+                                request);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 InterconnectsRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::global_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
-                                   request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                   std::move(options), request);
 }
 
 future<Status> InterconnectsRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::global_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
-                                      request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                      std::move(options), request);
 }
 
 void InterconnectsRestMetadata::SetMetadata(

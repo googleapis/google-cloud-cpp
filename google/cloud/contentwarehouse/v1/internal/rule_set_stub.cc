@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/contentwarehouse/v1/ruleset_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ RuleSetServiceStub::~RuleSetServiceStub() = default;
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 DefaultRuleSetServiceStub::CreateRuleSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request) {
   google::cloud::contentwarehouse::v1::RuleSet response;
   auto status = grpc_stub_->CreateRuleSet(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultRuleSetServiceStub::CreateRuleSet(
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 DefaultRuleSetServiceStub::GetRuleSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request) {
   google::cloud::contentwarehouse::v1::RuleSet response;
   auto status = grpc_stub_->GetRuleSet(&context, request, &response);
@@ -55,7 +56,7 @@ DefaultRuleSetServiceStub::GetRuleSet(
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 DefaultRuleSetServiceStub::UpdateRuleSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request) {
   google::cloud::contentwarehouse::v1::RuleSet response;
   auto status = grpc_stub_->UpdateRuleSet(&context, request, &response);
@@ -66,7 +67,7 @@ DefaultRuleSetServiceStub::UpdateRuleSet(
 }
 
 Status DefaultRuleSetServiceStub::DeleteRuleSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteRuleSet(&context, request, &response);
@@ -78,7 +79,7 @@ Status DefaultRuleSetServiceStub::DeleteRuleSet(
 
 StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse>
 DefaultRuleSetServiceStub::ListRuleSets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::ListRuleSetsRequest const& request) {
   google::cloud::contentwarehouse::v1::ListRuleSetsResponse response;
   auto status = grpc_stub_->ListRuleSets(&context, request, &response);

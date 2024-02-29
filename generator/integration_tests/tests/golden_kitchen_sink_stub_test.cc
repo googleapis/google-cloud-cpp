@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -373,9 +374,9 @@ TEST_F(GoldenKitchenSinkStubTest, GenerateAccessToken) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
-  auto success = stub.GenerateAccessToken(context, request);
+  auto success = stub.GenerateAccessToken(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
-  auto failure = stub.GenerateAccessToken(context, request);
+  auto failure = stub.GenerateAccessToken(context, Options{}, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
 
@@ -387,9 +388,9 @@ TEST_F(GoldenKitchenSinkStubTest, GenerateIdToken) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
-  auto success = stub.GenerateIdToken(context, request);
+  auto success = stub.GenerateIdToken(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
-  auto failure = stub.GenerateIdToken(context, request);
+  auto failure = stub.GenerateIdToken(context, Options{}, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
 
@@ -401,9 +402,9 @@ TEST_F(GoldenKitchenSinkStubTest, WriteLogEntries) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
-  auto success = stub.WriteLogEntries(context, request);
+  auto success = stub.WriteLogEntries(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
-  auto failure = stub.WriteLogEntries(context, request);
+  auto failure = stub.WriteLogEntries(context, Options{}, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
 
@@ -415,9 +416,9 @@ TEST_F(GoldenKitchenSinkStubTest, ListLogs) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
-  auto success = stub.ListLogs(context, request);
+  auto success = stub.ListLogs(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
-  auto failure = stub.ListLogs(context, request);
+  auto failure = stub.ListLogs(context, Options{}, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
 
@@ -429,9 +430,9 @@ TEST_F(GoldenKitchenSinkStubTest, ListServiceAccountKeys) {
       .WillOnce(Return(status))
       .WillOnce(Return(GrpcTransientError()));
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
-  auto success = stub.ListServiceAccountKeys(context, request);
+  auto success = stub.ListServiceAccountKeys(context, Options{}, request);
   EXPECT_THAT(success, IsOk());
-  auto failure = stub.ListServiceAccountKeys(context, request);
+  auto failure = stub.ListServiceAccountKeys(context, Options{}, request);
   EXPECT_EQ(failure.status(), TransientError());
 }
 
@@ -543,8 +544,9 @@ TEST_F(GoldenKitchenSinkStubTest, AsyncStreamingWriteRead) {
 
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
 
-  auto stream =
-      stub.AsyncStreamingReadWrite(cq, std::make_shared<grpc::ClientContext>());
+  auto stream = stub.AsyncStreamingReadWrite(
+      cq, std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::MakeImmutableOptions({}));
   auto start = stream->Start();
   notify_next_op(true);
   EXPECT_TRUE(start.get());
@@ -616,7 +618,8 @@ TEST_F(GoldenKitchenSinkStubTest, AsyncStreamingRead) {
 
   Request request;
   auto stream = stub.AsyncStreamingRead(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::MakeImmutableOptions({}), request);
   auto start = stream->Start();
   notify_next_op(true);
   EXPECT_TRUE(start.get());
@@ -685,8 +688,9 @@ TEST_F(GoldenKitchenSinkStubTest, AsyncStreamingWrite) {
 
   DefaultGoldenKitchenSinkStub stub(std::move(grpc_stub_));
 
-  auto stream =
-      stub.AsyncStreamingWrite(cq, std::make_shared<grpc::ClientContext>());
+  auto stream = stub.AsyncStreamingWrite(
+      cq, std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::MakeImmutableOptions({}));
   auto start = stream->Start();
   notify_next_op(true);
   EXPECT_TRUE(start.get());

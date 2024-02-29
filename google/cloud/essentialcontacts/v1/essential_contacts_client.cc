@@ -18,6 +18,7 @@
 
 #include "google/cloud/essentialcontacts/v1/essential_contacts_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

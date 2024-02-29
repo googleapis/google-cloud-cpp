@@ -3240,6 +3240,11 @@ service {
   initial_copyright_year: "2024"
   retryable_status_codes: ["kUnavailable"]
   omit_repo_metadata: true
+  idempotency_overrides: [
+    {rpc_name: "StorageControl.GetFolder", idempotency: IDEMPOTENT},
+    {rpc_name: "StorageControl.ListFolders", idempotency: IDEMPOTENT},
+    {rpc_name: "StorageControl.GetStorageLayout", idempotency: IDEMPOTENT}
+  ]
 }
 
 # Storage Insights

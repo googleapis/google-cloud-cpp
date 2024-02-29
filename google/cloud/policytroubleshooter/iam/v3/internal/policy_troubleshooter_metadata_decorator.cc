@@ -45,11 +45,11 @@ PolicyTroubleshooterMetadata::PolicyTroubleshooterMetadata(
 StatusOr<
     google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
 PolicyTroubleshooterMetadata::TroubleshootIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::policytroubleshooter::iam::v3::
         TroubleshootIamPolicyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->TroubleshootIamPolicy(context, request);
+  SetMetadata(context, options);
+  return child_->TroubleshootIamPolicy(context, options, request);
 }
 
 void PolicyTroubleshooterMetadata::SetMetadata(

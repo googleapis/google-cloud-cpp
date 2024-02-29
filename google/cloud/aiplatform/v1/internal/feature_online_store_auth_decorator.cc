@@ -19,6 +19,7 @@
 #include "google/cloud/aiplatform/v1/internal/feature_online_store_auth_decorator.h"
 #include <google/cloud/aiplatform/v1/feature_online_store_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,21 +33,21 @@ FeatureOnlineStoreServiceAuth::FeatureOnlineStoreServiceAuth(
 
 StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
 FeatureOnlineStoreServiceAuth::FetchFeatureValues(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->FetchFeatureValues(context, request);
+  return child_->FetchFeatureValues(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
 FeatureOnlineStoreServiceAuth::SearchNearestEntities(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SearchNearestEntities(context, request);
+  return child_->SearchNearestEntities(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

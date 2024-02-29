@@ -19,6 +19,7 @@
 #include "google/cloud/billing/v1/internal/cloud_catalog_auth_decorator.h"
 #include <google/cloud/billing/v1/cloud_catalog.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,20 +33,20 @@ CloudCatalogAuth::CloudCatalogAuth(
 
 StatusOr<google::cloud::billing::v1::ListServicesResponse>
 CloudCatalogAuth::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::v1::ListServicesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListServices(context, request);
+  return child_->ListServices(context, options, request);
 }
 
 StatusOr<google::cloud::billing::v1::ListSkusResponse>
 CloudCatalogAuth::ListSkus(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::v1::ListSkusRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListSkus(context, request);
+  return child_->ListSkus(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -18,6 +18,7 @@
 
 #include "google/cloud/trace/v2/trace_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -19,6 +19,7 @@
 #include "google/cloud/videointelligence/v1/internal/video_intelligence_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

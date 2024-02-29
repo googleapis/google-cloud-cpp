@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_IAM_V3_INTERNAL_POLICY_TROUBLESHOOTER_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLICYTROUBLESHOOTER_IAM_V3_INTERNAL_POLICY_TROUBLESHOOTER_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/policytroubleshooter/iam/v3/troubleshooter.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,7 +37,7 @@ class PolicyTroubleshooterStub {
 
   virtual StatusOr<google::cloud::policytroubleshooter::iam::v3::
                        TroubleshootIamPolicyResponse>
-  TroubleshootIamPolicy(grpc::ClientContext& context,
+  TroubleshootIamPolicy(grpc::ClientContext& context, Options const& options,
                         google::cloud::policytroubleshooter::iam::v3::
                             TroubleshootIamPolicyRequest const& request) = 0;
 };
@@ -51,7 +53,7 @@ class DefaultPolicyTroubleshooterStub : public PolicyTroubleshooterStub {
   StatusOr<google::cloud::policytroubleshooter::iam::v3::
                TroubleshootIamPolicyResponse>
   TroubleshootIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::policytroubleshooter::iam::v3::
           TroubleshootIamPolicyRequest const& request) override;
 

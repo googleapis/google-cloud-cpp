@@ -22,6 +22,7 @@
 #include <google/cloud/netapp/v1/cloud_netapp_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ NetAppStub::~NetAppStub() = default;
 
 StatusOr<google::cloud::netapp::v1::ListStoragePoolsResponse>
 DefaultNetAppStub::ListStoragePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::ListStoragePoolsRequest const& request) {
   google::cloud::netapp::v1::ListStoragePoolsResponse response;
   auto status = grpc_stub_->ListStoragePools(&context, request, &response);
@@ -45,7 +46,8 @@ DefaultNetAppStub::ListStoragePools(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateStoragePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::CreateStoragePoolRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::CreateStoragePoolRequest,
@@ -61,7 +63,7 @@ DefaultNetAppStub::AsyncCreateStoragePool(
 
 StatusOr<google::cloud::netapp::v1::StoragePool>
 DefaultNetAppStub::GetStoragePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::GetStoragePoolRequest const& request) {
   google::cloud::netapp::v1::StoragePool response;
   auto status = grpc_stub_->GetStoragePool(&context, request, &response);
@@ -74,7 +76,8 @@ DefaultNetAppStub::GetStoragePool(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncUpdateStoragePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::UpdateStoragePoolRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::UpdateStoragePoolRequest,
@@ -91,7 +94,8 @@ DefaultNetAppStub::AsyncUpdateStoragePool(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncDeleteStoragePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::DeleteStoragePoolRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::DeleteStoragePoolRequest,
@@ -107,7 +111,7 @@ DefaultNetAppStub::AsyncDeleteStoragePool(
 
 StatusOr<google::cloud::netapp::v1::ListVolumesResponse>
 DefaultNetAppStub::ListVolumes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::ListVolumesRequest const& request) {
   google::cloud::netapp::v1::ListVolumesResponse response;
   auto status = grpc_stub_->ListVolumes(&context, request, &response);
@@ -118,7 +122,7 @@ DefaultNetAppStub::ListVolumes(
 }
 
 StatusOr<google::cloud::netapp::v1::Volume> DefaultNetAppStub::GetVolume(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::GetVolumeRequest const& request) {
   google::cloud::netapp::v1::Volume response;
   auto status = grpc_stub_->GetVolume(&context, request, &response);
@@ -131,7 +135,8 @@ StatusOr<google::cloud::netapp::v1::Volume> DefaultNetAppStub::GetVolume(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateVolume(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::CreateVolumeRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::CreateVolumeRequest,
@@ -148,7 +153,8 @@ DefaultNetAppStub::AsyncCreateVolume(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncUpdateVolume(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::UpdateVolumeRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::UpdateVolumeRequest,
@@ -165,7 +171,8 @@ DefaultNetAppStub::AsyncUpdateVolume(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncDeleteVolume(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::DeleteVolumeRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::DeleteVolumeRequest,
@@ -182,7 +189,8 @@ DefaultNetAppStub::AsyncDeleteVolume(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncRevertVolume(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::RevertVolumeRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::RevertVolumeRequest,
@@ -198,7 +206,7 @@ DefaultNetAppStub::AsyncRevertVolume(
 
 StatusOr<google::cloud::netapp::v1::ListSnapshotsResponse>
 DefaultNetAppStub::ListSnapshots(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::ListSnapshotsRequest const& request) {
   google::cloud::netapp::v1::ListSnapshotsResponse response;
   auto status = grpc_stub_->ListSnapshots(&context, request, &response);
@@ -209,7 +217,7 @@ DefaultNetAppStub::ListSnapshots(
 }
 
 StatusOr<google::cloud::netapp::v1::Snapshot> DefaultNetAppStub::GetSnapshot(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::GetSnapshotRequest const& request) {
   google::cloud::netapp::v1::Snapshot response;
   auto status = grpc_stub_->GetSnapshot(&context, request, &response);
@@ -222,7 +230,8 @@ StatusOr<google::cloud::netapp::v1::Snapshot> DefaultNetAppStub::GetSnapshot(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateSnapshot(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::CreateSnapshotRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::CreateSnapshotRequest,
@@ -239,7 +248,8 @@ DefaultNetAppStub::AsyncCreateSnapshot(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncDeleteSnapshot(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::DeleteSnapshotRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::DeleteSnapshotRequest,
@@ -256,7 +266,8 @@ DefaultNetAppStub::AsyncDeleteSnapshot(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncUpdateSnapshot(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::UpdateSnapshotRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::UpdateSnapshotRequest,
@@ -272,7 +283,7 @@ DefaultNetAppStub::AsyncUpdateSnapshot(
 
 StatusOr<google::cloud::netapp::v1::ListActiveDirectoriesResponse>
 DefaultNetAppStub::ListActiveDirectories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::ListActiveDirectoriesRequest const& request) {
   google::cloud::netapp::v1::ListActiveDirectoriesResponse response;
   auto status = grpc_stub_->ListActiveDirectories(&context, request, &response);
@@ -284,7 +295,7 @@ DefaultNetAppStub::ListActiveDirectories(
 
 StatusOr<google::cloud::netapp::v1::ActiveDirectory>
 DefaultNetAppStub::GetActiveDirectory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::GetActiveDirectoryRequest const& request) {
   google::cloud::netapp::v1::ActiveDirectory response;
   auto status = grpc_stub_->GetActiveDirectory(&context, request, &response);
@@ -297,7 +308,8 @@ DefaultNetAppStub::GetActiveDirectory(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateActiveDirectory(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::CreateActiveDirectoryRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::CreateActiveDirectoryRequest,
@@ -315,7 +327,8 @@ DefaultNetAppStub::AsyncCreateActiveDirectory(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncUpdateActiveDirectory(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::UpdateActiveDirectoryRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::UpdateActiveDirectoryRequest,
@@ -333,7 +346,8 @@ DefaultNetAppStub::AsyncUpdateActiveDirectory(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncDeleteActiveDirectory(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::DeleteActiveDirectoryRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::DeleteActiveDirectoryRequest,
@@ -350,7 +364,7 @@ DefaultNetAppStub::AsyncDeleteActiveDirectory(
 
 StatusOr<google::cloud::netapp::v1::ListKmsConfigsResponse>
 DefaultNetAppStub::ListKmsConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::ListKmsConfigsRequest const& request) {
   google::cloud::netapp::v1::ListKmsConfigsResponse response;
   auto status = grpc_stub_->ListKmsConfigs(&context, request, &response);
@@ -363,7 +377,8 @@ DefaultNetAppStub::ListKmsConfigs(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateKmsConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::CreateKmsConfigRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::CreateKmsConfigRequest,
@@ -378,7 +393,7 @@ DefaultNetAppStub::AsyncCreateKmsConfig(
 }
 
 StatusOr<google::cloud::netapp::v1::KmsConfig> DefaultNetAppStub::GetKmsConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::GetKmsConfigRequest const& request) {
   google::cloud::netapp::v1::KmsConfig response;
   auto status = grpc_stub_->GetKmsConfig(&context, request, &response);
@@ -391,7 +406,8 @@ StatusOr<google::cloud::netapp::v1::KmsConfig> DefaultNetAppStub::GetKmsConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncUpdateKmsConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::UpdateKmsConfigRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::UpdateKmsConfigRequest,
@@ -408,7 +424,8 @@ DefaultNetAppStub::AsyncUpdateKmsConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncEncryptVolumes(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::EncryptVolumesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::EncryptVolumesRequest,
@@ -424,7 +441,7 @@ DefaultNetAppStub::AsyncEncryptVolumes(
 
 StatusOr<google::cloud::netapp::v1::VerifyKmsConfigResponse>
 DefaultNetAppStub::VerifyKmsConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::VerifyKmsConfigRequest const& request) {
   google::cloud::netapp::v1::VerifyKmsConfigResponse response;
   auto status = grpc_stub_->VerifyKmsConfig(&context, request, &response);
@@ -437,7 +454,8 @@ DefaultNetAppStub::VerifyKmsConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncDeleteKmsConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::DeleteKmsConfigRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::DeleteKmsConfigRequest,
@@ -453,7 +471,7 @@ DefaultNetAppStub::AsyncDeleteKmsConfig(
 
 StatusOr<google::cloud::netapp::v1::ListReplicationsResponse>
 DefaultNetAppStub::ListReplications(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::ListReplicationsRequest const& request) {
   google::cloud::netapp::v1::ListReplicationsResponse response;
   auto status = grpc_stub_->ListReplications(&context, request, &response);
@@ -465,7 +483,7 @@ DefaultNetAppStub::ListReplications(
 
 StatusOr<google::cloud::netapp::v1::Replication>
 DefaultNetAppStub::GetReplication(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::GetReplicationRequest const& request) {
   google::cloud::netapp::v1::Replication response;
   auto status = grpc_stub_->GetReplication(&context, request, &response);
@@ -478,7 +496,8 @@ DefaultNetAppStub::GetReplication(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateReplication(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::CreateReplicationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::CreateReplicationRequest,
@@ -495,7 +514,8 @@ DefaultNetAppStub::AsyncCreateReplication(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncDeleteReplication(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::DeleteReplicationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::DeleteReplicationRequest,
@@ -512,7 +532,8 @@ DefaultNetAppStub::AsyncDeleteReplication(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncUpdateReplication(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::UpdateReplicationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::UpdateReplicationRequest,
@@ -529,7 +550,8 @@ DefaultNetAppStub::AsyncUpdateReplication(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncStopReplication(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::StopReplicationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::StopReplicationRequest,
@@ -546,7 +568,8 @@ DefaultNetAppStub::AsyncStopReplication(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncResumeReplication(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::ResumeReplicationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::ResumeReplicationRequest,
@@ -563,7 +586,8 @@ DefaultNetAppStub::AsyncResumeReplication(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncReverseReplicationDirection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::ReverseReplicationDirectionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -584,7 +608,8 @@ DefaultNetAppStub::AsyncReverseReplicationDirection(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateBackupVault(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::CreateBackupVaultRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::CreateBackupVaultRequest,
@@ -600,7 +625,7 @@ DefaultNetAppStub::AsyncCreateBackupVault(
 
 StatusOr<google::cloud::netapp::v1::BackupVault>
 DefaultNetAppStub::GetBackupVault(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::GetBackupVaultRequest const& request) {
   google::cloud::netapp::v1::BackupVault response;
   auto status = grpc_stub_->GetBackupVault(&context, request, &response);
@@ -612,7 +637,7 @@ DefaultNetAppStub::GetBackupVault(
 
 StatusOr<google::cloud::netapp::v1::ListBackupVaultsResponse>
 DefaultNetAppStub::ListBackupVaults(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::ListBackupVaultsRequest const& request) {
   google::cloud::netapp::v1::ListBackupVaultsResponse response;
   auto status = grpc_stub_->ListBackupVaults(&context, request, &response);
@@ -625,7 +650,8 @@ DefaultNetAppStub::ListBackupVaults(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncUpdateBackupVault(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::UpdateBackupVaultRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::UpdateBackupVaultRequest,
@@ -642,7 +668,8 @@ DefaultNetAppStub::AsyncUpdateBackupVault(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncDeleteBackupVault(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::DeleteBackupVaultRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::DeleteBackupVaultRequest,
@@ -659,7 +686,8 @@ DefaultNetAppStub::AsyncDeleteBackupVault(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::CreateBackupRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::CreateBackupRequest,
@@ -674,7 +702,7 @@ DefaultNetAppStub::AsyncCreateBackup(
 }
 
 StatusOr<google::cloud::netapp::v1::Backup> DefaultNetAppStub::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::GetBackupRequest const& request) {
   google::cloud::netapp::v1::Backup response;
   auto status = grpc_stub_->GetBackup(&context, request, &response);
@@ -686,7 +714,7 @@ StatusOr<google::cloud::netapp::v1::Backup> DefaultNetAppStub::GetBackup(
 
 StatusOr<google::cloud::netapp::v1::ListBackupsResponse>
 DefaultNetAppStub::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::ListBackupsRequest const& request) {
   google::cloud::netapp::v1::ListBackupsResponse response;
   auto status = grpc_stub_->ListBackups(&context, request, &response);
@@ -699,7 +727,8 @@ DefaultNetAppStub::ListBackups(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::DeleteBackupRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::DeleteBackupRequest,
@@ -716,7 +745,8 @@ DefaultNetAppStub::AsyncDeleteBackup(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncUpdateBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::UpdateBackupRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::UpdateBackupRequest,
@@ -733,7 +763,8 @@ DefaultNetAppStub::AsyncUpdateBackup(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncCreateBackupPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::CreateBackupPolicyRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::CreateBackupPolicyRequest,
@@ -750,7 +781,7 @@ DefaultNetAppStub::AsyncCreateBackupPolicy(
 
 StatusOr<google::cloud::netapp::v1::BackupPolicy>
 DefaultNetAppStub::GetBackupPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::GetBackupPolicyRequest const& request) {
   google::cloud::netapp::v1::BackupPolicy response;
   auto status = grpc_stub_->GetBackupPolicy(&context, request, &response);
@@ -762,7 +793,7 @@ DefaultNetAppStub::GetBackupPolicy(
 
 StatusOr<google::cloud::netapp::v1::ListBackupPoliciesResponse>
 DefaultNetAppStub::ListBackupPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::netapp::v1::ListBackupPoliciesRequest const& request) {
   google::cloud::netapp::v1::ListBackupPoliciesResponse response;
   auto status = grpc_stub_->ListBackupPolicies(&context, request, &response);
@@ -775,7 +806,8 @@ DefaultNetAppStub::ListBackupPolicies(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncUpdateBackupPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::UpdateBackupPolicyRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::UpdateBackupPolicyRequest,
@@ -793,7 +825,8 @@ DefaultNetAppStub::AsyncUpdateBackupPolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncDeleteBackupPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::netapp::v1::DeleteBackupPolicyRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::netapp::v1::DeleteBackupPolicyRequest,
@@ -811,7 +844,8 @@ DefaultNetAppStub::AsyncDeleteBackupPolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetAppStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -826,7 +860,8 @@ DefaultNetAppStub::AsyncGetOperation(
 
 future<Status> DefaultNetAppStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

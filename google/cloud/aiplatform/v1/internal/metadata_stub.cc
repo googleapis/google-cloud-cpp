@@ -22,6 +22,7 @@
 #include <google/cloud/aiplatform/v1/metadata_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ MetadataServiceStub::~MetadataServiceStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncCreateMetadataStore(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::CreateMetadataStoreRequest,
@@ -50,7 +52,7 @@ DefaultMetadataServiceStub::AsyncCreateMetadataStore(
 
 StatusOr<google::cloud::aiplatform::v1::MetadataStore>
 DefaultMetadataServiceStub::GetMetadataStore(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetMetadataStoreRequest const& request) {
   google::cloud::aiplatform::v1::MetadataStore response;
   auto status = grpc_stub_->GetMetadataStore(&context, request, &response);
@@ -62,7 +64,7 @@ DefaultMetadataServiceStub::GetMetadataStore(
 
 StatusOr<google::cloud::aiplatform::v1::ListMetadataStoresResponse>
 DefaultMetadataServiceStub::ListMetadataStores(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListMetadataStoresRequest const& request) {
   google::cloud::aiplatform::v1::ListMetadataStoresResponse response;
   auto status = grpc_stub_->ListMetadataStores(&context, request, &response);
@@ -75,7 +77,8 @@ DefaultMetadataServiceStub::ListMetadataStores(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncDeleteMetadataStore(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteMetadataStoreRequest,
@@ -92,7 +95,7 @@ DefaultMetadataServiceStub::AsyncDeleteMetadataStore(
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
 DefaultMetadataServiceStub::CreateArtifact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CreateArtifactRequest const& request) {
   google::cloud::aiplatform::v1::Artifact response;
   auto status = grpc_stub_->CreateArtifact(&context, request, &response);
@@ -104,7 +107,7 @@ DefaultMetadataServiceStub::CreateArtifact(
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
 DefaultMetadataServiceStub::GetArtifact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetArtifactRequest const& request) {
   google::cloud::aiplatform::v1::Artifact response;
   auto status = grpc_stub_->GetArtifact(&context, request, &response);
@@ -116,7 +119,7 @@ DefaultMetadataServiceStub::GetArtifact(
 
 StatusOr<google::cloud::aiplatform::v1::ListArtifactsResponse>
 DefaultMetadataServiceStub::ListArtifacts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListArtifactsRequest const& request) {
   google::cloud::aiplatform::v1::ListArtifactsResponse response;
   auto status = grpc_stub_->ListArtifacts(&context, request, &response);
@@ -128,7 +131,7 @@ DefaultMetadataServiceStub::ListArtifacts(
 
 StatusOr<google::cloud::aiplatform::v1::Artifact>
 DefaultMetadataServiceStub::UpdateArtifact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::UpdateArtifactRequest const& request) {
   google::cloud::aiplatform::v1::Artifact response;
   auto status = grpc_stub_->UpdateArtifact(&context, request, &response);
@@ -141,7 +144,8 @@ DefaultMetadataServiceStub::UpdateArtifact(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncDeleteArtifact(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteArtifactRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteArtifactRequest,
@@ -159,7 +163,8 @@ DefaultMetadataServiceStub::AsyncDeleteArtifact(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncPurgeArtifacts(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::PurgeArtifactsRequest,
@@ -176,7 +181,7 @@ DefaultMetadataServiceStub::AsyncPurgeArtifacts(
 
 StatusOr<google::cloud::aiplatform::v1::Context>
 DefaultMetadataServiceStub::CreateContext(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CreateContextRequest const& request) {
   google::cloud::aiplatform::v1::Context response;
   auto status = grpc_stub_->CreateContext(&context, request, &response);
@@ -188,7 +193,7 @@ DefaultMetadataServiceStub::CreateContext(
 
 StatusOr<google::cloud::aiplatform::v1::Context>
 DefaultMetadataServiceStub::GetContext(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetContextRequest const& request) {
   google::cloud::aiplatform::v1::Context response;
   auto status = grpc_stub_->GetContext(&context, request, &response);
@@ -200,7 +205,7 @@ DefaultMetadataServiceStub::GetContext(
 
 StatusOr<google::cloud::aiplatform::v1::ListContextsResponse>
 DefaultMetadataServiceStub::ListContexts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListContextsRequest const& request) {
   google::cloud::aiplatform::v1::ListContextsResponse response;
   auto status = grpc_stub_->ListContexts(&context, request, &response);
@@ -212,7 +217,7 @@ DefaultMetadataServiceStub::ListContexts(
 
 StatusOr<google::cloud::aiplatform::v1::Context>
 DefaultMetadataServiceStub::UpdateContext(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::UpdateContextRequest const& request) {
   google::cloud::aiplatform::v1::Context response;
   auto status = grpc_stub_->UpdateContext(&context, request, &response);
@@ -225,7 +230,8 @@ DefaultMetadataServiceStub::UpdateContext(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncDeleteContext(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteContextRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteContextRequest,
@@ -242,7 +248,8 @@ DefaultMetadataServiceStub::AsyncDeleteContext(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncPurgeContexts(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::PurgeContextsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::PurgeContextsRequest,
@@ -259,7 +266,7 @@ DefaultMetadataServiceStub::AsyncPurgeContexts(
 StatusOr<
     google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse>
 DefaultMetadataServiceStub::AddContextArtifactsAndExecutions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::
         AddContextArtifactsAndExecutionsRequest const& request) {
   google::cloud::aiplatform::v1::AddContextArtifactsAndExecutionsResponse
@@ -274,7 +281,7 @@ DefaultMetadataServiceStub::AddContextArtifactsAndExecutions(
 
 StatusOr<google::cloud::aiplatform::v1::AddContextChildrenResponse>
 DefaultMetadataServiceStub::AddContextChildren(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::AddContextChildrenRequest const& request) {
   google::cloud::aiplatform::v1::AddContextChildrenResponse response;
   auto status = grpc_stub_->AddContextChildren(&context, request, &response);
@@ -286,7 +293,7 @@ DefaultMetadataServiceStub::AddContextChildren(
 
 StatusOr<google::cloud::aiplatform::v1::RemoveContextChildrenResponse>
 DefaultMetadataServiceStub::RemoveContextChildren(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::RemoveContextChildrenRequest const&
         request) {
   google::cloud::aiplatform::v1::RemoveContextChildrenResponse response;
@@ -299,7 +306,7 @@ DefaultMetadataServiceStub::RemoveContextChildren(
 
 StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
 DefaultMetadataServiceStub::QueryContextLineageSubgraph(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::QueryContextLineageSubgraphRequest const&
         request) {
   google::cloud::aiplatform::v1::LineageSubgraph response;
@@ -313,7 +320,7 @@ DefaultMetadataServiceStub::QueryContextLineageSubgraph(
 
 StatusOr<google::cloud::aiplatform::v1::Execution>
 DefaultMetadataServiceStub::CreateExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CreateExecutionRequest const& request) {
   google::cloud::aiplatform::v1::Execution response;
   auto status = grpc_stub_->CreateExecution(&context, request, &response);
@@ -325,7 +332,7 @@ DefaultMetadataServiceStub::CreateExecution(
 
 StatusOr<google::cloud::aiplatform::v1::Execution>
 DefaultMetadataServiceStub::GetExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetExecutionRequest const& request) {
   google::cloud::aiplatform::v1::Execution response;
   auto status = grpc_stub_->GetExecution(&context, request, &response);
@@ -337,7 +344,7 @@ DefaultMetadataServiceStub::GetExecution(
 
 StatusOr<google::cloud::aiplatform::v1::ListExecutionsResponse>
 DefaultMetadataServiceStub::ListExecutions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListExecutionsRequest const& request) {
   google::cloud::aiplatform::v1::ListExecutionsResponse response;
   auto status = grpc_stub_->ListExecutions(&context, request, &response);
@@ -349,7 +356,7 @@ DefaultMetadataServiceStub::ListExecutions(
 
 StatusOr<google::cloud::aiplatform::v1::Execution>
 DefaultMetadataServiceStub::UpdateExecution(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::UpdateExecutionRequest const& request) {
   google::cloud::aiplatform::v1::Execution response;
   auto status = grpc_stub_->UpdateExecution(&context, request, &response);
@@ -362,7 +369,8 @@ DefaultMetadataServiceStub::UpdateExecution(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncDeleteExecution(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteExecutionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteExecutionRequest,
@@ -380,7 +388,8 @@ DefaultMetadataServiceStub::AsyncDeleteExecution(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncPurgeExecutions(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::PurgeExecutionsRequest,
@@ -397,7 +406,7 @@ DefaultMetadataServiceStub::AsyncPurgeExecutions(
 
 StatusOr<google::cloud::aiplatform::v1::AddExecutionEventsResponse>
 DefaultMetadataServiceStub::AddExecutionEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::AddExecutionEventsRequest const& request) {
   google::cloud::aiplatform::v1::AddExecutionEventsResponse response;
   auto status = grpc_stub_->AddExecutionEvents(&context, request, &response);
@@ -409,7 +418,7 @@ DefaultMetadataServiceStub::AddExecutionEvents(
 
 StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
 DefaultMetadataServiceStub::QueryExecutionInputsAndOutputs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::QueryExecutionInputsAndOutputsRequest const&
         request) {
   google::cloud::aiplatform::v1::LineageSubgraph response;
@@ -423,7 +432,7 @@ DefaultMetadataServiceStub::QueryExecutionInputsAndOutputs(
 
 StatusOr<google::cloud::aiplatform::v1::MetadataSchema>
 DefaultMetadataServiceStub::CreateMetadataSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CreateMetadataSchemaRequest const& request) {
   google::cloud::aiplatform::v1::MetadataSchema response;
   auto status = grpc_stub_->CreateMetadataSchema(&context, request, &response);
@@ -435,7 +444,7 @@ DefaultMetadataServiceStub::CreateMetadataSchema(
 
 StatusOr<google::cloud::aiplatform::v1::MetadataSchema>
 DefaultMetadataServiceStub::GetMetadataSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetMetadataSchemaRequest const& request) {
   google::cloud::aiplatform::v1::MetadataSchema response;
   auto status = grpc_stub_->GetMetadataSchema(&context, request, &response);
@@ -447,7 +456,7 @@ DefaultMetadataServiceStub::GetMetadataSchema(
 
 StatusOr<google::cloud::aiplatform::v1::ListMetadataSchemasResponse>
 DefaultMetadataServiceStub::ListMetadataSchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListMetadataSchemasRequest const& request) {
   google::cloud::aiplatform::v1::ListMetadataSchemasResponse response;
   auto status = grpc_stub_->ListMetadataSchemas(&context, request, &response);
@@ -459,7 +468,7 @@ DefaultMetadataServiceStub::ListMetadataSchemas(
 
 StatusOr<google::cloud::aiplatform::v1::LineageSubgraph>
 DefaultMetadataServiceStub::QueryArtifactLineageSubgraph(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::QueryArtifactLineageSubgraphRequest const&
         request) {
   google::cloud::aiplatform::v1::LineageSubgraph response;
@@ -474,7 +483,8 @@ DefaultMetadataServiceStub::QueryArtifactLineageSubgraph(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMetadataServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -489,7 +499,8 @@ DefaultMetadataServiceStub::AsyncGetOperation(
 
 future<Status> DefaultMetadataServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

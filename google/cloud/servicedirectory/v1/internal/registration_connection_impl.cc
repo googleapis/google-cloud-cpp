@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -72,10 +73,12 @@ RegistrationServiceConnectionImpl::CreateNamespace(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateNamespace(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
-                 request) { return stub_->CreateNamespace(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreateNamespace(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::servicedirectory::v1::Namespace>
@@ -87,21 +90,22 @@ RegistrationServiceConnectionImpl::ListNamespaces(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::servicedirectory::v1::Namespace>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<servicedirectory_v1::RegistrationServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::servicedirectory::v1::ListNamespacesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::servicedirectory::v1::
                        ListNamespacesRequest const& request) {
-              return stub->ListNamespaces(context, request);
+              return stub->ListNamespaces(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::servicedirectory::v1::ListNamespacesResponse r) {
         std::vector<google::cloud::servicedirectory::v1::Namespace> result(
@@ -119,10 +123,12 @@ RegistrationServiceConnectionImpl::GetNamespace(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNamespace(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::servicedirectory::v1::GetNamespaceRequest const&
-                 request) { return stub_->GetNamespace(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetNamespace(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
@@ -133,10 +139,12 @@ RegistrationServiceConnectionImpl::UpdateNamespace(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateNamespace(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
-                 request) { return stub_->UpdateNamespace(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->UpdateNamespace(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status RegistrationServiceConnectionImpl::DeleteNamespace(
@@ -146,10 +154,12 @@ Status RegistrationServiceConnectionImpl::DeleteNamespace(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteNamespace(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&
-                 request) { return stub_->DeleteNamespace(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DeleteNamespace(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
@@ -159,10 +169,12 @@ RegistrationServiceConnectionImpl::CreateService(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateService(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::servicedirectory::v1::CreateServiceRequest const&
-                 request) { return stub_->CreateService(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreateService(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::servicedirectory::v1::Service>
@@ -174,20 +186,23 @@ RegistrationServiceConnectionImpl::ListServices(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::servicedirectory::v1::Service>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<servicedirectory_v1::RegistrationServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::servicedirectory::v1::ListServicesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::servicedirectory::v1::ListServicesRequest const&
-                    request) { return stub->ListServices(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListServices(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::servicedirectory::v1::ListServicesResponse r) {
         std::vector<google::cloud::servicedirectory::v1::Service> result(
@@ -205,10 +220,12 @@ RegistrationServiceConnectionImpl::GetService(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetService(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::servicedirectory::v1::GetServiceRequest const&
-                 request) { return stub_->GetService(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetService(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
@@ -218,10 +235,12 @@ RegistrationServiceConnectionImpl::UpdateService(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateService(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::servicedirectory::v1::UpdateServiceRequest const&
-                 request) { return stub_->UpdateService(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->UpdateService(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status RegistrationServiceConnectionImpl::DeleteService(
@@ -230,10 +249,12 @@ Status RegistrationServiceConnectionImpl::DeleteService(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteService(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::servicedirectory::v1::DeleteServiceRequest const&
-                 request) { return stub_->DeleteService(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DeleteService(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
@@ -243,10 +264,12 @@ RegistrationServiceConnectionImpl::CreateEndpoint(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateEndpoint(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::servicedirectory::v1::CreateEndpointRequest const&
-                 request) { return stub_->CreateEndpoint(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreateEndpoint(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::servicedirectory::v1::Endpoint>
@@ -258,20 +281,23 @@ RegistrationServiceConnectionImpl::ListEndpoints(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::servicedirectory::v1::Endpoint>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<servicedirectory_v1::RegistrationServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::servicedirectory::v1::ListEndpointsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::servicedirectory::v1::ListEndpointsRequest const&
-                    request) { return stub->ListEndpoints(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListEndpoints(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::servicedirectory::v1::ListEndpointsResponse r) {
         std::vector<google::cloud::servicedirectory::v1::Endpoint> result(
@@ -289,10 +315,12 @@ RegistrationServiceConnectionImpl::GetEndpoint(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetEndpoint(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::servicedirectory::v1::GetEndpointRequest const&
-                 request) { return stub_->GetEndpoint(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetEndpoint(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
@@ -302,10 +330,12 @@ RegistrationServiceConnectionImpl::UpdateEndpoint(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateEndpoint(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::servicedirectory::v1::UpdateEndpointRequest const&
-                 request) { return stub_->UpdateEndpoint(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->UpdateEndpoint(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status RegistrationServiceConnectionImpl::DeleteEndpoint(
@@ -314,10 +344,12 @@ Status RegistrationServiceConnectionImpl::DeleteEndpoint(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteEndpoint(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::servicedirectory::v1::DeleteEndpointRequest const&
-                 request) { return stub_->DeleteEndpoint(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DeleteEndpoint(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::Policy>
@@ -327,11 +359,11 @@ RegistrationServiceConnectionImpl::GetIamPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
-        return stub_->GetIamPolicy(context, request);
+        return stub_->GetIamPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::Policy>
@@ -341,11 +373,11 @@ RegistrationServiceConnectionImpl::SetIamPolicy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
-        return stub_->SetIamPolicy(context, request);
+        return stub_->SetIamPolicy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
@@ -355,11 +387,11 @@ RegistrationServiceConnectionImpl::TestIamPermissions(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->TestIamPermissions(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
-        return stub_->TestIamPermissions(context, request);
+        return stub_->TestIamPermissions(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

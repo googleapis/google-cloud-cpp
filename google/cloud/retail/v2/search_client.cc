@@ -18,6 +18,7 @@
 
 #include "google/cloud/retail/v2/search_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

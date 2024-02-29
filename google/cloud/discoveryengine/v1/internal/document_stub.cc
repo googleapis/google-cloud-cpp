@@ -22,6 +22,7 @@
 #include <google/cloud/discoveryengine/v1/document_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ DocumentServiceStub::~DocumentServiceStub() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
 DefaultDocumentServiceStub::GetDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::discoveryengine::v1::GetDocumentRequest const& request) {
   google::cloud::discoveryengine::v1::Document response;
   auto status = grpc_stub_->GetDocument(&context, request, &response);
@@ -44,7 +45,7 @@ DefaultDocumentServiceStub::GetDocument(
 
 StatusOr<google::cloud::discoveryengine::v1::ListDocumentsResponse>
 DefaultDocumentServiceStub::ListDocuments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::discoveryengine::v1::ListDocumentsRequest const& request) {
   google::cloud::discoveryengine::v1::ListDocumentsResponse response;
   auto status = grpc_stub_->ListDocuments(&context, request, &response);
@@ -56,7 +57,7 @@ DefaultDocumentServiceStub::ListDocuments(
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
 DefaultDocumentServiceStub::CreateDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::discoveryengine::v1::CreateDocumentRequest const& request) {
   google::cloud::discoveryengine::v1::Document response;
   auto status = grpc_stub_->CreateDocument(&context, request, &response);
@@ -68,7 +69,7 @@ DefaultDocumentServiceStub::CreateDocument(
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
 DefaultDocumentServiceStub::UpdateDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request) {
   google::cloud::discoveryengine::v1::Document response;
   auto status = grpc_stub_->UpdateDocument(&context, request, &response);
@@ -79,7 +80,7 @@ DefaultDocumentServiceStub::UpdateDocument(
 }
 
 Status DefaultDocumentServiceStub::DeleteDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteDocument(&context, request, &response);
@@ -92,7 +93,8 @@ Status DefaultDocumentServiceStub::DeleteDocument(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentServiceStub::AsyncImportDocuments(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::discoveryengine::v1::ImportDocumentsRequest,
@@ -110,7 +112,8 @@ DefaultDocumentServiceStub::AsyncImportDocuments(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentServiceStub::AsyncPurgeDocuments(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::discoveryengine::v1::PurgeDocumentsRequest,
@@ -128,7 +131,8 @@ DefaultDocumentServiceStub::AsyncPurgeDocuments(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -143,7 +147,8 @@ DefaultDocumentServiceStub::AsyncGetOperation(
 
 future<Status> DefaultDocumentServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

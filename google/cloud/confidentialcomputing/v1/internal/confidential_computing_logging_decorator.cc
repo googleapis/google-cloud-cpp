@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/confidentialcomputing/v1/service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,30 +37,30 @@ ConfidentialComputingLogging::ConfidentialComputingLogging(
 
 StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
 ConfidentialComputingLogging::CreateChallenge(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::confidentialcomputing::v1::
                  CreateChallengeRequest const& request) {
-        return child_->CreateChallenge(context, request);
+        return child_->CreateChallenge(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
 ConfidentialComputingLogging::VerifyAttestation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::confidentialcomputing::v1::
                  VerifyAttestationRequest const& request) {
-        return child_->VerifyAttestation(context, request);
+        return child_->VerifyAttestation(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

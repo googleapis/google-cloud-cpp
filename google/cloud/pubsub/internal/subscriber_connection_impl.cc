@@ -65,7 +65,7 @@ StatusOr<pubsub::PullResponse> SubscriberConnectionImpl::Pull() {
   while (!retry_policy->IsExhausted()) {
     grpc::ClientContext context;
     google::cloud::internal::ConfigureContext(context, current);
-    auto response = stub_->Pull(context, request);
+    auto response = stub_->Pull(context, current, request);
 
     if (response && !response->received_messages().empty()) {
       if (response->received_messages_size() > 1) {

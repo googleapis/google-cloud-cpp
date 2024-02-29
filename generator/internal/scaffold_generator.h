@@ -83,10 +83,16 @@ nlohmann::json LoadApiIndex(std::string const& googleapis_path);
  *     engine.
  */
 std::map<std::string, std::string> ScaffoldVars(
-    std::string const& googleapis_path, nlohmann::json const& index,
+    std::string const& yaml_root, nlohmann::json const& index,
     google::cloud::cpp::generator::ServiceConfiguration const& service,
     bool experimental);
 
+/// Find out the full path for the service config YAML file from the scaffold
+/// vars.
+std::string ServiceConfigYamlPath(
+    std::string const& root, std::map<std::string, std::string> const& vars);
+
+/// Create a directory. The parent must exist.
 void MakeDirectory(std::string const& path);
 
 /**

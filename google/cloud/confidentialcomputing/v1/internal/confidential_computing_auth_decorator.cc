@@ -19,6 +19,7 @@
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_auth_decorator.h"
 #include <google/cloud/confidentialcomputing/v1/service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,22 +33,22 @@ ConfidentialComputingAuth::ConfidentialComputingAuth(
 
 StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
 ConfidentialComputingAuth::CreateChallenge(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateChallenge(context, request);
+  return child_->CreateChallenge(context, options, request);
 }
 
 StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
 ConfidentialComputingAuth::VerifyAttestation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->VerifyAttestation(context, request);
+  return child_->VerifyAttestation(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

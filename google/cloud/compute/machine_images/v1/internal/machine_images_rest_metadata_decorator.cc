@@ -43,12 +43,12 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 MachineImagesRestMetadata::AsyncDeleteMachineImage(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::machine_images::v1::
         DeleteMachineImageRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncDeleteMachineImage(cq, std::move(rest_context), options,
-                                         request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncDeleteMachineImage(cq, std::move(rest_context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImage>
@@ -73,12 +73,12 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 MachineImagesRestMetadata::AsyncInsertMachineImage(
     CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::machine_images::v1::
         InsertMachineImageRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncInsertMachineImage(cq, std::move(rest_context), options,
-                                         request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncInsertMachineImage(cq, std::move(rest_context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::MachineImageList>
@@ -112,23 +112,23 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 MachineImagesRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::global_operations::v1::
         GetOperationRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), options,
-                                   request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncGetOperation(cq, std::move(rest_context),
+                                   std::move(options), request);
 }
 
 future<Status> MachineImagesRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::global_operations::v1::
         DeleteOperationRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), options,
-                                      request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncCancelOperation(cq, std::move(rest_context),
+                                      std::move(options), request);
 }
 
 void MachineImagesRestMetadata::SetMetadata(

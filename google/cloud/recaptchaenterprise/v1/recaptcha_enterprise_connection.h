@@ -260,6 +260,11 @@ class RecaptchaEnterpriseServiceConnection {
       google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
           request);
 
+  virtual StatusOr<
+      google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+  ReorderFirewallPolicies(google::cloud::recaptchaenterprise::v1::
+                              ReorderFirewallPoliciesRequest const& request);
+
   virtual StreamRange<
       google::cloud::recaptchaenterprise::v1::RelatedAccountGroup>
   ListRelatedAccountGroups(

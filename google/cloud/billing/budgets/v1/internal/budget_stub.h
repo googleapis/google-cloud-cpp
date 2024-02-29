@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_BUDGETS_V1_INTERNAL_BUDGET_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BILLING_BUDGETS_V1_INTERNAL_BUDGET_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/billing/budgets/v1/budget_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -34,26 +36,26 @@ class BudgetServiceStub {
   virtual ~BudgetServiceStub() = 0;
 
   virtual StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::budgets::v1::CreateBudgetRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::billing::budgets::v1::Budget> UpdateBudget(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::budgets::v1::UpdateBudgetRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::billing::budgets::v1::Budget> GetBudget(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::budgets::v1::GetBudgetRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::billing::budgets::v1::ListBudgetsResponse>
-  ListBudgets(grpc::ClientContext& context,
+  ListBudgets(grpc::ClientContext& context, Options const& options,
               google::cloud::billing::budgets::v1::ListBudgetsRequest const&
                   request) = 0;
 
   virtual Status DeleteBudget(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::budgets::v1::DeleteBudgetRequest const&
           request) = 0;
 };
@@ -67,27 +69,27 @@ class DefaultBudgetServiceStub : public BudgetServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::billing::budgets::v1::Budget> CreateBudget(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::budgets::v1::CreateBudgetRequest const& request)
       override;
 
   StatusOr<google::cloud::billing::budgets::v1::Budget> UpdateBudget(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request)
       override;
 
   StatusOr<google::cloud::billing::budgets::v1::Budget> GetBudget(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::budgets::v1::GetBudgetRequest const& request)
       override;
 
   StatusOr<google::cloud::billing::budgets::v1::ListBudgetsResponse>
-  ListBudgets(grpc::ClientContext& context,
+  ListBudgets(grpc::ClientContext& context, Options const& options,
               google::cloud::billing::budgets::v1::ListBudgetsRequest const&
                   request) override;
 
   Status DeleteBudget(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request)
       override;
 

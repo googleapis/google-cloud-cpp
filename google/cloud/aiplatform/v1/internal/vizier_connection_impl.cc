@@ -25,6 +25,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -72,11 +73,11 @@ VizierServiceConnectionImpl::CreateStudy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateStudy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::CreateStudyRequest const& request) {
-        return stub_->CreateStudy(context, request);
+        return stub_->CreateStudy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Study>
@@ -86,11 +87,11 @@ VizierServiceConnectionImpl::GetStudy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetStudy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetStudyRequest const& request) {
-        return stub_->GetStudy(context, request);
+        return stub_->GetStudy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::Study>
@@ -102,18 +103,21 @@ VizierServiceConnectionImpl::ListStudies(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Study>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::VizierServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListStudiesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::ListStudiesRequest const&
-                       request) { return stub->ListStudies(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListStudies(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListStudiesResponse r) {
         std::vector<google::cloud::aiplatform::v1::Study> result(
@@ -130,11 +134,11 @@ Status VizierServiceConnectionImpl::DeleteStudy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteStudy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::DeleteStudyRequest const& request) {
-        return stub_->DeleteStudy(context, request);
+        return stub_->DeleteStudy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Study>
@@ -144,45 +148,49 @@ VizierServiceConnectionImpl::LookupStudy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->LookupStudy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::LookupStudyRequest const& request) {
-        return stub_->LookupStudy(context, request);
+        return stub_->LookupStudy(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>
 VizierServiceConnectionImpl::SuggestTrials(
     google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->SuggestTrials(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::SuggestTrialsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
-        return stub->AsyncSuggestTrials(cq, std::move(context), options,
-                                        request);
+        return stub->AsyncSuggestTrials(cq, std::move(context),
+                                        std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::SuggestTrialsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->SuggestTrials(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -193,11 +201,11 @@ VizierServiceConnectionImpl::CreateTrial(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateTrial(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::CreateTrialRequest const& request) {
-        return stub_->CreateTrial(context, request);
+        return stub_->CreateTrial(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
@@ -207,11 +215,11 @@ VizierServiceConnectionImpl::GetTrial(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTrial(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetTrialRequest const& request) {
-        return stub_->GetTrial(context, request);
+        return stub_->GetTrial(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::aiplatform::v1::Trial>
@@ -223,18 +231,21 @@ VizierServiceConnectionImpl::ListTrials(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::aiplatform::v1::Trial>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<aiplatform_v1::VizierServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::aiplatform::v1::ListTrialsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::aiplatform::v1::ListTrialsRequest const&
-                       request) { return stub->ListTrials(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListTrials(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::aiplatform::v1::ListTrialsResponse r) {
         std::vector<google::cloud::aiplatform::v1::Trial> result(
@@ -252,12 +263,12 @@ VizierServiceConnectionImpl::AddTrialMeasurement(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->AddTrialMeasurement(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::AddTrialMeasurementRequest const&
                  request) {
-        return stub_->AddTrialMeasurement(context, request);
+        return stub_->AddTrialMeasurement(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
@@ -268,11 +279,11 @@ VizierServiceConnectionImpl::CompleteTrial(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CompleteTrial(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::aiplatform::v1::CompleteTrialRequest const& request) {
-        return stub_->CompleteTrial(context, request);
+        return stub_->CompleteTrial(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status VizierServiceConnectionImpl::DeleteTrial(
@@ -281,11 +292,11 @@ Status VizierServiceConnectionImpl::DeleteTrial(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteTrial(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::DeleteTrialRequest const& request) {
-        return stub_->DeleteTrial(context, request);
+        return stub_->DeleteTrial(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<
@@ -294,35 +305,38 @@ VizierServiceConnectionImpl::CheckTrialEarlyStoppingState(
     google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CheckTrialEarlyStoppingState(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::cloud::aiplatform::v1::
                          CheckTrialEarlyStoppingStateRequest const& request) {
-        return stub->AsyncCheckTrialEarlyStoppingState(cq, std::move(context),
-                                                       options, request);
+        return stub->AsyncCheckTrialEarlyStoppingState(
+            cq, std::move(context), std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CheckTrialEarlyStoppingState(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -333,11 +347,11 @@ VizierServiceConnectionImpl::StopTrial(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->StopTrial(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::StopTrialRequest const& request) {
-        return stub_->StopTrial(context, request);
+        return stub_->StopTrial(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>
@@ -347,12 +361,12 @@ VizierServiceConnectionImpl::ListOptimalTrials(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ListOptimalTrials(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ListOptimalTrialsRequest const&
                  request) {
-        return stub_->ListOptimalTrials(context, request);
+        return stub_->ListOptimalTrials(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

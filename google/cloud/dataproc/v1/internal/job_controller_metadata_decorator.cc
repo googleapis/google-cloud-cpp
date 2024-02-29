@@ -43,100 +43,105 @@ JobControllerMetadata::JobControllerMetadata(
               : std::move(api_client_header)) {}
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerMetadata::SubmitJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::SubmitJobRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "region=", internal::UrlEncode(request.region())));
-  return child_->SubmitJob(context, request);
+  return child_->SubmitJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 JobControllerMetadata::AsyncSubmitJobAsOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::dataproc::v1::SubmitJobRequest const& request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "region=", internal::UrlEncode(request.region())));
-  return child_->AsyncSubmitJobAsOperation(cq, std::move(context), options,
-                                           request);
+  return child_->AsyncSubmitJobAsOperation(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerMetadata::GetJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetJobRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "region=", internal::UrlEncode(request.region()), "&",
                    "job_id=", internal::UrlEncode(request.job_id())));
-  return child_->GetJob(context, request);
+  return child_->GetJob(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::ListJobsResponse>
 JobControllerMetadata::ListJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::ListJobsRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "region=", internal::UrlEncode(request.region())));
-  return child_->ListJobs(context, request);
+  return child_->ListJobs(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerMetadata::UpdateJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::UpdateJobRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "region=", internal::UrlEncode(request.region()), "&",
                    "job_id=", internal::UrlEncode(request.job_id())));
-  return child_->UpdateJob(context, request);
+  return child_->UpdateJob(context, options, request);
 }
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerMetadata::CancelJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::CancelJobRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "region=", internal::UrlEncode(request.region()), "&",
                    "job_id=", internal::UrlEncode(request.job_id())));
-  return child_->CancelJob(context, request);
+  return child_->CancelJob(context, options, request);
 }
 
 Status JobControllerMetadata::DeleteJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::DeleteJobRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("project_id=", internal::UrlEncode(request.project_id()),
                    "&", "region=", internal::UrlEncode(request.region()), "&",
                    "job_id=", internal::UrlEncode(request.job_id())));
-  return child_->DeleteJob(context, request);
+  return child_->DeleteJob(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 JobControllerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> JobControllerMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void JobControllerMetadata::SetMetadata(grpc::ClientContext& context,

@@ -44,79 +44,79 @@ ConversationsMetadata::ConversationsMetadata(
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
 ConversationsMetadata::CreateConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateConversationRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateConversation(context, request);
+  return child_->CreateConversation(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ListConversationsResponse>
 ConversationsMetadata::ListConversations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListConversationsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListConversations(context, request);
+  return child_->ListConversations(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
 ConversationsMetadata::GetConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetConversationRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetConversation(context, request);
+  return child_->GetConversation(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
 ConversationsMetadata::CompleteConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CompleteConversationRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->CompleteConversation(context, request);
+  return child_->CompleteConversation(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::ListMessagesResponse>
 ConversationsMetadata::ListMessages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListMessagesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListMessages(context, request);
+  return child_->ListMessages(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
 ConversationsMetadata::SuggestConversationSummary(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("conversation=",
                            internal::UrlEncode(request.conversation())));
-  return child_->SuggestConversationSummary(context, request);
+  return child_->SuggestConversationSummary(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
 ConversationsMetadata::GenerateStatelessSummary(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("stateless_conversation.parent=",
                            internal::UrlEncode(
                                request.stateless_conversation().parent())));
-  return child_->GenerateStatelessSummary(context, request);
+  return child_->GenerateStatelessSummary(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
 ConversationsMetadata::SearchKnowledge(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->SearchKnowledge(context, request);
+  return child_->SearchKnowledge(context, options, request);
 }
 
 void ConversationsMetadata::SetMetadata(grpc::ClientContext& context,

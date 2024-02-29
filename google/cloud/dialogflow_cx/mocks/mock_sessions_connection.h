@@ -53,6 +53,12 @@ class MockSessionsConnection : public dialogflow_cx::SessionsConnection {
       (override));
 
   MOCK_METHOD(
+      StreamRange<google::cloud::dialogflow::cx::v3::DetectIntentResponse>,
+      ServerStreamingDetectIntent,
+      (google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       (std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
            google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
            google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>),

@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/firewall_policies/v1/firewall_policies_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

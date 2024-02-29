@@ -39,7 +39,7 @@ class BigQueryReadLogging : public BigQueryReadStub {
                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::bigquery::storage::v1::ReadSession> CreateReadSession(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
           request) override;
 
@@ -51,7 +51,7 @@ class BigQueryReadLogging : public BigQueryReadStub {
 
   StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
   SplitReadStream(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
           request) override;
 

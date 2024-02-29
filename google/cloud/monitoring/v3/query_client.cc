@@ -18,6 +18,7 @@
 
 #include "google/cloud/monitoring/v3/query_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

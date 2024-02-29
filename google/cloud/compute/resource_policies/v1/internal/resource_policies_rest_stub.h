@@ -49,7 +49,7 @@ class ResourcePoliciesRestStub {
   AsyncDeleteResourcePolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::resource_policies::v1::
           DeleteResourcePolicyRequest const& request) = 0;
 
@@ -69,7 +69,7 @@ class ResourcePoliciesRestStub {
   AsyncInsertResourcePolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::resource_policies::v1::
           InsertResourcePolicyRequest const& request) = 0;
 
@@ -83,7 +83,7 @@ class ResourcePoliciesRestStub {
   AsyncPatchResourcePolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::resource_policies::v1::
           PatchResourcePolicyRequest const& request) = 0;
 
@@ -103,14 +103,14 @@ class ResourcePoliciesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) = 0;
 };
@@ -135,7 +135,7 @@ class DefaultResourcePoliciesRestStub : public ResourcePoliciesRestStub {
   AsyncDeleteResourcePolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::resource_policies::v1::
           DeleteResourcePolicyRequest const& request) override;
 
@@ -155,7 +155,7 @@ class DefaultResourcePoliciesRestStub : public ResourcePoliciesRestStub {
   AsyncInsertResourcePolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::resource_policies::v1::
           InsertResourcePolicyRequest const& request) override;
 
@@ -169,7 +169,7 @@ class DefaultResourcePoliciesRestStub : public ResourcePoliciesRestStub {
   AsyncPatchResourcePolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::resource_policies::v1::
           PatchResourcePolicyRequest const& request) override;
 
@@ -189,14 +189,14 @@ class DefaultResourcePoliciesRestStub : public ResourcePoliciesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 

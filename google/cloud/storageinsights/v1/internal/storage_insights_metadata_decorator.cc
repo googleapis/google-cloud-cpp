@@ -44,71 +44,71 @@ StorageInsightsMetadata::StorageInsightsMetadata(
 
 StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse>
 StorageInsightsMetadata::ListReportConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::storageinsights::v1::ListReportConfigsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListReportConfigs(context, request);
+  return child_->ListReportConfigs(context, options, request);
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
 StorageInsightsMetadata::GetReportConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::storageinsights::v1::GetReportConfigRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetReportConfig(context, request);
+  return child_->GetReportConfig(context, options, request);
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
 StorageInsightsMetadata::CreateReportConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::storageinsights::v1::CreateReportConfigRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateReportConfig(context, request);
+  return child_->CreateReportConfig(context, options, request);
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
 StorageInsightsMetadata::UpdateReportConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("report_config.name=",
                    internal::UrlEncode(request.report_config().name())));
-  return child_->UpdateReportConfig(context, request);
+  return child_->UpdateReportConfig(context, options, request);
 }
 
 Status StorageInsightsMetadata::DeleteReportConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteReportConfig(context, request);
+  return child_->DeleteReportConfig(context, options, request);
 }
 
 StatusOr<google::cloud::storageinsights::v1::ListReportDetailsResponse>
 StorageInsightsMetadata::ListReportDetails(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::storageinsights::v1::ListReportDetailsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListReportDetails(context, request);
+  return child_->ListReportDetails(context, options, request);
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportDetail>
 StorageInsightsMetadata::GetReportDetail(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::storageinsights::v1::GetReportDetailRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetReportDetail(context, request);
+  return child_->GetReportDetail(context, options, request);
 }
 
 void StorageInsightsMetadata::SetMetadata(grpc::ClientContext& context,

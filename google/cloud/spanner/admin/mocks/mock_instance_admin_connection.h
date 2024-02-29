@@ -95,6 +95,13 @@ class MockInstanceAdminConnection
       (override));
 
   MOCK_METHOD(
+      (StreamRange<google::spanner::admin::instance::v1::InstancePartition>),
+      ListInstancePartitions,
+      (google::spanner::admin::instance::v1::ListInstancePartitionsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::spanner::admin::instance::v1::Instance>, GetInstance,
       (google::spanner::admin::instance::v1::GetInstanceRequest const& request),
       (override));
@@ -130,6 +137,38 @@ class MockInstanceAdminConnection
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::spanner::admin::instance::v1::InstancePartition>,
+      GetInstancePartition,
+      (google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>,
+      CreateInstancePartition,
+      (google::spanner::admin::instance::v1::
+           CreateInstancePartitionRequest const& request),
+      (override));
+
+  MOCK_METHOD(Status, DeleteInstancePartition,
+              (google::spanner::admin::instance::v1::
+                   DeleteInstancePartitionRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>,
+      UpdateInstancePartition,
+      (google::spanner::admin::instance::v1::
+           UpdateInstancePartitionRequest const& request),
+      (override));
+
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+              ListInstancePartitionOperations,
+              (google::spanner::admin::instance::v1::
+                   ListInstancePartitionOperationsRequest request),
               (override));
 };
 

@@ -22,6 +22,7 @@
 #include <google/cloud/alloydb/v1/service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ AlloyDBAdminStub::~AlloyDBAdminStub() = default;
 
 StatusOr<google::cloud::alloydb::v1::ListClustersResponse>
 DefaultAlloyDBAdminStub::ListClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::ListClustersRequest const& request) {
   google::cloud::alloydb::v1::ListClustersResponse response;
   auto status = grpc_stub_->ListClusters(&context, request, &response);
@@ -44,7 +45,7 @@ DefaultAlloyDBAdminStub::ListClusters(
 
 StatusOr<google::cloud::alloydb::v1::Cluster>
 DefaultAlloyDBAdminStub::GetCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::GetClusterRequest const& request) {
   google::cloud::alloydb::v1::Cluster response;
   auto status = grpc_stub_->GetCluster(&context, request, &response);
@@ -57,7 +58,8 @@ DefaultAlloyDBAdminStub::GetCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::alloydb::v1::CreateClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::alloydb::v1::CreateClusterRequest,
@@ -74,7 +76,8 @@ DefaultAlloyDBAdminStub::AsyncCreateCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::alloydb::v1::UpdateClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::alloydb::v1::UpdateClusterRequest,
@@ -91,7 +94,8 @@ DefaultAlloyDBAdminStub::AsyncUpdateCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::alloydb::v1::DeleteClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::alloydb::v1::DeleteClusterRequest,
@@ -108,7 +112,8 @@ DefaultAlloyDBAdminStub::AsyncDeleteCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncPromoteCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::alloydb::v1::PromoteClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::alloydb::v1::PromoteClusterRequest,
@@ -125,7 +130,8 @@ DefaultAlloyDBAdminStub::AsyncPromoteCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncRestoreCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::alloydb::v1::RestoreClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::alloydb::v1::RestoreClusterRequest,
@@ -142,7 +148,8 @@ DefaultAlloyDBAdminStub::AsyncRestoreCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncCreateSecondaryCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::alloydb::v1::CreateSecondaryClusterRequest,
@@ -159,7 +166,7 @@ DefaultAlloyDBAdminStub::AsyncCreateSecondaryCluster(
 
 StatusOr<google::cloud::alloydb::v1::ListInstancesResponse>
 DefaultAlloyDBAdminStub::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::ListInstancesRequest const& request) {
   google::cloud::alloydb::v1::ListInstancesResponse response;
   auto status = grpc_stub_->ListInstances(&context, request, &response);
@@ -171,7 +178,7 @@ DefaultAlloyDBAdminStub::ListInstances(
 
 StatusOr<google::cloud::alloydb::v1::Instance>
 DefaultAlloyDBAdminStub::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::GetInstanceRequest const& request) {
   google::cloud::alloydb::v1::Instance response;
   auto status = grpc_stub_->GetInstance(&context, request, &response);
@@ -184,7 +191,8 @@ DefaultAlloyDBAdminStub::GetInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::alloydb::v1::CreateInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::alloydb::v1::CreateInstanceRequest,
@@ -201,7 +209,8 @@ DefaultAlloyDBAdminStub::AsyncCreateInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncCreateSecondaryInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::alloydb::v1::CreateSecondaryInstanceRequest,
@@ -219,7 +228,8 @@ DefaultAlloyDBAdminStub::AsyncCreateSecondaryInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncBatchCreateInstances(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::alloydb::v1::BatchCreateInstancesRequest,
@@ -237,7 +247,8 @@ DefaultAlloyDBAdminStub::AsyncBatchCreateInstances(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::alloydb::v1::UpdateInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::alloydb::v1::UpdateInstanceRequest,
@@ -254,7 +265,8 @@ DefaultAlloyDBAdminStub::AsyncUpdateInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::alloydb::v1::DeleteInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::alloydb::v1::DeleteInstanceRequest,
@@ -271,7 +283,8 @@ DefaultAlloyDBAdminStub::AsyncDeleteInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncFailoverInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::alloydb::v1::FailoverInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::alloydb::v1::FailoverInstanceRequest,
@@ -288,7 +301,8 @@ DefaultAlloyDBAdminStub::AsyncFailoverInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncInjectFault(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::alloydb::v1::InjectFaultRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::alloydb::v1::InjectFaultRequest,
@@ -305,7 +319,8 @@ DefaultAlloyDBAdminStub::AsyncInjectFault(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncRestartInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::alloydb::v1::RestartInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::alloydb::v1::RestartInstanceRequest,
@@ -321,7 +336,7 @@ DefaultAlloyDBAdminStub::AsyncRestartInstance(
 
 StatusOr<google::cloud::alloydb::v1::ListBackupsResponse>
 DefaultAlloyDBAdminStub::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::ListBackupsRequest const& request) {
   google::cloud::alloydb::v1::ListBackupsResponse response;
   auto status = grpc_stub_->ListBackups(&context, request, &response);
@@ -332,7 +347,7 @@ DefaultAlloyDBAdminStub::ListBackups(
 }
 
 StatusOr<google::cloud::alloydb::v1::Backup> DefaultAlloyDBAdminStub::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::GetBackupRequest const& request) {
   google::cloud::alloydb::v1::Backup response;
   auto status = grpc_stub_->GetBackup(&context, request, &response);
@@ -345,7 +360,8 @@ StatusOr<google::cloud::alloydb::v1::Backup> DefaultAlloyDBAdminStub::GetBackup(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::alloydb::v1::CreateBackupRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::alloydb::v1::CreateBackupRequest,
@@ -362,7 +378,8 @@ DefaultAlloyDBAdminStub::AsyncCreateBackup(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncUpdateBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::alloydb::v1::UpdateBackupRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::alloydb::v1::UpdateBackupRequest,
@@ -379,7 +396,8 @@ DefaultAlloyDBAdminStub::AsyncUpdateBackup(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncDeleteBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::alloydb::v1::DeleteBackupRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::alloydb::v1::DeleteBackupRequest,
@@ -395,7 +413,7 @@ DefaultAlloyDBAdminStub::AsyncDeleteBackup(
 
 StatusOr<google::cloud::alloydb::v1::ListSupportedDatabaseFlagsResponse>
 DefaultAlloyDBAdminStub::ListSupportedDatabaseFlags(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest const&
         request) {
   google::cloud::alloydb::v1::ListSupportedDatabaseFlagsResponse response;
@@ -409,7 +427,7 @@ DefaultAlloyDBAdminStub::ListSupportedDatabaseFlags(
 
 StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
 DefaultAlloyDBAdminStub::GenerateClientCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
         request) {
   google::cloud::alloydb::v1::GenerateClientCertificateResponse response;
@@ -423,7 +441,7 @@ DefaultAlloyDBAdminStub::GenerateClientCertificate(
 
 StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
 DefaultAlloyDBAdminStub::GetConnectionInfo(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::GetConnectionInfoRequest const& request) {
   google::cloud::alloydb::v1::ConnectionInfo response;
   auto status = grpc_stub_->GetConnectionInfo(&context, request, &response);
@@ -435,7 +453,7 @@ DefaultAlloyDBAdminStub::GetConnectionInfo(
 
 StatusOr<google::cloud::alloydb::v1::ListUsersResponse>
 DefaultAlloyDBAdminStub::ListUsers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::ListUsersRequest const& request) {
   google::cloud::alloydb::v1::ListUsersResponse response;
   auto status = grpc_stub_->ListUsers(&context, request, &response);
@@ -446,7 +464,7 @@ DefaultAlloyDBAdminStub::ListUsers(
 }
 
 StatusOr<google::cloud::alloydb::v1::User> DefaultAlloyDBAdminStub::GetUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::GetUserRequest const& request) {
   google::cloud::alloydb::v1::User response;
   auto status = grpc_stub_->GetUser(&context, request, &response);
@@ -457,7 +475,7 @@ StatusOr<google::cloud::alloydb::v1::User> DefaultAlloyDBAdminStub::GetUser(
 }
 
 StatusOr<google::cloud::alloydb::v1::User> DefaultAlloyDBAdminStub::CreateUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::CreateUserRequest const& request) {
   google::cloud::alloydb::v1::User response;
   auto status = grpc_stub_->CreateUser(&context, request, &response);
@@ -468,7 +486,7 @@ StatusOr<google::cloud::alloydb::v1::User> DefaultAlloyDBAdminStub::CreateUser(
 }
 
 StatusOr<google::cloud::alloydb::v1::User> DefaultAlloyDBAdminStub::UpdateUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::UpdateUserRequest const& request) {
   google::cloud::alloydb::v1::User response;
   auto status = grpc_stub_->UpdateUser(&context, request, &response);
@@ -479,7 +497,7 @@ StatusOr<google::cloud::alloydb::v1::User> DefaultAlloyDBAdminStub::UpdateUser(
 }
 
 Status DefaultAlloyDBAdminStub::DeleteUser(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::alloydb::v1::DeleteUserRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteUser(&context, request, &response);
@@ -492,7 +510,8 @@ Status DefaultAlloyDBAdminStub::DeleteUser(
 future<StatusOr<google::longrunning::Operation>>
 DefaultAlloyDBAdminStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -507,7 +526,8 @@ DefaultAlloyDBAdminStub::AsyncGetOperation(
 
 future<Status> DefaultAlloyDBAdminStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

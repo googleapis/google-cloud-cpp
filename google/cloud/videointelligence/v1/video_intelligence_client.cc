@@ -18,6 +18,7 @@
 
 #include "google/cloud/videointelligence/v1/video_intelligence_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

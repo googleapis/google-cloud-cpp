@@ -18,6 +18,7 @@
 #include "generator/internal/pagination.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
+#include "generator/internal/request_id.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <google/protobuf/descriptor.h>
 
@@ -165,8 +166,27 @@ Idempotency $idempotency_class_name$::$method_name$(
 
     // TODO(#9982) - we should pass `$request_type$ const&` here
     if (IsPaginated(method)) {
-      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+      if (HasRequestId(method)) {
+        CcPrintMethod(method, __FILE__, __LINE__, R"""(
+Idempotency $idempotency_class_name$::$method_name$($request_type$ request) { // NOLINT
+  if (!request.$request_id_field_name$().empty()) return Idempotency::kIdempotent;
+  return Idempotency::$idempotency$;
+}
+)""");
+      } else {
+        CcPrintMethod(method, __FILE__, __LINE__, R"""(
 Idempotency $idempotency_class_name$::$method_name$($request_type$) {  // NOLINT
+  return Idempotency::$idempotency$;
+}
+)""");
+      }
+      continue;
+    }
+
+    if (HasRequestId(method)) {
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+Idempotency $idempotency_class_name$::$method_name$($request_type$ const& request) {
+  if (!request.$request_id_field_name$().empty()) return Idempotency::kIdempotent;
   return Idempotency::$idempotency$;
 }
 )""");

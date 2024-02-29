@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_cx/internal/experiments_auth_decorator.h"
 #include <google/cloud/dialogflow/cx/v3/experiment.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,64 +33,64 @@ ExperimentsAuth::ExperimentsAuth(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListExperimentsResponse>
 ExperimentsAuth::ListExperiments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListExperimentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListExperiments(context, request);
+  return child_->ListExperiments(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsAuth::GetExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetExperiment(context, request);
+  return child_->GetExperiment(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsAuth::CreateExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateExperiment(context, request);
+  return child_->CreateExperiment(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsAuth::UpdateExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateExperiment(context, request);
+  return child_->UpdateExperiment(context, options, request);
 }
 
 Status ExperimentsAuth::DeleteExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteExperiment(context, request);
+  return child_->DeleteExperiment(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsAuth::StartExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->StartExperiment(context, request);
+  return child_->StartExperiment(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsAuth::StopExperiment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->StopExperiment(context, request);
+  return child_->StopExperiment(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -18,6 +18,7 @@
 
 #include "google/cloud/deploy/v1/cloud_deploy_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

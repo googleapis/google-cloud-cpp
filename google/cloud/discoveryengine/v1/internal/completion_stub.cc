@@ -22,6 +22,7 @@
 #include <google/cloud/discoveryengine/v1/completion_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ CompletionServiceStub::~CompletionServiceStub() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::CompleteQueryResponse>
 DefaultCompletionServiceStub::CompleteQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::discoveryengine::v1::CompleteQueryRequest const& request) {
   google::cloud::discoveryengine::v1::CompleteQueryResponse response;
   auto status = grpc_stub_->CompleteQuery(&context, request, &response);
@@ -45,7 +46,8 @@ DefaultCompletionServiceStub::CompleteQuery(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCompletionServiceStub::AsyncImportSuggestionDenyListEntries(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::discoveryengine::v1::
         ImportSuggestionDenyListEntriesRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::cloud::discoveryengine::v1::
@@ -65,7 +67,8 @@ DefaultCompletionServiceStub::AsyncImportSuggestionDenyListEntries(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCompletionServiceStub::AsyncPurgeSuggestionDenyListEntries(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::discoveryengine::v1::
         PurgeSuggestionDenyListEntriesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
@@ -85,7 +88,8 @@ DefaultCompletionServiceStub::AsyncPurgeSuggestionDenyListEntries(
 future<StatusOr<google::longrunning::Operation>>
 DefaultCompletionServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -100,7 +104,8 @@ DefaultCompletionServiceStub::AsyncGetOperation(
 
 future<Status> DefaultCompletionServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

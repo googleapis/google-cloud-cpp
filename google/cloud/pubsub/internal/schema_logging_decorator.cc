@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/schema.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,117 +36,117 @@ SchemaServiceLogging::SchemaServiceLogging(
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceLogging::CreateSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::CreateSchemaRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::CreateSchemaRequest const& request) {
-        return child_->CreateSchema(context, request);
+        return child_->CreateSchema(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceLogging::GetSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::GetSchemaRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::GetSchemaRequest const& request) {
-        return child_->GetSchema(context, request);
+        return child_->GetSchema(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::pubsub::v1::ListSchemasResponse>
 SchemaServiceLogging::ListSchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListSchemasRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::ListSchemasRequest const& request) {
-        return child_->ListSchemas(context, request);
+        return child_->ListSchemas(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse>
 SchemaServiceLogging::ListSchemaRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ListSchemaRevisionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::ListSchemaRevisionsRequest const& request) {
-        return child_->ListSchemaRevisions(context, request);
+        return child_->ListSchemaRevisions(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceLogging::CommitSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::CommitSchemaRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::CommitSchemaRequest const& request) {
-        return child_->CommitSchema(context, request);
+        return child_->CommitSchema(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceLogging::RollbackSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::RollbackSchemaRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::RollbackSchemaRequest const& request) {
-        return child_->RollbackSchema(context, request);
+        return child_->RollbackSchema(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::pubsub::v1::Schema> SchemaServiceLogging::DeleteSchemaRevision(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::DeleteSchemaRevisionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::DeleteSchemaRevisionRequest const& request) {
-        return child_->DeleteSchemaRevision(context, request);
+        return child_->DeleteSchemaRevision(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status SchemaServiceLogging::DeleteSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::DeleteSchemaRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::DeleteSchemaRequest const& request) {
-        return child_->DeleteSchema(context, request);
+        return child_->DeleteSchema(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::pubsub::v1::ValidateSchemaResponse>
 SchemaServiceLogging::ValidateSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ValidateSchemaRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::ValidateSchemaRequest const& request) {
-        return child_->ValidateSchema(context, request);
+        return child_->ValidateSchema(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::pubsub::v1::ValidateMessageResponse>
 SchemaServiceLogging::ValidateMessage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::ValidateMessageRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::pubsub::v1::ValidateMessageRequest const& request) {
-        return child_->ValidateMessage(context, request);
+        return child_->ValidateMessage(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

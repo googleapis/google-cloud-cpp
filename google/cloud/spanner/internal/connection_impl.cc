@@ -96,12 +96,22 @@ class DirectedReadVisitor {
   std::function<google::spanner::v1::DirectedReadOptions*()> factory_;
 };
 
+inline std::shared_ptr<spanner::RetryPolicy> const& RetryPolicyPrototype(
+    Options const& options) {
+  return options.get<spanner::SpannerRetryPolicyOption>();
+}
+
+inline std::shared_ptr<spanner::BackoffPolicy> const& BackoffPolicyPrototype(
+    Options const& options) {
+  return options.get<spanner::SpannerBackoffPolicyOption>();
+}
+
 inline std::shared_ptr<spanner::RetryPolicy> const& RetryPolicyPrototype() {
-  return internal::CurrentOptions().get<spanner::SpannerRetryPolicyOption>();
+  return RetryPolicyPrototype(internal::CurrentOptions());
 }
 
 inline std::shared_ptr<spanner::BackoffPolicy> const& BackoffPolicyPrototype() {
-  return internal::CurrentOptions().get<spanner::SpannerBackoffPolicyOption>();
+  return BackoffPolicyPrototype((internal::CurrentOptions()));
 }
 
 inline bool RpcStreamTracingEnabled() {
@@ -495,16 +505,17 @@ StatusOr<google::spanner::v1::Transaction> ConnectionImpl::BeginTransaction(
   begin.mutable_request_options()->set_transaction_tag(ctx.tag);
 
   auto stub = session_pool_->GetStub(*session);
+  auto const& current = internal::CurrentOptions();
   auto response = RetryLoop(
-      RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
-      Idempotency::kIdempotent,
+      RetryPolicyPrototype(current)->clone(),
+      BackoffPolicyPrototype(current)->clone(), Idempotency::kIdempotent,
       [&stub, route_to_leader = ctx.route_to_leader](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::spanner::v1::BeginTransactionRequest const& request) {
         if (route_to_leader) RouteToLeader(context);
-        return stub->BeginTransaction(context, request);
+        return stub->BeginTransaction(context, options, request);
       },
-      begin, func);
+      current, begin, func);
   if (!response) {
     auto status = std::move(response).status();
     if (IsSessionNotFound(status)) session->set_bad();
@@ -640,16 +651,17 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionReadImpl(
   *request.mutable_partition_options() = ToProto(partition_options);
 
   auto stub = session_pool_->GetStub(*session);
+  auto const& current = internal::CurrentOptions();
   for (;;) {
     auto response = RetryLoop(
         RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
         Idempotency::kIdempotent,
-        [&stub](grpc::ClientContext& context,
+        [&stub](grpc::ClientContext& context, Options const& options,
                 google::spanner::v1::PartitionReadRequest const& request) {
           RouteToLeader(context);  // always for PartitionRead()
-          return stub->PartitionRead(context, request);
+          return stub->PartitionRead(context, options, request);
         },
-        request, __func__);
+        current, request, __func__);
     if (s->has_begin()) {
       if (response.ok()) {
         if (!response->has_transaction()) {
@@ -868,24 +880,25 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
   // through the lifetime of the lambda. Note that the local variables are a
   // reference to avoid increasing refcounts twice, but the capture is by value.
   auto stub = session_pool_->GetStub(*session);
-  auto const& retry_policy_prototype = RetryPolicyPrototype();
-  auto const& backoff_policy_prototype = BackoffPolicyPrototype();
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto const& retry_policy_prototype = RetryPolicyPrototype(*current);
+  auto const& backoff_policy_prototype = BackoffPolicyPrototype(*current);
 
   auto retry_resume_fn =
       [function_name, stub, retry_policy_prototype, backoff_policy_prototype,
-       session, route_to_leader = ctx.route_to_leader](
-          google::spanner::v1::ExecuteSqlRequest& request) mutable
+       session, route_to_leader = ctx.route_to_leader,
+       current](google::spanner::v1::ExecuteSqlRequest& request) mutable
       -> StatusOr<std::unique_ptr<ResultSourceInterface>> {
     StatusOr<google::spanner::v1::ResultSet> response = RetryLoop(
         retry_policy_prototype->clone(), backoff_policy_prototype->clone(),
         Idempotency::kIdempotent,
         [stub, route_to_leader](
-            grpc::ClientContext& context,
+            grpc::ClientContext& context, Options const& options,
             google::spanner::v1::ExecuteSqlRequest const& request) {
           if (route_to_leader) RouteToLeader(context);
-          return stub->ExecuteSql(context, request);
+          return stub->ExecuteSql(context, options, request);
         },
-        request, function_name);
+        *current, request, function_name);
     if (!response) {
       auto status = std::move(response).status();
       if (IsSessionNotFound(status)) session->set_bad();
@@ -955,16 +968,17 @@ ConnectionImpl::PartitionQueryImpl(
   *request.mutable_partition_options() = ToProto(params.partition_options);
 
   auto stub = session_pool_->GetStub(*session);
+  auto const& current = internal::CurrentOptions();
   for (;;) {
     auto response = RetryLoop(
         RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
         Idempotency::kIdempotent,
-        [&stub](grpc::ClientContext& context,
+        [&stub](grpc::ClientContext& context, Options const& options,
                 google::spanner::v1::PartitionQueryRequest const& request) {
           RouteToLeader(context);  // always for PartitionQuery()
-          return stub->PartitionQuery(context, request);
+          return stub->PartitionQuery(context, options, request);
         },
-        request, __func__);
+        current, request, __func__);
     if (s->has_begin()) {
       if (response.ok()) {
         if (!response->has_transaction()) {
@@ -1029,17 +1043,18 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
   request.mutable_request_options()->set_request_tag(request_tag);
   request.mutable_request_options()->set_transaction_tag(ctx.tag);
 
+  auto const& current = internal::CurrentOptions();
   auto stub = session_pool_->GetStub(*session);
   for (;;) {
     auto response = RetryLoop(
         RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
         Idempotency::kIdempotent,
-        [&stub](grpc::ClientContext& context,
+        [&stub](grpc::ClientContext& context, Options const& options,
                 google::spanner::v1::ExecuteBatchDmlRequest const& request) {
           RouteToLeader(context);  // always for ExecuteBatchDml()
-          return stub->ExecuteBatchDml(context, request);
+          return stub->ExecuteBatchDml(context, options, request);
         },
-        request, __func__);
+        current, request, __func__);
     if (s->has_begin()) {
       if (response.ok() && response->result_sets_size() > 0) {
         if (!response->result_sets(0).metadata().has_transaction()) {
@@ -1174,16 +1189,17 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
       return Status(StatusCode::kInternal, "TransactionSelector state error");
   }
 
+  auto const& current = internal::CurrentOptions();
   auto stub = session_pool_->GetStub(*session);
   auto response = RetryLoop(
-      RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
-      Idempotency::kIdempotent,
-      [&stub](grpc::ClientContext& context,
+      RetryPolicyPrototype(current)->clone(),
+      BackoffPolicyPrototype(current)->clone(), Idempotency::kIdempotent,
+      [&stub](grpc::ClientContext& context, Options const& options,
               google::spanner::v1::CommitRequest const& request) {
         RouteToLeader(context);  // always for Commit()
-        return stub->Commit(context, request);
+        return stub->Commit(context, options, request);
       },
-      request, __func__);
+      current, request, __func__);
   if (!response) {
     auto status = std::move(response).status();
     if (IsSessionNotFound(status)) session->set_bad();
@@ -1229,15 +1245,16 @@ Status ConnectionImpl::RollbackImpl(
   request.set_session(session->session_name());
   request.set_transaction_id(s->id());
   auto stub = session_pool_->GetStub(*session);
+  auto const& current = internal::CurrentOptions();
   auto status = RetryLoop(
-      RetryPolicyPrototype()->clone(), BackoffPolicyPrototype()->clone(),
-      Idempotency::kIdempotent,
-      [&stub](grpc::ClientContext& context,
+      RetryPolicyPrototype(current)->clone(),
+      BackoffPolicyPrototype(current)->clone(), Idempotency::kIdempotent,
+      [&stub](grpc::ClientContext& context, Options const& options,
               google::spanner::v1::RollbackRequest const& request) {
         RouteToLeader(context);  // always for Rollback()
-        return stub->Rollback(context, request);
+        return stub->Rollback(context, options, request);
       },
-      request, __func__);
+      current, request, __func__);
   if (IsSessionNotFound(status)) session->set_bad();
   return status;
 }

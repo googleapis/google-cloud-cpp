@@ -44,188 +44,198 @@ BigtableTableAdminMetadata::BigtableTableAdminMetadata(
 
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminMetadata::CreateTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::CreateTableRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateTable(context, request);
+  return child_->CreateTable(context, options, request);
 }
 
 StatusOr<google::bigtable::admin::v2::ListTablesResponse>
 BigtableTableAdminMetadata::ListTables(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::ListTablesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListTables(context, request);
+  return child_->ListTables(context, options, request);
 }
 
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminMetadata::GetTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::GetTableRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetTable(context, request);
+  return child_->GetTable(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminMetadata::AsyncUpdateTable(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::admin::v2::UpdateTableRequest const& request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("table.name=", internal::UrlEncode(request.table().name())));
-  return child_->AsyncUpdateTable(cq, std::move(context), options, request);
+  return child_->AsyncUpdateTable(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 Status BigtableTableAdminMetadata::DeleteTable(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::DeleteTableRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteTable(context, request);
+  return child_->DeleteTable(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminMetadata::AsyncUndeleteTable(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::admin::v2::UndeleteTableRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncUndeleteTable(cq, std::move(context), options, request);
+  return child_->AsyncUndeleteTable(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminMetadata::ModifyColumnFamilies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->ModifyColumnFamilies(context, request);
+  return child_->ModifyColumnFamilies(context, options, request);
 }
 
 Status BigtableTableAdminMetadata::DropRowRange(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::DropRowRangeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DropRowRange(context, request);
+  return child_->DropRowRange(context, options, request);
 }
 
 StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
 BigtableTableAdminMetadata::GenerateConsistencyToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GenerateConsistencyToken(context, request);
+  return child_->GenerateConsistencyToken(context, options, request);
 }
 
 StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
 BigtableTableAdminMetadata::CheckConsistency(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->CheckConsistency(context, request);
+  return child_->CheckConsistency(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminMetadata::AsyncCreateBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::admin::v2::CreateBackupRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateBackup(cq, std::move(context), options, request);
+  return child_->AsyncCreateBackup(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 StatusOr<google::bigtable::admin::v2::Backup>
 BigtableTableAdminMetadata::GetBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::GetBackupRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetBackup(context, request);
+  return child_->GetBackup(context, options, request);
 }
 
 StatusOr<google::bigtable::admin::v2::Backup>
 BigtableTableAdminMetadata::UpdateBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::UpdateBackupRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("backup.name=",
                            internal::UrlEncode(request.backup().name())));
-  return child_->UpdateBackup(context, request);
+  return child_->UpdateBackup(context, options, request);
 }
 
 Status BigtableTableAdminMetadata::DeleteBackup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::DeleteBackupRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteBackup(context, request);
+  return child_->DeleteBackup(context, options, request);
 }
 
 StatusOr<google::bigtable::admin::v2::ListBackupsResponse>
 BigtableTableAdminMetadata::ListBackups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::admin::v2::ListBackupsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListBackups(context, request);
+  return child_->ListBackups(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminMetadata::AsyncRestoreTable(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::admin::v2::RestoreTableRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncRestoreTable(cq, std::move(context), options, request);
+  return child_->AsyncRestoreTable(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminMetadata::AsyncCopyBackup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::admin::v2::CopyBackupRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCopyBackup(cq, std::move(context), options, request);
+  return child_->AsyncCopyBackup(cq, std::move(context), std::move(options),
+                                 request);
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminMetadata::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> BigtableTableAdminMetadata::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 BigtableTableAdminMetadata::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
@@ -241,20 +251,24 @@ BigtableTableAdminMetadata::AsyncCheckConsistency(
 future<StatusOr<google::longrunning::Operation>>
 BigtableTableAdminMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> BigtableTableAdminMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void BigtableTableAdminMetadata::SetMetadata(

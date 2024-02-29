@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/agents_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

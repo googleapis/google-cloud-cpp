@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/internal/spanner_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/internal/streaming_read_rpc_tracing.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,47 +32,47 @@ SpannerTracingStub::SpannerTracingStub(std::shared_ptr<SpannerStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::spanner::v1::Session> SpannerTracingStub::CreateSession(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::v1::CreateSessionRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.spanner.v1.Spanner", "CreateSession");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateSession(context, request));
+                           child_->CreateSession(context, options, request));
 }
 
 StatusOr<google::spanner::v1::BatchCreateSessionsResponse>
 SpannerTracingStub::BatchCreateSessions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::v1::BatchCreateSessionsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.spanner.v1.Spanner",
                                      "BatchCreateSessions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->BatchCreateSessions(context, request));
+  return internal::EndSpan(
+      context, *span, child_->BatchCreateSessions(context, options, request));
 }
 
 Status SpannerTracingStub::DeleteSession(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::v1::DeleteSessionRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.spanner.v1.Spanner", "DeleteSession");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteSession(context, request));
+                           child_->DeleteSession(context, options, request));
 }
 
 StatusOr<google::spanner::v1::ResultSet> SpannerTracingStub::ExecuteSql(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::v1::ExecuteSqlRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.spanner.v1.Spanner", "ExecuteSql");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ExecuteSql(context, request));
+                           child_->ExecuteSql(context, options, request));
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -91,14 +92,14 @@ SpannerTracingStub::ExecuteStreamingSql(
 
 StatusOr<google::spanner::v1::ExecuteBatchDmlResponse>
 SpannerTracingStub::ExecuteBatchDml(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::v1::ExecuteBatchDmlRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.spanner.v1.Spanner", "ExecuteBatchDml");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ExecuteBatchDml(context, request));
+                           child_->ExecuteBatchDml(context, options, request));
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -117,56 +118,58 @@ SpannerTracingStub::StreamingRead(
 }
 
 StatusOr<google::spanner::v1::Transaction> SpannerTracingStub::BeginTransaction(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::v1::BeginTransactionRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.spanner.v1.Spanner", "BeginTransaction");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->BeginTransaction(context, request));
+                           child_->BeginTransaction(context, options, request));
 }
 
 StatusOr<google::spanner::v1::CommitResponse> SpannerTracingStub::Commit(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::v1::CommitRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.spanner.v1.Spanner", "Commit");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->Commit(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->Commit(context, options, request));
 }
 
 Status SpannerTracingStub::Rollback(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::v1::RollbackRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.spanner.v1.Spanner", "Rollback");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->Rollback(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->Rollback(context, options, request));
 }
 
 StatusOr<google::spanner::v1::PartitionResponse>
 SpannerTracingStub::PartitionQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::v1::PartitionQueryRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.spanner.v1.Spanner", "PartitionQuery");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->PartitionQuery(context, request));
+                           child_->PartitionQuery(context, options, request));
 }
 
 StatusOr<google::spanner::v1::PartitionResponse>
 SpannerTracingStub::PartitionRead(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::v1::PartitionReadRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.spanner.v1.Spanner", "PartitionRead");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->PartitionRead(context, request));
+                           child_->PartitionRead(context, options, request));
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<

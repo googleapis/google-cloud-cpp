@@ -30,6 +30,7 @@
 #include "google/cloud/options.h"
 #include <google/cloud/recaptchaenterprise/v1/recaptchaenterprise.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

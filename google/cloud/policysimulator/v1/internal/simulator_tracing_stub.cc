@@ -18,6 +18,7 @@
 
 #include "google/cloud/policysimulator/v1/internal/simulator_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,63 +32,68 @@ SimulatorTracingStub::SimulatorTracingStub(std::shared_ptr<SimulatorStub> child)
 
 StatusOr<google::cloud::policysimulator::v1::Replay>
 SimulatorTracingStub::GetReplay(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::policysimulator::v1::GetReplayRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.policysimulator.v1.Simulator", "GetReplay");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetReplay(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetReplay(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 SimulatorTracingStub::AsyncCreateReplay(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::policysimulator::v1::CreateReplayRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.policysimulator.v1.Simulator", "CreateReplay");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateReplay(cq, context, options, request);
+  auto f = child_->AsyncCreateReplay(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse>
 SimulatorTracingStub::ListReplayResults(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::policysimulator::v1::ListReplayResultsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.policysimulator.v1.Simulator", "ListReplayResults");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListReplayResults(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListReplayResults(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 SimulatorTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> SimulatorTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

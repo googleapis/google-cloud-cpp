@@ -19,6 +19,7 @@
 #include "google/cloud/support/v2/internal/case_attachment_auth_decorator.h"
 #include <google/cloud/support/v2/attachment_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,11 +33,11 @@ CaseAttachmentServiceAuth::CaseAttachmentServiceAuth(
 
 StatusOr<google::cloud::support::v2::ListAttachmentsResponse>
 CaseAttachmentServiceAuth::ListAttachments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::ListAttachmentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAttachments(context, request);
+  return child_->ListAttachments(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

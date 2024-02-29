@@ -42,34 +42,38 @@ class VpcAccessServiceMetadata : public VpcAccessServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConnector(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request)
       override;
 
   StatusOr<google::cloud::vpcaccess::v1::Connector> GetConnector(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vpcaccess::v1::GetConnectorRequest const& request)
       override;
 
   StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse> ListConnectors(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::vpcaccess::v1::ListConnectorsRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteConnector(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

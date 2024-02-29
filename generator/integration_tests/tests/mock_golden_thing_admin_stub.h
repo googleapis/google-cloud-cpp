@@ -31,86 +31,87 @@ class MockGoldenThingAdminStub
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::ListDatabasesResponse>,
       ListDatabases,
-      (grpc::ClientContext&,
+      (grpc::ClientContext&, Options const&,
        ::google::test::admin::database::v1::ListDatabasesRequest const&),
       (override));
   MOCK_METHOD(
       future<StatusOr<::google::longrunning::Operation>>, AsyncCreateDatabase,
       (google::cloud::CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
-       Options const&,
+       google::cloud::internal::ImmutableOptions,
        ::google::test::admin::database::v1::CreateDatabaseRequest const&),
       (override));
   MOCK_METHOD(StatusOr<::google::test::admin::database::v1::Database>,
               GetDatabase,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                ::google::test::admin::database::v1::GetDatabaseRequest const&),
               (override));
   MOCK_METHOD(
       future<StatusOr<::google::longrunning::Operation>>,
       AsyncUpdateDatabaseDdl,
       (google::cloud::CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
-       Options const&,
+       google::cloud::internal::ImmutableOptions,
        ::google::test::admin::database::v1::UpdateDatabaseDdlRequest const&),
       (override));
   MOCK_METHOD(Status, DropDatabase,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                ::google::test::admin::database::v1::DropDatabaseRequest const&),
               (override));
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::GetDatabaseDdlResponse>,
       GetDatabaseDdl,
-      (grpc::ClientContext&,
+      (grpc::ClientContext&, Options const&,
        ::google::test::admin::database::v1::GetDatabaseDdlRequest const&),
       (override));
   MOCK_METHOD(StatusOr<::google::iam::v1::Policy>, SetIamPolicy,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                ::google::iam::v1::SetIamPolicyRequest const&),
               (override));
   MOCK_METHOD(StatusOr<::google::iam::v1::Policy>, GetIamPolicy,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                ::google::iam::v1::GetIamPolicyRequest const&),
               (override));
   MOCK_METHOD(StatusOr<::google::iam::v1::TestIamPermissionsResponse>,
               TestIamPermissions,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                ::google::iam::v1::TestIamPermissionsRequest const&),
               (override));
   MOCK_METHOD(future<StatusOr<::google::longrunning::Operation>>,
               AsyncCreateBackup,
               (google::cloud::CompletionQueue&,
-               std::shared_ptr<grpc::ClientContext>, Options const&,
+               std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions,
                ::google::test::admin::database::v1::CreateBackupRequest const&),
               (override));
   MOCK_METHOD(StatusOr<::google::test::admin::database::v1::Backup>, GetBackup,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                ::google::test::admin::database::v1::GetBackupRequest const&),
               (override));
   MOCK_METHOD(StatusOr<::google::test::admin::database::v1::Backup>,
               UpdateBackup,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                ::google::test::admin::database::v1::UpdateBackupRequest const&),
               (override));
   MOCK_METHOD(Status, DeleteBackup,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                ::google::test::admin::database::v1::DeleteBackupRequest const&),
               (override));
   MOCK_METHOD(
       StatusOr<::google::test::admin::database::v1::ListBackupsResponse>,
       ListBackups,
-      (grpc::ClientContext&,
+      (grpc::ClientContext&, Options const&,
        ::google::test::admin::database::v1::ListBackupsRequest const&),
       (override));
   MOCK_METHOD(
       future<StatusOr<::google::longrunning::Operation>>, AsyncRestoreDatabase,
       (google::cloud::CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
-       Options const&,
+       google::cloud::internal::ImmutableOptions,
        ::google::test::admin::database::v1::RestoreDatabaseRequest const&),
       (override));
   MOCK_METHOD(
       StatusOr<
           ::google::test::admin::database::v1::ListDatabaseOperationsResponse>,
       ListDatabaseOperations,
-      (grpc::ClientContext&,
+      (grpc::ClientContext&, Options const&,
        ::google::test::admin::database::v1::ListDatabaseOperationsRequest const&
            request),
       (override));
@@ -118,7 +119,7 @@ class MockGoldenThingAdminStub
       StatusOr<
           ::google::test::admin::database::v1::ListBackupOperationsResponse>,
       ListBackupOperations,
-      (grpc::ClientContext&,
+      (grpc::ClientContext&, Options const&,
        ::google::test::admin::database::v1::ListBackupOperationsRequest const&),
       (override));
 
@@ -139,20 +140,22 @@ class MockGoldenThingAdminStub
       future<StatusOr<::google::longrunning::Operation>>,
       AsyncLongRunningWithoutRouting,
       (google::cloud::CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
-       Options const&,
+       google::cloud::internal::ImmutableOptions,
        ::google::test::admin::database::v1::RestoreDatabaseRequest const&),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::longrunning::Operation>>,
               AsyncGetOperation,
               (google::cloud::CompletionQueue&,
-               std::shared_ptr<grpc::ClientContext>, Options const&,
+               std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions,
                google::longrunning::GetOperationRequest const&),
               (override));
 
   MOCK_METHOD(future<Status>, AsyncCancelOperation,
               (google::cloud::CompletionQueue&,
-               std::shared_ptr<grpc::ClientContext>, Options const&,
+               std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions,
                google::longrunning::CancelOperationRequest const&),
               (override));
 };

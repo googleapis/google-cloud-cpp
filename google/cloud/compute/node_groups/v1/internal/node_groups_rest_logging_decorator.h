@@ -45,7 +45,7 @@ class NodeGroupsRestLogging : public NodeGroupsRestStub {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAddNodes(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
           request) override;
 
@@ -60,14 +60,14 @@ class NodeGroupsRestLogging : public NodeGroupsRestStub {
   AsyncDeleteNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::node_groups::v1::
           DeleteNodeGroupRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDeleteNodes(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
           request) override;
 
@@ -87,7 +87,7 @@ class NodeGroupsRestLogging : public NodeGroupsRestStub {
   AsyncInsertNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::node_groups::v1::
           InsertNodeGroupRequest const& request) override;
 
@@ -107,7 +107,7 @@ class NodeGroupsRestLogging : public NodeGroupsRestStub {
   AsyncPatchNodeGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::node_groups::v1::PatchNodeGroupRequest const&
           request) override;
 
@@ -121,7 +121,7 @@ class NodeGroupsRestLogging : public NodeGroupsRestStub {
   AsyncSetNodeTemplate(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::node_groups::v1::
           SetNodeTemplateRequest const& request) override;
 
@@ -129,7 +129,7 @@ class NodeGroupsRestLogging : public NodeGroupsRestStub {
   AsyncSimulateMaintenanceEvent(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::node_groups::v1::
           SimulateMaintenanceEventRequest const& request) override;
 
@@ -143,14 +143,14 @@ class NodeGroupsRestLogging : public NodeGroupsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::zone_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::zone_operations::v1::
           DeleteOperationRequest const& request) override;
 

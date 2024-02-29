@@ -44,57 +44,63 @@ ImageAnnotatorMetadata::ImageAnnotatorMetadata(
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
 ImageAnnotatorMetadata::BatchAnnotateImages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->BatchAnnotateImages(context, request);
+  SetMetadata(context, options);
+  return child_->BatchAnnotateImages(context, options, request);
 }
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
 ImageAnnotatorMetadata::BatchAnnotateFiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->BatchAnnotateFiles(context, request);
+  SetMetadata(context, options);
+  return child_->BatchAnnotateFiles(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorMetadata::AsyncAsyncBatchAnnotateImages(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
-  SetMetadata(*context, options);
-  return child_->AsyncAsyncBatchAnnotateImages(cq, std::move(context), options,
-                                               request);
+  SetMetadata(*context, *options);
+  return child_->AsyncAsyncBatchAnnotateImages(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorMetadata::AsyncAsyncBatchAnnotateFiles(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
-  SetMetadata(*context, options);
-  return child_->AsyncAsyncBatchAnnotateFiles(cq, std::move(context), options,
-                                              request);
+  SetMetadata(*context, *options);
+  return child_->AsyncAsyncBatchAnnotateFiles(cq, std::move(context),
+                                              std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ImageAnnotatorMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> ImageAnnotatorMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void ImageAnnotatorMetadata::SetMetadata(grpc::ClientContext& context,

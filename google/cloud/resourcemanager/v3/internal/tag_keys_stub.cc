@@ -22,6 +22,7 @@
 #include <google/cloud/resourcemanager/v3/tag_keys.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ TagKeysStub::~TagKeysStub() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::ListTagKeysResponse>
 DefaultTagKeysStub::ListTagKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::ListTagKeysRequest const& request) {
   google::cloud::resourcemanager::v3::ListTagKeysResponse response;
   auto status = grpc_stub_->ListTagKeys(&context, request, &response);
@@ -44,7 +45,7 @@ DefaultTagKeysStub::ListTagKeys(
 
 StatusOr<google::cloud::resourcemanager::v3::TagKey>
 DefaultTagKeysStub::GetTagKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::GetTagKeyRequest const& request) {
   google::cloud::resourcemanager::v3::TagKey response;
   auto status = grpc_stub_->GetTagKey(&context, request, &response);
@@ -56,7 +57,7 @@ DefaultTagKeysStub::GetTagKey(
 
 StatusOr<google::cloud::resourcemanager::v3::TagKey>
 DefaultTagKeysStub::GetNamespacedTagKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::GetNamespacedTagKeyRequest const&
         request) {
   google::cloud::resourcemanager::v3::TagKey response;
@@ -70,7 +71,8 @@ DefaultTagKeysStub::GetNamespacedTagKey(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagKeysStub::AsyncCreateTagKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::resourcemanager::v3::CreateTagKeyRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::resourcemanager::v3::CreateTagKeyRequest,
@@ -88,7 +90,8 @@ DefaultTagKeysStub::AsyncCreateTagKey(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagKeysStub::AsyncUpdateTagKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::resourcemanager::v3::UpdateTagKeyRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::resourcemanager::v3::UpdateTagKeyRequest,
@@ -106,7 +109,8 @@ DefaultTagKeysStub::AsyncUpdateTagKey(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagKeysStub::AsyncDeleteTagKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::resourcemanager::v3::DeleteTagKeyRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::resourcemanager::v3::DeleteTagKeyRequest,
@@ -122,7 +126,7 @@ DefaultTagKeysStub::AsyncDeleteTagKey(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultTagKeysStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -133,7 +137,7 @@ StatusOr<google::iam::v1::Policy> DefaultTagKeysStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultTagKeysStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -145,7 +149,7 @@ StatusOr<google::iam::v1::Policy> DefaultTagKeysStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultTagKeysStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
@@ -158,7 +162,8 @@ DefaultTagKeysStub::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTagKeysStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -173,7 +178,8 @@ DefaultTagKeysStub::AsyncGetOperation(
 
 future<Status> DefaultTagKeysStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

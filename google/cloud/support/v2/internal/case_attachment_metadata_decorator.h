@@ -40,7 +40,7 @@ class CaseAttachmentServiceMetadata : public CaseAttachmentServiceStub {
       std::string api_client_header = "");
 
   StatusOr<google::cloud::support::v2::ListAttachmentsResponse> ListAttachments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::ListAttachmentsRequest const& request)
       override;
 

@@ -22,6 +22,7 @@
 #include <google/cloud/discoveryengine/v1/schema_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ SchemaServiceStub::~SchemaServiceStub() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::Schema>
 DefaultSchemaServiceStub::GetSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::discoveryengine::v1::GetSchemaRequest const& request) {
   google::cloud::discoveryengine::v1::Schema response;
   auto status = grpc_stub_->GetSchema(&context, request, &response);
@@ -44,7 +45,7 @@ DefaultSchemaServiceStub::GetSchema(
 
 StatusOr<google::cloud::discoveryengine::v1::ListSchemasResponse>
 DefaultSchemaServiceStub::ListSchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::discoveryengine::v1::ListSchemasRequest const& request) {
   google::cloud::discoveryengine::v1::ListSchemasResponse response;
   auto status = grpc_stub_->ListSchemas(&context, request, &response);
@@ -57,7 +58,8 @@ DefaultSchemaServiceStub::ListSchemas(
 future<StatusOr<google::longrunning::Operation>>
 DefaultSchemaServiceStub::AsyncCreateSchema(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::discoveryengine::v1::CreateSchemaRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::discoveryengine::v1::CreateSchemaRequest,
@@ -75,7 +77,8 @@ DefaultSchemaServiceStub::AsyncCreateSchema(
 future<StatusOr<google::longrunning::Operation>>
 DefaultSchemaServiceStub::AsyncUpdateSchema(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::discoveryengine::v1::UpdateSchemaRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::discoveryengine::v1::UpdateSchemaRequest,
@@ -93,7 +96,8 @@ DefaultSchemaServiceStub::AsyncUpdateSchema(
 future<StatusOr<google::longrunning::Operation>>
 DefaultSchemaServiceStub::AsyncDeleteSchema(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::discoveryengine::v1::DeleteSchemaRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::discoveryengine::v1::DeleteSchemaRequest,
@@ -111,7 +115,8 @@ DefaultSchemaServiceStub::AsyncDeleteSchema(
 future<StatusOr<google::longrunning::Operation>>
 DefaultSchemaServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -126,7 +131,8 @@ DefaultSchemaServiceStub::AsyncGetOperation(
 
 future<Status> DefaultSchemaServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

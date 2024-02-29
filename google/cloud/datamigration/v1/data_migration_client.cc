@@ -18,6 +18,7 @@
 
 #include "google/cloud/datamigration/v1/data_migration_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

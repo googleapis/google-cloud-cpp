@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/devtools/cloudprofiler/v2/profiler.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ ExportServiceStub::~ExportServiceStub() = default;
 
 StatusOr<google::devtools::cloudprofiler::v2::ListProfilesResponse>
 DefaultExportServiceStub::ListProfiles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::devtools::cloudprofiler::v2::ListProfilesRequest const& request) {
   google::devtools::cloudprofiler::v2::ListProfilesResponse response;
   auto status = grpc_stub_->ListProfiles(&context, request, &response);

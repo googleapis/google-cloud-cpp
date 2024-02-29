@@ -44,11 +44,11 @@ EventServiceMetadata::EventServiceMetadata(
 
 StatusOr<google::cloud::talent::v4::ClientEvent>
 EventServiceMetadata::CreateClientEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::CreateClientEventRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateClientEvent(context, request);
+  return child_->CreateClientEvent(context, options, request);
 }
 
 void EventServiceMetadata::SetMetadata(grpc::ClientContext& context,

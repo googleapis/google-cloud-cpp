@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/llm_utility_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ LlmUtilityServiceStub::~LlmUtilityServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::CountTokensResponse>
 DefaultLlmUtilityServiceStub::CountTokens(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CountTokensRequest const& request) {
   google::cloud::aiplatform::v1::CountTokensResponse response;
   auto status = grpc_stub_->CountTokens(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultLlmUtilityServiceStub::CountTokens(
 
 StatusOr<google::cloud::aiplatform::v1::ComputeTokensResponse>
 DefaultLlmUtilityServiceStub::ComputeTokens(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ComputeTokensRequest const& request) {
   google::cloud::aiplatform::v1::ComputeTokensResponse response;
   auto status = grpc_stub_->ComputeTokens(&context, request, &response);

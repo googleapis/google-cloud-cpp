@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/discoveryengine/v1/conversational_search_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,80 +37,88 @@ ConversationalSearchServiceLogging::ConversationalSearchServiceLogging(
 
 StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
 ConversationalSearchServiceLogging::ConverseConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ConverseConversationRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::discoveryengine::v1::ConverseConversationRequest const&
               request) {
-        return child_->ConverseConversation(context, request);
+        return child_->ConverseConversation(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 ConversationalSearchServiceLogging::CreateConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::CreateConversationRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::discoveryengine::v1::CreateConversationRequest const&
-              request) { return child_->CreateConversation(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->CreateConversation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status ConversationalSearchServiceLogging::DeleteConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::DeleteConversationRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::discoveryengine::v1::DeleteConversationRequest const&
-              request) { return child_->DeleteConversation(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->DeleteConversation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 ConversationalSearchServiceLogging::UpdateConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::UpdateConversationRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::discoveryengine::v1::UpdateConversationRequest const&
-              request) { return child_->UpdateConversation(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->UpdateConversation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 ConversationalSearchServiceLogging::GetConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetConversationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::discoveryengine::v1::GetConversationRequest const&
-                 request) { return child_->GetConversation(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetConversation(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::ListConversationsResponse>
 ConversationalSearchServiceLogging::ListConversations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ListConversationsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::discoveryengine::v1::ListConversationsRequest const&
                  request) {
-        return child_->ListConversations(context, request);
+        return child_->ListConversations(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

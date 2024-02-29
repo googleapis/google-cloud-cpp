@@ -1,0 +1,164 @@
+// Copyright 2024 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package google.test.requestid.v1;
+
+import "google/api/client.proto";
+import "google/api/field_behavior.proto";
+import "google/api/field_info.proto";
+import "google/api/resource.proto";
+import "google/api/routing.proto";
+import "google/longrunning/operations.proto";
+
+// Test generation of request ids.
+service RequestIdService {
+  option (google.api.default_host) = "test.googleapis.com";
+  option (google.api.oauth_scopes) =
+      "https://www.googleapis.com/auth/cloud-platform";
+
+  // Creates a `Foo` resource.
+  rpc CreateFoo(CreateFooRequest) returns (Foo) {
+    option (google.api.routing) = {
+      routing_parameters { field: "parent" path_template: "{parent=**}" }
+    };
+    option (google.api.method_signature) = "parent,foo_id";
+  }
+
+  // Renames a `Foo`.
+  rpc RenameFoo(RenameFooRequest) returns (google.longrunning.Operation) {
+    option (google.api.routing) = {
+      routing_parameters {
+        field: "name"
+        path_template: "{parent=projects/*/parents/*}/**"
+      }
+    };
+    option (google.api.method_signature) = "name,destination_foo_id";
+    option (google.longrunning.operation_info) = {
+      response_type: "Foo"
+      metadata_type: "RenameFooMetadata"
+    };
+  }
+
+  // Retrieves a list of foos for a given parent.
+  rpc ListFoos(ListFoosRequest) returns (ListFoosResponse) {
+    option (google.api.routing) = {
+      routing_parameters { field: "parent" path_template: "{parent=**}" }
+    };
+    option (google.api.method_signature) = "parent";
+  }
+}
+
+// The resource.
+message Foo {
+  option (google.api.resource) = {
+    type: "test.googleapis.com/Foo"
+    pattern: "projects/{project}/parents/{parent}/foos/{foos=**}"
+    plural: "foos"
+    singular: "foo"
+  };
+
+  // Identifier. The name of this foo.
+  // Format: `projects/{project}/parent/{parent}/foos/{foo}`
+  string name = 1 [(google.api.field_behavior) = IDENTIFIER];
+}
+
+// Request message for CreateFoo.
+message CreateFooRequest {
+  // Required. Name of the `parent` in which the `foo` will reside.
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = { child_type: "test.googleapis.com/Foo" }
+  ];
+
+  // Required. The id of the `Foo`.
+  string foo_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional. A unique identifier for this request. UUID is the recommended
+  // format, but other formats are still accepted. This request is only
+  // idempotent if a `request_id` is provided.
+  string request_id = 3 [
+    (google.api.field_info).format = UUID4,
+    (google.api.field_behavior) = OPTIONAL
+  ];
+}
+
+// Request message for RenameFoo.
+message RenameFooRequest {
+  // Required. Name of the source foo being renamed.
+  // Format: `projects/{project}/parents/{parent}/foos/{foo}`
+  string name = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = { type: "test.googleapis.com/Foo" }
+  ];
+
+  // Required. The destination foo ID, e.g. `foo/bar/`.
+  string destination_foo_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional. A unique identifier for this request. UUID is the recommended
+  // format, but other formats are still accepted. This request is only
+  // idempotent if a `request_id` is provided.
+  string request_id = 3 [
+    (google.api.field_info).format = UUID4,
+    (google.api.field_behavior) = OPTIONAL
+  ];
+}
+
+// Message returned in the metadata field of the Operation resource for
+// RenameFoo operations.
+message RenameFooMetadata {
+  // Output only. The estimated progress of the operation in percentage [0,
+  // 100]. The value -1 means the progress is unknown.
+  int32 progress_percent = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // The path of the source foo.
+  string source_foo_id = 2;
+
+  // The path of the destination foo.
+  string destination_foo_id = 3;
+}
+
+// Request message for ListFoos.
+message ListFoosRequest {
+  // Required. Name of the parent in which to look for foos.
+  string parent = 1 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.api.resource_reference) = { child_type: "test.googleapis.com/Foo" }
+  ];
+
+  // Optional. Maximum number of foos to return in a single response.
+  int32 page_size = 2 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. A previously-returned page token representing part of the larger
+  // set of results to view.
+  string page_token = 3 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional. A unique identifier for this request. UUID is the recommended
+  // format, but other formats are still accepted.
+  string request_id = 4 [
+    (google.api.field_info).format = UUID4,
+    (google.api.field_behavior) = OPTIONAL
+  ];
+}
+
+// Response message for ListFoos.
+message ListFoosResponse {
+  // The list of child foos
+  repeated Foo foos = 1;
+
+  // The continuation token, used to page through large result sets. Provide
+  // this value in a subsequent request to return the next page of results.
+  string next_page_token = 2;
+}

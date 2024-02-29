@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/eventarc/publishing/v1/publisher.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ PublisherStub::~PublisherStub() = default;
 StatusOr<google::cloud::eventarc::publishing::v1::
              PublishChannelConnectionEventsResponse>
 DefaultPublisherStub::PublishChannelConnectionEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::eventarc::publishing::v1::
         PublishChannelConnectionEventsRequest const& request) {
   google::cloud::eventarc::publishing::v1::
@@ -47,7 +48,7 @@ DefaultPublisherStub::PublishChannelConnectionEvents(
 
 StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
 DefaultPublisherStub::PublishEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
         request) {
   google::cloud::eventarc::publishing::v1::PublishEventsResponse response;

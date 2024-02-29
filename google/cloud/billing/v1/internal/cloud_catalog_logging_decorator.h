@@ -39,11 +39,11 @@ class CloudCatalogLogging : public CloudCatalogStub {
                       std::set<std::string> const& components);
 
   StatusOr<google::cloud::billing::v1::ListServicesResponse> ListServices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::ListServicesRequest const& request) override;
 
   StatusOr<google::cloud::billing::v1::ListSkusResponse> ListSkus(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::billing::v1::ListSkusRequest const& request) override;
 
  private:

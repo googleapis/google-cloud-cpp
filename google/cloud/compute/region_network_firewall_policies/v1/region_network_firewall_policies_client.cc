@@ -19,6 +19,7 @@
 
 #include "google/cloud/compute/region_network_firewall_policies/v1/region_network_firewall_policies_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

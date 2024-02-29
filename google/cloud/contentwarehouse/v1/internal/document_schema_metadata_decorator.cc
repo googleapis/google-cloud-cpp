@@ -44,51 +44,51 @@ DocumentSchemaServiceMetadata::DocumentSchemaServiceMetadata(
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DocumentSchemaServiceMetadata::CreateDocumentSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::CreateDocumentSchemaRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateDocumentSchema(context, request);
+  return child_->CreateDocumentSchema(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DocumentSchemaServiceMetadata::UpdateDocumentSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::UpdateDocumentSchemaRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->UpdateDocumentSchema(context, request);
+  return child_->UpdateDocumentSchema(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
 DocumentSchemaServiceMetadata::GetDocumentSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetDocumentSchema(context, request);
+  return child_->GetDocumentSchema(context, options, request);
 }
 
 Status DocumentSchemaServiceMetadata::DeleteDocumentSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::DeleteDocumentSchemaRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteDocumentSchema(context, request);
+  return child_->DeleteDocumentSchema(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::ListDocumentSchemasResponse>
 DocumentSchemaServiceMetadata::ListDocumentSchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListDocumentSchemas(context, request);
+  return child_->ListDocumentSchemas(context, options, request);
 }
 
 void DocumentSchemaServiceMetadata::SetMetadata(

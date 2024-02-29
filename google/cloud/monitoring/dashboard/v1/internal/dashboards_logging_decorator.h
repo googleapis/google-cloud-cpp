@@ -39,27 +39,27 @@ class DashboardsServiceLogging : public DashboardsServiceStub {
                            std::set<std::string> const& components);
 
   StatusOr<google::monitoring::dashboard::v1::Dashboard> CreateDashboard(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::dashboard::v1::CreateDashboardRequest const& request)
       override;
 
   StatusOr<google::monitoring::dashboard::v1::ListDashboardsResponse>
-  ListDashboards(grpc::ClientContext& context,
+  ListDashboards(grpc::ClientContext& context, Options const& options,
                  google::monitoring::dashboard::v1::ListDashboardsRequest const&
                      request) override;
 
   StatusOr<google::monitoring::dashboard::v1::Dashboard> GetDashboard(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::dashboard::v1::GetDashboardRequest const& request)
       override;
 
   Status DeleteDashboard(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::dashboard::v1::DeleteDashboardRequest const& request)
       override;
 
   StatusOr<google::monitoring::dashboard::v1::Dashboard> UpdateDashboard(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::dashboard::v1::UpdateDashboardRequest const& request)
       override;
 

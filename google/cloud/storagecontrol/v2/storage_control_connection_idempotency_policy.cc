@@ -35,33 +35,38 @@ StorageControlConnectionIdempotencyPolicy::clone() const {
 }
 
 Idempotency StorageControlConnectionIdempotencyPolicy::CreateFolder(
-    google::storage::control::v2::CreateFolderRequest const&) {
+    google::storage::control::v2::CreateFolderRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency StorageControlConnectionIdempotencyPolicy::DeleteFolder(
-    google::storage::control::v2::DeleteFolderRequest const&) {
+    google::storage::control::v2::DeleteFolderRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency StorageControlConnectionIdempotencyPolicy::GetFolder(
-    google::storage::control::v2::GetFolderRequest const&) {
-  return Idempotency::kNonIdempotent;
+    google::storage::control::v2::GetFolderRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency StorageControlConnectionIdempotencyPolicy::ListFolders(
     google::storage::control::v2::ListFoldersRequest) {  // NOLINT
-  return Idempotency::kNonIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 Idempotency StorageControlConnectionIdempotencyPolicy::RenameFolder(
-    google::storage::control::v2::RenameFolderRequest const&) {
+    google::storage::control::v2::RenameFolderRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 
 Idempotency StorageControlConnectionIdempotencyPolicy::GetStorageLayout(
-    google::storage::control::v2::GetStorageLayoutRequest const&) {
-  return Idempotency::kNonIdempotent;
+    google::storage::control::v2::GetStorageLayoutRequest const& request) {
+  if (!request.request_id().empty()) return Idempotency::kIdempotent;
+  return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<StorageControlConnectionIdempotencyPolicy>

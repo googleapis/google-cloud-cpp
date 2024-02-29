@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/feature_online_store_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

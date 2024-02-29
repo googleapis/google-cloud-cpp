@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/support/v2/comment_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,26 +37,26 @@ CommentServiceLogging::CommentServiceLogging(
 
 StatusOr<google::cloud::support::v2::ListCommentsResponse>
 CommentServiceLogging::ListComments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::ListCommentsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::support::v2::ListCommentsRequest const& request) {
-        return child_->ListComments(context, request);
+        return child_->ListComments(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::support::v2::Comment>
 CommentServiceLogging::CreateComment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::CreateCommentRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::support::v2::CreateCommentRequest const& request) {
-        return child_->CreateComment(context, request);
+        return child_->CreateComment(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

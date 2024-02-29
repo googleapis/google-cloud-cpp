@@ -44,432 +44,447 @@ ContactCenterInsightsMetadata::ContactCenterInsightsMetadata(
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsMetadata::CreateConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::CreateConversationRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateConversation(context, request);
+  return child_->CreateConversation(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncUploadConversation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncUploadConversation(cq, std::move(context), options,
-                                         request);
+  return child_->AsyncUploadConversation(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsMetadata::UpdateConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("conversation.name=",
                            internal::UrlEncode(request.conversation().name())));
-  return child_->UpdateConversation(context, request);
+  return child_->UpdateConversation(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsMetadata::GetConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::GetConversationRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetConversation(context, request);
+  return child_->GetConversation(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListConversationsResponse>
 ContactCenterInsightsMetadata::ListConversations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::ListConversationsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListConversations(context, request);
+  return child_->ListConversations(context, options, request);
 }
 
 Status ContactCenterInsightsMetadata::DeleteConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::DeleteConversationRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteConversation(context, request);
+  return child_->DeleteConversation(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncCreateAnalysis(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateAnalysis(cq, std::move(context), options, request);
+  return child_->AsyncCreateAnalysis(cq, std::move(context), std::move(options),
+                                     request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Analysis>
 ContactCenterInsightsMetadata::GetAnalysis(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetAnalysis(context, request);
+  return child_->GetAnalysis(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListAnalysesResponse>
 ContactCenterInsightsMetadata::ListAnalyses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::ListAnalysesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListAnalyses(context, request);
+  return child_->ListAnalyses(context, options, request);
 }
 
 Status ContactCenterInsightsMetadata::DeleteAnalysis(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteAnalysis(context, request);
+  return child_->DeleteAnalysis(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncBulkAnalyzeConversations(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::contactcenterinsights::v1::
         BulkAnalyzeConversationsRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBulkAnalyzeConversations(cq, std::move(context), options,
-                                               request);
+  return child_->AsyncBulkAnalyzeConversations(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncBulkDeleteConversations(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::contactcenterinsights::v1::
         BulkDeleteConversationsRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncBulkDeleteConversations(cq, std::move(context), options,
-                                              request);
+  return child_->AsyncBulkDeleteConversations(cq, std::move(context),
+                                              std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncIngestConversations(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncIngestConversations(cq, std::move(context), options,
-                                          request);
+  return child_->AsyncIngestConversations(cq, std::move(context),
+                                          std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncExportInsightsData(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncExportInsightsData(cq, std::move(context), options,
-                                         request);
+  return child_->AsyncExportInsightsData(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncCreateIssueModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateIssueModel(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncCreateIssueModel(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
 ContactCenterInsightsMetadata::UpdateIssueModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("issue_model.name=",
                            internal::UrlEncode(request.issue_model().name())));
-  return child_->UpdateIssueModel(context, request);
+  return child_->UpdateIssueModel(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
 ContactCenterInsightsMetadata::GetIssueModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::GetIssueModelRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetIssueModel(context, request);
+  return child_->GetIssueModel(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListIssueModelsResponse>
 ContactCenterInsightsMetadata::ListIssueModels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListIssueModels(context, request);
+  return child_->ListIssueModels(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncDeleteIssueModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteIssueModel(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncDeleteIssueModel(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncDeployIssueModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeployIssueModel(cq, std::move(context), options,
-                                       request);
+  return child_->AsyncDeployIssueModel(cq, std::move(context),
+                                       std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncUndeployIssueModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncUndeployIssueModel(cq, std::move(context), options,
-                                         request);
+  return child_->AsyncUndeployIssueModel(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>
 ContactCenterInsightsMetadata::GetIssue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::GetIssueRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetIssue(context, request);
+  return child_->GetIssue(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListIssuesResponse>
 ContactCenterInsightsMetadata::ListIssues(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::ListIssuesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListIssues(context, request);
+  return child_->ListIssues(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>
 ContactCenterInsightsMetadata::UpdateIssue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("issue.name=", internal::UrlEncode(request.issue().name())));
-  return child_->UpdateIssue(context, request);
+  return child_->UpdateIssue(context, options, request);
 }
 
 Status ContactCenterInsightsMetadata::DeleteIssue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteIssue(context, request);
+  return child_->DeleteIssue(context, options, request);
 }
 
 StatusOr<
     google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsResponse>
 ContactCenterInsightsMetadata::CalculateIssueModelStats(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::
         CalculateIssueModelStatsRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("issue_model=", internal::UrlEncode(request.issue_model())));
-  return child_->CalculateIssueModelStats(context, request);
+  return child_->CalculateIssueModelStats(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
 ContactCenterInsightsMetadata::CreatePhraseMatcher(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::CreatePhraseMatcherRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreatePhraseMatcher(context, request);
+  return child_->CreatePhraseMatcher(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
 ContactCenterInsightsMetadata::GetPhraseMatcher(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetPhraseMatcher(context, request);
+  return child_->GetPhraseMatcher(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListPhraseMatchersResponse>
 ContactCenterInsightsMetadata::ListPhraseMatchers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListPhraseMatchers(context, request);
+  return child_->ListPhraseMatchers(context, options, request);
 }
 
 Status ContactCenterInsightsMetadata::DeletePhraseMatcher(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::DeletePhraseMatcherRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeletePhraseMatcher(context, request);
+  return child_->DeletePhraseMatcher(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
 ContactCenterInsightsMetadata::UpdatePhraseMatcher(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::UpdatePhraseMatcherRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("phrase_matcher.name=",
                    internal::UrlEncode(request.phrase_matcher().name())));
-  return child_->UpdatePhraseMatcher(context, request);
+  return child_->UpdatePhraseMatcher(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::CalculateStatsResponse>
 ContactCenterInsightsMetadata::CalculateStats(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::CalculateStatsRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("location=", internal::UrlEncode(request.location())));
-  return child_->CalculateStats(context, request);
+  return child_->CalculateStats(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Settings>
 ContactCenterInsightsMetadata::GetSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::GetSettingsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetSettings(context, request);
+  return child_->GetSettings(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Settings>
 ContactCenterInsightsMetadata::UpdateSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("settings.name=",
                            internal::UrlEncode(request.settings().name())));
-  return child_->UpdateSettings(context, request);
+  return child_->UpdateSettings(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>
 ContactCenterInsightsMetadata::CreateView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::CreateViewRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateView(context, request);
+  return child_->CreateView(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>
 ContactCenterInsightsMetadata::GetView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::GetViewRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetView(context, request);
+  return child_->GetView(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListViewsResponse>
 ContactCenterInsightsMetadata::ListViews(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::ListViewsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListViews(context, request);
+  return child_->ListViews(context, options, request);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>
 ContactCenterInsightsMetadata::UpdateView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::UpdateViewRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("view.name=", internal::UrlEncode(request.view().name())));
-  return child_->UpdateView(context, request);
+  return child_->UpdateView(context, options, request);
 }
 
 Status ContactCenterInsightsMetadata::DeleteView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteView(context, request);
+  return child_->DeleteView(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> ContactCenterInsightsMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void ContactCenterInsightsMetadata::SetMetadata(

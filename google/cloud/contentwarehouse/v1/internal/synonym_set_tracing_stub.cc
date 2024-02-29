@@ -18,6 +18,7 @@
 
 #include "google/cloud/contentwarehouse/v1/internal/synonym_set_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ SynonymSetServiceTracingStub::SynonymSetServiceTracingStub(
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 SynonymSetServiceTracingStub::CreateSynonymSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::CreateSynonymSetRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -40,24 +41,24 @@ SynonymSetServiceTracingStub::CreateSynonymSet(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateSynonymSet(context, request));
+                           child_->CreateSynonymSet(context, options, request));
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 SynonymSetServiceTracingStub::GetSynonymSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::GetSynonymSetRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.contentwarehouse.v1.SynonymSetService", "GetSynonymSet");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetSynonymSet(context, request));
+                           child_->GetSynonymSet(context, options, request));
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SynonymSet>
 SynonymSetServiceTracingStub::UpdateSynonymSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::UpdateSynonymSetRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -65,11 +66,11 @@ SynonymSetServiceTracingStub::UpdateSynonymSet(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateSynonymSet(context, request));
+                           child_->UpdateSynonymSet(context, options, request));
 }
 
 Status SynonymSetServiceTracingStub::DeleteSynonymSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::DeleteSynonymSetRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -77,12 +78,12 @@ Status SynonymSetServiceTracingStub::DeleteSynonymSet(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteSynonymSet(context, request));
+                           child_->DeleteSynonymSet(context, options, request));
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::ListSynonymSetsResponse>
 SynonymSetServiceTracingStub::ListSynonymSets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::ListSynonymSetsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -90,7 +91,7 @@ SynonymSetServiceTracingStub::ListSynonymSets(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListSynonymSets(context, request));
+                           child_->ListSynonymSets(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -53,9 +53,11 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRestMetadata::AsyncCreateDatabase(
       CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
-      Options const& options, google::test::admin::database::v1::CreateDatabaseRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncCreateDatabase(cq, std::move(rest_context), options, request);
+      google::cloud::internal::ImmutableOptions options,
+      google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncCreateDatabase(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::test::admin::database::v1::Database>
@@ -70,9 +72,11 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRestMetadata::AsyncUpdateDatabaseDdl(
       CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
-      Options const& options, google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncUpdateDatabaseDdl(cq, std::move(rest_context), options, request);
+      google::cloud::internal::ImmutableOptions options,
+      google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncUpdateDatabaseDdl(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 Status
@@ -156,9 +160,11 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRestMetadata::AsyncCreateBackup(
       CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
-      Options const& options, google::test::admin::database::v1::CreateBackupRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncCreateBackup(cq, std::move(rest_context), options, request);
+      google::cloud::internal::ImmutableOptions options,
+      google::test::admin::database::v1::CreateBackupRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncCreateBackup(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::test::admin::database::v1::Backup>
@@ -197,9 +203,11 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRestMetadata::AsyncRestoreDatabase(
       CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
-      Options const& options, google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncRestoreDatabase(cq, std::move(rest_context), options, request);
+      google::cloud::internal::ImmutableOptions options,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncRestoreDatabase(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>
@@ -277,20 +285,22 @@ future<StatusOr<google::longrunning::Operation>>
 GoldenThingAdminRestMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), options, request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncGetOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 future<Status>
 GoldenThingAdminRestMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), options, request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncCancelOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 void GoldenThingAdminRestMetadata::SetMetadata(

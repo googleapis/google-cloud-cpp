@@ -23,6 +23,7 @@
 #include <google/cloud/commerce/consumer/procurement/v1/procurement_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -34,7 +35,8 @@ ConsumerProcurementServiceStub::~ConsumerProcurementServiceStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultConsumerProcurementServiceStub::AsyncPlaceOrder(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::commerce::consumer::procurement::v1::PlaceOrderRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -52,7 +54,7 @@ DefaultConsumerProcurementServiceStub::AsyncPlaceOrder(
 
 StatusOr<google::cloud::commerce::consumer::procurement::v1::Order>
 DefaultConsumerProcurementServiceStub::GetOrder(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::commerce::consumer::procurement::v1::GetOrderRequest const&
         request) {
   google::cloud::commerce::consumer::procurement::v1::Order response;
@@ -65,7 +67,7 @@ DefaultConsumerProcurementServiceStub::GetOrder(
 
 StatusOr<google::cloud::commerce::consumer::procurement::v1::ListOrdersResponse>
 DefaultConsumerProcurementServiceStub::ListOrders(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::commerce::consumer::procurement::v1::ListOrdersRequest const&
         request) {
   google::cloud::commerce::consumer::procurement::v1::ListOrdersResponse
@@ -80,7 +82,8 @@ DefaultConsumerProcurementServiceStub::ListOrders(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConsumerProcurementServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -95,7 +98,8 @@ DefaultConsumerProcurementServiceStub::AsyncGetOperation(
 
 future<Status> DefaultConsumerProcurementServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

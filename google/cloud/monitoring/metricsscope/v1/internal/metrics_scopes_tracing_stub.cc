@@ -18,6 +18,7 @@
 
 #include "google/cloud/monitoring/metricsscope/v1/internal/metrics_scopes_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ MetricsScopesTracingStub::MetricsScopesTracingStub(
 
 StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
 MetricsScopesTracingStub::GetMetricsScope(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -40,13 +41,13 @@ MetricsScopesTracingStub::GetMetricsScope(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetMetricsScope(context, request));
+                           child_->GetMetricsScope(context, options, request));
 }
 
 StatusOr<google::monitoring::metricsscope::v1::
              ListMetricsScopesByMonitoredProjectResponse>
 MetricsScopesTracingStub::ListMetricsScopesByMonitoredProject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::metricsscope::v1::
         ListMetricsScopesByMonitoredProjectRequest const& request) {
   auto span =
@@ -56,13 +57,14 @@ MetricsScopesTracingStub::ListMetricsScopesByMonitoredProject(
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
       context, *span,
-      child_->ListMetricsScopesByMonitoredProject(context, request));
+      child_->ListMetricsScopesByMonitoredProject(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MetricsScopesTracingStub::AsyncCreateMonitoredProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::monitoring::metricsscope::v1::CreateMonitoredProjectRequest const&
         request) {
   auto span =
@@ -70,14 +72,16 @@ MetricsScopesTracingStub::AsyncCreateMonitoredProject(
                              "CreateMonitoredProject");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateMonitoredProject(cq, context, options, request);
+  auto f = child_->AsyncCreateMonitoredProject(cq, context, std::move(options),
+                                               request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MetricsScopesTracingStub::AsyncDeleteMonitoredProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::monitoring::metricsscope::v1::DeleteMonitoredProjectRequest const&
         request) {
   auto span =
@@ -85,32 +89,36 @@ MetricsScopesTracingStub::AsyncDeleteMonitoredProject(
                              "DeleteMonitoredProject");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteMonitoredProject(cq, context, options, request);
+  auto f = child_->AsyncDeleteMonitoredProject(cq, context, std::move(options),
+                                               request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 MetricsScopesTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> MetricsScopesTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

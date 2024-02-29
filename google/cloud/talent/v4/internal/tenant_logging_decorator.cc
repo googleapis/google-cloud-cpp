@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/talent/v4/tenant_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,59 +36,59 @@ TenantServiceLogging::TenantServiceLogging(
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceLogging::CreateTenant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::CreateTenantRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::CreateTenantRequest const& request) {
-        return child_->CreateTenant(context, request);
+        return child_->CreateTenant(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceLogging::GetTenant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::GetTenantRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::GetTenantRequest const& request) {
-        return child_->GetTenant(context, request);
+        return child_->GetTenant(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceLogging::UpdateTenant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::UpdateTenantRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::UpdateTenantRequest const& request) {
-        return child_->UpdateTenant(context, request);
+        return child_->UpdateTenant(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status TenantServiceLogging::DeleteTenant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::DeleteTenantRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::DeleteTenantRequest const& request) {
-        return child_->DeleteTenant(context, request);
+        return child_->DeleteTenant(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::talent::v4::ListTenantsResponse>
 TenantServiceLogging::ListTenants(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::ListTenantsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::talent::v4::ListTenantsRequest const& request) {
-        return child_->ListTenants(context, request);
+        return child_->ListTenants(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

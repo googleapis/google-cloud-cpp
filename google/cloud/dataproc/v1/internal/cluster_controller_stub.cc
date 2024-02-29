@@ -22,6 +22,7 @@
 #include <google/cloud/dataproc/v1/clusters.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ ClusterControllerStub::~ClusterControllerStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultClusterControllerStub::AsyncCreateCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataproc::v1::CreateClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataproc::v1::CreateClusterRequest,
@@ -50,7 +52,8 @@ DefaultClusterControllerStub::AsyncCreateCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultClusterControllerStub::AsyncUpdateCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataproc::v1::UpdateClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataproc::v1::UpdateClusterRequest,
@@ -67,7 +70,8 @@ DefaultClusterControllerStub::AsyncUpdateCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultClusterControllerStub::AsyncStopCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataproc::v1::StopClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataproc::v1::StopClusterRequest,
@@ -84,7 +88,8 @@ DefaultClusterControllerStub::AsyncStopCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultClusterControllerStub::AsyncStartCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataproc::v1::StartClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataproc::v1::StartClusterRequest,
@@ -101,7 +106,8 @@ DefaultClusterControllerStub::AsyncStartCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultClusterControllerStub::AsyncDeleteCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataproc::v1::DeleteClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataproc::v1::DeleteClusterRequest,
@@ -117,7 +123,7 @@ DefaultClusterControllerStub::AsyncDeleteCluster(
 
 StatusOr<google::cloud::dataproc::v1::Cluster>
 DefaultClusterControllerStub::GetCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::GetClusterRequest const& request) {
   google::cloud::dataproc::v1::Cluster response;
   auto status = grpc_stub_->GetCluster(&context, request, &response);
@@ -129,7 +135,7 @@ DefaultClusterControllerStub::GetCluster(
 
 StatusOr<google::cloud::dataproc::v1::ListClustersResponse>
 DefaultClusterControllerStub::ListClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataproc::v1::ListClustersRequest const& request) {
   google::cloud::dataproc::v1::ListClustersResponse response;
   auto status = grpc_stub_->ListClusters(&context, request, &response);
@@ -142,7 +148,8 @@ DefaultClusterControllerStub::ListClusters(
 future<StatusOr<google::longrunning::Operation>>
 DefaultClusterControllerStub::AsyncDiagnoseCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dataproc::v1::DiagnoseClusterRequest,
@@ -159,7 +166,8 @@ DefaultClusterControllerStub::AsyncDiagnoseCluster(
 future<StatusOr<google::longrunning::Operation>>
 DefaultClusterControllerStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -174,7 +182,8 @@ DefaultClusterControllerStub::AsyncGetOperation(
 
 future<Status> DefaultClusterControllerStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

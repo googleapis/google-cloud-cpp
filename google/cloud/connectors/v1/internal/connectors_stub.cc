@@ -22,6 +22,7 @@
 #include <google/cloud/connectors/v1/connectors_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ ConnectorsStub::~ConnectorsStub() = default;
 
 StatusOr<google::cloud::connectors::v1::ListConnectionsResponse>
 DefaultConnectorsStub::ListConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::connectors::v1::ListConnectionsRequest const& request) {
   google::cloud::connectors::v1::ListConnectionsResponse response;
   auto status = grpc_stub_->ListConnections(&context, request, &response);
@@ -44,7 +45,7 @@ DefaultConnectorsStub::ListConnections(
 
 StatusOr<google::cloud::connectors::v1::Connection>
 DefaultConnectorsStub::GetConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::connectors::v1::GetConnectionRequest const& request) {
   google::cloud::connectors::v1::Connection response;
   auto status = grpc_stub_->GetConnection(&context, request, &response);
@@ -57,7 +58,8 @@ DefaultConnectorsStub::GetConnection(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConnectorsStub::AsyncCreateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::connectors::v1::CreateConnectionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::connectors::v1::CreateConnectionRequest,
@@ -75,7 +77,8 @@ DefaultConnectorsStub::AsyncCreateConnection(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConnectorsStub::AsyncUpdateConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::connectors::v1::UpdateConnectionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::connectors::v1::UpdateConnectionRequest,
@@ -93,7 +96,8 @@ DefaultConnectorsStub::AsyncUpdateConnection(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConnectorsStub::AsyncDeleteConnection(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::connectors::v1::DeleteConnectionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::connectors::v1::DeleteConnectionRequest,
@@ -110,7 +114,7 @@ DefaultConnectorsStub::AsyncDeleteConnection(
 
 StatusOr<google::cloud::connectors::v1::ListProvidersResponse>
 DefaultConnectorsStub::ListProviders(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::connectors::v1::ListProvidersRequest const& request) {
   google::cloud::connectors::v1::ListProvidersResponse response;
   auto status = grpc_stub_->ListProviders(&context, request, &response);
@@ -122,7 +126,7 @@ DefaultConnectorsStub::ListProviders(
 
 StatusOr<google::cloud::connectors::v1::Provider>
 DefaultConnectorsStub::GetProvider(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::connectors::v1::GetProviderRequest const& request) {
   google::cloud::connectors::v1::Provider response;
   auto status = grpc_stub_->GetProvider(&context, request, &response);
@@ -134,7 +138,7 @@ DefaultConnectorsStub::GetProvider(
 
 StatusOr<google::cloud::connectors::v1::ListConnectorsResponse>
 DefaultConnectorsStub::ListConnectors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::connectors::v1::ListConnectorsRequest const& request) {
   google::cloud::connectors::v1::ListConnectorsResponse response;
   auto status = grpc_stub_->ListConnectors(&context, request, &response);
@@ -146,7 +150,7 @@ DefaultConnectorsStub::ListConnectors(
 
 StatusOr<google::cloud::connectors::v1::Connector>
 DefaultConnectorsStub::GetConnector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::connectors::v1::GetConnectorRequest const& request) {
   google::cloud::connectors::v1::Connector response;
   auto status = grpc_stub_->GetConnector(&context, request, &response);
@@ -158,7 +162,7 @@ DefaultConnectorsStub::GetConnector(
 
 StatusOr<google::cloud::connectors::v1::ListConnectorVersionsResponse>
 DefaultConnectorsStub::ListConnectorVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::connectors::v1::ListConnectorVersionsRequest const&
         request) {
   google::cloud::connectors::v1::ListConnectorVersionsResponse response;
@@ -171,7 +175,7 @@ DefaultConnectorsStub::ListConnectorVersions(
 
 StatusOr<google::cloud::connectors::v1::ConnectorVersion>
 DefaultConnectorsStub::GetConnectorVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::connectors::v1::GetConnectorVersionRequest const& request) {
   google::cloud::connectors::v1::ConnectorVersion response;
   auto status = grpc_stub_->GetConnectorVersion(&context, request, &response);
@@ -183,7 +187,7 @@ DefaultConnectorsStub::GetConnectorVersion(
 
 StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
 DefaultConnectorsStub::GetConnectionSchemaMetadata(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
         request) {
   google::cloud::connectors::v1::ConnectionSchemaMetadata response;
@@ -198,7 +202,8 @@ DefaultConnectorsStub::GetConnectionSchemaMetadata(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConnectorsStub::AsyncRefreshConnectionSchemaMetadata(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::connectors::v1::RefreshConnectionSchemaMetadataRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -217,7 +222,7 @@ DefaultConnectorsStub::AsyncRefreshConnectionSchemaMetadata(
 
 StatusOr<google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse>
 DefaultConnectorsStub::ListRuntimeEntitySchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::connectors::v1::ListRuntimeEntitySchemasRequest const&
         request) {
   google::cloud::connectors::v1::ListRuntimeEntitySchemasResponse response;
@@ -231,7 +236,7 @@ DefaultConnectorsStub::ListRuntimeEntitySchemas(
 
 StatusOr<google::cloud::connectors::v1::ListRuntimeActionSchemasResponse>
 DefaultConnectorsStub::ListRuntimeActionSchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::connectors::v1::ListRuntimeActionSchemasRequest const&
         request) {
   google::cloud::connectors::v1::ListRuntimeActionSchemasResponse response;
@@ -245,7 +250,7 @@ DefaultConnectorsStub::ListRuntimeActionSchemas(
 
 StatusOr<google::cloud::connectors::v1::RuntimeConfig>
 DefaultConnectorsStub::GetRuntimeConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::connectors::v1::GetRuntimeConfigRequest const& request) {
   google::cloud::connectors::v1::RuntimeConfig response;
   auto status = grpc_stub_->GetRuntimeConfig(&context, request, &response);
@@ -257,7 +262,7 @@ DefaultConnectorsStub::GetRuntimeConfig(
 
 StatusOr<google::cloud::connectors::v1::Settings>
 DefaultConnectorsStub::GetGlobalSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::connectors::v1::GetGlobalSettingsRequest const& request) {
   google::cloud::connectors::v1::Settings response;
   auto status = grpc_stub_->GetGlobalSettings(&context, request, &response);
@@ -270,7 +275,8 @@ DefaultConnectorsStub::GetGlobalSettings(
 future<StatusOr<google::longrunning::Operation>>
 DefaultConnectorsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -285,7 +291,8 @@ DefaultConnectorsStub::AsyncGetOperation(
 
 future<Status> DefaultConnectorsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

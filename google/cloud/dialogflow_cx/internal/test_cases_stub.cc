@@ -22,6 +22,7 @@
 #include <google/cloud/dialogflow/cx/v3/test_case.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ TestCasesStub::~TestCasesStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTestCasesResponse>
 DefaultTestCasesStub::ListTestCases(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ListTestCasesRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListTestCasesResponse response;
   auto status = grpc_stub_->ListTestCases(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultTestCasesStub::ListTestCases(
 }
 
 Status DefaultTestCasesStub::BatchDeleteTestCases(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
         request) {
   google::protobuf::Empty response;
@@ -56,7 +57,7 @@ Status DefaultTestCasesStub::BatchDeleteTestCases(
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 DefaultTestCasesStub::GetTestCase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request) {
   google::cloud::dialogflow::cx::v3::TestCase response;
   auto status = grpc_stub_->GetTestCase(&context, request, &response);
@@ -68,7 +69,7 @@ DefaultTestCasesStub::GetTestCase(
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 DefaultTestCasesStub::CreateTestCase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request) {
   google::cloud::dialogflow::cx::v3::TestCase response;
   auto status = grpc_stub_->CreateTestCase(&context, request, &response);
@@ -80,7 +81,7 @@ DefaultTestCasesStub::CreateTestCase(
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 DefaultTestCasesStub::UpdateTestCase(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request) {
   google::cloud::dialogflow::cx::v3::TestCase response;
   auto status = grpc_stub_->UpdateTestCase(&context, request, &response);
@@ -93,7 +94,8 @@ DefaultTestCasesStub::UpdateTestCase(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTestCasesStub::AsyncRunTestCase(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::RunTestCaseRequest,
@@ -111,7 +113,8 @@ DefaultTestCasesStub::AsyncRunTestCase(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTestCasesStub::AsyncBatchRunTestCases(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -129,7 +132,7 @@ DefaultTestCasesStub::AsyncBatchRunTestCases(
 
 StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
 DefaultTestCasesStub::CalculateCoverage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::CalculateCoverageResponse response;
@@ -143,7 +146,8 @@ DefaultTestCasesStub::CalculateCoverage(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTestCasesStub::AsyncImportTestCases(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::ImportTestCasesRequest,
@@ -161,7 +165,8 @@ DefaultTestCasesStub::AsyncImportTestCases(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTestCasesStub::AsyncExportTestCases(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::ExportTestCasesRequest,
@@ -178,7 +183,7 @@ DefaultTestCasesStub::AsyncExportTestCases(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListTestCaseResultsResponse>
 DefaultTestCasesStub::ListTestCaseResults(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::ListTestCaseResultsResponse response;
@@ -191,7 +196,7 @@ DefaultTestCasesStub::ListTestCaseResults(
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult>
 DefaultTestCasesStub::GetTestCaseResult(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::TestCaseResult response;
@@ -205,7 +210,8 @@ DefaultTestCasesStub::GetTestCaseResult(
 future<StatusOr<google::longrunning::Operation>>
 DefaultTestCasesStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -220,7 +226,8 @@ DefaultTestCasesStub::AsyncGetOperation(
 
 future<Status> DefaultTestCasesStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

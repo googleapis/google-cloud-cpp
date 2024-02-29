@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/recaptchaenterprise/v1/recaptchaenterprise.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ RecaptchaEnterpriseServiceStub::~RecaptchaEnterpriseServiceStub() = default;
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Assessment>
 DefaultRecaptchaEnterpriseServiceStub::CreateAssessment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const&
         request) {
   google::cloud::recaptchaenterprise::v1::Assessment response;
@@ -44,7 +45,7 @@ DefaultRecaptchaEnterpriseServiceStub::CreateAssessment(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::AnnotateAssessmentResponse>
 DefaultRecaptchaEnterpriseServiceStub::AnnotateAssessment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const&
         request) {
   google::cloud::recaptchaenterprise::v1::AnnotateAssessmentResponse response;
@@ -57,7 +58,7 @@ DefaultRecaptchaEnterpriseServiceStub::AnnotateAssessment(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 DefaultRecaptchaEnterpriseServiceStub::CreateKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request) {
   google::cloud::recaptchaenterprise::v1::Key response;
   auto status = grpc_stub_->CreateKey(&context, request, &response);
@@ -69,7 +70,7 @@ DefaultRecaptchaEnterpriseServiceStub::CreateKey(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::ListKeysResponse>
 DefaultRecaptchaEnterpriseServiceStub::ListKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recaptchaenterprise::v1::ListKeysRequest const& request) {
   google::cloud::recaptchaenterprise::v1::ListKeysResponse response;
   auto status = grpc_stub_->ListKeys(&context, request, &response);
@@ -82,7 +83,7 @@ DefaultRecaptchaEnterpriseServiceStub::ListKeys(
 StatusOr<
     google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse>
 DefaultRecaptchaEnterpriseServiceStub::RetrieveLegacySecretKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recaptchaenterprise::v1::
         RetrieveLegacySecretKeyRequest const& request) {
   google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse
@@ -97,7 +98,7 @@ DefaultRecaptchaEnterpriseServiceStub::RetrieveLegacySecretKey(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 DefaultRecaptchaEnterpriseServiceStub::GetKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request) {
   google::cloud::recaptchaenterprise::v1::Key response;
   auto status = grpc_stub_->GetKey(&context, request, &response);
@@ -109,7 +110,7 @@ DefaultRecaptchaEnterpriseServiceStub::GetKey(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 DefaultRecaptchaEnterpriseServiceStub::UpdateKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request) {
   google::cloud::recaptchaenterprise::v1::Key response;
   auto status = grpc_stub_->UpdateKey(&context, request, &response);
@@ -120,7 +121,7 @@ DefaultRecaptchaEnterpriseServiceStub::UpdateKey(
 }
 
 Status DefaultRecaptchaEnterpriseServiceStub::DeleteKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteKey(&context, request, &response);
@@ -132,7 +133,7 @@ Status DefaultRecaptchaEnterpriseServiceStub::DeleteKey(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 DefaultRecaptchaEnterpriseServiceStub::MigrateKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request) {
   google::cloud::recaptchaenterprise::v1::Key response;
   auto status = grpc_stub_->MigrateKey(&context, request, &response);
@@ -144,7 +145,7 @@ DefaultRecaptchaEnterpriseServiceStub::MigrateKey(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
 DefaultRecaptchaEnterpriseServiceStub::GetMetrics(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request) {
   google::cloud::recaptchaenterprise::v1::Metrics response;
   auto status = grpc_stub_->GetMetrics(&context, request, &response);
@@ -156,7 +157,7 @@ DefaultRecaptchaEnterpriseServiceStub::GetMetrics(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
 DefaultRecaptchaEnterpriseServiceStub::CreateFirewallPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
         request) {
   google::cloud::recaptchaenterprise::v1::FirewallPolicy response;
@@ -169,7 +170,7 @@ DefaultRecaptchaEnterpriseServiceStub::CreateFirewallPolicy(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesResponse>
 DefaultRecaptchaEnterpriseServiceStub::ListFirewallPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest const&
         request) {
   google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesResponse response;
@@ -182,7 +183,7 @@ DefaultRecaptchaEnterpriseServiceStub::ListFirewallPolicies(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
 DefaultRecaptchaEnterpriseServiceStub::GetFirewallPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
         request) {
   google::cloud::recaptchaenterprise::v1::FirewallPolicy response;
@@ -195,7 +196,7 @@ DefaultRecaptchaEnterpriseServiceStub::GetFirewallPolicy(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
 DefaultRecaptchaEnterpriseServiceStub::UpdateFirewallPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
         request) {
   google::cloud::recaptchaenterprise::v1::FirewallPolicy response;
@@ -207,7 +208,7 @@ DefaultRecaptchaEnterpriseServiceStub::UpdateFirewallPolicy(
 }
 
 Status DefaultRecaptchaEnterpriseServiceStub::DeleteFirewallPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
         request) {
   google::protobuf::Empty response;
@@ -219,9 +220,25 @@ Status DefaultRecaptchaEnterpriseServiceStub::DeleteFirewallPolicy(
 }
 
 StatusOr<
+    google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+DefaultRecaptchaEnterpriseServiceStub::ReorderFirewallPolicies(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::recaptchaenterprise::v1::
+        ReorderFirewallPoliciesRequest const& request) {
+  google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse
+      response;
+  auto status =
+      grpc_stub_->ReorderFirewallPolicies(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<
     google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>
 DefaultRecaptchaEnterpriseServiceStub::ListRelatedAccountGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recaptchaenterprise::v1::
         ListRelatedAccountGroupsRequest const& request) {
   google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse
@@ -237,7 +254,7 @@ DefaultRecaptchaEnterpriseServiceStub::ListRelatedAccountGroups(
 StatusOr<google::cloud::recaptchaenterprise::v1::
              ListRelatedAccountGroupMembershipsResponse>
 DefaultRecaptchaEnterpriseServiceStub::ListRelatedAccountGroupMemberships(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recaptchaenterprise::v1::
         ListRelatedAccountGroupMembershipsRequest const& request) {
   google::cloud::recaptchaenterprise::v1::
@@ -253,7 +270,7 @@ DefaultRecaptchaEnterpriseServiceStub::ListRelatedAccountGroupMemberships(
 StatusOr<google::cloud::recaptchaenterprise::v1::
              SearchRelatedAccountGroupMembershipsResponse>
 DefaultRecaptchaEnterpriseServiceStub::SearchRelatedAccountGroupMemberships(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recaptchaenterprise::v1::
         SearchRelatedAccountGroupMembershipsRequest const& request) {
   google::cloud::recaptchaenterprise::v1::

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/servicehealth/v1/event_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ ServiceHealthStub::~ServiceHealthStub() = default;
 
 StatusOr<google::cloud::servicehealth::v1::ListEventsResponse>
 DefaultServiceHealthStub::ListEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicehealth::v1::ListEventsRequest const& request) {
   google::cloud::servicehealth::v1::ListEventsResponse response;
   auto status = grpc_stub_->ListEvents(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultServiceHealthStub::ListEvents(
 
 StatusOr<google::cloud::servicehealth::v1::Event>
 DefaultServiceHealthStub::GetEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicehealth::v1::GetEventRequest const& request) {
   google::cloud::servicehealth::v1::Event response;
   auto status = grpc_stub_->GetEvent(&context, request, &response);
@@ -55,7 +56,7 @@ DefaultServiceHealthStub::GetEvent(
 
 StatusOr<google::cloud::servicehealth::v1::ListOrganizationEventsResponse>
 DefaultServiceHealthStub::ListOrganizationEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicehealth::v1::ListOrganizationEventsRequest const&
         request) {
   google::cloud::servicehealth::v1::ListOrganizationEventsResponse response;
@@ -69,7 +70,7 @@ DefaultServiceHealthStub::ListOrganizationEvents(
 
 StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>
 DefaultServiceHealthStub::GetOrganizationEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
         request) {
   google::cloud::servicehealth::v1::OrganizationEvent response;
@@ -82,7 +83,7 @@ DefaultServiceHealthStub::GetOrganizationEvent(
 
 StatusOr<google::cloud::servicehealth::v1::ListOrganizationImpactsResponse>
 DefaultServiceHealthStub::ListOrganizationImpacts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicehealth::v1::ListOrganizationImpactsRequest const&
         request) {
   google::cloud::servicehealth::v1::ListOrganizationImpactsResponse response;
@@ -96,7 +97,7 @@ DefaultServiceHealthStub::ListOrganizationImpacts(
 
 StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>
 DefaultServiceHealthStub::GetOrganizationImpact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
         request) {
   google::cloud::servicehealth::v1::OrganizationImpact response;

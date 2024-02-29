@@ -18,6 +18,7 @@
 
 #include "google/cloud/servicecontrol/v1/quota_controller_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

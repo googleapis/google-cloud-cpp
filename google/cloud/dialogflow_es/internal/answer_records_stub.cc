@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/answer_record.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ AnswerRecordsStub::~AnswerRecordsStub() = default;
 
 StatusOr<google::cloud::dialogflow::v2::ListAnswerRecordsResponse>
 DefaultAnswerRecordsStub::ListAnswerRecords(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::ListAnswerRecordsRequest const& request) {
   google::cloud::dialogflow::v2::ListAnswerRecordsResponse response;
   auto status = grpc_stub_->ListAnswerRecords(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultAnswerRecordsStub::ListAnswerRecords(
 
 StatusOr<google::cloud::dialogflow::v2::AnswerRecord>
 DefaultAnswerRecordsStub::UpdateAnswerRecord(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request) {
   google::cloud::dialogflow::v2::AnswerRecord response;
   auto status = grpc_stub_->UpdateAnswerRecord(&context, request, &response);

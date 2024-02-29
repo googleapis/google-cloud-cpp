@@ -79,6 +79,68 @@ class EnvironmentsTracingConnection
   PollAirflowCommand(google::cloud::orchestration::airflow::service::v1::
                          PollAirflowCommandRequest const& request) override;
 
+  StreamRange<google::cloud::orchestration::airflow::service::v1::
+                  ListWorkloadsResponse::ComposerWorkload>
+  ListWorkloads(
+      google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest
+          request) override;
+
+  StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  CreateUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          CreateUserWorkloadsSecretRequest const& request) override;
+
+  StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  GetUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          GetUserWorkloadsSecretRequest const& request) override;
+
+  StreamRange<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  ListUserWorkloadsSecrets(
+      google::cloud::orchestration::airflow::service::v1::
+          ListUserWorkloadsSecretsRequest request) override;
+
+  StatusOr<
+      google::cloud::orchestration::airflow::service::v1::UserWorkloadsSecret>
+  UpdateUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          UpdateUserWorkloadsSecretRequest const& request) override;
+
+  Status DeleteUserWorkloadsSecret(
+      google::cloud::orchestration::airflow::service::v1::
+          DeleteUserWorkloadsSecretRequest const& request) override;
+
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               UserWorkloadsConfigMap>
+  CreateUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          CreateUserWorkloadsConfigMapRequest const& request) override;
+
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               UserWorkloadsConfigMap>
+  GetUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          GetUserWorkloadsConfigMapRequest const& request) override;
+
+  StreamRange<google::cloud::orchestration::airflow::service::v1::
+                  UserWorkloadsConfigMap>
+  ListUserWorkloadsConfigMaps(
+      google::cloud::orchestration::airflow::service::v1::
+          ListUserWorkloadsConfigMapsRequest request) override;
+
+  StatusOr<google::cloud::orchestration::airflow::service::v1::
+               UserWorkloadsConfigMap>
+  UpdateUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          UpdateUserWorkloadsConfigMapRequest const& request) override;
+
+  Status DeleteUserWorkloadsConfigMap(
+      google::cloud::orchestration::airflow::service::v1::
+          DeleteUserWorkloadsConfigMapRequest const& request) override;
+
   future<StatusOr<
       google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
   SaveSnapshot(google::cloud::orchestration::airflow::service::v1::

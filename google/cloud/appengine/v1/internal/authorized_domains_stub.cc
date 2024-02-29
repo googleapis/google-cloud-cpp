@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ AuthorizedDomainsStub::~AuthorizedDomainsStub() = default;
 
 StatusOr<google::appengine::v1::ListAuthorizedDomainsResponse>
 DefaultAuthorizedDomainsStub::ListAuthorizedDomains(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::appengine::v1::ListAuthorizedDomainsRequest const& request) {
   google::appengine::v1::ListAuthorizedDomainsResponse response;
   auto status = grpc_stub_->ListAuthorizedDomains(&context, request, &response);

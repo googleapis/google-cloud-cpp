@@ -20,6 +20,7 @@
 #include "google/cloud/containeranalysis/v1/container_analysis_options.h"
 #include <memory>
 #include <thread>
+#include <utility>
 
 namespace google {
 namespace cloud {

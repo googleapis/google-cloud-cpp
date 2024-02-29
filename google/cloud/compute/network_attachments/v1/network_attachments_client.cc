@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/network_attachments/v1/network_attachments_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

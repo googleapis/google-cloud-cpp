@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/reservation/v1/reservation_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -22,6 +22,7 @@
 #include <google/cloud/aiplatform/v1/migration_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ MigrationServiceStub::~MigrationServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::SearchMigratableResourcesResponse>
 DefaultMigrationServiceStub::SearchMigratableResources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::SearchMigratableResourcesRequest const&
         request) {
   google::cloud::aiplatform::v1::SearchMigratableResourcesResponse response;
@@ -47,7 +48,8 @@ DefaultMigrationServiceStub::SearchMigratableResources(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationServiceStub::AsyncBatchMigrateResources(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -66,7 +68,8 @@ DefaultMigrationServiceStub::AsyncBatchMigrateResources(
 future<StatusOr<google::longrunning::Operation>>
 DefaultMigrationServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -81,7 +84,8 @@ DefaultMigrationServiceStub::AsyncGetOperation(
 
 future<Status> DefaultMigrationServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/cx/v3/security_settings.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ SecuritySettingsServiceStub::~SecuritySettingsServiceStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
 DefaultSecuritySettingsServiceStub::CreateSecuritySettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::SecuritySettings response;
@@ -45,7 +46,7 @@ DefaultSecuritySettingsServiceStub::CreateSecuritySettings(
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
 DefaultSecuritySettingsServiceStub::GetSecuritySettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::SecuritySettings response;
@@ -58,7 +59,7 @@ DefaultSecuritySettingsServiceStub::GetSecuritySettings(
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
 DefaultSecuritySettingsServiceStub::UpdateSecuritySettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::SecuritySettings response;
@@ -72,7 +73,7 @@ DefaultSecuritySettingsServiceStub::UpdateSecuritySettings(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListSecuritySettingsResponse>
 DefaultSecuritySettingsServiceStub::ListSecuritySettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::ListSecuritySettingsResponse response;
@@ -84,7 +85,7 @@ DefaultSecuritySettingsServiceStub::ListSecuritySettings(
 }
 
 Status DefaultSecuritySettingsServiceStub::DeleteSecuritySettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
         request) {
   google::protobuf::Empty response;

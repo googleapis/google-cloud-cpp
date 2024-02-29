@@ -19,6 +19,7 @@
 #include "google/cloud/appengine/v1/internal/authorized_certificates_auth_decorator.h"
 #include <google/appengine/v1/appengine.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,46 +33,46 @@ AuthorizedCertificatesAuth::AuthorizedCertificatesAuth(
 
 StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse>
 AuthorizedCertificatesAuth::ListAuthorizedCertificates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::ListAuthorizedCertificatesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAuthorizedCertificates(context, request);
+  return child_->ListAuthorizedCertificates(context, options, request);
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesAuth::GetAuthorizedCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::GetAuthorizedCertificateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAuthorizedCertificate(context, request);
+  return child_->GetAuthorizedCertificate(context, options, request);
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesAuth::CreateAuthorizedCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::CreateAuthorizedCertificateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateAuthorizedCertificate(context, request);
+  return child_->CreateAuthorizedCertificate(context, options, request);
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesAuth::UpdateAuthorizedCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::UpdateAuthorizedCertificateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateAuthorizedCertificate(context, request);
+  return child_->UpdateAuthorizedCertificate(context, options, request);
 }
 
 Status AuthorizedCertificatesAuth::DeleteAuthorizedCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::appengine::v1::DeleteAuthorizedCertificateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteAuthorizedCertificate(context, request);
+  return child_->DeleteAuthorizedCertificate(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

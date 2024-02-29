@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/api/servicemanagement/v1/servicemanager.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,226 +37,248 @@ ServiceManagerLogging::ServiceManagerLogging(
 
 StatusOr<google::api::servicemanagement::v1::ListServicesResponse>
 ServiceManagerLogging::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::ListServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::servicemanagement::v1::ListServicesRequest const&
-                 request) { return child_->ListServices(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListServices(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::servicemanagement::v1::ManagedService>
 ServiceManagerLogging::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::GetServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::servicemanagement::v1::GetServiceRequest const&
-                 request) { return child_->GetService(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetService(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerLogging::AsyncCreateService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::servicemanagement::v1::CreateServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::api::servicemanagement::v1::CreateServiceRequest const&
                  request) {
-        return child_->AsyncCreateService(cq, std::move(context), options,
-                                          request);
+        return child_->AsyncCreateService(cq, std::move(context),
+                                          std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerLogging::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::servicemanagement::v1::DeleteServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::api::servicemanagement::v1::DeleteServiceRequest const&
                  request) {
-        return child_->AsyncDeleteService(cq, std::move(context), options,
-                                          request);
+        return child_->AsyncDeleteService(cq, std::move(context),
+                                          std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerLogging::AsyncUndeleteService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::servicemanagement::v1::UndeleteServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::api::servicemanagement::v1::UndeleteServiceRequest const&
                  request) {
-        return child_->AsyncUndeleteService(cq, std::move(context), options,
-                                            request);
+        return child_->AsyncUndeleteService(cq, std::move(context),
+                                            std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 StatusOr<google::api::servicemanagement::v1::ListServiceConfigsResponse>
 ServiceManagerLogging::ListServiceConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::ListServiceConfigsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::api::servicemanagement::v1::ListServiceConfigsRequest const&
-              request) { return child_->ListServiceConfigs(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->ListServiceConfigs(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::Service> ServiceManagerLogging::GetServiceConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::GetServiceConfigRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::servicemanagement::v1::GetServiceConfigRequest const&
                  request) {
-        return child_->GetServiceConfig(context, request);
+        return child_->GetServiceConfig(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::Service> ServiceManagerLogging::CreateServiceConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::CreateServiceConfigRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::api::servicemanagement::v1::CreateServiceConfigRequest const&
               request) {
-        return child_->CreateServiceConfig(context, request);
+        return child_->CreateServiceConfig(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerLogging::AsyncSubmitConfigSource(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
               request) {
-        return child_->AsyncSubmitConfigSource(cq, std::move(context), options,
-                                               request);
+        return child_->AsyncSubmitConfigSource(cq, std::move(context),
+                                               std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 StatusOr<google::api::servicemanagement::v1::ListServiceRolloutsResponse>
 ServiceManagerLogging::ListServiceRollouts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::ListServiceRolloutsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::api::servicemanagement::v1::ListServiceRolloutsRequest const&
               request) {
-        return child_->ListServiceRollouts(context, request);
+        return child_->ListServiceRollouts(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::api::servicemanagement::v1::Rollout>
 ServiceManagerLogging::GetServiceRollout(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::GetServiceRolloutRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::servicemanagement::v1::GetServiceRolloutRequest const&
                  request) {
-        return child_->GetServiceRollout(context, request);
+        return child_->GetServiceRollout(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerLogging::AsyncCreateServiceRollout(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
               request) {
         return child_->AsyncCreateServiceRollout(cq, std::move(context),
-                                                 options, request);
+                                                 std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>
 ServiceManagerLogging::GenerateConfigReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::GenerateConfigReportRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::api::servicemanagement::v1::GenerateConfigReportRequest const&
               request) {
-        return child_->GenerateConfigReport(context, request);
+        return child_->GenerateConfigReport(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context), options,
-                                         request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<Status> ServiceManagerLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context), options,
-                                            request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

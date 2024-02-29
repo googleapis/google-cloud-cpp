@@ -39,12 +39,12 @@ class TraceServiceMetadata : public TraceServiceStub {
                        std::string api_client_header = "");
 
   Status BatchWriteSpans(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request)
       override;
 
   StatusOr<google::devtools::cloudtrace::v2::Span> CreateSpan(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudtrace::v2::Span const& request) override;
 
  private:

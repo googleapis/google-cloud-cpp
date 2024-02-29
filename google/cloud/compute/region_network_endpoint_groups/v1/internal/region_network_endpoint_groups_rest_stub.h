@@ -42,7 +42,7 @@ class RegionNetworkEndpointGroupsRestStub {
   AsyncAttachNetworkEndpoints(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           AttachNetworkEndpointsRequest const& request) = 0;
 
@@ -50,7 +50,7 @@ class RegionNetworkEndpointGroupsRestStub {
   AsyncDeleteNetworkEndpointGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           DeleteNetworkEndpointGroupRequest const& request) = 0;
 
@@ -58,7 +58,7 @@ class RegionNetworkEndpointGroupsRestStub {
   AsyncDetachNetworkEndpoints(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           DetachNetworkEndpointsRequest const& request) = 0;
 
@@ -73,7 +73,7 @@ class RegionNetworkEndpointGroupsRestStub {
   AsyncInsertNetworkEndpointGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           InsertNetworkEndpointGroupRequest const& request) = 0;
 
@@ -96,14 +96,14 @@ class RegionNetworkEndpointGroupsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) = 0;
 };
@@ -122,7 +122,7 @@ class DefaultRegionNetworkEndpointGroupsRestStub
   AsyncAttachNetworkEndpoints(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           AttachNetworkEndpointsRequest const& request) override;
 
@@ -130,7 +130,7 @@ class DefaultRegionNetworkEndpointGroupsRestStub
   AsyncDeleteNetworkEndpointGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           DeleteNetworkEndpointGroupRequest const& request) override;
 
@@ -138,7 +138,7 @@ class DefaultRegionNetworkEndpointGroupsRestStub
   AsyncDetachNetworkEndpoints(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           DetachNetworkEndpointsRequest const& request) override;
 
@@ -153,7 +153,7 @@ class DefaultRegionNetworkEndpointGroupsRestStub
   AsyncInsertNetworkEndpointGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_network_endpoint_groups::v1::
           InsertNetworkEndpointGroupRequest const& request) override;
 
@@ -176,14 +176,14 @@ class DefaultRegionNetworkEndpointGroupsRestStub
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 

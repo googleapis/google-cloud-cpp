@@ -18,6 +18,7 @@
 
 #include "google/cloud/eventarc/v1/eventarc_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

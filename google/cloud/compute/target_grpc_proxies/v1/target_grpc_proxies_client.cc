@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/target_grpc_proxies/v1/target_grpc_proxies_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

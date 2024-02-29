@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_COMPANY_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_INTERNAL_COMPANY_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/talent/v4/company_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -34,24 +36,24 @@ class CompanyServiceStub {
   virtual ~CompanyServiceStub() = 0;
 
   virtual StatusOr<google::cloud::talent::v4::Company> CreateCompany(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::CreateCompanyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::talent::v4::Company> GetCompany(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::GetCompanyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::talent::v4::Company> UpdateCompany(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::UpdateCompanyRequest const& request) = 0;
 
   virtual Status DeleteCompany(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::DeleteCompanyRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::talent::v4::ListCompaniesResponse>
   ListCompanies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::ListCompaniesRequest const& request) = 0;
 };
 
@@ -63,23 +65,23 @@ class DefaultCompanyServiceStub : public CompanyServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::talent::v4::Company> CreateCompany(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::CreateCompanyRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::Company> GetCompany(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::GetCompanyRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::Company> UpdateCompany(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::UpdateCompanyRequest const& request) override;
 
   Status DeleteCompany(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::DeleteCompanyRequest const& request) override;
 
   StatusOr<google::cloud::talent::v4::ListCompaniesResponse> ListCompanies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::talent::v4::ListCompaniesRequest const& request) override;
 
  private:

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/cx/v3/deployment.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ DeploymentsStub::~DeploymentsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListDeploymentsResponse>
 DefaultDeploymentsStub::ListDeployments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ListDeploymentsRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListDeploymentsResponse response;
   auto status = grpc_stub_->ListDeployments(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultDeploymentsStub::ListDeployments(
 
 StatusOr<google::cloud::dialogflow::cx::v3::Deployment>
 DefaultDeploymentsStub::GetDeployment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request) {
   google::cloud::dialogflow::cx::v3::Deployment response;
   auto status = grpc_stub_->GetDeployment(&context, request, &response);

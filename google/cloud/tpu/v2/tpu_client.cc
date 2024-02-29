@@ -18,6 +18,7 @@
 
 #include "google/cloud/tpu/v2/tpu_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

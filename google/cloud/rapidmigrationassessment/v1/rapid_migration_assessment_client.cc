@@ -19,6 +19,7 @@
 
 #include "google/cloud/rapidmigrationassessment/v1/rapid_migration_assessment_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

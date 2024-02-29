@@ -52,7 +52,7 @@ class NetworkEndpointGroupsRestMetadata : public NetworkEndpointGroupsRestStub {
   AsyncAttachNetworkEndpoints(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::network_endpoint_groups::v1::
           AttachNetworkEndpointsRequest const& request) override;
 
@@ -60,7 +60,7 @@ class NetworkEndpointGroupsRestMetadata : public NetworkEndpointGroupsRestStub {
   AsyncDeleteNetworkEndpointGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::network_endpoint_groups::v1::
           DeleteNetworkEndpointGroupRequest const& request) override;
 
@@ -68,7 +68,7 @@ class NetworkEndpointGroupsRestMetadata : public NetworkEndpointGroupsRestStub {
   AsyncDetachNetworkEndpoints(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::network_endpoint_groups::v1::
           DetachNetworkEndpointsRequest const& request) override;
 
@@ -83,7 +83,7 @@ class NetworkEndpointGroupsRestMetadata : public NetworkEndpointGroupsRestStub {
   AsyncInsertNetworkEndpointGroup(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::network_endpoint_groups::v1::
           InsertNetworkEndpointGroupRequest const& request) override;
 
@@ -112,14 +112,14 @@ class NetworkEndpointGroupsRestMetadata : public NetworkEndpointGroupsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::zone_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::zone_operations::v1::
           DeleteOperationRequest const& request) override;
 

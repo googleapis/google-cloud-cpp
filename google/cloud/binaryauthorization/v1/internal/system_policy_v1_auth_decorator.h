@@ -39,7 +39,7 @@ class SystemPolicyV1Auth : public SystemPolicyV1Stub {
       std::shared_ptr<SystemPolicyV1Stub> child);
 
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
           request) override;
 

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/contactcenterinsights/v1/contact_center_insights.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,585 +37,642 @@ ContactCenterInsightsLogging::ContactCenterInsightsLogging(
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsLogging::CreateConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::CreateConversationRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::
                  CreateConversationRequest const& request) {
-        return child_->CreateConversation(context, request);
+        return child_->CreateConversation(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsLogging::AsyncUploadConversation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::contactcenterinsights::v1::UploadConversationRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::contactcenterinsights::v1::
                  UploadConversationRequest const& request) {
-        return child_->AsyncUploadConversation(cq, std::move(context), options,
-                                               request);
+        return child_->AsyncUploadConversation(cq, std::move(context),
+                                               std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsLogging::UpdateConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::UpdateConversationRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::
                  UpdateConversationRequest const& request) {
-        return child_->UpdateConversation(context, request);
+        return child_->UpdateConversation(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
 ContactCenterInsightsLogging::GetConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::GetConversationRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::
                  GetConversationRequest const& request) {
-        return child_->GetConversation(context, request);
+        return child_->GetConversation(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListConversationsResponse>
 ContactCenterInsightsLogging::ListConversations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::ListConversationsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::
                  ListConversationsRequest const& request) {
-        return child_->ListConversations(context, request);
+        return child_->ListConversations(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status ContactCenterInsightsLogging::DeleteConversation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::DeleteConversationRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::
                  DeleteConversationRequest const& request) {
-        return child_->DeleteConversation(context, request);
+        return child_->DeleteConversation(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsLogging::AsyncCreateAnalysis(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
               request) {
-        return child_->AsyncCreateAnalysis(cq, std::move(context), options,
-                                           request);
+        return child_->AsyncCreateAnalysis(cq, std::move(context),
+                                           std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Analysis>
 ContactCenterInsightsLogging::GetAnalysis(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
-                 request) { return child_->GetAnalysis(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetAnalysis(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListAnalysesResponse>
 ContactCenterInsightsLogging::ListAnalyses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::ListAnalysesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::contactcenterinsights::v1::ListAnalysesRequest const&
-              request) { return child_->ListAnalyses(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->ListAnalyses(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status ContactCenterInsightsLogging::DeleteAnalysis(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&
-              request) { return child_->DeleteAnalysis(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->DeleteAnalysis(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsLogging::AsyncBulkAnalyzeConversations(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::contactcenterinsights::v1::
         BulkAnalyzeConversationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::contactcenterinsights::v1::
                  BulkAnalyzeConversationsRequest const& request) {
-        return child_->AsyncBulkAnalyzeConversations(cq, std::move(context),
-                                                     options, request);
+        return child_->AsyncBulkAnalyzeConversations(
+            cq, std::move(context), std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsLogging::AsyncBulkDeleteConversations(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::contactcenterinsights::v1::
         BulkDeleteConversationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::contactcenterinsights::v1::
                  BulkDeleteConversationsRequest const& request) {
-        return child_->AsyncBulkDeleteConversations(cq, std::move(context),
-                                                    options, request);
+        return child_->AsyncBulkDeleteConversations(
+            cq, std::move(context), std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsLogging::AsyncIngestConversations(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::contactcenterinsights::v1::
                  IngestConversationsRequest const& request) {
-        return child_->AsyncIngestConversations(cq, std::move(context), options,
-                                                request);
+        return child_->AsyncIngestConversations(cq, std::move(context),
+                                                std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsLogging::AsyncExportInsightsData(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::contactcenterinsights::v1::
                  ExportInsightsDataRequest const& request) {
-        return child_->AsyncExportInsightsData(cq, std::move(context), options,
-                                               request);
+        return child_->AsyncExportInsightsData(cq, std::move(context),
+                                               std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsLogging::AsyncCreateIssueModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::contactcenterinsights::v1::
                  CreateIssueModelRequest const& request) {
-        return child_->AsyncCreateIssueModel(cq, std::move(context), options,
-                                             request);
+        return child_->AsyncCreateIssueModel(cq, std::move(context),
+                                             std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
 ContactCenterInsightsLogging::UpdateIssueModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::UpdateIssueModelRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::
                  UpdateIssueModelRequest const& request) {
-        return child_->UpdateIssueModel(context, request);
+        return child_->UpdateIssueModel(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>
 ContactCenterInsightsLogging::GetIssueModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::GetIssueModelRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::contactcenterinsights::v1::GetIssueModelRequest const&
-              request) { return child_->GetIssueModel(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->GetIssueModel(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListIssueModelsResponse>
 ContactCenterInsightsLogging::ListIssueModels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::ListIssueModelsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::
                  ListIssueModelsRequest const& request) {
-        return child_->ListIssueModels(context, request);
+        return child_->ListIssueModels(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsLogging::AsyncDeleteIssueModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::contactcenterinsights::v1::
                  DeleteIssueModelRequest const& request) {
-        return child_->AsyncDeleteIssueModel(cq, std::move(context), options,
-                                             request);
+        return child_->AsyncDeleteIssueModel(cq, std::move(context),
+                                             std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsLogging::AsyncDeployIssueModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::contactcenterinsights::v1::
                  DeployIssueModelRequest const& request) {
-        return child_->AsyncDeployIssueModel(cq, std::move(context), options,
-                                             request);
+        return child_->AsyncDeployIssueModel(cq, std::move(context),
+                                             std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsLogging::AsyncUndeployIssueModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::contactcenterinsights::v1::UndeployIssueModelRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::cloud::contactcenterinsights::v1::
                  UndeployIssueModelRequest const& request) {
-        return child_->AsyncUndeployIssueModel(cq, std::move(context), options,
-                                               request);
+        return child_->AsyncUndeployIssueModel(cq, std::move(context),
+                                               std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>
 ContactCenterInsightsLogging::GetIssue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::GetIssueRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::GetIssueRequest const&
-                 request) { return child_->GetIssue(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetIssue(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListIssuesResponse>
 ContactCenterInsightsLogging::ListIssues(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::ListIssuesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::ListIssuesRequest const&
-                 request) { return child_->ListIssues(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListIssues(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>
 ContactCenterInsightsLogging::UpdateIssue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
-                 request) { return child_->UpdateIssue(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->UpdateIssue(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status ContactCenterInsightsLogging::DeleteIssue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
-                 request) { return child_->DeleteIssue(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->DeleteIssue(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<
     google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsResponse>
 ContactCenterInsightsLogging::CalculateIssueModelStats(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::
         CalculateIssueModelStatsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::
                  CalculateIssueModelStatsRequest const& request) {
-        return child_->CalculateIssueModelStats(context, request);
+        return child_->CalculateIssueModelStats(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
 ContactCenterInsightsLogging::CreatePhraseMatcher(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::CreatePhraseMatcherRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::
                  CreatePhraseMatcherRequest const& request) {
-        return child_->CreatePhraseMatcher(context, request);
+        return child_->CreatePhraseMatcher(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
 ContactCenterInsightsLogging::GetPhraseMatcher(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::GetPhraseMatcherRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::
                  GetPhraseMatcherRequest const& request) {
-        return child_->GetPhraseMatcher(context, request);
+        return child_->GetPhraseMatcher(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListPhraseMatchersResponse>
 ContactCenterInsightsLogging::ListPhraseMatchers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::ListPhraseMatchersRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::
                  ListPhraseMatchersRequest const& request) {
-        return child_->ListPhraseMatchers(context, request);
+        return child_->ListPhraseMatchers(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status ContactCenterInsightsLogging::DeletePhraseMatcher(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::DeletePhraseMatcherRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::
                  DeletePhraseMatcherRequest const& request) {
-        return child_->DeletePhraseMatcher(context, request);
+        return child_->DeletePhraseMatcher(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::PhraseMatcher>
 ContactCenterInsightsLogging::UpdatePhraseMatcher(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::UpdatePhraseMatcherRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::
                  UpdatePhraseMatcherRequest const& request) {
-        return child_->UpdatePhraseMatcher(context, request);
+        return child_->UpdatePhraseMatcher(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::CalculateStatsResponse>
 ContactCenterInsightsLogging::CalculateStats(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::CalculateStatsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::contactcenterinsights::v1::CalculateStatsRequest const&
-              request) { return child_->CalculateStats(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->CalculateStats(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Settings>
 ContactCenterInsightsLogging::GetSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::GetSettingsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::GetSettingsRequest const&
-                 request) { return child_->GetSettings(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetSettings(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::Settings>
 ContactCenterInsightsLogging::UpdateSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::contactcenterinsights::v1::UpdateSettingsRequest const&
-              request) { return child_->UpdateSettings(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->UpdateSettings(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>
 ContactCenterInsightsLogging::CreateView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::CreateViewRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::CreateViewRequest const&
-                 request) { return child_->CreateView(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->CreateView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>
 ContactCenterInsightsLogging::GetView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::GetViewRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::GetViewRequest const&
-                 request) { return child_->GetView(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::ListViewsResponse>
 ContactCenterInsightsLogging::ListViews(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::ListViewsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::ListViewsRequest const&
-                 request) { return child_->ListViews(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListViews(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contactcenterinsights::v1::View>
 ContactCenterInsightsLogging::UpdateView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::UpdateViewRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::UpdateViewRequest const&
-                 request) { return child_->UpdateView(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->UpdateView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status ContactCenterInsightsLogging::DeleteView(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contactcenterinsights::v1::DeleteViewRequest const&
-                 request) { return child_->DeleteView(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->DeleteView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context), options,
-                                         request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<Status> ContactCenterInsightsLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context), options,
-                                            request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

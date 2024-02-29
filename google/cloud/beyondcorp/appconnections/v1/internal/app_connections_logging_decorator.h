@@ -42,48 +42,53 @@ class AppConnectionsServiceLogging : public AppConnectionsServiceStub {
 
   StatusOr<
       google::cloud::beyondcorp::appconnections::v1::ListAppConnectionsResponse>
-  ListAppConnections(grpc::ClientContext& context,
+  ListAppConnections(grpc::ClientContext& context, Options const& options,
                      google::cloud::beyondcorp::appconnections::v1::
                          ListAppConnectionsRequest const& request) override;
 
   StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>
-  GetAppConnection(grpc::ClientContext& context,
+  GetAppConnection(grpc::ClientContext& context, Options const& options,
                    google::cloud::beyondcorp::appconnections::v1::
                        GetAppConnectionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAppConnection(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::beyondcorp::appconnections::v1::
           CreateAppConnectionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAppConnection(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::beyondcorp::appconnections::v1::
           UpdateAppConnectionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAppConnection(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::beyondcorp::appconnections::v1::
           DeleteAppConnectionRequest const& request) override;
 
   StatusOr<google::cloud::beyondcorp::appconnections::v1::
                ResolveAppConnectionsResponse>
   ResolveAppConnections(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::beyondcorp::appconnections::v1::
           ResolveAppConnectionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

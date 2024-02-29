@@ -101,7 +101,7 @@ Status OptionDefaultsGenerator::GenerateCc() {
     default:
       break;
   }
-  CcSystemIncludes({"memory"});
+  CcSystemIncludes({"memory", "utility"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;

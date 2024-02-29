@@ -19,6 +19,7 @@
 #include "google/cloud/kms/v1/internal/key_management_auth_decorator.h"
 #include <google/cloud/kms/v1/service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,254 +33,254 @@ KeyManagementServiceAuth::KeyManagementServiceAuth(
 
 StatusOr<google::cloud::kms::v1::ListKeyRingsResponse>
 KeyManagementServiceAuth::ListKeyRings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::ListKeyRingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListKeyRings(context, request);
+  return child_->ListKeyRings(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::ListCryptoKeysResponse>
 KeyManagementServiceAuth::ListCryptoKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::ListCryptoKeysRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCryptoKeys(context, request);
+  return child_->ListCryptoKeys(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::ListCryptoKeyVersionsResponse>
 KeyManagementServiceAuth::ListCryptoKeyVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::ListCryptoKeyVersionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCryptoKeyVersions(context, request);
+  return child_->ListCryptoKeyVersions(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::ListImportJobsResponse>
 KeyManagementServiceAuth::ListImportJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::ListImportJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListImportJobs(context, request);
+  return child_->ListImportJobs(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::KeyRing> KeyManagementServiceAuth::GetKeyRing(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetKeyRingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetKeyRing(context, request);
+  return child_->GetKeyRing(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
 KeyManagementServiceAuth::GetCryptoKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetCryptoKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCryptoKey(context, request);
+  return child_->GetCryptoKey(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceAuth::GetCryptoKeyVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCryptoKeyVersion(context, request);
+  return child_->GetCryptoKeyVersion(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::PublicKey>
 KeyManagementServiceAuth::GetPublicKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetPublicKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetPublicKey(context, request);
+  return child_->GetPublicKey(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::ImportJob>
 KeyManagementServiceAuth::GetImportJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GetImportJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetImportJob(context, request);
+  return child_->GetImportJob(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceAuth::CreateKeyRing(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::CreateKeyRingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateKeyRing(context, request);
+  return child_->CreateKeyRing(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
 KeyManagementServiceAuth::CreateCryptoKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::CreateCryptoKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateCryptoKey(context, request);
+  return child_->CreateCryptoKey(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceAuth::CreateCryptoKeyVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateCryptoKeyVersion(context, request);
+  return child_->CreateCryptoKeyVersion(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceAuth::ImportCryptoKeyVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ImportCryptoKeyVersion(context, request);
+  return child_->ImportCryptoKeyVersion(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::ImportJob>
 KeyManagementServiceAuth::CreateImportJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::CreateImportJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateImportJob(context, request);
+  return child_->CreateImportJob(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
 KeyManagementServiceAuth::UpdateCryptoKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::UpdateCryptoKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateCryptoKey(context, request);
+  return child_->UpdateCryptoKey(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceAuth::UpdateCryptoKeyVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateCryptoKeyVersion(context, request);
+  return child_->UpdateCryptoKeyVersion(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
 KeyManagementServiceAuth::UpdateCryptoKeyPrimaryVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateCryptoKeyPrimaryVersion(context, request);
+  return child_->UpdateCryptoKeyPrimaryVersion(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceAuth::DestroyCryptoKeyVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DestroyCryptoKeyVersion(context, request);
+  return child_->DestroyCryptoKeyVersion(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceAuth::RestoreCryptoKeyVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RestoreCryptoKeyVersion(context, request);
+  return child_->RestoreCryptoKeyVersion(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::EncryptResponse>
 KeyManagementServiceAuth::Encrypt(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::EncryptRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->Encrypt(context, request);
+  return child_->Encrypt(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::DecryptResponse>
 KeyManagementServiceAuth::Decrypt(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::DecryptRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->Decrypt(context, request);
+  return child_->Decrypt(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::RawEncryptResponse>
 KeyManagementServiceAuth::RawEncrypt(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::RawEncryptRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RawEncrypt(context, request);
+  return child_->RawEncrypt(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::RawDecryptResponse>
 KeyManagementServiceAuth::RawDecrypt(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::RawDecryptRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RawDecrypt(context, request);
+  return child_->RawDecrypt(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
 KeyManagementServiceAuth::AsymmetricSign(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::AsymmetricSignRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->AsymmetricSign(context, request);
+  return child_->AsymmetricSign(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse>
 KeyManagementServiceAuth::AsymmetricDecrypt(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::AsymmetricDecryptRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->AsymmetricDecrypt(context, request);
+  return child_->AsymmetricDecrypt(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::MacSignResponse>
 KeyManagementServiceAuth::MacSign(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::MacSignRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->MacSign(context, request);
+  return child_->MacSign(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::MacVerifyResponse>
 KeyManagementServiceAuth::MacVerify(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::MacVerifyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->MacVerify(context, request);
+  return child_->MacVerify(context, options, request);
 }
 
 StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
 KeyManagementServiceAuth::GenerateRandomBytes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::v1::GenerateRandomBytesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GenerateRandomBytes(context, request);
+  return child_->GenerateRandomBytes(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

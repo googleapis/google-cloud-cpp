@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/datastore/v1/datastore.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -30,7 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DatastoreStub::~DatastoreStub() = default;
 
 StatusOr<google::datastore::v1::LookupResponse> DefaultDatastoreStub::Lookup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::datastore::v1::LookupRequest const& request) {
   google::datastore::v1::LookupResponse response;
   auto status = grpc_stub_->Lookup(&context, request, &response);
@@ -42,7 +43,7 @@ StatusOr<google::datastore::v1::LookupResponse> DefaultDatastoreStub::Lookup(
 
 StatusOr<google::datastore::v1::RunQueryResponse>
 DefaultDatastoreStub::RunQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::datastore::v1::RunQueryRequest const& request) {
   google::datastore::v1::RunQueryResponse response;
   auto status = grpc_stub_->RunQuery(&context, request, &response);
@@ -54,7 +55,7 @@ DefaultDatastoreStub::RunQuery(
 
 StatusOr<google::datastore::v1::RunAggregationQueryResponse>
 DefaultDatastoreStub::RunAggregationQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::datastore::v1::RunAggregationQueryRequest const& request) {
   google::datastore::v1::RunAggregationQueryResponse response;
   auto status = grpc_stub_->RunAggregationQuery(&context, request, &response);
@@ -66,7 +67,7 @@ DefaultDatastoreStub::RunAggregationQuery(
 
 StatusOr<google::datastore::v1::BeginTransactionResponse>
 DefaultDatastoreStub::BeginTransaction(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::datastore::v1::BeginTransactionRequest const& request) {
   google::datastore::v1::BeginTransactionResponse response;
   auto status = grpc_stub_->BeginTransaction(&context, request, &response);
@@ -77,7 +78,7 @@ DefaultDatastoreStub::BeginTransaction(
 }
 
 StatusOr<google::datastore::v1::CommitResponse> DefaultDatastoreStub::Commit(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::datastore::v1::CommitRequest const& request) {
   google::datastore::v1::CommitResponse response;
   auto status = grpc_stub_->Commit(&context, request, &response);
@@ -89,7 +90,7 @@ StatusOr<google::datastore::v1::CommitResponse> DefaultDatastoreStub::Commit(
 
 StatusOr<google::datastore::v1::RollbackResponse>
 DefaultDatastoreStub::Rollback(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::datastore::v1::RollbackRequest const& request) {
   google::datastore::v1::RollbackResponse response;
   auto status = grpc_stub_->Rollback(&context, request, &response);
@@ -101,7 +102,7 @@ DefaultDatastoreStub::Rollback(
 
 StatusOr<google::datastore::v1::AllocateIdsResponse>
 DefaultDatastoreStub::AllocateIds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::datastore::v1::AllocateIdsRequest const& request) {
   google::datastore::v1::AllocateIdsResponse response;
   auto status = grpc_stub_->AllocateIds(&context, request, &response);
@@ -113,7 +114,7 @@ DefaultDatastoreStub::AllocateIds(
 
 StatusOr<google::datastore::v1::ReserveIdsResponse>
 DefaultDatastoreStub::ReserveIds(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::datastore::v1::ReserveIdsRequest const& request) {
   google::datastore::v1::ReserveIdsResponse response;
   auto status = grpc_stub_->ReserveIds(&context, request, &response);

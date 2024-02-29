@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/retail/v2/control_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ ControlServiceStub::~ControlServiceStub() = default;
 
 StatusOr<google::cloud::retail::v2::Control>
 DefaultControlServiceStub::CreateControl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::CreateControlRequest const& request) {
   google::cloud::retail::v2::Control response;
   auto status = grpc_stub_->CreateControl(&context, request, &response);
@@ -42,7 +43,7 @@ DefaultControlServiceStub::CreateControl(
 }
 
 Status DefaultControlServiceStub::DeleteControl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::DeleteControlRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteControl(&context, request, &response);
@@ -54,7 +55,7 @@ Status DefaultControlServiceStub::DeleteControl(
 
 StatusOr<google::cloud::retail::v2::Control>
 DefaultControlServiceStub::UpdateControl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::UpdateControlRequest const& request) {
   google::cloud::retail::v2::Control response;
   auto status = grpc_stub_->UpdateControl(&context, request, &response);
@@ -66,7 +67,7 @@ DefaultControlServiceStub::UpdateControl(
 
 StatusOr<google::cloud::retail::v2::Control>
 DefaultControlServiceStub::GetControl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::GetControlRequest const& request) {
   google::cloud::retail::v2::Control response;
   auto status = grpc_stub_->GetControl(&context, request, &response);
@@ -78,7 +79,7 @@ DefaultControlServiceStub::GetControl(
 
 StatusOr<google::cloud::retail::v2::ListControlsResponse>
 DefaultControlServiceStub::ListControls(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::retail::v2::ListControlsRequest const& request) {
   google::cloud::retail::v2::ListControlsResponse response;
   auto status = grpc_stub_->ListControls(&context, request, &response);

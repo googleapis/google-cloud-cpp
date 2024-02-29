@@ -44,161 +44,173 @@ ServiceManagerMetadata::ServiceManagerMetadata(
 
 StatusOr<google::api::servicemanagement::v1::ListServicesResponse>
 ServiceManagerMetadata::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::ListServicesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->ListServices(context, request);
+  SetMetadata(context, options);
+  return child_->ListServices(context, options, request);
 }
 
 StatusOr<google::api::servicemanagement::v1::ManagedService>
 ServiceManagerMetadata::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::GetServiceRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("service_name=",
                            internal::UrlEncode(request.service_name())));
-  return child_->GetService(context, request);
+  return child_->GetService(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerMetadata::AsyncCreateService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::servicemanagement::v1::CreateServiceRequest const& request) {
-  SetMetadata(*context, options);
-  return child_->AsyncCreateService(cq, std::move(context), options, request);
+  SetMetadata(*context, *options);
+  return child_->AsyncCreateService(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerMetadata::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::servicemanagement::v1::DeleteServiceRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("service_name=",
                            internal::UrlEncode(request.service_name())));
-  return child_->AsyncDeleteService(cq, std::move(context), options, request);
+  return child_->AsyncDeleteService(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerMetadata::AsyncUndeleteService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::servicemanagement::v1::UndeleteServiceRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("service_name=",
                            internal::UrlEncode(request.service_name())));
-  return child_->AsyncUndeleteService(cq, std::move(context), options, request);
+  return child_->AsyncUndeleteService(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 StatusOr<google::api::servicemanagement::v1::ListServiceConfigsResponse>
 ServiceManagerMetadata::ListServiceConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::ListServiceConfigsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("service_name=",
                            internal::UrlEncode(request.service_name())));
-  return child_->ListServiceConfigs(context, request);
+  return child_->ListServiceConfigs(context, options, request);
 }
 
 StatusOr<google::api::Service> ServiceManagerMetadata::GetServiceConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::GetServiceConfigRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat(
                   "service_name=", internal::UrlEncode(request.service_name()),
                   "&", "config_id=", internal::UrlEncode(request.config_id())));
-  return child_->GetServiceConfig(context, request);
+  return child_->GetServiceConfig(context, options, request);
 }
 
 StatusOr<google::api::Service> ServiceManagerMetadata::CreateServiceConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::CreateServiceConfigRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("service_name=",
                            internal::UrlEncode(request.service_name())));
-  return child_->CreateServiceConfig(context, request);
+  return child_->CreateServiceConfig(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerMetadata::AsyncSubmitConfigSource(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("service_name=",
                            internal::UrlEncode(request.service_name())));
-  return child_->AsyncSubmitConfigSource(cq, std::move(context), options,
-                                         request);
+  return child_->AsyncSubmitConfigSource(cq, std::move(context),
+                                         std::move(options), request);
 }
 
 StatusOr<google::api::servicemanagement::v1::ListServiceRolloutsResponse>
 ServiceManagerMetadata::ListServiceRollouts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::ListServiceRolloutsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("service_name=",
                            internal::UrlEncode(request.service_name())));
-  return child_->ListServiceRollouts(context, request);
+  return child_->ListServiceRollouts(context, options, request);
 }
 
 StatusOr<google::api::servicemanagement::v1::Rollout>
 ServiceManagerMetadata::GetServiceRollout(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::GetServiceRolloutRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("service_name=", internal::UrlEncode(request.service_name()),
                    "&",
                    "rollout_id=", internal::UrlEncode(request.rollout_id())));
-  return child_->GetServiceRollout(context, request);
+  return child_->GetServiceRollout(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerMetadata::AsyncCreateServiceRollout(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("service_name=",
                            internal::UrlEncode(request.service_name())));
-  return child_->AsyncCreateServiceRollout(cq, std::move(context), options,
-                                           request);
+  return child_->AsyncCreateServiceRollout(cq, std::move(context),
+                                           std::move(options), request);
 }
 
 StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>
 ServiceManagerMetadata::GenerateConfigReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::servicemanagement::v1::GenerateConfigReportRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->GenerateConfigReport(context, request);
+  SetMetadata(context, options);
+  return child_->GenerateConfigReport(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ServiceManagerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> ServiceManagerMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void ServiceManagerMetadata::SetMetadata(grpc::ClientContext& context,

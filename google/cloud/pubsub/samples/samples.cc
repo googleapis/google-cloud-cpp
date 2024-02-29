@@ -12,13 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/pubsub/admin/subscription_admin_client.h"
+#include "google/cloud/pubsub/admin/topic_admin_client.h"
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
 #include "google/cloud/pubsub/schema.h"
 #include "google/cloud/pubsub/schema_client.h"
 #include "google/cloud/pubsub/subscriber.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/subscription_builder.h"
-#include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/project.h"
@@ -36,8 +37,7 @@
 
 namespace {
 
-using ::google::cloud::pubsub::examples::CleanupSchemas;
-using ::google::cloud::pubsub::examples::CommitSchemaWithRevisionsForTesting;
+using ::google::cloud::pubsub::examples::Cleanup;
 using ::google::cloud::pubsub::examples::RandomSchemaId;
 using ::google::cloud::pubsub::examples::RandomSnapshotId;
 using ::google::cloud::pubsub::examples::RandomSubscriptionId;
@@ -120,123 +120,6 @@ class EventCounter {
  */
 void PleaseIgnoreThisSimplifiesTestingTheSamples() {
   EventCounter::Instance().Increment();
-}
-
-void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
-                 std::vector<std::string> const& argv) {
-  //! [START pubsub_quickstart_create_topic]
-  //! [START pubsub_create_topic]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string project_id,
-     std::string topic_id) {
-    auto topic = client.CreateTopic(pubsub::TopicBuilder(
-        pubsub::Topic(std::move(project_id), std::move(topic_id))));
-    // Note that kAlreadyExists is a possible error when the library retries.
-    if (topic.status().code() == google::cloud::StatusCode::kAlreadyExists) {
-      std::cout << "The topic already exists\n";
-      return;
-    }
-    if (!topic) throw std::move(topic).status();
-
-    std::cout << "The topic was successfully created: " << topic->DebugString()
-              << "\n";
-    //! [END pubsub_create_topic]
-    //! [END pubsub_quickstart_create_topic]
-  }(std::move(client), argv.at(0), argv.at(1));
-}
-
-void DeleteTopic(google::cloud::pubsub::TopicAdminClient client,
-                 std::vector<std::string> const& argv) {
-  //! [START pubsub_delete_topic]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string const& project_id,
-     std::string const& topic_id) {
-    auto status = client.DeleteTopic(pubsub::Topic(project_id, topic_id));
-    // Note that kNotFound is a possible result when the library retries.
-    if (status.code() == google::cloud::StatusCode::kNotFound) {
-      std::cout << "The topic was not found\n";
-      return;
-    }
-    if (!status.ok()) throw std::runtime_error(status.message());
-
-    std::cout << "The topic was successfully deleted\n";
-    //! [END pubsub_delete_topic]
-  }(std::move(client), argv.at(0), argv.at(1));
-}
-
-void DetachSubscription(google::cloud::pubsub::TopicAdminClient client,
-                        std::vector<std::string> const& argv) {
-  //! [START pubsub_detach_subscription] [detach-subscription]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string const& project_id,
-     std::string const& subscription_id) {
-    auto response = client.DetachSubscription(
-        pubsub::Subscription(project_id, subscription_id));
-    if (!response.ok()) throw std::move(response).status();
-
-    std::cout << "The subscription was successfully detached: "
-              << response->DebugString() << "\n";
-  }
-  //! [END pubsub_detach_subscription] [detach-subscription]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void ListTopics(google::cloud::pubsub::TopicAdminClient client,
-                std::vector<std::string> const& argv) {
-  //! [START pubsub_list_topics]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string const& project_id) {
-    int count = 0;
-    for (auto& topic : client.ListTopics(project_id)) {
-      if (!topic) throw std::move(topic).status();
-      std::cout << "Topic Name: " << topic->name() << "\n";
-      ++count;
-    }
-    if (count == 0) {
-      std::cout << "No topics found in project " << project_id << "\n";
-    }
-  }
-  //! [END pubsub_list_topics]
-  (std::move(client), argv.at(0));
-}
-
-void ListTopicSubscriptions(google::cloud::pubsub::TopicAdminClient client,
-                            std::vector<std::string> const& argv) {
-  //! [START pubsub_list_topic_subscriptions]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string const& project_id,
-     std::string const& topic_id) {
-    auto const topic = pubsub::Topic(project_id, topic_id);
-    std::cout << "Subscription list for topic " << topic << ":\n";
-    for (auto& name : client.ListTopicSubscriptions(topic)) {
-      if (!name) throw std::move(name).status();
-      std::cout << "  " << *name << "\n";
-    }
-  }
-  //! [END pubsub_list_topic_subscriptions]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void CreateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
-                        std::vector<std::string> const& argv) {
-  //! [START pubsub_create_pull_subscription] [create-subscription]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& topic_id, std::string const& subscription_id) {
-    auto sub = client.CreateSubscription(
-        pubsub::Topic(project_id, topic_id),
-        pubsub::Subscription(project_id, subscription_id));
-    if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
-      std::cout << "The subscription already exists\n";
-      return;
-    }
-    if (!sub) throw std::move(sub).status();
-
-    std::cout << "The subscription was successfully created: "
-              << sub->DebugString() << "\n";
-  }
-  //! [END pubsub_create_pull_subscription] [create-subscription]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void CreateSubscriptionWithExactlyOnceDelivery(
@@ -340,34 +223,6 @@ void CreateUnwrappedPushSubscription(
               << sub->DebugString() << "\n";
   }
   //! [END pubsub_create_unwrapped_push_subscription]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
-}
-
-void CreateBigQuerySubscription(
-    google::cloud::pubsub::SubscriptionAdminClient client,
-    std::vector<std::string> const& argv) {
-  //! [START pubsub_create_bigquery_subscription] [create-bigquery-subscription]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& topic_id, std::string const& subscription_id,
-     std::string const& table_id) {
-    auto sub = client.CreateSubscription(
-        pubsub::Topic(project_id, topic_id),
-        pubsub::Subscription(project_id, subscription_id),
-        pubsub::SubscriptionBuilder{}.set_bigquery_config(
-            pubsub::BigQueryConfigBuilder{}.set_table(table_id)));
-    if (!sub) {
-      if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
-        std::cout << "The subscription already exists\n";
-        return;
-      }
-      throw std::move(sub).status();
-    }
-
-    std::cout << "The subscription was successfully created: "
-              << sub->DebugString() << "\n";
-  }
-  //! [END pubsub_create_bigquery_subscription] [create-bigquery-subscription]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
@@ -536,61 +391,6 @@ void RemoveDeadLetterPolicy(
   (std::move(client), argv.at(0), argv.at(1));
 }
 
-void GetSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
-                     std::vector<std::string> const& argv) {
-  //! [get-subscription]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& subscription_id) {
-    auto sub = client.GetSubscription(
-        pubsub::Subscription(project_id, subscription_id));
-    if (!sub) throw std::move(sub).status();
-
-    std::cout << "The subscription exists and its metadata is: "
-              << sub->DebugString() << "\n";
-  }
-  //! [get-subscription]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void UpdateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
-                        std::vector<std::string> const& argv) {
-  //! [update-subscription]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& subscription_id) {
-    auto s = client.UpdateSubscription(
-        pubsub::Subscription(project_id, subscription_id),
-        pubsub::SubscriptionBuilder{}.set_ack_deadline(
-            std::chrono::seconds(60)));
-    if (!s) throw std::move(s).status();
-
-    std::cout << "The subscription has been updated to: " << s->DebugString()
-              << "\n";
-  }
-  //! [update-subscription]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void ListSubscriptions(google::cloud::pubsub::SubscriptionAdminClient client,
-                       std::vector<std::string> const& argv) {
-  //! [START pubsub_list_subscriptions] [list-subscriptions]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id) {
-    int count = 0;
-    for (auto& subscription : client.ListSubscriptions(project_id)) {
-      if (!subscription) throw std::move(subscription).status();
-      std::cout << "Subscription Name: " << subscription->name() << "\n";
-      ++count;
-    }
-    if (count == 0) {
-      std::cout << "No subscriptions found in project " << project_id << "\n";
-    }
-  }
-  //! [END pubsub_list_subscriptions] [list-subscriptions]
-  (std::move(client), argv.at(0));
-}
-
 void DeleteSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
                         std::vector<std::string> const& argv) {
   //! [START pubsub_delete_subscription] [delete-subscription]
@@ -630,141 +430,11 @@ void ModifyPushConfig(google::cloud::pubsub::SubscriptionAdminClient client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void CreateSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
-                    std::vector<std::string> const& argv) {
-  //! [create-snapshot-with-name]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& subscription_id, std::string const& snapshot_id) {
-    auto snapshot =
-        client.CreateSnapshot(pubsub::Subscription(project_id, subscription_id),
-                              pubsub::Snapshot(project_id, snapshot_id));
-    if (snapshot.status().code() == google::cloud::StatusCode::kAlreadyExists) {
-      std::cout << "The snapshot already exists\n";
-      return;
-    }
-    if (!snapshot.ok()) throw std::move(snapshot).status();
-
-    std::cout << "The snapshot was successfully created: "
-              << snapshot->DebugString() << "\n";
-  }
-  //! [create-snapshot-with-name]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void GetSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
-                 std::vector<std::string> const& argv) {
-  //! [get-snapshot]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& snapshot_id) {
-    auto response =
-        client.GetSnapshot(pubsub::Snapshot(project_id, snapshot_id));
-    if (!response.ok()) throw std::move(response).status();
-
-    std::cout << "The snapshot details are: " << response->DebugString()
-              << "\n";
-  }
-  //! [get-snapshot]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void UpdateSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
-                    std::vector<std::string> const& argv) {
-  //! [update-snapshot]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string snapshot_id) {
-    auto snap = client.UpdateSnapshot(
-        pubsub::Snapshot(project_id, std::move(snapshot_id)),
-        pubsub::SnapshotBuilder{}.add_label("samples-cpp", "gcp"));
-    if (!snap.ok()) throw std::move(snap).status();
-
-    std::cout << "The snapshot was successfully updated: "
-              << snap->DebugString() << "\n";
-  }
-  //! [update-snapshot]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void ListSnapshots(google::cloud::pubsub::SubscriptionAdminClient client,
-                   std::vector<std::string> const& argv) {
-  //! [list-snapshots]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id) {
-    std::cout << "Snapshot list for project " << project_id << ":\n";
-    for (auto& snapshot : client.ListSnapshots(project_id)) {
-      if (!snapshot) throw std::move(snapshot).status();
-      std::cout << "Snapshot Name: " << snapshot->name() << "\n";
-    }
-  }
-  //! [list-snapshots]
-  (std::move(client), argv.at(0));
-}
-
-void DeleteSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
-                    std::vector<std::string> const& argv) {
-  //! [delete-snapshot]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& snapshot_id) {
-    auto status =
-        client.DeleteSnapshot(pubsub::Snapshot(project_id, snapshot_id));
-    // Note that kNotFound is a possible result when the library retries.
-    if (status.code() == google::cloud::StatusCode::kNotFound) {
-      std::cout << "The snapshot was not found\n";
-      return;
-    }
-    if (!status.ok()) throw std::runtime_error(status.message());
-
-    std::cout << "The snapshot was successfully deleted\n";
-  }
-  //! [delete-snapshot]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void SeekWithSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
-                      std::vector<std::string> const& argv) {
-  //! [seek-with-snapshot]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& subscription_id, std::string const& snapshot_id) {
-    auto response =
-        client.Seek(pubsub::Subscription(project_id, subscription_id),
-                    pubsub::Snapshot(project_id, snapshot_id));
-    if (!response.ok()) throw std::move(response).status();
-
-    std::cout << "The subscription seek was successful: "
-              << response->DebugString() << "\n";
-  }
-  //! [seek-with-snapshot]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void SeekWithTimestamp(google::cloud::pubsub::SubscriptionAdminClient client,
-                       std::vector<std::string> const& argv) {
-  //! [seek-with-timestamp]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& subscription_id, std::string const& seconds) {
-    auto response =
-        client.Seek(pubsub::Subscription(project_id, subscription_id),
-                    std::chrono::system_clock::now() -
-                        std::chrono::seconds(std::stoi(seconds)));
-    if (!response.ok()) throw std::move(response).status();
-
-    std::cout << "The subscription seek was successful: "
-              << response->DebugString() << "\n";
-  }
-  //! [seek-with-timestamp]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void ExampleStatusOr(google::cloud::pubsub::TopicAdminClient client,
+void ExampleStatusOr(google::cloud::pubsub_admin::TopicAdminClient client,
                      std::vector<std::string> const& argv) {
   //! [example-status-or]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string const& project_id) {
+  namespace pubsub_admin = ::google::cloud::pubsub_admin;
+  [](pubsub_admin::TopicAdminClient client, std::string const& project_id) {
     // The actual type of `topic` is
     // google::cloud::StatusOr<google::pubsub::v1::Topic>, but
     // we expect it'll most often be declared with auto like this.
@@ -781,454 +451,6 @@ void ExampleStatusOr(google::cloud::pubsub::TopicAdminClient client,
   }
   //! [example-status-or]
   (std::move(client), argv.at(0));
-}
-
-void CreateAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
-                      std::vector<std::string> const& argv) {
-  //! [START pubsub_create_avro_schema] [create-avro-schema]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_id, std::string const& schema_definition_file) {
-    std::string const definition = ReadFile(schema_definition_file);
-
-    google::pubsub::v1::CreateSchemaRequest request;
-    request.set_parent(google::cloud::Project(project_id).FullName());
-    request.set_schema_id(schema_id);
-    request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
-    request.mutable_schema()->set_definition(definition);
-    auto schema = client.CreateSchema(request);
-    if (schema.status().code() == google::cloud::StatusCode::kAlreadyExists) {
-      std::cout << "The schema already exists\n";
-      return;
-    }
-    if (!schema) throw std::move(schema).status();
-
-    std::cout << "Schema successfully created: " << schema->DebugString()
-              << "\n";
-  }
-  //! [END pubsub_create_avro_schema] [create-avro-schema]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void CreateProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
-                          std::vector<std::string> const& argv) {
-  //! [START pubsub_create_proto_schema] [create-protobuf-schema]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_id, std::string const& schema_definition_file) {
-    std::string const definition = ReadFile(schema_definition_file);
-
-    google::pubsub::v1::CreateSchemaRequest request;
-    request.set_parent(google::cloud::Project(project_id).FullName());
-    request.set_schema_id(schema_id);
-    request.mutable_schema()->set_type(
-        google::pubsub::v1::Schema::PROTOCOL_BUFFER);
-    request.mutable_schema()->set_definition(definition);
-    auto schema = client.CreateSchema(request);
-    if (schema.status().code() == google::cloud::StatusCode::kAlreadyExists) {
-      std::cout << "The schema already exists\n";
-      return;
-    }
-    if (!schema) throw std::move(schema).status();
-    std::cout << "Schema successfully created: " << schema->DebugString()
-              << "\n";
-  }
-  //! [END pubsub_create_proto_schema] [create-protobuf-schema]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void CommitAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
-                      std::vector<std::string> const& argv) {
-  //! [START pubsub_commit_avro_schema]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_id, std::string const& schema_definition_file) {
-    std::string const definition = ReadFile(schema_definition_file);
-
-    google::pubsub::v1::CommitSchemaRequest request;
-    std::string const name =
-        google::cloud::pubsub::Schema(project_id, schema_id).FullName();
-    request.set_name(name);
-    request.mutable_schema()->set_name(name);
-    request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
-    request.mutable_schema()->set_definition(definition);
-    auto schema = client.CommitSchema(request);
-    if (schema.status().code() == google::cloud::StatusCode::kAlreadyExists) {
-      std::cout << "The schema revision already exists\n";
-      return;
-    }
-    if (!schema) throw std::move(schema).status();
-
-    std::cout << "Schema revision successfully committed: "
-              << schema->DebugString() << "\n";
-  }
-  //! [END pubsub_commit_avro_schema]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void CommitProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
-                          std::vector<std::string> const& argv) {
-  //! [START pubsub_commit_proto_schema]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_id, std::string const& schema_definition_file) {
-    std::string const definition = ReadFile(schema_definition_file);
-
-    google::pubsub::v1::CommitSchemaRequest request;
-    std::string const name =
-        google::cloud::pubsub::Schema(project_id, schema_id).FullName();
-    request.set_name(name);
-    request.mutable_schema()->set_name(name);
-    request.mutable_schema()->set_type(
-        google::pubsub::v1::Schema::PROTOCOL_BUFFER);
-    request.mutable_schema()->set_definition(definition);
-    auto schema = client.CommitSchema(request);
-    if (schema.status().code() == google::cloud::StatusCode::kAlreadyExists) {
-      std::cout << "The schema revision already exists\n";
-      return;
-    }
-    if (!schema) throw std::move(schema).status();
-
-    std::cout << "Schema revision successfully committed: "
-              << schema->DebugString() << "\n";
-  }
-  //! [END pubsub_commit_proto_schema]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void GetSchema(google::cloud::pubsub::SchemaServiceClient client,
-               std::vector<std::string> const& argv) {
-  //! [START pubsub_get_schema] [get-schema]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_id) {
-    google::pubsub::v1::GetSchemaRequest request;
-    request.set_name(pubsub::Schema(project_id, schema_id).FullName());
-    request.set_view(google::pubsub::v1::FULL);
-    auto schema = client.GetSchema(request);
-    if (!schema) throw std::move(schema).status();
-
-    std::cout << "The schema exists and its metadata is:"
-              << "\n"
-              << schema->DebugString() << "\n";
-  }
-  //! [END pubsub_get_schema] [get-schema]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void GetSchemaRevision(google::cloud::pubsub::SchemaServiceClient client,
-                       std::vector<std::string> const& argv) {
-  //! [START pubsub_get_schema_revision]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_id, std::string const& revision_id) {
-    std::string const schema_id_with_revision = schema_id + "@" + revision_id;
-
-    google::pubsub::v1::GetSchemaRequest request;
-    request.set_name(
-        pubsub::Schema(project_id, schema_id_with_revision).FullName());
-    request.set_view(google::pubsub::v1::FULL);
-    auto schema = client.GetSchema(request);
-    if (!schema) throw std::move(schema).status();
-
-    std::cout << "The schema revision exists and its metadata is:"
-              << "\n"
-              << schema->DebugString() << "\n";
-  }
-  //! [END pubsub_get_schema_revision]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void ListSchemas(google::cloud::pubsub::SchemaServiceClient client,
-                 std::vector<std::string> const& argv) {
-  //! [START pubsub_list_schemas] [list-schemas]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id) {
-    auto const parent = google::cloud::Project(project_id).FullName();
-    for (auto& s : client.ListSchemas(parent)) {
-      if (!s) throw std::move(s).status();
-      std::cout << "Schema: " << s->DebugString() << "\n";
-    }
-  }
-  //! [END pubsub_list_schemas] [list-schemas]
-  (std::move(client), argv.at(0));
-}
-
-void ListSchemaRevisions(google::cloud::pubsub::SchemaServiceClient client,
-                         std::vector<std::string> const& argv) {
-  //! [START pubsub_list_schema_revisions]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_id) {
-    auto const parent = pubsub::Schema(project_id, schema_id).FullName();
-    for (auto& s : client.ListSchemaRevisions(parent)) {
-      if (!s) throw std::move(s).status();
-      std::cout << "Schema revision: " << s->DebugString() << "\n";
-    }
-  }
-  //! [END pubsub_list_schema_revisions]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void DeleteSchema(google::cloud::pubsub::SchemaServiceClient client,
-                  std::vector<std::string> const& argv) {
-  //! [START pubsub_delete_schema] [delete-schema]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_id) {
-    google::pubsub::v1::DeleteSchemaRequest request;
-    request.set_name(pubsub::Schema(project_id, schema_id).FullName());
-    auto status = client.DeleteSchema(request);
-    // Note that kNotFound is a possible result when the library retries.
-    if (status.code() == google::cloud::StatusCode::kNotFound) {
-      std::cout << "The schema was not found\n";
-      return;
-    }
-    if (!status.ok()) throw std::runtime_error(status.message());
-
-    std::cout << "Schema successfully deleted\n";
-  }
-  //! [END pubsub_delete_schema] [delete-schema]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void DeleteSchemaRevision(google::cloud::pubsub::SchemaServiceClient client,
-                          std::vector<std::string> const& argv) {
-  //! [START pubsub_delete_schema_revision]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_id, std::string const& revision_id) {
-    std::string const schema_id_with_revision = schema_id + "@" + revision_id;
-
-    google::pubsub::v1::DeleteSchemaRevisionRequest request;
-    request.set_name(
-        pubsub::Schema(project_id, schema_id_with_revision).FullName());
-    auto schema = client.DeleteSchemaRevision(request);
-    if (!schema) throw std::move(schema).status();
-
-    std::cout << "Deleted schema. Its metadata is:"
-              << "\n"
-              << schema->DebugString() << "\n";
-  }
-  //! [END pubsub_delete_schema_revision]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void RollbackSchema(google::cloud::pubsub::SchemaServiceClient client,
-                    std::vector<std::string> const& argv) {
-  //! [START pubsub_rollback_schema]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_id, std::string const& revision_id) {
-    google::pubsub::v1::RollbackSchemaRequest request;
-    request.set_name(pubsub::Schema(project_id, schema_id).FullName());
-    request.set_revision_id(revision_id);
-    auto schema = client.RollbackSchema(request);
-    if (!schema) throw std::move(schema).status();
-
-    std::cout << "Rolledback schema. Created a new schema and its metadata is:"
-              << "\n"
-              << schema->DebugString() << "\n";
-  }
-  //! [END pubsub_rollback_schema]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void ValidateAvroSchema(google::cloud::pubsub::SchemaServiceClient client,
-                        std::vector<std::string> const& argv) {
-  //! [validate-avro-schema]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_definition_file) {
-    std::string const definition = ReadFile(schema_definition_file);
-
-    google::pubsub::v1::ValidateSchemaRequest request;
-    request.set_parent(google::cloud::Project(project_id).FullName());
-    request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
-    request.mutable_schema()->set_definition(definition);
-    auto schema = client.ValidateSchema(request);
-    if (!schema) throw std::move(schema).status();
-    std::cout << "Schema is valid\n";
-  }
-  //! [validate-avro-schema]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void ValidateProtobufSchema(google::cloud::pubsub::SchemaServiceClient client,
-                            std::vector<std::string> const& argv) {
-  //! [validate-protobuf-schema]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_definition_file) {
-    std::string const definition = ReadFile(schema_definition_file);
-
-    google::pubsub::v1::ValidateSchemaRequest request;
-    request.set_parent(google::cloud::Project(project_id).FullName());
-    request.mutable_schema()->set_type(
-        google::pubsub::v1::Schema::PROTOCOL_BUFFER);
-    request.mutable_schema()->set_definition(definition);
-    auto schema = client.ValidateSchema(request);
-    if (!schema) throw std::move(schema).status();
-    std::cout << "Schema is valid\n";
-  }
-  //! [validate-protobuf-schema]
-  (std::move(client), argv.at(0), argv.at(1));
-}
-
-void ValidateMessageAvro(google::cloud::pubsub::SchemaServiceClient client,
-                         std::vector<std::string> const& argv) {
-  //! [validate-message-avro]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_definition_file,
-     std::string const& message_file) {
-    std::string const definition = ReadFile(schema_definition_file);
-    auto message = ReadFile(message_file);
-
-    google::pubsub::v1::ValidateMessageRequest request;
-    request.set_parent(google::cloud::Project(project_id).FullName());
-    request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
-    request.mutable_schema()->set_definition(definition);
-    request.set_message(message);
-    request.set_encoding(google::pubsub::v1::JSON);
-    auto response = client.ValidateMessage(request);
-    if (!response) throw std::move(response).status();
-    std::cout << "Message is valid\n";
-  }
-  //! [validate-message-avro]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void ValidateMessageProtobuf(google::cloud::pubsub::SchemaServiceClient client,
-                             std::vector<std::string> const& argv) {
-  //! [validate-message-protobuf]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_definition_file,
-     std::string const& message_file) {
-    std::string const definition = ReadFile(schema_definition_file);
-    std::string const message = ReadFile(message_file);
-
-    google::pubsub::v1::ValidateMessageRequest request;
-    request.set_parent(google::cloud::Project(project_id).FullName());
-    request.mutable_schema()->set_type(
-        google::pubsub::v1::Schema::PROTOCOL_BUFFER);
-    request.mutable_schema()->set_definition(definition);
-    request.set_message(message);
-    request.set_encoding(google::pubsub::v1::BINARY);
-    auto response = client.ValidateMessage(request);
-    if (!response) throw std::move(response).status();
-    std::cout << "Message is valid\n";
-  }
-  //! [validate-message-protobuf]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void ValidateMessageNamedSchema(
-    google::cloud::pubsub::SchemaServiceClient client,
-    std::vector<std::string> const& argv) {
-  //! [validate-message-named-schema]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SchemaServiceClient client, std::string const& project_id,
-     std::string const& schema_id, std::string const& message_file) {
-    std::string message = ReadFile(message_file);
-
-    auto const schema = pubsub::Schema(project_id, schema_id);
-    google::pubsub::v1::ValidateMessageRequest request;
-    request.set_parent(google::cloud::Project(project_id).FullName());
-    request.set_name(schema.FullName());
-    request.set_message(message);
-    request.set_encoding(google::pubsub::v1::BINARY);
-    auto response = client.ValidateMessage(request);
-    if (!response) throw std::move(response).status();
-    std::cout << "Message is valid for schema " << schema << "\n";
-  }
-  //! [validate-message-named-schema]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void CreateTopicWithSchema(google::cloud::pubsub::TopicAdminClient client,
-                           std::vector<std::string> const& argv) {
-  //! [START pubsub_create_topic_with_schema]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string project_id,
-     std::string topic_id, std::string schema_id, std::string const& encoding) {
-    auto const& schema = pubsub::Schema(project_id, std::move(schema_id));
-    auto topic = client.CreateTopic(
-        pubsub::TopicBuilder(
-            pubsub::Topic(std::move(project_id), std::move(topic_id)))
-            .set_schema(schema)
-            .set_encoding(encoding == "JSON" ? google::pubsub::v1::JSON
-                                             : google::pubsub::v1::BINARY));
-    // Note that kAlreadyExists is a possible error when the library retries.
-    if (topic.status().code() == google::cloud::StatusCode::kAlreadyExists) {
-      std::cout << "The topic already exists\n";
-      return;
-    }
-    if (!topic) throw std::move(topic).status();
-
-    std::cout << "The topic was successfully created: " << topic->DebugString()
-              << "\n";
-  }
-  //! [END pubsub_create_topic_with_schema]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
-}
-
-void CreateTopicWithSchemaRevisions(
-    google::cloud::pubsub::TopicAdminClient client,
-    std::vector<std::string> const& argv) {
-  //! [START pubsub_create_topic_with_schema_revisions]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string project_id,
-     std::string topic_id, std::string schema_id, std::string const& encoding,
-     std::string const& first_revision_id,
-     std::string const& last_revision_id) {
-    auto const& schema = pubsub::Schema(project_id, std::move(schema_id));
-    auto topic = client.CreateTopic(
-        pubsub::TopicBuilder(
-            pubsub::Topic(std::move(project_id), std::move(topic_id)))
-            .set_schema(schema)
-            .set_encoding(encoding == "JSON" ? google::pubsub::v1::JSON
-                                             : google::pubsub::v1::BINARY)
-            .set_first_revision_id(first_revision_id)
-            .set_last_revision_id(last_revision_id));
-
-    // Note that kAlreadyExists is a possible error when the
-    // library retries.
-    if (topic.status().code() == google::cloud::StatusCode::kAlreadyExists) {
-      std::cout << "The topic already exists\n";
-      return;
-    }
-    if (!topic) throw std::move(topic).status();
-
-    std::cout << "The topic was successfully created: " << topic->DebugString()
-              << "\n";
-  }
-  //! [END pubsub_create_topic_with_schema_revisions]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
-   argv.at(4), argv.at(5));
-}
-
-void UpdateTopicSchema(google::cloud::pubsub::TopicAdminClient client,
-                       std::vector<std::string> const& argv) {
-  //! [START pubsub_update_topic_schema]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::TopicAdminClient client, std::string project_id,
-     std::string topic_id, std::string const& first_revision_id,
-     std::string const& last_revision_id) {
-    auto topic = client.UpdateTopic(
-        pubsub::TopicBuilder(
-            pubsub::Topic(std::move(project_id), std::move(topic_id)))
-            .set_first_revision_id(first_revision_id)
-            .set_last_revision_id(last_revision_id));
-
-    if (!topic) throw std::move(topic).status();
-
-    std::cout << "The topic was successfully updated: " << topic->DebugString()
-              << "\n";
-  }
-  //! [END pubsub_update_topic_schema]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
 void PublishAvroRecords(google::cloud::pubsub::Publisher publisher,
@@ -2091,84 +1313,51 @@ void SubscriberRetrySettings(std::vector<std::string> const& argv) {
 void AutoRunAvro(
     std::string const& project_id, std::string const& testdata_directory,
     google::cloud::internal::DefaultPRNG& generator,
-    google::cloud::pubsub::TopicAdminClient& topic_admin_client,
-    google::cloud::pubsub::SubscriptionAdminClient& subscription_admin_client) {
+    google::cloud::pubsub_admin::TopicAdminClient& topic_admin,
+    google::cloud::pubsub_admin::SubscriptionAdminClient& subscription_admin) {
   auto schema_admin = google::cloud::pubsub::SchemaServiceClient(
       google::cloud::pubsub::MakeSchemaServiceConnection());
   auto avro_schema_id = RandomSchemaId(generator);
   auto avro_schema_definition_file = testdata_directory + "schema.avsc";
-  auto avro_revised_schema_definition_file =
-      testdata_directory + "revised_schema.avsc";
-  auto avro_message_file = testdata_directory + "valid_message.avsc";
+  auto schema = google::cloud::pubsub::Schema(project_id, avro_schema_id);
 
-  CleanupSchemas(schema_admin, project_id,
-                 absl::FromChrono(std::chrono::system_clock::now()));
+  std::cout << "\nCreating test schema [avro]" << std::endl;
+  google::pubsub::v1::CreateSchemaRequest schema_request;
+  schema_request.set_parent(google::cloud::Project(project_id).FullName());
+  schema_request.set_schema_id(avro_schema_id);
+  schema_request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
+  std::string const definition = ReadFile(avro_schema_definition_file);
+  schema_request.mutable_schema()->set_definition(definition);
+  auto schema_result = schema_admin.CreateSchema(schema_request);
+  if (!schema_result) throw std::move(schema_result).status();
 
-  std::cout << "\nRunning CreateAvroSchema() sample" << std::endl;
-  CreateAvroSchema(schema_admin,
-                   {project_id, avro_schema_id, avro_schema_definition_file});
+  Cleanup cleanup;
+  cleanup.Defer([schema_admin, schema]() mutable {
+    std::cout << "\nDelete schema (" << schema.schema_id() << ") [avro]"
+              << std::endl;
+    google::pubsub::v1::DeleteSchemaRequest request;
+    request.set_name(schema.FullName());
+    schema_admin.DeleteSchema(request);
+  });
 
-  std::cout << "\nRunning CommitAvroSchema() sample" << std::endl;
-  CommitAvroSchema(schema_admin, {project_id, avro_schema_id,
-                                  avro_revised_schema_definition_file});
-
-  std::cout << "\nRunning ValidateAvroSchema() sample" << std::endl;
-  ValidateAvroSchema(schema_admin, {project_id, avro_schema_definition_file});
-
-  std::cout << "\nRunning ValidateMessageAvro() sample" << std::endl;
-  ValidateMessageAvro(schema_admin, {project_id, avro_schema_definition_file,
-                                     avro_message_file});
-
-  std::cout << "\nRunning GetSchema sample" << std::endl;
-  GetSchema(schema_admin, {project_id, avro_schema_id});
-
-  // For testing commands that require a revision id.
-  auto avro_revision_schema_id = RandomSchemaId(generator);
-  auto const avro_revision_topic_id = RandomTopicId(generator);
-  auto const revision_ids = CommitSchemaWithRevisionsForTesting(
-      schema_admin, project_id, avro_revision_schema_id,
-      avro_schema_definition_file, avro_revised_schema_definition_file, "AVRO");
-  auto const first_revision_id = revision_ids.first;
-  auto const last_revision_id = revision_ids.second;
-  std::cout << "\nRunning CreateTopicWithSchemaRevisions sample [avro]"
-            << std::endl;
-  CreateTopicWithSchemaRevisions(
-      topic_admin_client,
-      {project_id, avro_revision_topic_id, avro_revision_schema_id, "JSON",
-       first_revision_id, last_revision_id});
-  UpdateTopicSchema(topic_admin_client, {project_id, avro_revision_topic_id,
-                                         first_revision_id, first_revision_id});
-
-  std::cout << "\nRunning GetSchemaRevision sample" << std::endl;
-  GetSchemaRevision(schema_admin,
-                    {project_id, avro_revision_schema_id, first_revision_id});
-
-  std::cout << "\nRunning RollbackSchema sample" << std::endl;
-  RollbackSchema(schema_admin,
-                 {project_id, avro_revision_schema_id, first_revision_id});
-
-  std::cout << "\nRunning DeleteSchemaRevision sample" << std::endl;
-  DeleteSchemaRevision(schema_admin,
-                       {project_id, avro_revision_schema_id, last_revision_id});
-
-  std::cout
-      << "\nCleaning up the topic and schema created for testing revisions"
-      << std::endl;
-  DeleteTopic(topic_admin_client, {project_id, avro_revision_topic_id});
-  DeleteSchema(schema_admin, {project_id, avro_revision_schema_id});
-
-  std::cout << "\nRunning ListSchemas() sample" << std::endl;
-  ListSchemas(schema_admin, {project_id});
-
-  std::cout << "\nRunning ListSchemaRevisions() sample" << std::endl;
-  ListSchemaRevisions(schema_admin, {project_id, avro_schema_id});
-
-  std::cout << "\nRunning CreateTopicWithSchema() sample [avro]" << std::endl;
+  std::cout << "\nCreating test topic with schema [avro]" << std::endl;
   auto const avro_topic_id = RandomTopicId(generator);
-  CreateTopicWithSchema(topic_admin_client,
-                        {project_id, avro_topic_id, avro_schema_id, "JSON"});
-
   auto topic = google::cloud::pubsub::Topic(project_id, avro_topic_id);
+  google::pubsub::v1::Topic topic_request;
+  topic_request.set_name(topic.FullName());
+  topic_request.mutable_schema_settings()->set_schema(schema.FullName());
+  topic_request.mutable_schema_settings()->set_encoding(
+      google::pubsub::v1::JSON);
+  auto t = topic_admin.CreateTopic(topic_request);
+  if (!t) {
+    std::cerr << t.status() << "\n";
+  }
+  cleanup.Defer([topic_admin, topic]() mutable {
+    std::cout << "\nDelete topic (" << topic.topic_id() << ") [avro]"
+              << std::endl;
+    (void)topic_admin.DeleteTopic(topic.FullName());
+  });
+
   auto publisher = google::cloud::pubsub::Publisher(
       google::cloud::pubsub::MakePublisherConnection(
           topic, google::cloud::Options{}
@@ -2180,9 +1369,17 @@ void AutoRunAvro(
   auto subscriber = google::cloud::pubsub::Subscriber(
       google::cloud::pubsub::MakeSubscriberConnection(subscription));
 
-  std::cout << "\nRunning CreateSubscription() sample [avro]" << std::endl;
-  CreateSubscription(subscription_admin_client,
-                     {project_id, avro_topic_id, subscription_id});
+  std::cout << "\nCreate test subscription (" << subscription.subscription_id()
+            << ") [avro]" << std::endl;
+  google::pubsub::v1::Subscription request;
+  request.set_name(subscription.FullName());
+  request.set_topic(topic.FullName());
+  (void)subscription_admin.CreateSubscription(request);
+  cleanup.Defer([subscription_admin, subscription]() mutable {
+    std::cout << "\nDelete subscription (" << subscription.subscription_id()
+              << ") [avro]" << std::endl;
+    (void)subscription_admin.DeleteSubscription(subscription.FullName());
+  });
 
   std::cout << "\nRunning SubscribeAvroRecords() sample" << std::endl;
   auto session = SubscribeAvroRecords(subscriber, {});
@@ -2192,81 +1389,54 @@ void AutoRunAvro(
 
   session.cancel();
   WaitForSession(std::move(session), "SubscribeAvroRecords");
-
-  std::cout << "\nRunning DeleteSubscription() sample [avro]" << std::endl;
-  DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
-
-  std::cout << "\nRunning DeleteTopic() sample [avro]" << std::endl;
-  DeleteTopic(topic_admin_client, {project_id, avro_topic_id});
-
-  std::cout << "\nRunning DeleteSchema() sample [avro]" << std::endl;
-  DeleteSchema(schema_admin, {project_id, avro_schema_id});
 }
 
 void AutoRunProtobuf(
     std::string const& project_id, std::string const& testdata_directory,
     google::cloud::internal::DefaultPRNG& generator,
-    google::cloud::pubsub::TopicAdminClient& topic_admin_client,
-    google::cloud::pubsub::SubscriptionAdminClient& subscription_admin_client) {
+    google::cloud::pubsub_admin::TopicAdminClient& topic_admin,
+    google::cloud::pubsub_admin::SubscriptionAdminClient& subscription_admin) {
   auto schema_admin = google::cloud::pubsub::SchemaServiceClient(
       google::cloud::pubsub::MakeSchemaServiceConnection());
   auto proto_schema_id = RandomSchemaId(generator);
   auto proto_schema_definition_file = testdata_directory + "schema.proto";
-  auto proto_revised_schema_definition_file =
-      testdata_directory + "revised_schema.proto";
-  auto proto_message_file = testdata_directory + "valid_message.pb";
+  auto schema = google::cloud::pubsub::Schema(project_id, proto_schema_id);
 
-  std::cout << "\nRunning CreateProtobufSchema() sample" << std::endl;
-  CreateProtobufSchema(schema_admin, {project_id, proto_schema_id,
-                                      proto_schema_definition_file});
+  std::cout << "\nCreating test schema [proto]" << std::endl;
+  google::pubsub::v1::CreateSchemaRequest schema_request;
+  schema_request.set_parent(google::cloud::Project(project_id).FullName());
+  schema_request.set_schema_id(proto_schema_id);
+  schema_request.mutable_schema()->set_type(
+      google::pubsub::v1::Schema::PROTOCOL_BUFFER);
+  std::string const definition = ReadFile(proto_schema_definition_file);
+  schema_request.mutable_schema()->set_definition(definition);
+  auto schema_result = schema_admin.CreateSchema(schema_request);
+  if (!schema_result) throw std::move(schema_result).status();
 
-  std::cout << "\nRunning CommitProtobufSchema() sample" << std::endl;
-  CommitProtobufSchema(schema_admin, {project_id, proto_schema_id,
-                                      proto_revised_schema_definition_file});
+  Cleanup cleanup;
+  cleanup.Defer([schema_admin, schema]() mutable {
+    std::cout << "\nDelete schema (" << schema.schema_id() << ") [proto]"
+              << std::endl;
+    google::pubsub::v1::DeleteSchemaRequest request;
+    request.set_name(schema.FullName());
+    schema_admin.DeleteSchema(request);
+  });
 
-  std::cout << "\nRunning ValidateProtobufSchema() sample" << std::endl;
-  ValidateProtobufSchema(schema_admin,
-                         {project_id, proto_schema_definition_file});
-
-  std::cout << "\nRunning ValidateMessageProtobuf() sample" << std::endl;
-  ValidateMessageProtobuf(
-      schema_admin,
-      {project_id, proto_schema_definition_file, proto_message_file});
-
-  std::cout << "\nRunning ValidateMessageNamedSchema() sample" << std::endl;
-  ValidateMessageNamedSchema(schema_admin,
-                             {project_id, proto_schema_id, proto_message_file});
-
-  // For testing commands that require a revision id.
-  auto proto_revision_schema_id = RandomSchemaId(generator);
-  auto const proto_revision_topic_id = RandomTopicId(generator);
-  auto const revision_ids = CommitSchemaWithRevisionsForTesting(
-      schema_admin, project_id, proto_revision_schema_id,
-      proto_schema_definition_file, proto_revised_schema_definition_file,
-      "PROTO");
-  auto const first_revision_id = revision_ids.first;
-  auto const last_revision_id = revision_ids.second;
-  std::cout << "\nRunning CreateTopicWithSchemaRevisions sample [proto]"
-            << std::endl;
-  CreateTopicWithSchemaRevisions(
-      topic_admin_client,
-      {project_id, proto_revision_topic_id, proto_revision_schema_id, "BINARY",
-       first_revision_id, last_revision_id});
-  UpdateTopicSchema(topic_admin_client, {project_id, proto_revision_topic_id,
-                                         first_revision_id, first_revision_id});
-
-  std::cout
-      << "\nCleaning up the topic and schema created for testing revisions"
-      << std::endl;
-  DeleteTopic(topic_admin_client, {project_id, proto_revision_topic_id});
-  DeleteSchema(schema_admin, {project_id, proto_revision_schema_id});
-
-  std::cout << "\nRunning CreateTopicWithSchema() sample [proto]" << std::endl;
+  std::cout << "\nCreating test topic with schema [proto]" << std::endl;
   auto const proto_topic_id = RandomTopicId(generator);
-  CreateTopicWithSchema(topic_admin_client, {project_id, proto_topic_id,
-                                             proto_schema_id, "BINARY"});
-
   auto topic = google::cloud::pubsub::Topic(project_id, proto_topic_id);
+  google::pubsub::v1::Topic topic_request;
+  topic_request.set_name(topic.FullName());
+  topic_request.mutable_schema_settings()->set_schema(schema.FullName());
+  topic_request.mutable_schema_settings()->set_encoding(
+      google::pubsub::v1::BINARY);
+  topic_admin.CreateTopic(topic_request);
+  cleanup.Defer([topic_admin, topic]() mutable {
+    std::cout << "\nDelete topic (" << topic.topic_id() << ") [proto]"
+              << std::endl;
+    (void)topic_admin.DeleteTopic(topic.FullName());
+  });
+
   auto publisher = google::cloud::pubsub::Publisher(
       google::cloud::pubsub::MakePublisherConnection(
           topic, google::cloud::Options{}
@@ -2278,13 +1448,17 @@ void AutoRunProtobuf(
   auto subscriber = google::cloud::pubsub::Subscriber(
       google::cloud::pubsub::MakeSubscriberConnection(subscription));
 
-  std::cout << "\nRunning CreateSubscription sample [proto]" << std::endl;
-  CreateSubscription(subscription_admin_client,
-                     {project_id, proto_topic_id, subscription_id});
-
-  std::cout << "\nRunning CreateSubscription() sample [avro]" << std::endl;
-  CreateSubscription(subscription_admin_client,
-                     {project_id, proto_topic_id, subscription_id});
+  std::cout << "\nCreate test subscription (" << subscription.subscription_id()
+            << ") [proto]" << std::endl;
+  google::pubsub::v1::Subscription request;
+  request.set_name(subscription.FullName());
+  request.set_topic(topic.FullName());
+  (void)subscription_admin.CreateSubscription(request);
+  cleanup.Defer([subscription_admin, subscription]() mutable {
+    std::cout << "\nDelete subscription (" << subscription.subscription_id()
+              << ") [proto]" << std::endl;
+    (void)subscription_admin.DeleteSubscription(subscription.FullName());
+  });
 
   std::cout << "\nRunning SubscribeProtobufRecords() sample" << std::endl;
   auto session = SubscribeProtobufRecords(subscriber, {});
@@ -2294,15 +1468,6 @@ void AutoRunProtobuf(
 
   session.cancel();
   WaitForSession(std::move(session), "SubscribeProtobufRecords");
-
-  std::cout << "\nRunning DeleteSubscription sample [proto]" << std::endl;
-  DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
-
-  std::cout << "\nRunning DeleteTopic() sample [proto]" << std::endl;
-  DeleteTopic(topic_admin_client, {project_id, proto_topic_id});
-
-  std::cout << "\nRunning DeleteSchema() sample [proto]" << std::endl;
-  DeleteSchema(schema_admin, {project_id, proto_schema_id});
 }
 
 void AutoRun(std::vector<std::string> const& argv) {
@@ -2321,7 +1486,10 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   auto const topic_id = RandomTopicId(generator);
+  auto const topic = google::cloud::pubsub::Topic(project_id, topic_id);
   auto const subscription_id = RandomSubscriptionId(generator);
+  auto const subscription =
+      google::cloud::pubsub::Subscription(project_id, subscription_id);
   auto const exactly_once_subscription_id = RandomSubscriptionId(generator);
   auto const filtered_subscription_id = RandomSubscriptionId(generator);
   auto const push_subscription_id = RandomSubscriptionId(generator);
@@ -2330,9 +1498,12 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const bigquery_subscription_id = RandomSubscriptionId(generator);
   auto const ordering_subscription_id = RandomSubscriptionId(generator);
   auto const ordering_topic_id = "ordering-" + RandomTopicId(generator);
+  auto const ordering_topic =
+      google::cloud::pubsub::Topic(project_id, ordering_topic_id);
   auto const dead_letter_subscription_id = RandomSubscriptionId(generator);
   auto const dead_letter_topic_id = "dead-letter-" + RandomTopicId(generator);
-
+  auto const dead_letter_topic =
+      google::cloud::pubsub::Topic(project_id, dead_letter_topic_id);
   auto const snapshot_id = RandomSnapshotId(generator);
 
   using ::google::cloud::StatusCode;
@@ -2348,33 +1519,47 @@ void AutoRun(std::vector<std::string> const& argv) {
         }
       };
 
-  google::cloud::pubsub::TopicAdminClient topic_admin_client(
-      google::cloud::pubsub::MakeTopicAdminConnection());
+  google::cloud::pubsub_admin::TopicAdminClient topic_admin(
+      google::cloud::pubsub_admin::MakeTopicAdminConnection());
+  google::cloud::pubsub_admin::SubscriptionAdminClient subscription_admin(
+      google::cloud::pubsub_admin::MakeSubscriptionAdminConnection());
   google::cloud::pubsub::SubscriptionAdminClient subscription_admin_client(
       google::cloud::pubsub::MakeSubscriptionAdminConnection());
 
-  std::cout << "\nRunning CreateTopic() sample [1]" << std::endl;
-  CreateTopic(topic_admin_client, {project_id, topic_id});
-
-  std::cout << "\nRunning CreateTopic() sample [2]" << std::endl;
-  CreateTopic(topic_admin_client, {project_id, topic_id});
-
-  std::cout << "\nRunning CreateTopic() sample [3]" << std::endl;
-  CreateTopic(topic_admin_client, {project_id, ordering_topic_id});
-
-  std::cout << "\nRunning ListTopics() sample" << std::endl;
-  ListTopics(topic_admin_client, {project_id});
+  std::cout << "\nCreate topic (" << topic.topic_id() << ")" << std::endl;
+  topic_admin.CreateTopic(topic.FullName());
+  std::cout << "\nCreate topic (" << ordering_topic.topic_id() << ")"
+            << std::endl;
+  topic_admin.CreateTopic(ordering_topic.FullName());
+  std::cout << "\nCreate topic (" << dead_letter_topic.topic_id() << ")"
+            << std::endl;
+  topic_admin.CreateTopic(dead_letter_topic.FullName());
+  Cleanup cleanup;
+  cleanup.Defer(
+      [topic_admin, topic, ordering_topic, dead_letter_topic]() mutable {
+        std::cout << "\nDelete topic (" << topic.topic_id() << ")" << std::endl;
+        (void)topic_admin.DeleteTopic(topic.FullName());
+        std::cout << "\nDelete topic (" << ordering_topic.topic_id() << ")"
+                  << std::endl;
+        (void)topic_admin.DeleteTopic(ordering_topic.FullName());
+        std::cout << "\nDelete topic (" << dead_letter_topic.topic_id() << ")"
+                  << std::endl;
+        (void)topic_admin.DeleteTopic(dead_letter_topic.FullName());
+      });
 
   std::cout << "\nRunning the StatusOr example" << std::endl;
-  ExampleStatusOr(topic_admin_client, {project_id});
+  ExampleStatusOr(topic_admin, {project_id});
 
-  std::cout << "\nRunning CreateSubscription() sample [1]" << std::endl;
-  CreateSubscription(subscription_admin_client,
-                     {project_id, topic_id, subscription_id});
-
-  std::cout << "\nRunning CreateSubscription() sample [2]" << std::endl;
-  CreateSubscription(subscription_admin_client,
-                     {project_id, topic_id, subscription_id});
+  std::cout << "\nCreate subscription (" << subscription_id << ")" << std::endl;
+  google::pubsub::v1::Subscription request;
+  request.set_name(subscription.FullName());
+  request.set_topic(topic.FullName());
+  (void)subscription_admin.CreateSubscription(request);
+  cleanup.Defer([subscription_admin, subscription]() mutable {
+    std::cout << "\nDelete subscription (" << subscription.subscription_id()
+              << ")" << std::endl;
+    (void)subscription_admin.DeleteSubscription(subscription.FullName());
+  });
 
   auto const bucket_id = project_id + "-pubsub-bucket";
   std::cout << "\nRunning CreateCloudStorageSubscription() sample" << std::endl;
@@ -2403,18 +1588,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   CreateSubscriptionWithExactlyOnceDelivery(
       subscription_admin_client,
       {project_id, topic_id, exactly_once_subscription_id});
-
-  std::cout << "\nRunning ListTopicSubscriptions() sample" << std::endl;
-  ListTopicSubscriptions(topic_admin_client, {project_id, topic_id});
-
-  std::cout << "\nRunning GetSubscription() sample" << std::endl;
-  GetSubscription(subscription_admin_client, {project_id, subscription_id});
-
-  std::cout << "\nRunning UpdateSubscription() sample" << std::endl;
-  UpdateSubscription(subscription_admin_client, {project_id, subscription_id});
-
-  std::cout << "\nRunning ListSubscriptions() sample" << std::endl;
-  ListSubscriptions(subscription_admin_client, {project_id});
 
   auto const endpoint1 = "https://" + project_id + ".appspot.com/push1";
   auto const endpoint2 = "https://" + project_id + ".appspot.com/push2";
@@ -2448,9 +1621,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   DeleteSubscription(subscription_admin_client,
                      {project_id, std::move(push_subscription_id)});
 
-  std::cout << "\nRunning CreateTopic() sample [4]" << std::endl;
-  CreateTopic(topic_admin_client, {project_id, dead_letter_topic_id});
-
   // Hardcode this number as it does not really matter. The other samples
   // pick something between 10 and 15.
   auto constexpr kDeadLetterDeliveryAttempts = 15;
@@ -2471,55 +1641,19 @@ void AutoRun(std::vector<std::string> const& argv) {
          std::to_string(kUpdatedDeadLetterDeliveryAttempts)});
   });
 
-  std::cout << "\nRunning CreateSnapshot() sample [1]" << std::endl;
-  CreateSnapshot(subscription_admin_client,
-                 {project_id, subscription_id, snapshot_id});
-
-  std::cout << "\nRunning CreateSnapshot() sample [2]" << std::endl;
-  CreateSnapshot(subscription_admin_client,
-                 {project_id, subscription_id, snapshot_id});
-
-  std::cout << "\nRunning GetSnapshot() sample" << std::endl;
-  GetSnapshot(subscription_admin_client, {project_id, snapshot_id});
-
-  std::cout << "\nRunning UpdateSnapshot() sample" << std::endl;
   ignore_emulator_failures([&] {
-    UpdateSnapshot(subscription_admin_client, {project_id, snapshot_id});
-  });
-
-  std::cout << "\nRunning ListSnapshots() sample" << std::endl;
-  ListSnapshots(subscription_admin_client, {project_id});
-
-  std::cout << "\nRunning SeekWithSnapshot() sample" << std::endl;
-  SeekWithSnapshot(subscription_admin_client,
-                   {project_id, subscription_id, snapshot_id});
-
-  std::cout << "\nRunning DeleteSnapshot() sample [1]" << std::endl;
-  DeleteSnapshot(subscription_admin_client, {project_id, snapshot_id});
-
-  std::cout << "\nRunning DeleteSnapshot() sample [2]" << std::endl;
-  DeleteSnapshot(subscription_admin_client, {project_id, snapshot_id});
-
-  std::cout << "\nRunning SeekWithTimestamp() sample" << std::endl;
-  SeekWithTimestamp(subscription_admin_client,
-                    {project_id, subscription_id, "2"});
-
-  ignore_emulator_failures([&] {
-    AutoRunAvro(project_id, testdata_directory, generator, topic_admin_client,
-                subscription_admin_client);
+    AutoRunAvro(project_id, testdata_directory, generator, topic_admin,
+                subscription_admin);
   });
   ignore_emulator_failures([&] {
-    AutoRunProtobuf(project_id, testdata_directory, generator,
-                    topic_admin_client, subscription_admin_client);
+    AutoRunProtobuf(project_id, testdata_directory, generator, topic_admin,
+                    subscription_admin);
   });
 
-  auto topic = google::cloud::pubsub::Topic(project_id, topic_id);
   auto publisher = google::cloud::pubsub::Publisher(
       google::cloud::pubsub::MakePublisherConnection(
           topic, google::cloud::Options{}
                      .set<google::cloud::pubsub::MaxBatchMessagesOption>(1)));
-  auto subscription =
-      google::cloud::pubsub::Subscription(project_id, subscription_id);
   auto subscriber = google::cloud::pubsub::Subscriber(
       google::cloud::pubsub::MakeSubscriberConnection(subscription));
 
@@ -2635,11 +1769,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   PublishHelper(publisher, "SubscriberRetrySettings", 1);
   SubscriberRetrySettings({project_id, subscription_id});
 
-  std::cout << "\nRunning DetachSubscription() sample" << std::endl;
-  ignore_emulator_failures([&] {
-    DetachSubscription(topic_admin_client, {project_id, subscription_id});
-  });
-
   std::cout << "\nRunning DeleteSubscription() sample [2]" << std::endl;
   DeleteSubscription(subscription_admin_client,
                      {project_id, std::move(dead_letter_subscription_id)});
@@ -2647,12 +1776,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning DeleteSubscription() sample [3] " << std::endl;
   DeleteSubscription(subscription_admin_client,
                      {project_id, ordering_subscription_id});
-
-  std::cout << "\nRunning DeleteSubscription() sample [4]" << std::endl;
-  DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
-
-  std::cout << "\nRunning DeleteSubscription() sample [5]" << std::endl;
-  DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
 
   std::cout << "\nRunning DeleteSubscription() sample [6] " << std::endl;
   DeleteSubscription(subscription_admin_client,
@@ -2666,18 +1789,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   DeleteSubscription(subscription_admin_client,
                      {project_id, unwrapped_push_subscription_id});
 
-  std::cout << "\nRunning DeleteTopic() sample [1]" << std::endl;
-  DeleteTopic(topic_admin_client, {project_id, dead_letter_topic_id});
-
-  std::cout << "\nRunning DeleteTopic() sample [2]" << std::endl;
-  DeleteTopic(topic_admin_client, {project_id, ordering_topic_id});
-
-  std::cout << "\nRunning DeleteTopic() sample [3]" << std::endl;
-  DeleteTopic(topic_admin_client, {project_id, topic_id});
-
-  std::cout << "\nRunning DeleteTopic() sample [4]" << std::endl;
-  DeleteTopic(topic_admin_client, {project_id, topic_id});
-
   std::cout << "\nAutoRun done" << std::endl;
 }
 
@@ -2685,82 +1796,10 @@ void AutoRun(std::vector<std::string> const& argv) {
 
 int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   using ::google::cloud::pubsub::examples::CreatePublisherCommand;
-  using ::google::cloud::pubsub::examples::CreateSchemaServiceCommand;
   using ::google::cloud::pubsub::examples::CreateSubscriberCommand;
-  using ::google::cloud::pubsub::examples::CreateSubscriptionAdminCommand;
-  using ::google::cloud::pubsub::examples::CreateTopicAdminCommand;
   using ::google::cloud::testing_util::Example;
 
   Example example({
-      CreateSubscriptionAdminCommand(
-          "create-filtered-subscription",
-          {"project-id", "topic-id", "subscription-id"},
-          CreateFilteredSubscription),
-      CreateSubscriptionAdminCommand(
-          "create-subscription-with-exactly-once-delivery",
-          {"project-id", "topic-id", "subscription-id"},
-          CreateSubscriptionWithExactlyOnceDelivery),
-      CreateSubscriptionAdminCommand(
-          "create-push-subscription",
-          {"project-id", "topic-id", "subscription-id", "endpoint"},
-          CreatePushSubscription),
-      CreateSubscriptionAdminCommand(
-          "create-unwrapped-push-subscription",
-          {"project-id", "topic-id", "subscription-id", "endpoint"},
-          CreateUnwrappedPushSubscription),
-      CreateSubscriptionAdminCommand(
-          "create-bigquery-subscription",
-          {"project-id", "topic-id", "subscription-id", "table-id"},
-          CreateBigQuerySubscription),
-      CreateSubscriptionAdminCommand(
-          "create-cloud-storage-subscription",
-          {"project-id", "topic-id", "subscription-id", "bucket"},
-          CreateCloudStorageSubscription),
-      CreateSubscriptionAdminCommand(
-          "create-ordering-subscription",
-          {"project-id", "topic-id", "subscription-id"},
-          CreateOrderingSubscription),
-      CreateSubscriptionAdminCommand(
-          "create-dead-letter-subscription",
-          {"project-id", "topic-id", "subscription-id", "dead-letter-topic-id",
-           "dead-letter-delivery-attempts"},
-          CreateDeadLetterSubscription),
-      CreateSubscriptionAdminCommand(
-          "update-dead-letter-subscription",
-          {"project-id", "subscription-id", "dead-letter-topic-id",
-           "dead-letter-delivery-attempts"},
-          UpdateDeadLetterSubscription),
-      CreateSubscriptionAdminCommand("remove-dead-letter-policy",
-                                     {"project-id", "subscription-id"},
-                                     RemoveDeadLetterPolicy),
-      CreateSubscriptionAdminCommand("get-subscription",
-                                     {"project-id", "subscription-id"},
-                                     GetSubscription),
-      CreateSubscriptionAdminCommand("update-subscription",
-                                     {"project-id", "subscription-id"},
-                                     UpdateSubscription),
-      CreateSubscriptionAdminCommand("list-subscriptions", {"project-id"},
-                                     ListSubscriptions),
-      CreateSubscriptionAdminCommand(
-          "modify-push-config", {"project-id", "subscription-id", "endpoint"},
-          ModifyPushConfig),
-      CreateSubscriptionAdminCommand(
-          "create-snapshot", {"project-id", "subscription-id", "snapshot-id"},
-          CreateSnapshot),
-      CreateSubscriptionAdminCommand(
-          "get-snapshot", {"project-id", "snapshot-id"}, GetSnapshot),
-      CreateSubscriptionAdminCommand(
-          "update-snapshot", {"project-id", "snapshot-id"}, UpdateSnapshot),
-      CreateSubscriptionAdminCommand("list-snapshots", {"project-id"},
-                                     ListSnapshots),
-      CreateSubscriptionAdminCommand(
-          "delete-snapshot", {"project-id", "snapshot-id"}, DeleteSnapshot),
-      CreateSubscriptionAdminCommand(
-          "seek-with-snapshot",
-          {"project-id", "subscription-id", "snapshot-id"}, SeekWithSnapshot),
-      CreateSubscriptionAdminCommand(
-          "seek-with-timestamp", {"project-id", "subscription-id", "seconds"},
-          SeekWithTimestamp),
       CreatePublisherCommand("publish-avro-records", {}, PublishAvroRecords),
       CreateSubscriberCommand("subscribe-avro-records", {},
                               SubscribeAvroRecords),

@@ -44,9 +44,9 @@ BigtableRoundRobin::SampleRowKeys(
 }
 
 StatusOr<google::bigtable::v2::MutateRowResponse> BigtableRoundRobin::MutateRow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::MutateRowRequest const& request) {
-  return Child()->MutateRow(context, request);
+  return Child()->MutateRow(context, options, request);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -59,23 +59,23 @@ BigtableRoundRobin::MutateRows(
 
 StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
 BigtableRoundRobin::CheckAndMutateRow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::CheckAndMutateRowRequest const& request) {
-  return Child()->CheckAndMutateRow(context, request);
+  return Child()->CheckAndMutateRow(context, options, request);
 }
 
 StatusOr<google::bigtable::v2::PingAndWarmResponse>
 BigtableRoundRobin::PingAndWarm(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::PingAndWarmRequest const& request) {
-  return Child()->PingAndWarm(context, request);
+  return Child()->PingAndWarm(context, options, request);
 }
 
 StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>
 BigtableRoundRobin::ReadModifyWriteRow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
-  return Child()->ReadModifyWriteRow(context, request);
+  return Child()->ReadModifyWriteRow(context, options, request);
 }
 
 std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
@@ -83,8 +83,10 @@ std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
 BigtableRoundRobin::AsyncReadRows(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::ReadRowsRequest const& request) {
-  return Child()->AsyncReadRows(cq, std::move(context), request);
+  return Child()->AsyncReadRows(cq, std::move(context), std::move(options),
+                                request);
 }
 
 std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
@@ -92,8 +94,10 @@ std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
 BigtableRoundRobin::AsyncSampleRowKeys(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::SampleRowKeysRequest const& request) {
-  return Child()->AsyncSampleRowKeys(cq, std::move(context), request);
+  return Child()->AsyncSampleRowKeys(cq, std::move(context), std::move(options),
+                                     request);
 }
 
 future<StatusOr<google::bigtable::v2::MutateRowResponse>>
@@ -109,8 +113,10 @@ std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
 BigtableRoundRobin::AsyncMutateRows(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::MutateRowsRequest const& request) {
-  return Child()->AsyncMutateRows(cq, std::move(context), request);
+  return Child()->AsyncMutateRows(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>

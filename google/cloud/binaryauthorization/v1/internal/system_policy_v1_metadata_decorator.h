@@ -39,7 +39,7 @@ class SystemPolicyV1Metadata : public SystemPolicyV1Stub {
                          std::string api_client_header = "");
 
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
           request) override;
 

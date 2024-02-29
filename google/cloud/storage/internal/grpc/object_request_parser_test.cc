@@ -214,6 +214,20 @@ TEST(GrpcObjectRequestParser, DeleteObjectAllFields) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcObjectRequestParser, GetObjectMetadata) {
+  google::storage::v2::GetObjectRequest expected;
+  EXPECT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        bucket: "projects/_/buckets/test-bucket" object: "test-object"
+      )pb",
+      &expected));
+
+  storage::internal::GetObjectMetadataRequest req("test-bucket", "test-object");
+
+  auto const actual = ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcObjectRequestParser, GetObjectMetadataAllFields) {
   google::storage::v2::GetObjectRequest expected;
   EXPECT_TRUE(TextFormat::ParseFromString(
@@ -226,6 +240,7 @@ TEST(GrpcObjectRequestParser, GetObjectMetadataAllFields) {
         if_metageneration_match: 3
         if_metageneration_not_match: 4
         read_mask { paths: "*" }
+        soft_deleted: true
       )pb",
       &expected));
 
@@ -234,8 +249,7 @@ TEST(GrpcObjectRequestParser, GetObjectMetadataAllFields) {
       storage::Generation(7), storage::IfGenerationMatch(1),
       storage::IfGenerationNotMatch(2), storage::IfMetagenerationMatch(3),
       storage::IfMetagenerationNotMatch(4), storage::Projection("full"),
-      storage::UserProject("test-user-project"),
-      storage::UserProject("test-user-project"),
+      storage::SoftDeleted(true), storage::UserProject("test-user-project"),
       storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"));
 
   auto const actual = ToProto(req);
@@ -871,6 +885,20 @@ TEST(GrpcObjectRequestParser, WriteObjectResponseWithResource) {
                                    Pair("other-header", "other-value")));
 }
 
+TEST(GrpcObjectRequestParser, ListObjectsRequest) {
+  google::storage::v2::ListObjectsRequest expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        parent: "projects/_/buckets/test-bucket"
+      )pb",
+      &expected));
+
+  storage::internal::ListObjectsRequest req("test-bucket");
+
+  auto const actual = ToProto(req);
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 TEST(GrpcObjectRequestParser, ListObjectsRequestAllFields) {
   google::storage::v2::ListObjectsRequest expected;
   ASSERT_TRUE(TextFormat::ParseFromString(
@@ -885,6 +913,7 @@ TEST(GrpcObjectRequestParser, ListObjectsRequestAllFields) {
         lexicographic_start: "test/prefix/a"
         lexicographic_end: "test/prefix/abc"
         match_glob: "**/*.cc"
+        soft_deleted: true
       )pb",
       &expected));
 
@@ -895,7 +924,7 @@ TEST(GrpcObjectRequestParser, ListObjectsRequestAllFields) {
       storage::IncludeTrailingDelimiter(true), storage::Prefix("test/prefix"),
       storage::Versions(true), storage::StartOffset("test/prefix/a"),
       storage::EndOffset("test/prefix/abc"), storage::MatchGlob("**/*.cc"),
-      storage::UserProject("test-user-project"),
+      storage::SoftDeleted(true), storage::UserProject("test-user-project"),
       storage::QuotaUser("test-quota-user"), storage::UserIp("test-user-ip"));
 
   auto const actual = ToProto(req);

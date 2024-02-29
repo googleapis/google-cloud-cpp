@@ -25,7 +25,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::unique_ptr<pubsub_testing::MockAsyncPullStream> FakeAsyncStreamingPull(
     google::cloud::CompletionQueue const& completion_queue,
-    std::shared_ptr<grpc::ClientContext>);
+    std::shared_ptr<grpc::ClientContext>,
+    google::cloud::internal::ImmutableOptions);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_testing

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/kms/inventory/v1/key_dashboard_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,13 +37,15 @@ KeyDashboardServiceLogging::KeyDashboardServiceLogging(
 
 StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
 KeyDashboardServiceLogging::ListCryptoKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::kms::inventory::v1::ListCryptoKeysRequest const&
-                 request) { return child_->ListCryptoKeys(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListCryptoKeys(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

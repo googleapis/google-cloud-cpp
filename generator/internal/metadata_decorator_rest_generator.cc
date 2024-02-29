@@ -33,13 +33,14 @@ namespace {
 enum ContextType { kPointer, kReference };
 
 std::string SetMetadataText(google::protobuf::MethodDescriptor const& method,
-                            ContextType context_type) {
+                            ContextType context_type,
+                            absl::string_view options) {
   std::string const context =
       context_type == kPointer ? "*rest_context" : "rest_context";
 
   auto info = ParseExplicitRoutingHeader(method);
   if (info.empty()) {
-    return absl::StrFormat("  SetMetadata(%s, options);", context);
+    return absl::StrFormat("  SetMetadata(%s, %s);", context, options);
   }
 
   // clang-format off
@@ -83,7 +84,7 @@ std::string SetMetadataText(google::protobuf::MethodDescriptor const& method,
     text += "  " + kv.first + "_matcher->AppendParam(request, params);\n\n";
   }
 
-    text += "  SetMetadata(" + context + ", options, params);\n";
+  text += absl::StrCat("  SetMetadata(", context, ", ", options, ", params);\n");
   return text;
   // clang-format on
 }
@@ -143,7 +144,8 @@ class $metadata_rest_class_name$ : public $stub_rest_class_name$ {
   google::cloud::future<StatusOr<$response_type$>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options, $request_type$ const& request) override;
+      google::cloud::internal::ImmutableOptions options,
+      $request_type$ const& request) override;
 )""");
     } else {
       if (IsResponseTypeEmpty(method)) {
@@ -188,13 +190,13 @@ class $metadata_rest_class_name$ : public $stub_rest_class_name$ {
   google::cloud::future<StatusOr<$longrunning_response_type$>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       $longrunning_get_operation_request_type$ const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       $longrunning_cancel_operation_request_type$ const& request) override;
 )""");
   }
@@ -261,12 +263,14 @@ future<StatusOr<$response_type$>>
 $metadata_rest_class_name$::Async$method_name$(
       CompletionQueue& cq,
       std::unique_ptr<rest_internal::RestContext> rest_context,
-      Options const& options, $request_type$ const& request) {
+      google::cloud::internal::ImmutableOptions options,
+      $request_type$ const& request) {
 )""");
       CcPrintMethod(method, __FILE__, __LINE__,
-                    SetMetadataText(method, kPointer));
+                    SetMetadataText(method, kPointer, "*options"));
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
-  return child_->Async$method_name$(cq, std::move(rest_context), options, request);
+  return child_->Async$method_name$(
+      cq, std::move(rest_context), std::move(options), request);
 }
 )""");
     } else {
@@ -278,7 +282,7 @@ $metadata_rest_class_name$::$method_name$(
     Options const& options, $request_type$ const& request) {
 )""");
         CcPrintMethod(method, __FILE__, __LINE__,
-                      SetMetadataText(method, kReference));
+                      SetMetadataText(method, kReference, "options"));
         CcPrintMethod(method, __FILE__, __LINE__, R"""(
   return child_->$method_name$(rest_context, options, request);
 }
@@ -291,7 +295,7 @@ $metadata_rest_class_name$::$method_name$(
     Options const& options, $request_type$ const& request) {
 )""");
         CcPrintMethod(method, __FILE__, __LINE__,
-                      SetMetadataText(method, kReference));
+                      SetMetadataText(method, kReference, "options"));
         CcPrintMethod(method, __FILE__, __LINE__, R"""(
   return child_->$method_name$(rest_context, options, request);
 }
@@ -312,7 +316,7 @@ $metadata_rest_class_name$::Async$method_name$(
     Options const& options, $request_type$ const& request) {
 )""");
       CcPrintMethod(method, __FILE__, __LINE__,
-                    SetMetadataText(method, kPointer));
+                    SetMetadataText(method, kPointer, "options"));
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
   return child_->Async$method_name$(cq, std::move(rest_context), options, request);
 }
@@ -326,7 +330,7 @@ $metadata_rest_class_name$::Async$method_name$(
     Options const& options, $request_type$ const& request) {
 )""");
       CcPrintMethod(method, __FILE__, __LINE__,
-                    SetMetadataText(method, kPointer));
+                    SetMetadataText(method, kPointer, "options"));
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
   return child_->Async$method_name$(cq, std::move(rest_context), options, request);
 }
@@ -341,20 +345,22 @@ future<StatusOr<$longrunning_response_type$>>
 $metadata_rest_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     $longrunning_get_operation_request_type$ const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncGetOperation(cq, std::move(rest_context), options, request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncGetOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 
 future<Status>
 $metadata_rest_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     $longrunning_cancel_operation_request_type$ const& request) {
-  SetMetadata(*rest_context, options);
-  return child_->AsyncCancelOperation(cq, std::move(rest_context), options, request);
+  SetMetadata(*rest_context, *options);
+  return child_->AsyncCancelOperation(
+      cq, std::move(rest_context), std::move(options), request);
 }
 )""");
   }

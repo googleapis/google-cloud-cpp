@@ -44,11 +44,11 @@ CompletionMetadata::CompletionMetadata(
 
 StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
 CompletionMetadata::CompleteQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::talent::v4::CompleteQueryRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("tenant=", internal::UrlEncode(request.tenant())));
-  return child_->CompleteQuery(context, request);
+  return child_->CompleteQuery(context, options, request);
 }
 
 void CompletionMetadata::SetMetadata(grpc::ClientContext& context,

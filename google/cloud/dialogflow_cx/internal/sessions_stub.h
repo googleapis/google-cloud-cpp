@@ -21,10 +21,13 @@
 
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/internal/streaming_read_rpc.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/cx/v3/session.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,29 +39,38 @@ class SessionsStub {
   virtual ~SessionsStub() = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
-  DetectIntent(grpc::ClientContext& context,
+  DetectIntent(grpc::ClientContext& context, Options const& options,
                google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
                    request) = 0;
+
+  virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::dialogflow::cx::v3::DetectIntentResponse>>
+  ServerStreamingDetectIntent(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
+          request) = 0;
 
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>
-  AsyncStreamingDetectIntent(google::cloud::CompletionQueue const& cq,
-                             std::shared_ptr<grpc::ClientContext> context) = 0;
+  AsyncStreamingDetectIntent(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>
   MatchIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
-  FulfillIntent(grpc::ClientContext& context,
+  FulfillIntent(grpc::ClientContext& context, Options const& options,
                 google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&
                     request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
   SubmitAnswerFeedback(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
           request) = 0;
 };
@@ -72,30 +84,38 @@ class DefaultSessionsStub : public SessionsStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
-  DetectIntent(grpc::ClientContext& context,
+  DetectIntent(grpc::ClientContext& context, Options const& options,
                google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
                    request) override;
+
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::dialogflow::cx::v3::DetectIntentResponse>>
+  ServerStreamingDetectIntent(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request)
+      override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>
   AsyncStreamingDetectIntent(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse> MatchIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
-  FulfillIntent(grpc::ClientContext& context,
+  FulfillIntent(grpc::ClientContext& context, Options const& options,
                 google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&
                     request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
   SubmitAnswerFeedback(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
           request) override;
 

@@ -18,6 +18,7 @@
 
 #include "google/cloud/automl/v1/auto_ml_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -22,6 +22,7 @@
 #include <google/cloud/datafusion/v1/datafusion.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ DataFusionStub::~DataFusionStub() = default;
 
 StatusOr<google::cloud::datafusion::v1::ListAvailableVersionsResponse>
 DefaultDataFusionStub::ListAvailableVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datafusion::v1::ListAvailableVersionsRequest const&
         request) {
   google::cloud::datafusion::v1::ListAvailableVersionsResponse response;
@@ -45,7 +46,7 @@ DefaultDataFusionStub::ListAvailableVersions(
 
 StatusOr<google::cloud::datafusion::v1::ListInstancesResponse>
 DefaultDataFusionStub::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datafusion::v1::ListInstancesRequest const& request) {
   google::cloud::datafusion::v1::ListInstancesResponse response;
   auto status = grpc_stub_->ListInstances(&context, request, &response);
@@ -57,7 +58,7 @@ DefaultDataFusionStub::ListInstances(
 
 StatusOr<google::cloud::datafusion::v1::Instance>
 DefaultDataFusionStub::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::datafusion::v1::GetInstanceRequest const& request) {
   google::cloud::datafusion::v1::Instance response;
   auto status = grpc_stub_->GetInstance(&context, request, &response);
@@ -70,7 +71,8 @@ DefaultDataFusionStub::GetInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataFusionStub::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::datafusion::v1::CreateInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::datafusion::v1::CreateInstanceRequest,
@@ -88,7 +90,8 @@ DefaultDataFusionStub::AsyncCreateInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataFusionStub::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::datafusion::v1::DeleteInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::datafusion::v1::DeleteInstanceRequest,
@@ -106,7 +109,8 @@ DefaultDataFusionStub::AsyncDeleteInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataFusionStub::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::datafusion::v1::UpdateInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::datafusion::v1::UpdateInstanceRequest,
@@ -124,7 +128,8 @@ DefaultDataFusionStub::AsyncUpdateInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataFusionStub::AsyncRestartInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::datafusion::v1::RestartInstanceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::datafusion::v1::RestartInstanceRequest,
@@ -142,7 +147,8 @@ DefaultDataFusionStub::AsyncRestartInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDataFusionStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -157,7 +163,8 @@ DefaultDataFusionStub::AsyncGetOperation(
 
 future<Status> DefaultDataFusionStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

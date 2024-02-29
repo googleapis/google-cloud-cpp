@@ -55,47 +55,47 @@ AgentEndpointServiceMetadata::ReceiveTaskNotification(
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
 AgentEndpointServiceMetadata::StartNextTask(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->StartNextTask(context, request);
+  SetMetadata(context, options);
+  return child_->StartNextTask(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
 AgentEndpointServiceMetadata::ReportTaskProgress(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->ReportTaskProgress(context, request);
+  SetMetadata(context, options);
+  return child_->ReportTaskProgress(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
 AgentEndpointServiceMetadata::ReportTaskComplete(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->ReportTaskComplete(context, request);
+  SetMetadata(context, options);
+  return child_->ReportTaskComplete(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
 AgentEndpointServiceMetadata::RegisterAgent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->RegisterAgent(context, request);
+  SetMetadata(context, options);
+  return child_->RegisterAgent(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
 AgentEndpointServiceMetadata::ReportInventory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->ReportInventory(context, request);
+  SetMetadata(context, options);
+  return child_->ReportInventory(context, options, request);
 }
 
 void AgentEndpointServiceMetadata::SetMetadata(

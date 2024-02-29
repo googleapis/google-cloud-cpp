@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_es/internal/versions_auth_decorator.h"
 #include <google/cloud/dialogflow/v2/version.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,43 +33,43 @@ VersionsAuth::VersionsAuth(
 
 StatusOr<google::cloud::dialogflow::v2::ListVersionsResponse>
 VersionsAuth::ListVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListVersionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListVersions(context, request);
+  return child_->ListVersions(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Version> VersionsAuth::GetVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetVersion(context, request);
+  return child_->GetVersion(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Version> VersionsAuth::CreateVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateVersion(context, request);
+  return child_->CreateVersion(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Version> VersionsAuth::UpdateVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateVersion(context, request);
+  return child_->UpdateVersion(context, options, request);
 }
 
 Status VersionsAuth::DeleteVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteVersionRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteVersion(context, request);
+  return child_->DeleteVersion(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

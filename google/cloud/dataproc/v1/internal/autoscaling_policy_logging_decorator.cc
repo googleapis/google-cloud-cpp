@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dataproc/v1/autoscaling_policies.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,70 +37,70 @@ AutoscalingPolicyServiceLogging::AutoscalingPolicyServiceLogging(
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceLogging::CreateAutoscalingPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
                  request) {
-        return child_->CreateAutoscalingPolicy(context, request);
+        return child_->CreateAutoscalingPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceLogging::UpdateAutoscalingPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
                  request) {
-        return child_->UpdateAutoscalingPolicy(context, request);
+        return child_->UpdateAutoscalingPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceLogging::GetAutoscalingPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const&
                  request) {
-        return child_->GetAutoscalingPolicy(context, request);
+        return child_->GetAutoscalingPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse>
 AutoscalingPolicyServiceLogging::ListAutoscalingPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
                  request) {
-        return child_->ListAutoscalingPolicies(context, request);
+        return child_->ListAutoscalingPolicies(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status AutoscalingPolicyServiceLogging::DeleteAutoscalingPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
                  request) {
-        return child_->DeleteAutoscalingPolicy(context, request);
+        return child_->DeleteAutoscalingPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -69,20 +70,21 @@ CaseAttachmentServiceConnectionImpl::ListAttachments(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::support::v2::Attachment>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<support_v2::CaseAttachmentServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::support::v2::ListAttachmentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::support::v2::ListAttachmentsRequest const&
                        request) {
-              return stub->ListAttachments(context, request);
+              return stub->ListAttachments(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::support::v2::ListAttachmentsResponse r) {
         std::vector<google::cloud::support::v2::Attachment> result(

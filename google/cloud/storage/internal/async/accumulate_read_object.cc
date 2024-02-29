@@ -204,14 +204,16 @@ class AsyncAccumulateReadObjectFullHandle
   AsyncAccumulateReadObjectFullHandle(
       CompletionQueue cq, std::shared_ptr<StorageStub> stub,
       std::function<std::shared_ptr<grpc::ClientContext>()> context_factory,
-      google::storage::v2::ReadObjectRequest request, Options const& options)
+      google::storage::v2::ReadObjectRequest request,
+      google::cloud::internal::ImmutableOptions options)
       : cq_(std::move(cq)),
         stub_(std::move(stub)),
         context_factory_(std::move(context_factory)),
         request_(std::move(request)),
-        timeout_(options.get<storage::DownloadStallTimeoutOption>()),
-        retry_(options.get<storage::RetryPolicyOption>()->clone()),
-        backoff_(options.get<storage::BackoffPolicyOption>()->clone()) {
+        timeout_(options->get<storage::DownloadStallTimeoutOption>()),
+        retry_(options->get<storage::RetryPolicyOption>()->clone()),
+        backoff_(options->get<storage::BackoffPolicyOption>()->clone()),
+        options_(std::move(options)) {
     accumulator_.status = Status(StatusCode::kDeadlineExceeded,
                                  "retry policy exhausted before first request");
   }
@@ -228,7 +230,8 @@ class AsyncAccumulateReadObjectFullHandle
       return;
     }
     auto self = shared_from_this();
-    auto stream = stub_->AsyncReadObject(cq_, context_factory_(), request_);
+    auto stream =
+        stub_->AsyncReadObject(cq_, context_factory_(), options_, request_);
     AsyncAccumulateReadObjectPartial(cq_, std::move(stream), timeout_)
         .then([self](future<AsyncAccumulateReadObjectResult> f) {
           self->OnPartial(f.get());
@@ -305,6 +308,7 @@ class AsyncAccumulateReadObjectFullHandle
   std::chrono::milliseconds timeout_;
   std::unique_ptr<storage::RetryPolicy> retry_;
   std::unique_ptr<storage::BackoffPolicy> backoff_;
+  google::cloud::internal::ImmutableOptions options_;
 };
 
 }  // namespace
@@ -323,10 +327,11 @@ future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectPartial(
 future<AsyncAccumulateReadObjectResult> AsyncAccumulateReadObjectFull(
     CompletionQueue cq, std::shared_ptr<StorageStub> stub,
     std::function<std::shared_ptr<grpc::ClientContext>()> context_factory,
-    google::storage::v2::ReadObjectRequest request, Options const& options) {
+    google::storage::v2::ReadObjectRequest request,
+    google::cloud::internal::ImmutableOptions options) {
   auto handle = std::make_shared<AsyncAccumulateReadObjectFullHandle>(
       std::move(cq), std::move(stub), std::move(context_factory),
-      std::move(request), options);
+      std::move(request), std::move(options));
   return handle->Invoke();
 }
 

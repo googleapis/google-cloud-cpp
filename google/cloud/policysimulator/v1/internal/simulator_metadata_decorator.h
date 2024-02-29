@@ -40,30 +40,33 @@ class SimulatorMetadata : public SimulatorStub {
                     std::string api_client_header = "");
 
   StatusOr<google::cloud::policysimulator::v1::Replay> GetReplay(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::policysimulator::v1::GetReplayRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateReplay(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::policysimulator::v1::CreateReplayRequest const& request)
       override;
 
   StatusOr<google::cloud::policysimulator::v1::ListReplayResultsResponse>
   ListReplayResults(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::policysimulator::v1::ListReplayResultsRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

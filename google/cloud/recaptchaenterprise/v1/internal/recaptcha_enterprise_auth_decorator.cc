@@ -19,6 +19,7 @@
 #include "google/cloud/recaptchaenterprise/v1/internal/recaptcha_enterprise_auth_decorator.h"
 #include <google/cloud/recaptchaenterprise/v1/recaptchaenterprise.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,177 +33,189 @@ RecaptchaEnterpriseServiceAuth::RecaptchaEnterpriseServiceAuth(
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Assessment>
 RecaptchaEnterpriseServiceAuth::CreateAssessment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::CreateAssessmentRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateAssessment(context, request);
+  return child_->CreateAssessment(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::AnnotateAssessmentResponse>
 RecaptchaEnterpriseServiceAuth::AnnotateAssessment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::AnnotateAssessmentRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->AnnotateAssessment(context, request);
+  return child_->AnnotateAssessment(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceAuth::CreateKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::CreateKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateKey(context, request);
+  return child_->CreateKey(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::ListKeysResponse>
 RecaptchaEnterpriseServiceAuth::ListKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::ListKeysRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListKeys(context, request);
+  return child_->ListKeys(context, options, request);
 }
 
 StatusOr<
     google::cloud::recaptchaenterprise::v1::RetrieveLegacySecretKeyResponse>
 RecaptchaEnterpriseServiceAuth::RetrieveLegacySecretKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::
         RetrieveLegacySecretKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RetrieveLegacySecretKey(context, request);
+  return child_->RetrieveLegacySecretKey(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceAuth::GetKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::GetKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetKey(context, request);
+  return child_->GetKey(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceAuth::UpdateKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::UpdateKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateKey(context, request);
+  return child_->UpdateKey(context, options, request);
 }
 
 Status RecaptchaEnterpriseServiceAuth::DeleteKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::DeleteKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteKey(context, request);
+  return child_->DeleteKey(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Key>
 RecaptchaEnterpriseServiceAuth::MigrateKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::MigrateKeyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->MigrateKey(context, request);
+  return child_->MigrateKey(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::Metrics>
 RecaptchaEnterpriseServiceAuth::GetMetrics(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::GetMetricsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetMetrics(context, request);
+  return child_->GetMetrics(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
 RecaptchaEnterpriseServiceAuth::CreateFirewallPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::CreateFirewallPolicyRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateFirewallPolicy(context, request);
+  return child_->CreateFirewallPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesResponse>
 RecaptchaEnterpriseServiceAuth::ListFirewallPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::ListFirewallPoliciesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListFirewallPolicies(context, request);
+  return child_->ListFirewallPolicies(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
 RecaptchaEnterpriseServiceAuth::GetFirewallPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::GetFirewallPolicyRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetFirewallPolicy(context, request);
+  return child_->GetFirewallPolicy(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::FirewallPolicy>
 RecaptchaEnterpriseServiceAuth::UpdateFirewallPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::UpdateFirewallPolicyRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateFirewallPolicy(context, request);
+  return child_->UpdateFirewallPolicy(context, options, request);
 }
 
 Status RecaptchaEnterpriseServiceAuth::DeleteFirewallPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteFirewallPolicy(context, request);
+  return child_->DeleteFirewallPolicy(context, options, request);
+}
+
+StatusOr<
+    google::cloud::recaptchaenterprise::v1::ReorderFirewallPoliciesResponse>
+RecaptchaEnterpriseServiceAuth::ReorderFirewallPolicies(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::recaptchaenterprise::v1::
+        ReorderFirewallPoliciesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ReorderFirewallPolicies(context, options, request);
 }
 
 StatusOr<
     google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsResponse>
 RecaptchaEnterpriseServiceAuth::ListRelatedAccountGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::
         ListRelatedAccountGroupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListRelatedAccountGroups(context, request);
+  return child_->ListRelatedAccountGroups(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::
              ListRelatedAccountGroupMembershipsResponse>
 RecaptchaEnterpriseServiceAuth::ListRelatedAccountGroupMemberships(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::
         ListRelatedAccountGroupMembershipsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListRelatedAccountGroupMemberships(context, request);
+  return child_->ListRelatedAccountGroupMemberships(context, options, request);
 }
 
 StatusOr<google::cloud::recaptchaenterprise::v1::
              SearchRelatedAccountGroupMembershipsResponse>
 RecaptchaEnterpriseServiceAuth::SearchRelatedAccountGroupMemberships(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::recaptchaenterprise::v1::
         SearchRelatedAccountGroupMembershipsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SearchRelatedAccountGroupMemberships(context, request);
+  return child_->SearchRelatedAccountGroupMemberships(context, options,
+                                                      request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

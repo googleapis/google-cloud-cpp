@@ -18,6 +18,7 @@
 
 #include "google/cloud/billing/v1/cloud_catalog_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

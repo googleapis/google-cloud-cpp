@@ -1,0 +1,16 @@
+type: google.api.Service
+config_version: 3
+name: test.googleapis.com
+title: Cloud Storage API
+
+apis:
+- name: google.test.requestid.v1.RequestIdService
+
+publishing:
+  method_settings:
+  - selector: google.test.requestid.v1.RequestIdService.CreateFoo
+    auto_populated_fields:
+    - request_id
+  - selector: google.test.requestid.v1.RequestIdService.RenameFoo
+    auto_populated_fields:
+    - request_id

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/monitoring/v3/service_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,125 +37,125 @@ ServiceMonitoringServiceLogging::ServiceMonitoringServiceLogging(
 
 StatusOr<google::monitoring::v3::Service>
 ServiceMonitoringServiceLogging::CreateService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::CreateServiceRequest const& request) {
-        return child_->CreateService(context, request);
+        return child_->CreateService(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::v3::Service>
 ServiceMonitoringServiceLogging::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::GetServiceRequest const& request) {
-        return child_->GetService(context, request);
+        return child_->GetService(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::v3::ListServicesResponse>
 ServiceMonitoringServiceLogging::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListServicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::ListServicesRequest const& request) {
-        return child_->ListServices(context, request);
+        return child_->ListServices(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::v3::Service>
 ServiceMonitoringServiceLogging::UpdateService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::UpdateServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::UpdateServiceRequest const& request) {
-        return child_->UpdateService(context, request);
+        return child_->UpdateService(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status ServiceMonitoringServiceLogging::DeleteService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::DeleteServiceRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::DeleteServiceRequest const& request) {
-        return child_->DeleteService(context, request);
+        return child_->DeleteService(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
 ServiceMonitoringServiceLogging::CreateServiceLevelObjective(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::CreateServiceLevelObjectiveRequest const&
                  request) {
-        return child_->CreateServiceLevelObjective(context, request);
+        return child_->CreateServiceLevelObjective(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
 ServiceMonitoringServiceLogging::GetServiceLevelObjective(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetServiceLevelObjectiveRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::GetServiceLevelObjectiveRequest const&
                  request) {
-        return child_->GetServiceLevelObjective(context, request);
+        return child_->GetServiceLevelObjective(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::v3::ListServiceLevelObjectivesResponse>
 ServiceMonitoringServiceLogging::ListServiceLevelObjectives(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListServiceLevelObjectivesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::ListServiceLevelObjectivesRequest const&
                  request) {
-        return child_->ListServiceLevelObjectives(context, request);
+        return child_->ListServiceLevelObjectives(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
 ServiceMonitoringServiceLogging::UpdateServiceLevelObjective(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::UpdateServiceLevelObjectiveRequest const&
                  request) {
-        return child_->UpdateServiceLevelObjective(context, request);
+        return child_->UpdateServiceLevelObjective(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status ServiceMonitoringServiceLogging::DeleteServiceLevelObjective(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::v3::DeleteServiceLevelObjectiveRequest const&
                  request) {
-        return child_->DeleteServiceLevelObjective(context, request);
+        return child_->DeleteServiceLevelObjective(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

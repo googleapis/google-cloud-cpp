@@ -19,6 +19,7 @@
 #include "google/cloud/compute/image_family_views/v1/internal/image_family_views_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

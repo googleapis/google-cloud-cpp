@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/iap/v1/service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ IdentityAwareProxyAdminServiceStub::~IdentityAwareProxyAdminServiceStub() =
 
 StatusOr<google::iam::v1::Policy>
 DefaultIdentityAwareProxyAdminServiceStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -44,7 +45,7 @@ DefaultIdentityAwareProxyAdminServiceStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::Policy>
 DefaultIdentityAwareProxyAdminServiceStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -56,7 +57,7 @@ DefaultIdentityAwareProxyAdminServiceStub::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultIdentityAwareProxyAdminServiceStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
@@ -68,7 +69,7 @@ DefaultIdentityAwareProxyAdminServiceStub::TestIamPermissions(
 
 StatusOr<google::cloud::iap::v1::IapSettings>
 DefaultIdentityAwareProxyAdminServiceStub::GetIapSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::iap::v1::GetIapSettingsRequest const& request) {
   google::cloud::iap::v1::IapSettings response;
   auto status = grpc_stub_->GetIapSettings(&context, request, &response);
@@ -80,7 +81,7 @@ DefaultIdentityAwareProxyAdminServiceStub::GetIapSettings(
 
 StatusOr<google::cloud::iap::v1::IapSettings>
 DefaultIdentityAwareProxyAdminServiceStub::UpdateIapSettings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::iap::v1::UpdateIapSettingsRequest const& request) {
   google::cloud::iap::v1::IapSettings response;
   auto status = grpc_stub_->UpdateIapSettings(&context, request, &response);
@@ -92,7 +93,7 @@ DefaultIdentityAwareProxyAdminServiceStub::UpdateIapSettings(
 
 StatusOr<google::cloud::iap::v1::ListTunnelDestGroupsResponse>
 DefaultIdentityAwareProxyAdminServiceStub::ListTunnelDestGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::iap::v1::ListTunnelDestGroupsRequest const& request) {
   google::cloud::iap::v1::ListTunnelDestGroupsResponse response;
   auto status = grpc_stub_->ListTunnelDestGroups(&context, request, &response);
@@ -104,7 +105,7 @@ DefaultIdentityAwareProxyAdminServiceStub::ListTunnelDestGroups(
 
 StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 DefaultIdentityAwareProxyAdminServiceStub::CreateTunnelDestGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request) {
   google::cloud::iap::v1::TunnelDestGroup response;
   auto status = grpc_stub_->CreateTunnelDestGroup(&context, request, &response);
@@ -116,7 +117,7 @@ DefaultIdentityAwareProxyAdminServiceStub::CreateTunnelDestGroup(
 
 StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 DefaultIdentityAwareProxyAdminServiceStub::GetTunnelDestGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::iap::v1::GetTunnelDestGroupRequest const& request) {
   google::cloud::iap::v1::TunnelDestGroup response;
   auto status = grpc_stub_->GetTunnelDestGroup(&context, request, &response);
@@ -127,7 +128,7 @@ DefaultIdentityAwareProxyAdminServiceStub::GetTunnelDestGroup(
 }
 
 Status DefaultIdentityAwareProxyAdminServiceStub::DeleteTunnelDestGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteTunnelDestGroup(&context, request, &response);
@@ -139,7 +140,7 @@ Status DefaultIdentityAwareProxyAdminServiceStub::DeleteTunnelDestGroup(
 
 StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 DefaultIdentityAwareProxyAdminServiceStub::UpdateTunnelDestGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request) {
   google::cloud::iap::v1::TunnelDestGroup response;
   auto status = grpc_stub_->UpdateTunnelDestGroup(&context, request, &response);

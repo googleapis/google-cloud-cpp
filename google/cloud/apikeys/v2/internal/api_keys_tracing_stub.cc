@@ -18,6 +18,7 @@
 
 #include "google/cloud/apikeys/v2/internal/api_keys_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,120 +33,130 @@ ApiKeysTracingStub::ApiKeysTracingStub(std::shared_ptr<ApiKeysStub> child)
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysTracingStub::AsyncCreateKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::apikeys::v2::CreateKeyRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "CreateKey");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateKey(cq, context, options, request);
+  auto f = child_->AsyncCreateKey(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::api::apikeys::v2::ListKeysResponse>
 ApiKeysTracingStub::ListKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::ListKeysRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "ListKeys");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->ListKeys(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListKeys(context, options, request));
 }
 
 StatusOr<google::api::apikeys::v2::Key> ApiKeysTracingStub::GetKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::GetKeyRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "GetKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetKey(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetKey(context, options, request));
 }
 
 StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
 ApiKeysTracingStub::GetKeyString(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::GetKeyStringRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "GetKeyString");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetKeyString(context, request));
+                           child_->GetKeyString(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysTracingStub::AsyncUpdateKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::apikeys::v2::UpdateKeyRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "UpdateKey");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateKey(cq, context, options, request);
+  auto f = child_->AsyncUpdateKey(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysTracingStub::AsyncDeleteKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::apikeys::v2::DeleteKeyRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "DeleteKey");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteKey(cq, context, options, request);
+  auto f = child_->AsyncDeleteKey(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysTracingStub::AsyncUndeleteKey(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::api::apikeys::v2::UndeleteKeyRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "UndeleteKey");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUndeleteKey(cq, context, options, request);
+  auto f = child_->AsyncUndeleteKey(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::api::apikeys::v2::LookupKeyResponse>
 ApiKeysTracingStub::LookupKey(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::api::apikeys::v2::LookupKeyRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.api.apikeys.v2.ApiKeys", "LookupKey");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->LookupKey(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->LookupKey(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ApiKeysTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> ApiKeysTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

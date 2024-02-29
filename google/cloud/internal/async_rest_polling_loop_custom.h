@@ -83,14 +83,15 @@ future<StatusOr<OperationType>> AsyncRestPollingLoop(
         cancel_request_set_operation_name) {
   auto poll_wrapper = [poll = std::move(poll)](
                           google::cloud::CompletionQueue& cq,
-                          std::unique_ptr<RestContext> context, Options const&,
+                          std::unique_ptr<RestContext> context,
+                          internal::ImmutableOptions const&,
                           GetOperationRequestType const& request) {
     return poll(cq, std::move(context), request);
   };
   auto cancel_wrapper = [cancel = std::move(cancel)](
                             google::cloud::CompletionQueue& cq,
                             std::unique_ptr<RestContext> context,
-                            Options const&,
+                            internal::ImmutableOptions const&,
                             CancelOperationRequestType const& request) {
     return cancel(cq, std::move(context), request);
   };

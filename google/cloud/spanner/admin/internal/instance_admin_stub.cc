@@ -22,6 +22,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <google/spanner/admin/instance/v1/spanner_instance_admin.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ InstanceAdminStub::~InstanceAdminStub() = default;
 
 StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
 DefaultInstanceAdminStub::ListInstanceConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&
         request) {
   google::spanner::admin::instance::v1::ListInstanceConfigsResponse response;
@@ -45,7 +46,7 @@ DefaultInstanceAdminStub::ListInstanceConfigs(
 
 StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
 DefaultInstanceAdminStub::GetInstanceConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
         request) {
   google::spanner::admin::instance::v1::InstanceConfig response;
@@ -59,7 +60,8 @@ DefaultInstanceAdminStub::GetInstanceConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultInstanceAdminStub::AsyncCreateInstanceConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -78,7 +80,8 @@ DefaultInstanceAdminStub::AsyncCreateInstanceConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultInstanceAdminStub::AsyncUpdateInstanceConfig(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -95,7 +98,7 @@ DefaultInstanceAdminStub::AsyncUpdateInstanceConfig(
 }
 
 Status DefaultInstanceAdminStub::DeleteInstanceConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
         request) {
   google::protobuf::Empty response;
@@ -109,7 +112,7 @@ Status DefaultInstanceAdminStub::DeleteInstanceConfig(
 StatusOr<
     google::spanner::admin::instance::v1::ListInstanceConfigOperationsResponse>
 DefaultInstanceAdminStub::ListInstanceConfigOperations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::instance::v1::
         ListInstanceConfigOperationsRequest const& request) {
   google::spanner::admin::instance::v1::ListInstanceConfigOperationsResponse
@@ -124,7 +127,7 @@ DefaultInstanceAdminStub::ListInstanceConfigOperations(
 
 StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
 DefaultInstanceAdminStub::ListInstances(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::instance::v1::ListInstancesRequest const& request) {
   google::spanner::admin::instance::v1::ListInstancesResponse response;
   auto status = grpc_stub_->ListInstances(&context, request, &response);
@@ -134,9 +137,23 @@ DefaultInstanceAdminStub::ListInstances(
   return response;
 }
 
+StatusOr<google::spanner::admin::instance::v1::ListInstancePartitionsResponse>
+DefaultInstanceAdminStub::ListInstancePartitions(
+    grpc::ClientContext& context, Options const&,
+    google::spanner::admin::instance::v1::ListInstancePartitionsRequest const&
+        request) {
+  google::spanner::admin::instance::v1::ListInstancePartitionsResponse response;
+  auto status =
+      grpc_stub_->ListInstancePartitions(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::spanner::admin::instance::v1::Instance>
 DefaultInstanceAdminStub::GetInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
   google::spanner::admin::instance::v1::Instance response;
   auto status = grpc_stub_->GetInstance(&context, request, &response);
@@ -149,7 +166,8 @@ DefaultInstanceAdminStub::GetInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultInstanceAdminStub::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::spanner::admin::instance::v1::CreateInstanceRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -168,7 +186,8 @@ DefaultInstanceAdminStub::AsyncCreateInstance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultInstanceAdminStub::AsyncUpdateInstance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::spanner::admin::instance::v1::UpdateInstanceRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -185,7 +204,7 @@ DefaultInstanceAdminStub::AsyncUpdateInstance(
 }
 
 Status DefaultInstanceAdminStub::DeleteInstance(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::spanner::admin::instance::v1::DeleteInstanceRequest const&
         request) {
   google::protobuf::Empty response;
@@ -197,7 +216,7 @@ Status DefaultInstanceAdminStub::DeleteInstance(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultInstanceAdminStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -208,7 +227,7 @@ StatusOr<google::iam::v1::Policy> DefaultInstanceAdminStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultInstanceAdminStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -220,7 +239,7 @@ StatusOr<google::iam::v1::Policy> DefaultInstanceAdminStub::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultInstanceAdminStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
@@ -230,10 +249,93 @@ DefaultInstanceAdminStub::TestIamPermissions(
   return response;
 }
 
+StatusOr<google::spanner::admin::instance::v1::InstancePartition>
+DefaultInstanceAdminStub::GetInstancePartition(
+    grpc::ClientContext& context, Options const&,
+    google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
+        request) {
+  google::spanner::admin::instance::v1::InstancePartition response;
+  auto status = grpc_stub_->GetInstancePartition(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultInstanceAdminStub::AsyncCreateInstancePartition(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::spanner::admin::instance::v1::CreateInstancePartitionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::spanner::admin::instance::v1::
+                 CreateInstancePartitionRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateInstancePartition(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+Status DefaultInstanceAdminStub::DeleteInstancePartition(
+    grpc::ClientContext& context, Options const&,
+    google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteInstancePartition(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultInstanceAdminStub::AsyncUpdateInstancePartition(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
+        request) {
+  return internal::MakeUnaryRpcImpl<
+      google::spanner::admin::instance::v1::UpdateInstancePartitionRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::spanner::admin::instance::v1::
+                 UpdateInstancePartitionRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateInstancePartition(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::spanner::admin::instance::v1::
+             ListInstancePartitionOperationsResponse>
+DefaultInstanceAdminStub::ListInstancePartitionOperations(
+    grpc::ClientContext& context, Options const&,
+    google::spanner::admin::instance::v1::
+        ListInstancePartitionOperationsRequest const& request) {
+  google::spanner::admin::instance::v1::ListInstancePartitionOperationsResponse
+      response;
+  auto status =
+      grpc_stub_->ListInstancePartitionOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultInstanceAdminStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -248,7 +350,8 @@ DefaultInstanceAdminStub::AsyncGetOperation(
 
 future<Status> DefaultInstanceAdminStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -20,6 +20,7 @@
 #include "google/cloud/tasks/v2/cloud_tasks_options.h"
 #include <memory>
 #include <thread>
+#include <utility>
 
 namespace google {
 namespace cloud {

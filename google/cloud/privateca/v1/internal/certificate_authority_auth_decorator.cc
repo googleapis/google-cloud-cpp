@@ -19,6 +19,7 @@
 #include "google/cloud/privateca/v1/internal/certificate_authority_auth_decorator.h"
 #include <google/cloud/security/privateca/v1/service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,344 +33,355 @@ CertificateAuthorityServiceAuth::CertificateAuthorityServiceAuth(
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 CertificateAuthorityServiceAuth::CreateCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::CreateCertificateRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateCertificate(context, request);
+  return child_->CreateCertificate(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 CertificateAuthorityServiceAuth::GetCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::GetCertificateRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCertificate(context, request);
+  return child_->GetCertificate(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::ListCertificatesResponse>
 CertificateAuthorityServiceAuth::ListCertificates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::ListCertificatesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCertificates(context, request);
+  return child_->ListCertificates(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 CertificateAuthorityServiceAuth::RevokeCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::RevokeCertificateRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RevokeCertificate(context, request);
+  return child_->RevokeCertificate(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 CertificateAuthorityServiceAuth::UpdateCertificate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::UpdateCertificateRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateCertificate(context, request);
+  return child_->UpdateCertificate(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceAuth::AsyncActivateCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         ActivateCertificateAuthorityRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncActivateCertificateAuthority(cq, *std::move(context),
-                                                        options, request);
+        return child->AsyncActivateCertificateAuthority(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceAuth::AsyncCreateCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         CreateCertificateAuthorityRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateCertificateAuthority(cq, *std::move(context),
-                                                      options, request);
+        return child->AsyncCreateCertificateAuthority(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceAuth::AsyncDisableCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         DisableCertificateAuthorityRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDisableCertificateAuthority(cq, *std::move(context),
-                                                       options, request);
+        return child->AsyncDisableCertificateAuthority(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceAuth::AsyncEnableCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         EnableCertificateAuthorityRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncEnableCertificateAuthority(cq, *std::move(context),
-                                                      options, request);
+        return child->AsyncEnableCertificateAuthority(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::security::privateca::v1::
              FetchCertificateAuthorityCsrResponse>
 CertificateAuthorityServiceAuth::FetchCertificateAuthorityCsr(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::
         FetchCertificateAuthorityCsrRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->FetchCertificateAuthorityCsr(context, request);
+  return child_->FetchCertificateAuthorityCsr(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>
 CertificateAuthorityServiceAuth::GetCertificateAuthority(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::
         GetCertificateAuthorityRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCertificateAuthority(context, request);
+  return child_->GetCertificateAuthority(context, options, request);
 }
 
 StatusOr<
     google::cloud::security::privateca::v1::ListCertificateAuthoritiesResponse>
 CertificateAuthorityServiceAuth::ListCertificateAuthorities(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::
         ListCertificateAuthoritiesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCertificateAuthorities(context, request);
+  return child_->ListCertificateAuthorities(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceAuth::AsyncUndeleteCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         UndeleteCertificateAuthorityRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUndeleteCertificateAuthority(cq, *std::move(context),
-                                                        options, request);
+        return child->AsyncUndeleteCertificateAuthority(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceAuth::AsyncDeleteCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         DeleteCertificateAuthorityRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteCertificateAuthority(cq, *std::move(context),
-                                                      options, request);
+        return child->AsyncDeleteCertificateAuthority(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceAuth::AsyncUpdateCertificateAuthority(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         UpdateCertificateAuthorityRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateCertificateAuthority(cq, *std::move(context),
-                                                      options, request);
+        return child->AsyncUpdateCertificateAuthority(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceAuth::AsyncCreateCaPool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::CreateCaPoolRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateCaPool(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncCreateCaPool(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceAuth::AsyncUpdateCaPool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateCaPool(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncUpdateCaPool(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::security::privateca::v1::CaPool>
 CertificateAuthorityServiceAuth::GetCaPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::GetCaPoolRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCaPool(context, request);
+  return child_->GetCaPool(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::ListCaPoolsResponse>
 CertificateAuthorityServiceAuth::ListCaPools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::ListCaPoolsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCaPools(context, request);
+  return child_->ListCaPools(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceAuth::AsyncDeleteCaPool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteCaPool(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncDeleteCaPool(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
 CertificateAuthorityServiceAuth::FetchCaCerts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::FetchCaCertsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->FetchCaCerts(context, request);
+  return child_->FetchCaCerts(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>
 CertificateAuthorityServiceAuth::GetCertificateRevocationList(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::
         GetCertificateRevocationListRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCertificateRevocationList(context, request);
+  return child_->GetCertificateRevocationList(context, options, request);
 }
 
 StatusOr<google::cloud::security::privateca::v1::
              ListCertificateRevocationListsResponse>
 CertificateAuthorityServiceAuth::ListCertificateRevocationLists(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::
         ListCertificateRevocationListsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCertificateRevocationLists(context, request);
+  return child_->ListCertificateRevocationLists(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceAuth::AsyncUpdateCertificateRevocationList(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         UpdateCertificateRevocationListRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
@@ -377,122 +389,127 @@ CertificateAuthorityServiceAuth::AsyncUpdateCertificateRevocationList(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncUpdateCertificateRevocationList(
-            cq, *std::move(context), options, request);
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceAuth::AsyncCreateCertificateTemplate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         CreateCertificateTemplateRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateCertificateTemplate(cq, *std::move(context),
-                                                     options, request);
+        return child->AsyncCreateCertificateTemplate(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceAuth::AsyncDeleteCertificateTemplate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         DeleteCertificateTemplateRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteCertificateTemplate(cq, *std::move(context),
-                                                     options, request);
+        return child->AsyncDeleteCertificateTemplate(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
 CertificateAuthorityServiceAuth::GetCertificateTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::GetCertificateTemplateRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetCertificateTemplate(context, request);
+  return child_->GetCertificateTemplate(context, options, request);
 }
 
 StatusOr<
     google::cloud::security::privateca::v1::ListCertificateTemplatesResponse>
 CertificateAuthorityServiceAuth::ListCertificateTemplates(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::security::privateca::v1::
         ListCertificateTemplatesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListCertificateTemplates(context, request);
+  return child_->ListCertificateTemplates(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceAuth::AsyncUpdateCertificateTemplate(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::security::privateca::v1::
         UpdateCertificateTemplateRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateCertificateTemplate(cq, *std::move(context),
-                                                     options, request);
+        return child->AsyncUpdateCertificateTemplate(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 CertificateAuthorityServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 future<Status> CertificateAuthorityServiceAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), options,
-                                           request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

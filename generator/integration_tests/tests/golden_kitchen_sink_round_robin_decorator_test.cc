@@ -61,9 +61,7 @@ TEST(GoldenKitchenSinkRoundRobinDecoratorTest, GenerateAccessToken) {
   GoldenKitchenSinkRoundRobin stub(AsPlainStubs(mocks));
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
     grpc::ClientContext context;
-    auto status = stub.GenerateAccessToken(
-        context,
-        google::test::admin::database::v1::GenerateAccessTokenRequest{});
+    auto status = stub.GenerateAccessToken(context, Options{}, {});
     EXPECT_STATUS_OK(status);
   }
 }
@@ -111,7 +109,7 @@ TEST(GoldenKitchenSinkRoundRobinDecoratorTest, AsyncStreamingReadWrite) {
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
     for (auto& m : mocks) {
-      EXPECT_CALL(*m, AsyncStreamingReadWrite).WillOnce([](auto&, auto) {
+      EXPECT_CALL(*m, AsyncStreamingReadWrite).WillOnce([](auto&, auto, auto) {
         return std::make_unique<MockAsyncStreamingReadWriteRpc>();
       });
     }
@@ -121,7 +119,8 @@ TEST(GoldenKitchenSinkRoundRobinDecoratorTest, AsyncStreamingReadWrite) {
   GoldenKitchenSinkRoundRobin stub(AsPlainStubs(mocks));
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
     auto stream = stub.AsyncStreamingReadWrite(
-        cq, std::make_shared<grpc::ClientContext>());
+        cq, std::make_shared<grpc::ClientContext>(),
+        google::cloud::internal::MakeImmutableOptions({}));
     EXPECT_THAT(stream, NotNull());
   }
 }
@@ -131,7 +130,7 @@ TEST(GoldenKitchenSinkRoundRobinDecoratorTest, AsyncStreamingRead) {
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
     for (auto& m : mocks) {
-      EXPECT_CALL(*m, AsyncStreamingRead).WillOnce([](auto&, auto, auto) {
+      EXPECT_CALL(*m, AsyncStreamingRead).WillOnce([](auto&, auto, auto, auto) {
         return std::make_unique<MockAsyncStreamingReadRpc>();
       });
     }
@@ -141,7 +140,8 @@ TEST(GoldenKitchenSinkRoundRobinDecoratorTest, AsyncStreamingRead) {
   GoldenKitchenSinkRoundRobin stub(AsPlainStubs(mocks));
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
     auto stream = stub.AsyncStreamingRead(
-        cq, std::make_shared<grpc::ClientContext>(), Request{});
+        cq, std::make_shared<grpc::ClientContext>(),
+        google::cloud::internal::MakeImmutableOptions({}), Request{});
     EXPECT_THAT(stream, NotNull());
   }
 }
@@ -151,7 +151,7 @@ TEST(GoldenKitchenSinkRoundRobinDecoratorTest, AsyncStreamingWrite) {
   InSequence sequence;
   for (int i = 0; i != kRepeats; ++i) {
     for (auto& m : mocks) {
-      EXPECT_CALL(*m, AsyncStreamingWrite).WillOnce([](auto&, auto) {
+      EXPECT_CALL(*m, AsyncStreamingWrite).WillOnce([](auto&, auto, auto) {
         return std::make_unique<MockAsyncStreamingWriteRpc>();
       });
     }
@@ -160,8 +160,9 @@ TEST(GoldenKitchenSinkRoundRobinDecoratorTest, AsyncStreamingWrite) {
   CompletionQueue cq;
   GoldenKitchenSinkRoundRobin stub(AsPlainStubs(mocks));
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
-    auto stream =
-        stub.AsyncStreamingWrite(cq, std::make_shared<grpc::ClientContext>());
+    auto stream = stub.AsyncStreamingWrite(
+        cq, std::make_shared<grpc::ClientContext>(),
+        google::cloud::internal::MakeImmutableOptions({}));
     EXPECT_THAT(stream, NotNull());
   }
 }

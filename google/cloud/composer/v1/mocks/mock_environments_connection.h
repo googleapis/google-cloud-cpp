@@ -105,6 +105,80 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
                    PollAirflowCommandRequest const& request),
               (override));
 
+  MOCK_METHOD(
+      (StreamRange<google::cloud::orchestration::airflow::service::v1::
+                       ListWorkloadsResponse::ComposerWorkload>),
+      ListWorkloads,
+      (google::cloud::orchestration::airflow::service::v1::ListWorkloadsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
+                           UserWorkloadsSecret>,
+              CreateUserWorkloadsSecret,
+              (google::cloud::orchestration::airflow::service::v1::
+                   CreateUserWorkloadsSecretRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
+                           UserWorkloadsSecret>,
+              GetUserWorkloadsSecret,
+              (google::cloud::orchestration::airflow::service::v1::
+                   GetUserWorkloadsSecretRequest const& request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::orchestration::airflow::service::v1::
+                               UserWorkloadsSecret>),
+              ListUserWorkloadsSecrets,
+              (google::cloud::orchestration::airflow::service::v1::
+                   ListUserWorkloadsSecretsRequest request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
+                           UserWorkloadsSecret>,
+              UpdateUserWorkloadsSecret,
+              (google::cloud::orchestration::airflow::service::v1::
+                   UpdateUserWorkloadsSecretRequest const& request),
+              (override));
+
+  MOCK_METHOD(Status, DeleteUserWorkloadsSecret,
+              (google::cloud::orchestration::airflow::service::v1::
+                   DeleteUserWorkloadsSecretRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
+                           UserWorkloadsConfigMap>,
+              CreateUserWorkloadsConfigMap,
+              (google::cloud::orchestration::airflow::service::v1::
+                   CreateUserWorkloadsConfigMapRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
+                           UserWorkloadsConfigMap>,
+              GetUserWorkloadsConfigMap,
+              (google::cloud::orchestration::airflow::service::v1::
+                   GetUserWorkloadsConfigMapRequest const& request),
+              (override));
+
+  MOCK_METHOD((StreamRange<google::cloud::orchestration::airflow::service::v1::
+                               UserWorkloadsConfigMap>),
+              ListUserWorkloadsConfigMaps,
+              (google::cloud::orchestration::airflow::service::v1::
+                   ListUserWorkloadsConfigMapsRequest request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
+                           UserWorkloadsConfigMap>,
+              UpdateUserWorkloadsConfigMap,
+              (google::cloud::orchestration::airflow::service::v1::
+                   UpdateUserWorkloadsConfigMapRequest const& request),
+              (override));
+
+  MOCK_METHOD(Status, DeleteUserWorkloadsConfigMap,
+              (google::cloud::orchestration::airflow::service::v1::
+                   DeleteUserWorkloadsConfigMapRequest const& request),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::SaveSnapshotResponse>>,
               SaveSnapshot,

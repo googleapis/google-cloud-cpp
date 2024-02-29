@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGEECONNECT_V1_INTERNAL_CONNECTION_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_APIGEECONNECT_V1_INTERNAL_CONNECTION_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/apigeeconnect/v1/connection.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,7 +37,7 @@ class ConnectionServiceStub {
 
   virtual StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
   ListConnections(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apigeeconnect::v1::ListConnectionsRequest const&
           request) = 0;
 };
@@ -50,7 +52,7 @@ class DefaultConnectionServiceStub : public ConnectionServiceStub {
 
   StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
   ListConnections(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request)
       override;
 

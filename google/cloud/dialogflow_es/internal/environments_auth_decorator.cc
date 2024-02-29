@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_es/internal/environments_auth_decorator.h"
 #include <google/cloud/dialogflow/v2/environment.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,56 +33,56 @@ EnvironmentsAuth::EnvironmentsAuth(
 
 StatusOr<google::cloud::dialogflow::v2::ListEnvironmentsResponse>
 EnvironmentsAuth::ListEnvironments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListEnvironmentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEnvironments(context, request);
+  return child_->ListEnvironments(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
 EnvironmentsAuth::GetEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetEnvironmentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEnvironment(context, request);
+  return child_->GetEnvironment(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
 EnvironmentsAuth::CreateEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateEnvironment(context, request);
+  return child_->CreateEnvironment(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
 EnvironmentsAuth::UpdateEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateEnvironment(context, request);
+  return child_->UpdateEnvironment(context, options, request);
 }
 
 Status EnvironmentsAuth::DeleteEnvironment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteEnvironment(context, request);
+  return child_->DeleteEnvironment(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::EnvironmentHistory>
 EnvironmentsAuth::GetEnvironmentHistory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEnvironmentHistory(context, request);
+  return child_->GetEnvironmentHistory(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

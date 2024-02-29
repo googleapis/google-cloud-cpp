@@ -39,43 +39,43 @@ class SchemaServiceLogging : public SchemaServiceStub {
                        std::set<std::string> const& components);
 
   StatusOr<google::pubsub::v1::Schema> CreateSchema(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::CreateSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Schema> GetSchema(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::GetSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListSchemasResponse> ListSchemas(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ListSchemasRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse> ListSchemaRevisions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ListSchemaRevisionsRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Schema> CommitSchema(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::CommitSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Schema> RollbackSchema(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::RollbackSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::Schema> DeleteSchemaRevision(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::DeleteSchemaRevisionRequest const& request) override;
 
   Status DeleteSchema(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::DeleteSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ValidateSchemaRequest const& request) override;
 
   StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::pubsub::v1::ValidateMessageRequest const& request) override;
 
  private:

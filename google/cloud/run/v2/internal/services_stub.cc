@@ -22,6 +22,7 @@
 #include <google/cloud/run/v2/service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ ServicesStub::~ServicesStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultServicesStub::AsyncCreateService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::run::v2::CreateServiceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::run::v2::CreateServiceRequest,
@@ -48,7 +50,7 @@ DefaultServicesStub::AsyncCreateService(
 }
 
 StatusOr<google::cloud::run::v2::Service> DefaultServicesStub::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::run::v2::GetServiceRequest const& request) {
   google::cloud::run::v2::Service response;
   auto status = grpc_stub_->GetService(&context, request, &response);
@@ -60,7 +62,7 @@ StatusOr<google::cloud::run::v2::Service> DefaultServicesStub::GetService(
 
 StatusOr<google::cloud::run::v2::ListServicesResponse>
 DefaultServicesStub::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::run::v2::ListServicesRequest const& request) {
   google::cloud::run::v2::ListServicesResponse response;
   auto status = grpc_stub_->ListServices(&context, request, &response);
@@ -73,7 +75,8 @@ DefaultServicesStub::ListServices(
 future<StatusOr<google::longrunning::Operation>>
 DefaultServicesStub::AsyncUpdateService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::run::v2::UpdateServiceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::run::v2::UpdateServiceRequest,
@@ -90,7 +93,8 @@ DefaultServicesStub::AsyncUpdateService(
 future<StatusOr<google::longrunning::Operation>>
 DefaultServicesStub::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::run::v2::DeleteServiceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::run::v2::DeleteServiceRequest,
@@ -105,7 +109,7 @@ DefaultServicesStub::AsyncDeleteService(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultServicesStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -116,7 +120,7 @@ StatusOr<google::iam::v1::Policy> DefaultServicesStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultServicesStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -128,7 +132,7 @@ StatusOr<google::iam::v1::Policy> DefaultServicesStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultServicesStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
@@ -141,7 +145,8 @@ DefaultServicesStub::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultServicesStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -156,7 +161,8 @@ DefaultServicesStub::AsyncGetOperation(
 
 future<Status> DefaultServicesStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -70,21 +71,22 @@ StorageInsightsConnectionImpl::ListReportConfigs(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::storageinsights::v1::ReportConfig>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<storageinsights_v1::StorageInsightsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::storageinsights::v1::ListReportConfigsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::storageinsights::v1::
                        ListReportConfigsRequest const& request) {
-              return stub->ListReportConfigs(context, request);
+              return stub->ListReportConfigs(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::storageinsights::v1::ListReportConfigsResponse r) {
         std::vector<google::cloud::storageinsights::v1::ReportConfig> result(
@@ -102,10 +104,12 @@ StorageInsightsConnectionImpl::GetReportConfig(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetReportConfig(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::storageinsights::v1::GetReportConfigRequest const&
-                 request) { return stub_->GetReportConfig(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetReportConfig(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
@@ -117,10 +121,12 @@ StorageInsightsConnectionImpl::CreateReportConfig(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateReportConfig(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::storageinsights::v1::CreateReportConfigRequest const&
-              request) { return stub_->CreateReportConfig(context, request); },
-      request, __func__);
+              request) {
+        return stub_->CreateReportConfig(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
@@ -132,10 +138,12 @@ StorageInsightsConnectionImpl::UpdateReportConfig(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateReportConfig(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
-              request) { return stub_->UpdateReportConfig(context, request); },
-      request, __func__);
+              request) {
+        return stub_->UpdateReportConfig(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status StorageInsightsConnectionImpl::DeleteReportConfig(
@@ -146,10 +154,12 @@ Status StorageInsightsConnectionImpl::DeleteReportConfig(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteReportConfig(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
-              request) { return stub_->DeleteReportConfig(context, request); },
-      request, __func__);
+              request) {
+        return stub_->DeleteReportConfig(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::storageinsights::v1::ReportDetail>
@@ -161,21 +171,22 @@ StorageInsightsConnectionImpl::ListReportDetails(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::storageinsights::v1::ReportDetail>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<storageinsights_v1::StorageInsightsRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::storageinsights::v1::ListReportDetailsRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::storageinsights::v1::
                        ListReportDetailsRequest const& request) {
-              return stub->ListReportDetails(context, request);
+              return stub->ListReportDetails(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::storageinsights::v1::ListReportDetailsResponse r) {
         std::vector<google::cloud::storageinsights::v1::ReportDetail> result(
@@ -193,10 +204,12 @@ StorageInsightsConnectionImpl::GetReportDetail(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetReportDetail(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::storageinsights::v1::GetReportDetailRequest const&
-                 request) { return stub_->GetReportDetail(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetReportDetail(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

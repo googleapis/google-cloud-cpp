@@ -25,8 +25,9 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::logging::v2::TailLogEntriesResponse>>
 LoggingServiceV2ConnectionImpl::AsyncTailLogEntries() {
   // TODO(#7796) - add resume loop
-  return stub_->AsyncTailLogEntries(background_->cq(),
-                                    std::make_shared<grpc::ClientContext>());
+  return stub_->AsyncTailLogEntries(
+      background_->cq(), std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::SaveCurrentOptions());
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,6 +19,7 @@
 #include "google/cloud/essentialcontacts/v1/internal/essential_contacts_auth_decorator.h"
 #include <google/cloud/essentialcontacts/v1/service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,65 +33,65 @@ EssentialContactsServiceAuth::EssentialContactsServiceAuth(
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceAuth::CreateContact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::CreateContactRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateContact(context, request);
+  return child_->CreateContact(context, options, request);
 }
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceAuth::UpdateContact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::UpdateContactRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateContact(context, request);
+  return child_->UpdateContact(context, options, request);
 }
 
 StatusOr<google::cloud::essentialcontacts::v1::ListContactsResponse>
 EssentialContactsServiceAuth::ListContacts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::ListContactsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListContacts(context, request);
+  return child_->ListContacts(context, options, request);
 }
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceAuth::GetContact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::GetContactRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetContact(context, request);
+  return child_->GetContact(context, options, request);
 }
 
 Status EssentialContactsServiceAuth::DeleteContact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::DeleteContactRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteContact(context, request);
+  return child_->DeleteContact(context, options, request);
 }
 
 StatusOr<google::cloud::essentialcontacts::v1::ComputeContactsResponse>
 EssentialContactsServiceAuth::ComputeContacts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::ComputeContactsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ComputeContacts(context, request);
+  return child_->ComputeContacts(context, options, request);
 }
 
 Status EssentialContactsServiceAuth::SendTestMessage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SendTestMessage(context, request);
+  return child_->SendTestMessage(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

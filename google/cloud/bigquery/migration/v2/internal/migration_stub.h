@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MIGRATION_V2_INTERNAL_MIGRATION_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MIGRATION_V2_INTERNAL_MIGRATION_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/bigquery/migration/v2/migration_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,41 +37,41 @@ class MigrationServiceStub {
 
   virtual StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
   CreateMigrationWorkflow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::migration::v2::
           CreateMigrationWorkflowRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
   GetMigrationWorkflow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::bigquery::migration::v2::ListMigrationWorkflowsResponse>
-  ListMigrationWorkflows(grpc::ClientContext& context,
+  ListMigrationWorkflows(grpc::ClientContext& context, Options const& options,
                          google::cloud::bigquery::migration::v2::
                              ListMigrationWorkflowsRequest const& request) = 0;
 
   virtual Status DeleteMigrationWorkflow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::migration::v2::
           DeleteMigrationWorkflowRequest const& request) = 0;
 
   virtual Status StartMigrationWorkflow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::migration::v2::
           StartMigrationWorkflowRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
   GetMigrationSubtask(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::bigquery::migration::v2::ListMigrationSubtasksResponse>
-  ListMigrationSubtasks(grpc::ClientContext& context,
+  ListMigrationSubtasks(grpc::ClientContext& context, Options const& options,
                         google::cloud::bigquery::migration::v2::
                             ListMigrationSubtasksRequest const& request) = 0;
 };
@@ -84,43 +86,43 @@ class DefaultMigrationServiceStub : public MigrationServiceStub {
 
   StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
   CreateMigrationWorkflow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::migration::v2::
           CreateMigrationWorkflowRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
   GetMigrationWorkflow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&
           request) override;
 
   StatusOr<
       google::cloud::bigquery::migration::v2::ListMigrationWorkflowsResponse>
   ListMigrationWorkflows(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::migration::v2::
           ListMigrationWorkflowsRequest const& request) override;
 
   Status DeleteMigrationWorkflow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::migration::v2::
           DeleteMigrationWorkflowRequest const& request) override;
 
   Status StartMigrationWorkflow(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::migration::v2::
           StartMigrationWorkflowRequest const& request) override;
 
   StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
   GetMigrationSubtask(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
           request) override;
 
   StatusOr<
       google::cloud::bigquery::migration::v2::ListMigrationSubtasksResponse>
   ListMigrationSubtasks(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::bigquery::migration::v2::
           ListMigrationSubtasksRequest const& request) override;
 

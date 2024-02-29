@@ -40,13 +40,13 @@ class ConfidentialComputingMetadata : public ConfidentialComputingStub {
       std::string api_client_header = "");
 
   StatusOr<google::cloud::confidentialcomputing::v1::Challenge> CreateChallenge(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
           request) override;
 
   StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
   VerifyAttestation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
           request) override;
 

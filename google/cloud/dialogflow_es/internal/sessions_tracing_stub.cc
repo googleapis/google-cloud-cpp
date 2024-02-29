@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_es/internal/sessions_tracing_stub.h"
 #include "google/cloud/internal/async_read_write_stream_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,26 +33,28 @@ SessionsTracingStub::SessionsTracingStub(std::shared_ptr<SessionsStub> child)
 
 StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>
 SessionsTracingStub::DetectIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DetectIntentRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Sessions",
                                      "DetectIntent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DetectIntent(context, request));
+                           child_->DetectIntent(context, options, request));
 }
 
 std::unique_ptr<AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::v2::StreamingDetectIntentRequest,
     google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>
 SessionsTracingStub::AsyncStreamingDetectIntent(
-    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Sessions",
                                      "StreamingDetectIntent");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncStreamingDetectIntent(cq, context);
+  auto stream =
+      child_->AsyncStreamingDetectIntent(cq, context, std::move(options));
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::dialogflow::v2::StreamingDetectIntentRequest,
       google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>(

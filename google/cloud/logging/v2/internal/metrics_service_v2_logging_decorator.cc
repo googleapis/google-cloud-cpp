@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/logging/v2/logging_metrics.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,60 +37,60 @@ MetricsServiceV2Logging::MetricsServiceV2Logging(
 
 StatusOr<google::logging::v2::ListLogMetricsResponse>
 MetricsServiceV2Logging::ListLogMetrics(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListLogMetricsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::ListLogMetricsRequest const& request) {
-        return child_->ListLogMetrics(context, request);
+        return child_->ListLogMetrics(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::logging::v2::LogMetric> MetricsServiceV2Logging::GetLogMetric(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::GetLogMetricRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::GetLogMetricRequest const& request) {
-        return child_->GetLogMetric(context, request);
+        return child_->GetLogMetric(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::logging::v2::LogMetric>
 MetricsServiceV2Logging::CreateLogMetric(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::CreateLogMetricRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::CreateLogMetricRequest const& request) {
-        return child_->CreateLogMetric(context, request);
+        return child_->CreateLogMetric(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::logging::v2::LogMetric>
 MetricsServiceV2Logging::UpdateLogMetric(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::UpdateLogMetricRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::UpdateLogMetricRequest const& request) {
-        return child_->UpdateLogMetric(context, request);
+        return child_->UpdateLogMetric(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status MetricsServiceV2Logging::DeleteLogMetric(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::DeleteLogMetricRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::logging::v2::DeleteLogMetricRequest const& request) {
-        return child_->DeleteLogMetric(context, request);
+        return child_->DeleteLogMetric(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

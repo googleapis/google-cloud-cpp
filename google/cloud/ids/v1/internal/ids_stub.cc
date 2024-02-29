@@ -22,6 +22,7 @@
 #include <google/cloud/ids/v1/ids.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ IDSStub::~IDSStub() = default;
 
 StatusOr<google::cloud::ids::v1::ListEndpointsResponse>
 DefaultIDSStub::ListEndpoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::ids::v1::ListEndpointsRequest const& request) {
   google::cloud::ids::v1::ListEndpointsResponse response;
   auto status = grpc_stub_->ListEndpoints(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultIDSStub::ListEndpoints(
 }
 
 StatusOr<google::cloud::ids::v1::Endpoint> DefaultIDSStub::GetEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::ids::v1::GetEndpointRequest const& request) {
   google::cloud::ids::v1::Endpoint response;
   auto status = grpc_stub_->GetEndpoint(&context, request, &response);
@@ -56,7 +57,8 @@ StatusOr<google::cloud::ids::v1::Endpoint> DefaultIDSStub::GetEndpoint(
 future<StatusOr<google::longrunning::Operation>>
 DefaultIDSStub::AsyncCreateEndpoint(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::ids::v1::CreateEndpointRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::ids::v1::CreateEndpointRequest,
@@ -73,7 +75,8 @@ DefaultIDSStub::AsyncCreateEndpoint(
 future<StatusOr<google::longrunning::Operation>>
 DefaultIDSStub::AsyncDeleteEndpoint(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::ids::v1::DeleteEndpointRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::ids::v1::DeleteEndpointRequest,
@@ -90,7 +93,8 @@ DefaultIDSStub::AsyncDeleteEndpoint(
 future<StatusOr<google::longrunning::Operation>>
 DefaultIDSStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -105,7 +109,8 @@ DefaultIDSStub::AsyncGetOperation(
 
 future<Status> DefaultIDSStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

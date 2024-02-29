@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/policytroubleshooter/iam/v3/troubleshooter.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -37,16 +38,16 @@ PolicyTroubleshooterLogging::PolicyTroubleshooterLogging(
 StatusOr<
     google::cloud::policytroubleshooter::iam::v3::TroubleshootIamPolicyResponse>
 PolicyTroubleshooterLogging::TroubleshootIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::policytroubleshooter::iam::v3::
         TroubleshootIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::policytroubleshooter::iam::v3::
                  TroubleshootIamPolicyRequest const& request) {
-        return child_->TroubleshootIamPolicy(context, request);
+        return child_->TroubleshootIamPolicy(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

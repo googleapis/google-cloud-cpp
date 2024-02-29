@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -72,12 +73,12 @@ MigrationServiceConnectionImpl::CreateMigrationWorkflow(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateMigrationWorkflow(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::migration::v2::
                  CreateMigrationWorkflowRequest const& request) {
-        return stub_->CreateMigrationWorkflow(context, request);
+        return stub_->CreateMigrationWorkflow(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
@@ -88,12 +89,12 @@ MigrationServiceConnectionImpl::GetMigrationWorkflow(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetMigrationWorkflow(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::migration::v2::
                  GetMigrationWorkflowRequest const& request) {
-        return stub_->GetMigrationWorkflow(context, request);
+        return stub_->GetMigrationWorkflow(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>
@@ -107,22 +108,22 @@ MigrationServiceConnectionImpl::ListMigrationWorkflows(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<bigquery_migration_v2::MigrationServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::bigquery::migration::v2::
-              ListMigrationWorkflowsRequest const& r) {
+          Options const& options, google::cloud::bigquery::migration::v2::
+                                      ListMigrationWorkflowsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::bigquery::migration::v2::
                        ListMigrationWorkflowsRequest const& request) {
-              return stub->ListMigrationWorkflows(context, request);
+              return stub->ListMigrationWorkflows(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::bigquery::migration::v2::ListMigrationWorkflowsResponse
              r) {
@@ -141,12 +142,12 @@ Status MigrationServiceConnectionImpl::DeleteMigrationWorkflow(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteMigrationWorkflow(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::migration::v2::
                  DeleteMigrationWorkflowRequest const& request) {
-        return stub_->DeleteMigrationWorkflow(context, request);
+        return stub_->DeleteMigrationWorkflow(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status MigrationServiceConnectionImpl::StartMigrationWorkflow(
@@ -156,12 +157,12 @@ Status MigrationServiceConnectionImpl::StartMigrationWorkflow(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->StartMigrationWorkflow(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::migration::v2::
                  StartMigrationWorkflowRequest const& request) {
-        return stub_->StartMigrationWorkflow(context, request);
+        return stub_->StartMigrationWorkflow(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
@@ -172,12 +173,12 @@ MigrationServiceConnectionImpl::GetMigrationSubtask(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetMigrationSubtask(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::bigquery::migration::v2::
                  GetMigrationSubtaskRequest const& request) {
-        return stub_->GetMigrationSubtask(context, request);
+        return stub_->GetMigrationSubtask(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>
@@ -191,22 +192,22 @@ MigrationServiceConnectionImpl::ListMigrationSubtasks(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<bigquery_migration_v2::MigrationServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::bigquery::migration::v2::
-              ListMigrationSubtasksRequest const& r) {
+          Options const& options, google::cloud::bigquery::migration::v2::
+                                      ListMigrationSubtasksRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::bigquery::migration::v2::
                        ListMigrationSubtasksRequest const& request) {
-              return stub->ListMigrationSubtasks(context, request);
+              return stub->ListMigrationSubtasks(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::bigquery::migration::v2::ListMigrationSubtasksResponse
              r) {

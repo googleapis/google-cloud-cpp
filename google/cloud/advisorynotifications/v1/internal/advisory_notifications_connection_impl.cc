@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -81,22 +82,22 @@ AdvisoryNotificationsServiceConnectionImpl::ListNotifications(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::advisorynotifications::v1::Notification>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            advisorynotifications_v1::AdvisoryNotificationsServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          google::cloud::advisorynotifications::v1::
-              ListNotificationsRequest const& r) {
+          Options const& options, google::cloud::advisorynotifications::v1::
+                                      ListNotificationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::advisorynotifications::v1::
                        ListNotificationsRequest const& request) {
-              return stub->ListNotifications(context, request);
+              return stub->ListNotifications(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::advisorynotifications::v1::ListNotificationsResponse
              r) {
@@ -116,12 +117,12 @@ AdvisoryNotificationsServiceConnectionImpl::GetNotification(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNotification(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::advisorynotifications::v1::
                  GetNotificationRequest const& request) {
-        return stub_->GetNotification(context, request);
+        return stub_->GetNotification(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
@@ -132,10 +133,12 @@ AdvisoryNotificationsServiceConnectionImpl::GetSettings(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSettings(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::advisorynotifications::v1::GetSettingsRequest const&
-                 request) { return stub_->GetSettings(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetSettings(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::advisorynotifications::v1::Settings>
@@ -147,10 +150,12 @@ AdvisoryNotificationsServiceConnectionImpl::UpdateSettings(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateSettings(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::advisorynotifications::v1::UpdateSettingsRequest const&
-              request) { return stub_->UpdateSettings(context, request); },
-      request, __func__);
+              request) {
+        return stub_->UpdateSettings(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

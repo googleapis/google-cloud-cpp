@@ -22,6 +22,7 @@
 #include <google/cloud/networksecurity/v1/network_security.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ NetworkSecurityStub::~NetworkSecurityStub() = default;
 
 StatusOr<google::cloud::networksecurity::v1::ListAuthorizationPoliciesResponse>
 DefaultNetworkSecurityStub::ListAuthorizationPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networksecurity::v1::ListAuthorizationPoliciesRequest const&
         request) {
   google::cloud::networksecurity::v1::ListAuthorizationPoliciesResponse
@@ -47,7 +48,7 @@ DefaultNetworkSecurityStub::ListAuthorizationPolicies(
 
 StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>
 DefaultNetworkSecurityStub::GetAuthorizationPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networksecurity::v1::GetAuthorizationPolicyRequest const&
         request) {
   google::cloud::networksecurity::v1::AuthorizationPolicy response;
@@ -62,7 +63,8 @@ DefaultNetworkSecurityStub::GetAuthorizationPolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkSecurityStub::AsyncCreateAuthorizationPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::networksecurity::v1::CreateAuthorizationPolicyRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -81,7 +83,8 @@ DefaultNetworkSecurityStub::AsyncCreateAuthorizationPolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkSecurityStub::AsyncUpdateAuthorizationPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::networksecurity::v1::UpdateAuthorizationPolicyRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -100,7 +103,8 @@ DefaultNetworkSecurityStub::AsyncUpdateAuthorizationPolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkSecurityStub::AsyncDeleteAuthorizationPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::networksecurity::v1::DeleteAuthorizationPolicyRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -118,7 +122,7 @@ DefaultNetworkSecurityStub::AsyncDeleteAuthorizationPolicy(
 
 StatusOr<google::cloud::networksecurity::v1::ListServerTlsPoliciesResponse>
 DefaultNetworkSecurityStub::ListServerTlsPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networksecurity::v1::ListServerTlsPoliciesRequest const&
         request) {
   google::cloud::networksecurity::v1::ListServerTlsPoliciesResponse response;
@@ -131,7 +135,7 @@ DefaultNetworkSecurityStub::ListServerTlsPolicies(
 
 StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>
 DefaultNetworkSecurityStub::GetServerTlsPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networksecurity::v1::GetServerTlsPolicyRequest const&
         request) {
   google::cloud::networksecurity::v1::ServerTlsPolicy response;
@@ -145,7 +149,8 @@ DefaultNetworkSecurityStub::GetServerTlsPolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkSecurityStub::AsyncCreateServerTlsPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -164,7 +169,8 @@ DefaultNetworkSecurityStub::AsyncCreateServerTlsPolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkSecurityStub::AsyncUpdateServerTlsPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -183,7 +189,8 @@ DefaultNetworkSecurityStub::AsyncUpdateServerTlsPolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkSecurityStub::AsyncDeleteServerTlsPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -201,7 +208,7 @@ DefaultNetworkSecurityStub::AsyncDeleteServerTlsPolicy(
 
 StatusOr<google::cloud::networksecurity::v1::ListClientTlsPoliciesResponse>
 DefaultNetworkSecurityStub::ListClientTlsPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networksecurity::v1::ListClientTlsPoliciesRequest const&
         request) {
   google::cloud::networksecurity::v1::ListClientTlsPoliciesResponse response;
@@ -214,7 +221,7 @@ DefaultNetworkSecurityStub::ListClientTlsPolicies(
 
 StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>
 DefaultNetworkSecurityStub::GetClientTlsPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::networksecurity::v1::GetClientTlsPolicyRequest const&
         request) {
   google::cloud::networksecurity::v1::ClientTlsPolicy response;
@@ -228,7 +235,8 @@ DefaultNetworkSecurityStub::GetClientTlsPolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkSecurityStub::AsyncCreateClientTlsPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -247,7 +255,8 @@ DefaultNetworkSecurityStub::AsyncCreateClientTlsPolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkSecurityStub::AsyncUpdateClientTlsPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -266,7 +275,8 @@ DefaultNetworkSecurityStub::AsyncUpdateClientTlsPolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkSecurityStub::AsyncDeleteClientTlsPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -285,7 +295,8 @@ DefaultNetworkSecurityStub::AsyncDeleteClientTlsPolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultNetworkSecurityStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -300,7 +311,8 @@ DefaultNetworkSecurityStub::AsyncGetOperation(
 
 future<Status> DefaultNetworkSecurityStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

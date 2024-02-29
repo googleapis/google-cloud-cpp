@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/billing/v1/cloud_catalog.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ CloudCatalogStub::~CloudCatalogStub() = default;
 
 StatusOr<google::cloud::billing::v1::ListServicesResponse>
 DefaultCloudCatalogStub::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::billing::v1::ListServicesRequest const& request) {
   google::cloud::billing::v1::ListServicesResponse response;
   auto status = grpc_stub_->ListServices(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultCloudCatalogStub::ListServices(
 
 StatusOr<google::cloud::billing::v1::ListSkusResponse>
 DefaultCloudCatalogStub::ListSkus(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::billing::v1::ListSkusRequest const& request) {
   google::cloud::billing::v1::ListSkusResponse response;
   auto status = grpc_stub_->ListSkus(&context, request, &response);

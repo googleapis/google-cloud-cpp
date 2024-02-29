@@ -42,6 +42,8 @@ add_library(
     bucket_retention_policy.cc
     bucket_retention_policy.h
     bucket_rpo.h
+    bucket_soft_delete_policy.cc
+    bucket_soft_delete_policy.h
     bucket_versioning.h
     bucket_website.h
     client.cc
@@ -179,6 +181,7 @@ add_library(
     internal/tuple_filter.h
     internal/unified_rest_credentials.cc
     internal/unified_rest_credentials.h
+    internal/well_known_parameters_impl.h
     lifecycle_rule.cc
     lifecycle_rule.h
     list_buckets_reader.cc
@@ -232,6 +235,7 @@ add_library(
     service_account.cc
     service_account.h
     signed_url_options.h
+    soft_deleted.h
     storage_class.h
     upload_options.h
     user_ip_option.h
@@ -423,6 +427,7 @@ if (BUILD_TESTING)
         bucket_cors_entry_test.cc
         bucket_iam_configuration_test.cc
         bucket_metadata_test.cc
+        bucket_soft_delete_policy_test.cc
         client_bucket_acl_test.cc
         client_bucket_test.cc
         client_default_object_acl_test.cc

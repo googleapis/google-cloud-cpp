@@ -41,7 +41,7 @@ class FirewallsRestStub {
   AsyncDeleteFirewall(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
           request) = 0;
 
@@ -55,7 +55,7 @@ class FirewallsRestStub {
   AsyncInsertFirewall(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
           request) = 0;
 
@@ -69,7 +69,7 @@ class FirewallsRestStub {
   AsyncPatchFirewall(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
           request) = 0;
 
@@ -77,7 +77,7 @@ class FirewallsRestStub {
   AsyncUpdateFirewall(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
           request) = 0;
 
@@ -85,14 +85,14 @@ class FirewallsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) = 0;
 };
@@ -110,7 +110,7 @@ class DefaultFirewallsRestStub : public FirewallsRestStub {
   AsyncDeleteFirewall(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
           request) override;
 
@@ -124,7 +124,7 @@ class DefaultFirewallsRestStub : public FirewallsRestStub {
   AsyncInsertFirewall(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
           request) override;
 
@@ -138,7 +138,7 @@ class DefaultFirewallsRestStub : public FirewallsRestStub {
   AsyncPatchFirewall(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
           request) override;
 
@@ -146,7 +146,7 @@ class DefaultFirewallsRestStub : public FirewallsRestStub {
   AsyncUpdateFirewall(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
           request) override;
 
@@ -154,14 +154,14 @@ class DefaultFirewallsRestStub : public FirewallsRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::global_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::global_operations::v1::
           DeleteOperationRequest const& request) override;
 

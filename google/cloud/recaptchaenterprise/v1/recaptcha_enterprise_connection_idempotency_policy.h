@@ -90,6 +90,10 @@ class RecaptchaEnterpriseServiceConnectionIdempotencyPolicy {
       google::cloud::recaptchaenterprise::v1::DeleteFirewallPolicyRequest const&
           request);
 
+  virtual google::cloud::Idempotency ReorderFirewallPolicies(
+      google::cloud::recaptchaenterprise::v1::
+          ReorderFirewallPoliciesRequest const& request);
+
   virtual google::cloud::Idempotency ListRelatedAccountGroups(
       google::cloud::recaptchaenterprise::v1::ListRelatedAccountGroupsRequest
           request);

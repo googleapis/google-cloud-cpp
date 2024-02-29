@@ -43,37 +43,37 @@ SnoozeServiceMetadata::SnoozeServiceMetadata(
               : std::move(api_client_header)) {}
 
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceMetadata::CreateSnooze(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateSnoozeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateSnooze(context, request);
+  return child_->CreateSnooze(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::ListSnoozesResponse>
 SnoozeServiceMetadata::ListSnoozes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListSnoozesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListSnoozes(context, request);
+  return child_->ListSnoozes(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceMetadata::GetSnooze(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetSnoozeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetSnooze(context, request);
+  return child_->GetSnooze(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::Snooze> SnoozeServiceMetadata::UpdateSnooze(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::UpdateSnoozeRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("snooze.name=",
                            internal::UrlEncode(request.snooze().name())));
-  return child_->UpdateSnooze(context, request);
+  return child_->UpdateSnooze(context, options, request);
 }
 
 void SnoozeServiceMetadata::SetMetadata(grpc::ClientContext& context,

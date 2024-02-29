@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/global_operations/v1/global_operations_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

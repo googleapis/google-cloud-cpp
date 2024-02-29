@@ -44,67 +44,67 @@ EssentialContactsServiceMetadata::EssentialContactsServiceMetadata(
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceMetadata::CreateContact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::CreateContactRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateContact(context, request);
+  return child_->CreateContact(context, options, request);
 }
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceMetadata::UpdateContact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::UpdateContactRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("contact.name=",
                            internal::UrlEncode(request.contact().name())));
-  return child_->UpdateContact(context, request);
+  return child_->UpdateContact(context, options, request);
 }
 
 StatusOr<google::cloud::essentialcontacts::v1::ListContactsResponse>
 EssentialContactsServiceMetadata::ListContacts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::ListContactsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListContacts(context, request);
+  return child_->ListContacts(context, options, request);
 }
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 EssentialContactsServiceMetadata::GetContact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::GetContactRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetContact(context, request);
+  return child_->GetContact(context, options, request);
 }
 
 Status EssentialContactsServiceMetadata::DeleteContact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::DeleteContactRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteContact(context, request);
+  return child_->DeleteContact(context, options, request);
 }
 
 StatusOr<google::cloud::essentialcontacts::v1::ComputeContactsResponse>
 EssentialContactsServiceMetadata::ComputeContacts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::ComputeContactsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ComputeContacts(context, request);
+  return child_->ComputeContacts(context, options, request);
 }
 
 Status EssentialContactsServiceMetadata::SendTestMessage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
         request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("resource=", internal::UrlEncode(request.resource())));
-  return child_->SendTestMessage(context, request);
+  return child_->SendTestMessage(context, options, request);
 }
 
 void EssentialContactsServiceMetadata::SetMetadata(

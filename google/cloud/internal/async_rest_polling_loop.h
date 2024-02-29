@@ -41,12 +41,12 @@ template <typename OperationType, typename GetOperationRequestType>
 using AsyncRestPollLongRunningOperation =
     std::function<future<StatusOr<OperationType>>(
         google::cloud::CompletionQueue&, std::unique_ptr<RestContext>,
-        Options const&, GetOperationRequestType const&)>;
+        internal::ImmutableOptions, GetOperationRequestType const&)>;
 
 template <typename CancelOperationRequestType>
 using AsyncRestCancelLongRunningOperation = std::function<future<Status>(
     google::cloud::CompletionQueue&, std::unique_ptr<RestContext>,
-    Options const&, CancelOperationRequestType const&)>;
+    internal::ImmutableOptions, CancelOperationRequestType const&)>;
 
 template <typename OperationType, typename GetOperationRequestType>
 using AsyncRestPollLongRunningOperationImplicitOptions =

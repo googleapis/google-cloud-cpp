@@ -19,6 +19,7 @@
 
 #include "google/cloud/compute/instance_group_managers/v1/instance_group_managers_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

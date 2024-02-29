@@ -41,54 +41,58 @@ class WorkflowTemplateServiceAuth : public WorkflowTemplateServiceStub {
 
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
   CreateWorkflowTemplate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request)
       override;
 
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate> GetWorkflowTemplate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncInstantiateWorkflowTemplate(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncInstantiateInlineWorkflowTemplate(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::dataproc::v1::
           InstantiateInlineWorkflowTemplateRequest const& request) override;
 
   StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
   UpdateWorkflowTemplate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request)
       override;
 
   StatusOr<google::cloud::dataproc::v1::ListWorkflowTemplatesResponse>
   ListWorkflowTemplates(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::ListWorkflowTemplatesRequest const& request)
       override;
 
   Status DeleteWorkflowTemplate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

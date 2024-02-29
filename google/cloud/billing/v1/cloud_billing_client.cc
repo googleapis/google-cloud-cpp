@@ -20,6 +20,7 @@
 #include "google/cloud/billing/v1/cloud_billing_options.h"
 #include <memory>
 #include <thread>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -44,11 +44,11 @@ CaseAttachmentServiceMetadata::CaseAttachmentServiceMetadata(
 
 StatusOr<google::cloud::support::v2::ListAttachmentsResponse>
 CaseAttachmentServiceMetadata::ListAttachments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::ListAttachmentsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListAttachments(context, request);
+  return child_->ListAttachments(context, options, request);
 }
 
 void CaseAttachmentServiceMetadata::SetMetadata(

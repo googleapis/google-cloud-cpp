@@ -25,7 +25,9 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -60,7 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// such a copy when using this class from multiple threads.
 ///
 /// [google.cloud.dialogflow.cx.v3.EntityType]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
+/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L156}
 ///
 class EntityTypesClient {
  public:
@@ -107,8 +109,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
-  /// [google.cloud.dialogflow.cx.v3.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L281}
+  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L156}
+  /// [google.cloud.dialogflow.cx.v3.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L505}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> GetEntityType(
@@ -137,8 +139,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
-  /// [google.cloud.dialogflow.cx.v3.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L281}
+  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L156}
+  /// [google.cloud.dialogflow.cx.v3.GetEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L505}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> GetEntityType(
@@ -169,8 +171,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L309}
-  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
+  /// [google.cloud.dialogflow.cx.v3.CreateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L533}
+  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L156}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> CreateEntityType(
@@ -205,8 +207,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L309}
-  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
+  /// [google.cloud.dialogflow.cx.v3.CreateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L533}
+  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L156}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> CreateEntityType(
@@ -236,8 +238,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
-  /// [google.cloud.dialogflow.cx.v3.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L338}
+  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L156}
+  /// [google.cloud.dialogflow.cx.v3.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L562}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> UpdateEntityType(
@@ -271,8 +273,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
-  /// [google.cloud.dialogflow.cx.v3.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L338}
+  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L156}
+  /// [google.cloud.dialogflow.cx.v3.UpdateEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L562}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::EntityType> UpdateEntityType(
@@ -300,7 +302,7 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L361}
+  /// [google.cloud.dialogflow.cx.v3.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L585}
   ///
   // clang-format on
   Status DeleteEntityType(std::string const& name, Options opts = {});
@@ -330,7 +332,7 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L361}
+  /// [google.cloud.dialogflow.cx.v3.DeleteEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L585}
   ///
   // clang-format on
   Status DeleteEntityType(
@@ -365,8 +367,8 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
-  /// [google.cloud.dialogflow.cx.v3.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L235}
+  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L156}
+  /// [google.cloud.dialogflow.cx.v3.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L459}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::EntityType> ListEntityTypes(
@@ -404,12 +406,92 @@ class EntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L128}
-  /// [google.cloud.dialogflow.cx.v3.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L235}
+  /// [google.cloud.dialogflow.cx.v3.EntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L156}
+  /// [google.cloud.dialogflow.cx.v3.ListEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L459}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::EntityType> ListEntityTypes(
       google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Exports the selected entity types.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.cx.v3.ExportEntityTypesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dialogflow.cx.v3.ExportEntityTypesResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.cx.v3.ExportEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L263}
+  /// [google.cloud.dialogflow.cx.v3.ExportEntityTypesResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L331}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
+  ExportEntityTypes(
+      google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+          request,
+      Options opts = {});
+
+  // clang-format off
+  ///
+  /// Imports the specified entitytypes into the agent.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.dialogflow.cx.v3.ImportEntityTypesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.dialogflow.cx.v3.ImportEntityTypesResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.dialogflow.cx.v3.ImportEntityTypesRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L353}
+  /// [google.cloud.dialogflow.cx.v3.ImportEntityTypesResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/entity_type.proto#L427}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
+  ImportEntityTypes(
+      google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+          request,
       Options opts = {});
 
  private:

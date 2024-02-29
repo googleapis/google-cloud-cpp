@@ -22,6 +22,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/cx/v3/session.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ SessionsStub::~SessionsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
 DefaultSessionsStub::DetectIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
   google::cloud::dialogflow::cx::v3::DetectIntentResponse response;
   auto status = grpc_stub_->DetectIntent(&context, request, &response);
@@ -42,16 +43,28 @@ DefaultSessionsStub::DetectIntent(
   return response;
 }
 
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+    google::cloud::dialogflow::cx::v3::DetectIntentResponse>>
+DefaultSessionsStub::ServerStreamingDetectIntent(
+    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
+  auto stream = grpc_stub_->ServerStreamingDetectIntent(context.get(), request);
+  return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
+      google::cloud::dialogflow::cx::v3::DetectIntentResponse>>(
+      std::move(context), std::move(stream));
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>
 DefaultSessionsStub::AsyncStreamingDetectIntent(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   return google::cloud::internal::MakeStreamingReadWriteRpc<
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>(
-      cq, std::move(context),
+      cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return grpc_stub_->PrepareAsyncStreamingDetectIntent(context, cq);
       });
@@ -59,7 +72,7 @@ DefaultSessionsStub::AsyncStreamingDetectIntent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>
 DefaultSessionsStub::MatchIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request) {
   google::cloud::dialogflow::cx::v3::MatchIntentResponse response;
   auto status = grpc_stub_->MatchIntent(&context, request, &response);
@@ -71,7 +84,7 @@ DefaultSessionsStub::MatchIntent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
 DefaultSessionsStub::FulfillIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request) {
   google::cloud::dialogflow::cx::v3::FulfillIntentResponse response;
   auto status = grpc_stub_->FulfillIntent(&context, request, &response);
@@ -83,7 +96,7 @@ DefaultSessionsStub::FulfillIntent(
 
 StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
 DefaultSessionsStub::SubmitAnswerFeedback(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::AnswerFeedback response;

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/binaryauthorization/v1/service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,86 +37,100 @@ BinauthzManagementServiceV1Logging::BinauthzManagementServiceV1Logging(
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
 BinauthzManagementServiceV1Logging::GetPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::binaryauthorization::v1::GetPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::binaryauthorization::v1::GetPolicyRequest const&
-                 request) { return child_->GetPolicy(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetPolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>
 BinauthzManagementServiceV1Logging::UpdatePolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&
-                 request) { return child_->UpdatePolicy(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->UpdatePolicy(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
 BinauthzManagementServiceV1Logging::CreateAttestor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::binaryauthorization::v1::CreateAttestorRequest const&
-              request) { return child_->CreateAttestor(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->CreateAttestor(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
 BinauthzManagementServiceV1Logging::GetAttestor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::binaryauthorization::v1::GetAttestorRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::binaryauthorization::v1::GetAttestorRequest const&
-                 request) { return child_->GetAttestor(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetAttestor(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::Attestor>
 BinauthzManagementServiceV1Logging::UpdateAttestor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&
-              request) { return child_->UpdateAttestor(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->UpdateAttestor(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::binaryauthorization::v1::ListAttestorsResponse>
 BinauthzManagementServiceV1Logging::ListAttestors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::binaryauthorization::v1::ListAttestorsRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::binaryauthorization::v1::ListAttestorsRequest const&
-                 request) { return child_->ListAttestors(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListAttestors(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status BinauthzManagementServiceV1Logging::DeleteAttestor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&
-              request) { return child_->DeleteAttestor(context, request); },
-      context, request, __func__, tracing_options_);
+              request) {
+        return child_->DeleteAttestor(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

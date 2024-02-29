@@ -40,30 +40,37 @@ class GoldenKitchenSinkAuth : public GoldenKitchenSinkStub {
 
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse> GenerateAccessToken(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse> GenerateIdToken(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::GenerateIdTokenRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse> WriteLogEntries(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::WriteLogEntriesRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::ListLogsResponse> ListLogs(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::ListLogsRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> ListServiceAccountKeys(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
 
   Status DoNothing(
       grpc::ClientContext& context,
+      Options const& options,
       google::protobuf::Empty const& request) override;
 
   Status Deprecated2(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
@@ -84,14 +91,17 @@ class GoldenKitchenSinkAuth : public GoldenKitchenSinkStub {
       google::test::admin::database::v1::Response>>
   AsyncStreamingReadWrite(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   Status ExplicitRouting1(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
   Status ExplicitRouting2(
       grpc::ClientContext& context,
+      Options const& options,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
   std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
@@ -99,13 +109,15 @@ class GoldenKitchenSinkAuth : public GoldenKitchenSinkStub {
   AsyncStreamingRead(
       google::cloud::CompletionQueue const& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::test::admin::database::v1::Request const& request) override;
 
   std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
       google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>>
   AsyncStreamingWrite(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/devtools/cloudprofiler/v2/profiler.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,38 +37,42 @@ ProfilerServiceLogging::ProfilerServiceLogging(
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceLogging::CreateProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudprofiler::v2::CreateProfileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::cloudprofiler::v2::CreateProfileRequest const&
-                 request) { return child_->CreateProfile(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->CreateProfile(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceLogging::CreateOfflineProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::cloudprofiler::v2::
                  CreateOfflineProfileRequest const& request) {
-        return child_->CreateOfflineProfile(context, request);
+        return child_->CreateOfflineProfile(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::devtools::cloudprofiler::v2::Profile>
 ProfilerServiceLogging::UpdateProfile(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::cloudprofiler::v2::UpdateProfileRequest const&
-                 request) { return child_->UpdateProfile(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->UpdateProfile(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

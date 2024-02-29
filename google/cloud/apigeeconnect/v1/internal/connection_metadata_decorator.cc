@@ -44,11 +44,11 @@ ConnectionServiceMetadata::ConnectionServiceMetadata(
 
 StatusOr<google::cloud::apigeeconnect::v1::ListConnectionsResponse>
 ConnectionServiceMetadata::ListConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::apigeeconnect::v1::ListConnectionsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListConnections(context, request);
+  return child_->ListConnections(context, options, request);
 }
 
 void ConnectionServiceMetadata::SetMetadata(grpc::ClientContext& context,

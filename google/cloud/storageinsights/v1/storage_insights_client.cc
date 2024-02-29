@@ -18,6 +18,7 @@
 
 #include "google/cloud/storageinsights/v1/storage_insights_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -65,18 +66,21 @@ TraceServiceConnectionImpl::ListTraces(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::devtools::cloudtrace::v1::Trace>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<trace_v1::TraceServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::devtools::cloudtrace::v1::ListTracesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::devtools::cloudtrace::v1::ListTracesRequest const&
-                       request) { return stub->ListTraces(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListTraces(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::devtools::cloudtrace::v1::ListTracesResponse r) {
         std::vector<google::devtools::cloudtrace::v1::Trace> result(
@@ -94,11 +98,11 @@ TraceServiceConnectionImpl::GetTrace(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTrace(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
-        return stub_->GetTrace(context, request);
+        return stub_->GetTrace(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status TraceServiceConnectionImpl::PatchTraces(
@@ -108,11 +112,11 @@ Status TraceServiceConnectionImpl::PatchTraces(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->PatchTraces(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
-        return stub_->PatchTraces(context, request);
+        return stub_->PatchTraces(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

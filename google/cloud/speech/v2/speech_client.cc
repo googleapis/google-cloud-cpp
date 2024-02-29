@@ -18,6 +18,7 @@
 
 #include "google/cloud/speech/v2/speech_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

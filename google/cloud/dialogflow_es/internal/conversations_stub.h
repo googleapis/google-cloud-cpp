@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_CONVERSATIONS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_CONVERSATIONS_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/v2/conversation.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,48 +37,48 @@ class ConversationsStub {
 
   virtual StatusOr<google::cloud::dialogflow::v2::Conversation>
   CreateConversation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::CreateConversationRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::ListConversationsResponse>
   ListConversations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListConversationsRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::Conversation> GetConversation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetConversationRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::Conversation>
   CompleteConversation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::CompleteConversationRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::ListMessagesResponse>
   ListMessages(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListMessagesRequest const& request) = 0;
 
   virtual StatusOr<
       google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
   SuggestConversationSummary(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
   GenerateStatelessSummary(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
   SearchKnowledge(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request) = 0;
 };
 
@@ -89,45 +91,45 @@ class DefaultConversationsStub : public ConversationsStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::dialogflow::v2::Conversation> CreateConversation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::CreateConversationRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::ListConversationsResponse>
   ListConversations(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListConversationsRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Conversation> GetConversation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GetConversationRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::Conversation> CompleteConversation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::CompleteConversationRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::ListMessagesResponse> ListMessages(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::ListMessagesRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
   SuggestConversationSummary(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
   GenerateStatelessSummary(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
           request) override;
 
   StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
-  SearchKnowledge(grpc::ClientContext& context,
+  SearchKnowledge(grpc::ClientContext& context, Options const& options,
                   google::cloud::dialogflow::v2::SearchKnowledgeRequest const&
                       request) override;
 

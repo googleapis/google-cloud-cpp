@@ -103,7 +103,7 @@ TEST(LoggingDecoratorRestTest, AsyncCreateDatabase) {
   CompletionQueue cq;
   auto context = std::make_unique<rest_internal::RestContext>();
   auto status = stub.AsyncCreateDatabase(
-      cq, std::move(context), Options{},
+      cq, std::move(context), internal::MakeImmutableOptions({}),
       google::test::admin::database::v1::CreateDatabaseRequest());
   EXPECT_EQ(TransientError(), status.get().status());
 
@@ -122,7 +122,7 @@ TEST(LoggingDecoratorRestTest, AsyncUpdateDatabaseDdl) {
   CompletionQueue cq;
   auto context = std::make_unique<rest_internal::RestContext>();
   auto status = stub.AsyncUpdateDatabaseDdl(
-      cq, std::move(context), Options{},
+      cq, std::move(context), internal::MakeImmutableOptions({}),
       google::test::admin::database::v1::UpdateDatabaseDdlRequest());
   EXPECT_EQ(TransientError(), status.get().status());
 
@@ -223,7 +223,7 @@ TEST(LoggingDecoratorRestTest, AsyncCreateBackup) {
   CompletionQueue cq;
   auto context = std::make_unique<rest_internal::RestContext>();
   auto status = stub.AsyncCreateBackup(
-      cq, std::move(context), Options{},
+      cq, std::move(context), internal::MakeImmutableOptions({}),
       google::test::admin::database::v1::CreateBackupRequest());
   EXPECT_EQ(TransientError(), status.get().status());
 
@@ -310,7 +310,7 @@ TEST(LoggingDecoratorRestTest, AsyncRestoreDatabase) {
   CompletionQueue cq;
   auto context = std::make_unique<rest_internal::RestContext>();
   auto status = stub.AsyncRestoreDatabase(
-      cq, std::move(context), Options{},
+      cq, std::move(context), internal::MakeImmutableOptions({}),
       google::test::admin::database::v1::RestoreDatabaseRequest());
   EXPECT_EQ(TransientError(), status.get().status());
 

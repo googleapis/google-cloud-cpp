@@ -22,6 +22,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/session.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -37,15 +38,15 @@ SessionsLogging::SessionsLogging(std::shared_ptr<SessionsStub> child,
 
 StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>
 SessionsLogging::DetectIntent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::DetectIntentRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::v2::DetectIntentRequest const& request) {
-        return child_->DetectIntent(context, request);
+        return child_->DetectIntent(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -53,7 +54,8 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>
 SessionsLogging::AsyncStreamingDetectIntent(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   using LoggingStream =
       ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
           google::cloud::dialogflow::v2::StreamingDetectIntentRequest,
@@ -61,7 +63,8 @@ SessionsLogging::AsyncStreamingDetectIntent(
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->AsyncStreamingDetectIntent(cq, std::move(context));
+  auto stream = child_->AsyncStreamingDetectIntent(cq, std::move(context),
+                                                   std::move(options));
   if (stream_logging_) {
     stream = std::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));

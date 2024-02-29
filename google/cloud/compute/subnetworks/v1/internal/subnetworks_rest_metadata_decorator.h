@@ -50,7 +50,7 @@ class SubnetworksRestMetadata : public SubnetworksRestStub {
   AsyncDeleteSubnetwork(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::subnetworks::v1::
           DeleteSubnetworkRequest const& request) override;
 
@@ -58,7 +58,7 @@ class SubnetworksRestMetadata : public SubnetworksRestStub {
   AsyncExpandIpCidrRange(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::subnetworks::v1::
           ExpandIpCidrRangeRequest const& request) override;
 
@@ -78,7 +78,7 @@ class SubnetworksRestMetadata : public SubnetworksRestStub {
   AsyncInsertSubnetwork(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::subnetworks::v1::
           InsertSubnetworkRequest const& request) override;
 
@@ -99,7 +99,7 @@ class SubnetworksRestMetadata : public SubnetworksRestStub {
   AsyncPatchSubnetwork(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::subnetworks::v1::
           PatchSubnetworkRequest const& request) override;
 
@@ -113,7 +113,7 @@ class SubnetworksRestMetadata : public SubnetworksRestStub {
   AsyncSetPrivateIpGoogleAccess(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::subnetworks::v1::
           SetPrivateIpGoogleAccessRequest const& request) override;
 
@@ -127,14 +127,14 @@ class SubnetworksRestMetadata : public SubnetworksRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   google::cloud::future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 

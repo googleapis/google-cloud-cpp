@@ -45,188 +45,196 @@ LineageMetadata::LineageMetadata(
 StatusOr<
     google::cloud::datacatalog::lineage::v1::ProcessOpenLineageRunEventResponse>
 LineageMetadata::ProcessOpenLineageRunEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::
         ProcessOpenLineageRunEventRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ProcessOpenLineageRunEvent(context, request);
+  return child_->ProcessOpenLineageRunEvent(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 LineageMetadata::CreateProcess(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::CreateProcessRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateProcess(context, request);
+  return child_->CreateProcess(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 LineageMetadata::UpdateProcess(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::UpdateProcessRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("process.name=",
                            internal::UrlEncode(request.process().name())));
-  return child_->UpdateProcess(context, request);
+  return child_->UpdateProcess(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Process>
 LineageMetadata::GetProcess(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::GetProcessRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetProcess(context, request);
+  return child_->GetProcess(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::ListProcessesResponse>
 LineageMetadata::ListProcesses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::ListProcessesRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListProcesses(context, request);
+  return child_->ListProcesses(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 LineageMetadata::AsyncDeleteProcess(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteProcess(cq, std::move(context), options, request);
+  return child_->AsyncDeleteProcess(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 LineageMetadata::CreateRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::CreateRunRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateRun(context, request);
+  return child_->CreateRun(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run>
 LineageMetadata::UpdateRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::UpdateRunRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("run.name=", internal::UrlEncode(request.run().name())));
-  return child_->UpdateRun(context, request);
+  return child_->UpdateRun(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::Run> LineageMetadata::GetRun(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::GetRunRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetRun(context, request);
+  return child_->GetRun(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::ListRunsResponse>
 LineageMetadata::ListRuns(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::ListRunsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListRuns(context, request);
+  return child_->ListRuns(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 LineageMetadata::AsyncDeleteRun(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteRun(cq, std::move(context), options, request);
+  return child_->AsyncDeleteRun(cq, std::move(context), std::move(options),
+                                request);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
 LineageMetadata::CreateLineageEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::CreateLineageEventRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateLineageEvent(context, request);
+  return child_->CreateLineageEvent(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::LineageEvent>
 LineageMetadata::GetLineageEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::GetLineageEventRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetLineageEvent(context, request);
+  return child_->GetLineageEvent(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::ListLineageEventsResponse>
 LineageMetadata::ListLineageEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::ListLineageEventsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListLineageEvents(context, request);
+  return child_->ListLineageEvents(context, options, request);
 }
 
 Status LineageMetadata::DeleteLineageEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::DeleteLineageEventRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteLineageEvent(context, request);
+  return child_->DeleteLineageEvent(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::lineage::v1::SearchLinksResponse>
 LineageMetadata::SearchLinks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::SearchLinksRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->SearchLinks(context, request);
+  return child_->SearchLinks(context, options, request);
 }
 
 StatusOr<
     google::cloud::datacatalog::lineage::v1::BatchSearchLinkProcessesResponse>
 LineageMetadata::BatchSearchLinkProcesses(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::lineage::v1::
         BatchSearchLinkProcessesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->BatchSearchLinkProcesses(context, request);
+  return child_->BatchSearchLinkProcesses(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 LineageMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> LineageMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void LineageMetadata::SetMetadata(grpc::ClientContext& context,

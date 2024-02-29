@@ -30,6 +30,7 @@
 #include "google/cloud/options.h"
 #include <google/cloud/aiplatform/v1/feature_online_store_admin_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

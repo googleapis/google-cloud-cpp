@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_cx/sessions_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -37,6 +38,14 @@ SessionsClient::DetectIntent(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DetectIntent(request);
+}
+
+StreamRange<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
+SessionsClient::ServerStreamingDetectIntent(
+    google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ServerStreamingDetectIntent(request);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

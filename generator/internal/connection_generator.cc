@@ -328,7 +328,7 @@ Status ConnectionGenerator::GenerateCc() {
        "google/cloud/credentials.h", "google/cloud/grpc_options.h",
        "google/cloud/internal/unified_grpc_credentials.h",
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : ""});
-  CcSystemIncludes({"memory"});
+  CcSystemIncludes({"memory", "utility"});
 
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;

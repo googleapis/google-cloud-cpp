@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/kms/inventory/v1/key_dashboard_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ KeyDashboardServiceStub::~KeyDashboardServiceStub() = default;
 
 StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
 DefaultKeyDashboardServiceStub::ListCryptoKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& request) {
   google::cloud::kms::inventory::v1::ListCryptoKeysResponse response;
   auto status = grpc_stub_->ListCryptoKeys(&context, request, &response);

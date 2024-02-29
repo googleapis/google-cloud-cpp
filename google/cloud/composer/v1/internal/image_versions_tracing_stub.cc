@@ -18,6 +18,7 @@
 
 #include "google/cloud/composer/v1/internal/image_versions_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,7 @@ ImageVersionsTracingStub::ImageVersionsTracingStub(
 StatusOr<google::cloud::orchestration::airflow::service::v1::
              ListImageVersionsResponse>
 ImageVersionsTracingStub::ListImageVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::orchestration::airflow::service::v1::
         ListImageVersionsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
@@ -41,8 +42,8 @@ ImageVersionsTracingStub::ListImageVersions(
       "ListImageVersions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListImageVersions(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListImageVersions(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

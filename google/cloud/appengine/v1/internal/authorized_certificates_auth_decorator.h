@@ -40,30 +40,30 @@ class AuthorizedCertificatesAuth : public AuthorizedCertificatesStub {
 
   StatusOr<google::appengine::v1::ListAuthorizedCertificatesResponse>
   ListAuthorizedCertificates(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::ListAuthorizedCertificatesRequest const& request)
       override;
 
   StatusOr<google::appengine::v1::AuthorizedCertificate>
   GetAuthorizedCertificate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::GetAuthorizedCertificateRequest const& request)
       override;
 
   StatusOr<google::appengine::v1::AuthorizedCertificate>
   CreateAuthorizedCertificate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::CreateAuthorizedCertificateRequest const& request)
       override;
 
   StatusOr<google::appengine::v1::AuthorizedCertificate>
   UpdateAuthorizedCertificate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::UpdateAuthorizedCertificateRequest const& request)
       override;
 
   Status DeleteAuthorizedCertificate(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::appengine::v1::DeleteAuthorizedCertificateRequest const& request)
       override;
 

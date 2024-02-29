@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_SEARCH_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_INTERNAL_SEARCH_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/discoveryengine/v1/search_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -34,7 +36,7 @@ class SearchServiceStub {
   virtual ~SearchServiceStub() = 0;
 
   virtual StatusOr<google::cloud::discoveryengine::v1::SearchResponse> Search(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::SearchRequest const& request) = 0;
 };
 
@@ -47,7 +49,7 @@ class DefaultSearchServiceStub : public SearchServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::discoveryengine::v1::SearchResponse> Search(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::discoveryengine::v1::SearchRequest const& request)
       override;
 

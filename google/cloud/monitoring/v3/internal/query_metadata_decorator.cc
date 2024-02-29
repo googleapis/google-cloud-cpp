@@ -44,11 +44,11 @@ QueryServiceMetadata::QueryServiceMetadata(
 
 StatusOr<google::monitoring::v3::QueryTimeSeriesResponse>
 QueryServiceMetadata::QueryTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::QueryTimeSeriesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->QueryTimeSeries(context, request);
+  return child_->QueryTimeSeries(context, options, request);
 }
 
 void QueryServiceMetadata::SetMetadata(grpc::ClientContext& context,

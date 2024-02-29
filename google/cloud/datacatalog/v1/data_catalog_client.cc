@@ -20,6 +20,7 @@
 #include "google/cloud/datacatalog/v1/data_catalog_options.h"
 #include <memory>
 #include <thread>
+#include <utility>
 
 namespace google {
 namespace cloud {

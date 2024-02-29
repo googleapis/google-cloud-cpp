@@ -23,6 +23,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -65,11 +66,11 @@ FulfillmentsConnectionImpl::GetFulfillment(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetFulfillment(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) {
-        return stub_->GetFulfillment(context, request);
+        return stub_->GetFulfillment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
@@ -79,12 +80,12 @@ FulfillmentsConnectionImpl::UpdateFulfillment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateFulfillment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::v2::UpdateFulfillmentRequest const&
                  request) {
-        return stub_->UpdateFulfillment(context, request);
+        return stub_->UpdateFulfillment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

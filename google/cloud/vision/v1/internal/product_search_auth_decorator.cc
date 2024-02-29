@@ -19,6 +19,7 @@
 #include "google/cloud/vision/v1/internal/product_search_auth_decorator.h"
 #include <google/cloud/vision/v1/product_search_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,219 +33,223 @@ ProductSearchAuth::ProductSearchAuth(
 
 StatusOr<google::cloud::vision::v1::ProductSet>
 ProductSearchAuth::CreateProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::CreateProductSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateProductSet(context, request);
+  return child_->CreateProductSet(context, options, request);
 }
 
 StatusOr<google::cloud::vision::v1::ListProductSetsResponse>
 ProductSearchAuth::ListProductSets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::ListProductSetsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListProductSets(context, request);
+  return child_->ListProductSets(context, options, request);
 }
 
 StatusOr<google::cloud::vision::v1::ProductSet>
 ProductSearchAuth::GetProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::GetProductSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetProductSet(context, request);
+  return child_->GetProductSet(context, options, request);
 }
 
 StatusOr<google::cloud::vision::v1::ProductSet>
 ProductSearchAuth::UpdateProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::UpdateProductSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateProductSet(context, request);
+  return child_->UpdateProductSet(context, options, request);
 }
 
 Status ProductSearchAuth::DeleteProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::DeleteProductSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteProductSet(context, request);
+  return child_->DeleteProductSet(context, options, request);
 }
 
 StatusOr<google::cloud::vision::v1::Product> ProductSearchAuth::CreateProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::CreateProductRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateProduct(context, request);
+  return child_->CreateProduct(context, options, request);
 }
 
 StatusOr<google::cloud::vision::v1::ListProductsResponse>
 ProductSearchAuth::ListProducts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::ListProductsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListProducts(context, request);
+  return child_->ListProducts(context, options, request);
 }
 
 StatusOr<google::cloud::vision::v1::Product> ProductSearchAuth::GetProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::GetProductRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetProduct(context, request);
+  return child_->GetProduct(context, options, request);
 }
 
 StatusOr<google::cloud::vision::v1::Product> ProductSearchAuth::UpdateProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::UpdateProductRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateProduct(context, request);
+  return child_->UpdateProduct(context, options, request);
 }
 
 Status ProductSearchAuth::DeleteProduct(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::DeleteProductRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteProduct(context, request);
+  return child_->DeleteProduct(context, options, request);
 }
 
 StatusOr<google::cloud::vision::v1::ReferenceImage>
 ProductSearchAuth::CreateReferenceImage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::CreateReferenceImageRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateReferenceImage(context, request);
+  return child_->CreateReferenceImage(context, options, request);
 }
 
 Status ProductSearchAuth::DeleteReferenceImage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::DeleteReferenceImageRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteReferenceImage(context, request);
+  return child_->DeleteReferenceImage(context, options, request);
 }
 
 StatusOr<google::cloud::vision::v1::ListReferenceImagesResponse>
 ProductSearchAuth::ListReferenceImages(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::ListReferenceImagesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListReferenceImages(context, request);
+  return child_->ListReferenceImages(context, options, request);
 }
 
 StatusOr<google::cloud::vision::v1::ReferenceImage>
 ProductSearchAuth::GetReferenceImage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::GetReferenceImageRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetReferenceImage(context, request);
+  return child_->GetReferenceImage(context, options, request);
 }
 
 Status ProductSearchAuth::AddProductToProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::AddProductToProductSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->AddProductToProductSet(context, request);
+  return child_->AddProductToProductSet(context, options, request);
 }
 
 Status ProductSearchAuth::RemoveProductFromProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::RemoveProductFromProductSetRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RemoveProductFromProductSet(context, request);
+  return child_->RemoveProductFromProductSet(context, options, request);
 }
 
 StatusOr<google::cloud::vision::v1::ListProductsInProductSetResponse>
 ProductSearchAuth::ListProductsInProductSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::vision::v1::ListProductsInProductSetRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListProductsInProductSet(context, request);
+  return child_->ListProductsInProductSet(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ProductSearchAuth::AsyncImportProductSets(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vision::v1::ImportProductSetsRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncImportProductSets(cq, *std::move(context), options,
-                                             request);
+        return child->AsyncImportProductSets(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ProductSearchAuth::AsyncPurgeProducts(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::vision::v1::PurgeProductsRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncPurgeProducts(cq, *std::move(context), options,
-                                         request);
+        return child->AsyncPurgeProducts(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ProductSearchAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 future<Status> ProductSearchAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), options,
-                                           request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

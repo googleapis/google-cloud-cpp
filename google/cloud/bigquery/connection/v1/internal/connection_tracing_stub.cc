@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/connection/v1/internal/connection_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ ConnectionServiceTracingStub::ConnectionServiceTracingStub(
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceTracingStub::CreateConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::connection::v1::CreateConnectionRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -41,12 +42,12 @@ ConnectionServiceTracingStub::CreateConnection(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateConnection(context, request));
+                           child_->CreateConnection(context, options, request));
 }
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceTracingStub::GetConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::connection::v1::GetConnectionRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -54,12 +55,12 @@ ConnectionServiceTracingStub::GetConnection(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetConnection(context, request));
+                           child_->GetConnection(context, options, request));
 }
 
 StatusOr<google::cloud::bigquery::connection::v1::ListConnectionsResponse>
 ConnectionServiceTracingStub::ListConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::connection::v1::ListConnectionsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -68,12 +69,12 @@ ConnectionServiceTracingStub::ListConnections(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListConnections(context, request));
+                           child_->ListConnections(context, options, request));
 }
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceTracingStub::UpdateConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -82,11 +83,11 @@ ConnectionServiceTracingStub::UpdateConnection(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateConnection(context, request));
+                           child_->UpdateConnection(context, options, request));
 }
 
 Status ConnectionServiceTracingStub::DeleteConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -95,42 +96,42 @@ Status ConnectionServiceTracingStub::DeleteConnection(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteConnection(context, request));
+                           child_->DeleteConnection(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy> ConnectionServiceTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.connection.v1.ConnectionService", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetIamPolicy(context, request));
+                           child_->GetIamPolicy(context, options, request));
 }
 
 StatusOr<google::iam::v1::Policy> ConnectionServiceTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.connection.v1.ConnectionService", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->SetIamPolicy(context, request));
+                           child_->SetIamPolicy(context, options, request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ConnectionServiceTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.bigquery.connection.v1.ConnectionService",
       "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

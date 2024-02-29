@@ -39,7 +39,7 @@ class KeyDashboardServiceLogging : public KeyDashboardServiceStub {
                              std::set<std::string> const& components);
 
   StatusOr<google::cloud::kms::inventory::v1::ListCryptoKeysResponse>
-  ListCryptoKeys(grpc::ClientContext& context,
+  ListCryptoKeys(grpc::ClientContext& context, Options const& options,
                  google::cloud::kms::inventory::v1::ListCryptoKeysRequest const&
                      request) override;
 

@@ -41,69 +41,74 @@ class CloudFunctionsServiceMetadata : public CloudFunctionsServiceStub {
       std::string api_client_header = "");
 
   StatusOr<google::cloud::functions::v1::ListFunctionsResponse> ListFunctions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v1::ListFunctionsRequest const& request)
       override;
 
   StatusOr<google::cloud::functions::v1::CloudFunction> GetFunction(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v1::GetFunctionRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateFunction(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::functions::v1::CreateFunctionRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateFunction(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::functions::v1::UpdateFunctionRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteFunction(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::functions::v1::DeleteFunctionRequest const& request)
       override;
 
   StatusOr<google::cloud::functions::v1::CallFunctionResponse> CallFunction(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v1::CallFunctionRequest const& request)
       override;
 
   StatusOr<google::cloud::functions::v1::GenerateUploadUrlResponse>
   GenerateUploadUrl(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v1::GenerateUploadUrlRequest const& request)
       override;
 
   StatusOr<google::cloud::functions::v1::GenerateDownloadUrlResponse>
   GenerateDownloadUrl(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::functions::v1::GenerateDownloadUrlRequest const& request)
       override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

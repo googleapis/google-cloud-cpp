@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_INTERNAL_AUTOSCALING_POLICY_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_INTERNAL_AUTOSCALING_POLICY_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dataproc/v1/autoscaling_policies.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,30 +37,30 @@ class AutoscalingPolicyServiceStub {
 
   virtual StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   CreateAutoscalingPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   UpdateAutoscalingPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   GetAutoscalingPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse>
   ListAutoscalingPolicies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
           request) = 0;
 
   virtual Status DeleteAutoscalingPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
           request) = 0;
 };
@@ -74,29 +76,29 @@ class DefaultAutoscalingPolicyServiceStub
 
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   CreateAutoscalingPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
           request) override;
 
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
   UpdateAutoscalingPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
           request) override;
 
   StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy> GetAutoscalingPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request)
       override;
 
   StatusOr<google::cloud::dataproc::v1::ListAutoscalingPoliciesResponse>
   ListAutoscalingPolicies(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest const&
           request) override;
 
   Status DeleteAutoscalingPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
           request) override;
 

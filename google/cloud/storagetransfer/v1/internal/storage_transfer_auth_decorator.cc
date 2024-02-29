@@ -19,6 +19,7 @@
 #include "google/cloud/storagetransfer/v1/internal/storage_transfer_auth_decorator.h"
 #include <google/storagetransfer/v1/transfer.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,169 +33,172 @@ StorageTransferServiceAuth::StorageTransferServiceAuth(
 
 StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
 StorageTransferServiceAuth::GetGoogleServiceAccount(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetGoogleServiceAccount(context, request);
+  return child_->GetGoogleServiceAccount(context, options, request);
 }
 
 StatusOr<google::storagetransfer::v1::TransferJob>
 StorageTransferServiceAuth::CreateTransferJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::CreateTransferJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateTransferJob(context, request);
+  return child_->CreateTransferJob(context, options, request);
 }
 
 StatusOr<google::storagetransfer::v1::TransferJob>
 StorageTransferServiceAuth::UpdateTransferJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::UpdateTransferJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateTransferJob(context, request);
+  return child_->UpdateTransferJob(context, options, request);
 }
 
 StatusOr<google::storagetransfer::v1::TransferJob>
 StorageTransferServiceAuth::GetTransferJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::GetTransferJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTransferJob(context, request);
+  return child_->GetTransferJob(context, options, request);
 }
 
 StatusOr<google::storagetransfer::v1::ListTransferJobsResponse>
 StorageTransferServiceAuth::ListTransferJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::ListTransferJobsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTransferJobs(context, request);
+  return child_->ListTransferJobs(context, options, request);
 }
 
 Status StorageTransferServiceAuth::PauseTransferOperation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::PauseTransferOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->PauseTransferOperation(context, request);
+  return child_->PauseTransferOperation(context, options, request);
 }
 
 Status StorageTransferServiceAuth::ResumeTransferOperation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::ResumeTransferOperationRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ResumeTransferOperation(context, request);
+  return child_->ResumeTransferOperation(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 StorageTransferServiceAuth::AsyncRunTransferJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storagetransfer::v1::RunTransferJobRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRunTransferJob(cq, *std::move(context), options,
-                                          request);
+        return child->AsyncRunTransferJob(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
 Status StorageTransferServiceAuth::DeleteTransferJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::DeleteTransferJobRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteTransferJob(context, request);
+  return child_->DeleteTransferJob(context, options, request);
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
 StorageTransferServiceAuth::CreateAgentPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::CreateAgentPoolRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateAgentPool(context, request);
+  return child_->CreateAgentPool(context, options, request);
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
 StorageTransferServiceAuth::UpdateAgentPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::UpdateAgentPoolRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateAgentPool(context, request);
+  return child_->UpdateAgentPool(context, options, request);
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
 StorageTransferServiceAuth::GetAgentPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::GetAgentPoolRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAgentPool(context, request);
+  return child_->GetAgentPool(context, options, request);
 }
 
 StatusOr<google::storagetransfer::v1::ListAgentPoolsResponse>
 StorageTransferServiceAuth::ListAgentPools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::ListAgentPoolsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAgentPools(context, request);
+  return child_->ListAgentPools(context, options, request);
 }
 
 Status StorageTransferServiceAuth::DeleteAgentPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::DeleteAgentPoolRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteAgentPool(context, request);
+  return child_->DeleteAgentPool(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 StorageTransferServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 future<Status> StorageTransferServiceAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), options,
-                                           request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

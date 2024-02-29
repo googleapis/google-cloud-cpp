@@ -45,144 +45,151 @@ OsConfigZonalServiceMetadata::OsConfigZonalServiceMetadata(
 future<StatusOr<google::longrunning::Operation>>
 OsConfigZonalServiceMetadata::AsyncCreateOSPolicyAssignment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::osconfig::v1::CreateOSPolicyAssignmentRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateOSPolicyAssignment(cq, std::move(context), options,
-                                               request);
+  return child_->AsyncCreateOSPolicyAssignment(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 OsConfigZonalServiceMetadata::AsyncUpdateOSPolicyAssignment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::osconfig::v1::UpdateOSPolicyAssignmentRequest const&
         request) {
   SetMetadata(
-      *context, options,
+      *context, *options,
       absl::StrCat("os_policy_assignment.name=",
                    internal::UrlEncode(request.os_policy_assignment().name())));
-  return child_->AsyncUpdateOSPolicyAssignment(cq, std::move(context), options,
-                                               request);
+  return child_->AsyncUpdateOSPolicyAssignment(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignment>
 OsConfigZonalServiceMetadata::GetOSPolicyAssignment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetOSPolicyAssignmentRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetOSPolicyAssignment(context, request);
+  return child_->GetOSPolicyAssignment(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListOSPolicyAssignmentsResponse>
 OsConfigZonalServiceMetadata::ListOSPolicyAssignments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListOSPolicyAssignmentsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListOSPolicyAssignments(context, request);
+  return child_->ListOSPolicyAssignments(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsResponse>
 OsConfigZonalServiceMetadata::ListOSPolicyAssignmentRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListOSPolicyAssignmentRevisionsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->ListOSPolicyAssignmentRevisions(context, request);
+  return child_->ListOSPolicyAssignmentRevisions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 OsConfigZonalServiceMetadata::AsyncDeleteOSPolicyAssignment(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::osconfig::v1::DeleteOSPolicyAssignmentRequest const&
         request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteOSPolicyAssignment(cq, std::move(context), options,
-                                               request);
+  return child_->AsyncDeleteOSPolicyAssignment(cq, std::move(context),
+                                               std::move(options), request);
 }
 
 StatusOr<google::cloud::osconfig::v1::OSPolicyAssignmentReport>
 OsConfigZonalServiceMetadata::GetOSPolicyAssignmentReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetOSPolicyAssignmentReportRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetOSPolicyAssignmentReport(context, request);
+  return child_->GetOSPolicyAssignmentReport(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsResponse>
 OsConfigZonalServiceMetadata::ListOSPolicyAssignmentReports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListOSPolicyAssignmentReportsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListOSPolicyAssignmentReports(context, request);
+  return child_->ListOSPolicyAssignmentReports(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::Inventory>
 OsConfigZonalServiceMetadata::GetInventory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetInventoryRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetInventory(context, request);
+  return child_->GetInventory(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListInventoriesResponse>
 OsConfigZonalServiceMetadata::ListInventories(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListInventoriesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListInventories(context, request);
+  return child_->ListInventories(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::VulnerabilityReport>
 OsConfigZonalServiceMetadata::GetVulnerabilityReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::GetVulnerabilityReportRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetVulnerabilityReport(context, request);
+  return child_->GetVulnerabilityReport(context, options, request);
 }
 
 StatusOr<google::cloud::osconfig::v1::ListVulnerabilityReportsResponse>
 OsConfigZonalServiceMetadata::ListVulnerabilityReports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::osconfig::v1::ListVulnerabilityReportsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListVulnerabilityReports(context, request);
+  return child_->ListVulnerabilityReports(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 OsConfigZonalServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> OsConfigZonalServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void OsConfigZonalServiceMetadata::SetMetadata(

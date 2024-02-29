@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/essentialcontacts/v1/service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ EssentialContactsServiceStub::~EssentialContactsServiceStub() = default;
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 DefaultEssentialContactsServiceStub::CreateContact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::essentialcontacts::v1::CreateContactRequest const& request) {
   google::cloud::essentialcontacts::v1::Contact response;
   auto status = grpc_stub_->CreateContact(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultEssentialContactsServiceStub::CreateContact(
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 DefaultEssentialContactsServiceStub::UpdateContact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::essentialcontacts::v1::UpdateContactRequest const& request) {
   google::cloud::essentialcontacts::v1::Contact response;
   auto status = grpc_stub_->UpdateContact(&context, request, &response);
@@ -55,7 +56,7 @@ DefaultEssentialContactsServiceStub::UpdateContact(
 
 StatusOr<google::cloud::essentialcontacts::v1::ListContactsResponse>
 DefaultEssentialContactsServiceStub::ListContacts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::essentialcontacts::v1::ListContactsRequest const& request) {
   google::cloud::essentialcontacts::v1::ListContactsResponse response;
   auto status = grpc_stub_->ListContacts(&context, request, &response);
@@ -67,7 +68,7 @@ DefaultEssentialContactsServiceStub::ListContacts(
 
 StatusOr<google::cloud::essentialcontacts::v1::Contact>
 DefaultEssentialContactsServiceStub::GetContact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::essentialcontacts::v1::GetContactRequest const& request) {
   google::cloud::essentialcontacts::v1::Contact response;
   auto status = grpc_stub_->GetContact(&context, request, &response);
@@ -78,7 +79,7 @@ DefaultEssentialContactsServiceStub::GetContact(
 }
 
 Status DefaultEssentialContactsServiceStub::DeleteContact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::essentialcontacts::v1::DeleteContactRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteContact(&context, request, &response);
@@ -90,7 +91,7 @@ Status DefaultEssentialContactsServiceStub::DeleteContact(
 
 StatusOr<google::cloud::essentialcontacts::v1::ComputeContactsResponse>
 DefaultEssentialContactsServiceStub::ComputeContacts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::essentialcontacts::v1::ComputeContactsRequest const&
         request) {
   google::cloud::essentialcontacts::v1::ComputeContactsResponse response;
@@ -102,7 +103,7 @@ DefaultEssentialContactsServiceStub::ComputeContacts(
 }
 
 Status DefaultEssentialContactsServiceStub::SendTestMessage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::essentialcontacts::v1::SendTestMessageRequest const&
         request) {
   google::protobuf::Empty response;

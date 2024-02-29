@@ -18,6 +18,7 @@
 
 #include "google/cloud/servicehealth/v1/internal/service_health_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,77 +33,80 @@ ServiceHealthTracingStub::ServiceHealthTracingStub(
 
 StatusOr<google::cloud::servicehealth::v1::ListEventsResponse>
 ServiceHealthTracingStub::ListEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::ListEventsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.servicehealth.v1.ServiceHealth", "ListEvents");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListEvents(context, request));
+                           child_->ListEvents(context, options, request));
 }
 
 StatusOr<google::cloud::servicehealth::v1::Event>
 ServiceHealthTracingStub::GetEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::GetEventRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.servicehealth.v1.ServiceHealth", "GetEvent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetEvent(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetEvent(context, options, request));
 }
 
 StatusOr<google::cloud::servicehealth::v1::ListOrganizationEventsResponse>
 ServiceHealthTracingStub::ListOrganizationEvents(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::ListOrganizationEventsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.servicehealth.v1.ServiceHealth", "ListOrganizationEvents");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListOrganizationEvents(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListOrganizationEvents(context, options, request));
 }
 
 StatusOr<google::cloud::servicehealth::v1::OrganizationEvent>
 ServiceHealthTracingStub::GetOrganizationEvent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::GetOrganizationEventRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.servicehealth.v1.ServiceHealth", "GetOrganizationEvent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetOrganizationEvent(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetOrganizationEvent(context, options, request));
 }
 
 StatusOr<google::cloud::servicehealth::v1::ListOrganizationImpactsResponse>
 ServiceHealthTracingStub::ListOrganizationImpacts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::ListOrganizationImpactsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.servicehealth.v1.ServiceHealth", "ListOrganizationImpacts");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListOrganizationImpacts(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->ListOrganizationImpacts(context, options, request));
 }
 
 StatusOr<google::cloud::servicehealth::v1::OrganizationImpact>
 ServiceHealthTracingStub::GetOrganizationImpact(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicehealth::v1::GetOrganizationImpactRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.servicehealth.v1.ServiceHealth", "GetOrganizationImpact");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetOrganizationImpact(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetOrganizationImpact(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

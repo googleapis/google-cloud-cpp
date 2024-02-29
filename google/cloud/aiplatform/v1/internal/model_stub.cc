@@ -22,6 +22,7 @@
 #include <google/cloud/aiplatform/v1/model_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ ModelServiceStub::~ModelServiceStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultModelServiceStub::AsyncUploadModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::UploadModelRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::UploadModelRequest,
@@ -49,7 +51,7 @@ DefaultModelServiceStub::AsyncUploadModel(
 
 StatusOr<google::cloud::aiplatform::v1::Model>
 DefaultModelServiceStub::GetModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetModelRequest const& request) {
   google::cloud::aiplatform::v1::Model response;
   auto status = grpc_stub_->GetModel(&context, request, &response);
@@ -61,7 +63,7 @@ DefaultModelServiceStub::GetModel(
 
 StatusOr<google::cloud::aiplatform::v1::ListModelsResponse>
 DefaultModelServiceStub::ListModels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListModelsRequest const& request) {
   google::cloud::aiplatform::v1::ListModelsResponse response;
   auto status = grpc_stub_->ListModels(&context, request, &response);
@@ -73,7 +75,7 @@ DefaultModelServiceStub::ListModels(
 
 StatusOr<google::cloud::aiplatform::v1::ListModelVersionsResponse>
 DefaultModelServiceStub::ListModelVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListModelVersionsRequest const& request) {
   google::cloud::aiplatform::v1::ListModelVersionsResponse response;
   auto status = grpc_stub_->ListModelVersions(&context, request, &response);
@@ -85,7 +87,7 @@ DefaultModelServiceStub::ListModelVersions(
 
 StatusOr<google::cloud::aiplatform::v1::Model>
 DefaultModelServiceStub::UpdateModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::UpdateModelRequest const& request) {
   google::cloud::aiplatform::v1::Model response;
   auto status = grpc_stub_->UpdateModel(&context, request, &response);
@@ -98,7 +100,8 @@ DefaultModelServiceStub::UpdateModel(
 future<StatusOr<google::longrunning::Operation>>
 DefaultModelServiceStub::AsyncUpdateExplanationDataset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -118,7 +121,8 @@ DefaultModelServiceStub::AsyncUpdateExplanationDataset(
 future<StatusOr<google::longrunning::Operation>>
 DefaultModelServiceStub::AsyncDeleteModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteModelRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteModelRequest,
@@ -135,7 +139,8 @@ DefaultModelServiceStub::AsyncDeleteModel(
 future<StatusOr<google::longrunning::Operation>>
 DefaultModelServiceStub::AsyncDeleteModelVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::DeleteModelVersionRequest,
@@ -152,7 +157,7 @@ DefaultModelServiceStub::AsyncDeleteModelVersion(
 
 StatusOr<google::cloud::aiplatform::v1::Model>
 DefaultModelServiceStub::MergeVersionAliases(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request) {
   google::cloud::aiplatform::v1::Model response;
   auto status = grpc_stub_->MergeVersionAliases(&context, request, &response);
@@ -165,7 +170,8 @@ DefaultModelServiceStub::MergeVersionAliases(
 future<StatusOr<google::longrunning::Operation>>
 DefaultModelServiceStub::AsyncExportModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::ExportModelRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::ExportModelRequest,
@@ -182,7 +188,8 @@ DefaultModelServiceStub::AsyncExportModel(
 future<StatusOr<google::longrunning::Operation>>
 DefaultModelServiceStub::AsyncCopyModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::CopyModelRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::CopyModelRequest,
@@ -198,7 +205,7 @@ DefaultModelServiceStub::AsyncCopyModel(
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
 DefaultModelServiceStub::ImportModelEvaluation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ImportModelEvaluationRequest const&
         request) {
   google::cloud::aiplatform::v1::ModelEvaluation response;
@@ -212,7 +219,7 @@ DefaultModelServiceStub::ImportModelEvaluation(
 StatusOr<
     google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
 DefaultModelServiceStub::BatchImportModelEvaluationSlices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::
         BatchImportModelEvaluationSlicesRequest const& request) {
   google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse
@@ -227,7 +234,7 @@ DefaultModelServiceStub::BatchImportModelEvaluationSlices(
 
 StatusOr<google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
 DefaultModelServiceStub::BatchImportEvaluatedAnnotations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsRequest const&
         request) {
   google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse
@@ -242,7 +249,7 @@ DefaultModelServiceStub::BatchImportEvaluatedAnnotations(
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
 DefaultModelServiceStub::GetModelEvaluation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request) {
   google::cloud::aiplatform::v1::ModelEvaluation response;
   auto status = grpc_stub_->GetModelEvaluation(&context, request, &response);
@@ -254,7 +261,7 @@ DefaultModelServiceStub::GetModelEvaluation(
 
 StatusOr<google::cloud::aiplatform::v1::ListModelEvaluationsResponse>
 DefaultModelServiceStub::ListModelEvaluations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListModelEvaluationsRequest const& request) {
   google::cloud::aiplatform::v1::ListModelEvaluationsResponse response;
   auto status = grpc_stub_->ListModelEvaluations(&context, request, &response);
@@ -266,7 +273,7 @@ DefaultModelServiceStub::ListModelEvaluations(
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluationSlice>
 DefaultModelServiceStub::GetModelEvaluationSlice(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&
         request) {
   google::cloud::aiplatform::v1::ModelEvaluationSlice response;
@@ -280,7 +287,7 @@ DefaultModelServiceStub::GetModelEvaluationSlice(
 
 StatusOr<google::cloud::aiplatform::v1::ListModelEvaluationSlicesResponse>
 DefaultModelServiceStub::ListModelEvaluationSlices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest const&
         request) {
   google::cloud::aiplatform::v1::ListModelEvaluationSlicesResponse response;
@@ -295,7 +302,8 @@ DefaultModelServiceStub::ListModelEvaluationSlices(
 future<StatusOr<google::longrunning::Operation>>
 DefaultModelServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -310,7 +318,8 @@ DefaultModelServiceStub::AsyncGetOperation(
 
 future<Status> DefaultModelServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -22,6 +22,7 @@
 #include <google/cloud/aiplatform/v1/vizier_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ VizierServiceStub::~VizierServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::Study>
 DefaultVizierServiceStub::CreateStudy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CreateStudyRequest const& request) {
   google::cloud::aiplatform::v1::Study response;
   auto status = grpc_stub_->CreateStudy(&context, request, &response);
@@ -44,7 +45,7 @@ DefaultVizierServiceStub::CreateStudy(
 
 StatusOr<google::cloud::aiplatform::v1::Study>
 DefaultVizierServiceStub::GetStudy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetStudyRequest const& request) {
   google::cloud::aiplatform::v1::Study response;
   auto status = grpc_stub_->GetStudy(&context, request, &response);
@@ -56,7 +57,7 @@ DefaultVizierServiceStub::GetStudy(
 
 StatusOr<google::cloud::aiplatform::v1::ListStudiesResponse>
 DefaultVizierServiceStub::ListStudies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListStudiesRequest const& request) {
   google::cloud::aiplatform::v1::ListStudiesResponse response;
   auto status = grpc_stub_->ListStudies(&context, request, &response);
@@ -67,7 +68,7 @@ DefaultVizierServiceStub::ListStudies(
 }
 
 Status DefaultVizierServiceStub::DeleteStudy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::DeleteStudyRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteStudy(&context, request, &response);
@@ -79,7 +80,7 @@ Status DefaultVizierServiceStub::DeleteStudy(
 
 StatusOr<google::cloud::aiplatform::v1::Study>
 DefaultVizierServiceStub::LookupStudy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::LookupStudyRequest const& request) {
   google::cloud::aiplatform::v1::Study response;
   auto status = grpc_stub_->LookupStudy(&context, request, &response);
@@ -92,7 +93,8 @@ DefaultVizierServiceStub::LookupStudy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVizierServiceStub::AsyncSuggestTrials(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::SuggestTrialsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::aiplatform::v1::SuggestTrialsRequest,
@@ -108,7 +110,7 @@ DefaultVizierServiceStub::AsyncSuggestTrials(
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
 DefaultVizierServiceStub::CreateTrial(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CreateTrialRequest const& request) {
   google::cloud::aiplatform::v1::Trial response;
   auto status = grpc_stub_->CreateTrial(&context, request, &response);
@@ -120,7 +122,7 @@ DefaultVizierServiceStub::CreateTrial(
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
 DefaultVizierServiceStub::GetTrial(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetTrialRequest const& request) {
   google::cloud::aiplatform::v1::Trial response;
   auto status = grpc_stub_->GetTrial(&context, request, &response);
@@ -132,7 +134,7 @@ DefaultVizierServiceStub::GetTrial(
 
 StatusOr<google::cloud::aiplatform::v1::ListTrialsResponse>
 DefaultVizierServiceStub::ListTrials(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListTrialsRequest const& request) {
   google::cloud::aiplatform::v1::ListTrialsResponse response;
   auto status = grpc_stub_->ListTrials(&context, request, &response);
@@ -144,7 +146,7 @@ DefaultVizierServiceStub::ListTrials(
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
 DefaultVizierServiceStub::AddTrialMeasurement(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::AddTrialMeasurementRequest const& request) {
   google::cloud::aiplatform::v1::Trial response;
   auto status = grpc_stub_->AddTrialMeasurement(&context, request, &response);
@@ -156,7 +158,7 @@ DefaultVizierServiceStub::AddTrialMeasurement(
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
 DefaultVizierServiceStub::CompleteTrial(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::CompleteTrialRequest const& request) {
   google::cloud::aiplatform::v1::Trial response;
   auto status = grpc_stub_->CompleteTrial(&context, request, &response);
@@ -167,7 +169,7 @@ DefaultVizierServiceStub::CompleteTrial(
 }
 
 Status DefaultVizierServiceStub::DeleteTrial(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::DeleteTrialRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteTrial(&context, request, &response);
@@ -180,7 +182,8 @@ Status DefaultVizierServiceStub::DeleteTrial(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVizierServiceStub::AsyncCheckTrialEarlyStoppingState(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -199,7 +202,7 @@ DefaultVizierServiceStub::AsyncCheckTrialEarlyStoppingState(
 
 StatusOr<google::cloud::aiplatform::v1::Trial>
 DefaultVizierServiceStub::StopTrial(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::StopTrialRequest const& request) {
   google::cloud::aiplatform::v1::Trial response;
   auto status = grpc_stub_->StopTrial(&context, request, &response);
@@ -211,7 +214,7 @@ DefaultVizierServiceStub::StopTrial(
 
 StatusOr<google::cloud::aiplatform::v1::ListOptimalTrialsResponse>
 DefaultVizierServiceStub::ListOptimalTrials(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListOptimalTrialsRequest const& request) {
   google::cloud::aiplatform::v1::ListOptimalTrialsResponse response;
   auto status = grpc_stub_->ListOptimalTrials(&context, request, &response);
@@ -224,7 +227,8 @@ DefaultVizierServiceStub::ListOptimalTrials(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVizierServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -239,7 +243,8 @@ DefaultVizierServiceStub::AsyncGetOperation(
 
 future<Status> DefaultVizierServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

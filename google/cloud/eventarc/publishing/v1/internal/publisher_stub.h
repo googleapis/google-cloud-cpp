@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_PUBLISHING_V1_INTERNAL_PUBLISHER_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EVENTARC_PUBLISHING_V1_INTERNAL_PUBLISHER_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/eventarc/publishing/v1/publisher.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,14 +38,14 @@ class PublisherStub {
   virtual StatusOr<google::cloud::eventarc::publishing::v1::
                        PublishChannelConnectionEventsResponse>
   PublishChannelConnectionEvents(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::eventarc::publishing::v1::
           PublishChannelConnectionEventsRequest const& request) = 0;
 
   virtual StatusOr<
       google::cloud::eventarc::publishing::v1::PublishEventsResponse>
   PublishEvents(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
           request) = 0;
 };
@@ -59,13 +61,13 @@ class DefaultPublisherStub : public PublisherStub {
   StatusOr<google::cloud::eventarc::publishing::v1::
                PublishChannelConnectionEventsResponse>
   PublishChannelConnectionEvents(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::eventarc::publishing::v1::
           PublishChannelConnectionEventsRequest const& request) override;
 
   StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
   PublishEvents(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
           request) override;
 

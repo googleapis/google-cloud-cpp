@@ -41,107 +41,116 @@ class AwsClustersAuth : public AwsClustersStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAwsCluster(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAwsCluster(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request)
       override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AwsCluster> GetAwsCluster(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request)
       override;
 
   StatusOr<google::cloud::gkemulticloud::v1::ListAwsClustersResponse>
   ListAwsClusters(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::ListAwsClustersRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAwsCluster(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request)
       override;
 
   StatusOr<
       google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
   GenerateAwsClusterAgentToken(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::
           GenerateAwsClusterAgentTokenRequest const& request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
   GenerateAwsAccessToken(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateAwsNodePool(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateAwsNodePool(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>>
   AsyncRollbackAwsNodePoolUpdate(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
           request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool> GetAwsNodePool(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request)
       override;
 
   StatusOr<google::cloud::gkemulticloud::v1::ListAwsNodePoolsResponse>
   ListAwsNodePools(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteAwsNodePool(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request)
       override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
   GetAwsOpenIdConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
           request) override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys> GetAwsJsonWebKeys(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request)
       override;
 
   StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>
   GetAwsServerConfig(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

@@ -22,6 +22,7 @@
 #include <google/cloud/documentai/v1/document_processor_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ DocumentProcessorServiceStub::~DocumentProcessorServiceStub() = default;
 
 StatusOr<google::cloud::documentai::v1::ProcessResponse>
 DefaultDocumentProcessorServiceStub::ProcessDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::ProcessRequest const& request) {
   google::cloud::documentai::v1::ProcessResponse response;
   auto status = grpc_stub_->ProcessDocument(&context, request, &response);
@@ -45,7 +46,8 @@ DefaultDocumentProcessorServiceStub::ProcessDocument(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncBatchProcessDocuments(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::documentai::v1::BatchProcessRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::documentai::v1::BatchProcessRequest,
@@ -61,7 +63,7 @@ DefaultDocumentProcessorServiceStub::AsyncBatchProcessDocuments(
 
 StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
 DefaultDocumentProcessorServiceStub::FetchProcessorTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::FetchProcessorTypesRequest const& request) {
   google::cloud::documentai::v1::FetchProcessorTypesResponse response;
   auto status = grpc_stub_->FetchProcessorTypes(&context, request, &response);
@@ -73,7 +75,7 @@ DefaultDocumentProcessorServiceStub::FetchProcessorTypes(
 
 StatusOr<google::cloud::documentai::v1::ListProcessorTypesResponse>
 DefaultDocumentProcessorServiceStub::ListProcessorTypes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::ListProcessorTypesRequest const& request) {
   google::cloud::documentai::v1::ListProcessorTypesResponse response;
   auto status = grpc_stub_->ListProcessorTypes(&context, request, &response);
@@ -85,7 +87,7 @@ DefaultDocumentProcessorServiceStub::ListProcessorTypes(
 
 StatusOr<google::cloud::documentai::v1::ProcessorType>
 DefaultDocumentProcessorServiceStub::GetProcessorType(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::GetProcessorTypeRequest const& request) {
   google::cloud::documentai::v1::ProcessorType response;
   auto status = grpc_stub_->GetProcessorType(&context, request, &response);
@@ -97,7 +99,7 @@ DefaultDocumentProcessorServiceStub::GetProcessorType(
 
 StatusOr<google::cloud::documentai::v1::ListProcessorsResponse>
 DefaultDocumentProcessorServiceStub::ListProcessors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::ListProcessorsRequest const& request) {
   google::cloud::documentai::v1::ListProcessorsResponse response;
   auto status = grpc_stub_->ListProcessors(&context, request, &response);
@@ -109,7 +111,7 @@ DefaultDocumentProcessorServiceStub::ListProcessors(
 
 StatusOr<google::cloud::documentai::v1::Processor>
 DefaultDocumentProcessorServiceStub::GetProcessor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::GetProcessorRequest const& request) {
   google::cloud::documentai::v1::Processor response;
   auto status = grpc_stub_->GetProcessor(&context, request, &response);
@@ -122,7 +124,8 @@ DefaultDocumentProcessorServiceStub::GetProcessor(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncTrainProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::documentai::v1::TrainProcessorVersionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -140,7 +143,7 @@ DefaultDocumentProcessorServiceStub::AsyncTrainProcessorVersion(
 
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DefaultDocumentProcessorServiceStub::GetProcessorVersion(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::GetProcessorVersionRequest const& request) {
   google::cloud::documentai::v1::ProcessorVersion response;
   auto status = grpc_stub_->GetProcessorVersion(&context, request, &response);
@@ -152,7 +155,7 @@ DefaultDocumentProcessorServiceStub::GetProcessorVersion(
 
 StatusOr<google::cloud::documentai::v1::ListProcessorVersionsResponse>
 DefaultDocumentProcessorServiceStub::ListProcessorVersions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::ListProcessorVersionsRequest const&
         request) {
   google::cloud::documentai::v1::ListProcessorVersionsResponse response;
@@ -166,7 +169,8 @@ DefaultDocumentProcessorServiceStub::ListProcessorVersions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncDeleteProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -185,7 +189,8 @@ DefaultDocumentProcessorServiceStub::AsyncDeleteProcessorVersion(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncDeployProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::documentai::v1::DeployProcessorVersionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -204,7 +209,8 @@ DefaultDocumentProcessorServiceStub::AsyncDeployProcessorVersion(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncUndeployProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -223,7 +229,7 @@ DefaultDocumentProcessorServiceStub::AsyncUndeployProcessorVersion(
 
 StatusOr<google::cloud::documentai::v1::Processor>
 DefaultDocumentProcessorServiceStub::CreateProcessor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::CreateProcessorRequest const& request) {
   google::cloud::documentai::v1::Processor response;
   auto status = grpc_stub_->CreateProcessor(&context, request, &response);
@@ -236,7 +242,8 @@ DefaultDocumentProcessorServiceStub::CreateProcessor(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncDeleteProcessor(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::documentai::v1::DeleteProcessorRequest,
@@ -254,7 +261,8 @@ DefaultDocumentProcessorServiceStub::AsyncDeleteProcessor(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncEnableProcessor(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::documentai::v1::EnableProcessorRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::documentai::v1::EnableProcessorRequest,
@@ -272,7 +280,8 @@ DefaultDocumentProcessorServiceStub::AsyncEnableProcessor(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncDisableProcessor(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::documentai::v1::DisableProcessorRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::documentai::v1::DisableProcessorRequest,
@@ -290,7 +299,8 @@ DefaultDocumentProcessorServiceStub::AsyncDisableProcessor(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncSetDefaultProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -310,7 +320,8 @@ DefaultDocumentProcessorServiceStub::AsyncSetDefaultProcessorVersion(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncReviewDocument(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::documentai::v1::ReviewDocumentRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::documentai::v1::ReviewDocumentRequest,
@@ -328,7 +339,8 @@ DefaultDocumentProcessorServiceStub::AsyncReviewDocument(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncEvaluateProcessorVersion(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::documentai::v1::EvaluateProcessorVersionRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -347,7 +359,7 @@ DefaultDocumentProcessorServiceStub::AsyncEvaluateProcessorVersion(
 
 StatusOr<google::cloud::documentai::v1::Evaluation>
 DefaultDocumentProcessorServiceStub::GetEvaluation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::GetEvaluationRequest const& request) {
   google::cloud::documentai::v1::Evaluation response;
   auto status = grpc_stub_->GetEvaluation(&context, request, &response);
@@ -359,7 +371,7 @@ DefaultDocumentProcessorServiceStub::GetEvaluation(
 
 StatusOr<google::cloud::documentai::v1::ListEvaluationsResponse>
 DefaultDocumentProcessorServiceStub::ListEvaluations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::documentai::v1::ListEvaluationsRequest const& request) {
   google::cloud::documentai::v1::ListEvaluationsResponse response;
   auto status = grpc_stub_->ListEvaluations(&context, request, &response);
@@ -372,7 +384,8 @@ DefaultDocumentProcessorServiceStub::ListEvaluations(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDocumentProcessorServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -387,7 +400,8 @@ DefaultDocumentProcessorServiceStub::AsyncGetOperation(
 
 future<Status> DefaultDocumentProcessorServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

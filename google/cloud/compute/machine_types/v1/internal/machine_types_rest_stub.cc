@@ -23,6 +23,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/compute/machine_types/v1/machine_types.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

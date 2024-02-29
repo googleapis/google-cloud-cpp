@@ -4619,34 +4619,42 @@ void RunAllSlowInstanceTests(
         Basename(google::cloud::spanner_testing::PickInstanceConfig(
             google::cloud::Project(project_id), generator,
             [](google::spanner::admin::instance::v1::InstanceConfig const&
-                   config) {
-              // TODO(#11346): Remove once the incident clears out
-              for (auto const& replica_info : config.optional_replicas()) {
-                if (replica_info.location() == "europe-west9") return false;
-              }
-              return !config.optional_replicas().empty();
-            }));
+                   config) { return !config.optional_replicas().empty(); }));
     if (base_config_id.empty()) {
       throw std::runtime_error("Failed to pick a base config");
     }
     auto const user_config_id =
         google::cloud::spanner_testing::RandomInstanceConfigName(generator);
 
+    bool instance_config_created = true;
     SampleBanner("spanner_create_instance_config");
-    CreateInstanceConfig(instance_admin_client, project_id, user_config_id,
-                         base_config_id);
+    try {
+      CreateInstanceConfig(instance_admin_client, project_id, user_config_id,
+                           base_config_id);
+    } catch (google::cloud::Status const& status) {
+      // If the CreateInstanceConfig() failed with a constraint violation,
+      // presumably because of an optional replica we added, skip the remaining
+      // instance-config samples. It isn't worth trying to encode constraint
+      // knowledge here.
+      if (status.code() != google::cloud::StatusCode::kFailedPrecondition ||
+          !absl::StrContains(status.message(), "violates constraint")) {
+        throw;
+      }
+      instance_config_created = false;
+    }
+    if (instance_config_created) {
+      SampleBanner("spanner_update_instance_config");
+      UpdateInstanceConfig(instance_admin_client, project_id, user_config_id);
 
-    SampleBanner("spanner_update_instance_config");
-    UpdateInstanceConfig(instance_admin_client, project_id, user_config_id);
+      SampleBanner("spanner_list_instance_config_operations");
+      ListInstanceConfigOperations(instance_admin_client, project_id);
 
-    SampleBanner("spanner_list_instance_config_operations");
-    ListInstanceConfigOperations(instance_admin_client, project_id);
+      SampleBanner("spanner_list_instance_configs");
+      ListInstanceConfigs(instance_admin_client, project_id);
 
-    SampleBanner("spanner_list_instance_configs");
-    ListInstanceConfigs(instance_admin_client, project_id);
-
-    SampleBanner("spanner_delete_instance_config");
-    DeleteInstanceConfig(instance_admin_client, project_id, user_config_id);
+      SampleBanner("spanner_delete_instance_config");
+      DeleteInstanceConfig(instance_admin_client, project_id, user_config_id);
+    }
   }
 }
 

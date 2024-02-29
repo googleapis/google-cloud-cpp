@@ -39,27 +39,27 @@ class WebhooksMetadata : public WebhooksStub {
                    std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::cx::v3::ListWebhooksResponse>
-  ListWebhooks(grpc::ClientContext& context,
+  ListWebhooks(grpc::ClientContext& context, Options const& options,
                google::cloud::dialogflow::cx::v3::ListWebhooksRequest const&
                    request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Webhook> GetWebhook(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Webhook> CreateWebhook(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::Webhook> UpdateWebhook(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request)
       override;
 
   Status DeleteWebhook(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request)
       override;
 

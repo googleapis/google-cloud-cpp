@@ -44,29 +44,29 @@ PolicyTagManagerSerializationMetadata::PolicyTagManagerSerializationMetadata(
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerSerializationMetadata::ReplaceTaxonomy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->ReplaceTaxonomy(context, request);
+  return child_->ReplaceTaxonomy(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
 PolicyTagManagerSerializationMetadata::ImportTaxonomies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ImportTaxonomies(context, request);
+  return child_->ImportTaxonomies(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
 PolicyTagManagerSerializationMetadata::ExportTaxonomies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ExportTaxonomies(context, request);
+  return child_->ExportTaxonomies(context, options, request);
 }
 
 void PolicyTagManagerSerializationMetadata::SetMetadata(

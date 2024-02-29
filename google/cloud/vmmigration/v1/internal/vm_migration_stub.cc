@@ -22,6 +22,7 @@
 #include <google/cloud/vmmigration/v1/vmmigration.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ VmMigrationStub::~VmMigrationStub() = default;
 
 StatusOr<google::cloud::vmmigration::v1::ListSourcesResponse>
 DefaultVmMigrationStub::ListSources(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::ListSourcesRequest const& request) {
   google::cloud::vmmigration::v1::ListSourcesResponse response;
   auto status = grpc_stub_->ListSources(&context, request, &response);
@@ -44,7 +45,7 @@ DefaultVmMigrationStub::ListSources(
 
 StatusOr<google::cloud::vmmigration::v1::Source>
 DefaultVmMigrationStub::GetSource(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::GetSourceRequest const& request) {
   google::cloud::vmmigration::v1::Source response;
   auto status = grpc_stub_->GetSource(&context, request, &response);
@@ -57,7 +58,8 @@ DefaultVmMigrationStub::GetSource(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncCreateSource(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::CreateSourceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::CreateSourceRequest,
@@ -74,7 +76,8 @@ DefaultVmMigrationStub::AsyncCreateSource(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncUpdateSource(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::UpdateSourceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::UpdateSourceRequest,
@@ -91,7 +94,8 @@ DefaultVmMigrationStub::AsyncUpdateSource(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncDeleteSource(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::DeleteSourceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::DeleteSourceRequest,
@@ -107,7 +111,7 @@ DefaultVmMigrationStub::AsyncDeleteSource(
 
 StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
 DefaultVmMigrationStub::FetchInventory(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::FetchInventoryRequest const& request) {
   google::cloud::vmmigration::v1::FetchInventoryResponse response;
   auto status = grpc_stub_->FetchInventory(&context, request, &response);
@@ -119,7 +123,7 @@ DefaultVmMigrationStub::FetchInventory(
 
 StatusOr<google::cloud::vmmigration::v1::ListUtilizationReportsResponse>
 DefaultVmMigrationStub::ListUtilizationReports(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::ListUtilizationReportsRequest const&
         request) {
   google::cloud::vmmigration::v1::ListUtilizationReportsResponse response;
@@ -133,7 +137,7 @@ DefaultVmMigrationStub::ListUtilizationReports(
 
 StatusOr<google::cloud::vmmigration::v1::UtilizationReport>
 DefaultVmMigrationStub::GetUtilizationReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::GetUtilizationReportRequest const&
         request) {
   google::cloud::vmmigration::v1::UtilizationReport response;
@@ -147,7 +151,8 @@ DefaultVmMigrationStub::GetUtilizationReport(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncCreateUtilizationReport(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::CreateUtilizationReportRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -167,7 +172,8 @@ DefaultVmMigrationStub::AsyncCreateUtilizationReport(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncDeleteUtilizationReport(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::DeleteUtilizationReportRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -186,7 +192,7 @@ DefaultVmMigrationStub::AsyncDeleteUtilizationReport(
 
 StatusOr<google::cloud::vmmigration::v1::ListDatacenterConnectorsResponse>
 DefaultVmMigrationStub::ListDatacenterConnectors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest const&
         request) {
   google::cloud::vmmigration::v1::ListDatacenterConnectorsResponse response;
@@ -200,7 +206,7 @@ DefaultVmMigrationStub::ListDatacenterConnectors(
 
 StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
 DefaultVmMigrationStub::GetDatacenterConnector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&
         request) {
   google::cloud::vmmigration::v1::DatacenterConnector response;
@@ -215,7 +221,8 @@ DefaultVmMigrationStub::GetDatacenterConnector(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncCreateDatacenterConnector(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -234,7 +241,8 @@ DefaultVmMigrationStub::AsyncCreateDatacenterConnector(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncDeleteDatacenterConnector(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -253,7 +261,8 @@ DefaultVmMigrationStub::AsyncDeleteDatacenterConnector(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncUpgradeAppliance(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::UpgradeApplianceRequest,
@@ -271,7 +280,8 @@ DefaultVmMigrationStub::AsyncUpgradeAppliance(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncCreateMigratingVm(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::CreateMigratingVmRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::CreateMigratingVmRequest,
@@ -288,7 +298,7 @@ DefaultVmMigrationStub::AsyncCreateMigratingVm(
 
 StatusOr<google::cloud::vmmigration::v1::ListMigratingVmsResponse>
 DefaultVmMigrationStub::ListMigratingVms(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::ListMigratingVmsRequest const& request) {
   google::cloud::vmmigration::v1::ListMigratingVmsResponse response;
   auto status = grpc_stub_->ListMigratingVms(&context, request, &response);
@@ -300,7 +310,7 @@ DefaultVmMigrationStub::ListMigratingVms(
 
 StatusOr<google::cloud::vmmigration::v1::MigratingVm>
 DefaultVmMigrationStub::GetMigratingVm(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::GetMigratingVmRequest const& request) {
   google::cloud::vmmigration::v1::MigratingVm response;
   auto status = grpc_stub_->GetMigratingVm(&context, request, &response);
@@ -313,7 +323,8 @@ DefaultVmMigrationStub::GetMigratingVm(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncUpdateMigratingVm(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::UpdateMigratingVmRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::UpdateMigratingVmRequest,
@@ -331,7 +342,8 @@ DefaultVmMigrationStub::AsyncUpdateMigratingVm(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncDeleteMigratingVm(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::DeleteMigratingVmRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::DeleteMigratingVmRequest,
@@ -349,7 +361,8 @@ DefaultVmMigrationStub::AsyncDeleteMigratingVm(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncStartMigration(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::StartMigrationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::StartMigrationRequest,
@@ -367,7 +380,8 @@ DefaultVmMigrationStub::AsyncStartMigration(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncResumeMigration(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::ResumeMigrationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::ResumeMigrationRequest,
@@ -385,7 +399,8 @@ DefaultVmMigrationStub::AsyncResumeMigration(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncPauseMigration(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::PauseMigrationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::PauseMigrationRequest,
@@ -403,7 +418,8 @@ DefaultVmMigrationStub::AsyncPauseMigration(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncFinalizeMigration(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::FinalizeMigrationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::FinalizeMigrationRequest,
@@ -421,7 +437,8 @@ DefaultVmMigrationStub::AsyncFinalizeMigration(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncCreateCloneJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::CreateCloneJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::CreateCloneJobRequest,
@@ -439,7 +456,8 @@ DefaultVmMigrationStub::AsyncCreateCloneJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncCancelCloneJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::CancelCloneJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::CancelCloneJobRequest,
@@ -456,7 +474,7 @@ DefaultVmMigrationStub::AsyncCancelCloneJob(
 
 StatusOr<google::cloud::vmmigration::v1::ListCloneJobsResponse>
 DefaultVmMigrationStub::ListCloneJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::ListCloneJobsRequest const& request) {
   google::cloud::vmmigration::v1::ListCloneJobsResponse response;
   auto status = grpc_stub_->ListCloneJobs(&context, request, &response);
@@ -468,7 +486,7 @@ DefaultVmMigrationStub::ListCloneJobs(
 
 StatusOr<google::cloud::vmmigration::v1::CloneJob>
 DefaultVmMigrationStub::GetCloneJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::GetCloneJobRequest const& request) {
   google::cloud::vmmigration::v1::CloneJob response;
   auto status = grpc_stub_->GetCloneJob(&context, request, &response);
@@ -481,7 +499,8 @@ DefaultVmMigrationStub::GetCloneJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncCreateCutoverJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::CreateCutoverJobRequest,
@@ -499,7 +518,8 @@ DefaultVmMigrationStub::AsyncCreateCutoverJob(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncCancelCutoverJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::CancelCutoverJobRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::CancelCutoverJobRequest,
@@ -516,7 +536,7 @@ DefaultVmMigrationStub::AsyncCancelCutoverJob(
 
 StatusOr<google::cloud::vmmigration::v1::ListCutoverJobsResponse>
 DefaultVmMigrationStub::ListCutoverJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::ListCutoverJobsRequest const& request) {
   google::cloud::vmmigration::v1::ListCutoverJobsResponse response;
   auto status = grpc_stub_->ListCutoverJobs(&context, request, &response);
@@ -528,7 +548,7 @@ DefaultVmMigrationStub::ListCutoverJobs(
 
 StatusOr<google::cloud::vmmigration::v1::CutoverJob>
 DefaultVmMigrationStub::GetCutoverJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::GetCutoverJobRequest const& request) {
   google::cloud::vmmigration::v1::CutoverJob response;
   auto status = grpc_stub_->GetCutoverJob(&context, request, &response);
@@ -540,7 +560,7 @@ DefaultVmMigrationStub::GetCutoverJob(
 
 StatusOr<google::cloud::vmmigration::v1::ListGroupsResponse>
 DefaultVmMigrationStub::ListGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::ListGroupsRequest const& request) {
   google::cloud::vmmigration::v1::ListGroupsResponse response;
   auto status = grpc_stub_->ListGroups(&context, request, &response);
@@ -552,7 +572,7 @@ DefaultVmMigrationStub::ListGroups(
 
 StatusOr<google::cloud::vmmigration::v1::Group>
 DefaultVmMigrationStub::GetGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::GetGroupRequest const& request) {
   google::cloud::vmmigration::v1::Group response;
   auto status = grpc_stub_->GetGroup(&context, request, &response);
@@ -565,7 +585,8 @@ DefaultVmMigrationStub::GetGroup(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncCreateGroup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::CreateGroupRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::CreateGroupRequest,
@@ -582,7 +603,8 @@ DefaultVmMigrationStub::AsyncCreateGroup(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncUpdateGroup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::UpdateGroupRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::UpdateGroupRequest,
@@ -599,7 +621,8 @@ DefaultVmMigrationStub::AsyncUpdateGroup(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncDeleteGroup(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::DeleteGroupRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::DeleteGroupRequest,
@@ -616,7 +639,8 @@ DefaultVmMigrationStub::AsyncDeleteGroup(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncAddGroupMigration(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::AddGroupMigrationRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::AddGroupMigrationRequest,
@@ -634,7 +658,8 @@ DefaultVmMigrationStub::AsyncAddGroupMigration(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncRemoveGroupMigration(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::RemoveGroupMigrationRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -652,7 +677,7 @@ DefaultVmMigrationStub::AsyncRemoveGroupMigration(
 
 StatusOr<google::cloud::vmmigration::v1::ListTargetProjectsResponse>
 DefaultVmMigrationStub::ListTargetProjects(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::ListTargetProjectsRequest const& request) {
   google::cloud::vmmigration::v1::ListTargetProjectsResponse response;
   auto status = grpc_stub_->ListTargetProjects(&context, request, &response);
@@ -664,7 +689,7 @@ DefaultVmMigrationStub::ListTargetProjects(
 
 StatusOr<google::cloud::vmmigration::v1::TargetProject>
 DefaultVmMigrationStub::GetTargetProject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::GetTargetProjectRequest const& request) {
   google::cloud::vmmigration::v1::TargetProject response;
   auto status = grpc_stub_->GetTargetProject(&context, request, &response);
@@ -677,7 +702,8 @@ DefaultVmMigrationStub::GetTargetProject(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncCreateTargetProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::CreateTargetProjectRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::CreateTargetProjectRequest,
@@ -695,7 +721,8 @@ DefaultVmMigrationStub::AsyncCreateTargetProject(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncUpdateTargetProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::UpdateTargetProjectRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::UpdateTargetProjectRequest,
@@ -713,7 +740,8 @@ DefaultVmMigrationStub::AsyncUpdateTargetProject(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncDeleteTargetProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vmmigration::v1::DeleteTargetProjectRequest,
@@ -730,7 +758,7 @@ DefaultVmMigrationStub::AsyncDeleteTargetProject(
 
 StatusOr<google::cloud::vmmigration::v1::ListReplicationCyclesResponse>
 DefaultVmMigrationStub::ListReplicationCycles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::ListReplicationCyclesRequest const&
         request) {
   google::cloud::vmmigration::v1::ListReplicationCyclesResponse response;
@@ -743,7 +771,7 @@ DefaultVmMigrationStub::ListReplicationCycles(
 
 StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
 DefaultVmMigrationStub::GetReplicationCycle(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request) {
   google::cloud::vmmigration::v1::ReplicationCycle response;
   auto status = grpc_stub_->GetReplicationCycle(&context, request, &response);
@@ -756,7 +784,8 @@ DefaultVmMigrationStub::GetReplicationCycle(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -771,7 +800,8 @@ DefaultVmMigrationStub::AsyncGetOperation(
 
 future<Status> DefaultVmMigrationStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

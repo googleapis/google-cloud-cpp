@@ -22,6 +22,7 @@
 #include <google/cloud/dialogflow/cx/v3/flow.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 FlowsStub::~FlowsStub() = default;
 
 StatusOr<google::cloud::dialogflow::cx::v3::Flow> DefaultFlowsStub::CreateFlow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request) {
   google::cloud::dialogflow::cx::v3::Flow response;
   auto status = grpc_stub_->CreateFlow(&context, request, &response);
@@ -42,7 +43,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Flow> DefaultFlowsStub::CreateFlow(
 }
 
 Status DefaultFlowsStub::DeleteFlow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteFlow(&context, request, &response);
@@ -54,7 +55,7 @@ Status DefaultFlowsStub::DeleteFlow(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListFlowsResponse>
 DefaultFlowsStub::ListFlows(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ListFlowsRequest const& request) {
   google::cloud::dialogflow::cx::v3::ListFlowsResponse response;
   auto status = grpc_stub_->ListFlows(&context, request, &response);
@@ -65,7 +66,7 @@ DefaultFlowsStub::ListFlows(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Flow> DefaultFlowsStub::GetFlow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetFlowRequest const& request) {
   google::cloud::dialogflow::cx::v3::Flow response;
   auto status = grpc_stub_->GetFlow(&context, request, &response);
@@ -76,7 +77,7 @@ StatusOr<google::cloud::dialogflow::cx::v3::Flow> DefaultFlowsStub::GetFlow(
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Flow> DefaultFlowsStub::UpdateFlow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request) {
   google::cloud::dialogflow::cx::v3::Flow response;
   auto status = grpc_stub_->UpdateFlow(&context, request, &response);
@@ -89,7 +90,8 @@ StatusOr<google::cloud::dialogflow::cx::v3::Flow> DefaultFlowsStub::UpdateFlow(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFlowsStub::AsyncTrainFlow(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::TrainFlowRequest,
@@ -105,7 +107,7 @@ DefaultFlowsStub::AsyncTrainFlow(
 
 StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
 DefaultFlowsStub::ValidateFlow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request) {
   google::cloud::dialogflow::cx::v3::FlowValidationResult response;
   auto status = grpc_stub_->ValidateFlow(&context, request, &response);
@@ -117,7 +119,7 @@ DefaultFlowsStub::ValidateFlow(
 
 StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
 DefaultFlowsStub::GetFlowValidationResult(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const&
         request) {
   google::cloud::dialogflow::cx::v3::FlowValidationResult response;
@@ -132,7 +134,8 @@ DefaultFlowsStub::GetFlowValidationResult(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFlowsStub::AsyncImportFlow(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::ImportFlowRequest,
@@ -150,7 +153,8 @@ DefaultFlowsStub::AsyncImportFlow(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFlowsStub::AsyncExportFlow(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::dialogflow::cx::v3::ExportFlowRequest,
@@ -168,7 +172,8 @@ DefaultFlowsStub::AsyncExportFlow(
 future<StatusOr<google::longrunning::Operation>>
 DefaultFlowsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -183,7 +188,8 @@ DefaultFlowsStub::AsyncGetOperation(
 
 future<Status> DefaultFlowsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

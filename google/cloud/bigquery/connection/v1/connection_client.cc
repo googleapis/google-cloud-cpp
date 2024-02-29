@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/connection/v1/connection_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

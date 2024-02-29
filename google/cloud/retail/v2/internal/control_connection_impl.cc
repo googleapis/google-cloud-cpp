@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -65,11 +66,11 @@ ControlServiceConnectionImpl::CreateControl(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateControl(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::CreateControlRequest const& request) {
-        return stub_->CreateControl(context, request);
+        return stub_->CreateControl(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status ControlServiceConnectionImpl::DeleteControl(
@@ -78,11 +79,11 @@ Status ControlServiceConnectionImpl::DeleteControl(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteControl(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::DeleteControlRequest const& request) {
-        return stub_->DeleteControl(context, request);
+        return stub_->DeleteControl(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::retail::v2::Control>
@@ -92,11 +93,11 @@ ControlServiceConnectionImpl::UpdateControl(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateControl(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::UpdateControlRequest const& request) {
-        return stub_->UpdateControl(context, request);
+        return stub_->UpdateControl(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::retail::v2::Control>
@@ -106,11 +107,11 @@ ControlServiceConnectionImpl::GetControl(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetControl(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::retail::v2::GetControlRequest const& request) {
-        return stub_->GetControl(context, request);
+        return stub_->GetControl(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::retail::v2::Control>
@@ -122,20 +123,21 @@ ControlServiceConnectionImpl::ListControls(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::retail::v2::Control>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<retail_v2::ControlServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::retail::v2::ListControlsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::retail::v2::ListControlsRequest const& request) {
-              return stub->ListControls(context, request);
+              return stub->ListControls(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::retail::v2::ListControlsResponse r) {
         std::vector<google::cloud::retail::v2::Control> result(

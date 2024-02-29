@@ -19,6 +19,7 @@
 #include "google/cloud/accesscontextmanager/v1/internal/access_context_manager_auth_decorator.h"
 #include <google/identity/accesscontextmanager/v1/access_context_manager.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,213 +33,221 @@ AccessContextManagerAuth::AccessContextManagerAuth(
 
 StatusOr<google::identity::accesscontextmanager::v1::ListAccessPoliciesResponse>
 AccessContextManagerAuth::ListAccessPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAccessPolicies(context, request);
+  return child_->ListAccessPolicies(context, options, request);
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>
 AccessContextManagerAuth::GetAccessPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::GetAccessPolicyRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAccessPolicy(context, request);
+  return child_->GetAccessPolicy(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncCreateAccessPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::AccessPolicy const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateAccessPolicy(cq, *std::move(context), options,
-                                              request);
+        return child->AsyncCreateAccessPolicy(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncUpdateAccessPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateAccessPolicy(cq, *std::move(context), options,
-                                              request);
+        return child->AsyncUpdateAccessPolicy(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncDeleteAccessPolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteAccessPolicy(cq, *std::move(context), options,
-                                              request);
+        return child->AsyncDeleteAccessPolicy(cq, *std::move(context),
+                                              std::move(options), request);
       });
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::ListAccessLevelsResponse>
 AccessContextManagerAuth::ListAccessLevels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::ListAccessLevelsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAccessLevels(context, request);
+  return child_->ListAccessLevels(context, options, request);
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>
 AccessContextManagerAuth::GetAccessLevel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::GetAccessLevelRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAccessLevel(context, request);
+  return child_->GetAccessLevel(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncCreateAccessLevel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateAccessLevel(cq, *std::move(context), options,
-                                             request);
+        return child->AsyncCreateAccessLevel(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncUpdateAccessLevel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateAccessLevel(cq, *std::move(context), options,
-                                             request);
+        return child->AsyncUpdateAccessLevel(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncDeleteAccessLevel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteAccessLevel(cq, *std::move(context), options,
-                                             request);
+        return child->AsyncDeleteAccessLevel(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncReplaceAccessLevels(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         ReplaceAccessLevelsRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncReplaceAccessLevels(cq, *std::move(context), options,
-                                               request);
+        return child->AsyncReplaceAccessLevels(cq, *std::move(context),
+                                               std::move(options), request);
       });
 }
 
 StatusOr<
     google::identity::accesscontextmanager::v1::ListServicePerimetersResponse>
 AccessContextManagerAuth::ListServicePerimeters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::
         ListServicePerimetersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListServicePerimeters(context, request);
+  return child_->ListServicePerimeters(context, options, request);
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>
 AccessContextManagerAuth::GetServicePerimeter(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::
         GetServicePerimeterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetServicePerimeter(context, request);
+  return child_->GetServicePerimeter(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncCreateServicePerimeter(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         CreateServicePerimeterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
@@ -246,19 +255,20 @@ AccessContextManagerAuth::AsyncCreateServicePerimeter(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncCreateServicePerimeter(cq, *std::move(context),
-                                                  options, request);
+                                                  std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncUpdateServicePerimeter(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         UpdateServicePerimeterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
@@ -266,19 +276,20 @@ AccessContextManagerAuth::AsyncUpdateServicePerimeter(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncUpdateServicePerimeter(cq, *std::move(context),
-                                                  options, request);
+                                                  std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncDeleteServicePerimeter(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         DeleteServicePerimeterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
@@ -286,39 +297,41 @@ AccessContextManagerAuth::AsyncDeleteServicePerimeter(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncDeleteServicePerimeter(cq, *std::move(context),
-                                                  options, request);
+                                                  std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncReplaceServicePerimeters(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         ReplaceServicePerimetersRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncReplaceServicePerimeters(cq, *std::move(context),
-                                                    options, request);
+        return child->AsyncReplaceServicePerimeters(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncCommitServicePerimeters(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         CommitServicePerimetersRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
@@ -326,147 +339,152 @@ AccessContextManagerAuth::AsyncCommitServicePerimeters(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncCommitServicePerimeters(cq, *std::move(context),
-                                                   options, request);
+                                                   std::move(options), request);
       });
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::
              ListGcpUserAccessBindingsResponse>
 AccessContextManagerAuth::ListGcpUserAccessBindings(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::
         ListGcpUserAccessBindingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListGcpUserAccessBindings(context, request);
+  return child_->ListGcpUserAccessBindings(context, options, request);
 }
 
 StatusOr<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
 AccessContextManagerAuth::GetGcpUserAccessBinding(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::identity::accesscontextmanager::v1::
         GetGcpUserAccessBindingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetGcpUserAccessBinding(context, request);
+  return child_->GetGcpUserAccessBinding(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncCreateGcpUserAccessBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         CreateGcpUserAccessBindingRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateGcpUserAccessBinding(cq, *std::move(context),
-                                                      options, request);
+        return child->AsyncCreateGcpUserAccessBinding(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncUpdateGcpUserAccessBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         UpdateGcpUserAccessBindingRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateGcpUserAccessBinding(cq, *std::move(context),
-                                                      options, request);
+        return child->AsyncUpdateGcpUserAccessBinding(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncDeleteGcpUserAccessBinding(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::identity::accesscontextmanager::v1::
         DeleteGcpUserAccessBindingRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteGcpUserAccessBinding(cq, *std::move(context),
-                                                      options, request);
+        return child->AsyncDeleteGcpUserAccessBinding(
+            cq, *std::move(context), std::move(options), request);
       });
 }
 
 StatusOr<google::iam::v1::Policy> AccessContextManagerAuth::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> AccessContextManagerAuth::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 AccessContextManagerAuth::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 future<Status> AccessContextManagerAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), options,
-                                           request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

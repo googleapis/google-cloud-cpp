@@ -19,6 +19,7 @@
 #include "google/cloud/support/v2/internal/comment_auth_decorator.h"
 #include <google/cloud/support/v2/comment_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,19 +33,19 @@ CommentServiceAuth::CommentServiceAuth(
 
 StatusOr<google::cloud::support::v2::ListCommentsResponse>
 CommentServiceAuth::ListComments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::ListCommentsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListComments(context, request);
+  return child_->ListComments(context, options, request);
 }
 
 StatusOr<google::cloud::support::v2::Comment> CommentServiceAuth::CreateComment(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::support::v2::CreateCommentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateComment(context, request);
+  return child_->CreateComment(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

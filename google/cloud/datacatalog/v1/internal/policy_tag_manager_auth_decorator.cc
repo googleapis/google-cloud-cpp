@@ -19,6 +19,7 @@
 #include "google/cloud/datacatalog/v1/internal/policy_tag_manager_auth_decorator.h"
 #include <google/cloud/datacatalog/v1/policytagmanager.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,115 +33,115 @@ PolicyTagManagerAuth::PolicyTagManagerAuth(
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerAuth::CreateTaxonomy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateTaxonomy(context, request);
+  return child_->CreateTaxonomy(context, options, request);
 }
 
 Status PolicyTagManagerAuth::DeleteTaxonomy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteTaxonomy(context, request);
+  return child_->DeleteTaxonomy(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerAuth::UpdateTaxonomy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateTaxonomy(context, request);
+  return child_->UpdateTaxonomy(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ListTaxonomiesResponse>
 PolicyTagManagerAuth::ListTaxonomies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ListTaxonomiesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTaxonomies(context, request);
+  return child_->ListTaxonomies(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerAuth::GetTaxonomy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTaxonomy(context, request);
+  return child_->GetTaxonomy(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerAuth::CreatePolicyTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreatePolicyTag(context, request);
+  return child_->CreatePolicyTag(context, options, request);
 }
 
 Status PolicyTagManagerAuth::DeletePolicyTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeletePolicyTag(context, request);
+  return child_->DeletePolicyTag(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerAuth::UpdatePolicyTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdatePolicyTag(context, request);
+  return child_->UpdatePolicyTag(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ListPolicyTagsResponse>
 PolicyTagManagerAuth::ListPolicyTags(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ListPolicyTagsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListPolicyTags(context, request);
+  return child_->ListPolicyTags(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerAuth::GetPolicyTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetPolicyTag(context, request);
+  return child_->GetPolicyTag(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> PolicyTagManagerAuth::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> PolicyTagManagerAuth::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 PolicyTagManagerAuth::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

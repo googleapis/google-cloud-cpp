@@ -14,6 +14,14 @@
 # limitations under the License.
 # ~~~
 
+if (WIN32)
+    message(
+        WARNING "Cannot build google/cloud/securitycenter on Windows"
+                " - the protos have enum names that conflict with some system"
+                " macros.")
+    return()
+endif ()
+
 include(GoogleCloudCppLibrary)
 
 google_cloud_cpp_add_gapic_library(securitycenter "Security Command Center API"

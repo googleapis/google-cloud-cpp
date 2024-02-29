@@ -18,6 +18,7 @@
 
 #include "google/cloud/trace/v1/internal/trace_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,36 +33,37 @@ TraceServiceTracingStub::TraceServiceTracingStub(
 
 StatusOr<google::devtools::cloudtrace::v1::ListTracesResponse>
 TraceServiceTracingStub::ListTraces(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v1::ListTracesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.devtools.cloudtrace.v1.TraceService", "ListTraces");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListTraces(context, request));
+                           child_->ListTraces(context, options, request));
 }
 
 StatusOr<google::devtools::cloudtrace::v1::Trace>
 TraceServiceTracingStub::GetTrace(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v1::GetTraceRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.devtools.cloudtrace.v1.TraceService", "GetTrace");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetTrace(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetTrace(context, options, request));
 }
 
 Status TraceServiceTracingStub::PatchTraces(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::devtools::cloudtrace::v1::PatchTracesRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.devtools.cloudtrace.v1.TraceService", "PatchTraces");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->PatchTraces(context, request));
+                           child_->PatchTraces(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -81,7 +81,8 @@ future<StatusOr<storage::ObjectMetadata>> AsyncConnectionImpl::InsertObject(
                id = invocation_id_generator_.MakeInvocationId()](
                   CompletionQueue& cq,
                   std::shared_ptr<grpc::ClientContext> context,
-                  Options const& options,
+                  // NOLINTNEXTLINE(performance-unnecessary-value-param)
+                  google::cloud::internal::ImmutableOptions options,
                   google::storage::v2::WriteObjectRequest const& proto) {
     auto hash_function =
         [](storage_experimental::InsertObjectRequest const& r) {
@@ -92,15 +93,13 @@ future<StatusOr<storage::ObjectMetadata>> AsyncConnectionImpl::InsertObject(
               r.GetOption<storage::DisableMD5Hash>());
         };
 
-    ApplyQueryParameters(*context, options, params.request);
+    ApplyQueryParameters(*context, *options, params.request);
     ApplyRoutingHeaders(*context, params.request);
     context->AddMetadata("x-goog-gcs-idempotency-token", id);
-    // TODO(#12359) - pass the `options` parameter
-    google::cloud::internal::OptionsSpan span(current);
-    auto rpc = stub->AsyncWriteObject(cq, std::move(context));
-    auto running =
-        InsertObject::Call(std::move(rpc), hash_function(params.request), proto,
-                           WritePayloadImpl::GetImpl(params.payload), current);
+    auto rpc = stub->AsyncWriteObject(cq, std::move(context), current);
+    auto running = InsertObject::Call(
+        std::move(rpc), hash_function(params.request), proto,
+        WritePayloadImpl::GetImpl(params.payload), std::move(current));
     return running->Start().then([running](auto f) mutable {
       running.reset();  // extend the life of the co-routine until it co-returns
       return f.get();
@@ -130,10 +129,7 @@ AsyncConnectionImpl::ReadObject(ReadObjectParams p) {
                   google::storage::v2::ReadObjectRequest const& proto)
       -> future<StatusOr<std::unique_ptr<StreamingRpc>>> {
     ApplyQueryParameters(*context, *current, request);
-    // TODO(#12359) - pass the `options` parameter
-    google::cloud::internal::OptionsSpan span(current);
-
-    auto rpc = stub->AsyncReadObject(cq, std::move(context), proto);
+    auto rpc = stub->AsyncReadObject(cq, std::move(context), current, proto);
     auto start = rpc->Start();
     return start.then([rpc = std::move(rpc)](auto f) mutable {
       if (f.get()) return make_ready_future(make_status_or(std::move(rpc)));
@@ -177,8 +173,7 @@ AsyncConnectionImpl::ReadObjectRange(ReadObjectParams p) {
     return context;
   };
   return storage_internal::AsyncAccumulateReadObjectFull(
-             cq_, stub_, std::move(context_factory), *std::move(proto),
-             *current)
+             cq_, stub_, std::move(context_factory), *std::move(proto), current)
       .then([current](
                 future<storage_internal::AsyncAccumulateReadObjectResult> f) {
         return ToResponse(f.get(), *current);
@@ -447,10 +442,7 @@ AsyncConnectionImpl::UnbufferedUploadImpl(
           RequestPlaceholder const&)
       -> future<StatusOr<std::unique_ptr<StreamingRpc>>> {
     configure_context(*context);
-    // TODO(#12359) - pass the `options` parameter
-    google::cloud::internal::OptionsSpan span(current);
-
-    auto rpc = stub->AsyncBidiWriteObject(cq, std::move(context));
+    auto rpc = stub->AsyncBidiWriteObject(cq, std::move(context), current);
     auto start = rpc->Start();
     // TODO(coryan): I think we just call `Start()` and then send the data and
     // the metadata (if needed) on the first Write() call.

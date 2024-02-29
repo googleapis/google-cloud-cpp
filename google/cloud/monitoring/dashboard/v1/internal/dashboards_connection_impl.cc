@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -72,10 +73,12 @@ DashboardsServiceConnectionImpl::CreateDashboard(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateDashboard(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::dashboard::v1::CreateDashboardRequest const&
-                 request) { return stub_->CreateDashboard(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreateDashboard(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::monitoring::dashboard::v1::Dashboard>
@@ -87,20 +90,23 @@ DashboardsServiceConnectionImpl::ListDashboards(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::monitoring::dashboard::v1::Dashboard>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            monitoring_dashboard_v1::DashboardsServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::monitoring::dashboard::v1::ListDashboardsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::monitoring::dashboard::v1::ListDashboardsRequest const&
-                    request) { return stub->ListDashboards(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListDashboards(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::monitoring::dashboard::v1::ListDashboardsResponse r) {
         std::vector<google::monitoring::dashboard::v1::Dashboard> result(
@@ -118,10 +124,12 @@ DashboardsServiceConnectionImpl::GetDashboard(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDashboard(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::dashboard::v1::GetDashboardRequest const&
-                 request) { return stub_->GetDashboard(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetDashboard(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status DashboardsServiceConnectionImpl::DeleteDashboard(
@@ -130,10 +138,12 @@ Status DashboardsServiceConnectionImpl::DeleteDashboard(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteDashboard(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::dashboard::v1::DeleteDashboardRequest const&
-                 request) { return stub_->DeleteDashboard(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DeleteDashboard(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
@@ -143,10 +153,12 @@ DashboardsServiceConnectionImpl::UpdateDashboard(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateDashboard(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::monitoring::dashboard::v1::UpdateDashboardRequest const&
-                 request) { return stub_->UpdateDashboard(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->UpdateDashboard(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

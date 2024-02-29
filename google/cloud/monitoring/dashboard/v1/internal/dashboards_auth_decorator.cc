@@ -19,6 +19,7 @@
 #include "google/cloud/monitoring/dashboard/v1/internal/dashboards_auth_decorator.h"
 #include <google/monitoring/dashboard/v1/dashboards_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,46 +33,46 @@ DashboardsServiceAuth::DashboardsServiceAuth(
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceAuth::CreateDashboard(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::dashboard::v1::CreateDashboardRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateDashboard(context, request);
+  return child_->CreateDashboard(context, options, request);
 }
 
 StatusOr<google::monitoring::dashboard::v1::ListDashboardsResponse>
 DashboardsServiceAuth::ListDashboards(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::dashboard::v1::ListDashboardsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListDashboards(context, request);
+  return child_->ListDashboards(context, options, request);
 }
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceAuth::GetDashboard(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::dashboard::v1::GetDashboardRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDashboard(context, request);
+  return child_->GetDashboard(context, options, request);
 }
 
 Status DashboardsServiceAuth::DeleteDashboard(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteDashboard(context, request);
+  return child_->DeleteDashboard(context, options, request);
 }
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceAuth::UpdateDashboard(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateDashboard(context, request);
+  return child_->UpdateDashboard(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

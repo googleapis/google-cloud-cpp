@@ -19,6 +19,7 @@
 
 #include "google/cloud/compute/network_endpoint_groups/v1/network_endpoint_groups_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

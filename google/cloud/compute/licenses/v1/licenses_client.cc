@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/licenses/v1/licenses_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

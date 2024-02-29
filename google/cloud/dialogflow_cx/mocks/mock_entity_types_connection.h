@@ -73,6 +73,22 @@ class MockEntityTypesConnection : public dialogflow_cx::EntityTypesConnection {
       ListEntityTypes,
       (google::cloud::dialogflow::cx::v3::ListEntityTypesRequest request),
       (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>,
+      ExportEntityTypes,
+      (google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>,
+      ImportEntityTypes,
+      (google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

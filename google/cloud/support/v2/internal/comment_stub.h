@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_COMMENT_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SUPPORT_V2_INTERNAL_COMMENT_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/support/v2/comment_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,11 +37,11 @@ class CommentServiceStub {
 
   virtual StatusOr<google::cloud::support::v2::ListCommentsResponse>
   ListComments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::ListCommentsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::support::v2::Comment> CreateComment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::CreateCommentRequest const& request) = 0;
 };
 
@@ -51,11 +53,11 @@ class DefaultCommentServiceStub : public CommentServiceStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::support::v2::ListCommentsResponse> ListComments(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::ListCommentsRequest const& request) override;
 
   StatusOr<google::cloud::support::v2::Comment> CreateComment(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::support::v2::CreateCommentRequest const& request) override;
 
  private:

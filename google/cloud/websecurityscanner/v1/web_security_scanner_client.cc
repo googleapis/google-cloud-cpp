@@ -18,6 +18,7 @@
 
 #include "google/cloud/websecurityscanner/v1/web_security_scanner_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

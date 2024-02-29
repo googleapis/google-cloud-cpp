@@ -29,6 +29,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -66,6 +67,22 @@ EntityTypesConnection::ListEntityTypes(
         ListEntityTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::EntityType>>();
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>
+EntityTypesConnection::ExportEntityTypes(
+    google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>
+EntityTypesConnection::ImportEntityTypes(
+    google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 std::shared_ptr<EntityTypesConnection> MakeEntityTypesConnection(

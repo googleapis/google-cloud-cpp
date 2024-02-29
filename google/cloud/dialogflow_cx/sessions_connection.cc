@@ -28,6 +28,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -40,6 +41,18 @@ StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
 SessionsConnection::DetectIntent(
     google::cloud::dialogflow::cx::v3::DetectIntentRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
+SessionsConnection::ServerStreamingDetectIntent(
+    google::cloud::dialogflow::cx::v3::DetectIntentRequest const&) {
+  return google::cloud::internal::MakeStreamRange<
+      google::cloud::dialogflow::cx::v3::DetectIntentResponse>(
+      []()
+          -> absl::variant<
+              Status, google::cloud::dialogflow::cx::v3::DetectIntentResponse> {
+        return Status(StatusCode::kUnimplemented, "not implemented");
+      });
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

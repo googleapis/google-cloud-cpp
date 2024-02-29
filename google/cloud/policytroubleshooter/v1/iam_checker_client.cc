@@ -18,6 +18,7 @@
 
 #include "google/cloud/policytroubleshooter/v1/iam_checker_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

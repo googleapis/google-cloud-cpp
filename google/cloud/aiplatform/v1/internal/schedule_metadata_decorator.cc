@@ -44,84 +44,90 @@ ScheduleServiceMetadata::ScheduleServiceMetadata(
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 ScheduleServiceMetadata::CreateSchedule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::CreateScheduleRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateSchedule(context, request);
+  return child_->CreateSchedule(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ScheduleServiceMetadata::AsyncDeleteSchedule(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteScheduleRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteSchedule(cq, std::move(context), options, request);
+  return child_->AsyncDeleteSchedule(cq, std::move(context), std::move(options),
+                                     request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 ScheduleServiceMetadata::GetSchedule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetScheduleRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetSchedule(context, request);
+  return child_->GetSchedule(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListSchedulesResponse>
 ScheduleServiceMetadata::ListSchedules(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListSchedulesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListSchedules(context, request);
+  return child_->ListSchedules(context, options, request);
 }
 
 Status ScheduleServiceMetadata::PauseSchedule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::PauseScheduleRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->PauseSchedule(context, request);
+  return child_->PauseSchedule(context, options, request);
 }
 
 Status ScheduleServiceMetadata::ResumeSchedule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ResumeScheduleRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->ResumeSchedule(context, request);
+  return child_->ResumeSchedule(context, options, request);
 }
 
 StatusOr<google::cloud::aiplatform::v1::Schedule>
 ScheduleServiceMetadata::UpdateSchedule(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateScheduleRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("schedule.name=",
                            internal::UrlEncode(request.schedule().name())));
-  return child_->UpdateSchedule(context, request);
+  return child_->UpdateSchedule(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 ScheduleServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(cq, std::move(context), options, request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> ScheduleServiceMetadata::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(*context, options,
+  SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(cq, std::move(context), options, request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void ScheduleServiceMetadata::SetMetadata(grpc::ClientContext& context,

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/logging/v2/logging_metrics.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ MetricsServiceV2Stub::~MetricsServiceV2Stub() = default;
 
 StatusOr<google::logging::v2::ListLogMetricsResponse>
 DefaultMetricsServiceV2Stub::ListLogMetrics(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::ListLogMetricsRequest const& request) {
   google::logging::v2::ListLogMetricsResponse response;
   auto status = grpc_stub_->ListLogMetrics(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultMetricsServiceV2Stub::ListLogMetrics(
 
 StatusOr<google::logging::v2::LogMetric>
 DefaultMetricsServiceV2Stub::GetLogMetric(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::GetLogMetricRequest const& request) {
   google::logging::v2::LogMetric response;
   auto status = grpc_stub_->GetLogMetric(&context, request, &response);
@@ -55,7 +56,7 @@ DefaultMetricsServiceV2Stub::GetLogMetric(
 
 StatusOr<google::logging::v2::LogMetric>
 DefaultMetricsServiceV2Stub::CreateLogMetric(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::CreateLogMetricRequest const& request) {
   google::logging::v2::LogMetric response;
   auto status = grpc_stub_->CreateLogMetric(&context, request, &response);
@@ -67,7 +68,7 @@ DefaultMetricsServiceV2Stub::CreateLogMetric(
 
 StatusOr<google::logging::v2::LogMetric>
 DefaultMetricsServiceV2Stub::UpdateLogMetric(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::UpdateLogMetricRequest const& request) {
   google::logging::v2::LogMetric response;
   auto status = grpc_stub_->UpdateLogMetric(&context, request, &response);
@@ -78,7 +79,7 @@ DefaultMetricsServiceV2Stub::UpdateLogMetric(
 }
 
 Status DefaultMetricsServiceV2Stub::DeleteLogMetric(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::DeleteLogMetricRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteLogMetric(&context, request, &response);

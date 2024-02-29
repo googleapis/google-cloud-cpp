@@ -22,6 +22,7 @@
 #include <google/cloud/vpcaccess/v1/vpc_access.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,7 +34,8 @@ VpcAccessServiceStub::~VpcAccessServiceStub() = default;
 future<StatusOr<google::longrunning::Operation>>
 DefaultVpcAccessServiceStub::AsyncCreateConnector(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vpcaccess::v1::CreateConnectorRequest,
@@ -50,7 +52,7 @@ DefaultVpcAccessServiceStub::AsyncCreateConnector(
 
 StatusOr<google::cloud::vpcaccess::v1::Connector>
 DefaultVpcAccessServiceStub::GetConnector(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
   google::cloud::vpcaccess::v1::Connector response;
   auto status = grpc_stub_->GetConnector(&context, request, &response);
@@ -62,7 +64,7 @@ DefaultVpcAccessServiceStub::GetConnector(
 
 StatusOr<google::cloud::vpcaccess::v1::ListConnectorsResponse>
 DefaultVpcAccessServiceStub::ListConnectors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::vpcaccess::v1::ListConnectorsRequest const& request) {
   google::cloud::vpcaccess::v1::ListConnectorsResponse response;
   auto status = grpc_stub_->ListConnectors(&context, request, &response);
@@ -75,7 +77,8 @@ DefaultVpcAccessServiceStub::ListConnectors(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVpcAccessServiceStub::AsyncDeleteConnector(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::vpcaccess::v1::DeleteConnectorRequest,
@@ -93,7 +96,8 @@ DefaultVpcAccessServiceStub::AsyncDeleteConnector(
 future<StatusOr<google::longrunning::Operation>>
 DefaultVpcAccessServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -108,7 +112,8 @@ DefaultVpcAccessServiceStub::AsyncGetOperation(
 
 future<Status> DefaultVpcAccessServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

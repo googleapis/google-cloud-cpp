@@ -18,6 +18,7 @@
 
 #include "google/cloud/documentai/v1/document_processor_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

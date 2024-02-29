@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_INTERNAL_VALIDATION_HELPER_V1_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_INTERNAL_VALIDATION_HELPER_V1_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/binaryauthorization/v1/service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,7 +38,7 @@ class ValidationHelperV1Stub {
   virtual StatusOr<google::cloud::binaryauthorization::v1::
                        ValidateAttestationOccurrenceResponse>
   ValidateAttestationOccurrence(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::binaryauthorization::v1::
           ValidateAttestationOccurrenceRequest const& request) = 0;
 };
@@ -52,7 +54,7 @@ class DefaultValidationHelperV1Stub : public ValidationHelperV1Stub {
   StatusOr<google::cloud::binaryauthorization::v1::
                ValidateAttestationOccurrenceResponse>
   ValidateAttestationOccurrence(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::binaryauthorization::v1::
           ValidateAttestationOccurrenceRequest const& request) override;
 

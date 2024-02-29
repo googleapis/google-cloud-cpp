@@ -18,6 +18,7 @@
 
 #include "google/cloud/functions/v1/cloud_functions_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

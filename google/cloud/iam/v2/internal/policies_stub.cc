@@ -22,6 +22,7 @@
 #include <google/iam/v2/policy.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ PoliciesStub::~PoliciesStub() = default;
 
 StatusOr<google::iam::v2::ListPoliciesResponse>
 DefaultPoliciesStub::ListPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v2::ListPoliciesRequest const& request) {
   google::iam::v2::ListPoliciesResponse response;
   auto status = grpc_stub_->ListPolicies(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultPoliciesStub::ListPolicies(
 }
 
 StatusOr<google::iam::v2::Policy> DefaultPoliciesStub::GetPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v2::GetPolicyRequest const& request) {
   google::iam::v2::Policy response;
   auto status = grpc_stub_->GetPolicy(&context, request, &response);
@@ -56,7 +57,8 @@ StatusOr<google::iam::v2::Policy> DefaultPoliciesStub::GetPolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultPoliciesStub::AsyncCreatePolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::iam::v2::CreatePolicyRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::iam::v2::CreatePolicyRequest,
                                     google::longrunning::Operation>(
@@ -72,7 +74,8 @@ DefaultPoliciesStub::AsyncCreatePolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultPoliciesStub::AsyncUpdatePolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::iam::v2::UpdatePolicyRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::iam::v2::UpdatePolicyRequest,
                                     google::longrunning::Operation>(
@@ -88,7 +91,8 @@ DefaultPoliciesStub::AsyncUpdatePolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultPoliciesStub::AsyncDeletePolicy(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::iam::v2::DeletePolicyRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::iam::v2::DeletePolicyRequest,
                                     google::longrunning::Operation>(
@@ -104,7 +108,8 @@ DefaultPoliciesStub::AsyncDeletePolicy(
 future<StatusOr<google::longrunning::Operation>>
 DefaultPoliciesStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -119,7 +124,8 @@ DefaultPoliciesStub::AsyncGetOperation(
 
 future<Status> DefaultPoliciesStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

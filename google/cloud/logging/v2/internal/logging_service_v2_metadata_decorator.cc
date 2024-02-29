@@ -43,46 +43,46 @@ LoggingServiceV2Metadata::LoggingServiceV2Metadata(
               : std::move(api_client_header)) {}
 
 Status LoggingServiceV2Metadata::DeleteLog(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::DeleteLogRequest const& request) {
   SetMetadata(
-      context, internal::CurrentOptions(),
+      context, options,
       absl::StrCat("log_name=", internal::UrlEncode(request.log_name())));
-  return child_->DeleteLog(context, request);
+  return child_->DeleteLog(context, options, request);
 }
 
 StatusOr<google::logging::v2::WriteLogEntriesResponse>
 LoggingServiceV2Metadata::WriteLogEntries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::WriteLogEntriesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->WriteLogEntries(context, request);
+  SetMetadata(context, options);
+  return child_->WriteLogEntries(context, options, request);
 }
 
 StatusOr<google::logging::v2::ListLogEntriesResponse>
 LoggingServiceV2Metadata::ListLogEntries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListLogEntriesRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->ListLogEntries(context, request);
+  SetMetadata(context, options);
+  return child_->ListLogEntries(context, options, request);
 }
 
 StatusOr<google::logging::v2::ListMonitoredResourceDescriptorsResponse>
 LoggingServiceV2Metadata::ListMonitoredResourceDescriptors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
         request) {
-  SetMetadata(context, internal::CurrentOptions());
-  return child_->ListMonitoredResourceDescriptors(context, request);
+  SetMetadata(context, options);
+  return child_->ListMonitoredResourceDescriptors(context, options, request);
 }
 
 StatusOr<google::logging::v2::ListLogsResponse>
 LoggingServiceV2Metadata::ListLogs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListLogsRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListLogs(context, request);
+  return child_->ListLogs(context, options, request);
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -90,9 +90,11 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::logging::v2::TailLogEntriesResponse>>
 LoggingServiceV2Metadata::AsyncTailLogEntries(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->AsyncTailLogEntries(cq, std::move(context));
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  SetMetadata(*context, *options);
+  return child_->AsyncTailLogEntries(cq, std::move(context),
+                                     std::move(options));
 }
 
 future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>

@@ -19,6 +19,7 @@
 #include "google/cloud/monitoring/v3/internal/alert_policy_auth_decorator.h"
 #include <google/monitoring/v3/alert_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,46 +33,46 @@ AlertPolicyServiceAuth::AlertPolicyServiceAuth(
 
 StatusOr<google::monitoring::v3::ListAlertPoliciesResponse>
 AlertPolicyServiceAuth::ListAlertPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::ListAlertPoliciesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListAlertPolicies(context, request);
+  return child_->ListAlertPolicies(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceAuth::GetAlertPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::GetAlertPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetAlertPolicy(context, request);
+  return child_->GetAlertPolicy(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceAuth::CreateAlertPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::CreateAlertPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateAlertPolicy(context, request);
+  return child_->CreateAlertPolicy(context, options, request);
 }
 
 Status AlertPolicyServiceAuth::DeleteAlertPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::DeleteAlertPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteAlertPolicy(context, request);
+  return child_->DeleteAlertPolicy(context, options, request);
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceAuth::UpdateAlertPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::UpdateAlertPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateAlertPolicy(context, request);
+  return child_->UpdateAlertPolicy(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

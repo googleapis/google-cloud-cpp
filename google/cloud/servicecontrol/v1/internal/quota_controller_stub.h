@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V1_INTERNAL_QUOTA_CONTROLLER_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICECONTROL_V1_INTERNAL_QUOTA_CONTROLLER_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/api/servicecontrol/v1/quota_controller.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,7 +37,7 @@ class QuotaControllerStub {
 
   virtual StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
   AllocateQuota(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::api::servicecontrol::v1::AllocateQuotaRequest const& request) = 0;
 };
 
@@ -48,7 +50,7 @@ class DefaultQuotaControllerStub : public QuotaControllerStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
-  AllocateQuota(grpc::ClientContext& context,
+  AllocateQuota(grpc::ClientContext& context, Options const& options,
                 google::api::servicecontrol::v1::AllocateQuotaRequest const&
                     request) override;
 

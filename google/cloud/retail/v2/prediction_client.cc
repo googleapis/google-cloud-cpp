@@ -18,6 +18,7 @@
 
 #include "google/cloud/retail/v2/prediction_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

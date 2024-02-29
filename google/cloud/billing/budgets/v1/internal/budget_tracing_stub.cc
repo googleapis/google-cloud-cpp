@@ -18,6 +18,7 @@
 
 #include "google/cloud/billing/budgets/v1/internal/budget_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,60 +33,61 @@ BudgetServiceTracingStub::BudgetServiceTracingStub(
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceTracingStub::CreateBudget(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.billing.budgets.v1.BudgetService", "CreateBudget");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateBudget(context, request));
+                           child_->CreateBudget(context, options, request));
 }
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceTracingStub::UpdateBudget(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.billing.budgets.v1.BudgetService", "UpdateBudget");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateBudget(context, request));
+                           child_->UpdateBudget(context, options, request));
 }
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceTracingStub::GetBudget(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::budgets::v1::GetBudgetRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.billing.budgets.v1.BudgetService", "GetBudget");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetBudget(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetBudget(context, options, request));
 }
 
 StatusOr<google::cloud::billing::budgets::v1::ListBudgetsResponse>
 BudgetServiceTracingStub::ListBudgets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::budgets::v1::ListBudgetsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.billing.budgets.v1.BudgetService", "ListBudgets");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListBudgets(context, request));
+                           child_->ListBudgets(context, options, request));
 }
 
 Status BudgetServiceTracingStub::DeleteBudget(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.billing.budgets.v1.BudgetService", "DeleteBudget");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->DeleteBudget(context, request));
+                           child_->DeleteBudget(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_SERVICE_MONITORING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_V3_INTERNAL_SERVICE_MONITORING_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/monitoring/v3/service_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -34,51 +36,51 @@ class ServiceMonitoringServiceStub {
   virtual ~ServiceMonitoringServiceStub() = 0;
 
   virtual StatusOr<google::monitoring::v3::Service> CreateService(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::CreateServiceRequest const& request) = 0;
 
   virtual StatusOr<google::monitoring::v3::Service> GetService(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::GetServiceRequest const& request) = 0;
 
   virtual StatusOr<google::monitoring::v3::ListServicesResponse> ListServices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListServicesRequest const& request) = 0;
 
   virtual StatusOr<google::monitoring::v3::Service> UpdateService(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::UpdateServiceRequest const& request) = 0;
 
   virtual Status DeleteService(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::DeleteServiceRequest const& request) = 0;
 
   virtual StatusOr<google::monitoring::v3::ServiceLevelObjective>
   CreateServiceLevelObjective(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::CreateServiceLevelObjectiveRequest const&
           request) = 0;
 
   virtual StatusOr<google::monitoring::v3::ServiceLevelObjective>
   GetServiceLevelObjective(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::GetServiceLevelObjectiveRequest const&
           request) = 0;
 
   virtual StatusOr<google::monitoring::v3::ListServiceLevelObjectivesResponse>
   ListServiceLevelObjectives(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListServiceLevelObjectivesRequest const&
           request) = 0;
 
   virtual StatusOr<google::monitoring::v3::ServiceLevelObjective>
   UpdateServiceLevelObjective(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::UpdateServiceLevelObjectiveRequest const&
           request) = 0;
 
   virtual Status DeleteServiceLevelObjective(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::DeleteServiceLevelObjectiveRequest const&
           request) = 0;
 };
@@ -93,51 +95,51 @@ class DefaultServiceMonitoringServiceStub
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::monitoring::v3::Service> CreateService(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::CreateServiceRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Service> GetService(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::GetServiceRequest const& request) override;
 
   StatusOr<google::monitoring::v3::ListServicesResponse> ListServices(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListServicesRequest const& request) override;
 
   StatusOr<google::monitoring::v3::Service> UpdateService(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::UpdateServiceRequest const& request) override;
 
   Status DeleteService(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::DeleteServiceRequest const& request) override;
 
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   CreateServiceLevelObjective(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request)
       override;
 
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   GetServiceLevelObjective(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::GetServiceLevelObjectiveRequest const& request)
       override;
 
   StatusOr<google::monitoring::v3::ListServiceLevelObjectivesResponse>
   ListServiceLevelObjectives(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::ListServiceLevelObjectivesRequest const& request)
       override;
 
   StatusOr<google::monitoring::v3::ServiceLevelObjective>
   UpdateServiceLevelObjective(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request)
       override;
 
   Status DeleteServiceLevelObjective(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request)
       override;
 

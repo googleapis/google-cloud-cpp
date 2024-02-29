@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/storagetransfer/v1/transfer.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,215 +37,222 @@ StorageTransferServiceLogging::StorageTransferServiceLogging(
 
 StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
 StorageTransferServiceLogging::GetGoogleServiceAccount(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
                  request) {
-        return child_->GetGoogleServiceAccount(context, request);
+        return child_->GetGoogleServiceAccount(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::storagetransfer::v1::TransferJob>
 StorageTransferServiceLogging::CreateTransferJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::CreateTransferJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storagetransfer::v1::CreateTransferJobRequest const&
                  request) {
-        return child_->CreateTransferJob(context, request);
+        return child_->CreateTransferJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::storagetransfer::v1::TransferJob>
 StorageTransferServiceLogging::UpdateTransferJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::UpdateTransferJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storagetransfer::v1::UpdateTransferJobRequest const&
                  request) {
-        return child_->UpdateTransferJob(context, request);
+        return child_->UpdateTransferJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::storagetransfer::v1::TransferJob>
 StorageTransferServiceLogging::GetTransferJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::GetTransferJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::storagetransfer::v1::GetTransferJobRequest const& request) {
-        return child_->GetTransferJob(context, request);
+        return child_->GetTransferJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::storagetransfer::v1::ListTransferJobsResponse>
 StorageTransferServiceLogging::ListTransferJobs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::ListTransferJobsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::storagetransfer::v1::ListTransferJobsRequest const& request) {
-        return child_->ListTransferJobs(context, request);
+        return child_->ListTransferJobs(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status StorageTransferServiceLogging::PauseTransferOperation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::PauseTransferOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storagetransfer::v1::PauseTransferOperationRequest const&
                  request) {
-        return child_->PauseTransferOperation(context, request);
+        return child_->PauseTransferOperation(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status StorageTransferServiceLogging::ResumeTransferOperation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::ResumeTransferOperationRequest const&
         request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storagetransfer::v1::ResumeTransferOperationRequest const&
                  request) {
-        return child_->ResumeTransferOperation(context, request);
+        return child_->ResumeTransferOperation(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 StorageTransferServiceLogging::AsyncRunTransferJob(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storagetransfer::v1::RunTransferJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::storagetransfer::v1::RunTransferJobRequest const& request) {
-        return child_->AsyncRunTransferJob(cq, std::move(context), options,
-                                           request);
+        return child_->AsyncRunTransferJob(cq, std::move(context),
+                                           std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 Status StorageTransferServiceLogging::DeleteTransferJob(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::DeleteTransferJobRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storagetransfer::v1::DeleteTransferJobRequest const&
                  request) {
-        return child_->DeleteTransferJob(context, request);
+        return child_->DeleteTransferJob(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
 StorageTransferServiceLogging::CreateAgentPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::CreateAgentPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::storagetransfer::v1::CreateAgentPoolRequest const& request) {
-        return child_->CreateAgentPool(context, request);
+        return child_->CreateAgentPool(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
 StorageTransferServiceLogging::UpdateAgentPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::UpdateAgentPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::storagetransfer::v1::UpdateAgentPoolRequest const& request) {
-        return child_->UpdateAgentPool(context, request);
+        return child_->UpdateAgentPool(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::storagetransfer::v1::AgentPool>
 StorageTransferServiceLogging::GetAgentPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::GetAgentPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storagetransfer::v1::GetAgentPoolRequest const& request) {
-        return child_->GetAgentPool(context, request);
+        return child_->GetAgentPool(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::storagetransfer::v1::ListAgentPoolsResponse>
 StorageTransferServiceLogging::ListAgentPools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::ListAgentPoolsRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::storagetransfer::v1::ListAgentPoolsRequest const& request) {
-        return child_->ListAgentPools(context, request);
+        return child_->ListAgentPools(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status StorageTransferServiceLogging::DeleteAgentPool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::storagetransfer::v1::DeleteAgentPoolRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::storagetransfer::v1::DeleteAgentPoolRequest const& request) {
-        return child_->DeleteAgentPool(context, request);
+        return child_->DeleteAgentPool(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 StorageTransferServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(cq, std::move(context), options,
-                                         request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<Status> StorageTransferServiceLogging::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
-             Options const& options,
+             google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(cq, std::move(context), options,
-                                            request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
-      cq, std::move(context), options, request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

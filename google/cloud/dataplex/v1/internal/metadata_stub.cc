@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/dataplex/v1/metadata.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ MetadataServiceStub::~MetadataServiceStub() = default;
 
 StatusOr<google::cloud::dataplex::v1::Entity>
 DefaultMetadataServiceStub::CreateEntity(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::CreateEntityRequest const& request) {
   google::cloud::dataplex::v1::Entity response;
   auto status = grpc_stub_->CreateEntity(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultMetadataServiceStub::CreateEntity(
 
 StatusOr<google::cloud::dataplex::v1::Entity>
 DefaultMetadataServiceStub::UpdateEntity(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::UpdateEntityRequest const& request) {
   google::cloud::dataplex::v1::Entity response;
   auto status = grpc_stub_->UpdateEntity(&context, request, &response);
@@ -54,7 +55,7 @@ DefaultMetadataServiceStub::UpdateEntity(
 }
 
 Status DefaultMetadataServiceStub::DeleteEntity(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::DeleteEntityRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteEntity(&context, request, &response);
@@ -66,7 +67,7 @@ Status DefaultMetadataServiceStub::DeleteEntity(
 
 StatusOr<google::cloud::dataplex::v1::Entity>
 DefaultMetadataServiceStub::GetEntity(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::GetEntityRequest const& request) {
   google::cloud::dataplex::v1::Entity response;
   auto status = grpc_stub_->GetEntity(&context, request, &response);
@@ -78,7 +79,7 @@ DefaultMetadataServiceStub::GetEntity(
 
 StatusOr<google::cloud::dataplex::v1::ListEntitiesResponse>
 DefaultMetadataServiceStub::ListEntities(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::ListEntitiesRequest const& request) {
   google::cloud::dataplex::v1::ListEntitiesResponse response;
   auto status = grpc_stub_->ListEntities(&context, request, &response);
@@ -90,7 +91,7 @@ DefaultMetadataServiceStub::ListEntities(
 
 StatusOr<google::cloud::dataplex::v1::Partition>
 DefaultMetadataServiceStub::CreatePartition(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::CreatePartitionRequest const& request) {
   google::cloud::dataplex::v1::Partition response;
   auto status = grpc_stub_->CreatePartition(&context, request, &response);
@@ -101,7 +102,7 @@ DefaultMetadataServiceStub::CreatePartition(
 }
 
 Status DefaultMetadataServiceStub::DeletePartition(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::DeletePartitionRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeletePartition(&context, request, &response);
@@ -113,7 +114,7 @@ Status DefaultMetadataServiceStub::DeletePartition(
 
 StatusOr<google::cloud::dataplex::v1::Partition>
 DefaultMetadataServiceStub::GetPartition(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::GetPartitionRequest const& request) {
   google::cloud::dataplex::v1::Partition response;
   auto status = grpc_stub_->GetPartition(&context, request, &response);
@@ -125,7 +126,7 @@ DefaultMetadataServiceStub::GetPartition(
 
 StatusOr<google::cloud::dataplex::v1::ListPartitionsResponse>
 DefaultMetadataServiceStub::ListPartitions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::dataplex::v1::ListPartitionsRequest const& request) {
   google::cloud::dataplex::v1::ListPartitionsResponse response;
   auto status = grpc_stub_->ListPartitions(&context, request, &response);

@@ -27,6 +27,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -291,7 +292,7 @@ class CloudBillingClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.billing.v1.BillingAccount]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L242}
-  /// [google.cloud.billing.v1.UpdateBillingAccountRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L391}
+  /// [google.cloud.billing.v1.UpdateBillingAccountRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L389}
   ///
   // clang-format on
   StatusOr<google::cloud::billing::v1::BillingAccount> UpdateBillingAccount(
@@ -328,7 +329,7 @@ class CloudBillingClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.billing.v1.BillingAccount]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L242}
-  /// [google.cloud.billing.v1.UpdateBillingAccountRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L391}
+  /// [google.cloud.billing.v1.UpdateBillingAccountRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L389}
   ///
   // clang-format on
   StatusOr<google::cloud::billing::v1::BillingAccount> UpdateBillingAccount(
@@ -402,8 +403,6 @@ class CloudBillingClient {
   ///  account.
   /// @param parent  Optional. The parent to create a billing account from.
   ///  Format:
-  ///    - `organizations/{organization_id}`, for example,
-  ///      `organizations/12345678`
   ///    - `billingAccounts/{billing_account_id}`, for example,
   ///       `billingAccounts/012345-567890-ABCDEF`
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -504,7 +503,7 @@ class CloudBillingClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.billing.v1.ListProjectBillingInfoRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L410}
+  /// [google.cloud.billing.v1.ListProjectBillingInfoRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L408}
   /// [google.cloud.billing.v1.ProjectBillingInfo]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L293}
   ///
   // clang-format on
@@ -546,7 +545,7 @@ class CloudBillingClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.billing.v1.ListProjectBillingInfoRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L410}
+  /// [google.cloud.billing.v1.ListProjectBillingInfoRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L408}
   /// [google.cloud.billing.v1.ProjectBillingInfo]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L293}
   ///
   // clang-format on
@@ -578,7 +577,7 @@ class CloudBillingClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.billing.v1.GetProjectBillingInfoRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L444}
+  /// [google.cloud.billing.v1.GetProjectBillingInfoRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L442}
   /// [google.cloud.billing.v1.ProjectBillingInfo]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L293}
   ///
   // clang-format on
@@ -612,7 +611,7 @@ class CloudBillingClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.billing.v1.GetProjectBillingInfoRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L444}
+  /// [google.cloud.billing.v1.GetProjectBillingInfoRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L442}
   /// [google.cloud.billing.v1.ProjectBillingInfo]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L293}
   ///
   // clang-format on
@@ -676,7 +675,7 @@ class CloudBillingClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.billing.v1.ProjectBillingInfo]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L293}
-  /// [google.cloud.billing.v1.UpdateProjectBillingInfoRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L456}
+  /// [google.cloud.billing.v1.UpdateProjectBillingInfoRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L454}
   ///
   // clang-format on
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
@@ -740,7 +739,7 @@ class CloudBillingClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.billing.v1.ProjectBillingInfo]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L293}
-  /// [google.cloud.billing.v1.UpdateProjectBillingInfoRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L456}
+  /// [google.cloud.billing.v1.UpdateProjectBillingInfoRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L454}
   ///
   // clang-format on
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
@@ -994,7 +993,7 @@ class CloudBillingClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.billing.v1.BillingAccount]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L242}
-  /// [google.cloud.billing.v1.MoveBillingAccountRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L469}
+  /// [google.cloud.billing.v1.MoveBillingAccountRequest]: @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L467}
   ///
   // clang-format on
   StatusOr<google::cloud::billing::v1::BillingAccount> MoveBillingAccount(

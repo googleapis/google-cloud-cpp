@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/contentwarehouse/v1/document_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ DocumentServiceStub::~DocumentServiceStub() = default;
 
 StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>
 DefaultDocumentServiceStub::CreateDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request) {
   google::cloud::contentwarehouse::v1::CreateDocumentResponse response;
   auto status = grpc_stub_->CreateDocument(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultDocumentServiceStub::CreateDocument(
 
 StatusOr<google::cloud::contentwarehouse::v1::Document>
 DefaultDocumentServiceStub::GetDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::GetDocumentRequest const& request) {
   google::cloud::contentwarehouse::v1::Document response;
   auto status = grpc_stub_->GetDocument(&context, request, &response);
@@ -55,7 +56,7 @@ DefaultDocumentServiceStub::GetDocument(
 
 StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>
 DefaultDocumentServiceStub::UpdateDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request) {
   google::cloud::contentwarehouse::v1::UpdateDocumentResponse response;
   auto status = grpc_stub_->UpdateDocument(&context, request, &response);
@@ -66,7 +67,7 @@ DefaultDocumentServiceStub::UpdateDocument(
 }
 
 Status DefaultDocumentServiceStub::DeleteDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteDocument(&context, request, &response);
@@ -78,7 +79,7 @@ Status DefaultDocumentServiceStub::DeleteDocument(
 
 StatusOr<google::cloud::contentwarehouse::v1::SearchDocumentsResponse>
 DefaultDocumentServiceStub::SearchDocuments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::SearchDocumentsRequest const&
         request) {
   google::cloud::contentwarehouse::v1::SearchDocumentsResponse response;
@@ -91,7 +92,7 @@ DefaultDocumentServiceStub::SearchDocuments(
 
 StatusOr<google::cloud::contentwarehouse::v1::Document>
 DefaultDocumentServiceStub::LockDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::LockDocumentRequest const& request) {
   google::cloud::contentwarehouse::v1::Document response;
   auto status = grpc_stub_->LockDocument(&context, request, &response);
@@ -103,7 +104,7 @@ DefaultDocumentServiceStub::LockDocument(
 
 StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse>
 DefaultDocumentServiceStub::FetchAcl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::FetchAclRequest const& request) {
   google::cloud::contentwarehouse::v1::FetchAclResponse response;
   auto status = grpc_stub_->FetchAcl(&context, request, &response);
@@ -115,7 +116,7 @@ DefaultDocumentServiceStub::FetchAcl(
 
 StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse>
 DefaultDocumentServiceStub::SetAcl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::contentwarehouse::v1::SetAclRequest const& request) {
   google::cloud::contentwarehouse::v1::SetAclResponse response;
   auto status = grpc_stub_->SetAcl(&context, request, &response);

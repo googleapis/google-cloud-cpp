@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/region_operations/v1/region_operations_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -18,6 +18,7 @@
 
 #include "google/cloud/gkemulticloud/v1/aws_clusters_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

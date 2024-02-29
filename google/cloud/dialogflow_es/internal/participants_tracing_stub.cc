@@ -19,6 +19,7 @@
 #include "google/cloud/dialogflow_es/internal/participants_tracing_stub.h"
 #include "google/cloud/internal/async_read_write_stream_tracing.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,74 +34,76 @@ ParticipantsTracingStub::ParticipantsTracingStub(
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsTracingStub::CreateParticipant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::CreateParticipantRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
                                      "CreateParticipant");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->CreateParticipant(context, request));
+  return internal::EndSpan(
+      context, *span, child_->CreateParticipant(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsTracingStub::GetParticipant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::GetParticipantRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
                                      "GetParticipant");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetParticipant(context, request));
+                           child_->GetParticipant(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ListParticipantsResponse>
 ParticipantsTracingStub::ListParticipants(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::ListParticipantsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
                                      "ListParticipants");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListParticipants(context, request));
+                           child_->ListParticipants(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsTracingStub::UpdateParticipant(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::UpdateParticipantRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
                                      "UpdateParticipant");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->UpdateParticipant(context, request));
+  return internal::EndSpan(
+      context, *span, child_->UpdateParticipant(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
 ParticipantsTracingStub::AnalyzeContent(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::AnalyzeContentRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
                                      "AnalyzeContent");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->AnalyzeContent(context, request));
+                           child_->AnalyzeContent(context, options, request));
 }
 
 std::unique_ptr<AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
     google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
 ParticipantsTracingStub::AsyncStreamingAnalyzeContent(
-    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context) {
+    CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
                                      "StreamingAnalyzeContent");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto stream = child_->AsyncStreamingAnalyzeContent(cq, context);
+  auto stream =
+      child_->AsyncStreamingAnalyzeContent(cq, context, std::move(options));
   return std::make_unique<internal::AsyncStreamingReadWriteRpcTracing<
       google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
       google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>(
@@ -109,38 +112,38 @@ ParticipantsTracingStub::AsyncStreamingAnalyzeContent(
 
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 ParticipantsTracingStub::SuggestArticles(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::SuggestArticlesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
                                      "SuggestArticles");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->SuggestArticles(context, request));
+                           child_->SuggestArticles(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
 ParticipantsTracingStub::SuggestFaqAnswers(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
                                      "SuggestFaqAnswers");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->SuggestFaqAnswers(context, request));
+  return internal::EndSpan(
+      context, *span, child_->SuggestFaqAnswers(context, options, request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
 ParticipantsTracingStub::SuggestSmartReplies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.dialogflow.v2.Participants",
                                      "SuggestSmartReplies");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->SuggestSmartReplies(context, request));
+  return internal::EndSpan(
+      context, *span, child_->SuggestSmartReplies(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

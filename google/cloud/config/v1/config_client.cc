@@ -18,6 +18,7 @@
 
 #include "google/cloud/config/v1/config_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

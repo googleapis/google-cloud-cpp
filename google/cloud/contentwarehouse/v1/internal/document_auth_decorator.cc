@@ -19,6 +19,7 @@
 #include "google/cloud/contentwarehouse/v1/internal/document_auth_decorator.h"
 #include <google/cloud/contentwarehouse/v1/document_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,74 +33,74 @@ DocumentServiceAuth::DocumentServiceAuth(
 
 StatusOr<google::cloud::contentwarehouse::v1::CreateDocumentResponse>
 DocumentServiceAuth::CreateDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::CreateDocumentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateDocument(context, request);
+  return child_->CreateDocument(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::Document>
 DocumentServiceAuth::GetDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::GetDocumentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetDocument(context, request);
+  return child_->GetDocument(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::UpdateDocumentResponse>
 DocumentServiceAuth::UpdateDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::UpdateDocumentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateDocument(context, request);
+  return child_->UpdateDocument(context, options, request);
 }
 
 Status DocumentServiceAuth::DeleteDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::DeleteDocumentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteDocument(context, request);
+  return child_->DeleteDocument(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SearchDocumentsResponse>
 DocumentServiceAuth::SearchDocuments(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::SearchDocumentsRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SearchDocuments(context, request);
+  return child_->SearchDocuments(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::Document>
 DocumentServiceAuth::LockDocument(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::LockDocumentRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->LockDocument(context, request);
+  return child_->LockDocument(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::FetchAclResponse>
 DocumentServiceAuth::FetchAcl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::FetchAclRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->FetchAcl(context, request);
+  return child_->FetchAcl(context, options, request);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::SetAclResponse>
 DocumentServiceAuth::SetAcl(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::SetAclRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetAcl(context, request);
+  return child_->SetAcl(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

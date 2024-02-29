@@ -25,6 +25,7 @@
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/internal/streaming_read_rpc_logging.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -99,12 +100,12 @@ AgentEndpointServiceConnectionImpl::StartNextTask(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->StartNextTask(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::agentendpoint::v1::
                  StartNextTaskRequest const& request) {
-        return stub_->StartNextTask(context, request);
+        return stub_->StartNextTask(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
@@ -115,12 +116,12 @@ AgentEndpointServiceConnectionImpl::ReportTaskProgress(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ReportTaskProgress(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::agentendpoint::v1::
                  ReportTaskProgressRequest const& request) {
-        return stub_->ReportTaskProgress(context, request);
+        return stub_->ReportTaskProgress(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
@@ -131,12 +132,12 @@ AgentEndpointServiceConnectionImpl::ReportTaskComplete(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ReportTaskComplete(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::agentendpoint::v1::
                  ReportTaskCompleteRequest const& request) {
-        return stub_->ReportTaskComplete(context, request);
+        return stub_->ReportTaskComplete(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
@@ -147,12 +148,12 @@ AgentEndpointServiceConnectionImpl::RegisterAgent(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->RegisterAgent(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::agentendpoint::v1::
                  RegisterAgentRequest const& request) {
-        return stub_->RegisterAgent(context, request);
+        return stub_->RegisterAgent(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
@@ -163,12 +164,12 @@ AgentEndpointServiceConnectionImpl::ReportInventory(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ReportInventory(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::osconfig::agentendpoint::v1::
                  ReportInventoryRequest const& request) {
-        return stub_->ReportInventory(context, request);
+        return stub_->ReportInventory(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -30,6 +30,7 @@
 #include "google/cloud/options.h"
 #include <google/cloud/dialogflow/cx/v3/entity_type.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -44,7 +45,9 @@ std::shared_ptr<EntityTypesStub> CreateDefaultEntityTypesStub(
   auto service_grpc_stub =
       google::cloud::dialogflow::cx::v3::EntityTypes::NewStub(channel);
   std::shared_ptr<EntityTypesStub> stub =
-      std::make_shared<DefaultEntityTypesStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultEntityTypesStub>(
+          std::move(service_grpc_stub),
+          google::longrunning::Operations::NewStub(channel));
 
   if (auth->RequiresConfigureContext()) {
     stub = std::make_shared<EntityTypesAuth>(std::move(auth), std::move(stub));

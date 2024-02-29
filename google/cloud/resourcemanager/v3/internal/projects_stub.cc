@@ -22,6 +22,7 @@
 #include <google/cloud/resourcemanager/v3/projects.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ ProjectsStub::~ProjectsStub() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::Project>
 DefaultProjectsStub::GetProject(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::GetProjectRequest const& request) {
   google::cloud::resourcemanager::v3::Project response;
   auto status = grpc_stub_->GetProject(&context, request, &response);
@@ -44,7 +45,7 @@ DefaultProjectsStub::GetProject(
 
 StatusOr<google::cloud::resourcemanager::v3::ListProjectsResponse>
 DefaultProjectsStub::ListProjects(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::ListProjectsRequest const& request) {
   google::cloud::resourcemanager::v3::ListProjectsResponse response;
   auto status = grpc_stub_->ListProjects(&context, request, &response);
@@ -56,7 +57,7 @@ DefaultProjectsStub::ListProjects(
 
 StatusOr<google::cloud::resourcemanager::v3::SearchProjectsResponse>
 DefaultProjectsStub::SearchProjects(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::resourcemanager::v3::SearchProjectsRequest const& request) {
   google::cloud::resourcemanager::v3::SearchProjectsResponse response;
   auto status = grpc_stub_->SearchProjects(&context, request, &response);
@@ -69,7 +70,8 @@ DefaultProjectsStub::SearchProjects(
 future<StatusOr<google::longrunning::Operation>>
 DefaultProjectsStub::AsyncCreateProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::resourcemanager::v3::CreateProjectRequest,
@@ -87,7 +89,8 @@ DefaultProjectsStub::AsyncCreateProject(
 future<StatusOr<google::longrunning::Operation>>
 DefaultProjectsStub::AsyncUpdateProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::resourcemanager::v3::UpdateProjectRequest,
@@ -105,7 +108,8 @@ DefaultProjectsStub::AsyncUpdateProject(
 future<StatusOr<google::longrunning::Operation>>
 DefaultProjectsStub::AsyncMoveProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::resourcemanager::v3::MoveProjectRequest,
@@ -123,7 +127,8 @@ DefaultProjectsStub::AsyncMoveProject(
 future<StatusOr<google::longrunning::Operation>>
 DefaultProjectsStub::AsyncDeleteProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::resourcemanager::v3::DeleteProjectRequest,
@@ -141,7 +146,8 @@ DefaultProjectsStub::AsyncDeleteProject(
 future<StatusOr<google::longrunning::Operation>>
 DefaultProjectsStub::AsyncUndeleteProject(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::resourcemanager::v3::UndeleteProjectRequest,
@@ -157,7 +163,7 @@ DefaultProjectsStub::AsyncUndeleteProject(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultProjectsStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -168,7 +174,7 @@ StatusOr<google::iam::v1::Policy> DefaultProjectsStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultProjectsStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -180,7 +186,7 @@ StatusOr<google::iam::v1::Policy> DefaultProjectsStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultProjectsStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);
@@ -193,7 +199,8 @@ DefaultProjectsStub::TestIamPermissions(
 future<StatusOr<google::longrunning::Operation>>
 DefaultProjectsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -208,7 +215,8 @@ DefaultProjectsStub::AsyncGetOperation(
 
 future<Status> DefaultProjectsStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

@@ -133,20 +133,21 @@ TEST(SubscriberConnectionTest, MakeSubscriberConnectionSetupsMetadata) {
 
   EXPECT_CALL(*mock, AsyncStreamingPull)
       .Times(AtLeast(1))
-      .WillRepeatedly(
-          [&](google::cloud::CompletionQueue const& cq, auto context) {
-            ValidateMetadataFixture fixture;
-            auto metadata = fixture.GetMetadata(*context);
-            EXPECT_THAT(
-                metadata,
-                UnorderedElementsAre(
-                    Pair("x-goog-api-client",
-                         google::cloud::internal::HandCraftedLibClientHeader()),
-                    Pair("x-goog-request-params",
-                         "subscription=" +
-                             internal::UrlEncode(subscription.FullName()))));
-            return FakeAsyncStreamingPull(cq, std::move(context));
-          });
+      .WillRepeatedly([&](google::cloud::CompletionQueue const& cq,
+                          auto context, auto options) {
+        ValidateMetadataFixture fixture;
+        auto metadata = fixture.GetMetadata(*context);
+        EXPECT_THAT(
+            metadata,
+            UnorderedElementsAre(
+                Pair("x-goog-api-client",
+                     google::cloud::internal::HandCraftedLibClientHeader()),
+                Pair("x-goog-request-params",
+                     "subscription=" +
+                         internal::UrlEncode(subscription.FullName()))));
+        return FakeAsyncStreamingPull(cq, std::move(context),
+                                      std::move(options));
+      });
 
   auto subscriber = MakeTestSubscriberConnection(subscription, mock);
   std::atomic_flag received_one{false};
@@ -195,10 +196,11 @@ TEST(MakeSubscriberConnectionTest, TracingEnabledForUnaryPull) {
         return make_ready_future(
             Status{StatusCode::kUnknown, "test-only-unknown"});
       });
-  EXPECT_CALL(*mock, Pull(_, AllOf(Property(&PullRequest::max_messages, 1),
-                                   Property(&PullRequest::subscription,
-                                            subscription.FullName()))))
-      .WillOnce([&](grpc::ClientContext& context,
+  EXPECT_CALL(*mock, Pull(_, _,
+                          AllOf(Property(&PullRequest::max_messages, 1),
+                                Property(&PullRequest::subscription,
+                                         subscription.FullName()))))
+      .WillOnce([&](grpc::ClientContext& context, Options const&,
                     google::pubsub::v1::PullRequest const&) {
         ValidatePropagator(context);
         google::pubsub::v1::PullResponse response;
@@ -242,18 +244,19 @@ TEST(MakeSubscriberConnectionTest, TracingDisabledForUnaryPull) {
         return make_ready_future(
             Status{StatusCode::kUnknown, "test-only-unknown"});
       });
-  EXPECT_CALL(*mock, Pull(_, AllOf(Property(&PullRequest::max_messages, 1),
-                                   Property(&PullRequest::subscription,
-                                            subscription.FullName()))))
-      .WillOnce(
-          [&](grpc::ClientContext&, google::pubsub::v1::PullRequest const&) {
-            google::pubsub::v1::PullResponse response;
-            auto& message = *response.add_received_messages();
-            message.set_delivery_attempt(42);
-            message.set_ack_id("test-ack-id-0");
-            message.mutable_message()->set_data("test-data-0");
-            return response;
-          });
+  EXPECT_CALL(*mock, Pull(_, _,
+                          AllOf(Property(&PullRequest::max_messages, 1),
+                                Property(&PullRequest::subscription,
+                                         subscription.FullName()))))
+      .WillOnce([&](grpc::ClientContext&, Options const&,
+                    google::pubsub::v1::PullRequest const&) {
+        google::pubsub::v1::PullResponse response;
+        auto& message = *response.add_received_messages();
+        message.set_delivery_attempt(42);
+        message.set_ack_id("test-ack-id-0");
+        message.mutable_message()->set_data("test-data-0");
+        return response;
+      });
 
   auto subscriber = MakeTestSubscriberConnection(subscription, mock,
                                                  DisableTracing(Options{}));

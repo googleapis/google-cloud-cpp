@@ -26,6 +26,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -85,34 +86,38 @@ ConsumerProcurementServiceConnectionImpl::PlaceOrder(
     google::cloud::commerce::consumer::procurement::v1::PlaceOrderRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->PlaceOrder(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::commerce::consumer::procurement::v1::Order>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::cloud::commerce::consumer::procurement::v1::
                          PlaceOrderRequest const& request) {
-        return stub->AsyncPlaceOrder(cq, std::move(context), options, request);
+        return stub->AsyncPlaceOrder(cq, std::move(context), std::move(options),
+                                     request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::commerce::consumer::procurement::v1::Order>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->PlaceOrder(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -124,12 +129,12 @@ ConsumerProcurementServiceConnectionImpl::GetOrder(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetOrder(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::commerce::consumer::procurement::v1::
                  GetOrderRequest const& request) {
-        return stub_->GetOrder(context, request);
+        return stub_->GetOrder(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::commerce::consumer::procurement::v1::Order>
@@ -142,22 +147,23 @@ ConsumerProcurementServiceConnectionImpl::ListOrders(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::commerce::consumer::procurement::v1::Order>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<commerce_consumer_procurement_v1::
                                    ConsumerProcurementServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::commerce::consumer::procurement::v1::
               ListOrdersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::commerce::consumer::procurement::v1::
                        ListOrdersRequest const& request) {
-              return stub->ListOrders(context, request);
+              return stub->ListOrders(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::commerce::consumer::procurement::v1::ListOrdersResponse
              r) {

@@ -23,6 +23,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -74,10 +75,12 @@ PolicyTagManagerSerializationConnectionImpl::ReplaceTaxonomy(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ReplaceTaxonomy(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const&
-                 request) { return stub_->ReplaceTaxonomy(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->ReplaceTaxonomy(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
@@ -87,10 +90,12 @@ PolicyTagManagerSerializationConnectionImpl::ImportTaxonomies(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ImportTaxonomies(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::ImportTaxonomiesRequest const&
-                 request) { return stub_->ImportTaxonomies(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->ImportTaxonomies(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
@@ -100,10 +105,12 @@ PolicyTagManagerSerializationConnectionImpl::ExportTaxonomies(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ExportTaxonomies(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::datacatalog::v1::ExportTaxonomiesRequest const&
-                 request) { return stub_->ExportTaxonomies(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->ExportTaxonomies(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

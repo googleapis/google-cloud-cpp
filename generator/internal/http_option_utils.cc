@@ -14,6 +14,7 @@
 
 #include "generator/internal/http_option_utils.h"
 #include "generator/internal/http_annotation_parser.h"
+#include "generator/internal/longrunning.h"
 #include "generator/internal/printer.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
@@ -65,12 +66,14 @@ struct RestPathVisitor {
   void operator()(PathTemplate::MatchRecursive const&) { ; }
   void operator()(std::string const& s) {
     path.emplace_back([piece = s, api = api_version](
-                          google::protobuf::MethodDescriptor const&) {
-      if (piece == api) {
+                          google::protobuf::MethodDescriptor const& method) {
+      if (piece != api) return absl::StrFormat("\"%s\"", piece);
+      if (IsLongrunningOperation(method)) {
         return absl::StrFormat(
-            "rest_internal::DetermineApiVersion(\"%s\", options)", api);
+            "rest_internal::DetermineApiVersion(\"%s\", *options)", api);
       }
-      return absl::StrFormat("\"%s\"", piece);
+      return absl::StrFormat(
+          "rest_internal::DetermineApiVersion(\"%s\", options)", api);
     });
   }
   void operator()(PathTemplate::Variable const& v) {
@@ -151,8 +154,9 @@ void SetHttpDerivedMethodVars(
         method_vars["method_rest_path"] = absl::StrCat(
             "absl::StrCat(\"", info.url_path.substr(0, start), "/\", ",
             absl::StrFormat(
-                R"""(rest_internal::DetermineApiVersion("%s", options), "/)""",
-                info.api_version),
+                R"""(rest_internal::DetermineApiVersion("%s", %s), "/)""",
+                info.api_version,
+                IsLongrunningOperation(method) ? "*options" : "options"),
             info.url_path.substr(start + needle.length()), "\")");
       } else {
         method_vars["method_rest_path"] =

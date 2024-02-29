@@ -18,6 +18,7 @@
 
 #include "google/cloud/bigquery/migration/v2/migration_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

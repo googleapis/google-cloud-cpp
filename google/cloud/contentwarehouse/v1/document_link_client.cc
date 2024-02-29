@@ -18,6 +18,7 @@
 
 #include "google/cloud/contentwarehouse/v1/document_link_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

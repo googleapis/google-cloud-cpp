@@ -18,6 +18,7 @@
 
 #include "google/cloud/speech/v1/adaptation_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

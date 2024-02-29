@@ -113,7 +113,7 @@ BigtableMetadata::SampleRowKeys(
 }
 
 StatusOr<google::bigtable::v2::MutateRowResponse> BigtableMetadata::MutateRow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::MutateRowRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -137,12 +137,11 @@ StatusOr<google::bigtable::v2::MutateRowResponse> BigtableMetadata::MutateRow(
   }
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->MutateRow(context, request);
+  return child_->MutateRow(context, options, request);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -181,7 +180,7 @@ BigtableMetadata::MutateRows(
 
 StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
 BigtableMetadata::CheckAndMutateRow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::CheckAndMutateRowRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -205,17 +204,16 @@ BigtableMetadata::CheckAndMutateRow(
   }
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->CheckAndMutateRow(context, request);
+  return child_->CheckAndMutateRow(context, options, request);
 }
 
 StatusOr<google::bigtable::v2::PingAndWarmResponse>
 BigtableMetadata::PingAndWarm(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::PingAndWarmRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -239,17 +237,16 @@ BigtableMetadata::PingAndWarm(
   }
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->PingAndWarm(context, request);
+  return child_->PingAndWarm(context, options, request);
 }
 
 StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>
 BigtableMetadata::ReadModifyWriteRow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -273,12 +270,11 @@ BigtableMetadata::ReadModifyWriteRow(
   }
 
   if (params.empty()) {
-    SetMetadata(context, internal::CurrentOptions());
+    SetMetadata(context, options);
   } else {
-    SetMetadata(context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(context, options, absl::StrJoin(params, "&"));
   }
-  return child_->ReadModifyWriteRow(context, request);
+  return child_->ReadModifyWriteRow(context, options, request);
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
@@ -286,6 +282,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 BigtableMetadata::AsyncReadRows(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::ReadRowsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -309,12 +306,12 @@ BigtableMetadata::AsyncReadRows(
   }
 
   if (params.empty()) {
-    SetMetadata(*context, internal::CurrentOptions());
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncReadRows(cq, std::move(context), request);
+  return child_->AsyncReadRows(cq, std::move(context), std::move(options),
+                               request);
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
@@ -322,6 +319,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 BigtableMetadata::AsyncSampleRowKeys(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::SampleRowKeysRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -345,12 +343,12 @@ BigtableMetadata::AsyncSampleRowKeys(
   }
 
   if (params.empty()) {
-    SetMetadata(*context, internal::CurrentOptions());
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncSampleRowKeys(cq, std::move(context), request);
+  return child_->AsyncSampleRowKeys(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 future<StatusOr<google::bigtable::v2::MutateRowResponse>>
@@ -393,6 +391,7 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 BigtableMetadata::AsyncMutateRows(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::MutateRowsRequest const& request) {
   std::vector<std::string> params;
   params.reserve(2);
@@ -416,12 +415,12 @@ BigtableMetadata::AsyncMutateRows(
   }
 
   if (params.empty()) {
-    SetMetadata(*context, internal::CurrentOptions());
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, internal::CurrentOptions(),
-                absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncMutateRows(cq, std::move(context), request);
+  return child_->AsyncMutateRows(cq, std::move(context), std::move(options),
+                                 request);
 }
 
 future<StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>>

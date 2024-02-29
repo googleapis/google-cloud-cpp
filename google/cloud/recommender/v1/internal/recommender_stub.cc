@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/recommender/v1/recommender_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ RecommenderStub::~RecommenderStub() = default;
 
 StatusOr<google::cloud::recommender::v1::ListInsightsResponse>
 DefaultRecommenderStub::ListInsights(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recommender::v1::ListInsightsRequest const& request) {
   google::cloud::recommender::v1::ListInsightsResponse response;
   auto status = grpc_stub_->ListInsights(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultRecommenderStub::ListInsights(
 
 StatusOr<google::cloud::recommender::v1::Insight>
 DefaultRecommenderStub::GetInsight(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recommender::v1::GetInsightRequest const& request) {
   google::cloud::recommender::v1::Insight response;
   auto status = grpc_stub_->GetInsight(&context, request, &response);
@@ -55,7 +56,7 @@ DefaultRecommenderStub::GetInsight(
 
 StatusOr<google::cloud::recommender::v1::Insight>
 DefaultRecommenderStub::MarkInsightAccepted(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request) {
   google::cloud::recommender::v1::Insight response;
   auto status = grpc_stub_->MarkInsightAccepted(&context, request, &response);
@@ -67,7 +68,7 @@ DefaultRecommenderStub::MarkInsightAccepted(
 
 StatusOr<google::cloud::recommender::v1::ListRecommendationsResponse>
 DefaultRecommenderStub::ListRecommendations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recommender::v1::ListRecommendationsRequest const& request) {
   google::cloud::recommender::v1::ListRecommendationsResponse response;
   auto status = grpc_stub_->ListRecommendations(&context, request, &response);
@@ -79,7 +80,7 @@ DefaultRecommenderStub::ListRecommendations(
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 DefaultRecommenderStub::GetRecommendation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recommender::v1::GetRecommendationRequest const& request) {
   google::cloud::recommender::v1::Recommendation response;
   auto status = grpc_stub_->GetRecommendation(&context, request, &response);
@@ -91,7 +92,7 @@ DefaultRecommenderStub::GetRecommendation(
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 DefaultRecommenderStub::MarkRecommendationDismissed(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recommender::v1::MarkRecommendationDismissedRequest const&
         request) {
   google::cloud::recommender::v1::Recommendation response;
@@ -105,7 +106,7 @@ DefaultRecommenderStub::MarkRecommendationDismissed(
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 DefaultRecommenderStub::MarkRecommendationClaimed(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
         request) {
   google::cloud::recommender::v1::Recommendation response;
@@ -119,7 +120,7 @@ DefaultRecommenderStub::MarkRecommendationClaimed(
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 DefaultRecommenderStub::MarkRecommendationSucceeded(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&
         request) {
   google::cloud::recommender::v1::Recommendation response;
@@ -133,7 +134,7 @@ DefaultRecommenderStub::MarkRecommendationSucceeded(
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 DefaultRecommenderStub::MarkRecommendationFailed(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
         request) {
   google::cloud::recommender::v1::Recommendation response;
@@ -147,7 +148,7 @@ DefaultRecommenderStub::MarkRecommendationFailed(
 
 StatusOr<google::cloud::recommender::v1::RecommenderConfig>
 DefaultRecommenderStub::GetRecommenderConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recommender::v1::GetRecommenderConfigRequest const&
         request) {
   google::cloud::recommender::v1::RecommenderConfig response;
@@ -160,7 +161,7 @@ DefaultRecommenderStub::GetRecommenderConfig(
 
 StatusOr<google::cloud::recommender::v1::RecommenderConfig>
 DefaultRecommenderStub::UpdateRecommenderConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
         request) {
   google::cloud::recommender::v1::RecommenderConfig response;
@@ -174,7 +175,7 @@ DefaultRecommenderStub::UpdateRecommenderConfig(
 
 StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
 DefaultRecommenderStub::GetInsightTypeConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
         request) {
   google::cloud::recommender::v1::InsightTypeConfig response;
@@ -187,7 +188,7 @@ DefaultRecommenderStub::GetInsightTypeConfig(
 
 StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
 DefaultRecommenderStub::UpdateInsightTypeConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
         request) {
   google::cloud::recommender::v1::InsightTypeConfig response;

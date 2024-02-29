@@ -28,80 +28,80 @@ namespace testing {
 class MockStorageStub : public storage_internal::StorageStub {
  public:
   MOCK_METHOD(Status, DeleteBucket,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::DeleteBucketRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::Bucket>, GetBucket,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::GetBucketRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::Bucket>, CreateBucket,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::CreateBucketRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::ListBucketsResponse>, ListBuckets,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::ListBucketsRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::Bucket>, LockBucketRetentionPolicy,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::LockBucketRetentionPolicyRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::iam::v1::GetIamPolicyRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::iam::v1::SetIamPolicyRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
               TestIamPermissions,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::iam::v1::TestIamPermissionsRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::Bucket>, UpdateBucket,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::UpdateBucketRequest const&),
               (override));
   MOCK_METHOD(Status, DeleteNotificationConfig,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::DeleteNotificationConfigRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::NotificationConfig>,
               GetNotificationConfig,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::GetNotificationConfigRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::NotificationConfig>,
               CreateNotificationConfig,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::CreateNotificationConfigRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::ListNotificationConfigsResponse>,
               ListNotificationConfigs,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::ListNotificationConfigsRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::Object>, ComposeObject,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::ComposeObjectRequest const&),
               (override));
   MOCK_METHOD(Status, DeleteObject,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::DeleteObjectRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::Object>, RestoreObject,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::RestoreObjectRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::CancelResumableWriteResponse>,
               CancelResumableWrite,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::CancelResumableWriteRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::Object>, GetObject,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::GetObjectRequest const&),
               (override));
   MOCK_METHOD(std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -111,7 +111,7 @@ class MockStorageStub : public storage_internal::StorageStub {
                google::storage::v2::ReadObjectRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::Object>, UpdateObject,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::UpdateObjectRequest const&),
               (override));
   MOCK_METHOD((std::unique_ptr<google::cloud::internal::StreamingWriteRpc<
@@ -126,49 +126,50 @@ class MockStorageStub : public storage_internal::StorageStub {
                    google::storage::v2::BidiWriteObjectResponse>>),
               AsyncBidiWriteObject,
               (google::cloud::CompletionQueue const&,
-               std::shared_ptr<grpc::ClientContext>),
+               std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions),
               (override));
 
   MOCK_METHOD(StatusOr<google::storage::v2::ListObjectsResponse>, ListObjects,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::ListObjectsRequest const&));
   MOCK_METHOD(StatusOr<google::storage::v2::RewriteResponse>, RewriteObject,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::RewriteObjectRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::StartResumableWriteResponse>,
               StartResumableWrite,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::StartResumableWriteRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::QueryWriteStatusResponse>,
               QueryWriteStatus,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::QueryWriteStatusRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::ServiceAccount>, GetServiceAccount,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::GetServiceAccountRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::CreateHmacKeyResponse>,
               CreateHmacKey,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::CreateHmacKeyRequest const&),
               (override));
   MOCK_METHOD(Status, DeleteHmacKey,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::DeleteHmacKeyRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::HmacKeyMetadata>, GetHmacKey,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::GetHmacKeyRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::ListHmacKeysResponse>, ListHmacKeys,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::ListHmacKeysRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::HmacKeyMetadata>, UpdateHmacKey,
-              (grpc::ClientContext&,
+              (grpc::ClientContext&, Options const&,
                google::storage::v2::UpdateHmacKeyRequest const&),
               (override));
   MOCK_METHOD(future<StatusOr<google::storage::v2::Object>>, AsyncComposeObject,
@@ -186,6 +187,7 @@ class MockStorageStub : public storage_internal::StorageStub {
               AsyncReadObject,
               (google::cloud::CompletionQueue const&,
                std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions,
                google::storage::v2::ReadObjectRequest const&),
               (override));
   MOCK_METHOD(future<StatusOr<google::storage::v2::RewriteResponse>>,
@@ -200,7 +202,8 @@ class MockStorageStub : public storage_internal::StorageStub {
           google::storage::v2::WriteObjectResponse>>;
   MOCK_METHOD(AsyncWriteObjectReturnType, AsyncWriteObject,
               (google::cloud::CompletionQueue const&,
-               std::shared_ptr<grpc::ClientContext>),
+               std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions),
               (override));
   MOCK_METHOD(
       future<StatusOr<google::storage::v2::StartResumableWriteResponse>>,

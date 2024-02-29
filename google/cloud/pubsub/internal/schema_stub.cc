@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/schema.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -30,7 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SchemaServiceStub::~SchemaServiceStub() = default;
 
 StatusOr<google::pubsub::v1::Schema> DefaultSchemaServiceStub::CreateSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::pubsub::v1::CreateSchemaRequest const& request) {
   google::pubsub::v1::Schema response;
   auto status = grpc_stub_->CreateSchema(&context, request, &response);
@@ -41,7 +42,7 @@ StatusOr<google::pubsub::v1::Schema> DefaultSchemaServiceStub::CreateSchema(
 }
 
 StatusOr<google::pubsub::v1::Schema> DefaultSchemaServiceStub::GetSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::pubsub::v1::GetSchemaRequest const& request) {
   google::pubsub::v1::Schema response;
   auto status = grpc_stub_->GetSchema(&context, request, &response);
@@ -53,7 +54,7 @@ StatusOr<google::pubsub::v1::Schema> DefaultSchemaServiceStub::GetSchema(
 
 StatusOr<google::pubsub::v1::ListSchemasResponse>
 DefaultSchemaServiceStub::ListSchemas(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::pubsub::v1::ListSchemasRequest const& request) {
   google::pubsub::v1::ListSchemasResponse response;
   auto status = grpc_stub_->ListSchemas(&context, request, &response);
@@ -65,7 +66,7 @@ DefaultSchemaServiceStub::ListSchemas(
 
 StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse>
 DefaultSchemaServiceStub::ListSchemaRevisions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::pubsub::v1::ListSchemaRevisionsRequest const& request) {
   google::pubsub::v1::ListSchemaRevisionsResponse response;
   auto status = grpc_stub_->ListSchemaRevisions(&context, request, &response);
@@ -76,7 +77,7 @@ DefaultSchemaServiceStub::ListSchemaRevisions(
 }
 
 StatusOr<google::pubsub::v1::Schema> DefaultSchemaServiceStub::CommitSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::pubsub::v1::CommitSchemaRequest const& request) {
   google::pubsub::v1::Schema response;
   auto status = grpc_stub_->CommitSchema(&context, request, &response);
@@ -87,7 +88,7 @@ StatusOr<google::pubsub::v1::Schema> DefaultSchemaServiceStub::CommitSchema(
 }
 
 StatusOr<google::pubsub::v1::Schema> DefaultSchemaServiceStub::RollbackSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::pubsub::v1::RollbackSchemaRequest const& request) {
   google::pubsub::v1::Schema response;
   auto status = grpc_stub_->RollbackSchema(&context, request, &response);
@@ -99,7 +100,7 @@ StatusOr<google::pubsub::v1::Schema> DefaultSchemaServiceStub::RollbackSchema(
 
 StatusOr<google::pubsub::v1::Schema>
 DefaultSchemaServiceStub::DeleteSchemaRevision(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::pubsub::v1::DeleteSchemaRevisionRequest const& request) {
   google::pubsub::v1::Schema response;
   auto status = grpc_stub_->DeleteSchemaRevision(&context, request, &response);
@@ -110,7 +111,7 @@ DefaultSchemaServiceStub::DeleteSchemaRevision(
 }
 
 Status DefaultSchemaServiceStub::DeleteSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::pubsub::v1::DeleteSchemaRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteSchema(&context, request, &response);
@@ -122,7 +123,7 @@ Status DefaultSchemaServiceStub::DeleteSchema(
 
 StatusOr<google::pubsub::v1::ValidateSchemaResponse>
 DefaultSchemaServiceStub::ValidateSchema(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::pubsub::v1::ValidateSchemaRequest const& request) {
   google::pubsub::v1::ValidateSchemaResponse response;
   auto status = grpc_stub_->ValidateSchema(&context, request, &response);
@@ -134,7 +135,7 @@ DefaultSchemaServiceStub::ValidateSchema(
 
 StatusOr<google::pubsub::v1::ValidateMessageResponse>
 DefaultSchemaServiceStub::ValidateMessage(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::pubsub::v1::ValidateMessageRequest const& request) {
   google::pubsub::v1::ValidateMessageResponse response;
   auto status = grpc_stub_->ValidateMessage(&context, request, &response);

@@ -23,6 +23,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -65,12 +66,12 @@ TopicStatsServiceConnectionImpl::ComputeMessageStats(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ComputeMessageStats(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::pubsublite::v1::ComputeMessageStatsRequest const&
                  request) {
-        return stub_->ComputeMessageStats(context, request);
+        return stub_->ComputeMessageStats(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
@@ -80,12 +81,12 @@ TopicStatsServiceConnectionImpl::ComputeHeadCursor(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ComputeHeadCursor(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::pubsublite::v1::ComputeHeadCursorRequest const&
                  request) {
-        return stub_->ComputeHeadCursor(context, request);
+        return stub_->ComputeHeadCursor(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
@@ -95,12 +96,12 @@ TopicStatsServiceConnectionImpl::ComputeTimeCursor(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ComputeTimeCursor(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::pubsublite::v1::ComputeTimeCursorRequest const&
                  request) {
-        return stub_->ComputeTimeCursor(context, request);
+        return stub_->ComputeTimeCursor(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

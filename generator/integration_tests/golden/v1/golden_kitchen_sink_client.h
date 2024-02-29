@@ -28,6 +28,7 @@
 #include <google/protobuf/duration.pb.h>
 #include <map>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {

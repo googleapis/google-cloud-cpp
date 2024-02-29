@@ -22,6 +22,7 @@
 #include "google/cloud/status_or.h"
 #include <google/spanner/v1/spanner.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,48 +37,48 @@ SpannerLogging::SpannerLogging(std::shared_ptr<SpannerStub> child,
       stream_logging_(components.find("rpc-streams") != components.end()) {}
 
 StatusOr<google::spanner::v1::Session> SpannerLogging::CreateSession(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::v1::CreateSessionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::spanner::v1::CreateSessionRequest const& request) {
-        return child_->CreateSession(context, request);
+        return child_->CreateSession(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::spanner::v1::BatchCreateSessionsResponse>
 SpannerLogging::BatchCreateSessions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::v1::BatchCreateSessionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::spanner::v1::BatchCreateSessionsRequest const& request) {
-        return child_->BatchCreateSessions(context, request);
+        return child_->BatchCreateSessions(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status SpannerLogging::DeleteSession(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::v1::DeleteSessionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::spanner::v1::DeleteSessionRequest const& request) {
-        return child_->DeleteSession(context, request);
+        return child_->DeleteSession(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::spanner::v1::ResultSet> SpannerLogging::ExecuteSql(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::v1::ExecuteSqlRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::spanner::v1::ExecuteSqlRequest const& request) {
-        return child_->ExecuteSql(context, request);
+        return child_->ExecuteSql(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -107,14 +108,14 @@ SpannerLogging::ExecuteStreamingSql(
 
 StatusOr<google::spanner::v1::ExecuteBatchDmlResponse>
 SpannerLogging::ExecuteBatchDml(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::v1::ExecuteBatchDmlRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::spanner::v1::ExecuteBatchDmlRequest const& request) {
-        return child_->ExecuteBatchDml(context, request);
+        return child_->ExecuteBatchDml(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<
@@ -143,58 +144,58 @@ SpannerLogging::StreamingRead(std::shared_ptr<grpc::ClientContext> context,
 }
 
 StatusOr<google::spanner::v1::Transaction> SpannerLogging::BeginTransaction(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::v1::BeginTransactionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::spanner::v1::BeginTransactionRequest const& request) {
-        return child_->BeginTransaction(context, request);
+        return child_->BeginTransaction(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::spanner::v1::CommitResponse> SpannerLogging::Commit(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::v1::CommitRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::spanner::v1::CommitRequest const& request) {
-        return child_->Commit(context, request);
+        return child_->Commit(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 Status SpannerLogging::Rollback(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::v1::RollbackRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::spanner::v1::RollbackRequest const& request) {
-        return child_->Rollback(context, request);
+        return child_->Rollback(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::spanner::v1::PartitionResponse> SpannerLogging::PartitionQuery(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::v1::PartitionQueryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::spanner::v1::PartitionQueryRequest const& request) {
-        return child_->PartitionQuery(context, request);
+        return child_->PartitionQuery(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::spanner::v1::PartitionResponse> SpannerLogging::PartitionRead(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::spanner::v1::PartitionReadRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::spanner::v1::PartitionReadRequest const& request) {
-        return child_->PartitionRead(context, request);
+        return child_->PartitionRead(context, options, request);
       },
-      context, request, __func__, tracing_options_);
+      context, options, request, __func__, tracing_options_);
 }
 
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<

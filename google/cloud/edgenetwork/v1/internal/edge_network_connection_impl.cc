@@ -25,6 +25,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -70,10 +71,12 @@ EdgeNetworkConnectionImpl::InitializeZone(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->InitializeZone(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::InitializeZoneRequest const&
-                 request) { return stub_->InitializeZone(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->InitializeZone(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::edgenetwork::v1::Zone>
@@ -85,18 +88,21 @@ EdgeNetworkConnectionImpl::ListZones(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::edgenetwork::v1::Zone>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::edgenetwork::v1::ListZonesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::edgenetwork::v1::ListZonesRequest const&
-                       request) { return stub->ListZones(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListZones(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::edgenetwork::v1::ListZonesResponse r) {
         std::vector<google::cloud::edgenetwork::v1::Zone> result(
@@ -114,11 +120,11 @@ EdgeNetworkConnectionImpl::GetZone(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetZone(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::GetZoneRequest const& request) {
-        return stub_->GetZone(context, request);
+        return stub_->GetZone(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::edgenetwork::v1::Network>
@@ -130,20 +136,21 @@ EdgeNetworkConnectionImpl::ListNetworks(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::edgenetwork::v1::Network>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::edgenetwork::v1::ListNetworksRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::edgenetwork::v1::ListNetworksRequest const&
                        request) {
-              return stub->ListNetworks(context, request);
+              return stub->ListNetworks(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::edgenetwork::v1::ListNetworksResponse r) {
         std::vector<google::cloud::edgenetwork::v1::Network> result(
@@ -161,11 +168,11 @@ EdgeNetworkConnectionImpl::GetNetwork(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetNetwork(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::GetNetworkRequest const& request) {
-        return stub_->GetNetwork(context, request);
+        return stub_->GetNetwork(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseNetworkResponse>
@@ -175,44 +182,50 @@ EdgeNetworkConnectionImpl::DiagnoseNetwork(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DiagnoseNetwork(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::DiagnoseNetworkRequest const&
-                 request) { return stub_->DiagnoseNetwork(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DiagnoseNetwork(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Network>>
 EdgeNetworkConnectionImpl::CreateNetwork(
     google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateNetwork(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::edgenetwork::v1::Network>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::edgenetwork::v1::CreateNetworkRequest const& request) {
-        return stub->AsyncCreateNetwork(cq, std::move(context), options,
-                                        request);
+        return stub->AsyncCreateNetwork(cq, std::move(context),
+                                        std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::edgenetwork::v1::Network>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateNetwork(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -220,34 +233,38 @@ future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
 EdgeNetworkConnectionImpl::DeleteNetwork(
     google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteNetwork(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::edgenetwork::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request) {
-        return stub->AsyncDeleteNetwork(cq, std::move(context), options,
-                                        request);
+        return stub->AsyncDeleteNetwork(cq, std::move(context),
+                                        std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::edgenetwork::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteNetwork(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -260,18 +277,21 @@ EdgeNetworkConnectionImpl::ListSubnets(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::edgenetwork::v1::Subnet>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::edgenetwork::v1::ListSubnetsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::edgenetwork::v1::ListSubnetsRequest const&
-                       request) { return stub->ListSubnets(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListSubnets(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::edgenetwork::v1::ListSubnetsResponse r) {
         std::vector<google::cloud::edgenetwork::v1::Subnet> result(
@@ -289,45 +309,49 @@ EdgeNetworkConnectionImpl::GetSubnet(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetSubnet(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::GetSubnetRequest const& request) {
-        return stub_->GetSubnet(context, request);
+        return stub_->GetSubnet(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
 EdgeNetworkConnectionImpl::CreateSubnet(
     google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateSubnet(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::edgenetwork::v1::Subnet>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::edgenetwork::v1::CreateSubnetRequest const& request) {
-        return stub->AsyncCreateSubnet(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncCreateSubnet(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::edgenetwork::v1::Subnet>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateSubnet(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -335,34 +359,38 @@ future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>
 EdgeNetworkConnectionImpl::UpdateSubnet(
     google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateSubnet(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::edgenetwork::v1::Subnet>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request) {
-        return stub->AsyncUpdateSubnet(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncUpdateSubnet(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::edgenetwork::v1::Subnet>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateSubnet(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -370,34 +398,38 @@ future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
 EdgeNetworkConnectionImpl::DeleteSubnet(
     google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteSubnet(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::edgenetwork::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request) {
-        return stub->AsyncDeleteSubnet(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncDeleteSubnet(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::edgenetwork::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteSubnet(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -410,21 +442,22 @@ EdgeNetworkConnectionImpl::ListInterconnects(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::edgenetwork::v1::Interconnect>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::edgenetwork::v1::ListInterconnectsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::edgenetwork::v1::ListInterconnectsRequest const&
                     request) {
-              return stub->ListInterconnects(context, request);
+              return stub->ListInterconnects(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::edgenetwork::v1::ListInterconnectsResponse r) {
         std::vector<google::cloud::edgenetwork::v1::Interconnect> result(
@@ -442,10 +475,12 @@ EdgeNetworkConnectionImpl::GetInterconnect(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetInterconnect(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::GetInterconnectRequest const&
-                 request) { return stub_->GetInterconnect(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetInterconnect(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseInterconnectResponse>
@@ -456,12 +491,12 @@ EdgeNetworkConnectionImpl::DiagnoseInterconnect(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DiagnoseInterconnect(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::DiagnoseInterconnectRequest const&
                  request) {
-        return stub_->DiagnoseInterconnect(context, request);
+        return stub_->DiagnoseInterconnect(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::edgenetwork::v1::InterconnectAttachment>
@@ -475,21 +510,23 @@ EdgeNetworkConnectionImpl::ListInterconnectAttachments(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::edgenetwork::v1::InterconnectAttachment>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::edgenetwork::v1::
               ListInterconnectAttachmentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::edgenetwork::v1::
                        ListInterconnectAttachmentsRequest const& request) {
-              return stub->ListInterconnectAttachments(context, request);
+              return stub->ListInterconnectAttachments(context, options,
+                                                       request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::edgenetwork::v1::ListInterconnectAttachmentsResponse
              r) {
@@ -509,12 +546,12 @@ EdgeNetworkConnectionImpl::GetInterconnectAttachment(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetInterconnectAttachment(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::
                  GetInterconnectAttachmentRequest const& request) {
-        return stub_->GetInterconnectAttachment(context, request);
+        return stub_->GetInterconnectAttachment(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>
@@ -522,35 +559,38 @@ EdgeNetworkConnectionImpl::CreateInterconnectAttachment(
     google::cloud::edgenetwork::v1::CreateInterconnectAttachmentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateInterconnectAttachment(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::edgenetwork::v1::InterconnectAttachment>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::cloud::edgenetwork::v1::
                          CreateInterconnectAttachmentRequest const& request) {
-        return stub->AsyncCreateInterconnectAttachment(cq, std::move(context),
-                                                       options, request);
+        return stub->AsyncCreateInterconnectAttachment(
+            cq, std::move(context), std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::edgenetwork::v1::InterconnectAttachment>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateInterconnectAttachment(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -559,35 +599,38 @@ EdgeNetworkConnectionImpl::DeleteInterconnectAttachment(
     google::cloud::edgenetwork::v1::DeleteInterconnectAttachmentRequest const&
         request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteInterconnectAttachment(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::edgenetwork::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::cloud::edgenetwork::v1::
                          DeleteInterconnectAttachmentRequest const& request) {
-        return stub->AsyncDeleteInterconnectAttachment(cq, std::move(context),
-                                                       options, request);
+        return stub->AsyncDeleteInterconnectAttachment(
+            cq, std::move(context), std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::edgenetwork::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteInterconnectAttachment(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -600,18 +643,21 @@ EdgeNetworkConnectionImpl::ListRouters(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::edgenetwork::v1::Router>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<edgenetwork_v1::EdgeNetworkRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::edgenetwork::v1::ListRoutersRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::edgenetwork::v1::ListRoutersRequest const&
-                       request) { return stub->ListRouters(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListRouters(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::edgenetwork::v1::ListRoutersResponse r) {
         std::vector<google::cloud::edgenetwork::v1::Router> result(
@@ -629,11 +675,11 @@ EdgeNetworkConnectionImpl::GetRouter(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetRouter(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::GetRouterRequest const& request) {
-        return stub_->GetRouter(context, request);
+        return stub_->GetRouter(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::edgenetwork::v1::DiagnoseRouterResponse>
@@ -643,44 +689,50 @@ EdgeNetworkConnectionImpl::DiagnoseRouter(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DiagnoseRouter(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::edgenetwork::v1::DiagnoseRouterRequest const&
-                 request) { return stub_->DiagnoseRouter(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DiagnoseRouter(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::edgenetwork::v1::Router>>
 EdgeNetworkConnectionImpl::CreateRouter(
     google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->CreateRouter(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::edgenetwork::v1::Router>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::edgenetwork::v1::CreateRouterRequest const& request) {
-        return stub->AsyncCreateRouter(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncCreateRouter(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::edgenetwork::v1::Router>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->CreateRouter(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -688,34 +740,38 @@ future<StatusOr<google::cloud::edgenetwork::v1::Router>>
 EdgeNetworkConnectionImpl::UpdateRouter(
     google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->UpdateRouter(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::edgenetwork::v1::Router>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::edgenetwork::v1::UpdateRouterRequest const& request) {
-        return stub->AsyncUpdateRouter(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncUpdateRouter(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::edgenetwork::v1::Router>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->UpdateRouter(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -723,34 +779,38 @@ future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>
 EdgeNetworkConnectionImpl::DeleteRouter(
     google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->DeleteRouter(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::edgenetwork::v1::OperationMetadata>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::edgenetwork::v1::DeleteRouterRequest const& request) {
-        return stub->AsyncDeleteRouter(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncDeleteRouter(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultMetadata<
           google::cloud::edgenetwork::v1::OperationMetadata>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->DeleteRouter(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

@@ -18,6 +18,7 @@
 
 #include "google/cloud/dlp/v2/dlp_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

@@ -22,6 +22,7 @@
 #include <google/cloud/aiplatform/v1/deployment_resource_pool_service.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -34,7 +35,8 @@ DeploymentResourcePoolServiceStub::~DeploymentResourcePoolServiceStub() =
 future<StatusOr<google::longrunning::Operation>>
 DefaultDeploymentResourcePoolServiceStub::AsyncCreateDeploymentResourcePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -53,7 +55,7 @@ DefaultDeploymentResourcePoolServiceStub::AsyncCreateDeploymentResourcePool(
 
 StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>
 DefaultDeploymentResourcePoolServiceStub::GetDeploymentResourcePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
         request) {
   google::cloud::aiplatform::v1::DeploymentResourcePool response;
@@ -67,7 +69,7 @@ DefaultDeploymentResourcePoolServiceStub::GetDeploymentResourcePool(
 
 StatusOr<google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse>
 DefaultDeploymentResourcePoolServiceStub::ListDeploymentResourcePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ListDeploymentResourcePoolsRequest const&
         request) {
   google::cloud::aiplatform::v1::ListDeploymentResourcePoolsResponse response;
@@ -82,7 +84,8 @@ DefaultDeploymentResourcePoolServiceStub::ListDeploymentResourcePools(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDeploymentResourcePoolServiceStub::AsyncDeleteDeploymentResourcePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -102,7 +105,8 @@ DefaultDeploymentResourcePoolServiceStub::AsyncDeleteDeploymentResourcePool(
 future<StatusOr<google::longrunning::Operation>>
 DefaultDeploymentResourcePoolServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -117,7 +121,8 @@ DefaultDeploymentResourcePoolServiceStub::AsyncGetOperation(
 
 future<Status> DefaultDeploymentResourcePoolServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

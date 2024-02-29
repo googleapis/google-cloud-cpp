@@ -25,6 +25,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -74,10 +75,12 @@ DocumentServiceConnectionImpl::GetDocument(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDocument(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::discoveryengine::v1::GetDocumentRequest const&
-                 request) { return stub_->GetDocument(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->GetDocument(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::discoveryengine::v1::Document>
@@ -89,19 +92,22 @@ DocumentServiceConnectionImpl::ListDocuments(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::discoveryengine::v1::Document>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<discoveryengine_v1::DocumentServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::discoveryengine::v1::ListDocumentsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::discoveryengine::v1::ListDocumentsRequest const&
-                    request) { return stub->ListDocuments(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListDocuments(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::discoveryengine::v1::ListDocumentsResponse r) {
         std::vector<google::cloud::discoveryengine::v1::Document> result(
@@ -119,10 +125,12 @@ DocumentServiceConnectionImpl::CreateDocument(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateDocument(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::discoveryengine::v1::CreateDocumentRequest const&
-                 request) { return stub_->CreateDocument(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->CreateDocument(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::discoveryengine::v1::Document>
@@ -132,10 +140,12 @@ DocumentServiceConnectionImpl::UpdateDocument(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateDocument(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::discoveryengine::v1::UpdateDocumentRequest const&
-                 request) { return stub_->UpdateDocument(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->UpdateDocument(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status DocumentServiceConnectionImpl::DeleteDocument(
@@ -144,45 +154,51 @@ Status DocumentServiceConnectionImpl::DeleteDocument(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteDocument(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::discoveryengine::v1::DeleteDocumentRequest const&
-                 request) { return stub_->DeleteDocument(context, request); },
-      request, __func__);
+                 request) {
+        return stub_->DeleteDocument(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
 DocumentServiceConnectionImpl::ImportDocuments(
     google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->ImportDocuments(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::discoveryengine::v1::ImportDocumentsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::discoveryengine::v1::ImportDocumentsRequest const&
               request) {
-        return stub->AsyncImportDocuments(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncImportDocuments(cq, std::move(context),
+                                          std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::discoveryengine::v1::ImportDocumentsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->ImportDocuments(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 
@@ -190,35 +206,39 @@ future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
 DocumentServiceConnectionImpl::PurgeDocuments(
     google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent =
+      idempotency_policy(*current)->PurgeDocuments(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::discoveryengine::v1::PurgeDocumentsResponse>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::discoveryengine::v1::PurgeDocumentsRequest const&
               request) {
-        return stub->AsyncPurgeDocuments(cq, std::move(context), options,
-                                         request);
+        return stub->AsyncPurgeDocuments(cq, std::move(context),
+                                         std::move(options), request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::discoveryengine::v1::PurgeDocumentsResponse>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->PurgeDocuments(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

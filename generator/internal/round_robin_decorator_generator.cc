@@ -140,8 +140,10 @@ std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
     $response_type$>>
 $round_robin_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  return Child()->Async$method_name$(cq, std::move(context));
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  return Child()->Async$method_name$(
+      cq, std::move(context), std::move(options));
 }
 )""");
       continue;
@@ -152,9 +154,10 @@ future<StatusOr<google::longrunning::Operation>>
 $round_robin_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     $request_type$ const& request) {
-  return Child()->Async$method_name$(cq, std::move(context), options, request);
+  return Child()->Async$method_name$(
+      cq, std::move(context), std::move(options), request);
 }
 )""");
       continue;
@@ -163,8 +166,9 @@ $round_robin_class_name$::Async$method_name$(
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
 Status $round_robin_class_name$::$method_name$(
     grpc::ClientContext& context,
+    Options const& options,
     $request_type$ const& request) {
-  return Child()->$method_name$(context, request);
+  return Child()->$method_name$(context, options, request);
 }
 )""");
       continue;
@@ -172,8 +176,9 @@ Status $round_robin_class_name$::$method_name$(
     CcPrintMethod(method, __FILE__, __LINE__, R"""(
 StatusOr<$response_type$> $round_robin_class_name$::$method_name$(
     grpc::ClientContext& context,
+    Options const& options,
     $request_type$ const& request) {
-  return Child()->$method_name$(context, request);
+  return Child()->$method_name$(context, options, request);
 }
 )""");
   }
@@ -186,8 +191,10 @@ std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
 $round_robin_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     $request_type$ const& request) {
-  return Child()->Async$method_name$(cq, std::move(context), request);
+  return Child()->Async$method_name$(
+      cq, std::move(context), std::move(options), request);
 }
 )""");
       continue;
@@ -199,8 +206,10 @@ std::unique_ptr<google::cloud::internal::AsyncStreamingWriteRpc<
     $response_type$>>
 $round_robin_class_name$::Async$method_name$(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
-  return Child()->Async$method_name$(cq, std::move(context));
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
+  return Child()->Async$method_name$(
+      cq, std::move(context), std::move(options));
 }
 )""");
       continue;
@@ -243,18 +252,20 @@ future<StatusOr<google::longrunning::Operation>>
 $round_robin_class_name$::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
-  return Child()->AsyncGetOperation(cq, std::move(context), options, request);
+  return Child()->AsyncGetOperation(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status>
 $round_robin_class_name$::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return Child()->AsyncCancelOperation(cq, std::move(context), options, request);
+  return Child()->AsyncCancelOperation(
+      cq, std::move(context), std::move(options), request);
 }
 )""");
   }

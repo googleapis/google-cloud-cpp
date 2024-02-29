@@ -18,6 +18,7 @@
 
 #include "google/cloud/aiplatform/v1/internal/index_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,111 +34,118 @@ IndexServiceTracingStub::IndexServiceTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 IndexServiceTracingStub::AsyncCreateIndex(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::CreateIndexRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.IndexService",
                                      "CreateIndex");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateIndex(cq, context, options, request);
+  auto f = child_->AsyncCreateIndex(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::aiplatform::v1::Index>
 IndexServiceTracingStub::GetIndex(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetIndexRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.IndexService",
                                      "GetIndex");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetIndex(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetIndex(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::ListIndexesResponse>
 IndexServiceTracingStub::ListIndexes(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListIndexesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.IndexService",
                                      "ListIndexes");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListIndexes(context, request));
+                           child_->ListIndexes(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 IndexServiceTracingStub::AsyncUpdateIndex(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::UpdateIndexRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.IndexService",
                                      "UpdateIndex");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateIndex(cq, context, options, request);
+  auto f = child_->AsyncUpdateIndex(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 IndexServiceTracingStub::AsyncDeleteIndex(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::aiplatform::v1::DeleteIndexRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.IndexService",
                                      "DeleteIndex");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteIndex(cq, context, options, request);
+  auto f = child_->AsyncDeleteIndex(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::aiplatform::v1::UpsertDatapointsResponse>
 IndexServiceTracingStub::UpsertDatapoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpsertDatapointsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.IndexService",
                                      "UpsertDatapoints");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpsertDatapoints(context, request));
+                           child_->UpsertDatapoints(context, options, request));
 }
 
 StatusOr<google::cloud::aiplatform::v1::RemoveDatapointsResponse>
 IndexServiceTracingStub::RemoveDatapoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::RemoveDatapointsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.IndexService",
                                      "RemoveDatapoints");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->RemoveDatapoints(context, request));
+                           child_->RemoveDatapoints(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 IndexServiceTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> IndexServiceTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

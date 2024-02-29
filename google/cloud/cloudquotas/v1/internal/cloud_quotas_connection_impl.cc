@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -67,20 +68,21 @@ CloudQuotasConnectionImpl::ListQuotaInfos(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::api::cloudquotas::v1::QuotaInfo>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<cloudquotas_v1::CloudQuotasRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::api::cloudquotas::v1::ListQuotaInfosRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::api::cloudquotas::v1::ListQuotaInfosRequest const&
                        request) {
-              return stub->ListQuotaInfos(context, request);
+              return stub->ListQuotaInfos(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::api::cloudquotas::v1::ListQuotaInfosResponse r) {
         std::vector<google::api::cloudquotas::v1::QuotaInfo> result(
@@ -98,11 +100,11 @@ CloudQuotasConnectionImpl::GetQuotaInfo(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetQuotaInfo(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::cloudquotas::v1::GetQuotaInfoRequest const& request) {
-        return stub_->GetQuotaInfo(context, request);
+        return stub_->GetQuotaInfo(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::api::cloudquotas::v1::QuotaPreference>
@@ -115,21 +117,22 @@ CloudQuotasConnectionImpl::ListQuotaPreferences(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::api::cloudquotas::v1::QuotaPreference>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<cloudquotas_v1::CloudQuotasRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::api::cloudquotas::v1::ListQuotaPreferencesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::api::cloudquotas::v1::ListQuotaPreferencesRequest const&
                     request) {
-              return stub->ListQuotaPreferences(context, request);
+              return stub->ListQuotaPreferences(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::api::cloudquotas::v1::ListQuotaPreferencesResponse r) {
         std::vector<google::api::cloudquotas::v1::QuotaPreference> result(
@@ -147,12 +150,12 @@ CloudQuotasConnectionImpl::GetQuotaPreference(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetQuotaPreference(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::cloudquotas::v1::GetQuotaPreferenceRequest const&
                  request) {
-        return stub_->GetQuotaPreference(context, request);
+        return stub_->GetQuotaPreference(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
@@ -162,12 +165,12 @@ CloudQuotasConnectionImpl::CreateQuotaPreference(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateQuotaPreference(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::cloudquotas::v1::CreateQuotaPreferenceRequest const&
                  request) {
-        return stub_->CreateQuotaPreference(context, request);
+        return stub_->CreateQuotaPreference(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::api::cloudquotas::v1::QuotaPreference>
@@ -177,12 +180,12 @@ CloudQuotasConnectionImpl::UpdateQuotaPreference(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateQuotaPreference(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::api::cloudquotas::v1::UpdateQuotaPreferenceRequest const&
                  request) {
-        return stub_->UpdateQuotaPreference(context, request);
+        return stub_->UpdateQuotaPreference(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

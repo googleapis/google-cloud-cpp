@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/servicedirectory/v1/registration_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ RegistrationServiceStub::~RegistrationServiceStub() = default;
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
 DefaultRegistrationServiceStub::CreateNamespace(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
         request) {
   google::cloud::servicedirectory::v1::Namespace response;
@@ -44,7 +45,7 @@ DefaultRegistrationServiceStub::CreateNamespace(
 
 StatusOr<google::cloud::servicedirectory::v1::ListNamespacesResponse>
 DefaultRegistrationServiceStub::ListNamespaces(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicedirectory::v1::ListNamespacesRequest const& request) {
   google::cloud::servicedirectory::v1::ListNamespacesResponse response;
   auto status = grpc_stub_->ListNamespaces(&context, request, &response);
@@ -56,7 +57,7 @@ DefaultRegistrationServiceStub::ListNamespaces(
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
 DefaultRegistrationServiceStub::GetNamespace(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicedirectory::v1::GetNamespaceRequest const& request) {
   google::cloud::servicedirectory::v1::Namespace response;
   auto status = grpc_stub_->GetNamespace(&context, request, &response);
@@ -68,7 +69,7 @@ DefaultRegistrationServiceStub::GetNamespace(
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
 DefaultRegistrationServiceStub::UpdateNamespace(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
         request) {
   google::cloud::servicedirectory::v1::Namespace response;
@@ -80,7 +81,7 @@ DefaultRegistrationServiceStub::UpdateNamespace(
 }
 
 Status DefaultRegistrationServiceStub::DeleteNamespace(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&
         request) {
   google::protobuf::Empty response;
@@ -93,7 +94,7 @@ Status DefaultRegistrationServiceStub::DeleteNamespace(
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
 DefaultRegistrationServiceStub::CreateService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicedirectory::v1::CreateServiceRequest const& request) {
   google::cloud::servicedirectory::v1::Service response;
   auto status = grpc_stub_->CreateService(&context, request, &response);
@@ -105,7 +106,7 @@ DefaultRegistrationServiceStub::CreateService(
 
 StatusOr<google::cloud::servicedirectory::v1::ListServicesResponse>
 DefaultRegistrationServiceStub::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicedirectory::v1::ListServicesRequest const& request) {
   google::cloud::servicedirectory::v1::ListServicesResponse response;
   auto status = grpc_stub_->ListServices(&context, request, &response);
@@ -117,7 +118,7 @@ DefaultRegistrationServiceStub::ListServices(
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
 DefaultRegistrationServiceStub::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicedirectory::v1::GetServiceRequest const& request) {
   google::cloud::servicedirectory::v1::Service response;
   auto status = grpc_stub_->GetService(&context, request, &response);
@@ -129,7 +130,7 @@ DefaultRegistrationServiceStub::GetService(
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
 DefaultRegistrationServiceStub::UpdateService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicedirectory::v1::UpdateServiceRequest const& request) {
   google::cloud::servicedirectory::v1::Service response;
   auto status = grpc_stub_->UpdateService(&context, request, &response);
@@ -140,7 +141,7 @@ DefaultRegistrationServiceStub::UpdateService(
 }
 
 Status DefaultRegistrationServiceStub::DeleteService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicedirectory::v1::DeleteServiceRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteService(&context, request, &response);
@@ -152,7 +153,7 @@ Status DefaultRegistrationServiceStub::DeleteService(
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
 DefaultRegistrationServiceStub::CreateEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicedirectory::v1::CreateEndpointRequest const& request) {
   google::cloud::servicedirectory::v1::Endpoint response;
   auto status = grpc_stub_->CreateEndpoint(&context, request, &response);
@@ -164,7 +165,7 @@ DefaultRegistrationServiceStub::CreateEndpoint(
 
 StatusOr<google::cloud::servicedirectory::v1::ListEndpointsResponse>
 DefaultRegistrationServiceStub::ListEndpoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicedirectory::v1::ListEndpointsRequest const& request) {
   google::cloud::servicedirectory::v1::ListEndpointsResponse response;
   auto status = grpc_stub_->ListEndpoints(&context, request, &response);
@@ -176,7 +177,7 @@ DefaultRegistrationServiceStub::ListEndpoints(
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
 DefaultRegistrationServiceStub::GetEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicedirectory::v1::GetEndpointRequest const& request) {
   google::cloud::servicedirectory::v1::Endpoint response;
   auto status = grpc_stub_->GetEndpoint(&context, request, &response);
@@ -188,7 +189,7 @@ DefaultRegistrationServiceStub::GetEndpoint(
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
 DefaultRegistrationServiceStub::UpdateEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request) {
   google::cloud::servicedirectory::v1::Endpoint response;
   auto status = grpc_stub_->UpdateEndpoint(&context, request, &response);
@@ -199,7 +200,7 @@ DefaultRegistrationServiceStub::UpdateEndpoint(
 }
 
 Status DefaultRegistrationServiceStub::DeleteEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::servicedirectory::v1::DeleteEndpointRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteEndpoint(&context, request, &response);
@@ -210,7 +211,7 @@ Status DefaultRegistrationServiceStub::DeleteEndpoint(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultRegistrationServiceStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -221,7 +222,7 @@ StatusOr<google::iam::v1::Policy> DefaultRegistrationServiceStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultRegistrationServiceStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -233,7 +234,7 @@ StatusOr<google::iam::v1::Policy> DefaultRegistrationServiceStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultRegistrationServiceStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);

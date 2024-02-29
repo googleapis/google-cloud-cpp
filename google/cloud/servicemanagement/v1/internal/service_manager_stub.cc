@@ -22,6 +22,7 @@
 #include <google/api/servicemanagement/v1/servicemanager.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ ServiceManagerStub::~ServiceManagerStub() = default;
 
 StatusOr<google::api::servicemanagement::v1::ListServicesResponse>
 DefaultServiceManagerStub::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicemanagement::v1::ListServicesRequest const& request) {
   google::api::servicemanagement::v1::ListServicesResponse response;
   auto status = grpc_stub_->ListServices(&context, request, &response);
@@ -44,7 +45,7 @@ DefaultServiceManagerStub::ListServices(
 
 StatusOr<google::api::servicemanagement::v1::ManagedService>
 DefaultServiceManagerStub::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicemanagement::v1::GetServiceRequest const& request) {
   google::api::servicemanagement::v1::ManagedService response;
   auto status = grpc_stub_->GetService(&context, request, &response);
@@ -57,7 +58,8 @@ DefaultServiceManagerStub::GetService(
 future<StatusOr<google::longrunning::Operation>>
 DefaultServiceManagerStub::AsyncCreateService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::api::servicemanagement::v1::CreateServiceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::api::servicemanagement::v1::CreateServiceRequest,
@@ -75,7 +77,8 @@ DefaultServiceManagerStub::AsyncCreateService(
 future<StatusOr<google::longrunning::Operation>>
 DefaultServiceManagerStub::AsyncDeleteService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::api::servicemanagement::v1::DeleteServiceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::api::servicemanagement::v1::DeleteServiceRequest,
@@ -93,7 +96,8 @@ DefaultServiceManagerStub::AsyncDeleteService(
 future<StatusOr<google::longrunning::Operation>>
 DefaultServiceManagerStub::AsyncUndeleteService(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::api::servicemanagement::v1::UndeleteServiceRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::api::servicemanagement::v1::UndeleteServiceRequest,
@@ -110,7 +114,7 @@ DefaultServiceManagerStub::AsyncUndeleteService(
 
 StatusOr<google::api::servicemanagement::v1::ListServiceConfigsResponse>
 DefaultServiceManagerStub::ListServiceConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicemanagement::v1::ListServiceConfigsRequest const&
         request) {
   google::api::servicemanagement::v1::ListServiceConfigsResponse response;
@@ -122,7 +126,7 @@ DefaultServiceManagerStub::ListServiceConfigs(
 }
 
 StatusOr<google::api::Service> DefaultServiceManagerStub::GetServiceConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicemanagement::v1::GetServiceConfigRequest const&
         request) {
   google::api::Service response;
@@ -134,7 +138,7 @@ StatusOr<google::api::Service> DefaultServiceManagerStub::GetServiceConfig(
 }
 
 StatusOr<google::api::Service> DefaultServiceManagerStub::CreateServiceConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicemanagement::v1::CreateServiceConfigRequest const&
         request) {
   google::api::Service response;
@@ -148,7 +152,8 @@ StatusOr<google::api::Service> DefaultServiceManagerStub::CreateServiceConfig(
 future<StatusOr<google::longrunning::Operation>>
 DefaultServiceManagerStub::AsyncSubmitConfigSource(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::api::servicemanagement::v1::SubmitConfigSourceRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -167,7 +172,7 @@ DefaultServiceManagerStub::AsyncSubmitConfigSource(
 
 StatusOr<google::api::servicemanagement::v1::ListServiceRolloutsResponse>
 DefaultServiceManagerStub::ListServiceRollouts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicemanagement::v1::ListServiceRolloutsRequest const&
         request) {
   google::api::servicemanagement::v1::ListServiceRolloutsResponse response;
@@ -180,7 +185,7 @@ DefaultServiceManagerStub::ListServiceRollouts(
 
 StatusOr<google::api::servicemanagement::v1::Rollout>
 DefaultServiceManagerStub::GetServiceRollout(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicemanagement::v1::GetServiceRolloutRequest const&
         request) {
   google::api::servicemanagement::v1::Rollout response;
@@ -194,7 +199,8 @@ DefaultServiceManagerStub::GetServiceRollout(
 future<StatusOr<google::longrunning::Operation>>
 DefaultServiceManagerStub::AsyncCreateServiceRollout(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::api::servicemanagement::v1::CreateServiceRolloutRequest const&
         request) {
   return internal::MakeUnaryRpcImpl<
@@ -213,7 +219,7 @@ DefaultServiceManagerStub::AsyncCreateServiceRollout(
 
 StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>
 DefaultServiceManagerStub::GenerateConfigReport(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::api::servicemanagement::v1::GenerateConfigReportRequest const&
         request) {
   google::api::servicemanagement::v1::GenerateConfigReportResponse response;
@@ -227,7 +233,8 @@ DefaultServiceManagerStub::GenerateConfigReport(
 future<StatusOr<google::longrunning::Operation>>
 DefaultServiceManagerStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
                                     google::longrunning::Operation>(
@@ -242,7 +249,8 @@ DefaultServiceManagerStub::AsyncGetOperation(
 
 future<Status> DefaultServiceManagerStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const&,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,
                                     google::protobuf::Empty>(

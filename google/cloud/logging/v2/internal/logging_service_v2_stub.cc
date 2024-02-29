@@ -22,6 +22,7 @@
 #include "google/cloud/status_or.h"
 #include <google/logging/v2/logging.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 LoggingServiceV2Stub::~LoggingServiceV2Stub() = default;
 
 Status DefaultLoggingServiceV2Stub::DeleteLog(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::DeleteLogRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteLog(&context, request, &response);
@@ -43,7 +44,7 @@ Status DefaultLoggingServiceV2Stub::DeleteLog(
 
 StatusOr<google::logging::v2::WriteLogEntriesResponse>
 DefaultLoggingServiceV2Stub::WriteLogEntries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::WriteLogEntriesRequest const& request) {
   google::logging::v2::WriteLogEntriesResponse response;
   auto status = grpc_stub_->WriteLogEntries(&context, request, &response);
@@ -55,7 +56,7 @@ DefaultLoggingServiceV2Stub::WriteLogEntries(
 
 StatusOr<google::logging::v2::ListLogEntriesResponse>
 DefaultLoggingServiceV2Stub::ListLogEntries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::ListLogEntriesRequest const& request) {
   google::logging::v2::ListLogEntriesResponse response;
   auto status = grpc_stub_->ListLogEntries(&context, request, &response);
@@ -67,7 +68,7 @@ DefaultLoggingServiceV2Stub::ListLogEntries(
 
 StatusOr<google::logging::v2::ListMonitoredResourceDescriptorsResponse>
 DefaultLoggingServiceV2Stub::ListMonitoredResourceDescriptors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
         request) {
   google::logging::v2::ListMonitoredResourceDescriptorsResponse response;
@@ -81,7 +82,7 @@ DefaultLoggingServiceV2Stub::ListMonitoredResourceDescriptors(
 
 StatusOr<google::logging::v2::ListLogsResponse>
 DefaultLoggingServiceV2Stub::ListLogs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::logging::v2::ListLogsRequest const& request) {
   google::logging::v2::ListLogsResponse response;
   auto status = grpc_stub_->ListLogs(&context, request, &response);
@@ -96,11 +97,12 @@ std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::logging::v2::TailLogEntriesResponse>>
 DefaultLoggingServiceV2Stub::AsyncTailLogEntries(
     google::cloud::CompletionQueue const& cq,
-    std::shared_ptr<grpc::ClientContext> context) {
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options) {
   return google::cloud::internal::MakeStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>(
-      cq, std::move(context),
+      cq, std::move(context), std::move(options),
       [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
         return grpc_stub_->PrepareAsyncTailLogEntries(context, cq);
       });

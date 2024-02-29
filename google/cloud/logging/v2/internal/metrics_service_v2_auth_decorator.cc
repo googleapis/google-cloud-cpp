@@ -19,6 +19,7 @@
 #include "google/cloud/logging/v2/internal/metrics_service_v2_auth_decorator.h"
 #include <google/logging/v2/logging_metrics.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,43 +33,43 @@ MetricsServiceV2Auth::MetricsServiceV2Auth(
 
 StatusOr<google::logging::v2::ListLogMetricsResponse>
 MetricsServiceV2Auth::ListLogMetrics(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::ListLogMetricsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListLogMetrics(context, request);
+  return child_->ListLogMetrics(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogMetric> MetricsServiceV2Auth::GetLogMetric(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::GetLogMetricRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetLogMetric(context, request);
+  return child_->GetLogMetric(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogMetric> MetricsServiceV2Auth::CreateLogMetric(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::CreateLogMetricRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateLogMetric(context, request);
+  return child_->CreateLogMetric(context, options, request);
 }
 
 StatusOr<google::logging::v2::LogMetric> MetricsServiceV2Auth::UpdateLogMetric(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::UpdateLogMetricRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateLogMetric(context, request);
+  return child_->UpdateLogMetric(context, options, request);
 }
 
 Status MetricsServiceV2Auth::DeleteLogMetric(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::logging::v2::DeleteLogMetricRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteLogMetric(context, request);
+  return child_->DeleteLogMetric(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -18,6 +18,7 @@
 
 #include "google/cloud/gkemulticloud/v1/internal/azure_clusters_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -33,123 +34,133 @@ AzureClustersTracingStub::AzureClustersTracingStub(
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersTracingStub::AsyncCreateAzureClient(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::gkemulticloud::v1::CreateAzureClientRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gkemulticloud.v1.AzureClusters", "CreateAzureClient");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateAzureClient(cq, context, options, request);
+  auto f =
+      child_->AsyncCreateAzureClient(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureClient>
 AzureClustersTracingStub::GetAzureClient(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gkemulticloud.v1.AzureClusters", "GetAzureClient");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetAzureClient(context, request));
+                           child_->GetAzureClient(context, options, request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureClientsResponse>
 AzureClustersTracingStub::ListAzureClients(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::ListAzureClientsRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gkemulticloud.v1.AzureClusters", "ListAzureClients");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListAzureClients(context, request));
+                           child_->ListAzureClients(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersTracingStub::AsyncDeleteAzureClient(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gkemulticloud.v1.AzureClusters", "DeleteAzureClient");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteAzureClient(cq, context, options, request);
+  auto f =
+      child_->AsyncDeleteAzureClient(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersTracingStub::AsyncCreateAzureCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gkemulticloud.v1.AzureClusters", "CreateAzureCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateAzureCluster(cq, context, options, request);
+  auto f =
+      child_->AsyncCreateAzureCluster(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersTracingStub::AsyncUpdateAzureCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gkemulticloud.v1.AzureClusters", "UpdateAzureCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateAzureCluster(cq, context, options, request);
+  auto f =
+      child_->AsyncUpdateAzureCluster(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>
 AzureClustersTracingStub::GetAzureCluster(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gkemulticloud.v1.AzureClusters", "GetAzureCluster");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetAzureCluster(context, request));
+                           child_->GetAzureCluster(context, options, request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureClustersResponse>
 AzureClustersTracingStub::ListAzureClusters(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::ListAzureClustersRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gkemulticloud.v1.AzureClusters", "ListAzureClusters");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListAzureClusters(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListAzureClusters(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersTracingStub::AsyncDeleteAzureCluster(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gkemulticloud.v1.AzureClusters", "DeleteAzureCluster");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteAzureCluster(cq, context, options, request);
+  auto f =
+      child_->AsyncDeleteAzureCluster(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<
     google::cloud::gkemulticloud::v1::GenerateAzureClusterAgentTokenResponse>
 AzureClustersTracingStub::GenerateAzureClusterAgentToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::
         GenerateAzureClusterAgentTokenRequest const& request) {
   auto span =
@@ -158,12 +169,13 @@ AzureClustersTracingStub::GenerateAzureClusterAgentToken(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(
-      context, *span, child_->GenerateAzureClusterAgentToken(context, request));
+      context, *span,
+      child_->GenerateAzureClusterAgentToken(context, options, request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
 AzureClustersTracingStub::GenerateAzureAccessToken(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
         request) {
   auto span =
@@ -171,138 +183,148 @@ AzureClustersTracingStub::GenerateAzureAccessToken(
                              "GenerateAzureAccessToken");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GenerateAzureAccessToken(context, request));
+  return internal::EndSpan(
+      context, *span,
+      child_->GenerateAzureAccessToken(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersTracingStub::AsyncCreateAzureNodePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gkemulticloud.v1.AzureClusters", "CreateAzureNodePool");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateAzureNodePool(cq, context, options, request);
+  auto f = child_->AsyncCreateAzureNodePool(cq, context, std::move(options),
+                                            request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersTracingStub::AsyncUpdateAzureNodePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gkemulticloud.v1.AzureClusters", "UpdateAzureNodePool");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUpdateAzureNodePool(cq, context, options, request);
+  auto f = child_->AsyncUpdateAzureNodePool(cq, context, std::move(options),
+                                            request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>
 AzureClustersTracingStub::GetAzureNodePool(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gkemulticloud.v1.AzureClusters", "GetAzureNodePool");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetAzureNodePool(context, request));
+                           child_->GetAzureNodePool(context, options, request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::ListAzureNodePoolsResponse>
 AzureClustersTracingStub::ListAzureNodePools(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::ListAzureNodePoolsRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gkemulticloud.v1.AzureClusters", "ListAzureNodePools");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListAzureNodePools(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListAzureNodePools(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersTracingStub::AsyncDeleteAzureNodePool(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gkemulticloud.v1.AzureClusters", "DeleteAzureNodePool");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteAzureNodePool(cq, context, options, request);
+  auto f = child_->AsyncDeleteAzureNodePool(cq, context, std::move(options),
+                                            request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>
 AzureClustersTracingStub::GetAzureOpenIdConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureOpenIdConfigRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gkemulticloud.v1.AzureClusters", "GetAzureOpenIdConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetAzureOpenIdConfig(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetAzureOpenIdConfig(context, options, request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureJsonWebKeys>
 AzureClustersTracingStub::GetAzureJsonWebKeys(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureJsonWebKeysRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gkemulticloud.v1.AzureClusters", "GetAzureJsonWebKeys");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetAzureJsonWebKeys(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetAzureJsonWebKeys(context, options, request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
 AzureClustersTracingStub::GetAzureServerConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
       "google.cloud.gkemulticloud.v1.AzureClusters", "GetAzureServerConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetAzureServerConfig(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetAzureServerConfig(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AzureClustersTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> AzureClustersTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

@@ -28,6 +28,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -2058,7 +2059,7 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ModelMonitoringStatsAnomalies]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_deployment_monitoring_job.proto#L298}
+  /// [google.cloud.aiplatform.v1.ModelMonitoringStatsAnomalies]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_deployment_monitoring_job.proto#L303}
   /// [google.cloud.aiplatform.v1.SearchModelDeploymentMonitoringStatsAnomaliesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L1147}
   ///
   // clang-format on
@@ -2099,7 +2100,7 @@ class JobServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ModelMonitoringStatsAnomalies]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_deployment_monitoring_job.proto#L298}
+  /// [google.cloud.aiplatform.v1.ModelMonitoringStatsAnomalies]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_deployment_monitoring_job.proto#L303}
   /// [google.cloud.aiplatform.v1.SearchModelDeploymentMonitoringStatsAnomaliesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/job_service.proto#L1147}
   ///
   // clang-format on

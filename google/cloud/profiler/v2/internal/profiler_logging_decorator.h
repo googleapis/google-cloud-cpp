@@ -39,17 +39,17 @@ class ProfilerServiceLogging : public ProfilerServiceStub {
                          std::set<std::string> const& components);
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateProfile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudprofiler::v2::CreateProfileRequest const& request)
       override;
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> CreateOfflineProfile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudprofiler::v2::CreateOfflineProfileRequest const&
           request) override;
 
   StatusOr<google::devtools::cloudprofiler::v2::Profile> UpdateProfile(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudprofiler::v2::UpdateProfileRequest const& request)
       override;
 

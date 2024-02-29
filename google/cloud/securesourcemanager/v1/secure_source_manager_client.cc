@@ -18,6 +18,7 @@
 
 #include "google/cloud/securesourcemanager/v1/secure_source_manager_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

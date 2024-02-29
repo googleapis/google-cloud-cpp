@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -65,18 +66,21 @@ PagesConnectionImpl::ListPages(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::dialogflow::cx::v3::Page>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<dialogflow_cx::PagesRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::dialogflow::cx::v3::ListPagesRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::dialogflow::cx::v3::ListPagesRequest const&
-                       request) { return stub->ListPages(context, request); },
-            r, function_name);
+                       request) {
+              return stub->ListPages(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::dialogflow::cx::v3::ListPagesResponse r) {
         std::vector<google::cloud::dialogflow::cx::v3::Page> result(
@@ -93,11 +97,11 @@ StatusOr<google::cloud::dialogflow::cx::v3::Page> PagesConnectionImpl::GetPage(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPage(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::dialogflow::cx::v3::GetPageRequest const& request) {
-        return stub_->GetPage(context, request);
+        return stub_->GetPage(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page>
@@ -108,11 +112,11 @@ PagesConnectionImpl::CreatePage(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreatePage(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::cx::v3::CreatePageRequest const& request) {
-        return stub_->CreatePage(context, request);
+        return stub_->CreatePage(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page>
@@ -123,11 +127,11 @@ PagesConnectionImpl::UpdatePage(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdatePage(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request) {
-        return stub_->UpdatePage(context, request);
+        return stub_->UpdatePage(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 Status PagesConnectionImpl::DeletePage(
@@ -137,11 +141,11 @@ Status PagesConnectionImpl::DeletePage(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeletePage(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::dialogflow::cx::v3::DeletePageRequest const& request) {
-        return stub_->DeletePage(context, request);
+        return stub_->DeletePage(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

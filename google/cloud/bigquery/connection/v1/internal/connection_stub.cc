@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/connection/v1/connection.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ ConnectionServiceStub::~ConnectionServiceStub() = default;
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
 DefaultConnectionServiceStub::CreateConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::connection::v1::CreateConnectionRequest const&
         request) {
   google::cloud::bigquery::connection::v1::Connection response;
@@ -44,7 +45,7 @@ DefaultConnectionServiceStub::CreateConnection(
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
 DefaultConnectionServiceStub::GetConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::connection::v1::GetConnectionRequest const&
         request) {
   google::cloud::bigquery::connection::v1::Connection response;
@@ -57,7 +58,7 @@ DefaultConnectionServiceStub::GetConnection(
 
 StatusOr<google::cloud::bigquery::connection::v1::ListConnectionsResponse>
 DefaultConnectionServiceStub::ListConnections(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::connection::v1::ListConnectionsRequest const&
         request) {
   google::cloud::bigquery::connection::v1::ListConnectionsResponse response;
@@ -70,7 +71,7 @@ DefaultConnectionServiceStub::ListConnections(
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
 DefaultConnectionServiceStub::UpdateConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&
         request) {
   google::cloud::bigquery::connection::v1::Connection response;
@@ -82,7 +83,7 @@ DefaultConnectionServiceStub::UpdateConnection(
 }
 
 Status DefaultConnectionServiceStub::DeleteConnection(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&
         request) {
   google::protobuf::Empty response;
@@ -94,7 +95,7 @@ Status DefaultConnectionServiceStub::DeleteConnection(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultConnectionServiceStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -105,7 +106,7 @@ StatusOr<google::iam::v1::Policy> DefaultConnectionServiceStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultConnectionServiceStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -117,7 +118,7 @@ StatusOr<google::iam::v1::Policy> DefaultConnectionServiceStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultConnectionServiceStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);

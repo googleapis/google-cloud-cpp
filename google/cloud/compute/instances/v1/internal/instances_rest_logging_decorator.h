@@ -46,7 +46,7 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncAddAccessConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
           request) override;
 
@@ -54,7 +54,7 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncAddResourcePolicies(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::
           AddResourcePoliciesRequest const& request) override;
 
@@ -68,14 +68,14 @@ class InstancesRestLogging : public InstancesRestStub {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncAttachDisk(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncBulkInsert(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
           request) override;
 
@@ -83,7 +83,7 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncDeleteInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
           request) override;
 
@@ -91,14 +91,14 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncDeleteAccessConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::
           DeleteAccessConfigRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncDetachDisk(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
           request) override;
 
@@ -151,7 +151,7 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncInsertInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
           request) override;
 
@@ -172,7 +172,7 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncPerformMaintenance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::
           PerformMaintenanceRequest const& request) override;
 
@@ -180,21 +180,21 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncRemoveResourcePolicies(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::
           RemoveResourcePoliciesRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncReset(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::ResetRequest const& request)
       override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncResume(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::ResumeRequest const& request)
       override;
 
@@ -208,7 +208,7 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncSetDeletionProtection(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::
           SetDeletionProtectionRequest const& request) override;
 
@@ -216,7 +216,7 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncSetDiskAutoDelete(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::
           SetDiskAutoDeleteRequest const& request) override;
 
@@ -229,7 +229,7 @@ class InstancesRestLogging : public InstancesRestStub {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetLabels(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
           request) override;
 
@@ -237,7 +237,7 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncSetMachineResources(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::
           SetMachineResourcesRequest const& request) override;
 
@@ -245,14 +245,14 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncSetMachineType(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
           request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetMetadata(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
           request) override;
 
@@ -260,14 +260,14 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncSetMinCpuPlatform(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::
           SetMinCpuPlatformRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetName(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::SetNameRequest const& request)
       override;
 
@@ -275,7 +275,7 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncSetScheduling(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
           request) override;
 
@@ -283,7 +283,7 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncSetSecurityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::
           SetSecurityPolicyRequest const& request) override;
 
@@ -291,7 +291,7 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncSetServiceAccount(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::
           SetServiceAccountRequest const& request) override;
 
@@ -299,14 +299,14 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncSetShieldedInstanceIntegrityPolicy(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::
           SetShieldedInstanceIntegrityPolicyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSetTags(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request)
       override;
 
@@ -314,14 +314,14 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncSimulateMaintenanceEvent(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::
           SimulateMaintenanceEventRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncStart(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::StartRequest const& request)
       override;
 
@@ -329,21 +329,21 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncStartWithEncryptionKey(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::
           StartWithEncryptionKeyRequest const& request) override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncStop(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::StopRequest const& request)
       override;
 
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AsyncSuspend(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::SuspendRequest const& request)
       override;
 
@@ -357,7 +357,7 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncUpdateInstance(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
           request) override;
 
@@ -365,7 +365,7 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncUpdateAccessConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::
           UpdateAccessConfigRequest const& request) override;
 
@@ -373,7 +373,7 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncUpdateDisplayDevice(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::
           UpdateDisplayDeviceRequest const& request) override;
 
@@ -381,7 +381,7 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncUpdateNetworkInterface(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::
           UpdateNetworkInterfaceRequest const& request) override;
 
@@ -389,7 +389,7 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncUpdateShieldedInstanceConfig(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::instances::v1::
           UpdateShieldedInstanceConfigRequest const& request) override;
 
@@ -397,14 +397,14 @@ class InstancesRestLogging : public InstancesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::zone_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::zone_operations::v1::
           DeleteOperationRequest const& request) override;
 

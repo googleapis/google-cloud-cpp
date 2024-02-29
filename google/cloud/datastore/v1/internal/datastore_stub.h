@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTORE_V1_INTERNAL_DATASTORE_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATASTORE_V1_INTERNAL_DATASTORE_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/datastore/v1/datastore.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -34,37 +36,37 @@ class DatastoreStub {
   virtual ~DatastoreStub() = 0;
 
   virtual StatusOr<google::datastore::v1::LookupResponse> Lookup(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::v1::LookupRequest const& request) = 0;
 
   virtual StatusOr<google::datastore::v1::RunQueryResponse> RunQuery(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::v1::RunQueryRequest const& request) = 0;
 
   virtual StatusOr<google::datastore::v1::RunAggregationQueryResponse>
   RunAggregationQuery(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::v1::RunAggregationQueryRequest const& request) = 0;
 
   virtual StatusOr<google::datastore::v1::BeginTransactionResponse>
   BeginTransaction(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::v1::BeginTransactionRequest const& request) = 0;
 
   virtual StatusOr<google::datastore::v1::CommitResponse> Commit(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::v1::CommitRequest const& request) = 0;
 
   virtual StatusOr<google::datastore::v1::RollbackResponse> Rollback(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::v1::RollbackRequest const& request) = 0;
 
   virtual StatusOr<google::datastore::v1::AllocateIdsResponse> AllocateIds(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::v1::AllocateIdsRequest const& request) = 0;
 
   virtual StatusOr<google::datastore::v1::ReserveIdsResponse> ReserveIds(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::v1::ReserveIdsRequest const& request) = 0;
 };
 
@@ -76,36 +78,36 @@ class DefaultDatastoreStub : public DatastoreStub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::datastore::v1::LookupResponse> Lookup(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::v1::LookupRequest const& request) override;
 
   StatusOr<google::datastore::v1::RunQueryResponse> RunQuery(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::v1::RunQueryRequest const& request) override;
 
   StatusOr<google::datastore::v1::RunAggregationQueryResponse>
-  RunAggregationQuery(grpc::ClientContext& context,
+  RunAggregationQuery(grpc::ClientContext& context, Options const& options,
                       google::datastore::v1::RunAggregationQueryRequest const&
                           request) override;
 
   StatusOr<google::datastore::v1::BeginTransactionResponse> BeginTransaction(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::v1::BeginTransactionRequest const& request) override;
 
   StatusOr<google::datastore::v1::CommitResponse> Commit(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::v1::CommitRequest const& request) override;
 
   StatusOr<google::datastore::v1::RollbackResponse> Rollback(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::v1::RollbackRequest const& request) override;
 
   StatusOr<google::datastore::v1::AllocateIdsResponse> AllocateIds(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::v1::AllocateIdsRequest const& request) override;
 
   StatusOr<google::datastore::v1::ReserveIdsResponse> ReserveIds(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::datastore::v1::ReserveIdsRequest const& request) override;
 
  private:

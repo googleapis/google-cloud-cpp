@@ -40,98 +40,99 @@ class AdminServiceMetadata : public AdminServiceStub {
                        std::string api_client_header = "");
 
   StatusOr<google::cloud::pubsublite::v1::Topic> CreateTopic(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::CreateTopicRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::Topic> GetTopic(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::GetTopicRequest const& request) override;
 
   StatusOr<google::cloud::pubsublite::v1::TopicPartitions> GetTopicPartitions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::ListTopicsResponse> ListTopics(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::ListTopicsRequest const& request) override;
 
   StatusOr<google::cloud::pubsublite::v1::Topic> UpdateTopic(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::UpdateTopicRequest const& request)
       override;
 
-  Status DeleteTopic(grpc::ClientContext& context,
+  Status DeleteTopic(grpc::ClientContext& context, Options const& options,
                      google::cloud::pubsublite::v1::DeleteTopicRequest const&
                          request) override;
 
   StatusOr<google::cloud::pubsublite::v1::ListTopicSubscriptionsResponse>
   ListTopicSubscriptions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest const&
           request) override;
 
   StatusOr<google::cloud::pubsublite::v1::Subscription> CreateSubscription(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::Subscription> GetSubscription(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::GetSubscriptionRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::ListSubscriptionsResponse>
   ListSubscriptions(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::ListSubscriptionsRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::Subscription> UpdateSubscription(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request)
       override;
 
   Status DeleteSubscription(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncSeekSubscription(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::Reservation> CreateReservation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::CreateReservationRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::Reservation> GetReservation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::GetReservationRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::ListReservationsResponse>
-  ListReservations(grpc::ClientContext& context,
+  ListReservations(grpc::ClientContext& context, Options const& options,
                    google::cloud::pubsublite::v1::ListReservationsRequest const&
                        request) override;
 
   StatusOr<google::cloud::pubsublite::v1::Reservation> UpdateReservation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::UpdateReservationRequest const& request)
       override;
 
   Status DeleteReservation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::DeleteReservationRequest const& request)
       override;
 
   StatusOr<google::cloud::pubsublite::v1::ListReservationTopicsResponse>
   ListReservationTopics(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::pubsublite::v1::ListReservationTopicsRequest const&
           request) override;
 
@@ -144,12 +145,14 @@ class AdminServiceMetadata : public AdminServiceStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

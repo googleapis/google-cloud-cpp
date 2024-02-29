@@ -19,6 +19,7 @@
 
 #include "google/cloud/compute/interconnect_attachments/v1/interconnect_attachments_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

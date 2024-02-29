@@ -19,6 +19,7 @@
 #include "google/cloud/retail/v2/internal/search_auth_decorator.h"
 #include <google/cloud/retail/v2/search_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,11 +32,11 @@ SearchServiceAuth::SearchServiceAuth(
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
 StatusOr<google::cloud::retail::v2::SearchResponse> SearchServiceAuth::Search(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::retail::v2::SearchRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->Search(context, request);
+  return child_->Search(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

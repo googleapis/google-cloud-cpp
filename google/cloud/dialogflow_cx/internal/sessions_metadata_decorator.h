@@ -39,30 +39,38 @@ class SessionsMetadata : public SessionsStub {
                    std::string api_client_header = "");
 
   StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
-  DetectIntent(grpc::ClientContext& context,
+  DetectIntent(grpc::ClientContext& context, Options const& options,
                google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
                    request) override;
+
+  std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+      google::cloud::dialogflow::cx::v3::DetectIntentResponse>>
+  ServerStreamingDetectIntent(
+      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request)
+      override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>
   AsyncStreamingDetectIntent(
       google::cloud::CompletionQueue const& cq,
-      std::shared_ptr<grpc::ClientContext> context) override;
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse> MatchIntent(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request)
       override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
-  FulfillIntent(grpc::ClientContext& context,
+  FulfillIntent(grpc::ClientContext& context, Options const& options,
                 google::cloud::dialogflow::cx::v3::FulfillIntentRequest const&
                     request) override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::AnswerFeedback>
   SubmitAnswerFeedback(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::dialogflow::cx::v3::SubmitAnswerFeedbackRequest const&
           request) override;
 

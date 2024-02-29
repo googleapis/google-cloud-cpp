@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/feature_online_store_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ FeatureOnlineStoreServiceStub::~FeatureOnlineStoreServiceStub() = default;
 
 StatusOr<google::cloud::aiplatform::v1::FetchFeatureValuesResponse>
 DefaultFeatureOnlineStoreServiceStub::FetchFeatureValues(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::FetchFeatureValuesRequest const& request) {
   google::cloud::aiplatform::v1::FetchFeatureValuesResponse response;
   auto status = grpc_stub_->FetchFeatureValues(&context, request, &response);
@@ -43,7 +44,7 @@ DefaultFeatureOnlineStoreServiceStub::FetchFeatureValues(
 
 StatusOr<google::cloud::aiplatform::v1::SearchNearestEntitiesResponse>
 DefaultFeatureOnlineStoreServiceStub::SearchNearestEntities(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::SearchNearestEntitiesRequest const&
         request) {
   google::cloud::aiplatform::v1::SearchNearestEntitiesResponse response;

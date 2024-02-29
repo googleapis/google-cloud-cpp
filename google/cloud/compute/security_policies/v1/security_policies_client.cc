@@ -18,6 +18,7 @@
 
 #include "google/cloud/compute/security_policies/v1/security_policies_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

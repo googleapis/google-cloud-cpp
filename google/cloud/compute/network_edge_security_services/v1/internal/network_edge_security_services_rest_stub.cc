@@ -25,6 +25,7 @@
 #include <google/cloud/compute/network_edge_security_services/v1/network_edge_security_services.pb.h>
 #include <google/cloud/compute/region_operations/v1/region_operations.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -80,7 +81,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::
     AsyncDeleteNetworkEdgeSecurityService(
         CompletionQueue& cq,
         std::unique_ptr<rest_internal::RestContext> rest_context,
-        Options const& options,
+        google::cloud::internal::ImmutableOptions options,
         google::cloud::cpp::compute::network_edge_security_services::v1::
             DeleteNetworkEdgeSecurityServiceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -92,7 +93,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::
             rest_internal::Delete<google::cloud::cpp::compute::v1::Operation>(
                 *service, *rest_context, request, false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "networkEdgeSecurityServices", "/",
@@ -104,7 +105,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -132,7 +133,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::
     AsyncInsertNetworkEdgeSecurityService(
         CompletionQueue& cq,
         std::unique_ptr<rest_internal::RestContext> rest_context,
-        Options const& options,
+        google::cloud::internal::ImmutableOptions options,
         google::cloud::cpp::compute::network_edge_security_services::v1::
             InsertNetworkEdgeSecurityServiceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -145,7 +146,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::
                 *service, *rest_context,
                 request.network_edge_security_service_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "networkEdgeSecurityServices"),
@@ -158,7 +159,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -170,7 +171,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::
     AsyncPatchNetworkEdgeSecurityService(
         CompletionQueue& cq,
         std::unique_ptr<rest_internal::RestContext> rest_context,
-        Options const& options,
+        google::cloud::internal::ImmutableOptions options,
         google::cloud::cpp::compute::network_edge_security_services::v1::
             PatchNetworkEdgeSecurityServiceRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -183,7 +184,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::
                 *service, *rest_context,
                 request.network_edge_security_service_resource(), false,
                 absl::StrCat("/", "compute", "/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/", "projects", "/", request.project(), "/",
                              "regions", "/", request.region(), "/",
                              "networkEdgeSecurityServices", "/",
@@ -197,7 +198,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::
       service_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -208,7 +209,7 @@ future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 DefaultNetworkEdgeSecurityServicesRestStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_operations::v1::
         GetOperationRequest const& request) {
   promise<StatusOr<google::cloud::cpp::compute::v1::Operation>> p;
@@ -221,7 +222,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::AsyncGetOperation(
             rest_internal::Get<google::cloud::cpp::compute::v1::Operation>(
                 *operations, *rest_context, request, false,
                 absl::StrCat("/compute/",
-                             rest_internal::DetermineApiVersion("v1", options),
+                             rest_internal::DetermineApiVersion("v1", *options),
                              "/projects/", request.project(), "/regions/",
                              request.region(), "/operations/",
                              request.operation())));
@@ -230,7 +231,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::AsyncGetOperation(
       operations_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get();
@@ -240,7 +241,7 @@ DefaultNetworkEdgeSecurityServicesRestStub::AsyncGetOperation(
 future<Status> DefaultNetworkEdgeSecurityServicesRestStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::cpp::compute::region_operations::v1::
         DeleteOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
@@ -251,7 +252,7 @@ future<Status> DefaultNetworkEdgeSecurityServicesRestStub::AsyncCancelOperation(
         p.set_value(rest_internal::Post<google::protobuf::Empty>(
             *operations, *rest_context, request, false,
             absl::StrCat(
-                "/compute/", rest_internal::DetermineApiVersion("v1", options),
+                "/compute/", rest_internal::DetermineApiVersion("v1", *options),
                 "/projects/", request.project(), "/regions/", request.region(),
                 "/operations/", request.operation())));
       },
@@ -259,7 +260,7 @@ future<Status> DefaultNetworkEdgeSecurityServicesRestStub::AsyncCancelOperation(
       operations_,
       request,
       std::move(rest_context),
-      options};
+      std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable { t.join(); });
     return f.get().status();

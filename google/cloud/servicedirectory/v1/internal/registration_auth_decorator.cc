@@ -19,6 +19,7 @@
 #include "google/cloud/servicedirectory/v1/internal/registration_auth_decorator.h"
 #include <google/cloud/servicedirectory/v1/registration_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,162 +33,162 @@ RegistrationServiceAuth::RegistrationServiceAuth(
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
 RegistrationServiceAuth::CreateNamespace(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateNamespace(context, request);
+  return child_->CreateNamespace(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::ListNamespacesResponse>
 RegistrationServiceAuth::ListNamespaces(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::ListNamespacesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListNamespaces(context, request);
+  return child_->ListNamespaces(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
 RegistrationServiceAuth::GetNamespace(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::GetNamespaceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetNamespace(context, request);
+  return child_->GetNamespace(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Namespace>
 RegistrationServiceAuth::UpdateNamespace(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateNamespace(context, request);
+  return child_->UpdateNamespace(context, options, request);
 }
 
 Status RegistrationServiceAuth::DeleteNamespace(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteNamespace(context, request);
+  return child_->DeleteNamespace(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
 RegistrationServiceAuth::CreateService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::CreateServiceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateService(context, request);
+  return child_->CreateService(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::ListServicesResponse>
 RegistrationServiceAuth::ListServices(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::ListServicesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListServices(context, request);
+  return child_->ListServices(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
 RegistrationServiceAuth::GetService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::GetServiceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetService(context, request);
+  return child_->GetService(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Service>
 RegistrationServiceAuth::UpdateService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::UpdateServiceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateService(context, request);
+  return child_->UpdateService(context, options, request);
 }
 
 Status RegistrationServiceAuth::DeleteService(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::DeleteServiceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteService(context, request);
+  return child_->DeleteService(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
 RegistrationServiceAuth::CreateEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::CreateEndpointRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateEndpoint(context, request);
+  return child_->CreateEndpoint(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::ListEndpointsResponse>
 RegistrationServiceAuth::ListEndpoints(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::ListEndpointsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEndpoints(context, request);
+  return child_->ListEndpoints(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
 RegistrationServiceAuth::GetEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::GetEndpointRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEndpoint(context, request);
+  return child_->GetEndpoint(context, options, request);
 }
 
 StatusOr<google::cloud::servicedirectory::v1::Endpoint>
 RegistrationServiceAuth::UpdateEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::UpdateEndpointRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateEndpoint(context, request);
+  return child_->UpdateEndpoint(context, options, request);
 }
 
 Status RegistrationServiceAuth::DeleteEndpoint(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::servicedirectory::v1::DeleteEndpointRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteEndpoint(context, request);
+  return child_->DeleteEndpoint(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> RegistrationServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> RegistrationServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 RegistrationServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

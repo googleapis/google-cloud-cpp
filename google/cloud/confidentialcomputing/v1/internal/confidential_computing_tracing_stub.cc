@@ -18,6 +18,7 @@
 
 #include "google/cloud/confidentialcomputing/v1/internal/confidential_computing_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ ConfidentialComputingTracingStub::ConfidentialComputingTracingStub(
 
 StatusOr<google::cloud::confidentialcomputing::v1::Challenge>
 ConfidentialComputingTracingStub::CreateChallenge(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::confidentialcomputing::v1::CreateChallengeRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -41,12 +42,12 @@ ConfidentialComputingTracingStub::CreateChallenge(
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->CreateChallenge(context, request));
+                           child_->CreateChallenge(context, options, request));
 }
 
 StatusOr<google::cloud::confidentialcomputing::v1::VerifyAttestationResponse>
 ConfidentialComputingTracingStub::VerifyAttestation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::confidentialcomputing::v1::VerifyAttestationRequest const&
         request) {
   auto span = internal::MakeSpanGrpc(
@@ -54,8 +55,8 @@ ConfidentialComputingTracingStub::VerifyAttestation(
       "VerifyAttestation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->VerifyAttestation(context, request));
+  return internal::EndSpan(
+      context, *span, child_->VerifyAttestation(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/monitoring/v3/uptime_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ UptimeCheckServiceStub::~UptimeCheckServiceStub() = default;
 
 StatusOr<google::monitoring::v3::ListUptimeCheckConfigsResponse>
 DefaultUptimeCheckServiceStub::ListUptimeCheckConfigs(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::ListUptimeCheckConfigsRequest const& request) {
   google::monitoring::v3::ListUptimeCheckConfigsResponse response;
   auto status =
@@ -44,7 +45,7 @@ DefaultUptimeCheckServiceStub::ListUptimeCheckConfigs(
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 DefaultUptimeCheckServiceStub::GetUptimeCheckConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::GetUptimeCheckConfigRequest const& request) {
   google::monitoring::v3::UptimeCheckConfig response;
   auto status = grpc_stub_->GetUptimeCheckConfig(&context, request, &response);
@@ -56,7 +57,7 @@ DefaultUptimeCheckServiceStub::GetUptimeCheckConfig(
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 DefaultUptimeCheckServiceStub::CreateUptimeCheckConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) {
   google::monitoring::v3::UptimeCheckConfig response;
   auto status =
@@ -69,7 +70,7 @@ DefaultUptimeCheckServiceStub::CreateUptimeCheckConfig(
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 DefaultUptimeCheckServiceStub::UpdateUptimeCheckConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) {
   google::monitoring::v3::UptimeCheckConfig response;
   auto status =
@@ -81,7 +82,7 @@ DefaultUptimeCheckServiceStub::UpdateUptimeCheckConfig(
 }
 
 Status DefaultUptimeCheckServiceStub::DeleteUptimeCheckConfig(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) {
   google::protobuf::Empty response;
   auto status =
@@ -94,7 +95,7 @@ Status DefaultUptimeCheckServiceStub::DeleteUptimeCheckConfig(
 
 StatusOr<google::monitoring::v3::ListUptimeCheckIpsResponse>
 DefaultUptimeCheckServiceStub::ListUptimeCheckIps(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::ListUptimeCheckIpsRequest const& request) {
   google::monitoring::v3::ListUptimeCheckIpsResponse response;
   auto status = grpc_stub_->ListUptimeCheckIps(&context, request, &response);

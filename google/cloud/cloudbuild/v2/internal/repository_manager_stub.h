@@ -28,6 +28,7 @@
 #include <google/devtools/cloudbuild/v2/repositories.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -41,99 +42,107 @@ class RepositoryManagerStub {
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateConnection(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::devtools::cloudbuild::v2::CreateConnectionRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::cloudbuild::v2::Connection> GetConnection(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v2::GetConnectionRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::cloudbuild::v2::ListConnectionsResponse>
   ListConnections(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v2::ListConnectionsRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncUpdateConnection(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::devtools::cloudbuild::v2::UpdateConnectionRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteConnection(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::devtools::cloudbuild::v2::DeleteConnectionRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateRepository(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::devtools::cloudbuild::v2::CreateRepositoryRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncBatchCreateRepositories(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::cloudbuild::v2::Repository> GetRepository(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v2::GetRepositoryRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::cloudbuild::v2::ListRepositoriesResponse>
   ListRepositories(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v2::ListRepositoriesRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncDeleteRepository(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::devtools::cloudbuild::v2::DeleteRepositoryRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
   FetchReadWriteToken(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
-  FetchReadToken(grpc::ClientContext& context,
+  FetchReadToken(grpc::ClientContext& context, Options const& options,
                  google::devtools::cloudbuild::v2::FetchReadTokenRequest const&
                      request) = 0;
 
   virtual StatusOr<
       google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse>
   FetchLinkableRepositories(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
           request) = 0;
 
   virtual StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse>
   FetchGitRefs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -149,92 +158,100 @@ class DefaultRepositoryManagerStub : public RepositoryManagerStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateConnection(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::devtools::cloudbuild::v2::CreateConnectionRequest const& request)
       override;
 
   StatusOr<google::devtools::cloudbuild::v2::Connection> GetConnection(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v2::GetConnectionRequest const& request)
       override;
 
   StatusOr<google::devtools::cloudbuild::v2::ListConnectionsResponse>
   ListConnections(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v2::ListConnectionsRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateConnection(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::devtools::cloudbuild::v2::UpdateConnectionRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteConnection(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::devtools::cloudbuild::v2::DeleteConnectionRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRepository(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::devtools::cloudbuild::v2::CreateRepositoryRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncBatchCreateRepositories(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
           request) override;
 
   StatusOr<google::devtools::cloudbuild::v2::Repository> GetRepository(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v2::GetRepositoryRequest const& request)
       override;
 
   StatusOr<google::devtools::cloudbuild::v2::ListRepositoriesResponse>
   ListRepositories(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v2::ListRepositoriesRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRepository(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::devtools::cloudbuild::v2::DeleteRepositoryRequest const& request)
       override;
 
   StatusOr<google::devtools::cloudbuild::v2::FetchReadWriteTokenResponse>
   FetchReadWriteToken(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v2::FetchReadWriteTokenRequest const&
           request) override;
 
   StatusOr<google::devtools::cloudbuild::v2::FetchReadTokenResponse>
-  FetchReadToken(grpc::ClientContext& context,
+  FetchReadToken(grpc::ClientContext& context, Options const& options,
                  google::devtools::cloudbuild::v2::FetchReadTokenRequest const&
                      request) override;
 
   StatusOr<google::devtools::cloudbuild::v2::FetchLinkableRepositoriesResponse>
   FetchLinkableRepositories(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v2::FetchLinkableRepositoriesRequest const&
           request) override;
 
   StatusOr<google::devtools::cloudbuild::v2::FetchGitRefsResponse> FetchGitRefs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::devtools::cloudbuild::v2::FetchGitRefsRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

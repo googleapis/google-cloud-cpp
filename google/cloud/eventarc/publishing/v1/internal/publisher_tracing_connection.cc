@@ -19,6 +19,7 @@
 #include "google/cloud/eventarc/publishing/v1/internal/publisher_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

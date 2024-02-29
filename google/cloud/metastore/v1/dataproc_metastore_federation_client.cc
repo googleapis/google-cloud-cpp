@@ -18,6 +18,7 @@
 
 #include "google/cloud/metastore/v1/dataproc_metastore_federation_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

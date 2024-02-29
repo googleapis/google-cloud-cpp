@@ -24,6 +24,7 @@
 #include "google/cloud/internal/async_long_running_operation.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -69,12 +70,12 @@ WebRiskServiceConnectionImpl::ComputeThreatListDiff(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ComputeThreatListDiff(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::webrisk::v1::ComputeThreatListDiffRequest const&
                  request) {
-        return stub_->ComputeThreatListDiff(context, request);
+        return stub_->ComputeThreatListDiff(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
@@ -84,11 +85,11 @@ WebRiskServiceConnectionImpl::SearchUris(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SearchUris(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::webrisk::v1::SearchUrisRequest const& request) {
-        return stub_->SearchUris(context, request);
+        return stub_->SearchUris(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
@@ -98,11 +99,11 @@ WebRiskServiceConnectionImpl::SearchHashes(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->SearchHashes(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::webrisk::v1::SearchHashesRequest const& request) {
-        return stub_->SearchHashes(context, request);
+        return stub_->SearchHashes(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::webrisk::v1::Submission>
@@ -113,44 +114,48 @@ WebRiskServiceConnectionImpl::CreateSubmission(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateSubmission(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::webrisk::v1::CreateSubmissionRequest const& request) {
-        return stub_->CreateSubmission(context, request);
+        return stub_->CreateSubmission(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 future<StatusOr<google::cloud::webrisk::v1::Submission>>
 WebRiskServiceConnectionImpl::SubmitUri(
     google::cloud::webrisk::v1::SubmitUriRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
+  auto request_copy = request;
+  auto const idempotent = idempotency_policy(*current)->SubmitUri(request_copy);
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::webrisk::v1::Submission>(
-      background_->cq(), current, request,
+      background_->cq(), current, std::move(request_copy),
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::cloud::webrisk::v1::SubmitUriRequest const& request) {
-        return stub->AsyncSubmitUri(cq, std::move(context), options, request);
+        return stub->AsyncSubmitUri(cq, std::move(context), std::move(options),
+                                    request);
       },
       [stub = stub_](google::cloud::CompletionQueue& cq,
                      std::shared_ptr<grpc::ClientContext> context,
-                     Options const& options,
+                     google::cloud::internal::ImmutableOptions options,
                      google::longrunning::GetOperationRequest const& request) {
-        return stub->AsyncGetOperation(cq, std::move(context), options,
-                                       request);
+        return stub->AsyncGetOperation(cq, std::move(context),
+                                       std::move(options), request);
       },
       [stub = stub_](
           google::cloud::CompletionQueue& cq,
-          std::shared_ptr<grpc::ClientContext> context, Options const& options,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
           google::longrunning::CancelOperationRequest const& request) {
-        return stub->AsyncCancelOperation(cq, std::move(context), options,
-                                          request);
+        return stub->AsyncCancelOperation(cq, std::move(context),
+                                          std::move(options), request);
       },
       &google::cloud::internal::ExtractLongRunningResultResponse<
           google::cloud::webrisk::v1::Submission>,
-      retry_policy(*current), backoff_policy(*current),
-      idempotency_policy(*current)->SubmitUri(request),
+      retry_policy(*current), backoff_policy(*current), idempotent,
       polling_policy(*current), __func__);
 }
 

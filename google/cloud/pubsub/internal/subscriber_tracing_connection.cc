@@ -68,10 +68,13 @@ StatusOr<pubsub::PullResponse> EndPullSpan(
         /*sc::kMessagingMessageEnvelopeSize=*/"messaging.message.envelope.size",
         static_cast<std::int64_t>(MessageSize(message)));
 
+    auto current = opentelemetry::context::RuntimeContext::GetCurrent();
     auto context = ExtractTraceContext(message, *propagator);
     auto producer_span_context =
         opentelemetry::trace::GetSpan(context)->GetContext();
-    if (producer_span_context.IsSampled() && producer_span_context.IsValid()) {
+    // If the contexts are equal, the message span was invalid.
+    if (!(current == context) && producer_span_context.IsSampled() &&
+        producer_span_context.IsValid()) {
 #if OPENTELEMETRY_ABI_VERSION_NO >= 2
       span->AddLink(producer_span_context, {});
 #else

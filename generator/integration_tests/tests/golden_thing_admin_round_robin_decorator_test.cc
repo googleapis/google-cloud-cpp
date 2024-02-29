@@ -63,7 +63,8 @@ TEST(GoldenThingAdminRoundRobinDecoratorTest, AsyncCreateDatabase) {
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
     auto status =
         stub.AsyncCreateDatabase(
-                cq, std::make_shared<grpc::ClientContext>(), Options{},
+                cq, std::make_shared<grpc::ClientContext>(),
+                internal::MakeImmutableOptions({}),
                 google::test::admin::database::v1::CreateDatabaseRequest{})
             .get();
     EXPECT_STATUS_OK(status);
@@ -83,8 +84,7 @@ TEST(GoldenThingAdminRoundRobinDecoratorTest, DropDatabase) {
   GoldenThingAdminRoundRobin stub(AsPlainStubs(mocks));
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
     grpc::ClientContext context;
-    auto status = stub.DropDatabase(
-        context, google::test::admin::database::v1::DropDatabaseRequest{});
+    auto status = stub.DropDatabase(context, Options{}, {});
     EXPECT_STATUS_OK(status);
   }
 }
@@ -148,10 +148,11 @@ TEST(GoldenThingAdminRoundRobinDecoratorTest, AsyncGetOperation) {
   CompletionQueue cq;
   GoldenThingAdminRoundRobin stub(AsPlainStubs(mocks));
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
-    auto status = stub.AsyncGetOperation(
-                          cq, std::make_shared<grpc::ClientContext>(),
-                          Options{}, google::longrunning::GetOperationRequest{})
-                      .get();
+    auto status =
+        stub.AsyncGetOperation(cq, std::make_shared<grpc::ClientContext>(),
+                               internal::MakeImmutableOptions({}),
+                               google::longrunning::GetOperationRequest{})
+            .get();
     EXPECT_STATUS_OK(status);
   }
 }
@@ -171,7 +172,7 @@ TEST(GoldenThingAdminRoundRobinDecoratorTest, AsyncCancelOperation) {
   for (size_t i = 0; i != kRepeats * mocks.size(); ++i) {
     auto status =
         stub.AsyncCancelOperation(cq, std::make_shared<grpc::ClientContext>(),
-                                  Options{},
+                                  internal::MakeImmutableOptions({}),
                                   google::longrunning::CancelOperationRequest{})
             .get();
     EXPECT_STATUS_OK(status);

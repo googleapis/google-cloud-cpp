@@ -44,47 +44,47 @@ WebhooksMetadata::WebhooksMetadata(
 
 StatusOr<google::cloud::dialogflow::cx::v3::ListWebhooksResponse>
 WebhooksMetadata::ListWebhooks(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::ListWebhooksRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->ListWebhooks(context, request);
+  return child_->ListWebhooks(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 WebhooksMetadata::GetWebhook(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->GetWebhook(context, request);
+  return child_->GetWebhook(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 WebhooksMetadata::CreateWebhook(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->CreateWebhook(context, request);
+  return child_->CreateWebhook(context, options, request);
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 WebhooksMetadata::UpdateWebhook(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("webhook.name=",
                            internal::UrlEncode(request.webhook().name())));
-  return child_->UpdateWebhook(context, request);
+  return child_->UpdateWebhook(context, options, request);
 }
 
 Status WebhooksMetadata::DeleteWebhook(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request) {
-  SetMetadata(context, internal::CurrentOptions(),
+  SetMetadata(context, options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->DeleteWebhook(context, request);
+  return child_->DeleteWebhook(context, options, request);
 }
 
 void WebhooksMetadata::SetMetadata(grpc::ClientContext& context,

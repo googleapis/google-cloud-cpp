@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/aiplatform/v1/featurestore_online_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,7 +33,7 @@ FeaturestoreOnlineServingServiceStub::~FeaturestoreOnlineServingServiceStub() =
 
 StatusOr<google::cloud::aiplatform::v1::ReadFeatureValuesResponse>
 DefaultFeaturestoreOnlineServingServiceStub::ReadFeatureValues(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::ReadFeatureValuesRequest const& request) {
   google::cloud::aiplatform::v1::ReadFeatureValuesResponse response;
   auto status = grpc_stub_->ReadFeatureValues(&context, request, &response);
@@ -56,7 +57,7 @@ DefaultFeaturestoreOnlineServingServiceStub::StreamingReadFeatureValues(
 
 StatusOr<google::cloud::aiplatform::v1::WriteFeatureValuesResponse>
 DefaultFeaturestoreOnlineServingServiceStub::WriteFeatureValues(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::aiplatform::v1::WriteFeatureValuesRequest const& request) {
   google::cloud::aiplatform::v1::WriteFeatureValuesResponse response;
   auto status = grpc_stub_->WriteFeatureValues(&context, request, &response);

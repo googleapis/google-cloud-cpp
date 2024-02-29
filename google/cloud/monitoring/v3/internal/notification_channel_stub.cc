@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/monitoring/v3/notification_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ NotificationChannelServiceStub::~NotificationChannelServiceStub() = default;
 
 StatusOr<google::monitoring::v3::ListNotificationChannelDescriptorsResponse>
 DefaultNotificationChannelServiceStub::ListNotificationChannelDescriptors(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::ListNotificationChannelDescriptorsRequest const&
         request) {
   google::monitoring::v3::ListNotificationChannelDescriptorsResponse response;
@@ -45,7 +46,7 @@ DefaultNotificationChannelServiceStub::ListNotificationChannelDescriptors(
 
 StatusOr<google::monitoring::v3::NotificationChannelDescriptor>
 DefaultNotificationChannelServiceStub::GetNotificationChannelDescriptor(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::GetNotificationChannelDescriptorRequest const&
         request) {
   google::monitoring::v3::NotificationChannelDescriptor response;
@@ -59,7 +60,7 @@ DefaultNotificationChannelServiceStub::GetNotificationChannelDescriptor(
 
 StatusOr<google::monitoring::v3::ListNotificationChannelsResponse>
 DefaultNotificationChannelServiceStub::ListNotificationChannels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::ListNotificationChannelsRequest const& request) {
   google::monitoring::v3::ListNotificationChannelsResponse response;
   auto status =
@@ -72,7 +73,7 @@ DefaultNotificationChannelServiceStub::ListNotificationChannels(
 
 StatusOr<google::monitoring::v3::NotificationChannel>
 DefaultNotificationChannelServiceStub::GetNotificationChannel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::GetNotificationChannelRequest const& request) {
   google::monitoring::v3::NotificationChannel response;
   auto status =
@@ -85,7 +86,7 @@ DefaultNotificationChannelServiceStub::GetNotificationChannel(
 
 StatusOr<google::monitoring::v3::NotificationChannel>
 DefaultNotificationChannelServiceStub::CreateNotificationChannel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::CreateNotificationChannelRequest const& request) {
   google::monitoring::v3::NotificationChannel response;
   auto status =
@@ -98,7 +99,7 @@ DefaultNotificationChannelServiceStub::CreateNotificationChannel(
 
 StatusOr<google::monitoring::v3::NotificationChannel>
 DefaultNotificationChannelServiceStub::UpdateNotificationChannel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::UpdateNotificationChannelRequest const& request) {
   google::monitoring::v3::NotificationChannel response;
   auto status =
@@ -110,7 +111,7 @@ DefaultNotificationChannelServiceStub::UpdateNotificationChannel(
 }
 
 Status DefaultNotificationChannelServiceStub::DeleteNotificationChannel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::DeleteNotificationChannelRequest const& request) {
   google::protobuf::Empty response;
   auto status =
@@ -123,7 +124,7 @@ Status DefaultNotificationChannelServiceStub::DeleteNotificationChannel(
 
 Status
 DefaultNotificationChannelServiceStub::SendNotificationChannelVerificationCode(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::
         SendNotificationChannelVerificationCodeRequest const& request) {
   google::protobuf::Empty response;
@@ -137,7 +138,7 @@ DefaultNotificationChannelServiceStub::SendNotificationChannelVerificationCode(
 
 StatusOr<google::monitoring::v3::GetNotificationChannelVerificationCodeResponse>
 DefaultNotificationChannelServiceStub::GetNotificationChannelVerificationCode(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::GetNotificationChannelVerificationCodeRequest const&
         request) {
   google::monitoring::v3::GetNotificationChannelVerificationCodeResponse
@@ -152,7 +153,7 @@ DefaultNotificationChannelServiceStub::GetNotificationChannelVerificationCode(
 
 StatusOr<google::monitoring::v3::NotificationChannel>
 DefaultNotificationChannelServiceStub::VerifyNotificationChannel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::monitoring::v3::VerifyNotificationChannelRequest const& request) {
   google::monitoring::v3::NotificationChannel response;
   auto status =

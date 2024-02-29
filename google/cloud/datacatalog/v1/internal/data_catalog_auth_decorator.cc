@@ -19,6 +19,7 @@
 #include "google/cloud/datacatalog/v1/internal/data_catalog_auth_decorator.h"
 #include <google/cloud/datacatalog/v1/datacatalog.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,353 +33,357 @@ DataCatalogAuth::DataCatalogAuth(
 
 StatusOr<google::cloud::datacatalog::v1::SearchCatalogResponse>
 DataCatalogAuth::SearchCatalog(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::SearchCatalogRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SearchCatalog(context, request);
+  return child_->SearchCatalog(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogAuth::CreateEntryGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateEntryGroup(context, request);
+  return child_->CreateEntryGroup(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogAuth::GetEntryGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::GetEntryGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEntryGroup(context, request);
+  return child_->GetEntryGroup(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogAuth::UpdateEntryGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateEntryGroup(context, request);
+  return child_->UpdateEntryGroup(context, options, request);
 }
 
 Status DataCatalogAuth::DeleteEntryGroup(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteEntryGroup(context, request);
+  return child_->DeleteEntryGroup(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ListEntryGroupsResponse>
 DataCatalogAuth::ListEntryGroups(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ListEntryGroupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEntryGroups(context, request);
+  return child_->ListEntryGroups(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogAuth::CreateEntry(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::CreateEntryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateEntry(context, request);
+  return child_->CreateEntry(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogAuth::UpdateEntry(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::UpdateEntryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateEntry(context, request);
+  return child_->UpdateEntry(context, options, request);
 }
 
 Status DataCatalogAuth::DeleteEntry(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::DeleteEntryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteEntry(context, request);
+  return child_->DeleteEntry(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogAuth::GetEntry(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::GetEntryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetEntry(context, request);
+  return child_->GetEntry(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Entry> DataCatalogAuth::LookupEntry(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::LookupEntryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->LookupEntry(context, request);
+  return child_->LookupEntry(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ListEntriesResponse>
 DataCatalogAuth::ListEntries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ListEntriesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListEntries(context, request);
+  return child_->ListEntries(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::EntryOverview>
 DataCatalogAuth::ModifyEntryOverview(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ModifyEntryOverview(context, request);
+  return child_->ModifyEntryOverview(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Contacts>
 DataCatalogAuth::ModifyEntryContacts(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ModifyEntryContacts(context, request);
+  return child_->ModifyEntryContacts(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogAuth::CreateTagTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateTagTemplate(context, request);
+  return child_->CreateTagTemplate(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogAuth::GetTagTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::GetTagTemplateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetTagTemplate(context, request);
+  return child_->GetTagTemplate(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogAuth::UpdateTagTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateTagTemplate(context, request);
+  return child_->UpdateTagTemplate(context, options, request);
 }
 
 Status DataCatalogAuth::DeleteTagTemplate(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteTagTemplate(context, request);
+  return child_->DeleteTagTemplate(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogAuth::CreateTagTemplateField(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateTagTemplateField(context, request);
+  return child_->CreateTagTemplateField(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogAuth::UpdateTagTemplateField(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateTagTemplateField(context, request);
+  return child_->UpdateTagTemplateField(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogAuth::RenameTagTemplateField(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RenameTagTemplateField(context, request);
+  return child_->RenameTagTemplateField(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogAuth::RenameTagTemplateFieldEnumValue(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::
         RenameTagTemplateFieldEnumValueRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->RenameTagTemplateFieldEnumValue(context, request);
+  return child_->RenameTagTemplateFieldEnumValue(context, options, request);
 }
 
 Status DataCatalogAuth::DeleteTagTemplateField(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
         request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteTagTemplateField(context, request);
+  return child_->DeleteTagTemplateField(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Tag> DataCatalogAuth::CreateTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::CreateTagRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->CreateTag(context, request);
+  return child_->CreateTag(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::Tag> DataCatalogAuth::UpdateTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::UpdateTagRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UpdateTag(context, request);
+  return child_->UpdateTag(context, options, request);
 }
 
 Status DataCatalogAuth::DeleteTag(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::DeleteTagRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->DeleteTag(context, request);
+  return child_->DeleteTag(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::ListTagsResponse>
 DataCatalogAuth::ListTags(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::ListTagsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->ListTags(context, request);
+  return child_->ListTags(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataCatalogAuth::AsyncReconcileTags(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::datacatalog::v1::ReconcileTagsRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncReconcileTags(cq, *std::move(context), options,
-                                         request);
+        return child->AsyncReconcileTags(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
 DataCatalogAuth::StarEntry(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::StarEntryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->StarEntry(context, request);
+  return child_->StarEntry(context, options, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
 DataCatalogAuth::UnstarEntry(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->UnstarEntry(context, request);
+  return child_->UnstarEntry(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> DataCatalogAuth::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->SetIamPolicy(context, request);
+  return child_->SetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::Policy> DataCatalogAuth::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->GetIamPolicy(context, request);
+  return child_->GetIamPolicy(context, options, request);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DataCatalogAuth::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
-  return child_->TestIamPermissions(context, request);
+  return child_->TestIamPermissions(context, options, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataCatalogAuth::AsyncImportEntries(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::datacatalog::v1::ImportEntriesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncImportEntries(cq, *std::move(context), options,
-                                         request);
+        return child->AsyncImportEntries(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
 future<StatusOr<google::longrunning::Operation>>
 DataCatalogAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(cq, *std::move(context), options,
-                                        request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
 future<Status> DataCatalogAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child = child_, options,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(cq, *std::move(context), options,
-                                           request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

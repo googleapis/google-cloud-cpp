@@ -31,9 +31,11 @@ using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
 using ::google::cloud::bigtable::testing::MockBigtableStub;
 using ::google::cloud::bigtable::testing::MockMutateRowsLimiter;
 using ::google::cloud::bigtable::testing::MockMutateRowsStream;
+using ::google::cloud::internal::EnableServerRetriesOption;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 using ::testing::Contains;
+using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::IsEmpty;
 using ::testing::Matcher;
@@ -319,6 +321,87 @@ TEST_F(BulkMutatorTest, RetryOnlyIdempotent) {
   ASSERT_EQ(1UL, failures.size());
   EXPECT_EQ(0, failures[0].original_index());
   EXPECT_THAT(failures[0].status(), StatusIs(StatusCode::kUnavailable));
+}
+
+TEST_F(BulkMutatorTest, RetryInfoHeeded) {
+  // Create a BulkMutation with a non-idempotent mutation.
+  BulkMutation mut(NonIdempotentMutation("row"));
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, MutateRows)
+      .WillOnce([this](auto context, auto const&,
+                       google::bigtable::v2::MutateRowsRequest const&) {
+        metadata_fixture_.SetServerMetadata(*context, {});
+        auto status =
+            google::cloud::internal::ResourceExhaustedError("try again");
+        google::cloud::internal::SetRetryInfo(
+            status, google::cloud::internal::RetryInfo{0_ms});
+        auto stream = std::make_unique<MockMutateRowsStream>();
+        EXPECT_CALL(*stream, Read).WillOnce(Return(status));
+        return stream;
+      })
+      // By supplying a `RetryInfo` in the error details, the server is telling
+      // us that it is safe to retry the mutation, even though it is not
+      // idempotent.
+      .WillOnce([this](auto context, auto const&,
+                       google::bigtable::v2::MutateRowsRequest const& request) {
+        metadata_fixture_.SetServerMetadata(*context, {});
+        std::vector<RowKeyType> row_keys;
+        for (auto const& entry : request.entries()) {
+          row_keys.push_back(entry.row_key());
+        }
+        EXPECT_THAT(row_keys, ElementsAre("row"));
+        auto stream = std::make_unique<MockMutateRowsStream>();
+        EXPECT_CALL(*stream, Read)
+            .WillOnce(Return(MakeResponse({{0, grpc::StatusCode::OK}})))
+            .WillOnce(Return(Status()));
+        return stream;
+      });
+
+  auto policy = DefaultIdempotentMutationPolicy();
+  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
+                                         std::move(mut));
+
+  for (int i = 0; i != 2; ++i) {
+    EXPECT_TRUE(mutator.HasPendingMutations());
+    bigtable_internal::NoopMutateRowsLimiter limiter;
+    (void)mutator.MakeOneRequest(
+        *mock, limiter, Options{}.set<EnableServerRetriesOption>(true));
+  }
+  auto failures = std::move(mutator).OnRetryDone();
+  EXPECT_THAT(failures, IsEmpty());
+}
+
+TEST_F(BulkMutatorTest, RetryInfoIgnored) {
+  // Create a BulkMutation with a non-idempotent mutation.
+  BulkMutation mut(NonIdempotentMutation("row"));
+
+  auto mock = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(*mock, MutateRows)
+      .WillOnce([this](auto context, auto const&,
+                       google::bigtable::v2::MutateRowsRequest const&) {
+        metadata_fixture_.SetServerMetadata(*context, {});
+        auto status =
+            google::cloud::internal::ResourceExhaustedError("try again");
+        google::cloud::internal::SetRetryInfo(
+            status, google::cloud::internal::RetryInfo{0_ms});
+        auto stream = std::make_unique<MockMutateRowsStream>();
+        EXPECT_CALL(*stream, Read).WillOnce(Return(status));
+        return stream;
+      });
+
+  auto policy = DefaultIdempotentMutationPolicy();
+  bigtable_internal::BulkMutator mutator(kAppProfile, kTableName, *policy,
+                                         std::move(mut));
+
+  EXPECT_TRUE(mutator.HasPendingMutations());
+  bigtable_internal::NoopMutateRowsLimiter limiter;
+  auto status = mutator.MakeOneRequest(
+      *mock, limiter, Options{}.set<EnableServerRetriesOption>(false));
+  EXPECT_THAT(status, StatusIs(StatusCode::kResourceExhausted));
+  EXPECT_FALSE(mutator.HasPendingMutations());
+  auto failures = std::move(mutator).OnRetryDone();
+  EXPECT_THAT(failures, ElementsAre(FailedMutation(status, 0)));
 }
 
 TEST_F(BulkMutatorTest, UnconfirmedAreFailed) {

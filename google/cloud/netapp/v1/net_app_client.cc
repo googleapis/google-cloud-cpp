@@ -18,6 +18,7 @@
 
 #include "google/cloud/netapp/v1/net_app_client.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {

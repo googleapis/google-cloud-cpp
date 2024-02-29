@@ -30,26 +30,18 @@ RUN apt-get update && \
 # #### Abseil
 
 # Debian 11 ships with Abseil==20200923.3.  Unfortunately, the current gRPC
-# version needs Abseil >= 20210324.
-
-# :warning: By default, Abseil's ABI changes depending on whether it is used
-# with C++ >= 17 enabled or not. Installing Abseil with the default
-# configuration is error-prone, unless you can guarantee that all the code using
-# Abseil (gRPC, google-cloud-cpp, your own code, etc.) is compiled with the same
-# C++ version. We recommend that you switch the default configuration to pin
-# Abseil's ABI to the version used at compile time. In this case, the compiler
-# defaults to C++14. Therefore, we change `absl/base/options.h` to **always**
-# use `absl::any`, `absl::string_view`, and `absl::variant`. See
-# [abseil/abseil-cpp#696] for more information.
+# version needs Abseil >= 20210324. Enabling `ABSL_PROPAGATE_CXX_STD`
+# propagates the version of C++ used to compile Abseil to anything that depends
+# on Abseil.
 
 # ```bash
 WORKDIR /var/tmp/build/abseil-cpp
-RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20230802.1.tar.gz | \
+RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20240116.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
-    sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DABSL_BUILD_TESTING=OFF \
+      -DABSL_PROPAGATE_CXX_STD=ON \
       -DBUILD_SHARED_LIBS=yes \
       -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
@@ -96,7 +88,7 @@ RUN apt-get update && \
 
 # ```bash
 WORKDIR /var/tmp/build/protobuf
-RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v25.2.tar.gz | \
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v25.3.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -133,7 +125,7 @@ RUN curl -fsSL https://github.com/google/re2/archive/2024-02-01.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/grpc
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.61.0.tar.gz | \
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.62.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -160,7 +152,7 @@ RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.61.0.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/opentelemetry-cpp
-RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.13.0.tar.gz | \
+RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.14.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \

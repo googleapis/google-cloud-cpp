@@ -43,6 +43,11 @@ class SessionsTracingConnection : public dialogflow_cx::SessionsConnection {
   DetectIntent(google::cloud::dialogflow::cx::v3::DetectIntentRequest const&
                    request) override;
 
+  StreamRange<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
+  ServerStreamingDetectIntent(
+      google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request)
+      override;
+
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>

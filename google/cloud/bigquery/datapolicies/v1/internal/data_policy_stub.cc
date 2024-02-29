@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/datapolicies/v1/datapolicy.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ DataPolicyServiceStub::~DataPolicyServiceStub() = default;
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DefaultDataPolicyServiceStub::CreateDataPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
         request) {
   google::cloud::bigquery::datapolicies::v1::DataPolicy response;
@@ -44,7 +45,7 @@ DefaultDataPolicyServiceStub::CreateDataPolicy(
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DefaultDataPolicyServiceStub::UpdateDataPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
         request) {
   google::cloud::bigquery::datapolicies::v1::DataPolicy response;
@@ -57,7 +58,7 @@ DefaultDataPolicyServiceStub::UpdateDataPolicy(
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DefaultDataPolicyServiceStub::RenameDataPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
         request) {
   google::cloud::bigquery::datapolicies::v1::DataPolicy response;
@@ -69,7 +70,7 @@ DefaultDataPolicyServiceStub::RenameDataPolicy(
 }
 
 Status DefaultDataPolicyServiceStub::DeleteDataPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
         request) {
   google::protobuf::Empty response;
@@ -82,7 +83,7 @@ Status DefaultDataPolicyServiceStub::DeleteDataPolicy(
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DefaultDataPolicyServiceStub::GetDataPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
         request) {
   google::cloud::bigquery::datapolicies::v1::DataPolicy response;
@@ -95,7 +96,7 @@ DefaultDataPolicyServiceStub::GetDataPolicy(
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::ListDataPoliciesResponse>
 DefaultDataPolicyServiceStub::ListDataPolicies(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::bigquery::datapolicies::v1::ListDataPoliciesRequest const&
         request) {
   google::cloud::bigquery::datapolicies::v1::ListDataPoliciesResponse response;
@@ -107,7 +108,7 @@ DefaultDataPolicyServiceStub::ListDataPolicies(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultDataPolicyServiceStub::GetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::GetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->GetIamPolicy(&context, request, &response);
@@ -118,7 +119,7 @@ StatusOr<google::iam::v1::Policy> DefaultDataPolicyServiceStub::GetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DefaultDataPolicyServiceStub::SetIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::SetIamPolicyRequest const& request) {
   google::iam::v1::Policy response;
   auto status = grpc_stub_->SetIamPolicy(&context, request, &response);
@@ -130,7 +131,7 @@ StatusOr<google::iam::v1::Policy> DefaultDataPolicyServiceStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultDataPolicyServiceStub::TestIamPermissions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   google::iam::v1::TestIamPermissionsResponse response;
   auto status = grpc_stub_->TestIamPermissions(&context, request, &response);

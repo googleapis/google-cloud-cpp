@@ -22,6 +22,7 @@
 #include "google/cloud/status_or.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -54,7 +55,7 @@ DefaultBigtableStub::SampleRowKeys(
 
 StatusOr<google::bigtable::v2::MutateRowResponse>
 DefaultBigtableStub::MutateRow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::v2::MutateRowRequest const& request) {
   google::bigtable::v2::MutateRowResponse response;
   auto status = grpc_stub_->MutateRow(&context, request, &response);
@@ -77,7 +78,7 @@ DefaultBigtableStub::MutateRows(
 
 StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
 DefaultBigtableStub::CheckAndMutateRow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::v2::CheckAndMutateRowRequest const& request) {
   google::bigtable::v2::CheckAndMutateRowResponse response;
   auto status = grpc_stub_->CheckAndMutateRow(&context, request, &response);
@@ -89,7 +90,7 @@ DefaultBigtableStub::CheckAndMutateRow(
 
 StatusOr<google::bigtable::v2::PingAndWarmResponse>
 DefaultBigtableStub::PingAndWarm(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::v2::PingAndWarmRequest const& request) {
   google::bigtable::v2::PingAndWarmResponse response;
   auto status = grpc_stub_->PingAndWarm(&context, request, &response);
@@ -101,7 +102,7 @@ DefaultBigtableStub::PingAndWarm(
 
 StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>
 DefaultBigtableStub::ReadModifyWriteRow(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request) {
   google::bigtable::v2::ReadModifyWriteRowResponse response;
   auto status = grpc_stub_->ReadModifyWriteRow(&context, request, &response);
@@ -116,11 +117,12 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 DefaultBigtableStub::AsyncReadRows(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::ReadRowsRequest const& request) {
   return google::cloud::internal::MakeStreamingReadRpc<
       google::bigtable::v2::ReadRowsRequest,
       google::bigtable::v2::ReadRowsResponse>(
-      cq, std::move(context), request,
+      cq, std::move(context), std::move(options), request,
       [this](grpc::ClientContext* context,
              google::bigtable::v2::ReadRowsRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -133,11 +135,12 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 DefaultBigtableStub::AsyncSampleRowKeys(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::SampleRowKeysRequest const& request) {
   return google::cloud::internal::MakeStreamingReadRpc<
       google::bigtable::v2::SampleRowKeysRequest,
       google::bigtable::v2::SampleRowKeysResponse>(
-      cq, std::move(context), request,
+      cq, std::move(context), std::move(options), request,
       [this](grpc::ClientContext* context,
              google::bigtable::v2::SampleRowKeysRequest const& request,
              grpc::CompletionQueue* cq) {
@@ -166,11 +169,12 @@ std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
 DefaultBigtableStub::AsyncMutateRows(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::MutateRowsRequest const& request) {
   return google::cloud::internal::MakeStreamingReadRpc<
       google::bigtable::v2::MutateRowsRequest,
       google::bigtable::v2::MutateRowsResponse>(
-      cq, std::move(context), request,
+      cq, std::move(context), std::move(options), request,
       [this](grpc::ClientContext* context,
              google::bigtable::v2::MutateRowsRequest const& request,
              grpc::CompletionQueue* cq) {

@@ -19,10 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_INTERNAL_SYSTEM_POLICY_V1_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BINARYAUTHORIZATION_V1_INTERNAL_SYSTEM_POLICY_V1_STUB_H
 
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/binaryauthorization/v1/service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -35,7 +37,7 @@ class SystemPolicyV1Stub {
 
   virtual StatusOr<google::cloud::binaryauthorization::v1::Policy>
   GetSystemPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
           request) = 0;
 };
@@ -49,7 +51,7 @@ class DefaultSystemPolicyV1Stub : public SystemPolicyV1Stub {
       : grpc_stub_(std::move(grpc_stub)) {}
 
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
           request) override;
 

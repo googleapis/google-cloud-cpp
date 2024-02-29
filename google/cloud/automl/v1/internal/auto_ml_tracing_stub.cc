@@ -18,6 +18,7 @@
 
 #include "google/cloud/automl/v1/internal/auto_ml_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,245 +33,258 @@ AutoMlTracingStub::AutoMlTracingStub(std::shared_ptr<AutoMlStub> child)
 future<StatusOr<google::longrunning::Operation>>
 AutoMlTracingStub::AsyncCreateDataset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::automl::v1::CreateDatasetRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.automl.v1.AutoMl", "CreateDataset");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateDataset(cq, context, options, request);
+  auto f = child_->AsyncCreateDataset(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::automl::v1::Dataset> AutoMlTracingStub::GetDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::GetDatasetRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.automl.v1.AutoMl", "GetDataset");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->GetDataset(context, request));
+                           child_->GetDataset(context, options, request));
 }
 
 StatusOr<google::cloud::automl::v1::ListDatasetsResponse>
 AutoMlTracingStub::ListDatasets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::ListDatasetsRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.automl.v1.AutoMl", "ListDatasets");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListDatasets(context, request));
+                           child_->ListDatasets(context, options, request));
 }
 
 StatusOr<google::cloud::automl::v1::Dataset> AutoMlTracingStub::UpdateDataset(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::UpdateDatasetRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.automl.v1.AutoMl", "UpdateDataset");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateDataset(context, request));
+                           child_->UpdateDataset(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AutoMlTracingStub::AsyncDeleteDataset(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::automl::v1::DeleteDatasetRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.automl.v1.AutoMl", "DeleteDataset");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteDataset(cq, context, options, request);
+  auto f = child_->AsyncDeleteDataset(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AutoMlTracingStub::AsyncImportData(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::automl::v1::ImportDataRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.automl.v1.AutoMl", "ImportData");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncImportData(cq, context, options, request);
+  auto f = child_->AsyncImportData(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AutoMlTracingStub::AsyncExportData(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::automl::v1::ExportDataRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.automl.v1.AutoMl", "ExportData");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncExportData(cq, context, options, request);
+  auto f = child_->AsyncExportData(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::automl::v1::AnnotationSpec>
 AutoMlTracingStub::GetAnnotationSpec(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::GetAnnotationSpecRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.automl.v1.AutoMl",
                                      "GetAnnotationSpec");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetAnnotationSpec(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetAnnotationSpec(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AutoMlTracingStub::AsyncCreateModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::automl::v1::CreateModelRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.automl.v1.AutoMl", "CreateModel");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateModel(cq, context, options, request);
+  auto f = child_->AsyncCreateModel(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlTracingStub::GetModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::GetModelRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.automl.v1.AutoMl", "GetModel");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span, child_->GetModel(context, request));
+  return internal::EndSpan(context, *span,
+                           child_->GetModel(context, options, request));
 }
 
 StatusOr<google::cloud::automl::v1::ListModelsResponse>
 AutoMlTracingStub::ListModels(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::ListModelsRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.automl.v1.AutoMl", "ListModels");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->ListModels(context, request));
+                           child_->ListModels(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AutoMlTracingStub::AsyncDeleteModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::automl::v1::DeleteModelRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.automl.v1.AutoMl", "DeleteModel");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteModel(cq, context, options, request);
+  auto f = child_->AsyncDeleteModel(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlTracingStub::UpdateModel(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::UpdateModelRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.automl.v1.AutoMl", "UpdateModel");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->UpdateModel(context, request));
+                           child_->UpdateModel(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AutoMlTracingStub::AsyncDeployModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::automl::v1::DeployModelRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.automl.v1.AutoMl", "DeployModel");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeployModel(cq, context, options, request);
+  auto f = child_->AsyncDeployModel(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AutoMlTracingStub::AsyncUndeployModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::automl::v1::UndeployModelRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.automl.v1.AutoMl", "UndeployModel");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncUndeployModel(cq, context, options, request);
+  auto f = child_->AsyncUndeployModel(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AutoMlTracingStub::AsyncExportModel(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::cloud::automl::v1::ExportModelRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.cloud.automl.v1.AutoMl", "ExportModel");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncExportModel(cq, context, options, request);
+  auto f = child_->AsyncExportModel(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 StatusOr<google::cloud::automl::v1::ModelEvaluation>
 AutoMlTracingStub::GetModelEvaluation(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::GetModelEvaluationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.automl.v1.AutoMl",
                                      "GetModelEvaluation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetModelEvaluation(context, request));
+  return internal::EndSpan(
+      context, *span, child_->GetModelEvaluation(context, options, request));
 }
 
 StatusOr<google::cloud::automl::v1::ListModelEvaluationsResponse>
 AutoMlTracingStub::ListModelEvaluations(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::automl::v1::ListModelEvaluationsRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.cloud.automl.v1.AutoMl",
                                      "ListModelEvaluations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->ListModelEvaluations(context, request));
+  return internal::EndSpan(
+      context, *span, child_->ListModelEvaluations(context, options, request));
 }
 
 future<StatusOr<google::longrunning::Operation>>
 AutoMlTracingStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, options, request);
+  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> AutoMlTracingStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context, Options const& options,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.longrunning.Operations",
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCancelOperation(cq, context, options, request);
+  auto f =
+      child_->AsyncCancelOperation(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

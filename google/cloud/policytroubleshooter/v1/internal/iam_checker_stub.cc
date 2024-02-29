@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/policytroubleshooter/v1/checker.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -31,7 +32,7 @@ IamCheckerStub::~IamCheckerStub() = default;
 
 StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
 DefaultIamCheckerStub::TroubleshootIamPolicy(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const&
         request) {
   google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse

@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -72,20 +73,23 @@ KeyDashboardServiceConnectionImpl::ListCryptoKeys(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::kms::v1::CryptoKey>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry =
            std::shared_ptr<kms_inventory_v1::KeyDashboardServiceRetryPolicy>(
                retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::kms::inventory::v1::ListCryptoKeysRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                grpc::ClientContext& context, Options const& options,
                 google::cloud::kms::inventory::v1::ListCryptoKeysRequest const&
-                    request) { return stub->ListCryptoKeys(context, request); },
-            r, function_name);
+                    request) {
+              return stub->ListCryptoKeys(context, options, request);
+            },
+            options, r, function_name);
       },
       [](google::cloud::kms::inventory::v1::ListCryptoKeysResponse r) {
         std::vector<google::cloud::kms::v1::CryptoKey> result(

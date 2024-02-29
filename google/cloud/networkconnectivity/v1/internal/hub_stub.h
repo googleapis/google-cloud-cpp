@@ -28,6 +28,7 @@
 #include <google/cloud/networkconnectivity/v1/hub.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -39,120 +40,130 @@ class HubServiceStub {
   virtual ~HubServiceStub() = 0;
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::ListHubsResponse>
-  ListHubs(grpc::ClientContext& context,
+  ListHubs(grpc::ClientContext& context, Options const& options,
            google::cloud::networkconnectivity::v1::ListHubsRequest const&
                request) = 0;
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::Hub> GetHub(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::GetHubRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateHub(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::networkconnectivity::v1::CreateHubRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateHub(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::networkconnectivity::v1::UpdateHubRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteHub(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::networkconnectivity::v1::DeleteHubRequest const&
           request) = 0;
 
   virtual StatusOr<
       google::cloud::networkconnectivity::v1::ListHubSpokesResponse>
   ListHubSpokes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::ListHubSpokesRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::ListSpokesResponse>
-  ListSpokes(grpc::ClientContext& context,
+  ListSpokes(grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::ListSpokesRequest const&
                  request) = 0;
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::Spoke> GetSpoke(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::GetSpokeRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateSpoke(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::networkconnectivity::v1::CreateSpokeRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateSpoke(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::networkconnectivity::v1::UpdateSpokeRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncRejectHubSpoke(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncAcceptHubSpoke(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteSpoke(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::networkconnectivity::v1::DeleteSpokeRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::RouteTable>
   GetRouteTable(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::Route> GetRoute(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::GetRouteRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::ListRoutesResponse>
-  ListRoutes(grpc::ClientContext& context,
+  ListRoutes(grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::ListRoutesRequest const&
                  request) = 0;
 
   virtual StatusOr<
       google::cloud::networkconnectivity::v1::ListRouteTablesResponse>
   ListRouteTables(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::ListRouteTablesRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::Group> GetGroup(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::GetGroupRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::networkconnectivity::v1::ListGroupsResponse>
-  ListGroups(grpc::ClientContext& context,
+  ListGroups(grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::ListGroupsRequest const&
                  request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
@@ -167,118 +178,128 @@ class DefaultHubServiceStub : public HubServiceStub {
       : grpc_stub_(std::move(grpc_stub)), operations_(std::move(operations)) {}
 
   StatusOr<google::cloud::networkconnectivity::v1::ListHubsResponse> ListHubs(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::ListHubsRequest const& request)
       override;
 
   StatusOr<google::cloud::networkconnectivity::v1::Hub> GetHub(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::GetHubRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateHub(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::networkconnectivity::v1::CreateHubRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateHub(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::networkconnectivity::v1::UpdateHubRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteHub(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::networkconnectivity::v1::DeleteHubRequest const& request)
       override;
 
   StatusOr<google::cloud::networkconnectivity::v1::ListHubSpokesResponse>
   ListHubSpokes(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::ListHubSpokesRequest const&
           request) override;
 
   StatusOr<google::cloud::networkconnectivity::v1::ListSpokesResponse>
-  ListSpokes(grpc::ClientContext& context,
+  ListSpokes(grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::ListSpokesRequest const&
                  request) override;
 
   StatusOr<google::cloud::networkconnectivity::v1::Spoke> GetSpoke(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::GetSpokeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateSpoke(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateSpoke(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRejectHubSpoke(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncAcceptHubSpoke(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteSpoke(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request)
       override;
 
   StatusOr<google::cloud::networkconnectivity::v1::RouteTable> GetRouteTable(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
           request) override;
 
   StatusOr<google::cloud::networkconnectivity::v1::Route> GetRoute(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::GetRouteRequest const& request)
       override;
 
   StatusOr<google::cloud::networkconnectivity::v1::ListRoutesResponse>
-  ListRoutes(grpc::ClientContext& context,
+  ListRoutes(grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::ListRoutesRequest const&
                  request) override;
 
   StatusOr<google::cloud::networkconnectivity::v1::ListRouteTablesResponse>
   ListRouteTables(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::ListRouteTablesRequest const&
           request) override;
 
   StatusOr<google::cloud::networkconnectivity::v1::Group> GetGroup(
-      grpc::ClientContext& context,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::networkconnectivity::v1::GetGroupRequest const& request)
       override;
 
   StatusOr<google::cloud::networkconnectivity::v1::ListGroupsResponse>
-  ListGroups(grpc::ClientContext& context,
+  ListGroups(grpc::ClientContext& context, Options const& options,
              google::cloud::networkconnectivity::v1::ListGroupsRequest const&
                  request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context, Options const& options,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:

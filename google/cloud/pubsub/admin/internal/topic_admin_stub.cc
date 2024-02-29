@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -30,7 +31,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TopicAdminStub::~TopicAdminStub() = default;
 
 StatusOr<google::pubsub::v1::Topic> DefaultTopicAdminStub::CreateTopic(
-    grpc::ClientContext& context, google::pubsub::v1::Topic const& request) {
+    grpc::ClientContext& context, Options const&,
+    google::pubsub::v1::Topic const& request) {
   google::pubsub::v1::Topic response;
   auto status = grpc_stub_->CreateTopic(&context, request, &response);
   if (!status.ok()) {
@@ -40,7 +42,7 @@ StatusOr<google::pubsub::v1::Topic> DefaultTopicAdminStub::CreateTopic(
 }
 
 StatusOr<google::pubsub::v1::Topic> DefaultTopicAdminStub::UpdateTopic(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::pubsub::v1::UpdateTopicRequest const& request) {
   google::pubsub::v1::Topic response;
   auto status = grpc_stub_->UpdateTopic(&context, request, &response);
@@ -51,7 +53,7 @@ StatusOr<google::pubsub::v1::Topic> DefaultTopicAdminStub::UpdateTopic(
 }
 
 StatusOr<google::pubsub::v1::Topic> DefaultTopicAdminStub::GetTopic(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::pubsub::v1::GetTopicRequest const& request) {
   google::pubsub::v1::Topic response;
   auto status = grpc_stub_->GetTopic(&context, request, &response);
@@ -63,7 +65,7 @@ StatusOr<google::pubsub::v1::Topic> DefaultTopicAdminStub::GetTopic(
 
 StatusOr<google::pubsub::v1::ListTopicsResponse>
 DefaultTopicAdminStub::ListTopics(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::pubsub::v1::ListTopicsRequest const& request) {
   google::pubsub::v1::ListTopicsResponse response;
   auto status = grpc_stub_->ListTopics(&context, request, &response);
@@ -75,7 +77,7 @@ DefaultTopicAdminStub::ListTopics(
 
 StatusOr<google::pubsub::v1::ListTopicSubscriptionsResponse>
 DefaultTopicAdminStub::ListTopicSubscriptions(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::pubsub::v1::ListTopicSubscriptionsRequest const& request) {
   google::pubsub::v1::ListTopicSubscriptionsResponse response;
   auto status =
@@ -88,7 +90,7 @@ DefaultTopicAdminStub::ListTopicSubscriptions(
 
 StatusOr<google::pubsub::v1::ListTopicSnapshotsResponse>
 DefaultTopicAdminStub::ListTopicSnapshots(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::pubsub::v1::ListTopicSnapshotsRequest const& request) {
   google::pubsub::v1::ListTopicSnapshotsResponse response;
   auto status = grpc_stub_->ListTopicSnapshots(&context, request, &response);
@@ -99,7 +101,7 @@ DefaultTopicAdminStub::ListTopicSnapshots(
 }
 
 Status DefaultTopicAdminStub::DeleteTopic(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::pubsub::v1::DeleteTopicRequest const& request) {
   google::protobuf::Empty response;
   auto status = grpc_stub_->DeleteTopic(&context, request, &response);
@@ -111,7 +113,7 @@ Status DefaultTopicAdminStub::DeleteTopic(
 
 StatusOr<google::pubsub::v1::DetachSubscriptionResponse>
 DefaultTopicAdminStub::DetachSubscription(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const&,
     google::pubsub::v1::DetachSubscriptionRequest const& request) {
   google::pubsub::v1::DetachSubscriptionResponse response;
   auto status = grpc_stub_->DetachSubscription(&context, request, &response);

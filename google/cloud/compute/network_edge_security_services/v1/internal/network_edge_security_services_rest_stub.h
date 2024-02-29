@@ -50,7 +50,7 @@ class NetworkEdgeSecurityServicesRestStub {
   AsyncDeleteNetworkEdgeSecurityService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::network_edge_security_services::v1::
           DeleteNetworkEdgeSecurityServiceRequest const& request) = 0;
 
@@ -65,7 +65,7 @@ class NetworkEdgeSecurityServicesRestStub {
   AsyncInsertNetworkEdgeSecurityService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::network_edge_security_services::v1::
           InsertNetworkEdgeSecurityServiceRequest const& request) = 0;
 
@@ -73,7 +73,7 @@ class NetworkEdgeSecurityServicesRestStub {
   AsyncPatchNetworkEdgeSecurityService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::network_edge_security_services::v1::
           PatchNetworkEdgeSecurityServiceRequest const& request) = 0;
 
@@ -81,14 +81,14 @@ class NetworkEdgeSecurityServicesRestStub {
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) = 0;
 };
@@ -116,7 +116,7 @@ class DefaultNetworkEdgeSecurityServicesRestStub
   AsyncDeleteNetworkEdgeSecurityService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::network_edge_security_services::v1::
           DeleteNetworkEdgeSecurityServiceRequest const& request) override;
 
@@ -131,7 +131,7 @@ class DefaultNetworkEdgeSecurityServicesRestStub
   AsyncInsertNetworkEdgeSecurityService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::network_edge_security_services::v1::
           InsertNetworkEdgeSecurityServiceRequest const& request) override;
 
@@ -139,7 +139,7 @@ class DefaultNetworkEdgeSecurityServicesRestStub
   AsyncPatchNetworkEdgeSecurityService(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::network_edge_security_services::v1::
           PatchNetworkEdgeSecurityServiceRequest const& request) override;
 
@@ -147,14 +147,14 @@ class DefaultNetworkEdgeSecurityServicesRestStub
   AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           GetOperationRequest const& request) override;
 
   future<Status> AsyncCancelOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options,
+      google::cloud::internal::ImmutableOptions options,
       google::cloud::cpp::compute::region_operations::v1::
           DeleteOperationRequest const& request) override;
 

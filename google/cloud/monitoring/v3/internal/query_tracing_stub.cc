@@ -18,6 +18,7 @@
 
 #include "google/cloud/monitoring/v3/internal/query_tracing_stub.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -32,14 +33,14 @@ QueryServiceTracingStub::QueryServiceTracingStub(
 
 StatusOr<google::monitoring::v3::QueryTimeSeriesResponse>
 QueryServiceTracingStub::QueryTimeSeries(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::monitoring::v3::QueryTimeSeriesRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.monitoring.v3.QueryService",
                                      "QueryTimeSeries");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
-                           child_->QueryTimeSeries(context, request));
+                           child_->QueryTimeSeries(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

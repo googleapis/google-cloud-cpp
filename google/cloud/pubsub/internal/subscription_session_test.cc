@@ -103,7 +103,7 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
       });
   EXPECT_CALL(*mock, AsyncStreamingPull)
       .Times(AtLeast(1))
-      .WillRepeatedly([&](google::cloud::CompletionQueue const&, auto) {
+      .WillRepeatedly([&](google::cloud::CompletionQueue const&, auto, auto) {
         auto stream = std::make_unique<pubsub_testing::MockAsyncPullStream>();
         EXPECT_CALL(*stream, Start).WillOnce([&] {
           return cq.MakeRelativeTimer(us(10)).then(
@@ -222,7 +222,7 @@ TEST(SubscriptionSessionTest, ScheduleCallbacksExactlyOnce) {
       });
   EXPECT_CALL(*mock, AsyncStreamingPull)
       .Times(AtLeast(1))
-      .WillRepeatedly([&](google::cloud::CompletionQueue const&, auto) {
+      .WillRepeatedly([&](google::cloud::CompletionQueue const&, auto, auto) {
         auto stream = std::make_unique<pubsub_testing::MockAsyncPullStream>();
         EXPECT_CALL(*stream, Start).WillOnce([&] {
           return cq.MakeRelativeTimer(us(10)).then([](auto) { return true; });
@@ -814,7 +814,8 @@ TEST(SubscriptionSessionTest, FireAndForgetShutdown) {
   AsyncSequencer<bool> on_read;
   AsyncSequencer<Status> on_finish;
 
-  auto async_pull_mock = [&](google::cloud::CompletionQueue const& cq, auto) {
+  auto async_pull_mock = [&](google::cloud::CompletionQueue const& cq, auto,
+                             auto) {
     using us = std::chrono::microseconds;
     using F = future<StatusOr<std::chrono::system_clock::time_point>>;
     using Response = ::google::pubsub::v1::StreamingPullResponse;

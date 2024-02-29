@@ -118,7 +118,7 @@ class AsyncRestPollingLoopImpl
     }
     // Cancels are best effort, so we use weak pointers.
     auto w = WeakFromThis();
-    cancel_(cq_, std::make_unique<RestContext>(), *options_, request)
+    cancel_(cq_, std::make_unique<RestContext>(), options_, request)
         .then([w](future<Status> f) {
           if (auto self = w.lock()) self->OnCancel(f.get());
         });
@@ -163,7 +163,7 @@ class AsyncRestPollingLoopImpl
       get_request_set_operation_name_(op_name_, request);
     }
     auto self = this->shared_from_this();
-    poll_(cq_, std::make_unique<RestContext>(), *options_, request)
+    poll_(cq_, std::make_unique<RestContext>(), options_, request)
         .then([self](future<StatusOr<OperationType>> g) {
           self->OnPoll(std::move(g));
         });

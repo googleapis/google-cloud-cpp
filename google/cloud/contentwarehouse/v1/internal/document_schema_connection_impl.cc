@@ -24,6 +24,7 @@
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -73,12 +74,12 @@ DocumentSchemaServiceConnectionImpl::CreateDocumentSchema(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->CreateDocumentSchema(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::
                  CreateDocumentSchemaRequest const& request) {
-        return stub_->CreateDocumentSchema(context, request);
+        return stub_->CreateDocumentSchema(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
@@ -89,12 +90,12 @@ DocumentSchemaServiceConnectionImpl::UpdateDocumentSchema(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateDocumentSchema(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::
                  UpdateDocumentSchemaRequest const& request) {
-        return stub_->UpdateDocumentSchema(context, request);
+        return stub_->UpdateDocumentSchema(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::DocumentSchema>
@@ -106,10 +107,12 @@ DocumentSchemaServiceConnectionImpl::GetDocumentSchema(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDocumentSchema(request),
       [this](
-          grpc::ClientContext& context,
+          grpc::ClientContext& context, Options const& options,
           google::cloud::contentwarehouse::v1::GetDocumentSchemaRequest const&
-              request) { return stub_->GetDocumentSchema(context, request); },
-      request, __func__);
+              request) {
+        return stub_->GetDocumentSchema(context, options, request);
+      },
+      *current, request, __func__);
 }
 
 Status DocumentSchemaServiceConnectionImpl::DeleteDocumentSchema(
@@ -119,12 +122,12 @@ Status DocumentSchemaServiceConnectionImpl::DeleteDocumentSchema(
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteDocumentSchema(request),
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::
                  DeleteDocumentSchemaRequest const& request) {
-        return stub_->DeleteDocumentSchema(context, request);
+        return stub_->DeleteDocumentSchema(context, options, request);
       },
-      request, __func__);
+      *current, request, __func__);
 }
 
 StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>
@@ -136,22 +139,23 @@ DocumentSchemaServiceConnectionImpl::ListDocumentSchemas(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<google::cloud::contentwarehouse::v1::DocumentSchema>>(
-      std::move(request),
+      current, std::move(request),
       [idempotency, function_name, stub = stub_,
        retry = std::shared_ptr<
            contentwarehouse_v1::DocumentSchemaServiceRetryPolicy>(
            retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
+          Options const& options,
           google::cloud::contentwarehouse::v1::ListDocumentSchemasRequest const&
               r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](grpc::ClientContext& context, Options const& options,
                    google::cloud::contentwarehouse::v1::
                        ListDocumentSchemasRequest const& request) {
-              return stub->ListDocumentSchemas(context, request);
+              return stub->ListDocumentSchemas(context, options, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](google::cloud::contentwarehouse::v1::ListDocumentSchemasResponse r) {
         std::vector<google::cloud::contentwarehouse::v1::DocumentSchema> result(

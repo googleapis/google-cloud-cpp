@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include <google/cloud/contentwarehouse/v1/ruleset_service.grpc.pb.h>
 #include <memory>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,56 +37,66 @@ RuleSetServiceLogging::RuleSetServiceLogging(
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceLogging::CreateRuleSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::CreateRuleSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::CreateRuleSetRequest const&
-                 request) { return child_->CreateRuleSet(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->CreateRuleSet(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceLogging::GetRuleSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::GetRuleSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::GetRuleSetRequest const&
-                 request) { return child_->GetRuleSet(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->GetRuleSet(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::RuleSet>
 RuleSetServiceLogging::UpdateRuleSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::UpdateRuleSetRequest const&
-                 request) { return child_->UpdateRuleSet(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->UpdateRuleSet(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 Status RuleSetServiceLogging::DeleteRuleSet(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::DeleteRuleSetRequest const&
-                 request) { return child_->DeleteRuleSet(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->DeleteRuleSet(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::contentwarehouse::v1::ListRuleSetsResponse>
 RuleSetServiceLogging::ListRuleSets(
-    grpc::ClientContext& context,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::contentwarehouse::v1::ListRuleSetsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::contentwarehouse::v1::ListRuleSetsRequest const&
-                 request) { return child_->ListRuleSets(context, request); },
-      context, request, __func__, tracing_options_);
+                 request) {
+        return child_->ListRuleSets(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
