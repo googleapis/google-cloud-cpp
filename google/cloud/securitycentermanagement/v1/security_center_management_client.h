@@ -279,7 +279,7 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.ListSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L661}
+  /// [google.cloud.securitycentermanagement.v1.ListSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L662}
   /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L509}
   ///
   // clang-format on
@@ -322,7 +322,7 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.ListSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L661}
+  /// [google.cloud.securitycentermanagement.v1.ListSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L662}
   /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L509}
   ///
   // clang-format on
@@ -336,7 +336,7 @@ class SecurityCenterManagementClient {
   // clang-format off
   ///
   /// Returns a list of all resident SecurityHealthAnalyticsCustomModules under
-  /// the given CRM parent and all of the parent’s CRM descendants.
+  /// the given CRM parent and all of the parent's CRM descendants.
   ///
   /// @param parent  Required. Name of parent to list custom modules. Its format is
   ///  "organizations/{organization}/locations/{location}",
@@ -365,7 +365,7 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.ListDescendantSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L694}
+  /// [google.cloud.securitycentermanagement.v1.ListDescendantSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L695}
   /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L509}
   ///
   // clang-format on
@@ -377,7 +377,7 @@ class SecurityCenterManagementClient {
   // clang-format off
   ///
   /// Returns a list of all resident SecurityHealthAnalyticsCustomModules under
-  /// the given CRM parent and all of the parent’s CRM descendants.
+  /// the given CRM parent and all of the parent's CRM descendants.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -407,7 +407,7 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.ListDescendantSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L694}
+  /// [google.cloud.securitycentermanagement.v1.ListDescendantSecurityHealthAnalyticsCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L695}
   /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L509}
   ///
   // clang-format on
@@ -436,7 +436,7 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.GetSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L727}
+  /// [google.cloud.securitycentermanagement.v1.GetSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L728}
   /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L509}
   ///
   // clang-format on
@@ -468,7 +468,7 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.GetSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L727}
+  /// [google.cloud.securitycentermanagement.v1.GetSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L728}
   /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L509}
   ///
   // clang-format on
@@ -505,7 +505,7 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.CreateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L738}
+  /// [google.cloud.securitycentermanagement.v1.CreateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L739}
   /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L509}
   ///
   // clang-format on
@@ -544,7 +544,7 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.CreateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L738}
+  /// [google.cloud.securitycentermanagement.v1.CreateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L739}
   /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L509}
   ///
   // clang-format on
@@ -582,7 +582,7 @@ class SecurityCenterManagementClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L509}
-  /// [google.cloud.securitycentermanagement.v1.UpdateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L767}
+  /// [google.cloud.securitycentermanagement.v1.UpdateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L768}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -621,7 +621,7 @@ class SecurityCenterManagementClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.securitycentermanagement.v1.SecurityHealthAnalyticsCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L509}
-  /// [google.cloud.securitycentermanagement.v1.UpdateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L767}
+  /// [google.cloud.securitycentermanagement.v1.UpdateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L768}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -655,7 +655,7 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.DeleteSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L790}
+  /// [google.cloud.securitycentermanagement.v1.DeleteSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L791}
   ///
   // clang-format on
   Status DeleteSecurityHealthAnalyticsCustomModule(std::string const& name,
@@ -684,7 +684,7 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.DeleteSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L790}
+  /// [google.cloud.securitycentermanagement.v1.DeleteSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L791}
   ///
   // clang-format on
   Status DeleteSecurityHealthAnalyticsCustomModule(
@@ -716,8 +716,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.SimulateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L817}
-  /// [google.cloud.securitycentermanagement.v1.SimulateSecurityHealthAnalyticsCustomModuleResponse]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1018}
+  /// [google.cloud.securitycentermanagement.v1.SimulateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L818}
+  /// [google.cloud.securitycentermanagement.v1.SimulateSecurityHealthAnalyticsCustomModuleResponse]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1019}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -754,8 +754,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.SimulateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L817}
-  /// [google.cloud.securitycentermanagement.v1.SimulateSecurityHealthAnalyticsCustomModuleResponse]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1018}
+  /// [google.cloud.securitycentermanagement.v1.SimulateSecurityHealthAnalyticsCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L818}
+  /// [google.cloud.securitycentermanagement.v1.SimulateSecurityHealthAnalyticsCustomModuleResponse]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1019}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -798,8 +798,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EffectiveEventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1045}
-  /// [google.cloud.securitycentermanagement.v1.ListEffectiveEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1096}
+  /// [google.cloud.securitycentermanagement.v1.EffectiveEventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1046}
+  /// [google.cloud.securitycentermanagement.v1.ListEffectiveEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1097}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycentermanagement::v1::
@@ -841,8 +841,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EffectiveEventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1045}
-  /// [google.cloud.securitycentermanagement.v1.ListEffectiveEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1096}
+  /// [google.cloud.securitycentermanagement.v1.EffectiveEventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1046}
+  /// [google.cloud.securitycentermanagement.v1.ListEffectiveEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1097}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycentermanagement::v1::
@@ -882,8 +882,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EffectiveEventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1045}
-  /// [google.cloud.securitycentermanagement.v1.GetEffectiveEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1129}
+  /// [google.cloud.securitycentermanagement.v1.EffectiveEventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1046}
+  /// [google.cloud.securitycentermanagement.v1.GetEffectiveEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1130}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -920,8 +920,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EffectiveEventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1045}
-  /// [google.cloud.securitycentermanagement.v1.GetEffectiveEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1129}
+  /// [google.cloud.securitycentermanagement.v1.EffectiveEventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1046}
+  /// [google.cloud.securitycentermanagement.v1.GetEffectiveEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1130}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -964,8 +964,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1148}
-  /// [google.cloud.securitycentermanagement.v1.ListEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1224}
+  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1149}
+  /// [google.cloud.securitycentermanagement.v1.ListEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1225}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycentermanagement::v1::
@@ -1007,8 +1007,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1148}
-  /// [google.cloud.securitycentermanagement.v1.ListEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1224}
+  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1149}
+  /// [google.cloud.securitycentermanagement.v1.ListEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1225}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycentermanagement::v1::
@@ -1050,8 +1050,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1148}
-  /// [google.cloud.securitycentermanagement.v1.ListDescendantEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1264}
+  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1149}
+  /// [google.cloud.securitycentermanagement.v1.ListDescendantEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1265}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycentermanagement::v1::
@@ -1092,8 +1092,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1148}
-  /// [google.cloud.securitycentermanagement.v1.ListDescendantEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1264}
+  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1149}
+  /// [google.cloud.securitycentermanagement.v1.ListDescendantEventThreatDetectionCustomModulesRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1265}
   ///
   // clang-format on
   StreamRange<google::cloud::securitycentermanagement::v1::
@@ -1127,8 +1127,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1148}
-  /// [google.cloud.securitycentermanagement.v1.GetEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1298}
+  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1149}
+  /// [google.cloud.securitycentermanagement.v1.GetEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1299}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -1159,8 +1159,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1148}
-  /// [google.cloud.securitycentermanagement.v1.GetEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1298}
+  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1149}
+  /// [google.cloud.securitycentermanagement.v1.GetEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1299}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -1198,8 +1198,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.CreateEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1315}
-  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1148}
+  /// [google.cloud.securitycentermanagement.v1.CreateEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1316}
+  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1149}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -1237,8 +1237,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.CreateEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1315}
-  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1148}
+  /// [google.cloud.securitycentermanagement.v1.CreateEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1316}
+  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1149}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -1276,8 +1276,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1148}
-  /// [google.cloud.securitycentermanagement.v1.UpdateEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1345}
+  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1149}
+  /// [google.cloud.securitycentermanagement.v1.UpdateEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1346}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -1316,8 +1316,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1148}
-  /// [google.cloud.securitycentermanagement.v1.UpdateEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1345}
+  /// [google.cloud.securitycentermanagement.v1.EventThreatDetectionCustomModule]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1149}
+  /// [google.cloud.securitycentermanagement.v1.UpdateEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1346}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::
@@ -1351,7 +1351,7 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.DeleteEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1369}
+  /// [google.cloud.securitycentermanagement.v1.DeleteEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1370}
   ///
   // clang-format on
   Status DeleteEventThreatDetectionCustomModule(std::string const& name,
@@ -1380,7 +1380,7 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.DeleteEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1369}
+  /// [google.cloud.securitycentermanagement.v1.DeleteEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1370}
   ///
   // clang-format on
   Status DeleteEventThreatDetectionCustomModule(
@@ -1411,8 +1411,8 @@ class SecurityCenterManagementClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.securitycentermanagement.v1.ValidateEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1395}
-  /// [google.cloud.securitycentermanagement.v1.ValidateEventThreatDetectionCustomModuleResponse]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1417}
+  /// [google.cloud.securitycentermanagement.v1.ValidateEventThreatDetectionCustomModuleRequest]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1396}
+  /// [google.cloud.securitycentermanagement.v1.ValidateEventThreatDetectionCustomModuleResponse]: @googleapis_reference_link{google/cloud/securitycentermanagement/v1/security_center_management.proto#L1418}
   ///
   // clang-format on
   StatusOr<google::cloud::securitycentermanagement::v1::

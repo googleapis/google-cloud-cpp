@@ -253,37 +253,6 @@ function (google_cloud_cpp_add_gapic_library library display_name)
 
     add_library(${library_alias} ALIAS ${library_target})
 
-    # Create a header-only library for the mocks. We use a CMake `INTERFACE`
-    # library for these, a regular library would not work on macOS (where the
-    # library needs at least one .o file). Unfortunately INTERFACE libraries are
-    # a bit weird in that they need absolute paths for their sources.
-    file(
-        GLOB relative_mock_files
-        RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-        ${mocks_globs})
-    list(SORT relative_mock_files)
-    set(mock_files)
-    foreach (file IN LISTS relative_mock_files)
-        # We use a generator expression per the recommendation in:
-        # https://stackoverflow.com/a/62465051
-        list(APPEND mock_files
-             "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${file}>")
-    endforeach ()
-    add_library(${mocks_target} INTERFACE)
-    target_sources(${mocks_target} INTERFACE ${mock_files})
-    target_link_libraries(
-        ${mocks_target} INTERFACE ${library_alias} GTest::gmock_main
-                                  GTest::gmock GTest::gtest)
-    set_target_properties(${mocks_target} PROPERTIES EXPORT_NAME
-                                                     ${library_alias}_mocks)
-    target_include_directories(
-        ${mocks_target}
-        INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-                  $<INSTALL_INTERFACE:include>)
-    target_compile_options(${mocks_target}
-                           INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-
     # Get the destination directories based on the GNU recommendations.
     include(GNUInstallDirs)
 
@@ -349,7 +318,40 @@ function (google_cloud_cpp_add_gapic_library library display_name)
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${library_target}"
         COMPONENT google_cloud_cpp_development)
 
-    google_cloud_cpp_install_mocks("${library}" "${display_name}")
+    if (GOOGLE_CLOUD_CPP_WITH_MOCKS)
+        # Create a header-only library for the mocks. We use a CMake `INTERFACE`
+        # library for these, a regular library would not work on macOS (where
+        # the library needs at least one .o file). Unfortunately INTERFACE
+        # libraries are a bit weird in that they need absolute paths for their
+        # sources.
+        file(
+            GLOB relative_mock_files
+            RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+            ${mocks_globs})
+        list(SORT relative_mock_files)
+        set(mock_files)
+        foreach (file IN LISTS relative_mock_files)
+            # We use a generator expression per the recommendation in:
+            # https://stackoverflow.com/a/62465051
+            list(APPEND mock_files
+                 "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${file}>")
+        endforeach ()
+        add_library(${mocks_target} INTERFACE)
+        target_sources(${mocks_target} INTERFACE ${mock_files})
+        target_link_libraries(
+            ${mocks_target} INTERFACE ${library_alias} GTest::gmock_main
+                                      GTest::gmock GTest::gtest)
+        set_target_properties(${mocks_target} PROPERTIES EXPORT_NAME
+                                                         ${library_alias}_mocks)
+        target_include_directories(
+            ${mocks_target}
+            INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                      $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+                      $<INSTALL_INTERFACE:include>)
+        target_compile_options(${mocks_target}
+                               INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+        google_cloud_cpp_install_mocks("${library}" "${display_name}")
+    endif ()
 
     # ${library_alias} must be defined before we can add the samples.
     if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)

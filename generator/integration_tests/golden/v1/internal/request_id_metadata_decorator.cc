@@ -115,9 +115,10 @@ RequestIdServiceMetadata::ListFoos(
 
 future<StatusOr<google::test::requestid::v1::Foo>>
 RequestIdServiceMetadata::AsyncCreateFoo(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::test::requestid::v1::CreateFooRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::test::requestid::v1::CreateFooRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
@@ -126,11 +127,12 @@ RequestIdServiceMetadata::AsyncCreateFoo(
   }
 
   if (params.empty()) {
-    SetMetadata(*context, internal::CurrentOptions());
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, internal::CurrentOptions(), absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncCreateFoo(cq, std::move(context), request);
+  return child_->AsyncCreateFoo(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

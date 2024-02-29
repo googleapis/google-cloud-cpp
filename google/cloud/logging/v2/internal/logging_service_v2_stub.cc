@@ -112,6 +112,8 @@ future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
 DefaultLoggingServiceV2Stub::AsyncWriteLogEntries(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::logging::v2::WriteLogEntriesRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::logging::v2::WriteLogEntriesRequest,

@@ -165,6 +165,28 @@ This option is required to support package maintainers that split
     OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_USE_INSTALLED_COMMON)
 
+include(CMakeDependentOption)
+cmake_dependent_option(
+    GOOGLE_CLOUD_CPP_WITH_MOCKS
+    [==[Build the google-cloud-cpp mocking libraries.
+
+google-cloud-cpp offers mocking libraries with mock classes, to facilitate unit
+testing of Cloud C++ clients. Consumers of this library that do not use the
+provided mocks to test code involving the Cloud C++ clients may wish to turn
+this flag off.]==]
+    ON
+    "NOT BUILD_TESTING"
+    ON)
+mark_as_advanced(GOOGLE_CLOUD_CPP_WITH_MOCKS)
+
+# The examples use exception handling to simplify the code. Therefore they
+# cannot be compiled when exceptions are disabled, and applications cannot force
+# the flag.
+cmake_dependent_option(
+    GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES "Compile the google-cloud-cpp examples."
+    ON "GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS;BUILD_TESTING" OFF)
+mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
+
 include(GoogleCloudCppFeatures)
 
 # Controls the list of features compiled by `google-cloud-cpp`.
@@ -230,14 +252,6 @@ if (BUILD_TESTING)
     # Discover and add targets for the GTest::gtest and GTest::gmock libraries.
     include(FindGMockWithTargets)
 endif ()
-
-# The examples use exception handling to simplify the code. Therefore they
-# cannot be compiled when exceptions are disabled, and applications cannot force
-# the flag.
-cmake_dependent_option(
-    GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES "Compile the google-cloud-cpp examples."
-    ON "GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS;BUILD_TESTING" OFF)
-mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)
 
 # Add any subdirectories configured in the application.
 

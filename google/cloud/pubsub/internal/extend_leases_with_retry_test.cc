@@ -50,7 +50,7 @@ TEST(ExtendLeasesWithRetry, Success) {
 
   ::testing::InSequence sequence;
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(
-                         _, _,
+                         _, _, _,
                          Property(&ModifyAckDeadlineRequest::ack_ids,
                                   ElementsAre("test-001", "test-002"))))
       .WillOnce(Return(ByMove(make_ready_future(MakeTransient()))));
@@ -58,7 +58,7 @@ TEST(ExtendLeasesWithRetry, Success) {
       .WillOnce(Return(ByMove(make_ready_future(
           make_status_or(std::chrono::system_clock::now())))));
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(
-                         _, _,
+                         _, _, _,
                          Property(&ModifyAckDeadlineRequest::ack_ids,
                                   ElementsAre("test-001", "test-002"))))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
@@ -76,7 +76,7 @@ TEST(ExtendLeasesWithRetry, SuccessWithPartials) {
 
   ::testing::InSequence sequence;
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(
-                         _, _,
+                         _, _, _,
                          Property(&ModifyAckDeadlineRequest::ack_ids,
                                   ElementsAre("test-001", "test-002",
                                               "test-003", "test-004"))))
@@ -89,7 +89,7 @@ TEST(ExtendLeasesWithRetry, SuccessWithPartials) {
       .WillOnce(Return(ByMove(make_ready_future(
           make_status_or(std::chrono::system_clock::now())))));
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(
-                         _, _,
+                         _, _, _,
                          Property(&ModifyAckDeadlineRequest::ack_ids,
                                   ElementsAre("test-001", "test-002"))))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
@@ -108,7 +108,7 @@ TEST(ExtendLeasesWithRetry, FailurePermanentError) {
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
 
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(
-                         _, _,
+                         _, _, _,
                          Property(&ModifyAckDeadlineRequest::ack_ids,
                                   ElementsAre("test-001", "test-002"))))
       .WillOnce(Return(ByMove(make_ready_future(MakeStatusWithDetails({})))));
@@ -127,7 +127,7 @@ TEST(ExtendLeasesWithRetry, FailureTooManyTransients) {
   ::testing::InSequence sequence;
   EXPECT_CALL(*mock,
               AsyncModifyAckDeadline(
-                  _, _,
+                  _, _, _,
                   Property(&ModifyAckDeadlineRequest::ack_ids,
                            ElementsAre("test-001", "test-002", "test-003"))))
       .WillOnce(Return(ByMove(make_ready_future(MakeStatusWithDetails({
@@ -140,7 +140,7 @@ TEST(ExtendLeasesWithRetry, FailureTooManyTransients) {
         .WillOnce(Return(ByMove(make_ready_future(
             make_status_or(std::chrono::system_clock::now())))));
     EXPECT_CALL(*mock, AsyncModifyAckDeadline(
-                           _, _,
+                           _, _, _,
                            Property(&ModifyAckDeadlineRequest::ack_ids,
                                     ElementsAre("test-001", "test-002"))))
         .WillOnce(Return(ByMove(make_ready_future(MakeStatusWithDetails({

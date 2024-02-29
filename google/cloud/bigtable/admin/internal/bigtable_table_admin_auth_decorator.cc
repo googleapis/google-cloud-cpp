@@ -264,19 +264,20 @@ future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
 BigtableTableAdminAuth::AsyncCheckConsistency(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::bigtable::admin::v2::CheckConsistencyRequest const& request) {
-  using ReturnType =
-      StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>;
-  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
-      .then([cq, child,
+      .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
                           f) mutable {
         auto context = f.get();
         if (!context) {
-          return make_ready_future(ReturnType(std::move(context).status()));
+          return make_ready_future(
+              StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>(
+                  std::move(context).status()));
         }
-        return child->AsyncCheckConsistency(cq, *std::move(context), request);
+        return child->AsyncCheckConsistency(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 

@@ -61,6 +61,7 @@ add_library(
     iam_policy.h
     idempotency_policy.cc
     idempotency_policy.h
+    include_folders_as_prefixes.h
     internal/access_control_common.h
     internal/access_control_common_parser.cc
     internal/access_control_common_parser.h

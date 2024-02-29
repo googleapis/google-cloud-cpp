@@ -110,6 +110,19 @@ InstanceAdminTracingConnection::ListInstances(
                                                       std::move(sr));
 }
 
+StreamRange<google::spanner::admin::instance::v1::InstancePartition>
+InstanceAdminTracingConnection::ListInstancePartitions(
+    google::spanner::admin::instance::v1::ListInstancePartitionsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::ListInstancePartitions");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListInstancePartitions(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::spanner::admin::instance::v1::InstancePartition>(std::move(span),
+                                                               std::move(sr));
+}
+
 StatusOr<google::spanner::admin::instance::v1::Instance>
 InstanceAdminTracingConnection::GetInstance(
     google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
@@ -171,6 +184,60 @@ InstanceAdminTracingConnection::TestIamPermissions(
       "spanner_admin::InstanceAdminConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
+}
+
+StatusOr<google::spanner::admin::instance::v1::InstancePartition>
+InstanceAdminTracingConnection::GetInstancePartition(
+    google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::GetInstancePartition");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetInstancePartition(request));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+InstanceAdminTracingConnection::CreateInstancePartition(
+    google::spanner::admin::instance::v1::CreateInstancePartitionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::CreateInstancePartition");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateInstancePartition(request));
+}
+
+Status InstanceAdminTracingConnection::DeleteInstancePartition(
+    google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::DeleteInstancePartition");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteInstancePartition(request));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
+InstanceAdminTracingConnection::UpdateInstancePartition(
+    google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::UpdateInstancePartition");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateInstancePartition(request));
+}
+
+StreamRange<google::longrunning::Operation>
+InstanceAdminTracingConnection::ListInstancePartitionOperations(
+    google::spanner::admin::instance::v1::ListInstancePartitionOperationsRequest
+        request) {
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::"
+      "ListInstancePartitionOperations");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListInstancePartitionOperations(std::move(request));
+  return internal::MakeTracedStreamRange<google::longrunning::Operation>(
+      std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

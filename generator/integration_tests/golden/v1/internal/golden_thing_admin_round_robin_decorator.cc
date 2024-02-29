@@ -172,16 +172,20 @@ future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminRoundRobin::AsyncGetDatabase(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::test::admin::database::v1::GetDatabaseRequest const& request) {
-  return Child()->AsyncGetDatabase(cq, std::move(context), request);
+  return Child()->AsyncGetDatabase(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status>
 GoldenThingAdminRoundRobin::AsyncDropDatabase(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::test::admin::database::v1::DropDatabaseRequest const& request) {
-  return Child()->AsyncDropDatabase(cq, std::move(context), request);
+  return Child()->AsyncDropDatabase(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

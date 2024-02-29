@@ -33,8 +33,8 @@ struct HttpSimpleInfo {
 };
 
 struct HttpExtensionInfo {
-  using RestPathPiece =
-      std::function<std::string(google::protobuf::MethodDescriptor const&)>;
+  using RestPathPiece = std::function<std::string(
+      google::protobuf::MethodDescriptor const&, bool)>;
   std::string http_verb;
   std::string url_path;
   std::vector<std::pair<std::string, std::string>> field_substitutions;

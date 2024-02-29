@@ -877,7 +877,8 @@ TEST_F(GoldenStubTest, AsyncGetDatabase) {
                                    std::move(longrunning_stub_));
   google::test::admin::database::v1::GetDatabaseRequest request;
   auto failure = stub.AsyncGetDatabase(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(failure.get(), StatusIs(StatusCode::kCancelled));
 }
 
@@ -898,7 +899,8 @@ TEST_F(GoldenStubTest, AsyncDropDatabase) {
                                    std::move(longrunning_stub_));
   google::test::admin::database::v1::DropDatabaseRequest request;
   auto failure = stub.AsyncDropDatabase(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(failure.get(), StatusIs(StatusCode::kCancelled));
 }
 

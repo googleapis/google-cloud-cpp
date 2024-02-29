@@ -270,6 +270,8 @@ future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
 DefaultAdminServiceStub::AsyncGetTopicPartitions(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::cloud::pubsublite::v1::GetTopicPartitionsRequest,
@@ -288,6 +290,7 @@ future<StatusOr<google::longrunning::Operation>>
 DefaultAdminServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
@@ -304,6 +307,7 @@ DefaultAdminServiceStub::AsyncGetOperation(
 future<Status> DefaultAdminServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,

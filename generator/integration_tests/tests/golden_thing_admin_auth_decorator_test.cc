@@ -349,12 +349,14 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncGetDatabase) {
   auto under_test = GoldenThingAdminAuth(MakeTypicalAsyncMockAuth(), mock);
   google::test::admin::database::v1::GetDatabaseRequest request;
   CompletionQueue cq;
-  auto auth_failure = under_test.AsyncGetDatabase(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+  auto auth_failure =
+      under_test.AsyncGetDatabase(cq, std::make_shared<grpc::ClientContext>(),
+                                  internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
 
-  auto auth_success = under_test.AsyncGetDatabase(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+  auto auth_success =
+      under_test.AsyncGetDatabase(cq, std::make_shared<grpc::ClientContext>(),
+                                  internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 
@@ -368,11 +370,13 @@ TEST(GoldenThingAdminAuthDecoratorTest, AsyncDropDatabase) {
   google::test::admin::database::v1::DropDatabaseRequest request;
   CompletionQueue cq;
   auto auth_failure = under_test.AsyncDropDatabase(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(auth_failure.get(), StatusIs(StatusCode::kInvalidArgument));
 
   auto auth_success = under_test.AsyncDropDatabase(
-      cq, std::make_shared<grpc::ClientContext>(), request);
+      cq, std::make_shared<grpc::ClientContext>(),
+      google::cloud::internal::MakeImmutableOptions({}), request);
   EXPECT_THAT(auth_success.get(), StatusIs(StatusCode::kPermissionDenied));
 }
 

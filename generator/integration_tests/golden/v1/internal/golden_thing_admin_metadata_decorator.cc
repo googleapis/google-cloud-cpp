@@ -258,18 +258,21 @@ GoldenThingAdminMetadata::AsyncLongRunningWithoutRouting(
 
 future<StatusOr<google::test::admin::database::v1::Database>>
 GoldenThingAdminMetadata::AsyncGetDatabase(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::test::admin::database::v1::GetDatabaseRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(), absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetDatabase(cq, std::move(context), request);
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::test::admin::database::v1::GetDatabaseRequest const& request) {
+  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncGetDatabase(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<Status>
 GoldenThingAdminMetadata::AsyncDropDatabase(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::test::admin::database::v1::DropDatabaseRequest const& request) {
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::test::admin::database::v1::DropDatabaseRequest const& request) {
   std::vector<std::string> params;
   params.reserve(3);
 
@@ -307,11 +310,12 @@ GoldenThingAdminMetadata::AsyncDropDatabase(
   database_matcher->AppendParam(request, params);
 
   if (params.empty()) {
-    SetMetadata(*context, internal::CurrentOptions());
+    SetMetadata(*context, *options);
   } else {
-    SetMetadata(*context, internal::CurrentOptions(), absl::StrJoin(params, "&"));
+    SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncDropDatabase(cq, std::move(context), request);
+  return child_->AsyncDropDatabase(
+      cq, std::move(context), std::move(options), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>

@@ -412,7 +412,7 @@ TEST_F(DataConnectionTest, ApplyBigtableCookie) {
 TEST_F(DataConnectionTest, AsyncApplySuccess) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRow)
-      .WillOnce([](google::cloud::CompletionQueue&, auto,
+      .WillOnce([](google::cloud::CompletionQueue&, auto, auto,
                    v2::MutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -429,7 +429,7 @@ TEST_F(DataConnectionTest, AsyncApplySuccess) {
 TEST_F(DataConnectionTest, AsyncApplyPermanentFailure) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRow)
-      .WillOnce([](google::cloud::CompletionQueue&, auto,
+      .WillOnce([](google::cloud::CompletionQueue&, auto, auto,
                    v2::MutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -448,7 +448,7 @@ TEST_F(DataConnectionTest, AsyncApplyRetryExhausted) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRow)
       .Times(kNumRetries + 1)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          v2::MutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -474,7 +474,7 @@ TEST_F(DataConnectionTest, AsyncApplyRetryExhausted) {
 TEST_F(DataConnectionTest, AsyncApplyRetryIdempotency) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncMutateRow)
-      .WillOnce([](google::cloud::CompletionQueue&, auto,
+      .WillOnce([](google::cloud::CompletionQueue&, auto, auto,
                    v2::MutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -503,7 +503,7 @@ TEST_F(DataConnectionTest, AsyncApplyBigtableCookie) {
   EXPECT_CALL(*mock, AsyncMutateRow)
       .WillOnce([this](CompletionQueue&,
                        std::shared_ptr<grpc::ClientContext> const& context,
-                       v2::MutateRowRequest const&) {
+                       auto, v2::MutateRowRequest const&) {
         // Return a bigtable cookie in the first request.
         metadata_fixture_.SetServerMetadata(
             *context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
@@ -512,7 +512,7 @@ TEST_F(DataConnectionTest, AsyncApplyBigtableCookie) {
       })
       .WillOnce([this](CompletionQueue&,
                        std::shared_ptr<grpc::ClientContext> const& context,
-                       v2::MutateRowRequest const&) {
+                       auto, v2::MutateRowRequest const&) {
         // Verify that the next request includes the bigtable cookie from above.
         auto headers = metadata_fixture_.GetMetadata(*context);
         EXPECT_THAT(headers,
@@ -1270,7 +1270,7 @@ TEST_F(DataConnectionTest, AsyncCheckAndMutateRowSuccess) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncCheckAndMutateRow)
-      .WillOnce([&](google::cloud::CompletionQueue&, auto,
+      .WillOnce([&](google::cloud::CompletionQueue&, auto, auto,
                     v2::CheckAndMutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1285,7 +1285,7 @@ TEST_F(DataConnectionTest, AsyncCheckAndMutateRowSuccess) {
         resp.set_predicate_matched(true);
         return make_ready_future(make_status_or(resp));
       })
-      .WillOnce([&](google::cloud::CompletionQueue&, auto,
+      .WillOnce([&](google::cloud::CompletionQueue&, auto, auto,
                     v2::CheckAndMutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1324,7 +1324,7 @@ TEST_F(DataConnectionTest, AsyncCheckAndMutateRowIdempotency) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncCheckAndMutateRow)
-      .WillOnce([&](google::cloud::CompletionQueue&, auto,
+      .WillOnce([&](google::cloud::CompletionQueue&, auto, auto,
                     v2::CheckAndMutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1363,7 +1363,7 @@ TEST_F(DataConnectionTest, AsyncCheckAndMutateRowPermanentError) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncCheckAndMutateRow)
-      .WillOnce([&](google::cloud::CompletionQueue&, auto,
+      .WillOnce([&](google::cloud::CompletionQueue&, auto, auto,
                     v2::CheckAndMutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1393,7 +1393,7 @@ TEST_F(DataConnectionTest, AsyncCheckAndMutateRowRetryExhausted) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncCheckAndMutateRow)
       .Times(kNumRetries + 1)
-      .WillRepeatedly([&](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([&](google::cloud::CompletionQueue&, auto, auto,
                           v2::CheckAndMutateRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1435,7 +1435,7 @@ TEST_F(DataConnectionTest, AsyncCheckAndMutateRowBigtableCookie) {
   EXPECT_CALL(*mock, AsyncCheckAndMutateRow)
       .WillOnce([this](CompletionQueue&,
                        std::shared_ptr<grpc::ClientContext> const& context,
-                       v2::CheckAndMutateRowRequest const&) {
+                       auto, v2::CheckAndMutateRowRequest const&) {
         // Return a bigtable cookie in the first request.
         metadata_fixture_.SetServerMetadata(
             *context, {{}, {{"x-goog-cbt-cookie-routing", "routing"}}});
@@ -1444,7 +1444,7 @@ TEST_F(DataConnectionTest, AsyncCheckAndMutateRowBigtableCookie) {
       })
       .WillOnce([this](CompletionQueue&,
                        std::shared_ptr<grpc::ClientContext> const& context,
-                       v2::CheckAndMutateRowRequest const&) {
+                       auto, v2::CheckAndMutateRowRequest const&) {
         // Verify that the next request includes the bigtable cookie from above.
         auto headers = metadata_fixture_.GetMetadata(*context);
         EXPECT_THAT(headers,
@@ -1791,7 +1791,7 @@ TEST_F(DataConnectionTest, AsyncReadModifyWriteRowSuccess) {
 
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadModifyWriteRow)
-      .WillOnce([&response](google::cloud::CompletionQueue&, auto,
+      .WillOnce([&response](google::cloud::CompletionQueue&, auto, auto,
                             v2::ReadModifyWriteRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1817,7 +1817,7 @@ TEST_F(DataConnectionTest, AsyncReadModifyWriteRowSuccess) {
 TEST_F(DataConnectionTest, AsyncReadModifyWriteRowPermanentError) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadModifyWriteRow)
-      .WillOnce([](google::cloud::CompletionQueue&, auto,
+      .WillOnce([](google::cloud::CompletionQueue&, auto, auto,
                    v2::ReadModifyWriteRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());
@@ -1840,7 +1840,7 @@ TEST_F(DataConnectionTest, AsyncReadModifyWriteRowPermanentError) {
 TEST_F(DataConnectionTest, AsyncReadModifyWriteRowTransientErrorNotRetried) {
   auto mock = std::make_shared<MockBigtableStub>();
   EXPECT_CALL(*mock, AsyncReadModifyWriteRow)
-      .WillOnce([](google::cloud::CompletionQueue&, auto,
+      .WillOnce([](google::cloud::CompletionQueue&, auto, auto,
                    v2::ReadModifyWriteRowRequest const& request) {
         EXPECT_EQ(kAppProfile, request.app_profile_id());
         EXPECT_EQ(kTableName, request.table_name());

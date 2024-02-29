@@ -491,12 +491,12 @@ TEST(StreamingSubscriptionBatchSourceTest, ResumeAfterFirstRead) {
   EXPECT_THAT(ids, ElementsAre("ack-0", "ack-1", "ack-2", "ack-3", "ack-4"));
 }
 
-future<Status> OnAck(google::cloud::CompletionQueue&, Unused,
+future<Status> OnAck(google::cloud::CompletionQueue&, Unused, Unused,
                      AckRequest const&) {
   return make_ready_future(Status{});
 }
 
-future<Status> OnModify(google::cloud::CompletionQueue&, Unused,
+future<Status> OnModify(google::cloud::CompletionQueue&, Unused, Unused,
                         ModifyRequest const&) {
   return make_ready_future(Status{});
 }
@@ -512,22 +512,22 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
         return success_stream.MakeWriteFailureStream(cq, std::move(context),
                                                      std::move(options));
       });
-  EXPECT_CALL(
-      *mock, AsyncAcknowledge(
-                 _, _, Property(&AckRequest::ack_ids, ElementsAre("fake-001"))))
+  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _,
+                                      Property(&AckRequest::ack_ids,
+                                               ElementsAre("fake-001"))))
       .WillOnce(OnAck);
-  EXPECT_CALL(
-      *mock, AsyncAcknowledge(
-                 _, _, Property(&AckRequest::ack_ids, ElementsAre("fake-002"))))
+  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _,
+                                      Property(&AckRequest::ack_ids,
+                                               ElementsAre("fake-002"))))
       .WillOnce(OnAck);
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _,
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _,
                                             Property(&ModifyRequest::ack_ids,
                                                      ElementsAre("fake-003"))))
       .WillOnce(OnModify);
   EXPECT_CALL(
       *mock,
       AsyncModifyAckDeadline(
-          _, _,
+          _, _, _,
           AllOf(
               Property(&ModifyRequest::subscription,
                        "projects/test-project/subscriptions/test-subscription"),
@@ -537,7 +537,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckMany) {
   EXPECT_CALL(
       *mock,
       AsyncModifyAckDeadline(
-          _, _,
+          _, _, _,
           AllOf(
               Property(&ModifyRequest::subscription,
                        "projects/test-project/subscriptions/test-subscription"),
@@ -994,9 +994,9 @@ TEST(StreamingSubscriptionBatchSourceTest, AckNackWithRetry) {
         return MakeExactlyOnceStream(aseq, Status{});
       });
 
-  EXPECT_CALL(
-      *mock, AsyncAcknowledge(
-                 _, _, Property(&AckRequest::ack_ids, ElementsAre("fake-001"))))
+  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, _,
+                                      Property(&AckRequest::ack_ids,
+                                               ElementsAre("fake-001"))))
       .WillOnce(Return(ByMove(
           make_ready_future(Status(StatusCode::kUnavailable, "try-again")))))
       .WillOnce(Return(ByMove(make_ready_future(
@@ -1004,7 +1004,7 @@ TEST(StreamingSubscriptionBatchSourceTest, AckNackWithRetry) {
                  ErrorInfo("test-only-reason", "test-only-domain",
                            {{"fake-001", "TRANSIENT_FAILURE_BLAH_BLAH"}}))))))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _,
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _,
                                             Property(&ModifyRequest::ack_ids,
                                                      ElementsAre("fake-002"))))
       .WillOnce(Return(ByMove(
@@ -1066,7 +1066,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ExtendLeasesWithRetry) {
       });
 
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(
-                         _, _,
+                         _, _, _,
                          Property(&ModifyRequest::ack_ids,
                                   ElementsAre("fake-001", "fake-002"))))
       .WillOnce(Return(ByMove(
@@ -1075,7 +1075,7 @@ TEST(StreamingSubscriptionBatchSourceTest, ExtendLeasesWithRetry) {
           Status(StatusCode::kUnknown, "uh?",
                  ErrorInfo("test-only-reason", "test-only-domain",
                            {{"fake-002", "TRANSIENT_FAILURE_BLAH_BLAH"}}))))));
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _,
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, _,
                                             Property(&ModifyRequest::ack_ids,
                                                      ElementsAre("fake-002"))))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
@@ -1202,10 +1202,11 @@ TEST(StreamingSubscriptionBatchSourceTest, BulkNackMultipleRequests) {
   groups.push_back(make_ids("group-3-", 2));
 
   auto make_on_modify = [](std::vector<std::string> e) {
-    return [expected_ids = std::move(e)](auto, auto, auto const& request) {
-      EXPECT_THAT(request.ack_ids(), ElementsAreArray(expected_ids));
-      return make_ready_future(Status{});
-    };
+    return
+        [expected_ids = std::move(e)](auto, auto, auto, auto const& request) {
+          EXPECT_THAT(request.ack_ids(), ElementsAreArray(expected_ids));
+          return make_ready_future(Status{});
+        };
   };
 
   AutomaticallyCreatedBackgroundThreads background;
@@ -1219,7 +1220,7 @@ TEST(StreamingSubscriptionBatchSourceTest, BulkNackMultipleRequests) {
   EXPECT_CALL(
       *mock,
       AsyncModifyAckDeadline(
-          _, _,
+          _, _, _,
           Property(&ModifyRequest::subscription,
                    "projects/test-project/subscriptions/test-subscription")))
       .WillOnce(make_on_modify(groups[0]))
@@ -1259,10 +1260,11 @@ void CheckExtendLeasesMultipleRequests(bool enable_exactly_once) {
   groups.push_back(make_ids("group-3-", 2));
 
   auto make_on_modify = [](std::vector<std::string> e) {
-    return [expected_ids = std::move(e)](auto, auto, auto const& request) {
-      EXPECT_THAT(request.ack_ids(), ElementsAreArray(expected_ids));
-      return make_ready_future(Status{});
-    };
+    return
+        [expected_ids = std::move(e)](auto, auto, auto, auto const& request) {
+          EXPECT_THAT(request.ack_ids(), ElementsAreArray(expected_ids));
+          return make_ready_future(Status{});
+        };
   };
 
   AutomaticallyCreatedBackgroundThreads background;
@@ -1276,7 +1278,7 @@ void CheckExtendLeasesMultipleRequests(bool enable_exactly_once) {
   EXPECT_CALL(
       *mock,
       AsyncModifyAckDeadline(
-          _, _,
+          _, _, _,
           Property(&ModifyRequest::subscription,
                    "projects/test-project/subscriptions/test-subscription")))
       .WillOnce(make_on_modify(groups[0]))

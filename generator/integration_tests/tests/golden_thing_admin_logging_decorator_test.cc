@@ -313,6 +313,7 @@ TEST_F(LoggingDecoratorTest, AsyncGetDatabase) {
   CompletionQueue cq;
   auto status = stub.AsyncGetDatabase(
                         cq, std::make_shared<grpc::ClientContext>(),
+                        internal::MakeImmutableOptions({}),
                         google::test::admin::database::v1::GetDatabaseRequest())
                     .get();
   EXPECT_EQ(TransientError(), status.status());
@@ -332,6 +333,7 @@ TEST_F(LoggingDecoratorTest, AsyncDropDatabase) {
   auto status =
       stub.AsyncDropDatabase(
               cq, std::make_shared<grpc::ClientContext>(),
+              internal::MakeImmutableOptions({}),
               google::test::admin::database::v1::DropDatabaseRequest())
           .get();
   EXPECT_EQ(TransientError(), status);

@@ -117,12 +117,14 @@ class GoldenThingAdminRestStub {
   virtual future<StatusOr<google::test::admin::database::v1::Database>> AsyncGetDatabase(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options, google::test::admin::database::v1::GetDatabaseRequest const& request) = 0;
+      google::cloud::internal::ImmutableOptions options,
+      google::test::admin::database::v1::GetDatabaseRequest const& request) = 0;
 
   virtual future<Status> AsyncDropDatabase(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options, google::test::admin::database::v1::DropDatabaseRequest const& request) = 0;
+      google::cloud::internal::ImmutableOptions options,
+      google::test::admin::database::v1::DropDatabaseRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -226,12 +228,14 @@ class DefaultGoldenThingAdminRestStub : public GoldenThingAdminRestStub {
   future<StatusOr<google::test::admin::database::v1::Database>> AsyncGetDatabase(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options, google::test::admin::database::v1::GetDatabaseRequest const& request) override;
+      google::cloud::internal::ImmutableOptions options,
+      google::test::admin::database::v1::GetDatabaseRequest const& request) override;
 
   future<Status> AsyncDropDatabase(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options, google::test::admin::database::v1::DropDatabaseRequest const& request) override;
+      google::cloud::internal::ImmutableOptions options,
+      google::test::admin::database::v1::DropDatabaseRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

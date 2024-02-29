@@ -30,7 +30,6 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::storage_experimental::RewriteObjectResponse;
 using ::google::cloud::testing_util::AsyncSequencer;
@@ -87,9 +86,10 @@ TEST_F(RewriterConnectionImplTest, Basic) {
           return TransientError();
         });
       })
-      .WillOnce([&](auto&, auto context, auto const& request) {
-        // TODO(#12359) - use the explicit `options` when available.
-        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
+      .WillOnce([&](auto&, auto context,
+                    internal::ImmutableOptions const& options,
+                    auto const& request) {
+        EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(*context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -114,9 +114,10 @@ TEST_F(RewriterConnectionImplTest, Basic) {
           return TransientError();
         });
       })
-      .WillOnce([&](auto&, auto context, auto const& request) {
-        // TODO(#12359) - use the explicit `options` when available.
-        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
+      .WillOnce([&](auto&, auto context,
+                    internal::ImmutableOptions const& options,
+                    auto const& request) {
+        EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(*context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),
@@ -141,9 +142,10 @@ TEST_F(RewriterConnectionImplTest, Basic) {
           return TransientError();
         });
       })
-      .WillOnce([&](auto&, auto context, auto const& request) {
-        // TODO(#12359) - use the explicit `options` when available.
-        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), kAuthority);
+      .WillOnce([&](auto&, auto context,
+                    internal::ImmutableOptions const& options,
+                    auto const& request) {
+        EXPECT_EQ(options->get<AuthorityOption>(), kAuthority);
         auto metadata = GetMetadata(*context);
         EXPECT_THAT(metadata, UnorderedElementsAre(
                                   Pair("x-goog-quota-user", "test-quota-user"),

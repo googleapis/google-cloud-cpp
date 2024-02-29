@@ -209,27 +209,35 @@ StatusOr<google::pubsub::v1::SeekResponse> SubscriberLogging::Seek(
 future<Status> SubscriberLogging::AsyncModifyAckDeadline(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
              google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
-        return child_->AsyncModifyAckDeadline(cq, std::move(context), request);
+        return child_->AsyncModifyAckDeadline(cq, std::move(context),
+                                              std::move(options), request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 future<Status> SubscriberLogging::AsyncAcknowledge(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::pubsub::v1::AcknowledgeRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
              google::pubsub::v1::AcknowledgeRequest const& request) {
-        return child_->AsyncAcknowledge(cq, std::move(context), request);
+        return child_->AsyncAcknowledge(cq, std::move(context),
+                                        std::move(options), request);
       },
-      cq, std::move(context), request, __func__, tracing_options_);
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

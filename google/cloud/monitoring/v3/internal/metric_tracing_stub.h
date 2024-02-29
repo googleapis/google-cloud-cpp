@@ -85,6 +85,7 @@ class MetricServiceTracingStub : public MetricServiceStub {
   future<Status> AsyncCreateTimeSeries(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
 
  private:

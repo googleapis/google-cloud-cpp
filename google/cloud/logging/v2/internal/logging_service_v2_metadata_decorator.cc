@@ -101,9 +101,11 @@ future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
 LoggingServiceV2Metadata::AsyncWriteLogEntries(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::logging::v2::WriteLogEntriesRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions());
-  return child_->AsyncWriteLogEntries(cq, std::move(context), request);
+  SetMetadata(*context, *options);
+  return child_->AsyncWriteLogEntries(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void LoggingServiceV2Metadata::SetMetadata(grpc::ClientContext& context,

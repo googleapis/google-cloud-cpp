@@ -106,6 +106,7 @@ TEST(GoldenThingAdminRoundRobinDecoratorTest, AsyncGetDatabase) {
     auto status =
         stub.AsyncGetDatabase(
                 cq, std::make_shared<grpc::ClientContext>(),
+                internal::MakeImmutableOptions({}),
                 google::test::admin::database::v1::GetDatabaseRequest{})
             .get();
     EXPECT_STATUS_OK(status);
@@ -128,6 +129,7 @@ TEST(GoldenThingAdminRoundRobinDecoratorTest, AsyncDropDatabase) {
     auto status =
         stub.AsyncDropDatabase(
                 cq, std::make_shared<grpc::ClientContext>(),
+                google::cloud::internal::MakeImmutableOptions({}),
                 google::test::admin::database::v1::DropDatabaseRequest{})
             .get();
     EXPECT_STATUS_OK(status);

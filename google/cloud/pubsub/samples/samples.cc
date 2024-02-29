@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/pubsub/admin/subscription_admin_client.h"
 #include "google/cloud/pubsub/admin/topic_admin_client.h"
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
 #include "google/cloud/pubsub/schema.h"
@@ -119,28 +120,6 @@ class EventCounter {
  */
 void PleaseIgnoreThisSimplifiesTestingTheSamples() {
   EventCounter::Instance().Increment();
-}
-
-void CreateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
-                        std::vector<std::string> const& argv) {
-  //! [START pubsub_create_pull_subscription] [create-subscription]
-  namespace pubsub = ::google::cloud::pubsub;
-  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
-     std::string const& topic_id, std::string const& subscription_id) {
-    auto sub = client.CreateSubscription(
-        pubsub::Topic(project_id, topic_id),
-        pubsub::Subscription(project_id, subscription_id));
-    if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
-      std::cout << "The subscription already exists\n";
-      return;
-    }
-    if (!sub) throw std::move(sub).status();
-
-    std::cout << "The subscription was successfully created: "
-              << sub->DebugString() << "\n";
-  }
-  //! [END pubsub_create_pull_subscription] [create-subscription]
-  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void CreateSubscriptionWithExactlyOnceDelivery(
@@ -1335,7 +1314,7 @@ void AutoRunAvro(
     std::string const& project_id, std::string const& testdata_directory,
     google::cloud::internal::DefaultPRNG& generator,
     google::cloud::pubsub_admin::TopicAdminClient& topic_admin,
-    google::cloud::pubsub::SubscriptionAdminClient& subscription_admin_client) {
+    google::cloud::pubsub_admin::SubscriptionAdminClient& subscription_admin) {
   auto schema_admin = google::cloud::pubsub::SchemaServiceClient(
       google::cloud::pubsub::MakeSchemaServiceConnection());
   auto avro_schema_id = RandomSchemaId(generator);
@@ -1354,7 +1333,8 @@ void AutoRunAvro(
 
   Cleanup cleanup;
   cleanup.Defer([schema_admin, schema]() mutable {
-    std::cout << "\nDelete schema (" << schema.schema_id() << ")" << std::endl;
+    std::cout << "\nDelete schema (" << schema.schema_id() << ") [avro]"
+              << std::endl;
     google::pubsub::v1::DeleteSchemaRequest request;
     request.set_name(schema.FullName());
     schema_admin.DeleteSchema(request);
@@ -1373,7 +1353,8 @@ void AutoRunAvro(
     std::cerr << t.status() << "\n";
   }
   cleanup.Defer([topic_admin, topic]() mutable {
-    std::cout << "\nDelete topic (" << topic.topic_id() << ")" << std::endl;
+    std::cout << "\nDelete topic (" << topic.topic_id() << ") [avro]"
+              << std::endl;
     (void)topic_admin.DeleteTopic(topic.FullName());
   });
 
@@ -1388,9 +1369,17 @@ void AutoRunAvro(
   auto subscriber = google::cloud::pubsub::Subscriber(
       google::cloud::pubsub::MakeSubscriberConnection(subscription));
 
-  std::cout << "\nRunning CreateSubscription() sample [avro]" << std::endl;
-  CreateSubscription(subscription_admin_client,
-                     {project_id, avro_topic_id, subscription_id});
+  std::cout << "\nCreate test subscription (" << subscription.subscription_id()
+            << ") [avro]" << std::endl;
+  google::pubsub::v1::Subscription request;
+  request.set_name(subscription.FullName());
+  request.set_topic(topic.FullName());
+  (void)subscription_admin.CreateSubscription(request);
+  cleanup.Defer([subscription_admin, subscription]() mutable {
+    std::cout << "\nDelete subscription (" << subscription.subscription_id()
+              << ") [avro]" << std::endl;
+    (void)subscription_admin.DeleteSubscription(subscription.FullName());
+  });
 
   std::cout << "\nRunning SubscribeAvroRecords() sample" << std::endl;
   auto session = SubscribeAvroRecords(subscriber, {});
@@ -1400,16 +1389,13 @@ void AutoRunAvro(
 
   session.cancel();
   WaitForSession(std::move(session), "SubscribeAvroRecords");
-
-  std::cout << "\nRunning DeleteSubscription() sample [avro]" << std::endl;
-  DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
 }
 
 void AutoRunProtobuf(
     std::string const& project_id, std::string const& testdata_directory,
     google::cloud::internal::DefaultPRNG& generator,
     google::cloud::pubsub_admin::TopicAdminClient& topic_admin,
-    google::cloud::pubsub::SubscriptionAdminClient& subscription_admin_client) {
+    google::cloud::pubsub_admin::SubscriptionAdminClient& subscription_admin) {
   auto schema_admin = google::cloud::pubsub::SchemaServiceClient(
       google::cloud::pubsub::MakeSchemaServiceConnection());
   auto proto_schema_id = RandomSchemaId(generator);
@@ -1429,7 +1415,8 @@ void AutoRunProtobuf(
 
   Cleanup cleanup;
   cleanup.Defer([schema_admin, schema]() mutable {
-    std::cout << "\nDelete schema (" << schema.schema_id() << ")" << std::endl;
+    std::cout << "\nDelete schema (" << schema.schema_id() << ") [proto]"
+              << std::endl;
     google::pubsub::v1::DeleteSchemaRequest request;
     request.set_name(schema.FullName());
     schema_admin.DeleteSchema(request);
@@ -1445,7 +1432,8 @@ void AutoRunProtobuf(
       google::pubsub::v1::BINARY);
   topic_admin.CreateTopic(topic_request);
   cleanup.Defer([topic_admin, topic]() mutable {
-    std::cout << "\nDelete topic (" << topic.topic_id() << ")" << std::endl;
+    std::cout << "\nDelete topic (" << topic.topic_id() << ") [proto]"
+              << std::endl;
     (void)topic_admin.DeleteTopic(topic.FullName());
   });
 
@@ -1460,13 +1448,17 @@ void AutoRunProtobuf(
   auto subscriber = google::cloud::pubsub::Subscriber(
       google::cloud::pubsub::MakeSubscriberConnection(subscription));
 
-  std::cout << "\nRunning CreateSubscription sample [proto]" << std::endl;
-  CreateSubscription(subscription_admin_client,
-                     {project_id, proto_topic_id, subscription_id});
-
-  std::cout << "\nRunning CreateSubscription() sample [avro]" << std::endl;
-  CreateSubscription(subscription_admin_client,
-                     {project_id, proto_topic_id, subscription_id});
+  std::cout << "\nCreate test subscription (" << subscription.subscription_id()
+            << ") [proto]" << std::endl;
+  google::pubsub::v1::Subscription request;
+  request.set_name(subscription.FullName());
+  request.set_topic(topic.FullName());
+  (void)subscription_admin.CreateSubscription(request);
+  cleanup.Defer([subscription_admin, subscription]() mutable {
+    std::cout << "\nDelete subscription (" << subscription.subscription_id()
+              << ") [proto]" << std::endl;
+    (void)subscription_admin.DeleteSubscription(subscription.FullName());
+  });
 
   std::cout << "\nRunning SubscribeProtobufRecords() sample" << std::endl;
   auto session = SubscribeProtobufRecords(subscriber, {});
@@ -1476,9 +1468,6 @@ void AutoRunProtobuf(
 
   session.cancel();
   WaitForSession(std::move(session), "SubscribeProtobufRecords");
-
-  std::cout << "\nRunning DeleteSubscription sample [proto]" << std::endl;
-  DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
 }
 
 void AutoRun(std::vector<std::string> const& argv) {
@@ -1499,6 +1488,8 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const topic_id = RandomTopicId(generator);
   auto const topic = google::cloud::pubsub::Topic(project_id, topic_id);
   auto const subscription_id = RandomSubscriptionId(generator);
+  auto const subscription =
+      google::cloud::pubsub::Subscription(project_id, subscription_id);
   auto const exactly_once_subscription_id = RandomSubscriptionId(generator);
   auto const filtered_subscription_id = RandomSubscriptionId(generator);
   auto const push_subscription_id = RandomSubscriptionId(generator);
@@ -1530,6 +1521,8 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   google::cloud::pubsub_admin::TopicAdminClient topic_admin(
       google::cloud::pubsub_admin::MakeTopicAdminConnection());
+  google::cloud::pubsub_admin::SubscriptionAdminClient subscription_admin(
+      google::cloud::pubsub_admin::MakeSubscriptionAdminConnection());
   google::cloud::pubsub::SubscriptionAdminClient subscription_admin_client(
       google::cloud::pubsub::MakeSubscriptionAdminConnection());
 
@@ -1557,13 +1550,16 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning the StatusOr example" << std::endl;
   ExampleStatusOr(topic_admin, {project_id});
 
-  std::cout << "\nRunning CreateSubscription() sample [1]" << std::endl;
-  CreateSubscription(subscription_admin_client,
-                     {project_id, topic_id, subscription_id});
-
-  std::cout << "\nRunning CreateSubscription() sample [2]" << std::endl;
-  CreateSubscription(subscription_admin_client,
-                     {project_id, topic_id, subscription_id});
+  std::cout << "\nCreate subscription (" << subscription_id << ")" << std::endl;
+  google::pubsub::v1::Subscription request;
+  request.set_name(subscription.FullName());
+  request.set_topic(topic.FullName());
+  (void)subscription_admin.CreateSubscription(request);
+  cleanup.Defer([subscription_admin, subscription]() mutable {
+    std::cout << "\nDelete subscription (" << subscription.subscription_id()
+              << ")" << std::endl;
+    (void)subscription_admin.DeleteSubscription(subscription.FullName());
+  });
 
   auto const bucket_id = project_id + "-pubsub-bucket";
   std::cout << "\nRunning CreateCloudStorageSubscription() sample" << std::endl;
@@ -1647,19 +1643,17 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   ignore_emulator_failures([&] {
     AutoRunAvro(project_id, testdata_directory, generator, topic_admin,
-                subscription_admin_client);
+                subscription_admin);
   });
   ignore_emulator_failures([&] {
     AutoRunProtobuf(project_id, testdata_directory, generator, topic_admin,
-                    subscription_admin_client);
+                    subscription_admin);
   });
 
   auto publisher = google::cloud::pubsub::Publisher(
       google::cloud::pubsub::MakePublisherConnection(
           topic, google::cloud::Options{}
                      .set<google::cloud::pubsub::MaxBatchMessagesOption>(1)));
-  auto subscription =
-      google::cloud::pubsub::Subscription(project_id, subscription_id);
   auto subscriber = google::cloud::pubsub::Subscriber(
       google::cloud::pubsub::MakeSubscriberConnection(subscription));
 
@@ -1782,12 +1776,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning DeleteSubscription() sample [3] " << std::endl;
   DeleteSubscription(subscription_admin_client,
                      {project_id, ordering_subscription_id});
-
-  std::cout << "\nRunning DeleteSubscription() sample [4]" << std::endl;
-  DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
-
-  std::cout << "\nRunning DeleteSubscription() sample [5]" << std::endl;
-  DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
 
   std::cout << "\nRunning DeleteSubscription() sample [6] " << std::endl;
   DeleteSubscription(subscription_admin_client,

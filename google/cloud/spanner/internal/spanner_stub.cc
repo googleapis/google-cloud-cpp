@@ -181,6 +181,8 @@ future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
 DefaultSpannerStub::AsyncBatchCreateSessions(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::spanner::v1::BatchCreateSessionsRequest const& request) {
   return internal::MakeUnaryRpcImpl<
       google::spanner::v1::BatchCreateSessionsRequest,
@@ -197,6 +199,8 @@ DefaultSpannerStub::AsyncBatchCreateSessions(
 future<Status> DefaultSpannerStub::AsyncDeleteSession(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::spanner::v1::DeleteSessionRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::spanner::v1::DeleteSessionRequest,
                                     google::protobuf::Empty>(
@@ -216,6 +220,8 @@ future<StatusOr<google::spanner::v1::ResultSet>>
 DefaultSpannerStub::AsyncExecuteSql(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::spanner::v1::ExecuteSqlRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::spanner::v1::ExecuteSqlRequest,
                                     google::spanner::v1::ResultSet>(

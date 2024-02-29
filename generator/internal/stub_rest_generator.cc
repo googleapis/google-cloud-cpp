@@ -98,21 +98,24 @@ class $stub_rest_class_name$ {
   }
 
   for (auto const& method : async_methods()) {
-    if (IsStreaming(method)) continue;
+    // No streaming RPCs for REST, and Longrunning is already taken care of.
+    if (IsStreaming(method) || IsLongrunningOperation(method)) continue;
     if (!HasHttpAnnotation(method)) continue;
     if (IsResponseTypeEmpty(method)) {
       HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   virtual future<Status> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options, $request_type$ const& request) = 0;
+      google::cloud::internal::ImmutableOptions options,
+      $request_type$ const& request) = 0;
 )""");
     } else {
       HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   virtual future<StatusOr<$response_type$>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options, $request_type$ const& request) = 0;
+      google::cloud::internal::ImmutableOptions options,
+      $request_type$ const& request) = 0;
 )""");
     }
   }
@@ -201,20 +204,23 @@ class Default$stub_rest_class_name$ : public $stub_rest_class_name$ {
   }
 
   for (auto const& method : async_methods()) {
-    if (IsStreaming(method)) continue;
+    // No streaming RPCs for REST, and Longrunning is already taken care of.
+    if (IsStreaming(method) || IsLongrunningOperation(method)) continue;
     if (IsResponseTypeEmpty(method)) {
       HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   future<Status> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options, $request_type$ const& request) override;
+      google::cloud::internal::ImmutableOptions options,
+      $request_type$ const& request) override;
 )""");
     } else {
       HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   future<StatusOr<$response_type$>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<google::cloud::rest_internal::RestContext> rest_context,
-      Options const& options, $request_type$ const& request) override;
+      google::cloud::internal::ImmutableOptions options,
+      $request_type$ const& request) override;
 )""");
     }
   }
@@ -333,12 +339,15 @@ Default$stub_rest_class_name$::Async$method_name$(
       $request_type$ const& request) {
   promise<StatusOr<$response_type$>> p;
   future<StatusOr<$response_type$>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context, auto options) {
+  std::thread t{[](
+          auto p, auto service, auto request, auto rest_context, auto options) {
       p.set_value(rest_internal::$method_http_verb$<$response_type$>(
           *service, *rest_context, $request_resource$,
           $preserve_proto_field_names_in_json$,
-          $method_rest_path$$method_http_query_parameters$));
-  }, std::move(p), service_, request, std::move(rest_context), std::move(options)};
+          $method_rest_path_async$$method_http_query_parameters$));
+    },
+    std::move(p), service_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable {
       t.join();
@@ -376,7 +385,8 @@ Default$stub_rest_class_name$::$method_name$(
   }
 
   for (auto const& method : async_methods()) {
-    if (IsStreaming(method)) continue;
+    // No streaming RPCs for REST, and Longrunning is already taken care of.
+    if (IsStreaming(method) || IsLongrunningOperation(method)) continue;
     if (!HasHttpAnnotation(method)) continue;
     if (IsResponseTypeEmpty(method)) {
       CcPrintMethod(method, __FILE__, __LINE__, R"""(
@@ -384,14 +394,18 @@ future<Status>
 Default$stub_rest_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options, $request_type$ const& request) {
+    google::cloud::internal::ImmutableOptions options,
+    $request_type$ const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context, auto options) {
+  std::thread t{[](
+          auto p, auto service, auto request, auto rest_context, auto options) {
       p.set_value(rest_internal::$method_http_verb$<google::protobuf::Empty>(
           *service, *rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
-          $method_rest_path$$method_http_query_parameters$));
-  }, std::move(p), service_, request, std::move(rest_context), options};
+          $method_rest_path_async$$method_http_query_parameters$));
+    },
+    std::move(p), service_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable {
       t.join();
@@ -406,14 +420,18 @@ future<StatusOr<$response_type$>>
 Default$stub_rest_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<rest_internal::RestContext> rest_context,
-    Options const& options, $request_type$ const& request) {
+    google::cloud::internal::ImmutableOptions options,
+    $request_type$ const& request) {
   promise<StatusOr<$response_type$>> p;
   future<StatusOr<$response_type$>> f = p.get_future();
-  std::thread t{[](auto p, auto service, auto request, auto rest_context, auto options) {
+  std::thread t{[](
+          auto p, auto service, auto request, auto rest_context, auto options) {
       p.set_value(rest_internal::$method_http_verb$<$response_type$>(
           *service, *rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
-          $method_rest_path$$method_http_query_parameters$));
-  }, std::move(p), service_, request, std::move(rest_context), options};
+          $method_rest_path_async$$method_http_query_parameters$));
+    },
+    std::move(p), service_, request, std::move(rest_context),
+    std::move(options)};
   return f.then([t = std::move(t), cq](auto f) mutable {
     cq.RunAsync([t = std::move(t)]() mutable {
       t.join();
