@@ -103,7 +103,7 @@ class CommitOptions {
   }
 
   // The max commit delay for the `spanner::Client::Commit()` call.
-  absl::optional<std::chrono::milliseconds> max_commit_delay() const {
+  absl::optional<std::chrono::milliseconds> const& max_commit_delay() const {
     return max_commit_delay_;
   }
 

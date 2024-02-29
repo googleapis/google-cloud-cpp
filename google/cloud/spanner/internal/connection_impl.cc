@@ -1142,7 +1142,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
   if (params.options.max_commit_delay().has_value()) {
     *request.mutable_max_commit_delay() =
         google::protobuf::util::TimeUtil::MillisecondsToDuration(
-            params.options.max_commit_delay().value().count());
+            params.options.max_commit_delay()->count());
   }
 
   // params.options.transaction_tag() was either already used to set
