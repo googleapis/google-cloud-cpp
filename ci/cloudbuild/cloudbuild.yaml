@@ -67,7 +67,7 @@ logsBucket: 'gs://${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COM
 steps:
   # Builds the docker image that will be used by the main build step. Makes 3
   # attempts to workaround #6438.
-- name: 'gcr.io/kaniko-project/executor:v1.20.1'
+- name: 'gcr.io/kaniko-project/executor:v1.21.0'
   id: 'kaniko-attempt-1'
   args: [
     '--log-format=text',
@@ -88,7 +88,7 @@ steps:
   entrypoint: '/bin/true'
   allowFailure: true
 
-- name: 'gcr.io/kaniko-project/executor:v1.20.1'
+- name: 'gcr.io/kaniko-project/executor:v1.21.0'
   id: 'kaniko-attempt-2'
   waitFor: [ 'kaniko-attempt-1' ]
   args: [
