@@ -78,6 +78,8 @@ future<StatusOr<google::test::requestid::v1::Foo>>
 DefaultRequestIdServiceStub::AsyncCreateFoo(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
     google::test::requestid::v1::CreateFooRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::test::requestid::v1::CreateFooRequest,
                                     google::test::requestid::v1::Foo>(
@@ -94,6 +96,7 @@ future<StatusOr<google::longrunning::Operation>>
 DefaultRequestIdServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
     google::longrunning::GetOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::GetOperationRequest,
@@ -110,6 +113,7 @@ DefaultRequestIdServiceStub::AsyncGetOperation(
 future<Status> DefaultRequestIdServiceStub::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
     google::cloud::internal::ImmutableOptions,
     google::longrunning::CancelOperationRequest const& request) {
   return internal::MakeUnaryRpcImpl<google::longrunning::CancelOperationRequest,

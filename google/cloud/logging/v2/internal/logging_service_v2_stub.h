@@ -73,6 +73,7 @@ class LoggingServiceV2Stub {
   AsyncWriteLogEntries(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::logging::v2::WriteLogEntriesRequest const& request) = 0;
 };
 
@@ -117,6 +118,7 @@ class DefaultLoggingServiceV2Stub : public LoggingServiceV2Stub {
   AsyncWriteLogEntries(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::logging::v2::WriteLogEntriesRequest const& request) override;
 
  private:

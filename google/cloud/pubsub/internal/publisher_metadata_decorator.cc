@@ -123,10 +123,12 @@ future<StatusOr<google::pubsub::v1::PublishResponse>>
 PublisherMetadata::AsyncPublish(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::pubsub::v1::PublishRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, *options,
               absl::StrCat("topic=", internal::UrlEncode(request.topic())));
-  return child_->AsyncPublish(cq, std::move(context), request);
+  return child_->AsyncPublish(cq, std::move(context), std::move(options),
+                              request);
 }
 
 void PublisherMetadata::SetMetadata(grpc::ClientContext& context,

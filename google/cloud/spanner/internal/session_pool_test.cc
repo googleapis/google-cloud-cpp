@@ -510,7 +510,7 @@ TEST_F(SessionPoolTest, SessionRefresh) {
 
   EXPECT_CALL(*mock, AsyncExecuteSql)
       .WillOnce(
-          [&result](CompletionQueue&, auto,
+          [&result](CompletionQueue&, auto, auto,
                     google::spanner::v1::ExecuteSqlRequest const& request) {
             EXPECT_EQ("s2", request.session());
             return make_ready_future(make_status_or(std::move(result)));
@@ -569,7 +569,7 @@ TEST_F(SessionPoolTest, SessionRefreshNotFound) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s3"}))));
 
   EXPECT_CALL(*mock, AsyncExecuteSql)
-      .WillOnce([](CompletionQueue&, auto,
+      .WillOnce([](CompletionQueue&, auto, auto,
                    google::spanner::v1::ExecuteSqlRequest const& request) {
         EXPECT_EQ("s2", request.session());
         // The "SELECT 1" refresh returns "Session not found".

@@ -80,12 +80,14 @@ class MockSubscriberStub : public pubsub_internal::SubscriberStub {
   MOCK_METHOD(future<Status>, AsyncAcknowledge,
               (google::cloud::CompletionQueue&,
                std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions,
                google::pubsub::v1::AcknowledgeRequest const&),
               (override));
 
   MOCK_METHOD(future<Status>, AsyncModifyAckDeadline,
               (google::cloud::CompletionQueue&,
                std::shared_ptr<grpc::ClientContext>,
+               google::cloud::internal::ImmutableOptions,
                google::pubsub::v1::ModifyAckDeadlineRequest const&),
               (override));
 

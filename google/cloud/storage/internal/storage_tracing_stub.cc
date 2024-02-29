@@ -421,24 +421,26 @@ future<StatusOr<google::storage::v2::Object>>
 StorageTracingStub::AsyncComposeObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::ComposeObjectRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "ComposeObject");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncComposeObject(cq, context, request);
+  auto f = child_->AsyncComposeObject(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
 future<Status> StorageTracingStub::AsyncDeleteObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::DeleteObjectRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "DeleteObject");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncDeleteObject(cq, context, request);
+  auto f = child_->AsyncDeleteObject(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -481,12 +483,13 @@ future<StatusOr<google::storage::v2::RewriteResponse>>
 StorageTracingStub::AsyncRewriteObject(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::RewriteObjectRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "RewriteObject");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncRewriteObject(cq, context, request);
+  auto f = child_->AsyncRewriteObject(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -494,12 +497,14 @@ future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
 StorageTracingStub::AsyncStartResumableWrite(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::StartResumableWriteRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.storage.v2.Storage",
                                      "StartResumableWrite");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncStartResumableWrite(cq, context, request);
+  auto f = child_->AsyncStartResumableWrite(cq, context, std::move(options),
+                                            request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -507,12 +512,14 @@ future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
 StorageTracingStub::AsyncQueryWriteStatus(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::storage::v2::QueryWriteStatusRequest const& request) {
   auto span =
       internal::MakeSpanGrpc("google.storage.v2.Storage", "QueryWriteStatus");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncQueryWriteStatus(cq, context, request);
+  auto f =
+      child_->AsyncQueryWriteStatus(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

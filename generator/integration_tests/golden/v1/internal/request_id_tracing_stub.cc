@@ -66,14 +66,16 @@ StatusOr<google::test::requestid::v1::ListFoosResponse> RequestIdServiceTracingS
                            child_->ListFoos(context, options, request));
 }
 
-future<StatusOr<google::test::requestid::v1::Foo>> RequestIdServiceTracingStub::AsyncCreateFoo(
+future<StatusOr<google::test::requestid::v1::Foo>>
+RequestIdServiceTracingStub::AsyncCreateFoo(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
       google::test::requestid::v1::CreateFooRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.test.requestid.v1.RequestIdService", "CreateFoo");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncCreateFoo(cq, context, request);
+  auto f = child_->AsyncCreateFoo(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

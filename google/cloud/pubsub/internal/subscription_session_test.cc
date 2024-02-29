@@ -85,7 +85,7 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
   using us = std::chrono::microseconds;
   EXPECT_CALL(*mock, AsyncAcknowledge)
       .WillRepeatedly(
-          [&](google::cloud::CompletionQueue&, auto,
+          [&](google::cloud::CompletionQueue&, auto, auto,
               google::pubsub::v1::AcknowledgeRequest const& request) {
             for (auto const& a : request.ack_ids()) {
               std::lock_guard<std::mutex> lk(ack_id_mu);
@@ -97,7 +97,7 @@ TEST(SubscriptionSessionTest, ScheduleCallbacks) {
                 [](TimerFuture) { return Status{}; });
           });
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
         return make_ready_future(Status{});
       });
@@ -204,7 +204,7 @@ TEST(SubscriptionSessionTest, ScheduleCallbacksExactlyOnce) {
   using us = std::chrono::microseconds;
   EXPECT_CALL(*mock, AsyncAcknowledge)
       .WillRepeatedly(
-          [&](google::cloud::CompletionQueue&, auto,
+          [&](google::cloud::CompletionQueue&, auto, auto,
               google::pubsub::v1::AcknowledgeRequest const& request) {
             for (auto const& a : request.ack_ids()) {
               std::lock_guard<std::mutex> lk(ack_id_mu);
@@ -216,7 +216,7 @@ TEST(SubscriptionSessionTest, ScheduleCallbacksExactlyOnce) {
                 [](auto) { return Status{}; });
           });
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
         return make_ready_future(Status{});
       });
@@ -314,7 +314,7 @@ TEST(SubscriptionSessionTest, ExactlyOnceAckErrors) {
       .Times(AtLeast(1))
       .WillRepeatedly(FakeAsyncStreamingPull);
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::AcknowledgeRequest const& r) {
         if (r.ack_ids_size() == 1 && r.ack_ids(0) == "test-ack-id-0") {
           return make_ready_future(Status{StatusCode::kUnauthenticated, "0"});
@@ -322,7 +322,7 @@ TEST(SubscriptionSessionTest, ExactlyOnceAckErrors) {
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&
                              r) {
         if (r.ack_ids_size() == 1 && r.ack_ids(0) == "test-ack-id-1") {
@@ -379,7 +379,7 @@ TEST(SubscriptionSessionTest, DefaultAckHandlerLogsErrors) {
       .Times(AtLeast(1))
       .WillRepeatedly(FakeAsyncStreamingPull);
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::AcknowledgeRequest const& r) {
         if (r.ack_ids_size() == 1 && r.ack_ids(0) == "test-ack-id-0") {
           return make_ready_future(Status{StatusCode::kUnauthenticated,
@@ -389,7 +389,7 @@ TEST(SubscriptionSessionTest, DefaultAckHandlerLogsErrors) {
       });
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
       .WillRepeatedly(
-          [](google::cloud::CompletionQueue&, auto,
+          [](google::cloud::CompletionQueue&, auto, auto,
              google::pubsub::v1::ModifyAckDeadlineRequest const& r) {
             if (r.ack_ids_size() == 1 && r.ack_ids(0) == "test-ack-id-1") {
               return make_ready_future(Status{StatusCode::kPermissionDenied,
@@ -451,12 +451,12 @@ TEST(SubscriptionSessionTest, SequencedCallbacks) {
       .Times(AtLeast(1))
       .WillRepeatedly(FakeAsyncStreamingPull);
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::AcknowledgeRequest const&) {
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
         return make_ready_future(Status{});
       });
@@ -499,12 +499,12 @@ TEST(SubscriptionSessionTest, ShutdownNackCallbacks) {
       .Times(AtLeast(1))
       .WillRepeatedly(FakeAsyncStreamingPull);
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::AcknowledgeRequest const&) {
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
         return make_ready_future(Status{});
       });
@@ -548,12 +548,12 @@ TEST(SubscriptionSessionTest, ShutdownWaitsFutures) {
       .Times(AtLeast(1))
       .WillRepeatedly(FakeAsyncStreamingPull);
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::AcknowledgeRequest const&) {
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
         return make_ready_future(Status{});
       });
@@ -608,12 +608,12 @@ TEST(SubscriptionSessionTest, ShutdownWaitsConditionVars) {
       .Times(AtLeast(1))
       .WillRepeatedly(FakeAsyncStreamingPull);
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::AcknowledgeRequest const&) {
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
         return make_ready_future(Status{});
       });
@@ -676,12 +676,12 @@ TEST(SubscriptionSessionTest, ShutdownWaitsEarlyAcks) {
       .Times(AtLeast(1))
       .WillRepeatedly(FakeAsyncStreamingPull);
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::AcknowledgeRequest const&) {
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
         return make_ready_future(Status{});
       });
@@ -748,12 +748,12 @@ TEST(SubscriptionSessionTest, FireAndForget) {
       .Times(AtLeast(1))
       .WillRepeatedly(FakeAsyncStreamingPull);
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::AcknowledgeRequest const&) {
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
         return make_ready_future(Status{});
       });
@@ -849,12 +849,12 @@ TEST(SubscriptionSessionTest, FireAndForgetShutdown) {
   };
   EXPECT_CALL(*mock, AsyncStreamingPull).WillRepeatedly(async_pull_mock);
   EXPECT_CALL(*mock, AsyncAcknowledge)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::AcknowledgeRequest const&) {
         return make_ready_future(Status{});
       });
   EXPECT_CALL(*mock, AsyncModifyAckDeadline)
-      .WillRepeatedly([](google::cloud::CompletionQueue&, auto,
+      .WillRepeatedly([](google::cloud::CompletionQueue&, auto, auto,
                          google::pubsub::v1::ModifyAckDeadlineRequest const&) {
         return make_ready_future(Status{});
       });

@@ -173,21 +173,25 @@ StatusOr<google::pubsub::v1::SeekResponse> SubscriberMetadata::Seek(
 future<Status> SubscriberMetadata::AsyncModifyAckDeadline(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::pubsub::v1::ModifyAckDeadlineRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, *options,
               absl::StrCat("subscription=",
                            internal::UrlEncode(request.subscription())));
-  return child_->AsyncModifyAckDeadline(cq, std::move(context), request);
+  return child_->AsyncModifyAckDeadline(cq, std::move(context),
+                                        std::move(options), request);
 }
 
 future<Status> SubscriberMetadata::AsyncAcknowledge(
     google::cloud::CompletionQueue& cq,
     std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
     google::pubsub::v1::AcknowledgeRequest const& request) {
-  SetMetadata(*context, internal::CurrentOptions(),
+  SetMetadata(*context, *options,
               absl::StrCat("subscription=",
                            internal::UrlEncode(request.subscription())));
-  return child_->AsyncAcknowledge(cq, std::move(context), request);
+  return child_->AsyncAcknowledge(cq, std::move(context), std::move(options),
+                                  request);
 }
 
 void SubscriberMetadata::SetMetadata(grpc::ClientContext& context,
