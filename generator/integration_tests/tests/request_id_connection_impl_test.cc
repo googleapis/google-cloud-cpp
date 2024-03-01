@@ -15,6 +15,7 @@
 #include "generator/integration_tests/golden/v1/internal/request_id_connection_impl.h"
 #include "generator/integration_tests/golden/v1/internal/request_id_option_defaults.h"
 #include "generator/integration_tests/golden/v1/internal/request_id_stub.h"
+#include "generator/integration_tests/tests/mock_request_id_stub.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -30,6 +31,7 @@ namespace golden_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::golden_v1_testing::MockRequestIdServiceStub;
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::test::requestid::v1::CreateFooRequest;
 using ::google::test::requestid::v1::Foo;
@@ -43,52 +45,6 @@ using ::testing::Eq;
 using ::testing::IsEmpty;
 using ::testing::ResultOf;
 using ::testing::Return;
-
-class MockRequestIdServiceStub
-    : public google::cloud::golden_v1_internal::RequestIdServiceStub {
- public:
-  ~MockRequestIdServiceStub() override = default;
-
-  MOCK_METHOD(StatusOr<google::test::requestid::v1::Foo>, CreateFoo,
-              (grpc::ClientContext&, Options const&,
-               google::test::requestid::v1::CreateFooRequest const&),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::longrunning::Operation>>, AsyncRenameFoo,
-              (google::cloud::CompletionQueue&,
-               std::shared_ptr<grpc::ClientContext>,
-               google::cloud::internal::ImmutableOptions,
-               google::test::requestid::v1::RenameFooRequest const&),
-              (override));
-
-  MOCK_METHOD(StatusOr<google::test::requestid::v1::ListFoosResponse>, ListFoos,
-              (grpc::ClientContext&, Options const&,
-               google::test::requestid::v1::ListFoosRequest const&),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::test::requestid::v1::Foo>>,
-              AsyncCreateFoo,
-              (google::cloud::CompletionQueue&,
-               std::shared_ptr<grpc::ClientContext>,
-               google::cloud::internal::ImmutableOptions,
-               google::test::requestid::v1::CreateFooRequest const&),
-              (override));
-
-  MOCK_METHOD(future<StatusOr<google::longrunning::Operation>>,
-              AsyncGetOperation,
-              (google::cloud::CompletionQueue&,
-               std::shared_ptr<grpc::ClientContext>,
-               google::cloud::internal::ImmutableOptions,
-               google::longrunning::GetOperationRequest const&),
-              (override));
-
-  MOCK_METHOD(future<Status>, AsyncCancelOperation,
-              (google::cloud::CompletionQueue&,
-               std::shared_ptr<grpc::ClientContext>,
-               google::cloud::internal::ImmutableOptions,
-               google::longrunning::CancelOperationRequest const&),
-              (override));
-};
 
 template <typename Request>
 auto WithRequestId(std::string expected) {
