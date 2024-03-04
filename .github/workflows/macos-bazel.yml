@@ -33,8 +33,10 @@ jobs:
         credentials_json: ${{ secrets.BUILD_CACHE_KEY }}
     - name: Install bash >= 5.x
       run: brew install bash
-    - name: Determine bash path
+    - name: Determine bash path 1
       run: find /usr/local -name bash
+    - name: Determine bash path 2
+      run: find /opt -name bash
     - name: Build google-cloud-cpp
       run: |
         /opt/homebrew/bin/bash ci/gha/builds/macos-bazel.sh
