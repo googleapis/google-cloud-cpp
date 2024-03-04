@@ -37,8 +37,10 @@ jobs:
       run: find /usr/local -name bash
     - name: Determine bash path 2
       run: find /opt -name bash
-    - name: Determine bash path 2
+    - name: which bash
       run: which bash
+    - name: which bash version
+      run: bash --version
     - name: Build google-cloud-cpp
       run: |
         /opt/homebrew/bin/bash ci/gha/builds/macos-bazel.sh
