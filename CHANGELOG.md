@@ -19,7 +19,9 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
   details.
 </details>
 
-## v2.22.0 - TBD
+## v2.23.0 - TBD
+
+## v2.22.0 - 2024-03
 
 ### New Libraries
 
@@ -27,6 +29,33 @@ We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [Security Center Management API](/google/cloud/securitycentermanagement/README.md)
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- feat: promote `EnableServerRetriesOption` ([#13698](https://github.com/googleapis/google-cloud-cpp/pull/13698))
+- feat(bigtable): install mocks library ([#13551](https://github.com/googleapis/google-cloud-cpp/pull/13551))
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- docs(pubsub): add doxygen comment to deprecate handwritten apis ([#13585](https://github.com/googleapis/google-cloud-cpp/pull/13585))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- feat(spanner): add support for max commit delay ([#13562](https://github.com/googleapis/google-cloud-cpp/pull/13562))
+- feat: install mocks for `spanner`, `sql`, `pubsublite` ([#13548](https://github.com/googleapis/google-cloud-cpp/pull/13548))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- docs(GCS+gRPC): add contact info ([#13688](https://github.com/googleapis/google-cloud-cpp/pull/13688))
+- feat(storage): support listing folders as prefixes ([#13683](https://github.com/googleapis/google-cloud-cpp/pull/13683))
+- feat(storage): support soft-deleted objects ([#13644](https://github.com/googleapis/google-cloud-cpp/pull/13644))
+- feat(storage): support Bucket soft-delete metadata ([#13623](https://github.com/googleapis/google-cloud-cpp/pull/13623))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat: cmake option to skip building mock libraries ([#13673](https://github.com/googleapis/google-cloud-cpp/pull/13673))
+- feat(generator): support `request_id`-like fields ([#13615](https://github.com/googleapis/google-cloud-cpp/pull/13615))
+- docs(common): advertise OAuth2 library ([#13614](https://github.com/googleapis/google-cloud-cpp/pull/13614))
 
 ## v2.21.0 - 2024-02
 

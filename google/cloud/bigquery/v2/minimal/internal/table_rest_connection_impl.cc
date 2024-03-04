@@ -53,11 +53,11 @@ StatusOr<Table> TableRestConnectionImpl::GetTable(
   auto result = rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetTable(request),
-      [this](rest_internal::RestContext& rest_context,
+      [this](rest_internal::RestContext& rest_context, Options const&,
              GetTableRequest const& request) {
         return stub_->GetTable(rest_context, request);
       },
-      request, __func__);
+      *current, request, __func__);
   if (!result) return std::move(result).status();
   return result->table;
 }
@@ -74,16 +74,17 @@ StreamRange<ListFormatTable> TableRestConnectionImpl::ListTables(
   char const* function_name = __func__;
   return google::cloud::internal::MakePaginationRange<
       StreamRange<ListFormatTable>>(
-      std::move(req),
+      std::move(current), std::move(req),
       [stub = stub_, retry = std::move(retry), backoff = std::move(backoff),
-       idempotency, function_name](ListTablesRequest const& r) {
+       idempotency,
+       function_name](Options const& options, ListTablesRequest const& r) {
         return rest_internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](rest_internal::RestContext& context,
+            [stub](rest_internal::RestContext& context, Options const&,
                    ListTablesRequest const& request) {
               return stub->ListTables(context, request);
             },
-            r, function_name);
+            options, r, function_name);
       },
       [](ListTablesResponse r) {
         std::vector<ListFormatTable> result(r.tables.size());

@@ -14,8 +14,8 @@
 
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
 #include "google/cloud/bigtable/internal/async_streaming_read.h"
-#include "google/cloud/bigtable/internal/retry_info_helper.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/retry_loop_helpers.h"
 
 namespace google {
 namespace cloud {
@@ -97,8 +97,9 @@ void AsyncBulkApplier::OnFinish(Status const& status) {
     SetPromise();
     return;
   }
-  auto delay = BackoffOrBreak(enable_server_retries_, status, *retry_policy_,
-                              *backoff_policy_);
+  auto delay = internal::Backoff(status, "AsyncBulkApply", *retry_policy_,
+                                 *backoff_policy_, Idempotency::kIdempotent,
+                                 enable_server_retries_);
   if (!delay) {
     SetPromise();
     return;

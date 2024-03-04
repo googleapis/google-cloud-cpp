@@ -133,26 +133,6 @@ future<StatusOr<google::longrunning::Operation>> AsyncPollingLoop(
     AsyncPollLongRunningOperation poll, AsyncCancelLongRunningOperation cancel,
     std::unique_ptr<PollingPolicy> polling_policy, std::string location);
 
-// TODO(#12359) - remove this once it becomes unused
-using AsyncPollLongRunningOperationImplicitOptions =
-    std::function<future<StatusOr<google::longrunning::Operation>>(
-        CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
-        google::longrunning::GetOperationRequest const&)>;
-
-// TODO(#12359) - remove this once it becomes unused
-using AsyncCancelLongRunningOperationImplicitOptions =
-    std::function<future<Status>(
-        CompletionQueue&, std::shared_ptr<grpc::ClientContext>,
-        google::longrunning::CancelOperationRequest const&)>;
-
-// TODO(#12359) - remove this once it becomes unused
-future<StatusOr<google::longrunning::Operation>> AsyncPollingLoop(
-    google::cloud::CompletionQueue cq,
-    future<StatusOr<google::longrunning::Operation>> op,
-    AsyncPollLongRunningOperationImplicitOptions poll,
-    AsyncCancelLongRunningOperationImplicitOptions cancel,
-    std::unique_ptr<PollingPolicy> polling_policy, std::string location);
-
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

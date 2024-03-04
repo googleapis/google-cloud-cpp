@@ -93,7 +93,8 @@ find_package(GTest CONFIG REQUIRED)
 
 add_library(
     google_cloud_cpp_generator_golden_testing # cmake-format: sort
-    tests/mock_golden_kitchen_sink_stub.h tests/mock_golden_thing_admin_stub.h)
+    tests/mock_golden_kitchen_sink_stub.h tests/mock_golden_thing_admin_stub.h
+    tests/mock_request_id_stub.h)
 target_link_libraries(
     google_cloud_cpp_generator_golden_testing
     PUBLIC google_cloud_cpp_testing google_cloud_cpp_mocks

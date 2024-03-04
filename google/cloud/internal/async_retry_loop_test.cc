@@ -119,26 +119,6 @@ class AsyncRetryLoopCancelTest : public ::testing::Test {
   AsyncSequencer<Status> sequencer_;
 };
 
-TEST(AsyncRetryLoopTest, SuccessWithImplicitOptions) {
-  EXPECT_EQ(CurrentOptions().get<TestOption>(), "");
-  OptionsSpan span(Options{}.set<TestOption>("Success"));
-  EXPECT_EQ(CurrentOptions().get<TestOption>(), "Success");
-  AutomaticallyCreatedBackgroundThreads background;
-  auto pending = AsyncRetryLoop(
-      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
-      background.cq(),
-      [](google::cloud::CompletionQueue&, auto,
-         int request) -> future<StatusOr<int>> {
-        EXPECT_EQ(CurrentOptions().get<TestOption>(), "Success");
-        return make_ready_future(StatusOr<int>(2 * request));
-      },
-      42, "error message");
-  OptionsSpan overlay(Options{}.set<TestOption>("uh-oh"));
-  StatusOr<int> actual = pending.get();
-  ASSERT_THAT(actual.status(), IsOk());
-  EXPECT_EQ(84, *actual);
-}
-
 TEST(AsyncRetryLoopTest, SuccessWithExplicitOptions) {
   AutomaticallyCreatedBackgroundThreads background;
   auto pending = AsyncRetryLoop(

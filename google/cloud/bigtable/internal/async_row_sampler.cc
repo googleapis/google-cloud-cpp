@@ -14,9 +14,9 @@
 
 #include "google/cloud/bigtable/internal/async_row_sampler.h"
 #include "google/cloud/bigtable/internal/async_streaming_read.h"
-#include "google/cloud/bigtable/internal/retry_info_helper.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/grpc_opentelemetry.h"
+#include "google/cloud/internal/retry_loop_helpers.h"
 #include <chrono>
 
 namespace google {
@@ -71,7 +71,7 @@ void AsyncRowSampler::StartIteration() {
       [self](v2::SampleRowKeysResponse response) {
         return self->OnRead(std::move(response));
       },
-      [self](Status status) { self->OnFinish(std::move(status)); });
+      [self](Status const& status) { self->OnFinish(status); });
 }
 
 future<bool> AsyncRowSampler::OnRead(v2::SampleRowKeysResponse response) {
@@ -82,15 +82,16 @@ future<bool> AsyncRowSampler::OnRead(v2::SampleRowKeysResponse response) {
   return make_ready_future(keep_reading_.load());
 }
 
-void AsyncRowSampler::OnFinish(Status status) {
+void AsyncRowSampler::OnFinish(Status const& status) {
   if (status.ok()) {
     promise_.set_value(std::move(samples_));
     return;
   }
-  auto delay = BackoffOrBreak(enable_server_retries_, status, *retry_policy_,
-                              *backoff_policy_);
+  auto delay = internal::Backoff(status, "AsyncSampleRows", *retry_policy_,
+                                 *backoff_policy_, Idempotency::kIdempotent,
+                                 enable_server_retries_);
   if (!delay) {
-    promise_.set_value(std::move(status));
+    promise_.set_value(std::move(delay).status());
     return;
   }
 

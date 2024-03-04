@@ -15,7 +15,7 @@
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/internal/client_options_defaults.h"
 #include "google/cloud/bigtable/options.h"
-#include "google/cloud/connection_options.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/status.h"
@@ -218,7 +218,6 @@ TEST(OptionsTest, DataAuthorityOption) {
 }
 
 TEST(OptionsTest, DataEnableServerRetriesOption) {
-  using ::google::cloud::internal::EnableServerRetriesOption;
   auto options = DefaultDataOptions(Options{});
   EXPECT_TRUE(options.get<EnableServerRetriesOption>());
 
