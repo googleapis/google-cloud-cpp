@@ -36,6 +36,7 @@ StatusOr<google::test::requestid::v1::Foo> RequestIdServiceTracingStub::CreateFo
     Options const& options,
     google::test::requestid::v1::CreateFooRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.test.requestid.v1.RequestIdService", "CreateFoo");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -49,6 +50,7 @@ RequestIdServiceTracingStub::AsyncRenameFoo(
       google::cloud::internal::ImmutableOptions options,
       google::test::requestid::v1::RenameFooRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.test.requestid.v1.RequestIdService", "RenameFoo");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncRenameFoo(cq, context, std::move(options), request);
@@ -73,6 +75,7 @@ RequestIdServiceTracingStub::AsyncCreateFoo(
       google::cloud::internal::ImmutableOptions options,
       google::test::requestid::v1::CreateFooRequest const& request) {
   auto span = internal::MakeSpanGrpc("google.test.requestid.v1.RequestIdService", "CreateFoo");
+  span->SetAttribute("gl-cpp.request_id", request.request_id());
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncCreateFoo(cq, context, std::move(options), request);
