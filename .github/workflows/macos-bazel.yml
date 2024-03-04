@@ -42,7 +42,6 @@ jobs:
     - name: which bash version
       run: bash --version
     - name: Build google-cloud-cpp
-      run: |
-        /opt/homebrew/bin/bash ci/gha/builds/macos-bazel.sh
+      run: ci/gha/builds/macos-bazel.sh
     env:
       BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-gha-cache/bazel-cache/${{ matrix.os }}
