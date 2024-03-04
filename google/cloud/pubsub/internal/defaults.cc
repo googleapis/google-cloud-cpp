@@ -137,7 +137,9 @@ Options DefaultSubscriberOptionsOnly(Options opts) {
           // hard-coded "treat these disconnects as non-failures" code.
           .set<pubsub::RetryPolicyOption>(pubsub::LimitedErrorCountRetryPolicy(
                                               (std::numeric_limits<int>::max)())
-                                              .clone());
+                                              .clone())
+          .set<pubsub::experimental::SpanRelationshipOption>(
+              pubsub::experimental::SpanRelationship::kParentChild);
   opts = google::cloud::internal::MergeOptions(std::move(opts),
                                                std::move(defaults));
 

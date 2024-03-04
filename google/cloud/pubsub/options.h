@@ -50,6 +50,27 @@ namespace cloud {
 namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+namespace experimental {
+
+enum class SpanRelationship {
+  /// Configure the consumer span to be linked to the producer span.
+  kLink,
+  /// Configure the consumer span to be a child of the producer span.
+  kParentChild
+};
+
+/**
+ * The relationship of the spans produced between the producer and consumer by
+ * the subscriber for streaming pull.
+ *
+ * @ingroup pubsub-options
+ */
+struct SpanRelationshipOption {
+  using Type = SpanRelationship;
+};
+
+}  // namespace experimental
+
 /**
  * The retry policy
  *
@@ -410,7 +431,8 @@ using SubscriberOptionList =
     OptionList<MaxDeadlineTimeOption, MaxDeadlineExtensionOption,
                MinDeadlineExtensionOption, MaxOutstandingMessagesOption,
                MaxOutstandingBytesOption, MaxConcurrencyOption,
-               ShutdownPollingPeriodOption, SubscriptionOption>;
+               ShutdownPollingPeriodOption, SubscriptionOption,
+               experimental::SpanRelationshipOption>;
 
 /**
  * Convenience function to initialize a
