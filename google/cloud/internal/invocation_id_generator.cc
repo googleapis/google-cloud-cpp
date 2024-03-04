@@ -24,7 +24,7 @@ namespace internal {
 
 // Initialize the random bit source with some minimal entropy.
 InvocationIdGenerator::InvocationIdGenerator()
-    : generator_(std::random_device{}()) {}
+    : generator_(MakeDefaultPRNG()) {}
 
 std::string InvocationIdGenerator::MakeInvocationId() {
   // A retry id is supposed to be a UUID V4 string. We assume you have read the
