@@ -66,8 +66,11 @@ bool operator==(ObjectMetadata const& lhs, ObjectMetadata const& rhs) {
          && lhs.time_created_ == rhs.time_created_                            //
          && lhs.time_deleted_ == rhs.time_deleted_                            //
          && (lhs.time_storage_class_updated_ ==
-             rhs.time_storage_class_updated_)  //
-         && lhs.updated_ == rhs.updated_;
+             rhs.time_storage_class_updated_)               //
+         && lhs.updated_ == rhs.updated_                    //
+         && lhs.soft_delete_time_ == rhs.soft_delete_time_  //
+         && lhs.hard_delete_time_ == rhs.hard_delete_time_  //
+      ;
 }
 
 std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
@@ -117,6 +120,12 @@ std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
      << ", updated=" << rhs.updated().time_since_epoch().count();
   if (rhs.has_custom_time()) {
     os << ", custom_time=" << FormatRfc3339(rhs.custom_time());
+  }
+  if (rhs.has_soft_delete_time()) {
+    os << ", soft_delete_time=" << FormatRfc3339(rhs.soft_delete_time());
+  }
+  if (rhs.has_hard_delete_time()) {
+    os << ", hard_delete_time=" << FormatRfc3339(rhs.hard_delete_time());
   }
   return os << "}";
 }

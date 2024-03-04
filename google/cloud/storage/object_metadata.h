@@ -505,6 +505,50 @@ class ObjectMetadata {
     return *this;
   }
 
+  /// Returns true if the object has a soft delete timestamp.
+  bool has_soft_delete_time() const { return soft_delete_time_.has_value(); }
+
+  /// The timestamp when the object became soft deleted. Objects that are not
+  /// soft deleted return a default initialized time point.
+  std::chrono::system_clock::time_point soft_delete_time() const {
+    return soft_delete_time_.value_or(std::chrono::system_clock::time_point{});
+  }
+
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_soft_delete_time(
+      std::chrono::system_clock::time_point v) {
+    soft_delete_time_ = v;
+    return *this;
+  }
+
+  /// @note This is only intended for mocking.
+  ObjectMetadata& reset_soft_delete_time() {
+    soft_delete_time_.reset();
+    return *this;
+  }
+
+  /// Returns true if the object has a soft delete timestamp.
+  bool has_hard_delete_time() const { return hard_delete_time_.has_value(); }
+
+  /// The timestamp when the object will be hard deleted. Objects that are not
+  /// soft deleted return a default initialized time point.
+  std::chrono::system_clock::time_point hard_delete_time() const {
+    return hard_delete_time_.value_or(std::chrono::system_clock::time_point{});
+  }
+
+  /// @note This is only intended for mocking.
+  ObjectMetadata& set_hard_delete_time(
+      std::chrono::system_clock::time_point v) {
+    hard_delete_time_ = v;
+    return *this;
+  }
+
+  /// @note THis is only intended for mocking.
+  ObjectMetadata& reset_hard_delete_time() {
+    hard_delete_time_.reset();
+    return *this;
+  }
+
   friend bool operator==(ObjectMetadata const& lhs, ObjectMetadata const& rhs);
   friend bool operator!=(ObjectMetadata const& lhs, ObjectMetadata const& rhs) {
     return !(lhs == rhs);
@@ -545,6 +589,8 @@ class ObjectMetadata {
   std::chrono::system_clock::time_point time_deleted_;
   std::chrono::system_clock::time_point time_storage_class_updated_;
   std::chrono::system_clock::time_point updated_;
+  absl::optional<std::chrono::system_clock::time_point> soft_delete_time_;
+  absl::optional<std::chrono::system_clock::time_point> hard_delete_time_;
 };
 
 std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs);
