@@ -172,6 +172,20 @@ Status ParseUpdated(ObjectMetadata& meta, nlohmann::json const& json) {
   return Status{};
 }
 
+Status ParseSoftDeleteTime(ObjectMetadata& meta, nlohmann::json const& json) {
+  auto v = ParseTimestampField(json, "softDeleteTime");
+  if (!v) return std::move(v).status();
+  meta.set_soft_delete_time(*std::move(v));
+  return Status{};
+}
+
+Status ParseHardDeleteTime(ObjectMetadata& meta, nlohmann::json const& json) {
+  auto v = ParseTimestampField(json, "hardDeleteTime");
+  if (!v) return std::move(v).status();
+  meta.set_hard_delete_time(*std::move(v));
+  return Status{};
+}
+
 }  // namespace
 
 StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
@@ -260,6 +274,8 @@ StatusOr<ObjectMetadata> ObjectMetadataParser::FromJson(
       ParseTimeDeleted,
       ParseTimeStorageClassUpdated,
       ParseUpdated,
+      ParseSoftDeleteTime,
+      ParseHardDeleteTime,
   };
   ObjectMetadata meta;
   for (auto const& p : parsers) {
