@@ -124,6 +124,7 @@ info, see [#7463] and [#5976].
 
 </details>
 
+[#12987]: https://github.com/googleapis/google-cloud-cpp/issues/12987
 [#5976]: https://github.com/googleapis/google-cloud-cpp/issues/5976
 [#7356]: https://github.com/googleapis/google-cloud-cpp/issues/7356
 [#7463]: https://github.com/googleapis/google-cloud-cpp/issues/7463
@@ -131,4 +132,3 @@ info, see [#7463] and [#5976].
 [#8800]: https://github.com/googleapis/google-cloud-cpp/issues/8800
 [#8854]: https://github.com/googleapis/google-cloud-cpp/issues/8854
 [#9086]: https://github.com/googleapis/google-cloud-cpp/issues/9086
-[#12987]: https://github.com/googleapis/google-cloud-cpp/issues/12987
