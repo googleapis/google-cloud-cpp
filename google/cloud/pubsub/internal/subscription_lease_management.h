@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIPTION_LEASE_MANAGEMENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_SUBSCRIPTION_LEASE_MANAGEMENT_H
 
+#include "google/cloud/pubsub/internal/batch_callback.h"
 #include "google/cloud/pubsub/internal/session_shutdown_manager.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/internal/subscription_batch_source.h"
@@ -49,7 +50,7 @@ class SubscriptionLeaseManagement
             max_deadline_time, max_deadline_extension));
   }
 
-  void Start(BatchCallback cb) override;
+  void Start(std::shared_ptr<BatchCallback> cb) override;
   void Shutdown() override;
   future<Status> AckMessage(std::string const& ack_id) override;
   future<Status> NackMessage(std::string const& ack_id) override;
