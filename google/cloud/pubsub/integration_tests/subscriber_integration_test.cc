@@ -86,7 +86,7 @@ class SubscriberIntegrationTest
                 AnyOf(IsOk(), StatusIs(StatusCode::kAlreadyExists)));
 
     google::pubsub::v1::Subscription ordered_request;
-    ordered_request.set_name(subscription_.FullName());
+    ordered_request.set_name(ordered_subscription_.FullName());
     ordered_request.set_topic(topic_.FullName());
     ordered_request.set_ack_deadline_seconds(30);
     ordered_request.set_enable_message_ordering(true);
