@@ -1282,8 +1282,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nCreate exactly once subscription ("
             << exactly_once_subscription.subscription_id() << ")" << std::endl;
   google::pubsub::v1::Subscription exactly_once_request;
-  exactly_once_request.set_name(exactly_once_subscription
-          .FullName());
+  exactly_once_request.set_name(exactly_once_subscription.FullName());
   exactly_once_request.set_topic(topic.FullName());
   exactly_once_request.set_enable_exactly_once_delivery(true);
   (void)subscription_admin.CreateSubscription(exactly_once_request);
@@ -1305,17 +1304,17 @@ void AutoRun(std::vector<std::string> const& argv) {
   dead_letter_request.mutable_dead_letter_policy()->set_dead_letter_topic(
       dead_letter_topic.FullName());
   dead_letter_request.mutable_dead_letter_policy()->set_max_delivery_attempts(
-     kDeadLetterDeliveryAttempts);
+      kDeadLetterDeliveryAttempts);
   (void)subscription_admin.CreateSubscription(dead_letter_request);
   cleanup.Defer([subscription_admin, subscription, filtered_subscription,
                  exactly_once_subscription, ordering_subscription,
                  dead_letter_subscription]() mutable {
     std::cout << "\nDelete subscription (" << subscription.subscription_id()
               << ")" << std::endl;
-               (void)subscription_admin.DeleteSubscription(
-        subscription.FullName());
-     std::cout << "\nDelete subscription (" << filtered_subscription.subscription_id()
-              << ")" << std::endl;   (void)subscription_admin.DeleteSubscription(
+    (void)subscription_admin.DeleteSubscription(subscription.FullName());
+    std::cout << "\nDelete subscription ("
+              << filtered_subscription.subscription_id() << ")" << std::endl;
+    (void)subscription_admin.DeleteSubscription(
         filtered_subscription.FullName());
     std::cout << "\nDelete subscription ("
               << exactly_once_subscription.subscription_id() << ")"
