@@ -14,7 +14,7 @@ permissions:
 jobs:
   bazel:
     name: bazel + ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}-xlarge
+    runs-on: ${{ matrix.os }}-large
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -34,7 +34,6 @@ jobs:
     - name: Install bash >= 5.x
       run: brew install bash
     - name: Build google-cloud-cpp
-      run: |
-        /opt/homebrew/bin/bash ci/gha/builds/macos-bazel.sh
+      run: ci/gha/builds/macos-bazel.sh
     env:
       BAZEL_REMOTE_CACHE: https://storage.googleapis.com/cloud-cpp-gha-cache/bazel-cache/${{ matrix.os }}
