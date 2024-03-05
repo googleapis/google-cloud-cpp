@@ -508,8 +508,12 @@ class ObjectMetadata {
   /// Returns true if the object has a soft delete timestamp.
   bool has_soft_delete_time() const { return soft_delete_time_.has_value(); }
 
-  /// The timestamp when the object became soft deleted. Objects that are not
-  /// soft deleted return a default initialized time point.
+  /**
+   * This is the time when the object became soft-deleted.
+   *
+   * Soft-deleted objects are only accessible if a `soft_delete_policy` is
+   * enabled in their bucket. Also see `hard_delete_time()`.
+   */
   std::chrono::system_clock::time_point soft_delete_time() const {
     return soft_delete_time_.value_or(std::chrono::system_clock::time_point{});
   }
@@ -527,11 +531,17 @@ class ObjectMetadata {
     return *this;
   }
 
-  /// Returns true if the object has a soft delete timestamp.
+  /// Returns true if the object has a hard delete timestamp.
   bool has_hard_delete_time() const { return hard_delete_time_.has_value(); }
 
-  /// The timestamp when the object will be hard deleted. Objects that are not
-  /// soft deleted return a default initialized time point.
+  /**
+   * The time when the object will be permanently deleted.
+   *
+   * Soft-deleted objects are permanently deleted after some time, based on the
+   * `soft_delete_policy` in their bucket. This is only set on soft-deleted
+   * objects, and indicates the earliest time at which the object will be
+   * permanently deleted.
+   */
   std::chrono::system_clock::time_point hard_delete_time() const {
     return hard_delete_time_.value_or(std::chrono::system_clock::time_point{});
   }
@@ -543,7 +553,7 @@ class ObjectMetadata {
     return *this;
   }
 
-  /// @note THis is only intended for mocking.
+  /// @note This is only intended for mocking.
   ObjectMetadata& reset_hard_delete_time() {
     hard_delete_time_.reset();
     return *this;
