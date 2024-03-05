@@ -109,6 +109,22 @@ info, see [#7463] and [#5976].
 
 </details>
 
+<details>
+<summary>2024-12-31: retiring legacy Pubsub admin APIs</summary>
+<br>
+
+- On 2024-12-31 (or shortly after) we are planning to remove the hand-written
+  versions of the Pubsub topic admin APIs. These have been superseded by
+  versions generated automatically from the service definitions. The new APIs
+  can be found in the
+  [`google/cloud/pubsub/admin`](https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/pubsub/admin)
+  tree and within the `google::cloud::pubsub_admin` namespace. Starting with the
+  v2.23.0 release, and depending on your compiler settings, using these
+  classes/functions may elicit a deprecation warning. See [#7356] for more
+  details.
+
+</details>
+
 [#5976]: https://github.com/googleapis/google-cloud-cpp/issues/5976
 [#7356]: https://github.com/googleapis/google-cloud-cpp/issues/7356
 [#7463]: https://github.com/googleapis/google-cloud-cpp/issues/7463
