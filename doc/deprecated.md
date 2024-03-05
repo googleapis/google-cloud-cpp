@@ -60,7 +60,7 @@ definitions. The new APIs can be found in the
 [`google/cloud/pubsub/admin`](https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/pubsub/admin)
 tree and within the `google::cloud::pubsub_admin` namespace. Starting with the
 v2.33.0 release, and depending on your compiler settings, using the old
-classes/functions may elicit a deprecation warning. See [#7356] for more
+classes/functions may elicit a deprecation warning. See [#12987] for more
 details.
 
 </details>
@@ -131,3 +131,4 @@ info, see [#7463] and [#5976].
 [#8800]: https://github.com/googleapis/google-cloud-cpp/issues/8800
 [#8854]: https://github.com/googleapis/google-cloud-cpp/issues/8854
 [#9086]: https://github.com/googleapis/google-cloud-cpp/issues/9086
+[#12987]: https://github.com/googleapis/google-cloud-cpp/issues/12987
