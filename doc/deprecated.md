@@ -59,7 +59,7 @@ been superseded by versions generated automatically from the service
 definitions. The new APIs can be found in the
 [`google/cloud/pubsub/admin`](https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/pubsub/admin)
 tree and within the `google::cloud::pubsub_admin` namespace. Starting with the
-v2.33.0 release, and depending on your compiler settings, using the old
+v2.23.0 release, and depending on your compiler settings, using the old
 classes/functions may elicit a deprecation warning. See [#12987] for more
 details.
 
