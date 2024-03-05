@@ -13,7 +13,7 @@ breaking changes in the upcoming 3.x release. This release is scheduled for
   generated automatically from the service definitions. The new APIs can be
   found in the [`google/cloud/pubsub/admin`](https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/pubsub/admin)
   tree and within the `google::cloud::pubsub_admin` namespace. Starting with
-  the v2.22.0 release, and depending on your compiler settings, using these
+  the v2.23.0 release, and depending on your compiler settings, using these
   classes/functions may elicit a deprecation warning. See
   [#7356](https://github.com/googleapis/google-cloud-cpp/issues/7356) for more
   details.
