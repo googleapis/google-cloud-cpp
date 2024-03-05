@@ -59,7 +59,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [pubsub-doc-link]: https://cloud.google.com/pubsub/docs
  */
-class TopicAdminClient {
+class GOOGLE_CLOUD_CPP_PUBSUB_ADMIN_API_DEPRECATED("TopicAdminClient")
+    TopicAdminClient {
  public:
   explicit TopicAdminClient(std::shared_ptr<TopicAdminConnection> connection,
                             Options opts = {});

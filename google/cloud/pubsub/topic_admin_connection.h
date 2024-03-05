@@ -202,6 +202,7 @@ std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
  *       - `google::cloud::GrpcOptionList`
  *       - `google::cloud::pubsub::PolicyOptionList`
  */
+GOOGLE_CLOUD_CPP_PUBSUB_ADMIN_API_DEPRECATED("MakeTopicAdminConnection")
 std::shared_ptr<TopicAdminConnection> MakeTopicAdminConnection(
     Options opts = {});
 
