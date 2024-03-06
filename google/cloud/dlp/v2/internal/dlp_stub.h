@@ -216,6 +216,40 @@ class DlpServiceStub {
       grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request) = 0;
 
+  virtual StatusOr<google::privacy::dlp::v2::ListProjectDataProfilesResponse>
+  ListProjectDataProfiles(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::ListProjectDataProfilesRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::privacy::dlp::v2::ListTableDataProfilesResponse>
+  ListTableDataProfiles(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::ListTableDataProfilesRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::privacy::dlp::v2::ListColumnDataProfilesResponse>
+  ListColumnDataProfiles(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::ListColumnDataProfilesRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::privacy::dlp::v2::ProjectDataProfile>
+  GetProjectDataProfile(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::GetProjectDataProfileRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::privacy::dlp::v2::TableDataProfile>
+  GetTableDataProfile(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::GetTableDataProfileRequest const& request) = 0;
+
+  virtual StatusOr<google::privacy::dlp::v2::ColumnDataProfile>
+  GetColumnDataProfile(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::GetColumnDataProfileRequest const& request) = 0;
+
   virtual StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
   HybridInspectDlpJob(
       grpc::ClientContext& context, Options const& options,
@@ -413,6 +447,39 @@ class DefaultDlpServiceStub : public DlpServiceStub {
   Status DeleteStoredInfoType(
       grpc::ClientContext& context, Options const& options,
       google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ListProjectDataProfilesResponse>
+  ListProjectDataProfiles(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::ListProjectDataProfilesRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ListTableDataProfilesResponse>
+  ListTableDataProfiles(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::ListTableDataProfilesRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ListColumnDataProfilesResponse>
+  ListColumnDataProfiles(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::ListColumnDataProfilesRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ProjectDataProfile> GetProjectDataProfile(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::GetProjectDataProfileRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::TableDataProfile> GetTableDataProfile(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::GetTableDataProfileRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ColumnDataProfile> GetColumnDataProfile(
+      grpc::ClientContext& context, Options const& options,
+      google::privacy::dlp::v2::GetColumnDataProfileRequest const& request)
       override;
 
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse> HybridInspectDlpJob(

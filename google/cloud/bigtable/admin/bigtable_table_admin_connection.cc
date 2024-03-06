@@ -79,6 +79,41 @@ BigtableTableAdminConnection::UndeleteTable(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+BigtableTableAdminConnection::CreateAuthorizedView(
+    google::bigtable::admin::v2::CreateAuthorizedViewRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::AuthorizedView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StreamRange<google::bigtable::admin::v2::AuthorizedView>
+BigtableTableAdminConnection::ListAuthorizedViews(
+    google::bigtable::admin::v2::
+        ListAuthorizedViewsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::bigtable::admin::v2::AuthorizedView>>();
+}
+
+StatusOr<google::bigtable::admin::v2::AuthorizedView>
+BigtableTableAdminConnection::GetAuthorizedView(
+    google::bigtable::admin::v2::GetAuthorizedViewRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+BigtableTableAdminConnection::UpdateAuthorizedView(
+    google::bigtable::admin::v2::UpdateAuthorizedViewRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::AuthorizedView>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+Status BigtableTableAdminConnection::DeleteAuthorizedView(
+    google::bigtable::admin::v2::DeleteAuthorizedViewRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminConnection::ModifyColumnFamilies(
     google::bigtable::admin::v2::ModifyColumnFamiliesRequest const&) {
