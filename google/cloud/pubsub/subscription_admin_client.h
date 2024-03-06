@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_ADMIN_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_ADMIN_CLIENT_H
 
+// TODO(#12987): Remove this file after the deprecation period expires
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include "google/cloud/pubsub/snapshot_builder.h"
 #include "google/cloud/pubsub/subscription_admin_connection.h"
 #include "google/cloud/pubsub/subscription_builder.h"
@@ -61,7 +63,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [pubsub-doc-link]: https://cloud.google.com/pubsub/docs
  */
-class SubscriptionAdminClient {
+class GOOGLE_CLOUD_CPP_PUBSUB_ADMIN_API_DEPRECATED("SubscriptionAdminClient")
+    SubscriptionAdminClient {
  public:
   explicit SubscriptionAdminClient(
       std::shared_ptr<SubscriptionAdminConnection> connection,
