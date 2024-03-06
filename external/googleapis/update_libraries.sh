@@ -42,6 +42,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/appengine/logging/v1:logging_cc_grpc" \
       "@com_google_googleapis//google/appengine/legacy:legacy_cc_grpc"
   )"
+  ["apphub"]="@com_google_googleapis//google/cloud/apphub/v1:apphub_cc_grpc"
   ["artifactregistry"]="@com_google_googleapis//google/devtools/artifactregistry/v1:artifactregistry_cc_grpc"
   ["asset"]="@com_google_googleapis//google/cloud/asset/v1:asset_cc_grpc"
   ["assuredworkloads"]="@com_google_googleapis//google/cloud/assuredworkloads/v1:assuredworkloads_cc_grpc"
