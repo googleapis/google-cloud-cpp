@@ -1,8 +1,7 @@
 # App Hub API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[App Hub API][cloud-service-docs], a service to \<UNKNOWN - NO SERVICE CONFIG
-DOCUMENTATION SUMMARY>
+[App Hub API][cloud-service-docs], a service to manage App Hub resources.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -17,7 +16,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/apphub/v1/ EDIT HERE _client.h"
+#include "google/cloud/apphub/v1/app_hub_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -30,12 +29,11 @@ int main(int argc, char* argv[]) try {
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace apphub = ::google::cloud::apphub_v1;
-  auto client =
-      apphub::ServiceClient(apphub::MakeServiceConnection());  // EDIT HERE
+  auto client = apphub::AppHubClient(apphub::MakeAppHubConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto a : client.ListApplications(location.FullName())) {
+    if (!a) throw std::move(a).status();
+    std::cout << a->DebugString() << "\n";
   }
 
   return 0;
@@ -54,6 +52,6 @@ int main(int argc, char* argv[]) try {
   client library
 - Detailed header comments in our [public `.h`][source-link] files
 
-[cloud-service-docs]: https://cloud.google.com/apphub
+[cloud-service-docs]: https://cloud.google.com/app-hub
 [doxygen-link]: https://cloud.google.com/cpp/docs/reference/apphub/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/apphub

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/apphub/v1/ EDIT HERE _client.h"
+#include "google/cloud/apphub/v1/app_hub_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -26,12 +26,11 @@ int main(int argc, char* argv[]) try {
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace apphub = ::google::cloud::apphub_v1;
-  auto client =
-      apphub::ServiceClient(apphub::MakeServiceConnection());  // EDIT HERE
+  auto client = apphub::AppHubClient(apphub::MakeAppHubConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  for (auto a : client.ListApplications(location.FullName())) {
+    if (!a) throw std::move(a).status();
+    std::cout << a->DebugString() << "\n";
   }
 
   return 0;
