@@ -62,6 +62,10 @@
 ./include/google/cloud/appengine/v1
 ./include/google/cloud/appengine/v1/internal
 ./include/google/cloud/appengine/v1/mocks
+./include/google/cloud/apphub
+./include/google/cloud/apphub/v1
+./include/google/cloud/apphub/v1/internal
+./include/google/cloud/apphub/v1/mocks
 ./include/google/cloud/artifactregistry
 ./include/google/cloud/artifactregistry/mocks
 ./include/google/cloud/artifactregistry/v1
@@ -1211,6 +1215,8 @@
 ./lib64/cmake/google_cloud_cpp_apikeys_mocks
 ./lib64/cmake/google_cloud_cpp_appengine
 ./lib64/cmake/google_cloud_cpp_appengine_mocks
+./lib64/cmake/google_cloud_cpp_apphub
+./lib64/cmake/google_cloud_cpp_apphub_mocks
 ./lib64/cmake/google_cloud_cpp_artifactregistry
 ./lib64/cmake/google_cloud_cpp_artifactregistry_mocks
 ./lib64/cmake/google_cloud_cpp_asset
