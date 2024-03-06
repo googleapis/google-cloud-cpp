@@ -106,6 +106,71 @@ BigtableTableAdminTracingStub::AsyncUndeleteTable(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminTracingStub::AsyncCreateAuthorizedView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "CreateAuthorizedView");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncCreateAuthorizedView(cq, context, std::move(options),
+                                             request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+StatusOr<google::bigtable::admin::v2::ListAuthorizedViewsResponse>
+BigtableTableAdminTracingStub::ListAuthorizedViews(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListAuthorizedViewsRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "ListAuthorizedViews");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->ListAuthorizedViews(context, options, request));
+}
+
+StatusOr<google::bigtable::admin::v2::AuthorizedView>
+BigtableTableAdminTracingStub::GetAuthorizedView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetAuthorizedViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "GetAuthorizedView");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->GetAuthorizedView(context, options, request));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminTracingStub::AsyncUpdateAuthorizedView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "UpdateAuthorizedView");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncUpdateAuthorizedView(cq, context, std::move(options),
+                                             request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+Status BigtableTableAdminTracingStub::DeleteAuthorizedView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request) {
+  auto span = internal::MakeSpanGrpc(
+      "google.bigtable.admin.v2.BigtableTableAdmin", "DeleteAuthorizedView");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(
+      context, *span, child_->DeleteAuthorizedView(context, options, request));
+}
+
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminTracingStub::ModifyColumnFamilies(
     grpc::ClientContext& context, Options const& options,

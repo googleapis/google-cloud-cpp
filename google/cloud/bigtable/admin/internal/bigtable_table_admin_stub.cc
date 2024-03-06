@@ -114,6 +114,79 @@ DefaultBigtableTableAdminStub::AsyncUndeleteTable(
       request, std::move(context));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultBigtableTableAdminStub::AsyncCreateAuthorizedView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::bigtable::admin::v2::CreateAuthorizedViewRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::bigtable::admin::v2::CreateAuthorizedViewRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCreateAuthorizedView(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+StatusOr<google::bigtable::admin::v2::ListAuthorizedViewsResponse>
+DefaultBigtableTableAdminStub::ListAuthorizedViews(
+    grpc::ClientContext& context, Options const&,
+    google::bigtable::admin::v2::ListAuthorizedViewsRequest const& request) {
+  google::bigtable::admin::v2::ListAuthorizedViewsResponse response;
+  auto status = grpc_stub_->ListAuthorizedViews(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::bigtable::admin::v2::AuthorizedView>
+DefaultBigtableTableAdminStub::GetAuthorizedView(
+    grpc::ClientContext& context, Options const&,
+    google::bigtable::admin::v2::GetAuthorizedViewRequest const& request) {
+  google::bigtable::admin::v2::AuthorizedView response;
+  auto status = grpc_stub_->GetAuthorizedView(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultBigtableTableAdminStub::AsyncUpdateAuthorizedView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions,
+    google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) {
+  return internal::MakeUnaryRpcImpl<
+      google::bigtable::admin::v2::UpdateAuthorizedViewRequest,
+      google::longrunning::Operation>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::bigtable::admin::v2::UpdateAuthorizedViewRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateAuthorizedView(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+Status DefaultBigtableTableAdminStub::DeleteAuthorizedView(
+    grpc::ClientContext& context, Options const&,
+    google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteAuthorizedView(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
 StatusOr<google::bigtable::admin::v2::Table>
 DefaultBigtableTableAdminStub::ModifyColumnFamilies(
     grpc::ClientContext& context, Options const&,

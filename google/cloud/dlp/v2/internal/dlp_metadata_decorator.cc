@@ -365,6 +365,60 @@ Status DlpServiceMetadata::DeleteStoredInfoType(
   return child_->DeleteStoredInfoType(context, options, request);
 }
 
+StatusOr<google::privacy::dlp::v2::ListProjectDataProfilesResponse>
+DlpServiceMetadata::ListProjectDataProfiles(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::ListProjectDataProfilesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListProjectDataProfiles(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::ListTableDataProfilesResponse>
+DlpServiceMetadata::ListTableDataProfiles(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::ListTableDataProfilesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListTableDataProfiles(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::ListColumnDataProfilesResponse>
+DlpServiceMetadata::ListColumnDataProfiles(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::ListColumnDataProfilesRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListColumnDataProfiles(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::ProjectDataProfile>
+DlpServiceMetadata::GetProjectDataProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::GetProjectDataProfileRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetProjectDataProfile(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::TableDataProfile>
+DlpServiceMetadata::GetTableDataProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::GetTableDataProfileRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetTableDataProfile(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::ColumnDataProfile>
+DlpServiceMetadata::GetColumnDataProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::GetColumnDataProfileRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetColumnDataProfile(context, options, request);
+}
+
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DlpServiceMetadata::HybridInspectDlpJob(
     grpc::ClientContext& context, Options const& options,

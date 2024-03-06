@@ -133,6 +133,95 @@ BigtableTableAdminClient::UndeleteTable(
   return connection_->UndeleteTable(request);
 }
 
+future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+BigtableTableAdminClient::CreateAuthorizedView(
+    std::string const& parent,
+    google::bigtable::admin::v2::AuthorizedView const& authorized_view,
+    std::string const& authorized_view_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::CreateAuthorizedViewRequest request;
+  request.set_parent(parent);
+  *request.mutable_authorized_view() = authorized_view;
+  request.set_authorized_view_id(authorized_view_id);
+  return connection_->CreateAuthorizedView(request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+BigtableTableAdminClient::CreateAuthorizedView(
+    google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateAuthorizedView(request);
+}
+
+StreamRange<google::bigtable::admin::v2::AuthorizedView>
+BigtableTableAdminClient::ListAuthorizedViews(std::string const& parent,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::ListAuthorizedViewsRequest request;
+  request.set_parent(parent);
+  return connection_->ListAuthorizedViews(request);
+}
+
+StreamRange<google::bigtable::admin::v2::AuthorizedView>
+BigtableTableAdminClient::ListAuthorizedViews(
+    google::bigtable::admin::v2::ListAuthorizedViewsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListAuthorizedViews(std::move(request));
+}
+
+StatusOr<google::bigtable::admin::v2::AuthorizedView>
+BigtableTableAdminClient::GetAuthorizedView(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::GetAuthorizedViewRequest request;
+  request.set_name(name);
+  return connection_->GetAuthorizedView(request);
+}
+
+StatusOr<google::bigtable::admin::v2::AuthorizedView>
+BigtableTableAdminClient::GetAuthorizedView(
+    google::bigtable::admin::v2::GetAuthorizedViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetAuthorizedView(request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+BigtableTableAdminClient::UpdateAuthorizedView(
+    google::bigtable::admin::v2::AuthorizedView const& authorized_view,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::UpdateAuthorizedViewRequest request;
+  *request.mutable_authorized_view() = authorized_view;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateAuthorizedView(request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+BigtableTableAdminClient::UpdateAuthorizedView(
+    google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateAuthorizedView(request);
+}
+
+Status BigtableTableAdminClient::DeleteAuthorizedView(std::string const& name,
+                                                      Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::DeleteAuthorizedViewRequest request;
+  request.set_name(name);
+  return connection_->DeleteAuthorizedView(request);
+}
+
+Status BigtableTableAdminClient::DeleteAuthorizedView(
+    google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteAuthorizedView(request);
+}
+
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminClient::ModifyColumnFamilies(
     std::string const& name,

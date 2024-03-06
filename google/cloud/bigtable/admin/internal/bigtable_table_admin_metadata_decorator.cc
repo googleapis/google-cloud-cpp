@@ -102,6 +102,58 @@ BigtableTableAdminMetadata::AsyncUndeleteTable(
                                     request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminMetadata::AsyncCreateAuthorizedView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateAuthorizedView(cq, std::move(context),
+                                           std::move(options), request);
+}
+
+StatusOr<google::bigtable::admin::v2::ListAuthorizedViewsResponse>
+BigtableTableAdminMetadata::ListAuthorizedViews(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListAuthorizedViewsRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->ListAuthorizedViews(context, options, request);
+}
+
+StatusOr<google::bigtable::admin::v2::AuthorizedView>
+BigtableTableAdminMetadata::GetAuthorizedView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetAuthorizedViewRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->GetAuthorizedView(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminMetadata::AsyncUpdateAuthorizedView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) {
+  SetMetadata(
+      *context, *options,
+      absl::StrCat("authorized_view.name=",
+                   internal::UrlEncode(request.authorized_view().name())));
+  return child_->AsyncUpdateAuthorizedView(cq, std::move(context),
+                                           std::move(options), request);
+}
+
+Status BigtableTableAdminMetadata::DeleteAuthorizedView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->DeleteAuthorizedView(context, options, request);
+}
+
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminMetadata::ModifyColumnFamilies(
     grpc::ClientContext& context, Options const& options,

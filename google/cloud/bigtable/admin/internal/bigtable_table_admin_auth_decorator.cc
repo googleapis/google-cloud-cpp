@@ -105,6 +105,72 @@ BigtableTableAdminAuth::AsyncUndeleteTable(
       });
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminAuth::AsyncCreateAuthorizedView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateAuthorizedView(cq, *std::move(context),
+                                                std::move(options), request);
+      });
+}
+
+StatusOr<google::bigtable::admin::v2::ListAuthorizedViewsResponse>
+BigtableTableAdminAuth::ListAuthorizedViews(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListAuthorizedViewsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListAuthorizedViews(context, options, request);
+}
+
+StatusOr<google::bigtable::admin::v2::AuthorizedView>
+BigtableTableAdminAuth::GetAuthorizedView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetAuthorizedViewRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetAuthorizedView(context, options, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminAuth::AsyncUpdateAuthorizedView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateAuthorizedView(cq, *std::move(context),
+                                                std::move(options), request);
+      });
+}
+
+Status BigtableTableAdminAuth::DeleteAuthorizedView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteAuthorizedView(context, options, request);
+}
+
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminAuth::ModifyColumnFamilies(
     grpc::ClientContext& context, Options const& options,

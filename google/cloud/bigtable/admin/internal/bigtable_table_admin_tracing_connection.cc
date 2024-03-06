@@ -88,6 +88,55 @@ BigtableTableAdminTracingConnection::UndeleteTable(
   return internal::EndSpan(std::move(span), child_->UndeleteTable(request));
 }
 
+future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+BigtableTableAdminTracingConnection::CreateAuthorizedView(
+    google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::CreateAuthorizedView");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->CreateAuthorizedView(request));
+}
+
+StreamRange<google::bigtable::admin::v2::AuthorizedView>
+BigtableTableAdminTracingConnection::ListAuthorizedViews(
+    google::bigtable::admin::v2::ListAuthorizedViewsRequest request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::ListAuthorizedViews");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListAuthorizedViews(std::move(request));
+  return internal::MakeTracedStreamRange<
+      google::bigtable::admin::v2::AuthorizedView>(std::move(span),
+                                                   std::move(sr));
+}
+
+StatusOr<google::bigtable::admin::v2::AuthorizedView>
+BigtableTableAdminTracingConnection::GetAuthorizedView(
+    google::bigtable::admin::v2::GetAuthorizedViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::GetAuthorizedView");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAuthorizedView(request));
+}
+
+future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+BigtableTableAdminTracingConnection::UpdateAuthorizedView(
+    google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::UpdateAuthorizedView");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span),
+                           child_->UpdateAuthorizedView(request));
+}
+
+Status BigtableTableAdminTracingConnection::DeleteAuthorizedView(
+    google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request) {
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableTableAdminConnection::DeleteAuthorizedView");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteAuthorizedView(request));
+}
+
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminTracingConnection::ModifyColumnFamilies(
     google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request) {

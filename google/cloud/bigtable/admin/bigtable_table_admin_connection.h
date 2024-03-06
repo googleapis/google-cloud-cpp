@@ -208,6 +208,25 @@ class BigtableTableAdminConnection {
   virtual future<StatusOr<google::bigtable::admin::v2::Table>> UndeleteTable(
       google::bigtable::admin::v2::UndeleteTableRequest const& request);
 
+  virtual future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+  CreateAuthorizedView(
+      google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request);
+
+  virtual StreamRange<google::bigtable::admin::v2::AuthorizedView>
+  ListAuthorizedViews(
+      google::bigtable::admin::v2::ListAuthorizedViewsRequest request);
+
+  virtual StatusOr<google::bigtable::admin::v2::AuthorizedView>
+  GetAuthorizedView(
+      google::bigtable::admin::v2::GetAuthorizedViewRequest const& request);
+
+  virtual future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
+  UpdateAuthorizedView(
+      google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request);
+
+  virtual Status DeleteAuthorizedView(
+      google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request);
+
   virtual StatusOr<google::bigtable::admin::v2::Table> ModifyColumnFamilies(
       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request);
 

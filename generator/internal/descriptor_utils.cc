@@ -347,6 +347,12 @@ auto constexpr kLoggingConfigClientCpp2 =
    "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]")""";
 
 ParameterCommentSubstitution substitutions[] = {
+    // Unescaped elements in bigtable/admin/v2.
+    {" projects/<project>/instances/<instance>/"
+     "tables/<table>/authorizedViews/<authorized_view>",
+     " `projects/<project>/instances/<instance>/"
+     "tables/<table>/authorizedViews/<authorized_view>`"},
+
     // From dialogflow/cx/v3.
     {kDialogflowCXEnvironmentIdProto1, kDialogflowCXEnvironmentIdCpp1},
     {kDialogflowCXEnvironmentIdProto2, kDialogflowCXEnvironmentIdCpp2},

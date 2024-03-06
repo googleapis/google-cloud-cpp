@@ -621,6 +621,105 @@ Status DlpServiceClient::DeleteStoredInfoType(
   return connection_->DeleteStoredInfoType(request);
 }
 
+StreamRange<google::privacy::dlp::v2::ProjectDataProfile>
+DlpServiceClient::ListProjectDataProfiles(std::string const& parent,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::ListProjectDataProfilesRequest request;
+  request.set_parent(parent);
+  return connection_->ListProjectDataProfiles(request);
+}
+
+StreamRange<google::privacy::dlp::v2::ProjectDataProfile>
+DlpServiceClient::ListProjectDataProfiles(
+    google::privacy::dlp::v2::ListProjectDataProfilesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListProjectDataProfiles(std::move(request));
+}
+
+StreamRange<google::privacy::dlp::v2::TableDataProfile>
+DlpServiceClient::ListTableDataProfiles(std::string const& parent,
+                                        Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::ListTableDataProfilesRequest request;
+  request.set_parent(parent);
+  return connection_->ListTableDataProfiles(request);
+}
+
+StreamRange<google::privacy::dlp::v2::TableDataProfile>
+DlpServiceClient::ListTableDataProfiles(
+    google::privacy::dlp::v2::ListTableDataProfilesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListTableDataProfiles(std::move(request));
+}
+
+StreamRange<google::privacy::dlp::v2::ColumnDataProfile>
+DlpServiceClient::ListColumnDataProfiles(std::string const& parent,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::ListColumnDataProfilesRequest request;
+  request.set_parent(parent);
+  return connection_->ListColumnDataProfiles(request);
+}
+
+StreamRange<google::privacy::dlp::v2::ColumnDataProfile>
+DlpServiceClient::ListColumnDataProfiles(
+    google::privacy::dlp::v2::ListColumnDataProfilesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListColumnDataProfiles(std::move(request));
+}
+
+StatusOr<google::privacy::dlp::v2::ProjectDataProfile>
+DlpServiceClient::GetProjectDataProfile(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::GetProjectDataProfileRequest request;
+  request.set_name(name);
+  return connection_->GetProjectDataProfile(request);
+}
+
+StatusOr<google::privacy::dlp::v2::ProjectDataProfile>
+DlpServiceClient::GetProjectDataProfile(
+    google::privacy::dlp::v2::GetProjectDataProfileRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetProjectDataProfile(request);
+}
+
+StatusOr<google::privacy::dlp::v2::TableDataProfile>
+DlpServiceClient::GetTableDataProfile(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::GetTableDataProfileRequest request;
+  request.set_name(name);
+  return connection_->GetTableDataProfile(request);
+}
+
+StatusOr<google::privacy::dlp::v2::TableDataProfile>
+DlpServiceClient::GetTableDataProfile(
+    google::privacy::dlp::v2::GetTableDataProfileRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetTableDataProfile(request);
+}
+
+StatusOr<google::privacy::dlp::v2::ColumnDataProfile>
+DlpServiceClient::GetColumnDataProfile(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::privacy::dlp::v2::GetColumnDataProfileRequest request;
+  request.set_name(name);
+  return connection_->GetColumnDataProfile(request);
+}
+
+StatusOr<google::privacy::dlp::v2::ColumnDataProfile>
+DlpServiceClient::GetColumnDataProfile(
+    google::privacy::dlp::v2::GetColumnDataProfileRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetColumnDataProfile(request);
+}
+
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DlpServiceClient::HybridInspectDlpJob(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

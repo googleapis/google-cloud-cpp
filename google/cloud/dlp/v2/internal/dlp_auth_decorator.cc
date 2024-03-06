@@ -351,6 +351,60 @@ Status DlpServiceAuth::DeleteStoredInfoType(
   return child_->DeleteStoredInfoType(context, options, request);
 }
 
+StatusOr<google::privacy::dlp::v2::ListProjectDataProfilesResponse>
+DlpServiceAuth::ListProjectDataProfiles(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::ListProjectDataProfilesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListProjectDataProfiles(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::ListTableDataProfilesResponse>
+DlpServiceAuth::ListTableDataProfiles(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::ListTableDataProfilesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListTableDataProfiles(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::ListColumnDataProfilesResponse>
+DlpServiceAuth::ListColumnDataProfiles(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::ListColumnDataProfilesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListColumnDataProfiles(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::ProjectDataProfile>
+DlpServiceAuth::GetProjectDataProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::GetProjectDataProfileRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetProjectDataProfile(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::TableDataProfile>
+DlpServiceAuth::GetTableDataProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::GetTableDataProfileRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetTableDataProfile(context, options, request);
+}
+
+StatusOr<google::privacy::dlp::v2::ColumnDataProfile>
+DlpServiceAuth::GetColumnDataProfile(
+    grpc::ClientContext& context, Options const& options,
+    google::privacy::dlp::v2::GetColumnDataProfileRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetColumnDataProfile(context, options, request);
+}
+
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DlpServiceAuth::HybridInspectDlpJob(
     grpc::ClientContext& context, Options const& options,
