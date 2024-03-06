@@ -82,7 +82,6 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
     io::log_h2 "Adding new ${UPDATED_DISCOVERY_DOCUMENT} generated service code"
     git add "${PROJECT_ROOT}/google/cloud/${UPDATED_DISCOVERY_DOCUMENT}"
   fi
-
 else
   io::log_red "Skipping update of generated libraries."
 fi

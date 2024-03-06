@@ -20,7 +20,7 @@ source "$(dirname "$0")/../../ci/lib/init.sh"
 source module ci/lib/io.sh
 
 if (($# > 0)); then
-  cat <<EOM
+  cat 1>&2 <<EOM
 Usage: $(basename "$0")
 
   Updates the Compute Discovery Document and runs the generator on the updated
@@ -33,7 +33,7 @@ readonly COMPUTE_DISCOVERY_DOCUMENT_URL="https://www.googleapis.com/discovery/v1
 readonly COMPUTE_DISCOVERY_JSON_RELATIVE_PATH="generator/discovery/compute_public_google_rest_v1.json"
 
 io::log_h2 "Fetching discovery document from ${COMPUTE_DISCOVERY_DOCUMENT_URL}"
-curl "${COMPUTE_DISCOVERY_DOCUMENT_URL}" >"${PROJECT_ROOT}"/"${COMPUTE_DISCOVERY_JSON_RELATIVE_PATH}"
+curl "${COMPUTE_DISCOVERY_DOCUMENT_URL}" >"${PROJECT_ROOT}/${COMPUTE_DISCOVERY_JSON_RELATIVE_PATH}"
 
 io::log_h2 "Adding updated Discovery JSON ${COMPUTE_DISCOVERY_JSON_RELATIVE_PATH}"
 git add "${PROJECT_ROOT}/${COMPUTE_DISCOVERY_JSON_RELATIVE_PATH}"
