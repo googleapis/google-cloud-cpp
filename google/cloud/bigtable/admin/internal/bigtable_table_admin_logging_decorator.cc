@@ -118,6 +118,82 @@ BigtableTableAdminLogging::AsyncUndeleteTable(
       tracing_options_);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminLogging::AsyncCreateAuthorizedView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::bigtable::admin::v2::CreateAuthorizedViewRequest const&
+                 request) {
+        return child_->AsyncCreateAuthorizedView(cq, std::move(context),
+                                                 std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+StatusOr<google::bigtable::admin::v2::ListAuthorizedViewsResponse>
+BigtableTableAdminLogging::ListAuthorizedViews(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::ListAuthorizedViewsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::ListAuthorizedViewsRequest const&
+                 request) {
+        return child_->ListAuthorizedViews(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::bigtable::admin::v2::AuthorizedView>
+BigtableTableAdminLogging::GetAuthorizedView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::GetAuthorizedViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::GetAuthorizedViewRequest const&
+                 request) {
+        return child_->GetAuthorizedView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+BigtableTableAdminLogging::AsyncUpdateAuthorizedView(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::bigtable::admin::v2::UpdateAuthorizedViewRequest const&
+                 request) {
+        return child_->AsyncUpdateAuthorizedView(cq, std::move(context),
+                                                 std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+Status BigtableTableAdminLogging::DeleteAuthorizedView(
+    grpc::ClientContext& context, Options const& options,
+    google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context, Options const& options,
+             google::bigtable::admin::v2::DeleteAuthorizedViewRequest const&
+                 request) {
+        return child_->DeleteAuthorizedView(context, options, request);
+      },
+      context, options, request, __func__, tracing_options_);
+}
+
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminLogging::ModifyColumnFamilies(
     grpc::ClientContext& context, Options const& options,

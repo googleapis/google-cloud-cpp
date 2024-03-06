@@ -470,6 +470,80 @@ Status DefaultDlpServiceStub::DeleteStoredInfoType(
   return google::cloud::Status();
 }
 
+StatusOr<google::privacy::dlp::v2::ListProjectDataProfilesResponse>
+DefaultDlpServiceStub::ListProjectDataProfiles(
+    grpc::ClientContext& context, Options const&,
+    google::privacy::dlp::v2::ListProjectDataProfilesRequest const& request) {
+  google::privacy::dlp::v2::ListProjectDataProfilesResponse response;
+  auto status =
+      grpc_stub_->ListProjectDataProfiles(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::privacy::dlp::v2::ListTableDataProfilesResponse>
+DefaultDlpServiceStub::ListTableDataProfiles(
+    grpc::ClientContext& context, Options const&,
+    google::privacy::dlp::v2::ListTableDataProfilesRequest const& request) {
+  google::privacy::dlp::v2::ListTableDataProfilesResponse response;
+  auto status = grpc_stub_->ListTableDataProfiles(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::privacy::dlp::v2::ListColumnDataProfilesResponse>
+DefaultDlpServiceStub::ListColumnDataProfiles(
+    grpc::ClientContext& context, Options const&,
+    google::privacy::dlp::v2::ListColumnDataProfilesRequest const& request) {
+  google::privacy::dlp::v2::ListColumnDataProfilesResponse response;
+  auto status =
+      grpc_stub_->ListColumnDataProfiles(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::privacy::dlp::v2::ProjectDataProfile>
+DefaultDlpServiceStub::GetProjectDataProfile(
+    grpc::ClientContext& context, Options const&,
+    google::privacy::dlp::v2::GetProjectDataProfileRequest const& request) {
+  google::privacy::dlp::v2::ProjectDataProfile response;
+  auto status = grpc_stub_->GetProjectDataProfile(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::privacy::dlp::v2::TableDataProfile>
+DefaultDlpServiceStub::GetTableDataProfile(
+    grpc::ClientContext& context, Options const&,
+    google::privacy::dlp::v2::GetTableDataProfileRequest const& request) {
+  google::privacy::dlp::v2::TableDataProfile response;
+  auto status = grpc_stub_->GetTableDataProfile(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::privacy::dlp::v2::ColumnDataProfile>
+DefaultDlpServiceStub::GetColumnDataProfile(
+    grpc::ClientContext& context, Options const&,
+    google::privacy::dlp::v2::GetColumnDataProfileRequest const& request) {
+  google::privacy::dlp::v2::ColumnDataProfile response;
+  auto status = grpc_stub_->GetColumnDataProfile(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::privacy::dlp::v2::HybridInspectResponse>
 DefaultDlpServiceStub::HybridInspectDlpJob(
     grpc::ClientContext& context, Options const&,

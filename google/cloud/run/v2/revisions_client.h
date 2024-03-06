@@ -105,8 +105,8 @@ class RevisionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.GetRevisionRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L92}
-  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
+  /// [google.cloud.run.v2.GetRevisionRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L93}
+  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L161}
   ///
   // clang-format on
   StatusOr<google::cloud::run::v2::Revision> GetRevision(
@@ -135,8 +135,8 @@ class RevisionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.GetRevisionRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L92}
-  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
+  /// [google.cloud.run.v2.GetRevisionRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L93}
+  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L161}
   ///
   // clang-format on
   StatusOr<google::cloud::run::v2::Revision> GetRevision(
@@ -173,8 +173,8 @@ class RevisionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.ListRevisionsRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L103}
-  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
+  /// [google.cloud.run.v2.ListRevisionsRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L104}
+  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L161}
   ///
   // clang-format on
   StreamRange<google::cloud::run::v2::Revision> ListRevisions(
@@ -212,8 +212,8 @@ class RevisionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.ListRevisionsRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L103}
-  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
+  /// [google.cloud.run.v2.ListRevisionsRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L104}
+  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L161}
   ///
   // clang-format on
   StreamRange<google::cloud::run::v2::Revision> ListRevisions(
@@ -246,8 +246,8 @@ class RevisionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.DeleteRevisionRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L139}
-  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
+  /// [google.cloud.run.v2.DeleteRevisionRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L140}
+  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L161}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(
@@ -283,8 +283,8 @@ class RevisionsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.run.v2.DeleteRevisionRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L139}
-  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L160}
+  /// [google.cloud.run.v2.DeleteRevisionRequest]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L140}
+  /// [google.cloud.run.v2.Revision]: @googleapis_reference_link{google/cloud/run/v2/revision.proto#L161}
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Revision>> DeleteRevision(

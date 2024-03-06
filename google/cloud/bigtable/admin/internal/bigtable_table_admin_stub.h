@@ -66,6 +66,38 @@ class BigtableTableAdminStub {
       google::cloud::internal::ImmutableOptions options,
       google::bigtable::admin::v2::UndeleteTableRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateAuthorizedView(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::CreateAuthorizedViewRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::bigtable::admin::v2::ListAuthorizedViewsResponse>
+  ListAuthorizedViews(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::ListAuthorizedViewsRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::bigtable::admin::v2::AuthorizedView>
+  GetAuthorizedView(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::GetAuthorizedViewRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateAuthorizedView(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::UpdateAuthorizedViewRequest const&
+          request) = 0;
+
+  virtual Status DeleteAuthorizedView(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::DeleteAuthorizedViewRequest const&
+          request) = 0;
+
   virtual StatusOr<google::bigtable::admin::v2::Table> ModifyColumnFamilies(
       grpc::ClientContext& context, Options const& options,
       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const&
@@ -193,6 +225,36 @@ class DefaultBigtableTableAdminStub : public BigtableTableAdminStub {
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::bigtable::admin::v2::UndeleteTableRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateAuthorizedView(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request)
+      override;
+
+  StatusOr<google::bigtable::admin::v2::ListAuthorizedViewsResponse>
+  ListAuthorizedViews(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::ListAuthorizedViewsRequest const& request)
+      override;
+
+  StatusOr<google::bigtable::admin::v2::AuthorizedView> GetAuthorizedView(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::GetAuthorizedViewRequest const& request)
+      override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateAuthorizedView(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request)
+      override;
+
+  Status DeleteAuthorizedView(
+      grpc::ClientContext& context, Options const& options,
+      google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request)
       override;
 
   StatusOr<google::bigtable::admin::v2::Table> ModifyColumnFamilies(

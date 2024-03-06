@@ -147,6 +147,24 @@ class DlpServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteStoredInfoType(
       google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request);
 
+  virtual google::cloud::Idempotency ListProjectDataProfiles(
+      google::privacy::dlp::v2::ListProjectDataProfilesRequest request);
+
+  virtual google::cloud::Idempotency ListTableDataProfiles(
+      google::privacy::dlp::v2::ListTableDataProfilesRequest request);
+
+  virtual google::cloud::Idempotency ListColumnDataProfiles(
+      google::privacy::dlp::v2::ListColumnDataProfilesRequest request);
+
+  virtual google::cloud::Idempotency GetProjectDataProfile(
+      google::privacy::dlp::v2::GetProjectDataProfileRequest const& request);
+
+  virtual google::cloud::Idempotency GetTableDataProfile(
+      google::privacy::dlp::v2::GetTableDataProfileRequest const& request);
+
+  virtual google::cloud::Idempotency GetColumnDataProfile(
+      google::privacy::dlp::v2::GetColumnDataProfileRequest const& request);
+
   virtual google::cloud::Idempotency HybridInspectDlpJob(
       google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request);
 

@@ -219,6 +219,36 @@ Idempotency DlpServiceConnectionIdempotencyPolicy::DeleteStoredInfoType(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency DlpServiceConnectionIdempotencyPolicy::ListProjectDataProfiles(
+    google::privacy::dlp::v2::ListProjectDataProfilesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::ListTableDataProfiles(
+    google::privacy::dlp::v2::ListTableDataProfilesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::ListColumnDataProfiles(
+    google::privacy::dlp::v2::ListColumnDataProfilesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::GetProjectDataProfile(
+    google::privacy::dlp::v2::GetProjectDataProfileRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::GetTableDataProfile(
+    google::privacy::dlp::v2::GetTableDataProfileRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency DlpServiceConnectionIdempotencyPolicy::GetColumnDataProfile(
+    google::privacy::dlp::v2::GetColumnDataProfileRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 Idempotency DlpServiceConnectionIdempotencyPolicy::HybridInspectDlpJob(
     google::privacy::dlp::v2::HybridInspectDlpJobRequest const&) {
   return Idempotency::kNonIdempotent;

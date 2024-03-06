@@ -178,6 +178,30 @@ class DlpServiceTracingConnection : public dlp_v2::DlpServiceConnection {
       google::privacy::dlp::v2::DeleteStoredInfoTypeRequest const& request)
       override;
 
+  StreamRange<google::privacy::dlp::v2::ProjectDataProfile>
+  ListProjectDataProfiles(
+      google::privacy::dlp::v2::ListProjectDataProfilesRequest request)
+      override;
+
+  StreamRange<google::privacy::dlp::v2::TableDataProfile> ListTableDataProfiles(
+      google::privacy::dlp::v2::ListTableDataProfilesRequest request) override;
+
+  StreamRange<google::privacy::dlp::v2::ColumnDataProfile>
+  ListColumnDataProfiles(
+      google::privacy::dlp::v2::ListColumnDataProfilesRequest request) override;
+
+  StatusOr<google::privacy::dlp::v2::ProjectDataProfile> GetProjectDataProfile(
+      google::privacy::dlp::v2::GetProjectDataProfileRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::TableDataProfile> GetTableDataProfile(
+      google::privacy::dlp::v2::GetTableDataProfileRequest const& request)
+      override;
+
+  StatusOr<google::privacy::dlp::v2::ColumnDataProfile> GetColumnDataProfile(
+      google::privacy::dlp::v2::GetColumnDataProfileRequest const& request)
+      override;
+
   StatusOr<google::privacy::dlp::v2::HybridInspectResponse> HybridInspectDlpJob(
       google::privacy::dlp::v2::HybridInspectDlpJobRequest const& request)
       override;
