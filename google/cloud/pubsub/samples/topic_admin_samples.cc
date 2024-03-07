@@ -554,27 +554,15 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const kinesis_topic_id =
       "kinesis-" + RandomTopicId(generator) + "_ingestion_topic";
   auto kinesis_stream_arn =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_PUBSUB_STREAM_ARN")
-          .value_or("");
+      "arn:aws:kinesis:us-west-2:111111111111:stream/fake-stream-name";
   auto kinesis_consumer_arn =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_PUBSUB_CONSUMER_ARN")
-          .value_or("");
-  auto kinesis_aws_role_arn =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_PUBSUB_AWS_ROLE_ARN")
-          .value_or("");
+      "arn:aws:kinesis:us-west-2:111111111111:stream/fake-stream-name/consumer/"
+      "consumer-1:1111111111";
+  auto kinesis_aws_role_arn = "arn:aws:iam::111111111111:role/fake-role-name";
   auto kinesis_gcp_service_account =
-      google::cloud::internal::GetEnv(
-          "GOOGLE_CLOUD_CPP_PUBSUB_GCP_SERVICE_ACCOUNT")
-          .value_or("");
+      "fake-service-account@fake-gcp-project.iam.gserviceaccount.com";
   auto kinesis_updated_gcp_service_account =
-      google::cloud::internal::GetEnv(
-          "GOOGLE_CLOUD_CPP_PUBSUB_UPDATED_GCP_SERVICE_ACCOUNT")
-          .value_or("");
-  // Only run the samples if all the environment variables are set.
-  bool const enable_kinesis =
-      !(kinesis_stream_arn.empty() || kinesis_consumer_arn.empty() ||
-        kinesis_aws_role_arn.empty() || kinesis_gcp_service_account.empty() ||
-        kinesis_updated_gcp_service_account.empty());
+      "fake-update-service-account@fake-gcp-project.iam.gserviceaccount.com";
 
   using ::google::cloud::StatusCode;
   auto ignore_emulator_failures =
@@ -612,18 +600,10 @@ void AutoRun(std::vector<std::string> const& argv) {
   // Since the topic was created already, this should return kAlreadyExists.
   std::cout << "\nRunning CreateTopic() sample [2]" << std::endl;
 
-  // Only run the samples using the emulator or if the environment variables are
-  // set.
-  if (enable_kinesis || UsingEmulator()) {
-    if (UsingEmulator()) {
-      kinesis_stream_arn = "stream_arn";
-      kinesis_consumer_arn = "consumer_arn";
-      kinesis_aws_role_arn = "aws_role_arn";
-      kinesis_gcp_service_account = "gcp_service_account";
-      kinesis_updated_gcp_service_account = "updated_gcp_service_account";
-    }
-    std::cout << "\nRunning CreateTopicWithKinesisIngestion() sample"
-              << std::endl;
+  std::cout << "\nRunning CreateTopicWithKinesisIngestion() sample"
+            << std::endl;
+
+  ignore_emulator_failures([&] {
     CreateTopicWithKinesisIngestion(
         topic_admin_client,
         {project_id, kinesis_topic_id, kinesis_stream_arn, kinesis_consumer_arn,
@@ -636,7 +616,7 @@ void AutoRun(std::vector<std::string> const& argv) {
     std::cout << "\nRunning UpdateTopicType() sample" << std::endl;
     UpdateTopicType(topic_admin_client, {project_id, kinesis_topic_id,
                                          kinesis_updated_gcp_service_account});
-  }
+  });
 
   std::cout << "\nRunning GetTopic() sample" << std::endl;
   GetTopic(topic_admin_client, {project_id, topic_id});
