@@ -19,6 +19,7 @@ licenses(["notice"])  # Apache 2.0
 service_dirs = [
     "",
     "v1/",
+    "v2/",
 ]
 
 src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
@@ -60,6 +61,7 @@ cc_library(
         "//:common",
         "//:grpc_utils",
         "@com_google_googleapis//google/cloud/securitycenter/v1:securitycenter_cc_grpc",
+        "@com_google_googleapis//google/cloud/securitycenter/v2:securitycenter_cc_grpc",
     ],
 )
 
