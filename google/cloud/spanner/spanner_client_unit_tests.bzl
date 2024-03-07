@@ -51,6 +51,8 @@ spanner_client_unit_tests = [
     "mutations_test.cc",
     "numeric_test.cc",
     "partition_options_test.cc",
+    "proto_enum_test.cc",
+    "proto_message_test.cc",
     "query_options_test.cc",
     "query_partition_test.cc",
     "read_options_test.cc",
