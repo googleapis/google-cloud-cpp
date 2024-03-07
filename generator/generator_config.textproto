@@ -2989,6 +2989,13 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/cloud/securitycenter/v2/securitycenter_service.proto"
+  product_path: "google/cloud/securitycenter/v2"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Security Center Management
 service {
   service_proto_path: "google/cloud/securitycentermanagement/v1/security_center_management.proto"
