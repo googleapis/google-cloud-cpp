@@ -55,6 +55,11 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
   find "${PROJECT_ROOT}/protos/google/cloud/compute/v1/internal" -name '*.proto' -exec clang-format -i {} \;
   git add "${PROJECT_ROOT}/protos/google/cloud/compute/v1/internal/common_*.proto"
 
+  if [ -n "${UPDATED_DISCOVERY_DOCUMENT}" ]; then
+    io::log_h2 "Adding new ${UPDATED_DISCOVERY_DOCUMENT} protos"
+    git add "${PROJECT_ROOT}/protos/google/cloud/${UPDATED_DISCOVERY_DOCUMENT}"
+  fi
+
   io::log_h2 "Formatting generated protos"
   git ls-files -z -- '*.proto' |
     xargs -P "$(nproc)" -n 50 -0 clang-format -i
@@ -72,6 +77,11 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
     --output_path="${PROJECT_ROOT}" \
     --check_parameter_comment_substitutions=true \
     --config_file="${PROJECT_ROOT}/generator/generator_config.textproto"
+
+  if [ -n "${UPDATED_DISCOVERY_DOCUMENT}" ]; then
+    io::log_h2 "Adding new ${UPDATED_DISCOVERY_DOCUMENT} generated service code"
+    git add "${PROJECT_ROOT}/google/cloud/${UPDATED_DISCOVERY_DOCUMENT}"
+  fi
 else
   io::log_red "Skipping update of generated libraries."
 fi
@@ -107,20 +117,27 @@ else
   io::log_yellow "Skipping update of protobuf lists/deps."
 fi
 
-# This build should fail if any generated files differ from what was checked in.
-io::log_h2 "Highlight generated code differences"
-# We use `--compact-summary` because in almost all cases the delta is at
-# least hundreds of lines long, and often it is thousands of lines long. The
-# summary is all we need in the script.  The developer can do specific diffs
-# if needed.
-#
-# We only compare a subset of the directories because we expect changes in
-# generator/... (but not in generator/integration_tests/golden) while making
-# generator changes.
-git diff --exit-code --compact-summary generator/integration_tests/golden/ google/ ci/
+if [ -n "${UPDATED_DISCOVERY_DOCUMENT}" ]; then
+  io::log_h2 "Adding new ${UPDATED_DISCOVERY_DOCUMENT} files post formatting"
+  git add -u "${PROJECT_ROOT}/google/cloud/${UPDATED_DISCOVERY_DOCUMENT}" \
+    "${PROJECT_ROOT}/protos/google/cloud/${UPDATED_DISCOVERY_DOCUMENT}"
+else
+  # If the Discovery Document is not being updated, then this build should fail
+  # if any generated files differ from what was checked in.
+  io::log_h2 "Highlight generated code differences"
+  # We use `--compact-summary` because in almost all cases the delta is at
+  # least hundreds of lines long, and often it is thousands of lines long. The
+  # summary is all we need in the script.  The developer can do specific diffs
+  # if needed.
+  #
+  # We only compare a subset of the directories because we expect changes in
+  # generator/... (but not in generator/integration_tests/golden) while making
+  # generator changes.
+  git diff --exit-code --compact-summary generator/integration_tests/golden/ google/ ci/
 
-if [[ -n "$(git status --porcelain)" ]]; then
-  io::log_red "New unmanaged files created by generator"
-  git status
-  exit 1
+  if [[ -n "$(git status --porcelain)" ]]; then
+    io::log_red "New unmanaged files created by generator"
+    git status
+    exit 1
+  fi
 fi
