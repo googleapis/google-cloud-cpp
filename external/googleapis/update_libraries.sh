@@ -90,6 +90,7 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/devtools/cloudbuild/v1:cloudbuild_cc_grpc" \
       "@com_google_googleapis//google/devtools/cloudbuild/v2:cloudbuild_cc_grpc"
   )"
+  ["cloudcontrolspartner"]="@com_google_googleapis//google/cloud/cloudcontrolspartner/v1:cloudcontrolspartner_cc_grpc"
   ["cloudquotas"]="@com_google_googleapis//google/api/cloudquotas/v1:cloudquotas_cc_grpc"
   ["commerce"]="@com_google_googleapis//google/cloud/commerce/consumer/procurement/v1:procurement_cc_grpc"
   ["common"]="@com_google_googleapis//google/cloud/common:common_cc_grpc"

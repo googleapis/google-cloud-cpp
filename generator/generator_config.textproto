@@ -590,6 +590,21 @@ service {
   emitted_rpcs: ["RunReportJob", "FetchReportResults", "ListReports"]
 }
 
+# Cloud Controls Partner
+service {
+  service_proto_path: "google/cloud/cloudcontrolspartner/v1/core.proto"
+  product_path: "google/cloud/cloudcontrolspartner/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+service {
+  service_proto_path: "google/cloud/cloudcontrolspartner/v1/monitoring.proto"
+  product_path: "google/cloud/cloudcontrolspartner/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Cloud Quotas
 service {
   service_proto_path: "google/api/cloudquotas/v1/cloudquotas.proto"
