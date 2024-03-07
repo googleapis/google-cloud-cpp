@@ -181,6 +181,10 @@
 ./include/google/cloud/cloudbuild/v2
 ./include/google/cloud/cloudbuild/v2/internal
 ./include/google/cloud/cloudbuild/v2/mocks
+./include/google/cloud/cloudcontrolspartner
+./include/google/cloud/cloudcontrolspartner/v1
+./include/google/cloud/cloudcontrolspartner/v1/internal
+./include/google/cloud/cloudcontrolspartner/v1/mocks
 ./include/google/cloud/clouddms
 ./include/google/cloud/clouddms/v1
 ./include/google/cloud/cloudquotas
@@ -1245,6 +1249,8 @@
 ./lib64/cmake/google_cloud_cpp_channel_mocks
 ./lib64/cmake/google_cloud_cpp_cloudbuild
 ./lib64/cmake/google_cloud_cpp_cloudbuild_mocks
+./lib64/cmake/google_cloud_cpp_cloudcontrolspartner
+./lib64/cmake/google_cloud_cpp_cloudcontrolspartner_mocks
 ./lib64/cmake/google_cloud_cpp_cloudquotas
 ./lib64/cmake/google_cloud_cpp_cloudquotas_mocks
 ./lib64/cmake/google_cloud_cpp_commerce

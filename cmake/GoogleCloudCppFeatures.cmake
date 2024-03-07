@@ -65,6 +65,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "certificatemanager"
     "channel"
     "cloudbuild"
+    "cloudcontrolspartner"
     "cloudquotas"
     "commerce"
     "composer"

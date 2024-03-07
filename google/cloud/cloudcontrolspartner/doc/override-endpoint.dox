@@ -1,0 +1,36 @@
+/*!
+@page cloudcontrolspartner-override-endpoint How to Override the Default Endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the
+[EndpointOption](@ref google::cloud::EndpointOption) when initializing the
+client library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `cloudcontrolspartner_v1::CloudControlsPartnerCoreClient`:
+
+@snippet cloud_controls_partner_core_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+
+- [\c cloudcontrolspartner_v1::CloudControlsPartnerCoreClient](@ref cloudcontrolspartner_v1::CloudControlsPartnerCoreClient-endpoint-snippet)
+- [\c cloudcontrolspartner_v1::CloudControlsPartnerMonitoringClient](@ref cloudcontrolspartner_v1::CloudControlsPartnerMonitoringClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page cloudcontrolspartner_v1::CloudControlsPartnerCoreClient-endpoint-snippet Override cloudcontrolspartner_v1::CloudControlsPartnerCoreClient Endpoint Configuration
+
+@snippet google/cloud/cloudcontrolspartner/v1/samples/cloud_controls_partner_core_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page cloudcontrolspartner_v1::CloudControlsPartnerMonitoringClient-endpoint-snippet Override cloudcontrolspartner_v1::CloudControlsPartnerMonitoringClient Endpoint Configuration
+
+@snippet google/cloud/cloudcontrolspartner/v1/samples/cloud_controls_partner_monitoring_client_samples.cc set-client-endpoint
+
+*/
+// <!-- inject-endpoint-pages-end -->
