@@ -50,6 +50,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "apigeeconnect"
     "apikeys"
     "appengine"
+    "apphub"
     "artifactregistry"
     "asset"
     "assuredworkloads"

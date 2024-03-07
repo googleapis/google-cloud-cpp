@@ -265,6 +265,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# App Hub
+service {
+  service_proto_path: "google/cloud/apphub/v1/apphub_service.proto"
+  product_path: "google/cloud/apphub/v1"
+  initial_copyright_year: "2024"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Artifact Registry
 service {
   service_proto_path: "google/devtools/artifactregistry/v1/service.proto"
