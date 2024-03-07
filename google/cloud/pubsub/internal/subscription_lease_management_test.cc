@@ -149,9 +149,9 @@ TEST(SubscriptionLeaseManagementTest, ShutdownOnError) {
       BatchCallback::StreamingPullResponse{GenerateMessages("0-", 3)});
   EXPECT_EQ(1U, fake_cq->size());
 
-  batch_callback->operator()(
-      BatchCallback::StreamingPullResponse{StatusOr<google::pubsub::v1::StreamingPullResponse>(
-      Status(StatusCode::kPermissionDenied, "uh-oh"))});
+  batch_callback->operator()(BatchCallback::StreamingPullResponse{
+      StatusOr<google::pubsub::v1::StreamingPullResponse>(
+          Status(StatusCode::kPermissionDenied, "uh-oh"))});
   ASSERT_EQ(1U, fake_cq->size());
 
   fake_cq->SimulateCompletion(false);

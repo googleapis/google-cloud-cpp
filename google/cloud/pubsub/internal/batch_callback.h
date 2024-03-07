@@ -20,8 +20,6 @@
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
-#include "absl/types/any.h"
-#include "absl/types/optional.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 #include <string>
 
