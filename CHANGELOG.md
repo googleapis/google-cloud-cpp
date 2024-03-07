@@ -12,6 +12,7 @@ We are happy to announce the following GA libraries. Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [App Hub API](/google/cloud/apphub/README.md)
+- [Sovereign Controls by Partners](/google/cloud/cloudcontrolspartner/README.md)
 
 ## v2.22.0 - 2024-03
 
